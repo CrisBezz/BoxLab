@@ -10139,3 +10139,69 @@ repeat no-ops; paint requires explicit Clear paint before cutting. Complete path
 closed loops only; partial slits refuse atomically. No general unwrap/stitch/persistent
 seam recipe. User952 UI/history PASS protected; DEVICE953 feel/visibility pending.
 Next actual953 feedback, then scoped seam/stitch/unwrap audit through original owners.
+
+
+## .954 — screen-proximity Edge picking; supplied convex-edge report — 24 October 2026 (Brisbane)
+
+User reports convex-position edges almost impossible to tap and newly flipped
+edges becoming unselectable. Screenshot clearly952; current953 retains SAME main930
+picker, so reproduced on current source, not dismissed as stale-shell behavior.
+No953 Cut UVs PASS inferred. User952 UV-editor acceptance remains protected.
+Exact uploaded Convex Edge.obj retained byte-for-byte at
+ tests/fixtures/convex-edge-954.obj; SHA256
+7822b8d3536771c3b5f80d73f3fac42110c385dd7a1723200d9e7a40c18778d4.
+60vertices/84faces matches screenshot. Camera pose is not in OBJ; test cameras are
+controlled reproductions, not a claim to recover exact screenshot view.
+
+Audit: original main pickKindHits uses Three Line threshold .09 world units then
+camera-distance order. On exact supplied geometry,12 chosen line midpoints ALL
+select another camera-nearer neighbouring edge. Original proxy/display batching
+and IDs are correct; no source topology/Flip kernel repair required. Selected-only
+component-tap helper also greedily chose any selected edge within20px, even when
+a different edge lay under the pointer. Pencil gate already delegates native pick.
+Edge-paint owner independently used the old world-radius ordering.
+
+Main's Edge-only branch now calls small read-only edge-screen-picking helper over
+SAME rendered indexed line proxies,12 CSS pixels, screen proximity first, camera
+depth for quantized quarter-pixel ties. Homogeneous frustum clipping before divide
+and perspective-correct world interpolation; parent transforms and orthographic
+cameras supported. No mesh.edges(), topology or source writes, cache/history/input
+owner. Material.visible=false proxy convention retained; object/ancestor visibility
+respected. Face/Vertex/Object ray paths unchanged. This is targeting, not a new
+surface occlusion/back-face/Through-selection policy; no new hidden-surface guarantee.
+
+Original selected-component Edge toggle now checks SAME native hit before removal;
+unselected neighbours pass to main. Original Edge paint visible/through uses native
+pickHits order and original dedup/first/all policy, retaining fallback for startup/
+non-Edge fixtures. Same original listeners, propagation and gesture owners; no new
+raw-pointer handler. Flip Edge geometry/history/radial/workspace/UV/paint/material
+algorithms unchanged. New MAIN cache pin954 is intentional actual picker repair;
+original main internal stamp and cage930/Multi1.0/frozen bytes remain unchanged.
+Direct-bevel changes ONLY component-tap child cache key; shell/recovery/manifest
+and reviewed main/child loader graph954. No blanket repinning.
+
+Seven new integrations: exact supplied12 pre-repair failures→correct native pick;
+ACTUAL original Flip Edge apply/rebuild/UndoRedo plus reselect new diagonal; scale/
+projection/parent/DPR/12px bounds; clip/hidden ancestor/subpixel-depth behavior;
+actual selected-toggle refusal/removal with no history; original Edge-paint native
+event/visible/through delegation; real Pencil gate/paint owner release/cancel/finger
+Orbit retention. Focused new+native Face/Vertex/floating-navigation/release38PASS.
+Original assertions retained; full and publication evidence follow. Node Three/input
+fixtures are not native iPad/WebGL rendered acceptance.
+
+DEVICE954: SAME supplied mesh, deselect and tap circled edge and neighbouring white
+edge; orbit/zoom and repeat. Flip eligible edge, deselect then reselect new diagonal;
+UndoRedo keeps both geometry and picking usable. Try nearby multi-edge selection,
+Pencil drag selection and finger orbit/pan/pinch without selection loss. Check953
+Cut UVs separately when practical; no953 acceptance inferred from this bug report.
+Next respond to954 device results before new seam/unwrap features. No topology
+repair/triangulation workaround or forced cache-clearing needed for reproduced bug.
+
+.954 final local Node24.19.0 regression: **2783 PASS / 0 FAIL / 0 skipped**
+(95.1s), original2776 retained plus seven supplied-file/picker/input integrations.
+Focused new/native Face/Vertex/floating-edge/gesture/release38PASS. No old assertions
+relaxed or removed. Uploaded OBJ fixture byte-identical. Main source changes only
+helper import and Edge picker branch; direct-bevel is pin-only. Component Edge toggle
+and Edge-paint use existing native owner; no new pointer/geometry/history implementation.
+Reviewed cache closure954; cage930/Multi1.0/frozen unchanged. Hosted/Pages/live-file
+publication proof follows; actual954 iPad tap/Flip/reselect acceptance pending.

@@ -30,6 +30,11 @@ function setPointer(event) {
 }
 
 function hitIndices(event, type) {
+  // Share native Edge proximity ranking with taps and Pencil background classification.
+  if(type==='edge'&&selection()?.pickHits){
+    const indices=[...new Set(selection().pickHits(type,event).map(hit=>hit.index).filter(Number.isInteger))];
+    return paintDepth==='through'?indices:indices.slice(0,1);
+  }
   const camera = state()?.camera;
   const objects = objectsFor(type).filter(Boolean);
   if (!camera || !objects.length) return [];

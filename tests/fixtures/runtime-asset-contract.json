@@ -130,9 +130,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/direct-bevel.js?v=0.36.18.769",
+      "url": "./src/direct-bevel.js?v=0.36.18.954",
       "target": "src/direct-bevel.js",
-      "sha256": "bf427e20def1e98591792e0e2dad86f9393f4d04ead55c12038b54d1674a1251"
+      "sha256": "5342473a880ec351ba598156c6dffc2182b7660ab98f7e79b04bb021112ed5e3"
     },
     {
       "owner": "index.html",
@@ -198,9 +198,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/edge-paint-select.js?v=0.36.18.720",
+      "url": "./src/edge-paint-select.js?v=0.36.18.954",
       "target": "src/edge-paint-select.js",
-      "sha256": "6b2c4ee4edd7d9eff97ad0ac029e4229583186473aefe1cd756c2a36f953909e"
+      "sha256": "5700d04cc9228d92221384fac8bd1d90742019d1fed3e1d168cfd5ba3feb0bce"
     },
     {
       "owner": "index.html",
@@ -303,9 +303,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/main.js?v=0.36.18.930",
+      "url": "./src/main.js?v=0.36.18.954",
       "target": "src/main.js",
-      "sha256": "7a91b7cfcdaaa0eba7f8e8de29a9d0e6a199885157900640a855acbba648f02b",
+      "sha256": "e2077661509db3a520ec5d6ef9f69d4937d757e3e20c43d522cd59671b6b420b",
       "sourceVersion": "0.35.1"
     },
     {
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.953",
+      "url": "./src/release-bootstrap.js?v=0.36.18.954",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.953",
+      "url": "./src/release-version.js?v=0.36.18.954",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -719,9 +719,9 @@
     },
     {
       "owner": "src/direct-bevel.js",
-      "url": "./component-tap-toggle.js?v=0.32.21",
+      "url": "./component-tap-toggle.js?v=0.36.18.954",
       "target": "src/component-tap-toggle.js",
-      "sha256": "ef61a14672fbc9fd1adcd02427adc69d73e688698dbbb378c779bb8ed144306c"
+      "sha256": "4952bbddec2983ce88f6a2229d4c1f27eb0c576432ac68372633f563c14b043d"
     },
     {
       "owner": "src/direct-bevel.js",
@@ -3107,6 +3107,12 @@
       "url": "../../src/imported-uv-edit.js?v=0.36.18.953",
       "target": "src/imported-uv-edit.js",
       "sha256": "3db8495725ce70308960a53515f87f2d891a934a56d929fac6f273ea34befa1b"
+    },
+    {
+      "owner": "src/main.js",
+      "url": "./edge-screen-picking.js?v=0.36.18.954",
+      "target": "src/edge-screen-picking.js",
+      "sha256": "f33deb2304b073b41761071541a8a20b66b2f44a0f2ce9135e5df1c3fa1ae3f3"
     }
   ]
 }

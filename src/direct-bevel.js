@@ -4,7 +4,7 @@ import './bridge-ui.js?v=0.32.22';
 import './dissolve-bootstrap.js?v=0.32.4';
 import './dissolve-ui.js?v=0.32.22';
 import './transform-arming.js?v=0.36.18.253';
-import './component-tap-toggle.js?v=0.32.21';
+import './component-tap-toggle.js?v=0.36.18.954';
 import * as THREE from 'three';
 import {createFaceBevelPreview,disposeFaceBevelPreview} from './bevel-face-preview.js?v=0.36.18.716';
 const button=document.querySelector('#bevelBtn'),canvas=document.querySelector('#viewport'),width=document.querySelector('#bevelWidth'),out=document.querySelector('#bevelWidthOut'),multiToggle=document.querySelector('#multiSelectToggle'),ray=new THREE.Raycaster(),pointer=new THREE.Vector2();ray.params.Line.threshold=.09;let armed=false,drag=null,faceSession=null,facePreview=null,persistentEdge=false,edgeSession=null;

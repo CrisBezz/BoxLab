@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import {pickScreenEdges} from './edge-screen-picking.js?v=0.36.18.954';
 import {createCageBatch,updateCageBatches,addMirrorCageBatch} from './cage-render-batches.js?v=0.36.18.930';
 import { scaffoldLoopCandidates } from './scaffold-loop-candidates.js?v=0.36.18.761';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
@@ -370,7 +371,7 @@ function syncMirrorAlignControl(){const b=document.querySelector('#alignMirrorBt
 function updateScreenSpaceSelection(){const height=Math.max(1,renderer.domElement.clientHeight),fov=THREE.MathUtils.degToRad(camera.fov);root.children.forEach(object=>{const pixels=object.userData?.screenPixels;if(!pixels)return;const distance=Math.max(.001,camera.position.distanceTo(object.position)),size=2*Math.tan(fov*.5)*distance/height*pixels;if(object.userData.screenShape==='edge')object.scale.set(size,1,size);else object.scale.setScalar(size);});updateCageBatches(root);}
 function resize(){const w=wrap.clientWidth,h=wrap.clientHeight;renderer.setSize(w,h,false);camera.aspect=w/Math.max(h,1);camera.updateProjectionMatrix();updateScreenSpaceSelection();}
 function setPointer(event){const r=canvas.getBoundingClientRect();pointer.x=((event.clientX-r.left)/r.width)*2-1;pointer.y=-((event.clientY-r.top)/r.height)*2+1;}
-function pickKindHits(event,kind){setPointer(event);raycaster.setFromCamera(pointer,camera);return raycaster.intersectObjects(root.children.filter(o=>o.userData.kind===kind),false).map(hit=>({type:kind,index:hit.object.userData.index,distance:hit.distance}));}
+function pickKindHits(event,kind){setPointer(event);if(kind==='edge'&&root.children.some(o=>o.userData.kind==='edge'&&o.isLine))return pickScreenEdges(event,camera,canvas,root.children);raycaster.setFromCamera(pointer,camera);return raycaster.intersectObjects(root.children.filter(o=>o.userData.kind===kind),false).map(hit=>({type:kind,index:hit.object.userData.index,distance:hit.distance}));}
 function pickKind(event,kind){const hits=pickKindHits(event,kind);return hits.length?{type:kind,index:hits[0].index}:null;}
 function pickObject(event){setPointer(event);raycaster.setFromCamera(pointer,camera);const hits=raycaster.intersectObjects(root.children.filter(o=>o.userData.kind==='body'),false);return hits.length?{type:'object',index:0,distance:hits[0].distance}:null;}
 function pick(event){if(selectionMode==='object')return pickObject(event);return pickKind(event,selectionMode);}
