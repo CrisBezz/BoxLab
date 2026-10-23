@@ -1,4 +1,4 @@
-import {createCommittedPaintSurface} from './paint-target.js?v=0.36.18.938';
+import {createCommittedPaintSurface} from './paint-target.js?v=0.36.18.948';
 import {createUVImageOverlay} from './uv-image-surface-preview.js?v=0.36.18.892';
 import {createUVCheckerOverlay} from './uv-checker-preview.js?v=0.36.18.879';
 import * as THREE from 'three';
@@ -147,7 +147,9 @@ function applyMode(body){
   const inactive=kind==='boxlab-inactive-body';if(!inactive)lastBody=body;clearRenderChildren(body);
   if(!body.userData.boxlabOriginalMaterial)body.userData.boxlabOriginalMaterial=body.material;
   const original=body.userData.boxlabOriginalMaterial;syncStudio();
-  if(mode==='studio'){body.material=inactive?studioInactiveMaterial:studioMaterial;addBackface(body);}
+  // Set before async paint display creation, not only in the queued rig refresh.
+  // The replacement surface inherits these flags even when its digest wins the race.
+  if(mode==='studio'){body.castShadow=true;body.receiveShadow=true;body.material=inactive?studioInactiveMaterial:studioMaterial;addBackface(body);}
   else if(mode==='uvchecker'||mode==='uvimage'){
     const m=manager(),object=m?.objects?.find(o=>o.id===(inactive?body.userData.objectId:m.activeId));
     const settings=object?.settings||{},mesh=inactive?object?.mesh:bridge()?.mesh;

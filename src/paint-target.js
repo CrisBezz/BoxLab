@@ -59,7 +59,9 @@ export function createCommittedPaintSurface(body,object,mesh,owner=globalThis.__
   const colourValid=resource?.binding===binding,roughnessValid=scalar?.binding===binding,metalnessValid=metal?.binding===binding;
   // Do not show a stale channel with a valid neighbour. Scalar-only uses white.
   if(resource&&!colourValid||!colourValid&&!roughnessValid&&!metalnessValid){display.dispose();return;}
-  if(roughnessValid||metalnessValid)display.showMaterial(resource?.pixels||null,roughnessValid?scalar:null,false,metalnessValid?metal:null);
+  // Committed colour is albedo, including image/AO composites. Use the same
+  // scene-lit material even without scalar maps; Channel stays an editing view.
+  display.showMaterial(colourValid?resource.pixels:null,roughnessValid?scalar:null,false,metalnessValid?metal:null);
   display.show();
  }).catch(()=>display.dispose());return display;
 }

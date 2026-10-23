@@ -1,4 +1,4 @@
-# BoxLab AI Handoff — .947 / visual paint layer stack
+# BoxLab AI Handoff — .948 / committed colour lighting
 
 ## Permanent rule — every build completion
 
@@ -11,6 +11,50 @@ leave the user to infer completion. This applies to EVERY build without a remind
 User reaffirmed this permanent instruction on 21 October 2026.
 
 
+
+## .948 — committed colour lighting; .947 user PASS — 23 October 2026 (Brisbane)
+
+User reports .947 PASS: protect visual layer selection/thumbnails, blend/opacity/
+visibility, history/persistence and bounded LEFT dock. Continue requested repair:
+colour-only UV paint/image/AO composites must rejoin scene lighting after Paint Done.
+Audit main d17be438: original createCommittedPaintSurface only selected Standard for
+valid roughness/metalness; colour-only intentionally stayed Basic. Studio shadow flags
+were queued after material creation and could be copied too early. No missing light,
+new rendering engine or second material owner is required for this specific defect.
+
+Original committed surface now always calls its existing Standard material path for
+valid channels. Colour remains exact sRGB albedo, white factor, default roughness1 /
+metalness0; no scalar maps/resources invented. Stale scalar is omitted; stale colour
+still refuses. Same original geometry/UV/lifetime and async identity guards. Studio
+sets original body cast/receive flags synchronously before async surface creation,
+so both active and inactive/locked paint replacements inherit shadows regardless of
+digest/frame order. Existing Studio lights/rig/floor and reflection pool unchanged.
+Paint Channel remains intentionally unlit while editing; Paint Lit preview unchanged.
+Existing saved colour projects gain lit display on reopen/rebuild without migration,
+resource/history/pixel/export changes. No new AO bake, general atlas unwrap or claim
+that the older smooth-metal reflection report is resolved by this colour-only fix.
+
+Four new integrations cover512/1024 exact owned sRGB pixels/UVs/shadow flags/disposal,
+original Studio active+inactive/locked path BEFORE queued refresh, rebuild/diagnostic
+cleanup, actual Paint Channel→Done→lit and exact Save/Open without extra history,
+stale/replaced/body-loss suppression. Original920/923 colour-only Basic assertions now
+require requested Standard fallback while retaining exact pixels and absent stale
+scalar map; live Channel expectations remain Basic. Original904/909 committed display
+checks retain exact pixel equality and now require private lit texture ownership, as
+already used for scalar-lit surfaces. New+nearby paint/layers/scalar/
+reflection/release30PASS. Full regression/publication evidence follows.
+
+Reviewed entire surface→painter/render/export→Lab reverse loader graph948 and shell/
+recovery keys; parent/export edits are cache pins only. Main930/cage/Multi1.0/frozen,
+brushes/history/project/export algorithms unchanged. Actual GPU/iPad shadows and
+appearance remain DEVICE948 gate, not established by Node material/texture tests.
+
+DEVICE948: paint a UV cube in Colour only, Done→Studio, orbit for shaded faces; add
+another mesh and switch selection, shadows/lighting remain on both. Reopen existing
+painted .boxlab; compare lit display and paint unchanged. Paint Channel remains flat;
+Lit preview/Done restore scene shading. UndoRedo remains in Paint; .947 layer list
+remains accepted. Next narrow work follows948 device feedback; keep independent
+alpha929/reflection gates and general atlas unwrap request visible.
 
 ## .947 — visual Paint layer stack; user946PASS — 23 October 2026
 
@@ -711,10 +755,11 @@ splitting paths alone makes painting seamless or that CPU timings establish M2 p
 
 ## Next narrow step
 
-User945 and946PASS protected. Build947 adds visual layer list in original LEFT
-Paint dock. Await947 device selection/thumbnail/blend/opacity/visibility/scroll and
-history/persistence feedback. General atlas unwrap remains separate future work;
-Pack all arranges existing islands only. Alpha929/reflection gates independent.
+User945/946/947PASS protected. Build948 restores scene-lit committed colour-only
+paint/image/AO composites after Done through original material owner, with synchronous
+Studio shadow inheritance. Await948 device lighting/shadows/multi-object/SaveOpen
+feedback. Paint Channel stays unlit by design. General atlas unwrap remains separate;
+Pack all arranges existing islands only. Alpha929/metal-reflection gates independent.
 
 ## Protected interaction and modelling baseline
 
@@ -2618,3 +2663,13 @@ selected settings; edit them and check row/mesh. Visibility check toggles select
 row with one original Undo; Base immutable. Check image/mask rows, reorder Up/Down,
 UndoRedo/SaveOpen and bounded left dock scrolling/Done. Device947 PENDING;946 user
 PASS protected. General atlas unwrap remains deferred behind current UI request.
+
+
+.948 final local Node24.19.0 full regression: **2,750 PASS / 0 FAIL / 0 skipped**
+(97.7s). Four new checks plus original2746 retained; targeted paint/material/layer/
+duplicate/project/release50PASS. Superseded unlit/sharing expectations in920/923 and
+904/909 were updated to requested lit/private-texture behavior; exact pixel, stale
+channel, duplicate isolation and persistence assertions retained. Initial exploratory
+full run hit those old expectations; this FINAL complete run closes all regressions.
+Reviewed loader closure948; main930/cage/Multi1.0/frozen unchanged. Hosted regression,
+Pages and postdeployment live-file verification follow. Device948 lighting pending.
