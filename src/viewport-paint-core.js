@@ -180,8 +180,29 @@ export function createViewportPainter({target,activeId=()=>target()?.id,body,own
  }
  function editMask(patch){colourOnly();if(!ready())return false;const layer=session.stack?.layers.find(l=>l.id===session.selected);if(!layer?.mask)throw Error('Add a mask to the selected paint layer first');if(!patch||Object.keys(patch).some(k=>!['enabled','inverted'].includes(k)))throw Error('Unsupported mask edit');if(Object.keys(patch).every(k=>layer.mask[k]===patch[k]))return false;return commit(captureLayeredColourResource(replacePaintLayer(session.stack,session.selected,{mask:{...layer.mask,...patch}})));}
  function removeMask(){colourOnly();if(!ready())return false;const layer=session.stack?.layers.find(l=>l.id===session.selected);if(!layer?.mask)return false;return commit(captureLayeredColourResource(replacePaintLayer(session.stack,session.selected,{mask:null})));}
+ // Read-only UI thumbnails use committed raw layer colour/coverage, independent
+ // of opacity/blend/mask. Area averaging preserves thin marks; UV v=1 is at top.
+ function layerThumbnail(id){
+  const s=session;if(!s)return null;
+  const source=id==='$base'?(s.stack?.base.pixels||s.resource?.pixels):s.stack?.layers.find(l=>l.id===id)?.pixels;
+  if(!source&&id!=='$base')return null;
+  s.thumbnails??=new WeakMap();let pixels=source&&s.thumbnails.get(source);
+  if(!pixels){
+   pixels=new Uint8Array(64*64*4);
+   if(!source)pixels.fill(255);
+   else{const step=s.size/64,count=step*step;
+    for(let y=0;y<64;y++)for(let x=0;x<64;x++){
+     let a=0,r=0,g=0,b=0;
+     for(let j=0;j<step;j++)for(let i=0;i<step;i++){const at=((y*step+j)*s.size+x*step+i)*4,alpha=source[at+3];a+=alpha;r+=source[at]*alpha;g+=source[at+1]*alpha;b+=source[at+2]*alpha;}
+     const out=((63-y)*64+x)*4;if(a){pixels[out]=Math.round(r/a);pixels[out+1]=Math.round(g/a);pixels[out+2]=Math.round(b/a);}pixels[out+3]=Math.round(a/count);
+    }
+    s.thumbnails.set(source,pixels);
+   }
+  }
+  return {width:64,height:64,pixels:pixels.slice()};
+ }
  function state(){const s=session;return s?{resolution:s.size,selected:s.selected,paintTarget:s.paintTarget,previewMode:s.previewMode,aoPreview:!!s.aoPreview,aoBusy:!!s.aoJob,aoProgress:s.aoProgress||0,layered:!!s.stack,layers:[{id:'$base',name:'Base colour',visible:true,opacity:1,blendMode:'normal',mask:null},...(s.stack?.layers||[]).map(({id,name,visible,opacity,blendMode,mask,image})=>({id,name,visible,opacity,blendMode,image:!!image,mask:mask?{enabled:mask.enabled,inverted:mask.inverted}:null}))]}:null;}
- return {open,close,cancel,begin,move,finish,hit,selectPreviewMode,selectLayer,addLayer,editLayer,removeLayer,moveLayer,selectPaintTarget,addMask,editMask,removeMask,projectImage,imageForEdit,rasterizeImage,increaseResolution,mergeToBase:()=>mergeLayers(false),flattenLayers:()=>mergeLayers(true),previewImage,applyImagePreview,clearImagePreview,surfaceFrame,previewAO,previewAOHigh,applyAO,cancelAO,
+ return {open,close,cancel,begin,move,finish,hit,layerThumbnail,selectPreviewMode,selectLayer,addLayer,editLayer,removeLayer,moveLayer,selectPaintTarget,addMask,editMask,removeMask,projectImage,imageForEdit,rasterizeImage,increaseResolution,mergeToBase:()=>mergeLayers(false),flattenLayers:()=>mergeLayers(true),previewImage,applyImagePreview,clearImagePreview,surfaceFrame,previewAO,previewAOHigh,applyAO,cancelAO,
   tick(){if(session&&!current()){close();return;}if(session?.layer.consumeDirty())updatePreview();if(session?.dirty){updateMaterialPreview();const map=session.display.surface.material.map;if(session.previewMode==='channel'&&map)map.needsUpdate=true;session.dirty=false;}},
   get state(){return state();},get active(){return !!session;},get drawing(){return !!stroke;},get pixels(){return session?.preview;}};
 }

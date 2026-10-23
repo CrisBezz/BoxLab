@@ -1,4 +1,4 @@
-# BoxLab AI Handoff — .946 / paint and UV restart
+# BoxLab AI Handoff — .947 / visual paint layer stack
 
 ## Permanent rule — every build completion
 
@@ -10,6 +10,46 @@ the build number and readiness status. Never finish with only a progress update 
 leave the user to infer completion. This applies to EVERY build without a reminder.
 User reaffirmed this permanent instruction on 21 October 2026.
 
+
+
+## .947 — visual Paint layer stack; user946PASS — 23 October 2026
+
+User reports946PASS: protect explicit undoable Clear paint / Clear paint + UVs,
+stale-binding recovery/reproject and original resources/history. User now prioritizes
+a Procreate-style layer list; atlas unwrap remains deferred, not implemented by Pack.
+Audit current8c98072: all layer operations already belong to original Paint core and
+UI controls; only dropdown presentation existed, no thumbnail/list owner.
+
+Replace visible layer dropdown with compact top-first list in existing272px LEFT
+dock:64px content thumbnails displayed40px over checkerboard, name, unique1–2-letter
+blend code, opacity%, visibility toggle, selected blue row and image/mask labels.
+Tap row to select; blend/opacity opens original Selected layer settings below list.
+Original hidden select/visibility nodes remain event transport for original owners
+and regression contracts, not duplicate visible controls. + Layer/+ Image remain
+beside heading; image edit/conversion moves into selected settings. Original rename,
+opacity, blend, order, delete, merge, flatten, masks and image actions retained.
+Base visibility/blend/opacity stay immutable; scalar channels hide colour stack;
+AO staging disables row edits. No new paint schema, budgets, history, compositor or
+modelling owner. All original protected gestures/Multi1.0/frozen files retained.
+
+src/paint-layer-list.js is presentation only; viewport painter exposes owned tiny
+layerThumbnail snapshots of committed raw colour/alpha, before layer opacity/blend/
+mask. Area reduction includes thin marks and alpha-weighted RGB, flips UVv0-first
+rows for top-up previews, caches by immutable pixel identity using session WeakMap.
+No full texture bytes exposed to DOM; no thumbnails serialized or history entries
+for browsing. Updates after original Pencil release/actions/history reopen, clears
+on close. Canvas thumbnails are content previews, not final composites or mask maps.
+
+Five new tests cover all26 unique blend codes, alpha/thin/orientation/ownership,
+actual UI row order/content/mask/rename/blend/opacity, visibility one checkpoint,
+UndoRedo/reopen/SaveOpen, stroke Cancel and scalar/AO/close guards. Original905/906/
+928 targeted19PASS. Headless Chromium rendering of actual markup/styles/list module
+with fixture metadata verified no overflow at272px dock /1024 and390 viewport widths,
+selection settings/visibility and screenshot inspection; real painter/history tested
+through original integration harness, no iPad acceptance inferred. Screenshot is QA
+fixture only; original app/session layout owners unchanged. Full/publication proof
+follows. DEVICE947: layer taps/strokes/previews; blend/opacity/visibility; ordering/
+image+mask selection; UndoRedo/SaveOpen and left dock scrolling/Done on iPad.
 
 ## .946 — paint / UV restart; .945 user PASS — 23 October 2026
 
@@ -671,10 +711,10 @@ splitting paths alone makes painting seamless or that CPU timings establish M2 p
 
 ## Next narrow step
 
-User945PASS is protected. Build946 adds explicit undoable restart under Object → UV.
-Await946 device recovery/reset/reproject/UndoRedo/SaveOpen checks. Then consider a
-proper general atlas unwrap through existing native UV corner/history transport;
-current Pack all only packs existing islands. Alpha929/reflection gates independent.
+User945 and946PASS protected. Build947 adds visual layer list in original LEFT
+Paint dock. Await947 device selection/thumbnail/blend/opacity/visibility/scroll and
+history/persistence feedback. General atlas unwrap remains separate future work;
+Pack all arranges existing islands only. Alpha929/reflection gates independent.
 
 ## Protected interaction and modelling baseline
 
