@@ -9724,3 +9724,28 @@ channel, duplicate isolation and persistence assertions retained. Initial explor
 full run hit those old expectations; this FINAL complete run closes all regressions.
 Reviewed loader closure948; main930/cage/Multi1.0/frozen unchanged. Hosted regression,
 Pages and postdeployment live-file verification follow. Device948 lighting pending.
+
+
+## .948 publication verified — 23 October 2026 (Brisbane)
+
+Runtime `a2453a6b1b12d49a310f99d281209624f4e40a61`, exact tested tree
+`6f937c9c3c25802fa57cc4a83b5bcf6f4290cb32`, is published on main. Connected
+Git Data uploaded22 exact blobs and created the identical local tree. Fetched main
+matched, local branch aligned cleanly. Local Node24 full regression and hosted
+Node22 regression39934931497/job120352039428 both pass **2750 tests / 0 failures /
+0 skipped**; complete hosted log totals verified (249.9s). Pages39934930737 build
+120352042059/deploy120352235264 succeeded. All19 checked postdeployment files
+(shell/version, complete changed runtime/Lab graph, recovery, retained947 layer list,
+main930/cage/Multi1.0 and frozenBeta7 marker) byte-match tested source. Reviewed pins;
+no protected/frozen changes. This proof updates four continuity files only and keeps
+tested/published runtime bytes unchanged. User947PASS is protected, not inferred948.
+
+Build948 complete and ready for device testing: Colour-only painted UV cube → Done →
+VIEW Studio, orbit for shaded faces and scene shadows. Add another mesh/switch active
+selection; painted inactive objects remain scene-lit. Reopen existing painted.boxlab,
+confirm appearance and original colour; reopen Paint for Channel(unlit)/Lit and retained
+947 layer list, UndoRedo/continue painting. Standard material/shadow inheritance and
+exact bytes verified automatically; real GPU/iPad shadow/appearance acceptance pending.
+Older smooth-metal reflection and alpha929 gates remain independent; general atlas
+unwrap remains future work (Pack all arranges existing islands). No new light/brush/
+history/project/export/modelling owner or source pixel/schema changes.
