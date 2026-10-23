@@ -1,4 +1,4 @@
-import {createNativeUVCandidate} from './imported-uv-edit.js?v=0.36.18.951';
+import {createNativeUVCandidate} from './imported-uv-edit.js?v=0.36.18.953';
 import * as THREE from 'three';
 import { editableBooleanEligibility } from './editable-boolean-core.js?v=0.36.18.803';
 import { EditableMesh } from './mesh.js';

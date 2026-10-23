@@ -29,6 +29,41 @@ export function packImportedUVIslands(object,mesh,topologySignature,history,scop
  if(!scope||scope.payload!==object?.glbPassthrough||scope.island!=null&&!Number.isInteger(scope.island))return {ok:false,reason:'Refresh the UV layout before packing'};
  return editImportedUV(object,mesh,topologySignature,history,{kind:'pack'},scope.island==null?undefined:scope);
 }
+// Cut existing native islands through the original inspector and pack owner.
+// No seam metadata: separated face-corner coordinates are the authored result.
+export function cutNativeUVEdges(object,mesh,topologySignature,history,edgePairs){
+ const error=nativeUVTargetError(object,mesh,topologySignature);if(error)return {ok:false,reason:error};
+ if(object.colourPaint||object.roughnessPaint||object.metalnessPaint)return {ok:false,reason:'Clear paint in Object → UV before cutting UVs; existing paint is retained'};
+ if(mesh.faces.reduce((n,f)=>n+(Array.isArray(f)?f.length:0),0)>20000)return {ok:false,reason:'Cut UVs supports up to 20,000 face corners'};
+ if(!Array.isArray(edgePairs)||!edgePairs.length||edgePairs.length>20000)return {ok:false,reason:'Select mesh edges to cut'};
+ const previous=object.glbPassthrough,report=inspectImportedUV(mesh,previous,topologySignature,{includeEdgeOwners:true});
+ if(report.state!=='ready'||report.missingFaces||report.mappedFaces!==report.faces)return {ok:false,reason:'Create complete matching native UVs in Object → UV first'};
+ const key=(a,b)=>a<b?`${a}:${b}`:`${b}:${a}`,cuts=new Set();
+ for(const pair of edgePairs){
+  if(!Array.isArray(pair)||pair.length!==2||pair.some(id=>!Number.isInteger(id)||id<0||id>=mesh.vertices.length)||pair[0]===pair[1])return {ok:false,reason:'Select valid mesh edges again'};
+  const k=key(...pair),owners=report.edgeOwners.get(k);
+  if(!owners)return {ok:false,reason:'Selected edge no longer belongs to this mesh'};
+  if(owners.length>2||owners.length===2&&(owners[0].fi===owners[1].fi||owners[0].a!==owners[1].b||owners[0].b!==owners[1].a))return {ok:false,reason:'Cut UVs needs unambiguous manifold edges'};
+  cuts.add(k);
+ }
+ const split=inspectImportedUV(mesh,previous,topologySignature,{canJoinFaces:(a,b)=>!cuts.has(key(a.a,a.b))});
+ // A slit ending inside a chart cannot be represented by moving whole islands.
+ // Refuse the entire action rather than silently cutting additional boundaries.
+ let needsCut=false;
+ for(const k of cuts){
+  const owners=report.edgeOwners.get(k);if(owners.length!==2)continue;
+  const [a,b]=owners,points=o=>{const uv=previous.uvCorners[o.fi],j=(o.i+1)%uv.length;return o.a<o.b?[uv[o.i],uv[j]]:[uv[j],uv[o.i]];};
+  const x=points(a),y=points(b);if(x.some((p,i)=>p.some((v,j)=>v!==y[i][j])))continue;
+  if(split.faceIslands[a.fi]===split.faceIslands[b.fi])return {ok:false,reason:'Select a complete boundary-to-boundary cut or closed loop across the UV island'};
+  needsCut=true;
+ }
+ if(!needsCut)return {ok:true,changed:false,islandCount:report.islandCount};
+ const packed=packedLayout(previous.uvCorners,split);if(packed.reason)return {ok:false,reason:packed.reason};
+ const check=inspectImportedUV(mesh,{...previous,uvCorners:packed.uvCorners},topologySignature);
+ if(check.state!=='ready'||check.faceIslands.some((id,fi)=>id!==split.faceIslands[fi]))return {ok:false,reason:'Cut UVs would change an unselected UV connection'};
+ const result=commitNativeUV(object,mesh,topologySignature,history,packed.uvCorners);
+ return {...result,islandCount:check.islandCount};
+}
 // Equal average UV area per Base surface area; island centres/orientation stay fixed.
 // This does not remove internal stretch or overlap. Pack all remains a separate action.
 export function equalizeImportedUVDensity(object,mesh,topologySignature,history,scope){

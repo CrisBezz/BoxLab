@@ -394,6 +394,7 @@ root.innerHTML=`
   <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:0.000deg;--r:230px" data-tool-target="#componentCircleBtn">Circle</button>
   <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:24.000deg;--r:230px" data-tool-target="#joinCoplanarBtn">Join Coplanar</button>
   <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:45.000deg;--r:230px" data-tool-target="#loopCutBtn">Loop</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:67.500deg;--r:230px" data-tool-target="#cutUVEdgesBtn" title="Split existing UV islands at complete selected cuts; clear paint first">Cut UVs</button>
   <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:90.000deg;--r:230px" data-tool-target="#faceSplitBtn">Split</button>
   <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:135.000deg;--r:230px" data-tool-target="#clearCreaseBtn">Uncrease</button>
   <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:180.000deg;--r:230px" data-tool-target="#fillFaceBtn">Fill Face</button>
@@ -601,7 +602,7 @@ toolSectors.forEach(button=>{
       target.click();
       if(radialOffset)launchAccepted=!!globalThis.__boxlabOffsetViewportSession?.openFromHub?.({ids:launchIds});
       if(radialSlide)launchAccepted=!!globalThis.__boxlabSlideViewportSession?.openFromHub?.({ids:launchIds});
-      if((mode==='vertex'&&['Join','Weld','Create Face','Delete','Circle','Merge Center','Merge First'].includes(toolLabel))||(mode==='edge'&&['Dissolve','Delete','Uncrease','Fill Face','Grid Fill','Dissolve Loop','Join Coplanar','Flip Edge','Collapse','Circle'].includes(toolLabel))||(mode==='face'&&(toolLabel==='Delete'||toolLabel==='Join Coplanar'||toolLabel==='Circle'||toolLabel==='Poke'||toolLabel==='Make Planar'||toolLabel==='Triangulate'||toolLabel==='Flip Faces'||toolLabel==='Orient Faces'||toolLabel==='Orient Outward'))){
+      if((mode==='vertex'&&['Join','Weld','Create Face','Delete','Circle','Merge Center','Merge First'].includes(toolLabel))||(mode==='edge'&&['Cut UVs','Dissolve','Delete','Uncrease','Fill Face','Grid Fill','Dissolve Loop','Join Coplanar','Flip Edge','Collapse','Circle'].includes(toolLabel))||(mode==='face'&&(toolLabel==='Delete'||toolLabel==='Join Coplanar'||toolLabel==='Circle'||toolLabel==='Poke'||toolLabel==='Make Planar'||toolLabel==='Triangulate'||toolLabel==='Flip Faces'||toolLabel==='Orient Faces'||toolLabel==='Orient Outward'))){
         queueMicrotask(()=>{
           hubSuppressedKey='';
           const mesh=state()?.mesh,current=currentMode();

@@ -8,8 +8,8 @@ const gizmo=read('src/total-gizmo.js');
 const ring=mode=>gizmo.split(`data-ring-mode="${mode}"`)[1].split('</div>\n<div class="tg-tool-ring"')[0];
 test('Edge exposes every existing Active Tool and no selection actions',()=>{
  const edge=ring('edge');
- assert.equal((edge.match(/data-tool-target=/g)||[]).length,19);
- for(const id of ['edgeExtrudeBtn','edgeSlideBtn','bevelBtn','applyCreaseBtn','offsetLoopBtn','bridgeEdgesBtn','dissolveEdgeBtn','deleteEdgeBtn','loopCutBtn','faceSplitBtn','clearCreaseBtn','fillFaceBtn','gridFillBtn','dissolveLoopBtn','joinCoplanarBtn','rotateEdgeBtn','collapseEdgeBtn','componentCircleBtn'])assert.ok(edge.includes('#'+id),id);
+ assert.equal((edge.match(/data-tool-target=/g)||[]).length,20);
+ for(const id of ['cutUVEdgesBtn','edgeExtrudeBtn','edgeSlideBtn','bevelBtn','applyCreaseBtn','offsetLoopBtn','bridgeEdgesBtn','dissolveEdgeBtn','deleteEdgeBtn','loopCutBtn','faceSplitBtn','clearCreaseBtn','fillFaceBtn','gridFillBtn','dissolveLoopBtn','joinCoplanarBtn','rotateEdgeBtn','collapseEdgeBtn','componentCircleBtn'])assert.ok(edge.includes('#'+id),id);
  assert.ok(edge.includes("data-sweep-selection-mode='edge'"));assert.match(gizmo,/mode==='edge'.*__boxlabEdgeViewportSession.*active.*__boxlabSweepViewportSession/);assert.doesNotMatch(edge,/#select|growSelection|shrinkSelection/);
 });
 test('shared tools use the same radial direction and inner/outer tier',()=>{

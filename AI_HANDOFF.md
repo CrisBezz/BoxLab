@@ -1,4 +1,4 @@
-# BoxLab AI Handoff — .952 / UV Editor layer and entry hardening
+# BoxLab AI Handoff — .953 / selected Edge UV cuts
 
 ## Permanent rule — every build completion
 
@@ -12,9 +12,52 @@ User reaffirmed this permanent instruction on 21 October 2026.
 
 
 
-Current published runtime: .952 `105b95ca8b0cd2b8ffde8a57a15c38074923943d`.
-Local/hosted2770PASS, Pages success,29/29 live byte matches. User951 atlas PASS protected;
-intermittent iPadPro UI-loss retest952 pending. Exact publication proof at file end.
+Build .953 validated locally2776PASS from main6cb66f1c; publication pending below.
+User952 PASS now protects UV Editor entry/exit, toolbar/VIEW and Pencil/history.
+
+## .953 — selected Edge Cut UVs; .952 user PASS — 24 October 2026 (Brisbane)
+
+User952 PASS protects repeated UV Editor entry/exit, main toolbar/VIEW and island
+Pencil/history workflow after sibling-layer hardening. Prior951 atlas PASS retained.
+No new acceptance of independent alpha929 or smooth-metal reflection gates inferred.
+
+Audit main6cb66f1c: original inspector already owns manifold adjacency/union and has
+canJoinFaces; original UV editor owns Pack and native commit/history. No authored
+Edge-cut command exists. Add Edge radial outer67.5° Cut UVs using current original
+SelectionBridge edge indices, with all previous tool positions preserved. Same
+MeshHealth module hosts the one-shot button; no new popup/input/history/kernel.
+
+Native unpainted independent Base meshes with complete matching UVs only. Exclude
+selected actual edges from ORIGINAL inspector connectivity, require each selected
+continuous UV edge's owners to end in different components, then original grid Pack
+and ONE native UV commit. Complete boundary-to-boundary cuts or closed loops split
+charts; incomplete slits refuse the whole action. Existing seams/boundaries no-op.
+Every unselected connection is verified unchanged before checkpoint. Coordinates
+persist as ordinary native UVs, not seam flags or a new schema. Repack affects ALL
+islands with one common scale; source polygons/positions/relative density untouched.
+No conformal unwrap, new flattening, persistent seam marking or stitch command.
+20K corners / original128 packed-island limits; ambiguous/nonmanifold/same-winding
+selected edges, stale target/history failure refuse before publication. Any colour/
+roughness/metalness paint refuses and points to explicit Object UV Clear paint.
+No silent pixel discard/rebind or imported material remapping.
+
+Six new integration checks cover complete cuts/closed loops, mixed partial refusal,
+existing seams/boundaries, original pack/work/target/history guards, read-only peers,
+unchanged geometry and unselected joins, actual scene UndoRedo/Paint/SaveOpen/GLB
+roundtrip, actual Edge callback/current selection/render and radial one-shot wiring.
+Old713/709 radial inventory now includes the new20th Edge action, retaining ALL old
+IDs and cross-mode placements. Other runtime source changes are reviewed reverse
+UV/Add/Multi/Lab cache pins and shell/recovery keys953 only. Workspace952/main930/
+cage/Multi-transform1.0/frozen bytes unchanged. Full/publication proof follows.
+
+DEVICE953: Add unpainted UV Plane with X density2, Y1. Edge mode select its centre
+shared edge → radial Cut UVs. Object → UV → Open UV Editor shows2 separated islands;
+UndoRedo restores/reapplies cut; Pencil island move affects one side. Paint after cut,
+SaveOpen retains result. Repeat cut on same edge adds no history; painted targets
+refuse until explicit Clear paint. Existing cube face boundaries may already be seams
+and correctly no-op. For multi-edge paths select the whole cut, not an interior slit.
+Next follow953 tactile feedback; arbitrary seam marks/stitch/general curved unwrap
+remain queued through original owners. Keep952 UI-loss acceptance protected.
 
 ## .952 — UV Editor layer/entry hardening; .951 atlas PASS protected — 23 October 2026
 
@@ -940,13 +983,11 @@ splitting paths alone makes painting seamless or that CPU timings establish M2 p
 
 ## Next narrow step
 
-User951 atlas PASS protected with separate intermittent iPadPro UI loss.952 isolates
-original UV workspace beside WebGL viewport below main header and hardens opening/
-resize/exit. Await repeated UV entry/Back to3D/main toolbar/VIEW/Pencil/UndoRedo retest.
-Exact device compositor failure not reproduced in cloud (WebGL unavailable). Do not
-claim resolved until user feedback; if persistent trace trigger/layout with screenshot.
-Keep accepted950 warped atlas/951coplanar behavior,128-face/20K-corner and clear-paint
-guards. General unwrap/Edge seams queued;929alpha/metal gates remain independent.
+User952 PASS recorded/protected. Build953 adds Edge Cut UVs for complete separating
+paths/loops through existing inspector/Pack/commit. Finish validation/publication,
+then request two-face Plane split / UV island / UndoRedo / Paint / SaveOpen testing.
+Follow actual953 feedback before stitch or general curved unwrap. No further952
+UI changes; alpha929 and smooth-metal reflection gates remain independent.
 
 ## Protected interaction and modelling baseline
 
@@ -3010,3 +3051,12 @@ header-above-viewport behavior preserved with sibling workspace layer. Cloud Web
 unavailable, no exact intermittent Safari reproduction or full-app rendered acceptance
 claimed. Next follow952 device feedback; don't infer that automated tests prove the
 reported intermittent disappearance resolved. No modelling/atlas/paint algorithm changes.
+
+.953 final local Node24.19.0 regression: **2776 PASS / 0 FAIL / 0 skipped**
+(91.6s), retaining original2770 plus six Edge-cut integrations. Focused new/atlas/
+workspace/release20PASS; radial709/713 retained all old IDs and now requires20 Edge
+actions. First full run's only failure was old713 inventory19; updated to intended
+20 and final COMPLETE rerun above passes. No behavior assertion dropped or skipped.
+Reviewed9-file runtime/loader closure + recovery keys953; main930/cage/Multi1.0/
+frozen unchanged. Actual953 iPad tactile acceptance pending. Hosted/Pages/live
+publication proof follows. Reprojecting UVs replaces cuts; no persistent seam recipe.

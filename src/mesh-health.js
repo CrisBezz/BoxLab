@@ -4,8 +4,29 @@ import {autoCloseSimpleHoles,simpleBoundaryLoops} from './mesh-auto-close-core.j
 import {boundaryDiagnostics} from './mesh-boundary-diagnostics-core.js?v=0.36.18.443';
 import {unifyFaceWinding,flipAllFaces,triangulateMesh} from './mesh-normals-triangulate-core.js?v=0.36.18.443';
 import {inspectImportedUV} from './imported-uv-inspection.js?v=0.36.18.951';
-import {clearNativePaint,rotateImportedUV,flipImportedUV,moveImportedUV,scaleImportedUV,rotateImportedUVByAngle,fitImportedUVToTile,packImportedUVIslands,equalizeImportedUVDensity,createPlanarUV,createFaceAtlasUV,createCoplanarAtlasUV,createBoxUV,createCylinderUV,createSphereUV,createTorusUV} from './imported-uv-edit.js?v=0.36.18.951';
+import {cutNativeUVEdges,clearNativePaint,rotateImportedUV,flipImportedUV,moveImportedUV,scaleImportedUV,rotateImportedUVByAngle,fitImportedUVToTile,packImportedUVIslands,equalizeImportedUVDensity,createPlanarUV,createFaceAtlasUV,createCoplanarAtlasUV,createBoxUV,createCylinderUV,createSphereUV,createTorusUV} from './imported-uv-edit.js?v=0.36.18.953';
 import {createUVWorkspace} from './uv-workspace.js?v=0.36.18.952';
+
+// One-shot Edge action uses the original selected edge indices and native history.
+const cutUVButton=document.createElement('button');
+cutUVButton.id='cutUVEdgesBtn';cutUVButton.type='button';cutUVButton.textContent='Cut UVs';
+cutUVButton.title='Split and repack existing UV islands along selected complete cuts; clear paint first';
+document.querySelector('.mode-tools[data-mode-tools="edge"]')?.appendChild(cutUVButton);
+cutUVButton.addEventListener('click',cutSelectedUVEdges);
+function cutSelectedUVEdges(){
+ const selection=globalThis.__boxlabSelectionBridge;
+ if(currentMode()!=='edge'||selection?.mode?.()!=='edge')return false;
+ const object=activeObject(),mesh=liveMesh(),ids=selection.indices?.()||[];
+ if(!object||!mesh||!ids.length){setStatus('Cut UVs • select mesh edges first');return false;}
+ const edges=mesh.edges(),pairs=ids.map(id=>Number.isInteger(id)&&edges[id]?[edges[id].a,edges[id].b]:null);
+ const result=cutNativeUVEdges(object,mesh,globalThis.__boxlabExportAs?.topologySignature,globalThis.__boxlabObjectHistory,pairs);
+ if(result.ok&&result.changed){
+  manager()?.saveActive?.();
+  globalThis.__boxlabBridgeState?.scene?.traverse(body=>{if(body.userData?.kind==='body')globalThis.__boxlabRenderModes?.apply?.(body);});
+ }
+ setStatus(result.ok?result.changed?`UVs cut + repacked • ${result.islandCount} islands • Undo to restore`:'Cut UVs • selected edges are already UV seams or mesh boundaries':`Cut UVs • ${result.reason}`);
+ return result.ok;
+}
 
 const VERSION='0.36.18.880';
 const objectTools=document.querySelector('.mode-tools[data-mode-tools="object"]');
