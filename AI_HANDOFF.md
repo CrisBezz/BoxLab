@@ -37,8 +37,8 @@ stale UV removal/reproject/repaint, blank native SaveOpen, no-op/refusal atomici
 and original panel callback/render delegation. New manual gate: reproduce stale
 paint → Clear paint → Paint; clear both → Box/appropriate projection → Paint;
 UndoRedo reset and SaveOpen blank/repainted result. Atlas generation not shipped.
-Release graph946 reviewed; Multi1.0/frozen files unchanged. Validation/publication
-results follow; no946 device PASS inferred.
+Release graph946 reviewed; Multi1.0/frozen files unchanged. Runtime9af9a37 published;
+local and hosted2741PASS, Pages and20 live byte matches verified. Device946 pending.
 
 ## .945 — higher-resolution AO and cancellable quality jobs — 23 October 2026 (Brisbane)
 
@@ -2531,3 +2531,24 @@ actual iPad quality/latency acceptance remains PENDING, not inferred from Node.
 Quality test proves actual higher grid/more levels/thin-face coverage, not perfect
 smoothness on every model. Alpha929/reflection gates remain independent. Next
 runtime refinement follows device comparison rather than unrelated lighting changes.
+
+.946 runtime published: `9af9a37ebeb0913e3c50f76a0e5b198f89143fdf`, tested tree
+`318f420120392e573f463f8834af05103563c6fc`. Local Node24 full regression:
+**2,741 PASS / 0 FAIL / 0 skipped** (212.9s), including original2737 and four new
+recovery tests; no original assertions relaxed. Release contract five pass. Remote
+main fetched, exact tested tree matched and local branch aligned cleanly.
+Hosted regression39900966420 and Pages39900966243 verified below.
+
+.946 publication verified: hosted Node22 regression39900966420/job120242198371
+passes **2741 tests / 0 failures / 0 skipped** (full log totals verified), matching
+local Node24. Pages39900966243 build120242201383/deploy120242345149 SUCCESS.
+All20 checked postdeployment shell/version, reset/UV/painter/creation loaders,
+release-recovery/AO/main/Multi1.0/inspection/paint/project/export and frozenBeta7
+marker byte-match tested source. No tested runtime changed after validation.
+
+Build946 complete and ready for device testing: Object → UV → Clear paint keeps
+UVs and starts a blank paint session, including the old binding-error case. Clear
+paint + UVs permits fresh Box/appropriate projection and repaint. UndoRedo restores
+resources/UVs; SaveOpen retains cleared/repainted result. Device946 PENDING. User945
+PASS protected. General atlas unwrap remains a separate future build; Pack all only
+arranges existing islands. This proof changes continuity docs only.
