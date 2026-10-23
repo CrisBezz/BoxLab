@@ -1,4 +1,4 @@
-# BoxLab AI Handoff — .945 / higher-resolution cancellable AO
+# BoxLab AI Handoff — .946 / paint and UV restart
 
 ## Permanent rule — every build completion
 
@@ -9,6 +9,36 @@ checks from device testing. If there is nothing new to test, explicitly say so w
 the build number and readiness status. Never finish with only a progress update or
 leave the user to infer completion. This applies to EVERY build without a reminder.
 User reaffirmed this permanent instruction on 21 October 2026.
+
+
+## .946 — paint / UV restart; .945 user PASS — 23 October 2026
+
+User explicitly reports **945 = PASS**: protect higher-resolution AO and its existing
+preview/cancel/apply/history workflow. This supersedes earlier pending945 notes;
+no implication of perfect AO on all meshes or acceptance of unrelated open gates.
+
+Audit main d0c1400: original UV projections and Pack all exist, no paint reset and
+no general atlas unwrap. xatlas appears only in pathtrace dependency URL; Pack all
+arranges existing islands and does not generate an atlas. Keep atlas unwrap as a
+separate future narrow task through original UV/history owners.
+
+Object → UV now exposes Clear paint (keeps UVs) and Clear paint + UVs (choose a
+projection again). Both work with stale geometry/UV bindings without opening Paint.
+All colour layers/masks/images/AO plus roughness and metalness resources detach in
+one original scene checkpoint; shared resources/copies remain intact. No rebind of
+old pixels, no geometry edits, no automatic discard on UV edits. Undo/Redo restores
+exact resources/UVs. Reset is for independent BoxLab meshes; imported GLB materials,
+linked/procedural/locked/reference objects are refused. Existing projection Base
+restrictions remain. Viewport refresh uses original render-mode owner. Stale paint
+errors now direct to Object → UV → Clear paint.
+
+Four new946 tests cover all-channel stale recovery and reopen, actual UndoRedo/COW,
+stale UV removal/reproject/repaint, blank native SaveOpen, no-op/refusal atomicity,
+and original panel callback/render delegation. New manual gate: reproduce stale
+paint → Clear paint → Paint; clear both → Box/appropriate projection → Paint;
+UndoRedo reset and SaveOpen blank/repainted result. Atlas generation not shipped.
+Release graph946 reviewed; Multi1.0/frozen files unchanged. Validation/publication
+results follow; no946 device PASS inferred.
 
 ## .945 — higher-resolution AO and cancellable quality jobs — 23 October 2026 (Brisbane)
 
@@ -641,14 +671,10 @@ splitting paths alone makes painting seamless or that CPU timings establish M2 p
 
 ## Next narrow step
 
-User944PASS protects AO workflow with explicit patchy/poor-quality exception.
-Build945 defaults to real256²/64 rays, Medium128²/64 or exact-oldQuick64²/16;
-async progress/Cancel, existing editable Multiply/Apply/history owners retained.
-Await SAME-model Quick-vs-High iPad quality/time/cancel feedback. Hide/delete old AO
-before comparing new bakes; saved old pixels never auto-upscale/recompute. Quality
-remains pending; no assumption this fixes every patch. If High refuses, try Medium.
-Then evidence-led sampling/coverage/denoising refinement; alpha929/reflection and
-Edge-seam authoring remain independent. No automatic unrelated runtime feature.
+User945PASS is protected. Build946 adds explicit undoable restart under Object → UV.
+Await946 device recovery/reset/reproject/UndoRedo/SaveOpen checks. Then consider a
+proper general atlas unwrap through existing native UV corner/history transport;
+current Pack all only packs existing islands. Alpha929/reflection gates independent.
 
 ## Protected interaction and modelling baseline
 

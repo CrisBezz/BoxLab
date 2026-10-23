@@ -9545,3 +9545,35 @@ actual iPad quality/latency acceptance remains PENDING, not inferred from Node.
 Quality test proves actual higher grid/more levels/thin-face coverage, not perfect
 smoothness on every model. Alpha929/reflection gates remain independent. Next
 runtime refinement follows device comparison rather than unrelated lighting changes.
+
+## .946 — paint / UV restart; .945 user PASS — 23 October 2026
+
+User explicitly reports **945 = PASS**: protect higher-resolution AO and its existing
+preview/cancel/apply/history workflow. This supersedes earlier pending945 notes;
+no implication of perfect AO on all meshes or acceptance of unrelated open gates.
+
+Audit main d0c1400: original UV projections and Pack all exist, no paint reset and
+no general atlas unwrap. xatlas appears only in pathtrace dependency URL; Pack all
+arranges existing islands and does not generate an atlas. Keep atlas unwrap as a
+separate future narrow task through original UV/history owners.
+
+Object → UV now exposes Clear paint (keeps UVs) and Clear paint + UVs (choose a
+projection again). Both work with stale geometry/UV bindings without opening Paint.
+All colour layers/masks/images/AO plus roughness and metalness resources detach in
+one original scene checkpoint; shared resources/copies remain intact. No rebind of
+old pixels, no geometry edits, no automatic discard on UV edits. Undo/Redo restores
+exact resources/UVs. Reset is for independent BoxLab meshes; imported GLB materials,
+linked/procedural/locked/reference objects are refused. Existing projection Base
+restrictions remain. Viewport refresh uses original render-mode owner. Stale paint
+errors now direct to Object → UV → Clear paint.
+
+Four new946 tests cover all-channel stale recovery and reopen, actual UndoRedo/COW,
+stale UV removal/reproject/repaint, blank native SaveOpen, no-op/refusal atomicity,
+and original panel callback/render delegation. New manual gate: reproduce stale
+paint → Clear paint → Paint; clear both → Box/appropriate projection → Paint;
+UndoRedo reset and SaveOpen blank/repainted result. Atlas generation not shipped.
+Release graph946 reviewed; Multi1.0/frozen files unchanged. Validation/publication
+results follow; no946 device PASS inferred.
+
+- [x] DEVICE945 user explicitly reports PASS; higher-resolution AO workflow protected.
+- [ ] DEVICE946 Clear paint, clear paint + UVs, reproject/repaint, UndoRedo and SaveOpen.

@@ -1,6 +1,6 @@
 import {importPaintAlpha} from './paint-alpha-source.js?v=0.36.18.929';
 import {bindPaintColourControls} from './paint-colour-controls.js?v=0.36.18.915';
-import {createViewportPainter} from './viewport-paint-core.js?v=0.36.18.945';
+import {createViewportPainter} from './viewport-paint-core.js?v=0.36.18.946';
 import {brushSettings} from '../evaluations/uv-paint/paint-core.js?v=0.36.18.942';
 import {PAINT_BLEND_MODES} from './paint-blend-modes.js?v=0.36.18.903';
 import {importPaintImage} from './paint-image-source.js?v=0.36.18.907';

@@ -412,3 +412,17 @@ export function createTorusUV(object,mesh,topologySignature,history){
  }
  return commitNativeUV(object,mesh,topologySignature,history,uvCorners);
 }
+
+// Explicit restart, including stale bindings: detach resources, never mutate shared
+// pixels/payloads or require the obsolete UVs to validate. Original scene history
+// owns all three channels and the optional native UV removal in one transaction.
+export function clearNativePaint(object,mesh,history,clearUVs=false){
+ if(!object||object.locked||object.kind==='reference'||object.sourceId||object.booleanRecipe||object.arrayRecipe||object.curveProfile||object.materials||object.textures||object.glbPassthrough&&object.glbPassthrough.source!=='boxlab')return {ok:false,reason:'Select an independent BoxLab mesh'};
+ if(!mesh?.faces||!history?.capture||!history?.checkpointSnapshot)return {ok:false,reason:'Scene history is not ready'};
+ if(!object.colourPaint&&!object.roughnessPaint&&!object.metalnessPaint&&!(clearUVs&&object.glbPassthrough))return {ok:true,changed:false};
+ const before=history.capture();
+ if(!before||!history.checkpointSnapshot(before,mesh))return {ok:false,reason:'Could not record paint reset'};
+ delete object.colourPaint;delete object.roughnessPaint;delete object.metalnessPaint;
+ if(clearUVs)delete object.glbPassthrough;
+ return {ok:true,changed:true};
+}
