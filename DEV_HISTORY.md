@@ -13530,3 +13530,26 @@ New+nearby Box/Pack/density/reset/release30PASS. No existing behavior assertion 
 or removed. Reviewed UV/Add/Multi/Lab reverse pins949 including newly recorded Lab
 sample import; main930/cage/Multi-transform1.0/frozen/948lighting unchanged. Hosted
 regression/Pages/live publication proof follows. DEVICE949 remains pending.
+
+
+## .949 publication verified — 23 October 2026 (Brisbane)
+
+Runtime `342f05b4a3b2822467d025dc19000f3281434492`, exact tested tree
+`57fd40f453c15363c607690fab4c6e26de538ab1`, is published on main. Connected
+Git Data uploaded15 exact blobs/tree; fetched main matched, local branch aligned
+cleanly. Local Node24 and hosted Node22 regression39937602575/job120360872192 both
+pass **2756 tests / 0 failures / 0 skipped**; complete hosted log totals verified
+(145.1s). Pages39937601356 build120360875053/deploy120361068122 succeeded. All20
+checked postdeployment shell/version, complete UV/Add/Multi/Lab graph, recovery,
+retained UV workspace/inspector/948 lit owners/main/cage/Multi-transform1.0/947 layer
+list/frozenBeta7 marker byte-match tested source. No existing assertions removed or
+changed. This proof updates four continuity files only, retaining tested runtime.
+
+Build949 complete and ready for device testing: plain cube or small planar-faced
+extruded mesh → Object → UV → Face atlas → Open UV Editor. Separate face islands,
+UndoRedo, Paint/Done retains accepted948 lighting, SaveOpen and optional NOMAD.
+Existing paint must be explicitly cleared first; action never discards it. Face atlas
+is one island per planar face, up to128 faces/20K corners; it is not joined-chart or
+general curved unwrap. Existing Box/Planar/Cylinder/Sphere/Torus/Pack/auto-Add retain
+original algorithms. DEVICE949 pending; user948 PERFECT PASS protected. Next actual
+949 feedback, then scoped atlas/chart/seam direction. Alpha929/reflection independent.
