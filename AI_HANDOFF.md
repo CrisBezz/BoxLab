@@ -48,7 +48,8 @@ actual NOM and GLB UV+paint slots; unavailable/malformed/folded preview/refused 
 paint atomicity; actual panel forwarding/target guards. Original949 negative unavailable
 warped-preview test retained; its UI wording expectation follows intended scope change.
 Original895 standalone nonplanar refusal stays active. Focused new/949/density/Pack/
-release26PASS; full validation/publication follows. Native test prepares through ACTUAL
+release26PASS; runtime dac0fc6 published with local+hosted2761PASS, Pages and20 live
+byte matches verified below. Native test prepares through ACTUAL
 writer's versioned paint-export owner (module-local WeakMaps); canonical JSON handles
 cross-realm UV prototypes without weakening exact values. Bitmap shim is transport
 only, not GPU/Nomad visual proof. Main/cage/Multi-transform/frozen bytes unchanged.
@@ -2844,3 +2845,26 @@ planarity contract unchanged. Supplied OBJ fixture byte-identical; no source upl
 modified. Reviewed full UV/Add/Multi/Lab/recovery950 graph, main/cage/Multi-transform/
 frozen/accepted948lighting unchanged. Hosted/Pages/live proof follows; device950
 SAME-model atlas/paint/UndoRedo/SaveOpen acceptance pending, no949 PASS inferred.
+
+
+## .950 publication verified — 23 October 2026 (Brisbane)
+
+Runtime `dac0fc655727a68693aa761d87ede425e12abd00`, exact tested tree
+`4170c78794755c3f60417b4012d2f93d4ae65eda`, is published on main. Connected
+Git Data uploaded17 exact blobs/tree; fetched main matched and local branch aligned
+cleanly. Local Node24 and hosted Node22 regression39942759656/job120377956989 both
+pass **2761 tests / 0 failures / 0 skipped**; complete hosted log totals verified
+(247.2s). Pages39942759456 build120377961102/deploy120378158885 succeeded. All20
+checked postdeployment shell/version, complete UV/Add/Multi/Lab graph, recovery,
+retained UV workspace/inspector/948 lit owners/main/cage/Multi-transform1.0/947 layer
+list/frozenBeta7 marker byte-match tested source. Original895 planar-density guard
+retained;949 UI wording updated for intended warped-face support. This proof changes
+four continuity files only, retaining tested runtime. Original supplied OBJ unchanged.
+
+Build950 complete and ready: SAME extrusion/scale mesh → Object → UV → Face atlas →
+Open UV Editor should map all20 faces. Original quads/ngons remain; UndoRedo restores
+UVs, paint/Done retains948 lighting, SaveOpen and optional NOMAD sanity. Exact supplied
+file now passes real-owner atlas/paint/history/transport integrations, but iPad950
+appearance/performance acceptance remains pending. Clear existing paint explicitly
+first. Source949 failure recorded, not accepted as PASS; user948 PERFECT PASS protected.
+Next actual950 feedback before unrelated features; no permanent triangulation workaround.
