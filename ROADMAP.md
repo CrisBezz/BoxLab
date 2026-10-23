@@ -5558,3 +5558,52 @@ UndoRedo, paint across connected flat faces and SaveOpen. Clear existing paint
 explicitly first. DEVICE951 appearance/performance remains pending. Next follow951
 feedback before broader unwrap/seam tooling; keep original owners and protected
 modelling/navigation/lighting/frozen behavior. No general curved unwrap claim.
+
+
+## .952 — UV Editor layer/entry hardening; .951 atlas PASS protected — 23 October 2026
+
+User951 PASS /nextbuild, with separate intermittent iPad Pro UI-loss report. Supplied
+screenshot confirms951: workspace right section including Back to3D and main toolbar
+buttons missing, while UV tile remains drawn. Do NOT treat atlas acceptance as UI-loss
+acceptance or dismiss it because node tests pass. Original924 toolbar fix was accepted
+but this is a recurrence with screenshot evidence; protect its header-above-viewport
+intent. Exact intermittent iPad/WebKit compositor failure is NOT reproduced here.
+
+Audit: no action intentionally hides main toolbar; workspace was a large absolute
+canvas overlay inside WebGL viewport alongside backdrop/filter floating panels.
+Only ORIGINAL uv-workspace changes: mount its one existing section beside viewport
+under #app, use fixed viewport insets and header height variable with z9 below header10;
+active-only viewport isolation retained via updated sibling-host selector (old nested
+fallback retained for embedded/test host). Isolate/paint-contain canvas area; keep its
+original canvas, controls, listeners and MeshHealth context/session/history callbacks.
+Back to3D moves beside title; wrapping controls do not shrink out of short viewport,
+workspace scrolls when needed. No force-GPU transforms, z-index escalation, duplicate
+UI, modelling/UV/paint/history/navigation kernels or changes to original header owner.
+
+Open measures immediately and again once on next animation frame after launch hides
+source panel. Listen to visualViewport resize as well as window/ResizeObserver.
+Close cancels queued frame and removes both resize listeners; existing capture/gesture/
+image cancellation unchanged. Three new production-owner tests: real app/header/
+viewport siblings and twelve open/close cycles using same nodes/actions; deferred and
+visual resize pixel sizing/history neutrality/late frame/cleanup; CSS header ordering,
+canvas containment, bounded overflow and single left-side exit. Original tests retained.
+Cloud browser951 main fails WebGL context creation, so no full rendered or Safari/iPad
+reproduction claimed. Repair addresses layer topology and entry sizing; iPad retest is
+required before accepting intermittent disappearance as fixed.
+
+Reviewed cache closure ONLY workspace → MeshHealth → shell plus recovery loader keys;
+internal version stamps and unrelated951 UV/paint loader pins remain. Atlas950/951,
+paint948, main930, cage930, Multi-transform1.0 and frozen snapshots unchanged.
+DEVICE952: repeatedly open/Back to3D on iPadPro, verify full editor and main top-right
+buttons/VIEW; pan/pinch/Pencil island edit and UndoRedo; return to3D then reopen.
+Next follow952 UI feedback before further unwrap work; record exact repeat trigger if
+loss persists. Other alpha929/metal reflection gates remain independent.
+
+
+.952 local Node24 full regression: **2770 PASS / 0 FAIL / 0 skipped** (97.5s),
+all2767 retained plus three workspace layer/entry lifecycle tests. Focused UV/history/
+Pencil/island/image-reference/Pack/density/release53PASS. No assertions relaxed or old
+checks deleted. Functional changes only uv-workspace; MeshHealth import + reviewed
+shell/recovery cache keys952. Main/cage/Multi-transform1.0 and frozen bytes unchanged.
+Hosted/Pages/live publication evidence follows. DEVICE952 intermittent iPad UI-loss
+retest remains pending; no exact browser/GPU reproduction or device fix PASS claimed.
