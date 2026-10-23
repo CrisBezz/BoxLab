@@ -1,5 +1,5 @@
 import {createPaintFilterDomain} from './paint-filter-domain.js?v=0.36.18.943';
-import {createPaintAOPixels} from './paint-ao-layer.js?v=0.36.18.944';
+import {createPaintAOPixels,createPaintAOPixelsAsync} from './paint-ao-layer.js?v=0.36.18.945';
 import * as THREE from 'three';
 import {createPaintLayer} from '../evaluations/uv-paint/paint-core.js?v=0.36.18.942';
 import {createStroke} from '../evaluations/uv-paint/stroke.js?v=896';
@@ -22,7 +22,7 @@ export function createViewportPainter({target,activeId=()=>target()?.id,body,own
  let session=null,generation=0,stroke=null;const ray=new THREE.Raycaster(),occluderMaterial=new THREE.MeshBasicMaterial({side:THREE.DoubleSide});
  function current(){if(!session)return false;const o=session.object;return !session.display.disposed&&allowed()&&activeId()===session.id&&o?.id===session.id&&o.colourPaint===session.resource&&o.roughnessPaint===session.roughness&&o.metalnessPaint===session.metalness&&o.glbPassthrough===session.uv&&o.visible!==false&&!o.locked&&!o.sourceId&&!o.arrayRecipe&&!o.booleanRecipe&&!o.curveProfile&&!o.settings?.subd&&!Object.values(o.settings?.mirror||{}).some(Boolean);}
  function cancel(){if(!stroke)return;stroke.path?.cancel();session?.layer.finish(true);if(session)updatePreview();controls.enabled=stroke.controls;stroke=null;}
- function close(redraw=true){generation++;if(!session)return;cancel();const old=session;session=null;old.body.geometry.removeEventListener('dispose',old.lost);old.display.dispose();old.layer.dispose();onClose();if(redraw)refresh(old.body);}
+ function close(redraw=true){generation++;session?.aoJob?.abort();if(!session)return;cancel();const old=session;session=null;old.body.geometry.removeEventListener('dispose',old.lost);old.display.dispose();old.layer.dispose();onClose();if(redraw)refresh(old.body);}
  async function open(){close();const token=++generation,o=target();if(o?.locked||o?.visible===false)throw Error('Unlock and show the selected object first');const key=paintTargetKey(o,o?.mesh,owner),resource=o.colourPaint,roughness=o.roughnessPaint,metalness=o.metalnessPaint,binding=await paintTargetDigest(key);
   if(token!==generation||!allowed()||target()!==o||target()?.colourPaint!==resource||target()?.roughnessPaint!==roughness||target()?.metalnessPaint!==metalness||paintTargetKey(target(),target()?.mesh,owner)!==key)throw Error('Object changed while opening paint');
   const size=resource?.width||newColourSize;
@@ -41,7 +41,7 @@ export function createViewportPainter({target,activeId=()=>target()?.id,body,own
   let blocked=false;scene.traverse(b=>{if(blocked||b===session.body||!['body','boxlab-inactive-body'].includes(b.userData?.kind)||!b.geometry)return;for(let a=b;a;a=a.parent)if(!a.visible)return;const other=new THREE.Mesh(b.geometry,occluderMaterial);other.matrixWorld.copy(b.matrixWorld);const nearest=ray.intersectObject(other,false)[0];if(nearest&&nearest.distance<h.distance-1e-6)blocked=true;});return blocked?null:h;
  }
  function scalar(){return !!session&&Object.hasOwn(scalarOwners,session.paintTarget);}
- function begin(p,settings,kind='boxlab',maskValue=0,roughnessValue=128,metalnessValue=255,action='paint'){if(session?.aoPreview)throw Error('Apply or cancel AO preview first');if(!['paint','fill','erase','blur','smudge'].includes(action))throw Error('Unknown paint action');if(!session||stroke)return false;clearImagePreview();const selected=session.stack?.layers.find(l=>l.id===session.selected);if(!scalar()&&selected&&(!selected.visible||!selected.opacity))throw Error('Show the selected layer and increase its opacity before painting');if(scalar()){const value=session.paintTarget==='roughness'?roughnessValue:metalnessValue;if(!Number.isInteger(value)||value<0||value>255)throw Error(scalarOwners[session.paintTarget].label+' value must be 0 to 255');const hex=value.toString(16).padStart(2,'0');settings={...settings,colour:'#'+hex.repeat(3)};}if(session.paintTarget==='mask'){if(!selected?.mask?.enabled)throw Error('Enable the selected layer mask before painting it');if(!Number.isInteger(maskValue)||maskValue<0||maskValue>255)throw Error('Mask value must be 0 to 255');const hex=maskValue.toString(16).padStart(2,'0');settings={...settings,colour:'#'+hex.repeat(3)};}if(action==='erase'){const value=scalar()?scalarOwners[session.paintTarget].initial:session.paintTarget==='mask'?(selected?.mask?.inverted?0:255):255;const hex=value.toString(16).padStart(2,'0');settings={...settings,colour:'#'+hex.repeat(3)};}if(selected?.image&&session.paintTarget==='colour')throw Error('Image colour is retained; use Convert to paint for Brush/Blur, or edit its mask');if(!current()||paintTargetKey(target(),target()?.mesh,owner)!==session.key){close();return false;}if(['fill','blur','smudge'].includes(action)&&!hit(p))return false;let filter=null;if(['blur','smudge'].includes(action)){const filterSize=scalar()?512:session.size;if(session.filterDomain?.labels.length!==filterSize*filterSize)session.filterDomain=null;session.filterDomain??=createPaintFilterDomain(session.display.surface.geometry,scalar()?512:session.size,{mesh:session.object.mesh,payload:session.uv,topologySignature:owner.topologySignature});filter={domains:session.filterDomain.labels,neighbours:session.filterDomain.neighbours,connectedFaces:action==='smudge'?session.filterDomain.connectedFaces:undefined,amount:action==='blur'?(settings.blurAmount??1):1};}session.layer.begin(settings,{erase:action==='erase'&&session.paintTarget==='colour'&&!!selected,filter,smudge:action==='smudge'});const enabled=controls.enabled;controls.enabled=false;if(action==='fill'){stroke={fill:true,start:{x:p.x,y:p.y},controls:enabled};session.layer.fill();return true;}const path=createStroke(kind,q=>{const h=hit({...q,width:p.width,height:p.height});if(h)session.layer.stamp(h.uv.x,h.uv.y,q.pressure,['blur','smudge'].includes(action)?session.filterDomain.faceAt(h.faceIndex):null);else if(action==='smudge')session.layer.resetPickup();});stroke={path,controls:enabled};path.start(p);return true;}
+ function begin(p,settings,kind='boxlab',maskValue=0,roughnessValue=128,metalnessValue=255,action='paint'){if(session?.aoPreview||session?.aoJob)throw Error('Apply or cancel AO preview first');if(!['paint','fill','erase','blur','smudge'].includes(action))throw Error('Unknown paint action');if(!session||stroke)return false;clearImagePreview();const selected=session.stack?.layers.find(l=>l.id===session.selected);if(!scalar()&&selected&&(!selected.visible||!selected.opacity))throw Error('Show the selected layer and increase its opacity before painting');if(scalar()){const value=session.paintTarget==='roughness'?roughnessValue:metalnessValue;if(!Number.isInteger(value)||value<0||value>255)throw Error(scalarOwners[session.paintTarget].label+' value must be 0 to 255');const hex=value.toString(16).padStart(2,'0');settings={...settings,colour:'#'+hex.repeat(3)};}if(session.paintTarget==='mask'){if(!selected?.mask?.enabled)throw Error('Enable the selected layer mask before painting it');if(!Number.isInteger(maskValue)||maskValue<0||maskValue>255)throw Error('Mask value must be 0 to 255');const hex=maskValue.toString(16).padStart(2,'0');settings={...settings,colour:'#'+hex.repeat(3)};}if(action==='erase'){const value=scalar()?scalarOwners[session.paintTarget].initial:session.paintTarget==='mask'?(selected?.mask?.inverted?0:255):255;const hex=value.toString(16).padStart(2,'0');settings={...settings,colour:'#'+hex.repeat(3)};}if(selected?.image&&session.paintTarget==='colour')throw Error('Image colour is retained; use Convert to paint for Brush/Blur, or edit its mask');if(!current()||paintTargetKey(target(),target()?.mesh,owner)!==session.key){close();return false;}if(['fill','blur','smudge'].includes(action)&&!hit(p))return false;let filter=null;if(['blur','smudge'].includes(action)){const filterSize=scalar()?512:session.size;if(session.filterDomain?.labels.length!==filterSize*filterSize)session.filterDomain=null;session.filterDomain??=createPaintFilterDomain(session.display.surface.geometry,scalar()?512:session.size,{mesh:session.object.mesh,payload:session.uv,topologySignature:owner.topologySignature});filter={domains:session.filterDomain.labels,neighbours:session.filterDomain.neighbours,connectedFaces:action==='smudge'?session.filterDomain.connectedFaces:undefined,amount:action==='blur'?(settings.blurAmount??1):1};}session.layer.begin(settings,{erase:action==='erase'&&session.paintTarget==='colour'&&!!selected,filter,smudge:action==='smudge'});const enabled=controls.enabled;controls.enabled=false;if(action==='fill'){stroke={fill:true,start:{x:p.x,y:p.y},controls:enabled};session.layer.fill();return true;}const path=createStroke(kind,q=>{const h=hit({...q,width:p.width,height:p.height});if(h)session.layer.stamp(h.uv.x,h.uv.y,q.pressure,['blur','smudge'].includes(action)?session.filterDomain.faceAt(h.faceIndex):null);else if(action==='smudge')session.layer.resetPickup();});stroke={path,controls:enabled};path.start(p);return true;}
  function move(p){if(stroke){if(!current()){close();return;}if(stroke.fill){if(Math.hypot(p.x-stroke.start.x,p.y-stroke.start.y)>8)cancel();return;}try{stroke.path.move(p);}catch(error){cancel();throw error;}}}
  function finish(p){if(!stroke)return false;if(p)move(p);if(!stroke)return false;try{stroke.path?.end();}catch(error){cancel();throw error;}const enabled=stroke.controls;stroke=null;controls.enabled=enabled;
   if(!current()||paintTargetKey(target(),target()?.mesh,owner)!==session.key){session.layer.finish(true);close();return false;}
@@ -91,7 +91,7 @@ export function createViewportPainter({target,activeId=()=>target()?.id,body,own
   if(!checkpoint())throw Error('Scene history checkpoint unavailable');
   target().colourPaint=resource;session.imagePreview=null;session.aoPreview=null;session.resource=resource;session.stack=resource.version>=2?resource.layers:null;loadLayer();updatePreview();return true;
  }
- function ready(){if(!session)return false;if(session.aoPreview)throw Error('Apply or cancel AO preview first');cancel();clearImagePreview();if(!current()||paintTargetKey(target(),target()?.mesh,owner)!==session.key){close();return false;}return true;}
+ function ready(){if(!session)return false;if(session.aoPreview||session.aoJob)throw Error('Apply or cancel AO preview first');cancel();clearImagePreview();if(!current()||paintTargetKey(target(),target()?.mesh,owner)!==session.key){close();return false;}return true;}
  function selectLayer(id){if(!ready())return false;colourOnly();if(id!=='$base'&&!session.stack?.layers.some(l=>l.id===id))throw Error('Unknown paint layer');session.selected=id;session.paintTarget='colour';loadLayer();return true;}
  function addLayer(){colourOnly();if(!ready())return false;const s=session,stack=s.stack||createPaintLayerStack(s.resource||captureColourResource({width:s.size,height:s.size,pixels:s.preview,binding:s.binding}));let n=1;while(stack.layers.some(l=>l.id==='layer'+n))n++;const id='layer'+n,resource=captureLayeredColourResource(appendPaintLayer(stack,{id,name:'Layer '+n}));if(commit(resource)){session.selected=id;session.paintTarget='colour';loadLayer();return true;}return false;}
  function prepareImage(source,placement,{replace=false,name='Image layer',surface=null}={}){colourOnly();
@@ -111,25 +111,38 @@ export function createViewportPainter({target,activeId=()=>target()?.id,body,own
  function applyImagePreview(){const candidate=session?.imagePreview;if(!candidate||!ready())return false;try{return publishImage(candidate);}catch(error){updatePreview();throw error;}}
  function surfaceFrame(p,source){if(!current())return null;const h=hit(p);return h?surfaceImageFrameFromHit(h,{matrixWorld:session.body.matrixWorld,geometry:session.display.surface.geometry,source}):null;}
 
- function previewAO({radius=.25,strength=.65}={}){
+ function prepareAO({radius=.25,strength=.65}={}){
   if(session?.imagePreview)throw Error('Apply or cancel image placement before baking AO');
-  if(!ready())return false;
+  if(!ready())return null;
   const s=session;if(s.paintTarget!=='colour')throw Error('Switch to Colour before baking AO');
   if(!Number.isFinite(strength)||strength<0||strength>1)throw Error('AO strength must be 0 to 1');
   const stack=s.stack||createPaintLayerStack(s.resource||captureColourResource({width:s.size,height:s.size,pixels:s.preview,binding:s.binding}));
   if(stack.layers.length>=3)throw Error('Merge or delete a layer first; three overlays maximum');
   const mesh=s.object.mesh,positions=JSON.stringify(mesh.vertices),geometry=owner.buildUVPreviewGeometry(mesh,s.uv,{faceIndices:true});
   if(!geometry)throw Error('AO needs current native UV geometry');
-  try{
-   const pixels=createPaintAOPixels({geometry,mesh,payload:s.uv,topologySignature:owner.topologySignature,size:s.size,radius});
-   let n=1;while(stack.layers.some(l=>l.id==='ao'+n))n++;const id='ao'+n;
-   const resource=captureLayeredColourResource(appendPaintLayer(stack,{id,name:'AO '+n,blendMode:'multiply',opacity:strength,pixels}));
-   preflight(resource);
-   const object=target();if(!current()||s!==session||JSON.stringify(object?.mesh?.vertices)!==positions||paintTargetKey(object,object?.mesh,owner)!==s.key)throw Error('Object changed during AO bake');
-   s.aoPreview={resource,id,positions};updatePreview();return true;
-  }finally{geometry.dispose();}
+  return {s,stack,mesh,positions,geometry,radius,strength};
  }
- function cancelAO(){if(!session?.aoPreview)return false;session.aoPreview=null;updatePreview();return true;}
+ function publishAOPreview(job,pixels){
+  const {s,stack,positions,strength}=job;
+  let n=1;while(stack.layers.some(l=>l.id==='ao'+n))n++;const id='ao'+n;
+  const resource=captureLayeredColourResource(appendPaintLayer(stack,{id,name:'AO '+n,blendMode:'multiply',opacity:strength,pixels}));
+  preflight(resource);
+  const object=target();if(!current()||s!==session||JSON.stringify(object?.mesh?.vertices)!==positions||paintTargetKey(object,object?.mesh,owner)!==s.key)throw Error('Object changed during AO bake');
+  s.aoPreview={resource,id,positions};updatePreview();return true;
+ }
+ function previewAO(options={}){const job=prepareAO(options);if(!job)return false;
+  const {s,mesh,geometry,radius}=job;try{return publishAOPreview(job,createPaintAOPixels({geometry,mesh,payload:s.uv,topologySignature:owner.topologySignature,size:s.size,radius}));}finally{geometry.dispose();}
+ }
+ async function previewAOHigh({resolution=256,...options}={}){
+  const job=prepareAO(options);if(!job)return false;
+  const {s,mesh,geometry,radius}=job,abort=new AbortController();s.aoJob=abort;s.aoProgress=0;
+  try{const pixels=await createPaintAOPixelsAsync({geometry,mesh,payload:s.uv,topologySignature:owner.topologySignature,size:s.size,radius,resolution},{signal:abort.signal,onProgress:p=>{s.aoProgress=p;if(!current())abort.abort();}});
+   if(abort.signal.aborted||session!==s||s.aoJob!==abort)return false;
+   return publishAOPreview(job,pixels);
+  }catch(error){if(abort.signal.aborted)return false;throw error;}
+  finally{geometry.dispose();if(s.aoJob===abort)s.aoJob=null;}
+ }
+ function cancelAO(){if(!session)return false;const had=!!session.aoJob||!!session.aoPreview;session.aoJob?.abort();session.aoJob=null;session.aoPreview=null;if(had)updatePreview();return had;}
  function applyAO(){const s=session,candidate=s?.aoPreview;if(!candidate)return false;
   const object=target();if(!current()||JSON.stringify(object?.mesh?.vertices)!==candidate.positions||paintTargetKey(object,object?.mesh,owner)!==s.key){cancelAO();throw Error('Object changed after AO preview; bake again');}
   if(commit(candidate.resource)){session.selected=candidate.id;session.paintTarget='colour';loadLayer();updatePreview();return true;}return false;
@@ -167,8 +180,8 @@ export function createViewportPainter({target,activeId=()=>target()?.id,body,own
  }
  function editMask(patch){colourOnly();if(!ready())return false;const layer=session.stack?.layers.find(l=>l.id===session.selected);if(!layer?.mask)throw Error('Add a mask to the selected paint layer first');if(!patch||Object.keys(patch).some(k=>!['enabled','inverted'].includes(k)))throw Error('Unsupported mask edit');if(Object.keys(patch).every(k=>layer.mask[k]===patch[k]))return false;return commit(captureLayeredColourResource(replacePaintLayer(session.stack,session.selected,{mask:{...layer.mask,...patch}})));}
  function removeMask(){colourOnly();if(!ready())return false;const layer=session.stack?.layers.find(l=>l.id===session.selected);if(!layer?.mask)return false;return commit(captureLayeredColourResource(replacePaintLayer(session.stack,session.selected,{mask:null})));}
- function state(){const s=session;return s?{resolution:s.size,selected:s.selected,paintTarget:s.paintTarget,previewMode:s.previewMode,aoPreview:!!s.aoPreview,layered:!!s.stack,layers:[{id:'$base',name:'Base colour',visible:true,opacity:1,blendMode:'normal',mask:null},...(s.stack?.layers||[]).map(({id,name,visible,opacity,blendMode,mask,image})=>({id,name,visible,opacity,blendMode,image:!!image,mask:mask?{enabled:mask.enabled,inverted:mask.inverted}:null}))]}:null;}
- return {open,close,cancel,begin,move,finish,hit,selectPreviewMode,selectLayer,addLayer,editLayer,removeLayer,moveLayer,selectPaintTarget,addMask,editMask,removeMask,projectImage,imageForEdit,rasterizeImage,increaseResolution,mergeToBase:()=>mergeLayers(false),flattenLayers:()=>mergeLayers(true),previewImage,applyImagePreview,clearImagePreview,surfaceFrame,previewAO,applyAO,cancelAO,
+ function state(){const s=session;return s?{resolution:s.size,selected:s.selected,paintTarget:s.paintTarget,previewMode:s.previewMode,aoPreview:!!s.aoPreview,aoBusy:!!s.aoJob,aoProgress:s.aoProgress||0,layered:!!s.stack,layers:[{id:'$base',name:'Base colour',visible:true,opacity:1,blendMode:'normal',mask:null},...(s.stack?.layers||[]).map(({id,name,visible,opacity,blendMode,mask,image})=>({id,name,visible,opacity,blendMode,image:!!image,mask:mask?{enabled:mask.enabled,inverted:mask.inverted}:null}))]}:null;}
+ return {open,close,cancel,begin,move,finish,hit,selectPreviewMode,selectLayer,addLayer,editLayer,removeLayer,moveLayer,selectPaintTarget,addMask,editMask,removeMask,projectImage,imageForEdit,rasterizeImage,increaseResolution,mergeToBase:()=>mergeLayers(false),flattenLayers:()=>mergeLayers(true),previewImage,applyImagePreview,clearImagePreview,surfaceFrame,previewAO,previewAOHigh,applyAO,cancelAO,
   tick(){if(session&&!current()){close();return;}if(session?.layer.consumeDirty())updatePreview();if(session?.dirty){updateMaterialPreview();const map=session.display.surface.material.map;if(session.previewMode==='channel'&&map)map.needsUpdate=true;session.dirty=false;}},
   get state(){return state();},get active(){return !!session;},get drawing(){return !!stroke;},get pixels(){return session?.preview;}};
 }

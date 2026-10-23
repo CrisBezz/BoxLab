@@ -5,8 +5,8 @@ import {createPaintTriangleGraph} from './paint-triangle-graph.js?v=0.36.18.933'
 // Read-only object-local AO foundation. No scene, resource, history or UI writes.
 // Texel coverage and triangles come from the existing authoritative paint owners.
 const MAX_RAY_TESTS=8e6,EPSILON=1e-5;
-export function bakePaintAO({geometry,mesh,payload,topologySignature,size=64,samples=16,radius=.25}){
- if(!Number.isInteger(size)||size<16||size>128||!Number.isInteger(samples)||samples<4||samples>64||!Number.isFinite(radius)||radius<.001||radius>2)throw Error('AO requires size 16–128, 4–64 samples and radius .001–2 of object diagonal');
+function* bakeTask({geometry,mesh,payload,topologySignature,size=64,samples=16,radius=.25,highQuality=false}){
+ if(!Number.isInteger(size)||size<16||size>(highQuality?256:128)||!Number.isInteger(samples)||samples<4||samples>64||!Number.isFinite(radius)||radius<.001||radius>2)throw Error('AO requires size 16–'+(highQuality?256:128)+', 4–64 samples and radius .001–2 of object diagonal');
  const pos=geometry?.attributes?.position,uv=geometry?.attributes?.uv,count=geometry?.index?.count??pos?.count;
  if(!pos||!uv||!Number.isInteger(count)||count<3||count%3||count>60000)throw Error('AO needs original UV preview geometry');
  // Validate before the original graph touches BufferAttributes or source metadata.
@@ -16,11 +16,12 @@ export function bakePaintAO({geometry,mesh,payload,topologySignature,size=64,sam
  }
  const triangles=createPaintTriangleGraph({geometry,mesh,payload,topologySignature});
  const domain=createPaintFilterDomain(geometry,size,null,{captureTriangles:true});
- let covered=0;for(let i=0;i<domain.labels.length;i++)if(domain.labels[i]>=0&&domain.triangleAt[i]>=0)covered++;
+ let work=0,covered=0;for(let i=0;i<domain.labels.length;i++)if(domain.labels[i]>=0&&domain.triangleAt[i]>=0)covered++;
  if(!covered)throw Error('AO UVs have no covered texels');
- // Conservative complete-work preflight, before tracing any rays or returning pixels.
+ // Conservative complete-work preflight. Async quality has a separate128M cap;
+ // legacy synchronous calls retain8M. No caller can supply an unbounded work limit.
  const rayTests=covered*samples*triangles.length;
- if(rayTests>MAX_RAY_TESTS)throw Error('AO bake is too complex; reduce bake size, samples or mesh complexity');
+ if(rayTests>(highQuality?128e6:MAX_RAY_TESTS))throw Error('AO bake is too complex; reduce bake size, samples or mesh complexity');
  const bounds=new THREE.Box3();for(const t of triangles)for(const p of t.p)bounds.expandByPoint(p);
  const extent=bounds.getSize(new THREE.Vector3()).length(),origin=bounds.min.clone();
  if(!Number.isFinite(extent)||extent<=0)throw Error('AO needs finite non-zero object bounds');
@@ -47,6 +48,7 @@ export function bakePaintAO({geometry,mesh,payload,topologySignature,size=64,sam
   for(const [x,y,z] of directions){
    ray.direction.copy(tangent).multiplyScalar(x).addScaledVector(bitangent,y).addScaledVector(t.normal,z).normalize();
    for(let j=0;j<triangles.length;j++){
+    if(++work%65536===0)yield {progress:at/pixels.length};
     if(j===ti)continue;const other=triangles[j];
     if(ray.intersectTriangle(...other.p,false,hit)&&hit.distanceTo(ray.origin)>EPSILON&&hit.distanceTo(ray.origin)<=radius){blocked++;break;}
    }
@@ -54,5 +56,17 @@ export function bakePaintAO({geometry,mesh,payload,topologySignature,size=64,sam
   pixels[at]=Math.round(255*(1-blocked/samples));coverage[at]=255;
  }
  // Owned linear visibility bytes, UV-v0-first. Uncovered texels are white, coverage0.
- return Object.freeze({width:size,height:size,pixels,coverage,samples,radius,rayTests});
+ return Object.freeze({width:size,height:size,pixels,coverage,labels:domain.labels,samples,radius,rayTests});
+}
+
+// One tracing kernel; legacy synchronous callers retain the original work envelope.
+export function bakePaintAO(options){const task=bakeTask({...options,highQuality:false});let next;do{next=task.next();}while(!next.done);return next.value;}
+export async function runPaintAOTask(task,{signal,onProgress}={}){
+ let started=performance.now();
+ try{while(true){if(signal?.aborted)throw Error('AO bake cancelled');const next=task.next();if(next.done)return next.value;
+  if(performance.now()-started>=8){onProgress?.(next.value?.progress||0);await new Promise(resolve=>setTimeout(resolve,0));started=performance.now();}
+ }}finally{task.return?.();}
+}
+export function bakePaintAOAsync(options,{signal,onProgress}={}){
+ return runPaintAOTask(bakeTask({...options,highQuality:true}),{signal,onProgress});
 }

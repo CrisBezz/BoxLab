@@ -9501,3 +9501,22 @@ appearance/latency/persistence acceptance remains pending, not inferred from Nod
 User942 connected Smudge PASS protected; alpha929/reflection-preview independent.
 Next narrow runtime work follows actual944 device feedback rather than automatic
 AO quality/lighting changes. No new AO device PASS inferred from /nextbuild.
+
+## .945 higher-resolution AO / .944 PASS with quality exception
+
+- [x] User944PASS protects AO workflow; poor/patchy appearance remains an explicit open issue.
+- [x] Real256²/64-ray bake, finer shade levels and new thin-face coverage; no atlas-face contamination/source writes.
+- [x] Quick64/16 async output byte-identical to old sync output; original8M/size guard tests retained.
+- [x] Progress/cancel/pre-abort/invalid quality/128M refusal keep output atomic.
+- [x] Actual painter busy Cancel/close/stale source/retry/pool/checkpoint and UI default/Done late-result suppression.
+- [ ] DEVICE945 same recessed model Quick versus High, old AO hidden/deleted, same Reach/Strength: quality/patchiness and wait time.
+- [ ] DEVICE945 Cancel DURING bake leaves no layer/history; retry Apply/opacity/UndoRedo/SaveOpen/native shaded output.
+
+New quality gates remain pending. Medium/Quick fallback for complex work; no new
+paint/source/scalar limits, schemas or light source. Old saved AO must be rebaked.
+
+.945 final local Node24.19.0 full regression: **2,737 PASS / 0 FAIL / 0 skipped**.
+All original2731 and six new quality/cancellation checks pass on final source;
+original AO943/944 eleven and reviewed release five also pass. No assertions
+relaxed. Reviewed AO/painter/shell reverse graph945; protected main/cage/Multi1.0/
+frozen unchanged. Hosted/Pages/live publication proof follows; device quality pending.

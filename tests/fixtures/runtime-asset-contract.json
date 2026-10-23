@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.944",
+      "url": "./src/release-bootstrap.js?v=0.36.18.945",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.944",
+      "url": "./src/release-version.js?v=0.36.18.945",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -2481,14 +2481,14 @@
     {
       "owner": "index.html",
       "target": "src/viewport-paint.js",
-      "url": "./src/viewport-paint.js?v=0.36.18.944",
-      "sha256": "e8a8627e42a668cc67511bfc3c267f597b757f9fc4f78c3423bd7463cbc9ca8f"
+      "url": "./src/viewport-paint.js?v=0.36.18.945",
+      "sha256": "d7f7dd37f472956e653e3164e77e3cf87e925be3003f8a570ffb80d59747d345"
     },
     {
       "owner": "src/viewport-paint.js",
       "target": "src/viewport-paint-core.js",
-      "url": "./viewport-paint-core.js?v=0.36.18.944",
-      "sha256": "8ad355bdae31771b6e9727f47ba7e88b6e58aff93cb4175ea1193fd97d84a3dc"
+      "url": "./viewport-paint-core.js?v=0.36.18.945",
+      "sha256": "7a7c2149f30a533f018c50eead75b99e3ce8dab4285daed45159c9f7e4f5f4ee"
     },
     {
       "owner": "src/viewport-paint.js",
@@ -3081,14 +3081,14 @@
     {
       "owner": "src/viewport-paint-core.js",
       "target": "src/paint-ao-layer.js",
-      "url": "./paint-ao-layer.js?v=0.36.18.944",
-      "sha256": "2933a23775425e53aa1ded25e477c497afb92fed41688aae0f4d9e6d5204e64a"
+      "url": "./paint-ao-layer.js?v=0.36.18.945",
+      "sha256": "3ecdb151795cf5dca4fcecb122e69791e02c4382623ced15c2770bb59fbed449"
     },
     {
       "owner": "src/paint-ao-layer.js",
       "target": "src/paint-ao-bake.js",
-      "url": "./paint-ao-bake.js?v=0.36.18.943",
-      "sha256": "34c622ba9988d4d0c3c78cde77f72254143bc794f99a272dc0b0b8018637e8ef"
+      "url": "./paint-ao-bake.js?v=0.36.18.945",
+      "sha256": "9375708063e9603214a813693c001de6d402a81511514c7336409ec1623b8678"
     },
     {
       "owner": "src/paint-ao-layer.js",
