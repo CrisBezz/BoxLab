@@ -12,6 +12,10 @@ User reaffirmed this permanent instruction on 21 October 2026.
 
 
 
+Current published runtime: .951 `63f4c6986756d65dc6682b8c76f31f834d035aea`.
+Local/hosted2767PASS, Pages success and29/29 live byte matches. User950 PASS protected;
+optional Coplanar atlas951 device gate pending. Exact publication proof at file end.
+
 ## .951 — Optional Coplanar atlas; .950 user PASS protected — 23 October 2026
 
 User replies PASS /nextbuild after950: protect the supplied extrusion/scale Face atlas
@@ -2912,3 +2916,25 @@ runtime loader closure, three functional owners only; retained main/cage/Multi1.
 frozen bytes and recovery owners unchanged. Source949/950 Face atlas outputs and
 standalone895 density guards stay protected. Hosted/Pages/live proof follows;
 DEVICE951 comparison/paint/UndoRedo/SaveOpen remains pending.
+
+
+## .951 publication verified — 23 October 2026
+
+Runtime `63f4c6986756d65dc6682b8c76f31f834d035aea`, exact tested tree
+`fc4050afa6437d9dca2127af0d0f2cdae9b310cd`, is published on main. All26 uploaded
+blobs and Git Data tree matched local hashes; fetched main matched and checkout clean.
+Local Node24 full regression2767PASS/0FAIL/0skipped (99.0s); hosted Node22 run
+39952990826/job120411804887 complete log verifies same2767/0/0 (198.0s).
+Pages39952990462 build120411810503/deploy120411996505 succeeded. All29 postdeployment
+shell/version, complete reviewed UV/Add/Multi/Lab/paint loader graph, recovery,
+retained948lit/main/cage/Multi-transform1.0/947layers/frozenBeta7 marker byte-match.
+Proof commit updates four continuity files only; tested runtime retained.
+
+User950 PASS is recorded/protected. Build951 complete/ready for device testing:
+same unpainted extrusion/scale mesh → Object → UV → Coplanar atlas → Open UV Editor.
+Exact fixture automatically gives14 islands versus Face atlas20, four warped faces
+stay isolated and all original24 vertices/20 quads/ngons unchanged. Compare charts,
+UndoRedo, paint across connected flat faces and SaveOpen. Clear existing paint
+explicitly first. DEVICE951 appearance/performance remains pending. Next follow951
+feedback before broader unwrap/seam tooling; keep original owners and protected
+modelling/navigation/lighting/frozen behavior. No general curved unwrap claim.
