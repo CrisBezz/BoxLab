@@ -1,4 +1,4 @@
-# BoxLab AI Handoff — .948 / committed colour lighting
+# BoxLab AI Handoff — .949 / bounded Face atlas UVs
 
 ## Permanent rule — every build completion
 
@@ -11,6 +11,57 @@ leave the user to infer completion. This applies to EVERY build without a remind
 User reaffirmed this permanent instruction on 21 October 2026.
 
 
+
+## .949 — bounded Face atlas UVs; .948 user PASS — 23 October 2026 (Brisbane)
+
+User PERFECT PASS948 protects committed colour-only scene lighting/Studio shadows,
+active/inactive appearance, existing paint/layers/history/persistence and Channel/Lit.
+Next audited deferred atlas request. Main e5bf44b3 has Box/Planar/Cylinder/Sphere/Torus,
+density equalization and Pack all, but no joined-chart/general atlas solver. xatlas
+is only an unused pathtrace dependency URL. No new external library/kernel imported.
+
+Object → UV → Face atlas now stages ORIGINAL Box directional per-face projection,
+ORIGINAL densityLayout with explicit one-island-per-polygon membership, then ORIGINAL
+packedLayout. Only final corners commit through commitNativeUV: one native checkpoint,
+read-only old/peer payloads, no source geometry/face-group changes. Repeat is an exact
+no-op. Original projections/Pack/density math and Add automatic choices unchanged.
+
+This is a FIRST bounded face atlas:1–128 planar polygons,≤20K corners, one island per
+face, common average world-area density, existing .02 tile margins/gaps/grid packing.
+It cuts every face boundary; it does NOT join charts, optimize packing, author seams,
+or implement xatlas/general curved unwrap. Dominant-plane projection retains its
+existing angular distortion; equal density fixes average area, not angle distortion.
+Invalid/nonplanar/degenerate/over-limit and imported/procedural/modifier targets refuse.
+This scope is visible beside the button, not hidden behind a generic Unwrap claim.
+
+Any colour/roughness/metalness paint refuses BEFORE staging/history; UI disables Face
+atlas with paint present and points to explicit existing Clear paint / Clear paint +
+UVs. No silent paint discard, resampling or stale-resource rebind. Existing stale native
+UVs can be replaced after clearing paint. Undo restores old UVs; paint reset remains a
+separate undoable user action. Native codec, original Paint/Lit/SaveOpen/NOM/GLB owners
+handle unchanged version1 source:boxlab face-corner payload. No schema/writer/history
+or modelling kernel added; no automatic atlas on Add, no new UV pointer/UI owner.
+
+Six new integrations cover concave/tilted/disconnected/subdivided planar faces,
+non-overlapping separate bounds/equal average density/exact geometry,128-face limit/
+scale/refusals, real original UndoRedo/idempotence/peer COW, explicit paint refusal/
+clear/repaint, owner/history atomic refusal, exact native project/NOM/GLB UVs and
+actual UV panel target/context callback. New+Box/Pack/density/reset/release30PASS;
+no existing assertion changed. Full regression/publication follows; iPad949 pending.
+
+Surface audit found Lab samples' old914 UV import absent from the reviewed cache
+manifest. Added that REAL dependency and refreshed its samples→Lab→index ancestors,
+alongside original MeshHealth/Add/Multi UV import graph949 and shell/recovery keys.
+Only UV mapper + MeshHealth functionality changes; other source changes are pins.
+Main930/cage/Multi-transform1.0/frozen/948lighting/paint/export algorithms unchanged.
+
+DEVICE949: plain cube or small planar-faced extruded mesh → Object → UV → Face atlas
+→ Open UV Editor: separate face islands inside tile. UndoRedo restores/reapplies UVs;
+Paint/Done retains accepted948 lit scene. Existing paint: explicitly Clear paint first,
+then Face atlas/repaint. SaveOpen and optional NOMAD retain new UVs/paint.128 planar
+faces maximum; nonplanar faces require other projection or future chart unwrap.
+Next:949 device feedback, then scoped atlas/chart improvements or Edge seam authoring
+audit. General joined-chart unwrap remains queued; no automatic kernel replacement.
 
 ## .948 — committed colour lighting; .947 user PASS — 23 October 2026 (Brisbane)
 
@@ -756,11 +807,12 @@ splitting paths alone makes painting seamless or that CPU timings establish M2 p
 
 ## Next narrow step
 
-User945/946/947PASS protected. Build948 restores scene-lit committed colour-only
-paint/image/AO composites after Done through original material owner, with synchronous
-Studio shadow inheritance. Await948 device lighting/shadows/multi-object/SaveOpen
-feedback. Paint Channel stays unlit by design. General atlas unwrap remains separate;
-Pack all arranges existing islands only. Alpha929/metal-reflection gates independent.
+User945/946/947/948PASS protected. Build949 adds explicit Face atlas (one island per
+planar polygon,≤128 faces/20K corners) through original projection/density/Pack/commit.
+Await949 device UV Editor/history/repaint/SaveOpen feedback. Existing paint must be
+explicitly cleared first. Joined-chart/general unwrap and Edge seam authoring remain
+separate future work; Face atlas does not deliver those. Alpha929/metal-reflection
+gates independent; accepted948 committed lighting/Studio shadows protected.
 
 ## Protected interaction and modelling baseline
 
@@ -2699,3 +2751,11 @@ exact bytes verified automatically; real GPU/iPad shadow/appearance acceptance p
 Older smooth-metal reflection and alpha929 gates remain independent; general atlas
 unwrap remains future work (Pack all arranges existing islands). No new light/brush/
 history/project/export/modelling owner or source pixel/schema changes.
+
+
+.949 final local Node24.19.0 full regression: **2,756 PASS / 0 FAIL / 0 skipped**
+(101.7s), retaining every original2750 check plus six new Face atlas integrations.
+New+nearby Box/Pack/density/reset/release30PASS. No existing behavior assertion changed
+or removed. Reviewed UV/Add/Multi/Lab reverse pins949 including newly recorded Lab
+sample import; main930/cage/Multi-transform1.0/frozen/948lighting unchanged. Hosted
+regression/Pages/live publication proof follows. DEVICE949 remains pending.

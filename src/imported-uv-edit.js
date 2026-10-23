@@ -196,6 +196,22 @@ function commitNativeUV(object,mesh,topologySignature,history,uvCorners){
  return {ok:true,changed:true};
 }
 
+// First automatic face atlas: original Box projections, density equalization and
+// grid packer, staged privately. One island per polygon; no chart-joining solver.
+export function createFaceAtlasUV(object,mesh,topologySignature,history){
+ const error=nativeUVTargetError(object,mesh,topologySignature);if(error)return {ok:false,reason:error};
+ if(object.colourPaint||object.roughnessPaint||object.metalnessPaint)return {ok:false,reason:'Clear paint before creating a Face atlas; existing paint is retained'};
+ if(mesh.faces.length>128||mesh.faces.reduce((sum,face)=>sum+(Array.isArray(face)?face.length:0),0)>20000)return {ok:false,reason:'Face atlas supports up to 128 planar faces and 20,000 corners'};
+ const candidate={},projected=createBoxUV(candidate,mesh,topologySignature,nativeUVCandidate);
+ if(!projected.ok)return projected;
+ const report={islandCount:mesh.faces.length,faceIslands:mesh.faces.map((_,fi)=>fi)};
+ const density=densityLayout(mesh,candidate.glbPassthrough,report);
+ if(density.reason)return {ok:false,reason:density.reason};
+ const packed=packedLayout(density.uvCorners,report);
+ if(packed.reason)return {ok:false,reason:packed.reason};
+ return commitNativeUV(object,mesh,topologySignature,history,packed.uvCorners);
+}
+
 // Six fixed directional cells. Faces in the same direction share one projection;
 // all cells use one scale, preserving proportions and equal world-unit UV density.
 export function createBoxUV(object,mesh,topologySignature,history){
