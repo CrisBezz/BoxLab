@@ -1,5 +1,5 @@
-import {bakePaintAO,bakePaintAOAsync,runPaintAOTask} from './paint-ao-bake.js?v=0.36.18.945';
-import {createPaintFilterDomain} from './paint-filter-domain.js?v=0.36.18.943';
+import {bakePaintAO,bakePaintAOAsync,runPaintAOTask} from './paint-ao-bake.js?v=0.36.18.951';
+import {createPaintFilterDomain} from './paint-filter-domain.js?v=0.36.18.951';
 
 // Convert the bounded object-local bake into ordinary colour-layer pixels.
 // Original UV raster owns both grids; atlas proximity never connects faces.

@@ -3,9 +3,9 @@ import {safeRepairMesh} from './mesh-health-repair-core.js?v=0.36.18.443';
 import {autoCloseSimpleHoles,simpleBoundaryLoops} from './mesh-auto-close-core.js?v=0.36.18.443';
 import {boundaryDiagnostics} from './mesh-boundary-diagnostics-core.js?v=0.36.18.443';
 import {unifyFaceWinding,flipAllFaces,triangulateMesh} from './mesh-normals-triangulate-core.js?v=0.36.18.443';
-import {inspectImportedUV} from './imported-uv-inspection.js?v=0.36.18.932';
-import {clearNativePaint,rotateImportedUV,flipImportedUV,moveImportedUV,scaleImportedUV,rotateImportedUVByAngle,fitImportedUVToTile,packImportedUVIslands,equalizeImportedUVDensity,createPlanarUV,createFaceAtlasUV,createBoxUV,createCylinderUV,createSphereUV,createTorusUV} from './imported-uv-edit.js?v=0.36.18.950';
-import {createUVWorkspace} from './uv-workspace.js?v=0.36.18.932';
+import {inspectImportedUV} from './imported-uv-inspection.js?v=0.36.18.951';
+import {clearNativePaint,rotateImportedUV,flipImportedUV,moveImportedUV,scaleImportedUV,rotateImportedUVByAngle,fitImportedUVToTile,packImportedUVIslands,equalizeImportedUVDensity,createPlanarUV,createFaceAtlasUV,createCoplanarAtlasUV,createBoxUV,createCylinderUV,createSphereUV,createTorusUV} from './imported-uv-edit.js?v=0.36.18.951';
+import {createUVWorkspace} from './uv-workspace.js?v=0.36.18.951';
 
 const VERSION='0.36.18.880';
 const objectTools=document.querySelector('.mode-tools[data-mode-tools="object"]');
@@ -34,7 +34,7 @@ panel.innerHTML=`
   <details id="meshHealthUVDetails">
     <summary class="boxlab-tool-session-section">UVs</summary>
     <div id="meshHealthUVSummary" class="boxlab-tool-session-subtitle" aria-live="polite"></div>
-    <div class="outliner-actions" style="grid-template-columns:repeat(3,1fr)"><button id="meshHealthUVPlanarXY" type="button">Planar XY</button><button id="meshHealthUVPlanarXZ" type="button">Planar XZ</button><button id="meshHealthUVPlanarYZ" type="button">Planar YZ</button><button id="meshHealthUVFaceAtlas" type="button" title="One packed island per face; up to 128 faces. Clear paint first.">Face atlas</button><button id="meshHealthUVBox" type="button">Box UVs</button><button id="meshHealthUVCylinder" type="button">Cylinder UVs (Y)</button><button id="meshHealthUVSphere" type="button" title="Round spheres with Y-axis vertex poles; replaces native UVs">Sphere UVs (Y)</button><button id="meshHealthUVTorus" type="button" title="Round upright Y-axis torus with regular quads; replaces native UVs">Torus UVs (Y)</button></div><div class="boxlab-tool-session-subtitle">Planar / Box / Cylinder: upright cylinders, cones, Revolves / round Sphere / Torus · Base meshes · replaces native UVs</div><div class="boxlab-tool-session-subtitle">Face atlas: one island per face, up to 128 faces. Clear paint first. Curved faces may stretch.</div>
+    <div class="outliner-actions" style="grid-template-columns:repeat(3,1fr)"><button id="meshHealthUVPlanarXY" type="button">Planar XY</button><button id="meshHealthUVPlanarXZ" type="button">Planar XZ</button><button id="meshHealthUVPlanarYZ" type="button">Planar YZ</button><button id="meshHealthUVFaceAtlas" type="button" title="One packed island per face; up to 128 faces. Clear paint first.">Face atlas</button><button id="meshHealthUVCoplanarAtlas" type="button" title="Keep connected flat faces together; up to 128 faces. Clear paint first.">Coplanar atlas</button><button id="meshHealthUVBox" type="button">Box UVs</button><button id="meshHealthUVCylinder" type="button">Cylinder UVs (Y)</button><button id="meshHealthUVSphere" type="button" title="Round spheres with Y-axis vertex poles; replaces native UVs">Sphere UVs (Y)</button><button id="meshHealthUVTorus" type="button" title="Round upright Y-axis torus with regular quads; replaces native UVs">Torus UVs (Y)</button></div><div class="boxlab-tool-session-subtitle">Planar / Box / Cylinder: upright cylinders, cones, Revolves / round Sphere / Torus · Base meshes · replaces native UVs</div><div class="boxlab-tool-session-subtitle">Face atlas: one island per face, up to 128 faces. Clear paint first. Curved faces may stretch. Coplanar atlas keeps connected flat faces together.</div>
     <div class="outliner-actions" style="grid-template-columns:repeat(2,1fr)"><button id="meshHealthClearPaint" type="button">Clear paint</button><button id="meshHealthClearPaintUV" type="button">Clear paint + UVs</button></div>
     <div class="boxlab-tool-session-subtitle">Restart: removes all colour layers, images, AO, roughness and metalness paint. Keep UVs, or remove them and project again. Undo restores.</div>
     <button id="meshHealthUVOpen" type="button" disabled>Open UV Editor</button>
@@ -98,6 +98,7 @@ const uvFlipV=panel.querySelector('#meshHealthUVFlipV');
 const uvOpen=panel.querySelector('#meshHealthUVOpen');
 const uvPlanar=['XY','XZ','YZ'].map(axis=>panel.querySelector('#meshHealthUVPlanar'+axis));
 const uvFaceAtlas=panel.querySelector('#meshHealthUVFaceAtlas');
+const uvCoplanarAtlas=panel.querySelector('#meshHealthUVCoplanarAtlas');
 const uvBox=panel.querySelector('#meshHealthUVBox');
 const uvCylinder=panel.querySelector('#meshHealthUVCylinder');
 const uvSphere=panel.querySelector('#meshHealthUVSphere');
@@ -111,7 +112,7 @@ function renderUVReport(object,mesh){
  const hasPaint=!!(object?.colourPaint||object?.roughnessPaint||object?.metalnessPaint);
  clearPaint.disabled=!resetReady||!hasPaint;clearPaintUV.disabled=!resetReady||!hasPaint&&!object?.glbPassthrough;
  const nativeReady=object&&!object.locked&&object.kind!=='reference'&&!object.sourceId&&!object.booleanRecipe&&!object.arrayRecipe&&!object.curveProfile&&!object.materials&&!object.textures&&!object.settings?.subd&&!Object.values(object.settings?.mirror||{}).some(Boolean)&&(!object.glbPassthrough||object.glbPassthrough.source==='boxlab')&&!!globalThis.__boxlabObjectHistory?.capture&&!!globalThis.__boxlabObjectHistory?.checkpointSnapshot;
- for(const button of uvPlanar)button.disabled=!nativeReady;uvBox.disabled=uvCylinder.disabled=uvSphere.disabled=!nativeReady;uvTorus.disabled=!nativeReady;uvFaceAtlas.disabled=!nativeReady||hasPaint;
+ for(const button of uvPlanar)button.disabled=!nativeReady;uvBox.disabled=uvCylinder.disabled=uvSphere.disabled=!nativeReady;uvTorus.disabled=!nativeReady;uvFaceAtlas.disabled=!nativeReady||hasPaint;uvCoplanarAtlas.disabled=!nativeReady||hasPaint;
  const report=inspectImportedUV(mesh,object?.glbPassthrough,globalThis.__boxlabExportAs?.topologySignature);
  const messages={absent:'No UV channel on this mesh. Plain Base meshes can create planar UVs.',stale:'Stored UVs no longer match the current topology.',invalid:'Stored UV channel is incomplete or invalid.',unavailable:'UV inspection is not ready. Try Refresh.'};
  uvSummary.textContent=report.state==='ready'?`${report.mappedFaces} / ${report.faces} faces have UVs · ${report.islandCount} island${report.islandCount===1?'':'s'} · ${report.seamEdges} seam edge${report.seamEdges===1?'':'s'}${report.nonManifoldEdges?` · ${report.nonManifoldEdges} ambiguous edge${report.nonManifoldEdges===1?'':'s'}`:''}${report.missingFaces?` · ${report.missingFaces} missing`:''}${report.outsideCorners?` · ${report.outsideCorners} corners outside tile 0–1`:''}`:messages[report.state];
@@ -171,6 +172,15 @@ function faceAtlasUVs(){
  return result.ok;
 }
 uvFaceAtlas.addEventListener('click',faceAtlasUVs);
+function coplanarAtlasUVs(){
+ const object=activeObject(),mesh=liveMesh();
+ if(!active||currentMode()!=='object'||!object||object.id!==objectId||!mesh)return false;
+ const result=createCoplanarAtlasUV(object,mesh,globalThis.__boxlabExportAs?.topologySignature,globalThis.__boxlabObjectHistory,globalThis.__boxlabExportAs);
+ renderReport();setStatus(result.ok?result.changed?'Coplanar atlas created • connected flat faces share islands • Undo to restore':'Coplanar atlas • no change needed':`Coplanar atlas • ${result.reason}`);
+ return result.ok;
+}
+uvCoplanarAtlas.addEventListener('click',coplanarAtlasUVs);
+
 function cylinderUVs(){
  const object=activeObject(),mesh=liveMesh();
  if(!active||currentMode()!=='object'||!object||object.id!==objectId||!mesh)return false;

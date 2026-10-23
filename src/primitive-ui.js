@@ -1,4 +1,4 @@
-import {createNativeUVCandidate} from './imported-uv-edit.js?v=0.36.18.950';
+import {createNativeUVCandidate} from './imported-uv-edit.js?v=0.36.18.951';
 import './curve-profile-ui.js?v=0.36.18.830';
 import { makePrimitive,primitiveDensity } from './primitive-factory.js?v=0.36.18.771';
 import { makeTextObject } from './text-object-core.js?v=0.36.18.771';

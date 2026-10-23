@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {createPaintImageWrap} from './paint-image-wrap.js?v=0.36.18.933';
+import {createPaintImageWrap} from './paint-image-wrap.js?v=0.36.18.951';
 import {capturePaintImageLayer} from './paint-image-layer.js?v=0.36.18.908';
 import {createPaintImageProjector} from './paint-image-placement.js?v=0.36.18.907';
 

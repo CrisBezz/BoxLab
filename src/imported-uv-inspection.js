@@ -1,6 +1,6 @@
 // Read-only inspection of the importer's existing face-corner channel. The
 // exporter supplies its authoritative topology signature; no second UV owner.
-export function inspectImportedUV(mesh,payload,topologySignature,{maxPreviewCorners=20000,includeEdgeOwners=false}={}){
+export function inspectImportedUV(mesh,payload,topologySignature,{maxPreviewCorners=20000,includeEdgeOwners=false,canJoinFaces=null}={}){
  const faces=mesh?.faces||[],uvs=payload?.uvCorners;
  const report={state:'absent',faces:faces.length,mappedFaces:0,missingFaces:0,invalidFaces:0,outsideCorners:0,previewFaces:[],previewFaceIndices:[],previewCorners:0,bounds:{minU:0,minV:0,maxU:1,maxV:1}};
  if(!Array.isArray(uvs)||!uvs.some(Boolean))return report;
@@ -20,10 +20,10 @@ export function inspectImportedUV(mesh,payload,topologySignature,{maxPreviewCorn
   if(report.previewCorners+corners.length<=maxPreviewCorners){report.previewFaces.push(corners);report.previewFaceIndices.push(i);report.previewCorners+=corners.length;}
  }
  report.state=report.invalidFaces?'invalid':report.mappedFaces?'ready':'absent';
- if(report.state==='ready')inspectConnectivity(faces,uvs,report,includeEdgeOwners);
+ if(report.state==='ready')inspectConnectivity(faces,uvs,report,includeEdgeOwners,canJoinFaces);
  return report;
 }
-function inspectConnectivity(faces,uvs,report,includeEdgeOwners=false){
+function inspectConnectivity(faces,uvs,report,includeEdgeOwners=false,canJoinFaces=null){
  // Diagnostic adjacency only: never call mesh.edges(), which legacy bridges may
  // wrap with live-mesh publication side effects. Never weld or author UV data.
  const parent=new Int32Array(faces.length).fill(-1),edges=new Map();
@@ -47,7 +47,8 @@ function inspectConnectivity(faces,uvs,report,includeEdgeOwners=false){
   if(owners.length>2||owners.some(o=>o.a===o.b)||owners.length===2&&owners[0].fi===owners[1].fi){report.nonManifoldEdges++;continue;}
   if(owners.length===1||mapped.length===1){report.boundaryEdges++;continue;}
   const [a,b]=mapped,[a0,a1]=endpoints(a),[b0,b1]=endpoints(b);
-  if(same(a0,b0)&&same(a1,b1)){
+  // Optional atlas restriction reuses this sole manifold-edge/union owner.
+  if(same(a0,b0)&&same(a1,b1)&&(!canJoinFaces||canJoinFaces(a,b))){
    const ra=root(a.fi),rb=root(b.fi);parent[Math.max(ra,rb)]=Math.min(ra,rb);
   }else{
    report.seamEdges++;

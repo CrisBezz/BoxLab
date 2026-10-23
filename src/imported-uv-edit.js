@@ -1,5 +1,5 @@
 import {meshTopologySignature} from './mesh-topology-signature.js?v=0.36.18.939';
-import {inspectImportedUV,importedUVIslandCentre,importedUVIslandBounds,rotateImportedUVPoint} from './imported-uv-inspection.js?v=0.36.18.932';
+import {inspectImportedUV,importedUVIslandCentre,importedUVIslandBounds,rotateImportedUVPoint} from './imported-uv-inspection.js?v=0.36.18.951';
 // UV transforms keep the existing stored face-corner channel
 // and native scene history. All untouched resource buffers remain read-only.
 export function rotateImportedUV(object,mesh,topologySignature,history,scope){
@@ -203,15 +203,22 @@ function commitNativeUV(object,mesh,topologySignature,history,uvCorners){
  return {ok:true,changed:true};
 }
 
-// First automatic face atlas: original Box projections, density equalization and
-// grid packer, staged privately. One island per polygon; no chart-joining solver.
+// Both atlases stage original Box projections, density and packing privately.
+// Coplanar mode only restricts the existing UV inspector's connectivity owner.
 export function createFaceAtlasUV(object,mesh,topologySignature,history,owner=globalThis.__boxlabExportAs){
+ return createAtlasUV(object,mesh,topologySignature,history,owner,false);
+}
+export function createCoplanarAtlasUV(object,mesh,topologySignature,history,owner=globalThis.__boxlabExportAs){
+ return createAtlasUV(object,mesh,topologySignature,history,owner,true);
+}
+function createAtlasUV(object,mesh,topologySignature,history,owner,coplanar){
  const error=nativeUVTargetError(object,mesh,topologySignature);if(error)return {ok:false,reason:error};
  if(object.colourPaint||object.roughnessPaint||object.metalnessPaint)return {ok:false,reason:'Clear paint before creating a Face atlas; existing paint is retained'};
  if(mesh.faces.length>128||mesh.faces.reduce((sum,face)=>sum+(Array.isArray(face)?face.length:0),0)>20000)return {ok:false,reason:'Face atlas supports up to 128 faces and 20,000 corners'};
  const candidate={},projected=createBoxUV(candidate,mesh,topologySignature,nativeUVCandidate);
  if(!projected.ok)return projected;
- const report={islandCount:mesh.faces.length,faceIslands:mesh.faces.map((_,fi)=>fi)};
+ const groups=coplanar?coplanarFaceGroups(mesh):null;
+ const report=coplanar?inspectImportedUV(mesh,candidate.glbPassthrough,topologySignature,{canJoinFaces:(a,b)=>a.a===b.b&&a.b===b.a&&groups[a.fi]===groups[b.fi]}):{islandCount:mesh.faces.length,faceIslands:mesh.faces.map((_,fi)=>fi)};
  let density=densityLayout(mesh,candidate.glbPassthrough,report);
  if(density.reason==='Equalize density needs non-degenerate UVs and finite planar Base faces'){
   const source=faceAtlasTriangles(mesh,candidate.glbPassthrough,owner);
@@ -222,6 +229,30 @@ export function createFaceAtlasUV(object,mesh,topologySignature,history,owner=gl
  const packed=packedLayout(density.uvCorners,report);
  if(packed.reason)return {ok:false,reason:packed.reason};
  return commitNativeUV(object,mesh,topologySignature,history,packed.uvCorners);
+}
+
+// Fixed seed planes avoid accumulating pairwise tolerance along a long strip.
+// Warped/degenerate faces get unique groups; the existing inspector still requires
+// shared manifold edges and exactly matching Box UV endpoints before any join.
+function coplanarFaceGroups(mesh){
+ let magnitude=0;
+ for(const face of mesh.faces)for(const id of face){const v=mesh.vertices[id];magnitude=Math.max(magnitude,Math.abs(v.x),Math.abs(v.y),Math.abs(v.z));}
+ const seeds=[];
+ return mesh.faces.map((face,fi)=>{
+  const points=face.map(id=>{const v=mesh.vertices[id];return [v.x/magnitude,v.y/magnitude,v.z/magnitude];}),origin=points[0];
+  const local=points.map(p=>p.map((v,k)=>v-origin[k])),normal=[0,0,0];
+  let extent=0;
+  for(let i=0;i<local.length;i++){
+   const a=local[i],b=local[(i+1)%local.length];extent=Math.max(extent,...a.map(Math.abs));
+   normal[0]+=a[1]*b[2]-a[2]*b[1];normal[1]+=a[2]*b[0]-a[0]*b[2];normal[2]+=a[0]*b[1]-a[1]*b[0];
+  }
+  const length=Math.hypot(...normal);if(!length||!Number.isFinite(length))return fi;
+  const n=normal.map(v=>v/length),dot=(a,b)=>a.reduce((sum,v,k)=>sum+v*b[k],0);
+  if(local.some(p=>Math.abs(dot(p,n))>extent*1e-10))return fi;
+  const seed=seeds.find(s=>Math.hypot(...n.map((v,k)=>v-s.n[k]))<=1e-10&&points.every(p=>Math.abs(dot(p.map((v,k)=>v-s.origin[k]),s.n))<=Math.min(extent,s.extent)*1e-10));
+  if(seed)return seed.fi;
+  seeds.push({fi,n,origin,extent});return fi;
+ });
 }
 
 // Borrow triangle ownership from the SAME preview that will display/paint UVs.

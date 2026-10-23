@@ -5490,3 +5490,49 @@ file now passes real-owner atlas/paint/history/transport integrations, but iPad9
 appearance/performance acceptance remains pending. Clear existing paint explicitly
 first. Source949 failure recorded, not accepted as PASS; user948 PERFECT PASS protected.
 Next actual950 feedback before unrelated features; no permanent triangulation workaround.
+
+
+## .951 — Optional Coplanar atlas; .950 user PASS protected — 23 October 2026
+
+User replies PASS /nextbuild after950: protect the supplied extrusion/scale Face atlas
+repair and existing948 lit-paint acceptance.949 original warped failure stays recorded.
+Audit: existing Box projection already gives matching UVs on adjacent same-direction
+faces; original imported-uv-inspection owns manifold adjacency/union; density/Pack and
+native UV commit/history already exist. No other live chart-joining atlas found; the
+pathtracer xatlas dependency is unrelated. Add optional Object → UV → Coplanar atlas.
+
+Both modes share original private Box → density → grid Pack → ONE commit pipeline.
+Face atlas retains one island per face and exact950 outputs. Coplanar mode uses fixed
+seed planes (normalized finite coordinates, oriented normal/planarity tolerance1e-10,
+no accumulated neighbour drift), leaving warped faces isolated. Original inspector
+gets opt-in canJoinFaces predicate; default behavior unchanged. Join only opposite
+shared edge directions, matching Box UV endpoints, same seed plane and exactly two
+manifold owners. Disconnected/coincident vertex positions and ambiguous edges never
+join. No mesh edits, new triangulator/adjacency kernel, persistent chart metadata or
+UV schema. Original950 preview fallback handles warped area; standalone density895
+still planar.128-face/20K-corner limit and explicit clear-all-paint prerequisite stay.
+This is conservative coplanar grouping, not arbitrary unwrap or optimal packing;
+invalid self-overlapping geometry and general curved stretch are not solved.
+
+Six new tests951 cover connected patch/seam endpoints/island editing; bends/warps/
+same-winding duplicates/opposite faces/disconnected positions/nonmanifold boundaries;
+exact supplied20-face OBJ (14 islands versus Face atlas20), scale/translation and equal average island density/separate
+packed bounds; guards/refused history; actual UndoRedo/paint/project/GLB owner path;
+actual panel forwarding/current-target/history guards. Focused new/949/950/density/
+Pack/release32PASS. Full local/hosted and publication evidence follows below.
+
+Reviewed cache closure refreshes UV inspector/edit/panel, UV workspace, paint import
+ancestors and UV/Add/Multi/Lab loaders; functional changes ONLY inspector opt-in,
+atlas owner and existing panel. Main/cage/Multi-transform1.0/frozen bytes unchanged.
+Device951 remains pending: same unpainted supplied mesh → Coplanar atlas → UV Editor;
+compare Face atlas's20 islands; UndoRedo, paint across a flat patch and SaveOpen.
+Next act on951 feedback; alpha929/metal-reflection gates remain independent. Do not
+infer general curved unwrap, arbitrary overlap repair or optional NOMAD device PASS.
+
+
+.951 full local Node24 regression: **2767 PASS / 0 FAIL / 0 skipped** (99.0s),
+retaining all2761 plus six coplanar integrations. Focused32PASS. Reviewed19-file
+runtime loader closure, three functional owners only; retained main/cage/Multi1.0/
+frozen bytes and recovery owners unchanged. Source949/950 Face atlas outputs and
+standalone895 density guards stay protected. Hosted/Pages/live proof follows;
+DEVICE951 comparison/paint/UndoRedo/SaveOpen remains pending.

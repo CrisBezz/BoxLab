@@ -1,6 +1,6 @@
 import * as THREE from 'three';
-import {createPaintFilterDomain} from './paint-filter-domain.js?v=0.36.18.943';
-import {createPaintTriangleGraph} from './paint-triangle-graph.js?v=0.36.18.933';
+import {createPaintFilterDomain} from './paint-filter-domain.js?v=0.36.18.951';
+import {createPaintTriangleGraph} from './paint-triangle-graph.js?v=0.36.18.951';
 
 // Read-only object-local AO foundation. No scene, resource, history or UI writes.
 // Texel coverage and triangles come from the existing authoritative paint owners.

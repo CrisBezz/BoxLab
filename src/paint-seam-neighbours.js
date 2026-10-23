@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {createPaintTriangleGraph} from './paint-triangle-graph.js?v=0.36.18.933';
+import {createPaintTriangleGraph} from './paint-triangle-graph.js?v=0.36.18.951';
 // A read-only sampling plan over the ORIGINAL triangle graph. UV adjacency alone
 // never connects surfaces. Only real manifold face edges (or internal diagonals)
 // may be crossed. Unsupported edges/corners/long walks simply omit that neighbour.

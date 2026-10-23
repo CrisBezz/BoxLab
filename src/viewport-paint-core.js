@@ -1,11 +1,11 @@
-import {createPaintFilterDomain} from './paint-filter-domain.js?v=0.36.18.943';
-import {createPaintAOPixels,createPaintAOPixelsAsync} from './paint-ao-layer.js?v=0.36.18.945';
+import {createPaintFilterDomain} from './paint-filter-domain.js?v=0.36.18.951';
+import {createPaintAOPixels,createPaintAOPixelsAsync} from './paint-ao-layer.js?v=0.36.18.951';
 import * as THREE from 'three';
 import {createPaintLayer} from '../evaluations/uv-paint/paint-core.js?v=0.36.18.942';
 import {createStroke} from '../evaluations/uv-paint/stroke.js?v=896';
 import {captureColourResource} from './paint-resource.js?v=898';
 import {createPaintLayerStack,appendPaintLayer,replacePaintLayer,flattenPaintLayerStack,appendImagePaintLayer,replaceImagePaintLayer,rasterizeImagePaintLayer,enlargePaintLayerStack,mergePaintLayersToBase} from './paint-layer-stack.js?v=0.36.18.938';
-import {projectPaintImage} from './paint-image-project.js?v=0.36.18.936';
+import {projectPaintImage} from './paint-image-project.js?v=0.36.18.951';
 import {surfaceImageFrameFromHit} from './paint-image-surface.js?v=0.36.18.933';
 import {capturePaintImagePlacement,paintImagePlacementFromCamera} from './paint-image-placement.js?v=0.36.18.907';
 import {captureLayeredColourResource,capturePaintResource} from './paint-layer-resource.js?v=0.36.18.938';

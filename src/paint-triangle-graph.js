@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {inspectImportedUV} from './imported-uv-inspection.js?v=0.36.18.932';
+import {inspectImportedUV} from './imported-uv-inspection.js?v=0.36.18.951';
 // Shared read-only graph of the original preview triangles. Never triangulates,
 // welds positions, calls mesh.edges(), or crosses non-manifold polygon edges.
 export function createPaintTriangleGraph({geometry,mesh,payload,topologySignature,matrixWorld=null}){

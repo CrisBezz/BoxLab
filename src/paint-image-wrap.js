@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {createPaintTriangleGraph} from './paint-triangle-graph.js?v=0.36.18.933';
+import {createPaintTriangleGraph} from './paint-triangle-graph.js?v=0.36.18.951';
 import {captureSurfaceImageFrame,surfaceImageOrientation} from './paint-image-surface.js?v=0.36.18.933';
 // A local unfolded image chart over original triangles. The existing image UV
 // rasterizer samples it; this helper owns neither pixels, mesh edits nor history.
