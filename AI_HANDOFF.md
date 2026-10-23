@@ -47,8 +47,8 @@ UndoRedo/reopen/SaveOpen, stroke Cancel and scalar/AO/close guards. Original905/
 with fixture metadata verified no overflow at272px dock /1024 and390 viewport widths,
 selection settings/visibility and screenshot inspection; real painter/history tested
 through original integration harness, no iPad acceptance inferred. Screenshot is QA
-fixture only; original app/session layout owners unchanged. Full/publication proof
-follows. DEVICE947: layer taps/strokes/previews; blend/opacity/visibility; ordering/
+fixture only; original app/session layout owners unchanged. Runtime789924e is
+published; local+hosted2746PASS, Pages and20 live byte matches verified. DEVICE947: layer taps/strokes/previews; blend/opacity/visibility; ordering/
 image+mask selection; UndoRedo/SaveOpen and left dock scrolling/Done on iPad.
 
 ## .946 — paint / UV restart; .945 user PASS — 23 October 2026
@@ -2592,3 +2592,29 @@ paint + UVs permits fresh Box/appropriate projection and repaint. UndoRedo resto
 resources/UVs; SaveOpen retains cleared/repainted result. Device946 PENDING. User945
 PASS protected. General atlas unwrap remains a separate future build; Pack all only
 arranges existing islands. This proof changes continuity docs only.
+
+.947 final local Node24 regression: **2,746 PASS / 0 FAIL / 0 skipped** (180.9s);
+original2741 and five new visual-list checks retained. Original905/906/928 targeted19
+and reviewed release five pass. No original assertion relaxed. Runtime published
+`789924e19b10cef2b81409d34290e3f5dccd82f0`, exact tested tree
+`bb97d1e5facc367b0f52feb040f2906eb336556e`. Fetched main matched that tree and
+local branch aligned cleanly. Hosted regression / Pages / live-file proof verified below.
+
+## .947 publication verified — 23 October 2026
+
+Runtime789924e19b10cef2b81409d34290e3f5dccd82f0 / tested tree
+bb97d1e5facc367b0f52feb040f2906eb336556e published and fetched main matched exactly.
+Local Node24 and hosted Node22 regression39903168453/job120249065878 both pass
+**2746 tests / 0 failures / 0 skipped**; full hosted log totals verified. Original
+checks retained. Pages39903167923 build120249067854/deploy120249209727 SUCCESS.
+All20 checked live shell/version, layer-list/painter/recovery, retained layer/blend/
+paint/project/export/AO/UV/reset/main/Multi1.0 and frozenBeta7 marker byte-match tested
+source. Reverse loader keys947 reviewed; no tested runtime changes after validation.
+This proof updates continuity documentation only.
+
+Build947 ready for iPad testing: open Paint with two or more layers, tap rows and
+paint distinct marks; previews update on Pencil lift. Blend code / opacity% opens
+selected settings; edit them and check row/mesh. Visibility check toggles selected
+row with one original Undo; Base immutable. Check image/mask rows, reorder Up/Down,
+UndoRedo/SaveOpen and bounded left dock scrolling/Done. Device947 PENDING;946 user
+PASS protected. General atlas unwrap remains deferred behind current UI request.
