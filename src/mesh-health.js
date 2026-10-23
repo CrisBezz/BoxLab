@@ -4,7 +4,7 @@ import {autoCloseSimpleHoles,simpleBoundaryLoops} from './mesh-auto-close-core.j
 import {boundaryDiagnostics} from './mesh-boundary-diagnostics-core.js?v=0.36.18.443';
 import {unifyFaceWinding,flipAllFaces,triangulateMesh} from './mesh-normals-triangulate-core.js?v=0.36.18.443';
 import {inspectImportedUV} from './imported-uv-inspection.js?v=0.36.18.932';
-import {clearNativePaint,rotateImportedUV,flipImportedUV,moveImportedUV,scaleImportedUV,rotateImportedUVByAngle,fitImportedUVToTile,packImportedUVIslands,equalizeImportedUVDensity,createPlanarUV,createFaceAtlasUV,createBoxUV,createCylinderUV,createSphereUV,createTorusUV} from './imported-uv-edit.js?v=0.36.18.949';
+import {clearNativePaint,rotateImportedUV,flipImportedUV,moveImportedUV,scaleImportedUV,rotateImportedUVByAngle,fitImportedUVToTile,packImportedUVIslands,equalizeImportedUVDensity,createPlanarUV,createFaceAtlasUV,createBoxUV,createCylinderUV,createSphereUV,createTorusUV} from './imported-uv-edit.js?v=0.36.18.950';
 import {createUVWorkspace} from './uv-workspace.js?v=0.36.18.932';
 
 const VERSION='0.36.18.880';
@@ -34,7 +34,7 @@ panel.innerHTML=`
   <details id="meshHealthUVDetails">
     <summary class="boxlab-tool-session-section">UVs</summary>
     <div id="meshHealthUVSummary" class="boxlab-tool-session-subtitle" aria-live="polite"></div>
-    <div class="outliner-actions" style="grid-template-columns:repeat(3,1fr)"><button id="meshHealthUVPlanarXY" type="button">Planar XY</button><button id="meshHealthUVPlanarXZ" type="button">Planar XZ</button><button id="meshHealthUVPlanarYZ" type="button">Planar YZ</button><button id="meshHealthUVFaceAtlas" type="button" title="One packed island per planar face; up to 128 faces. Clear paint first.">Face atlas</button><button id="meshHealthUVBox" type="button">Box UVs</button><button id="meshHealthUVCylinder" type="button">Cylinder UVs (Y)</button><button id="meshHealthUVSphere" type="button" title="Round spheres with Y-axis vertex poles; replaces native UVs">Sphere UVs (Y)</button><button id="meshHealthUVTorus" type="button" title="Round upright Y-axis torus with regular quads; replaces native UVs">Torus UVs (Y)</button></div><div class="boxlab-tool-session-subtitle">Planar / Box / Cylinder: upright cylinders, cones, Revolves / round Sphere / Torus · Base meshes · replaces native UVs</div><div class="boxlab-tool-session-subtitle">Face atlas: one island per planar face, up to 128 faces. Clear paint first. More seams than joined-chart unwrap.</div>
+    <div class="outliner-actions" style="grid-template-columns:repeat(3,1fr)"><button id="meshHealthUVPlanarXY" type="button">Planar XY</button><button id="meshHealthUVPlanarXZ" type="button">Planar XZ</button><button id="meshHealthUVPlanarYZ" type="button">Planar YZ</button><button id="meshHealthUVFaceAtlas" type="button" title="One packed island per face; up to 128 faces. Clear paint first.">Face atlas</button><button id="meshHealthUVBox" type="button">Box UVs</button><button id="meshHealthUVCylinder" type="button">Cylinder UVs (Y)</button><button id="meshHealthUVSphere" type="button" title="Round spheres with Y-axis vertex poles; replaces native UVs">Sphere UVs (Y)</button><button id="meshHealthUVTorus" type="button" title="Round upright Y-axis torus with regular quads; replaces native UVs">Torus UVs (Y)</button></div><div class="boxlab-tool-session-subtitle">Planar / Box / Cylinder: upright cylinders, cones, Revolves / round Sphere / Torus · Base meshes · replaces native UVs</div><div class="boxlab-tool-session-subtitle">Face atlas: one island per face, up to 128 faces. Clear paint first. Curved faces may stretch.</div>
     <div class="outliner-actions" style="grid-template-columns:repeat(2,1fr)"><button id="meshHealthClearPaint" type="button">Clear paint</button><button id="meshHealthClearPaintUV" type="button">Clear paint + UVs</button></div>
     <div class="boxlab-tool-session-subtitle">Restart: removes all colour layers, images, AO, roughness and metalness paint. Keep UVs, or remove them and project again. Undo restores.</div>
     <button id="meshHealthUVOpen" type="button" disabled>Open UV Editor</button>
@@ -166,7 +166,7 @@ uvBox.addEventListener('click',boxUVs);
 function faceAtlasUVs(){
  const object=activeObject(),mesh=liveMesh();
  if(!active||currentMode()!=='object'||!object||object.id!==objectId||!mesh)return false;
- const result=createFaceAtlasUV(object,mesh,globalThis.__boxlabExportAs?.topologySignature,globalThis.__boxlabObjectHistory);
+ const result=createFaceAtlasUV(object,mesh,globalThis.__boxlabExportAs?.topologySignature,globalThis.__boxlabObjectHistory,globalThis.__boxlabExportAs);
  renderReport();setStatus(result.ok?result.changed?'Face atlas created • one island per face • Undo to restore':'Face atlas • no change needed':`Face atlas • ${result.reason}`);
  return result.ok;
 }

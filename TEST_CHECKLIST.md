@@ -9835,3 +9835,65 @@ is one island per planar face, up to128 faces/20K corners; it is not joined-char
 general curved unwrap. Existing Box/Planar/Cylinder/Sphere/Torus/Pack/auto-Add retain
 original algorithms. DEVICE949 pending; user948 PERFECT PASS protected. Next actual
 949 feedback, then scoped atlas/chart/seam direction. Alpha929/reflection independent.
+
+
+## .950 — Face atlas warped-face repair; .949 device FAIL — 23 October 2026 (Brisbane)
+
+User949 reports the Equalize-density planar/non-degenerate error after ordinary
+extrusions/scales. Screenshot confirms949 and24verts/20faces, far below128-face cap.
+Exact supplied Extrude and scale.obj reproduces rejection: first four polygons are
+mildly warped (point-to-plane deviations≈.010–.013 local units). This is949's atlas
+planarity restriction, not evidence of damaged modelling topology or a stale build.
+OBJ exporter header892 is the retained internal writer stamp, not shell release.
+Exact input retained as tests/fixtures/extrude-and-scale-950.obj; SHA256
+07178d51ab561392fa508624d088460f33b1da57ed87617ede4138c09272b46d, identical to upload.
+
+Original Face atlas first tries EXACT949 planar path. Only its planar/area refusal
+requests the ORIGINAL buildUVPreviewGeometry({faceIndices:true}) owner, forwarded
+explicitly by MeshHealth UV callback. Original triangle→face/vertex metadata becomes
+transient local-corner lists; no triangulator, new adjacency or mesh mutation. Require
+complete n−2 triangles per polygon, valid unique corner ownership, finite nonzero UV
+triangle areas and consistent per-face UV orientation. Folded/collapsed candidates
+refuse with face number; absent/failed preview refuses. Temporary geometry disposes
+in finally on success/error. Same original density math optionally sums measured
+normalized 3D triangle areas; standalone Equalize density RETAINS strict planar rule.
+Original planar outputs/extreme scales remain exact; no blanket tolerance relaxation.
+
+Final atlas still uses original Pack/commit, one island per source face and one scene
+checkpoint; source quads/ngons/positions/groups and old/peer resources remain intact.
+No permanent triangulation or schema/export/history/brush/lighting changes. Original
+128faces/20Kcorner/pool/history/clear-paint guards retained. UI no longer calls atlas
+planar-only; says curved faces may stretch. This is still projected per-face atlas,
+not joined-chart/general UV optimization or a guarantee every folded face maps.
+
+Five new integrations exercise exact user file with20 separated equal-density islands,
+unchanged24 vertices/14quads/6ngons, temporary disposal and exact repeat; ordinary
+extrusion+axis-scale reproducer at .01/1/10000; original UndoRedo/Paint/exact SaveOpen/
+actual NOM and GLB UV+paint slots; unavailable/malformed/folded preview/refused history/
+paint atomicity; actual panel forwarding/target guards. Original949 negative unavailable
+warped-preview test retained; its UI wording expectation follows intended scope change.
+Original895 standalone nonplanar refusal stays active. Focused new/949/density/Pack/
+release26PASS; full validation/publication follows. Native test prepares through ACTUAL
+writer's versioned paint-export owner (module-local WeakMaps); canonical JSON handles
+cross-realm UV prototypes without weakening exact values. Bitmap shim is transport
+only, not GPU/Nomad visual proof. Main/cage/Multi-transform/frozen bytes unchanged.
+
+DEVICE950: SAME supplied model → Object → UV → Face atlas → Open UV Editor should
+map all20 faces. UndoRedo restores/reapplies original quads/UVs; Paint/Done remains
+scene-lit; SaveOpen and optional NOMAD sanity. Clear existing paint explicitly first.
+Exact uploaded mesh now maps in automated real-owner path; actual iPad950 gate pending,
+not inferred PASS.948 scene-lighting acceptance remains protected;949 warped failure
+recorded. Next actual950 retest; don't ask user to permanently triangulate a valid box
+model as a workaround or add a second modelling/UV kernel. Other chart/seam work queued.
+
+- [ ] DEVICE950: supplied Extrude and scale mesh maps all20 faces, UV/history/paint/SaveOpen retained.949 warped-face FAIL explicitly recorded; no PASS inferred.
+
+
+.950 final local Node24.19.0 full regression: **2,761 PASS / 0 FAIL / 0 skipped**
+(101.9s), retaining original2756 plus five new exact-file/warped-face integrations.
+Focused new/949/density/Pack/release26PASS. Old949 unavailable-preview/degeneracy
+refusals remain; its UI text expectation reflects new scope. Standalone density895
+planarity contract unchanged. Supplied OBJ fixture byte-identical; no source upload
+modified. Reviewed full UV/Add/Multi/Lab/recovery950 graph, main/cage/Multi-transform/
+frozen/accepted948lighting unchanged. Hosted/Pages/live proof follows; device950
+SAME-model atlas/paint/UndoRedo/SaveOpen acceptance pending, no949 PASS inferred.

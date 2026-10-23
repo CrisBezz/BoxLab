@@ -36,7 +36,7 @@ export function equalizeImportedUVDensity(object,mesh,topologySignature,history,
  if(!scope||scope.payload!==object?.glbPassthrough||scope.island!=null&&!Number.isInteger(scope.island))return {ok:false,reason:'Refresh the UV layout before equalizing density'};
  return editImportedUV(object,mesh,topologySignature,history,{kind:'density'},scope.island==null?undefined:scope);
 }
-function densityLayout(mesh,payload,report){
+function densityLayout(mesh,payload,report,faceTriangles=null){
  const refuse=()=>({reason:'Equalize density needs non-degenerate UVs and finite planar Base faces'});
  const count=report.islandCount;if(count<1||count>128)return {reason:'Equalize density supports 1–128 UV islands'};
  const faces=Array.from({length:count},()=>[]);report.faceIslands.forEach((id,fi)=>faces[id].push(fi));
@@ -51,8 +51,15 @@ function densityLayout(mesh,payload,report){
   const points=face.map(id=>{const p=mesh.vertices[id];return [p.x/worldMagnitude,p.y/worldMagnitude,p.z/worldMagnitude];});
   const origin=points[0],local=points.map(p=>p.map((v,k)=>v-origin[k])),normal=[0,0,0];
   for(let i=1;i<local.length-1;i++){const a=local[i],b=local[i+1];normal[0]+=a[1]*b[2]-a[2]*b[1];normal[1]+=a[2]*b[0]-a[0]*b[2];normal[2]+=a[0]*b[1]-a[1]*b[0];}
-  const area=Math.hypot(...normal);let extent=0;for(const p of local)extent=Math.max(extent,Math.hypot(...p));
-  if(!(area>0)||!Number.isFinite(area)||local.some(p=>Math.abs(p.reduce((sum,v,k)=>sum+v*(normal[k]/area),0))>extent*1e-7))return refuse();
+  let area=Math.hypot(...normal),extent=0;for(const p of local)extent=Math.max(extent,Math.hypot(...p));
+  if(!(area>0)||!Number.isFinite(area)||!faceTriangles&&local.some(p=>Math.abs(p.reduce((sum,v,k)=>sum+v*(normal[k]/area),0))>extent*1e-7))return refuse();
+  // Face atlas alone can measure warped polygons using the original preview's
+  // validated triangles. The standalone density command retains its planar rule.
+  if(faceTriangles){
+   area=0;
+   for(const [ia,ib,ic] of faceTriangles[fi]){const a=local[ia],b=local[ib].map((v,k)=>v-a[k]),c=local[ic].map((v,k)=>v-a[k]),value=Math.hypot(b[1]*c[2]-b[2]*c[1],b[2]*c[0]-b[0]*c[2],b[0]*c[1]-b[1]*c[0]);if(!(value>0)||!Number.isFinite(value))return {reason:`Face ${fi+1} has a collapsed surface triangle`};area+=value;}
+   if(!(area>0)||!Number.isFinite(area))return {reason:`Face ${fi+1} has no finite surface area`};
+  }
   const uv=payload.uvCorners[fi].map(p=>p.map(v=>v/uvMagnitude)),start=uv[0];let signed=0;
   for(let i=1;i<uv.length-1;i++)signed+=(uv[i][0]-start[0])*(uv[i+1][1]-start[1])-(uv[i][1]-start[1])*(uv[i+1][0]-start[0]);
   if(!Number.isFinite(signed)||signed===0)return refuse();
@@ -198,18 +205,49 @@ function commitNativeUV(object,mesh,topologySignature,history,uvCorners){
 
 // First automatic face atlas: original Box projections, density equalization and
 // grid packer, staged privately. One island per polygon; no chart-joining solver.
-export function createFaceAtlasUV(object,mesh,topologySignature,history){
+export function createFaceAtlasUV(object,mesh,topologySignature,history,owner=globalThis.__boxlabExportAs){
  const error=nativeUVTargetError(object,mesh,topologySignature);if(error)return {ok:false,reason:error};
  if(object.colourPaint||object.roughnessPaint||object.metalnessPaint)return {ok:false,reason:'Clear paint before creating a Face atlas; existing paint is retained'};
- if(mesh.faces.length>128||mesh.faces.reduce((sum,face)=>sum+(Array.isArray(face)?face.length:0),0)>20000)return {ok:false,reason:'Face atlas supports up to 128 planar faces and 20,000 corners'};
+ if(mesh.faces.length>128||mesh.faces.reduce((sum,face)=>sum+(Array.isArray(face)?face.length:0),0)>20000)return {ok:false,reason:'Face atlas supports up to 128 faces and 20,000 corners'};
  const candidate={},projected=createBoxUV(candidate,mesh,topologySignature,nativeUVCandidate);
  if(!projected.ok)return projected;
  const report={islandCount:mesh.faces.length,faceIslands:mesh.faces.map((_,fi)=>fi)};
- const density=densityLayout(mesh,candidate.glbPassthrough,report);
+ let density=densityLayout(mesh,candidate.glbPassthrough,report);
+ if(density.reason==='Equalize density needs non-degenerate UVs and finite planar Base faces'){
+  const source=faceAtlasTriangles(mesh,candidate.glbPassthrough,owner);
+  if(source.reason)return {ok:false,reason:source.reason};
+  density=densityLayout(mesh,candidate.glbPassthrough,report,source.triangles);
+ }
  if(density.reason)return {ok:false,reason:density.reason};
  const packed=packedLayout(density.uvCorners,report);
  if(packed.reason)return {ok:false,reason:packed.reason};
  return commitNativeUV(object,mesh,topologySignature,history,packed.uvCorners);
+}
+
+// Borrow triangle ownership from the SAME preview that will display/paint UVs.
+// No triangulation, topology edits or persistent triangle metadata here.
+function faceAtlasTriangles(mesh,payload,owner){
+ if(typeof owner?.buildUVPreviewGeometry!=='function')return {reason:'Warped-face atlas needs the UV preview; try Refresh'};
+ let geometry;
+ try{
+  geometry=owner.buildUVPreviewGeometry(mesh,payload,{faceIndices:true});
+  const faces=geometry?.userData?.boxlabTriangleFaces,vertices=geometry?.userData?.boxlabTriangleVertices;
+  if(!Array.isArray(faces)||!Array.isArray(vertices)||vertices.length!==faces.length*3)return {reason:'Face atlas could not read the current face triangles'};
+  const corners=mesh.faces.map(face=>new Map(face.map((id,i)=>[id,i]))),triangles=mesh.faces.map(()=>[]);
+  for(let i=0;i<faces.length;i++){
+   const fi=faces[i];if(!Number.isInteger(fi)||!corners[fi])return {reason:'Face atlas received invalid face ownership'};
+   const ids=vertices.slice(i*3,i*3+3).map(id=>corners[fi].get(id));
+   if(ids.some(id=>!Number.isInteger(id))||new Set(ids).size!==3)return {reason:`Face ${fi+1} has invalid triangle ownership`};
+   triangles[fi].push(ids);
+  }
+  for(let fi=0;fi<triangles.length;fi++){
+   if(triangles[fi].length!==mesh.faces[fi].length-2)return {reason:`Face ${fi+1} could not be mapped completely`};
+   let direction=0;
+   for(const [ia,ib,ic] of triangles[fi]){const [a,b,c]=[ia,ib,ic].map(id=>payload.uvCorners[fi][id]),signed=(b[0]-a[0])*(c[1]-a[1])-(b[1]-a[1])*(c[0]-a[0]);if(!Number.isFinite(signed)||signed===0||direction&&Math.sign(signed)!==direction)return {reason:`Face ${fi+1} folds or collapses in this projection; simplify that face or use another projection`};direction=Math.sign(signed);}
+  }
+  return {triangles};
+ }catch{return {reason:'Face atlas could not read the current face triangles'};}
+ finally{geometry?.dispose();}
 }
 
 // Six fixed directional cells. Faces in the same direction share one projection;
