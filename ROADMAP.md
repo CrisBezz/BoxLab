@@ -5770,3 +5770,25 @@ helper import and Edge picker branch; direct-bevel is pin-only. Component Edge t
 and Edge-paint use existing native owner; no new pointer/geometry/history implementation.
 Reviewed cache closure954; cage930/Multi1.0/frozen unchanged. Hosted/Pages/live-file
 publication proof follows; actual954 iPad tap/Flip/reselect acceptance pending.
+
+
+## .954 publication verified — 24 October 2026 (Brisbane)
+
+Runtime `989a1c1a0ef919a106e239ab6c85fafad788ecc1`, tested tree
+`07f00248ab50e88a0e50a82b712757da0e6339c6`, published on main. All15 blobs
+and Git Data tree matched local hashes; fetched main matched exact tested tree and
+checkout aligned cleanly. Local Node24 full2783PASS/0FAIL/0skip (95.1s); hosted
+Node22 run40041192199/job120712416004 complete logs verify2783/0/0 (244.4s).
+Pages40041191386 build120712417098/deploy120712558241 SUCCESS. All20 checked live
+files byte-match: shell/version, new picker + changed main/toggle/Edge-paint/Bevel
+loader graph, recovery, retained workspace952/UV953/gizmo953/Pencil gate/cage930/
+Multi1.0/Flip337/native writer/project/frozenBeta7. Original upload fixture unchanged.
+This proof changes four continuity files only; tested/published runtime retained.
+
+Build954 complete/ready for SAME-file iPad retest: unselected circled edge and its
+neighbours, orbit/zoom/reselect, original Flip Edge→deselect→reselect new diagonal,
+UndoRedo, multi-edge selection and finger navigation. Automated exact-file/native
+picker and real Flip/history/input fixtures pass; actual iPad feel/appearance remains
+pending. Screenshot952 failure reproduced on same picker in953; no forced stale-cache
+workaround. User952 UI/history PASS protected;953 Cut UVs device gate remains separate.
+Next actual954 feedback before further unwrap/seam features; no new953/954 PASS inferred.
