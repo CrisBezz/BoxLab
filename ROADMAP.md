@@ -5607,3 +5607,25 @@ checks deleted. Functional changes only uv-workspace; MeshHealth import + review
 shell/recovery cache keys952. Main/cage/Multi-transform1.0 and frozen bytes unchanged.
 Hosted/Pages/live publication evidence follows. DEVICE952 intermittent iPad UI-loss
 retest remains pending; no exact browser/GPU reproduction or device fix PASS claimed.
+
+
+## .952 publication verified — 24 October 2026 (Brisbane)
+
+Runtime `105b95ca8b0cd2b8ffde8a57a15c38074923943d`, tested tree
+`ea50e9e98994c4abcbc4f3829a0d1418938d0c35`, published on main. Ten uploaded
+blobs/tree matched local hashes; fetched main matched and checkout clean. Local
+Node24 regression2770PASS/0FAIL/0skipped (97.5s); hosted Node22 run39955713017 /
+job120420921065 complete logs verify2770/0/0 (248.6s). Pages39955712534 build
+120420925921/deploy120421167189 succeeded. All29 postdeployment checked shell/version,
+workspace/MeshHealth/UV/Add/Multi/Lab/paint loaders, recovery, retained main/cage/
+Multi-transform1.0/lit948/layers947/frozenBeta7 marker byte-match tested source.
+This proof changes four continuity files only; tested runtime retained.
+
+Build952 complete and ready for iPadPro retest. User951 atlas PASS protected; separate
+intermittent UV/main-toolbar disappearance is still pending DEVICE952 confirmation.
+Repeatedly open editor and Back to3D; check whole editor, exit beside title, main top-right
+buttons/VIEW, pan/pinch/Pencil island editing/UndoRedo and return/reopen. Original924
+header-above-viewport behavior preserved with sibling workspace layer. Cloud WebGL
+unavailable, no exact intermittent Safari reproduction or full-app rendered acceptance
+claimed. Next follow952 device feedback; don't infer that automated tests prove the
+reported intermittent disappearance resolved. No modelling/atlas/paint algorithm changes.
