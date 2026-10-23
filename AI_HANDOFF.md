@@ -12,7 +12,8 @@ User reaffirmed this permanent instruction on 21 October 2026.
 
 
 
-Build .953 validated locally2776PASS from main6cb66f1c; publication pending below.
+Current published runtime .953 `1d3185fb08ec44bd61dc01b00aa36078eaddab47`.
+Local/hosted2776PASS, Pages success and20/20 live-file byte matches verified below.
 User952 PASS now protects UV Editor entry/exit, toolbar/VIEW and Pencil/history.
 
 ## .953 — selected Edge Cut UVs; .952 user PASS — 24 October 2026 (Brisbane)
@@ -984,8 +985,8 @@ splitting paths alone makes painting seamless or that CPU timings establish M2 p
 ## Next narrow step
 
 User952 PASS recorded/protected. Build953 adds Edge Cut UVs for complete separating
-paths/loops through existing inspector/Pack/commit. Finish validation/publication,
-then request two-face Plane split / UV island / UndoRedo / Paint / SaveOpen testing.
+paths/loops through existing inspector/Pack/commit. Publication verified.
+Await two-face Plane split / UV island / UndoRedo / Paint / SaveOpen device testing.
 Follow actual953 feedback before stitch or general curved unwrap. No further952
 UI changes; alpha929 and smooth-metal reflection gates remain independent.
 
@@ -3060,3 +3061,24 @@ actions. First full run's only failure was old713 inventory19; updated to intend
 Reviewed9-file runtime/loader closure + recovery keys953; main930/cage/Multi1.0/
 frozen unchanged. Actual953 iPad tactile acceptance pending. Hosted/Pages/live
 publication proof follows. Reprojecting UVs replaces cuts; no persistent seam recipe.
+
+
+## .953 publication verified — 24 October 2026 (Brisbane)
+
+Runtime `1d3185fb08ec44bd61dc01b00aa36078eaddab47`, tested tree
+`e31ab5696a9155691ae26b8b2a6313e74eebd8db`, published on main. All18 blobs
+and created tree matched local hashes; fetched main matched exactly and checkout
+aligned cleanly. Local Node24 full2776PASS/0FAIL/0skip (91.6s); hosted Node22 run
+40039584933/job120707236946 complete logs verify2776/0/0 (214.7s). Pages40039584537
+build120707240032/deploy120707397865 SUCCESS. All20 checked live files byte-match:
+shell/version, COMPLETE changed UV/Add/Multi/Lab/gizmo graph, recovery, retained
+workspace952/inspector951/main930/cage/Multi1.0/native writer/project/frozenBeta7.
+This proof changes four continuity documents only; tested runtime retained.
+
+Build953 ready for iPad testing: Add UV Plane X2/Y1 → select centre shared Edge →
+radial Cut UVs → Object UV Editor shows two islands. UndoRedo restores/reapplies;
+Pencil island move, Paint after cut and SaveOpen retain layout. Existing seam/boundary
+repeat no-ops; paint requires explicit Clear paint before cutting. Complete paths or
+closed loops only; partial slits refuse atomically. No general unwrap/stitch/persistent
+seam recipe. User952 UI/history PASS protected; DEVICE953 feel/visibility pending.
+Next actual953 feedback, then scoped seam/stitch/unwrap audit through original owners.
