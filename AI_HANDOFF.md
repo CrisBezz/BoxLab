@@ -54,8 +54,8 @@ new thin-face coverage and isolation, progress/abort/pre-abort/invalid quality,
 actual painter cancel/close/stale/retry/checkpoint/pool/work refusal, actual UI default/
 Cancel while busy/Done late-result suppression/Quick comparison. Original943+944 eleven
 and reviewed release five pass. No original assertion relaxed; old943 size129 and
-8M refusal checks remain active. Read docs/paint-ao-quality-945.md. Full/publication
-proof follows. All changed AO/painter/shell reverse loader pins945 reviewed; main/
+8M refusal checks remain active. Read docs/paint-ao-quality-945.md. Published bc04adb6; local+hosted2737PASS,
+Pages and20 live-file matches verified. All changed AO/painter/shell reverse loader pins945 reviewed; main/
 cage/Multi1.0/frozen/modelling/UV/project/export algorithms unchanged.
 
 DEVICE945: on SAME recessed model hide old AO, Quality Quick→Bake/inspect/Cancel;
@@ -2480,3 +2480,28 @@ All original2731 and six new quality/cancellation checks pass on final source;
 original AO943/944 eleven and reviewed release five also pass. No assertions
 relaxed. Reviewed AO/painter/shell reverse graph945; protected main/cage/Multi1.0/
 frozen unchanged. Hosted/Pages/live publication proof follows; device quality pending.
+
+## .945 publication verified — 23 October 2026 (Brisbane)
+
+Runtime `bc04adb66457223c2a3654ecbd059ef41804a4bf`, tested tree
+`8ab57dcdbcfe0303c80932cfd8d4e5f91e951c40`, is published on main. Connected Git
+Data uploaded13 exact blobs and created identical tested tree; fetched main matched
+and local branch aligned cleanly. Local Node24 and hosted Node22 regression39887637934/
+job120199434595 both pass **2737 tests / 0 failures / 0 skipped**; complete hosted
+log totals verified (233.1s). Pages39887637391 build120199437013/deploy120199572392
+succeeded. All20 checked postdeployment shell/version, changed AO baker/transfer/
+painter UI/core, retained domain/triangle graph, recovery/main/cage/Multi1.0/UV/paint/
+project/export and frozenBeta7 marker byte-match tested source. Reviewed pins945;
+original assertions retained, protected/frozen algorithms unchanged. This proof
+changes four continuity files only; tested/published runtime bytes unchanged.
+
+Build945 complete and ready for SAME-model comparison: hide/delete old AO, Quality
+Quick64/16→Bake/inspect/Cancel; High256/64 at same Reach/Strength, compare finer shade
+and wait time. Medium128/64 remains available if High work cap refuses. Cancel during
+bake leaves no layer/history; retry/Apply, Layer opacity/visibility, Paint UndoRedo,
+SaveOpen/native shading. Old saved AO pixels do not automatically improve; rebake.
+User944PASS protects workflow with explicit poor/patchy appearance exception;945
+actual iPad quality/latency acceptance remains PENDING, not inferred from Node.
+Quality test proves actual higher grid/more levels/thin-face coverage, not perfect
+smoothness on every model. Alpha929/reflection gates remain independent. Next
+runtime refinement follows device comparison rather than unrelated lighting changes.
