@@ -12,7 +12,7 @@ User reaffirmed this permanent instruction on 21 October 2026.
 
 
 
-Build .959 validated2800PASS; publication in progress. .958 user PASS protected. Previous .958 published/verified: runtime8deba41d; local2800PASS;13/13 live files match. See final958 entry. Previous .957 published/verified: runtime cac6a27c;2799 distinct local checks PASS.
+Build .959 published/verified: runtime57cb1ca5; local/hosted2800PASS;16/16 live matches. .958 user PASS protected. Previous .958 published/verified: runtime8deba41d; local2800PASS;13/13 live files match. See final958 entry. Previous .957 published/verified: runtime cac6a27c;2799 distinct local checks PASS.
 Pages success;12/12 live files match; hosted regression SUCCESS. .956 PASS protected.
 Audit baseline main82ddf0de; published runtime cac6a27c. See .957 entry.
 User953 Cut UVs/954 picking/952 editor PASS protected;955 device gate still pending.
@@ -3467,3 +3467,13 @@ Pencil paint, fingers orbit/pan/pinch, UndoRedo stays in Paint; Done→radial→
 same layers. Try UV popup→close→Paint and Paint→Done→another tool. SaveOpen retains
 paint. File Paint entry still works. Invalid/no-UV targets retain original refusal.
 Next feedback on mainstream access before a separate paint-tool/layer radial build.
+
+.959 runtime57cb1ca5e86addf0d875e39fadd94fce8ac38088 published on main; uploaded
+tree0d80b7f3c25e805e9b422076e51921473cea5d66 exactly equals tested local tree.
+Local2800PASS/0FAIL/0skip, focused19PASS, final inventory/lifecycle14PASS. Hosted
+regression40069141161/job120798590171 SUCCESS:2800PASS/0FAIL/0skip;
+Pages40069140924 SUCCESS.
+All16 checked public files byte-match tested checkout (shell/version/new gizmo,
+original painter/adapter/session958/UV957/packing/main954/Multi1.0 and loader graph).
+User958 PASS explicitly protected;959 hands-on gate remains separate. No957 packing
+PASS inferred and no packing/paint/UV/session algorithm changed in959.

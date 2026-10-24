@@ -10528,3 +10528,13 @@ Pencil paint, fingers orbit/pan/pinch, UndoRedo stays in Paint; Done→radial→
 same layers. Try UV popup→close→Paint and Paint→Done→another tool. SaveOpen retains
 paint. File Paint entry still works. Invalid/no-UV targets retain original refusal.
 Next feedback on mainstream access before a separate paint-tool/layer radial build.
+
+.959 runtime57cb1ca5e86addf0d875e39fadd94fce8ac38088 published on main; uploaded
+tree0d80b7f3c25e805e9b422076e51921473cea5d66 exactly equals tested local tree.
+Local2800PASS/0FAIL/0skip, focused19PASS, final inventory/lifecycle14PASS. Hosted
+regression40069141161/job120798590171 SUCCESS:2800PASS/0FAIL/0skip;
+Pages40069140924 SUCCESS.
+All16 checked public files byte-match tested checkout (shell/version/new gizmo,
+original painter/adapter/session958/UV957/packing/main954/Multi1.0 and loader graph).
+User958 PASS explicitly protected;959 hands-on gate remains separate. No957 packing
+PASS inferred and no packing/paint/UV/session algorithm changed in959.
