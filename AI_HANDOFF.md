@@ -1,4 +1,4 @@
-# BoxLab AI Handoff — .956 / angle-based Auto atlas
+# BoxLab AI Handoff — .957 / variable-size UV packing
 
 ## Permanent rule — every build completion
 
@@ -12,9 +12,10 @@ User reaffirmed this permanent instruction on 21 October 2026.
 
 
 
-Build .956 published/verified: runtime f0b790fe; local + hosted2796PASS; live20/20 matches.
+Build .957 validated:2799 distinct checks PASS; publication pending. .956 user PASS.
+Current runtime baseline main82ddf0de; see .957 entry for narrow packing change.
 User953 Cut UVs/954 picking/952 editor PASS protected;955 device gate still pending.
-Current focus: fast angle-grouped Auto atlas4096 faces; Safari save-name explanation.
+Current focus: shelf packing and existing4096-island workspace controls.
 
 ## .956 — bounded angle-based Auto atlas; 4096-face limit — 24 October 2026 (Brisbane)
 
@@ -3380,3 +3381,27 @@ Undo/Redo, paint a new map, then .boxlab Save/Open should preserve UVs and paint
 mainstream Paint access, paint/layer radial and captioned icon UI remain recorded
 roadmap directions; none are part of956 runtime. Safari overwrite limitation remains
 browser-owned; Save/Open filename owner unchanged. Docs-only proof commit follows.
+
+## .957 — variable-size shelf packing; .956 PASS — 24 October 2026
+
+User .956 PASS /nextbuild protects angle Auto atlas and larger limits. Audit main
+82ddf0de: packedLayout allocates identical cells using largest chart bounds; original
+UV workspace still disabled Pack/density above128 despite4096-capable owner.
+Extend SAME packedLayout with height/width/ID sorted next-fit shelves and24 bounded
+common-scale trials. Choose only if common scale strictly improves over original
+grid; equal-sized charts retain original grid. No chart rotation, shape nesting,
+relaxation, seam changes or optimal-packing claim. Source geometry and original
+UV/history/paint refusal/numeric-collapse validation retained. All callers (Auto/
+Face atlas, Pack, Cut/Stitch repack) reuse original owner. Workspace Pack/density
+now enabled through4096 islands. Margin and count-dependent gaps unchanged.
+New tests verify mixed-size coverage, common relative density, separation, bounds,
+determinism, equal-size fallback and actual workspace129/4096/4097 control gating.
+Validation: full suite2797PASS/0FAIL/0skip (98.8s), plus two new shelf tests
+PASS separately (added after full run enumerated files);2799 distinct tests covered.
+Release+new packing/workspace focused11PASS. No assertions removed/relaxed.
+Publication pending; runtime/source checks complete.
+Reviewed reverse cache graph957; main954/picker954/gizmo955/Multi1.0/frozen unchanged.
+DEVICE957: unpainted varied-size mesh → Auto atlas → inspect packing; existing UV
+layout → Pack all; UndoRedo; paint then SaveOpen. Painted targets require Clear paint
+before UV repacking. Bigger chart bounding boxes do not guarantee tight concave nesting.
+Next follow actual packing quality/device timing before broader unwrap or UI changes.

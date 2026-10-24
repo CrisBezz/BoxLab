@@ -35,3 +35,6 @@ test('952 CSS isolates only active UV layers, keeps header priority and places o
   const shell=fs.readFileSync(new URL('../styles.css',import.meta.url),'utf8');assert.match(shell,/\.topbar\{[^}]*z-index:10/);
  }finally{f.restore();}
 });
+test('957 original workspace enables Pack and density through 4096 islands and refuses the next count',()=>{
+ const f=fixture();try{for(const count of [129,4096,4097]){f.api.setReport({...ready,islandCount:count},'');f.api.open();for(const action of ['pack','density'])assert.equal(f.root.querySelector(`[data-uv="${action}"]`).disabled,count>4096);}}finally{f.restore();}
+});

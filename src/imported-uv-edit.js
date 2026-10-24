@@ -182,7 +182,23 @@ function packedLayout(uvCorners,report){
   if(Number.isFinite(scale)&&scale>0&&(!best||scale>best.scale*(1+32*Number.EPSILON)))best={columns,rows,cellWidth,cellHeight,scale};
  }
  if(!best)return {reason:'UV island scale is out of range'};
- const result=uvCorners.map((face,fi)=>{const id=report.faceIslands[fi],b=normalized[id],u=.02+(id%best.columns)*(best.cellWidth+gap)+best.cellWidth/2,v=.02+Math.floor(id/best.columns)*(best.cellHeight+gap)+best.cellHeight/2;return face.map(([x,y])=>[u+((x/magnitude-b.minU)-b.width/2)*best.scale,v+((y/magnitude-b.minV)-b.height/2)*best.scale]);});
+ // Try height-sorted shelves alongside the accepted grid. Bounded 24-pass
+ // scale search; retain grid unless shelves increase the common scale.
+ const order=normalized.map((b,id)=>({...b,id})).sort((a,b)=>b.height-a.height||b.width-a.width||a.id-b.id);
+ function shelves(scale){
+  let x=0,y=0,rowHeight=0;const placements=Array(count);
+  for(const b of order){const w=b.width*scale,h=b.height*scale;
+   if(w>.96||h>.96)return null;
+   if(x+w>.96){y+=rowHeight+gap;x=0;rowHeight=0;}
+   if(y+h>.96)return null;
+   placements[b.id]={u:.02+x+w/2,v:.02+y+h/2};x+=w+gap;rowHeight=Math.max(rowHeight,h);
+  }
+  return placements;
+ }
+ let low=best.scale,high=Math.min(width?.96/width:Infinity,height?.96/height:Infinity),shelf=null;
+ for(let pass=0;pass<24;pass++){const scale=(low+high)/2,placed=shelves(scale);if(placed){low=scale;shelf=placed;}else high=scale;}
+ if(shelf&&low>best.scale*(1+1e-9))best={...best,scale:low,placements:shelf};
+ const result=uvCorners.map((face,fi)=>{const id=report.faceIslands[fi],b=normalized[id],u=best.placements?best.placements[id].u:.02+(id%best.columns)*(best.cellWidth+gap)+best.cellWidth/2,v=best.placements?best.placements[id].v:.02+Math.floor(id/best.columns)*(best.cellHeight+gap)+best.cellHeight/2;return face.map(([x,y])=>[u+((x/magnitude-b.minU)-b.width/2)*best.scale,v+((y/magnitude-b.minV)-b.height/2)*best.scale]);});
  // Refuse numeric collapse of any existing island extent rather than losing it.
  if(faces.some((ids,id)=>{const b=importedUVIslandBounds(result,ids),old=bounds[id];return old.maxU>old.minU&&b.maxU===b.minU||old.maxV>old.minV&&b.maxV===b.minV;}))return {reason:'UV packing exceeds the coordinate range'};
  if(result.some((face,fi)=>face.some((uv,j)=>{const k=(j+1)%face.length,a=uvCorners[fi][j],b=uvCorners[fi][k],next=face[k];return (a[0]!==b[0]||a[1]!==b[1])&&uv[0]===next[0]&&uv[1]===next[1]||(Math.fround(a[0])!==Math.fround(b[0])||Math.fround(a[1])!==Math.fround(b[1]))&&Math.fround(uv[0])===Math.fround(next[0])&&Math.fround(uv[1])===Math.fround(next[1]);})))return {reason:'UV packing would collapse an existing UV edge'};
