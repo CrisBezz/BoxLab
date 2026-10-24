@@ -310,7 +310,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/mesh-health.js?v=0.36.18.959",
+      "url": "./src/mesh-health.js?v=0.36.18.960",
       "target": "src/mesh-health.js",
       "sha256": "18a99f63b89cf5821f5295d8a9ee5f3631e6dfbd3e21acaebaa95b55d944be8a",
       "sourceVersion": "0.36.18.880"
@@ -329,7 +329,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/multi-object.js?v=0.36.18.959",
+      "url": "./src/multi-object.js?v=0.36.18.960",
       "target": "src/multi-object.js",
       "sha256": "6b18d90dc8e815e97be8adb86936f0274a915869cfbdf1ea0c70c1067a6dd841"
     },
@@ -360,7 +360,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/primitive-ui.js?v=0.36.18.959",
+      "url": "./src/primitive-ui.js?v=0.36.18.960",
       "target": "src/primitive-ui.js",
       "sha256": "5d3300e69bd1d61a036f56a1ccebad5e3ecc4e51fee27b165da80f8959b2f35f"
     },
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.959",
+      "url": "./src/release-bootstrap.js?v=0.36.18.960",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.959",
+      "url": "./src/release-version.js?v=0.36.18.960",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -539,7 +539,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/tool-session-ui.js?v=0.36.18.959",
+      "url": "./src/tool-session-ui.js?v=0.36.18.960",
       "target": "src/tool-session-ui.js",
       "sha256": "bc4e273dd2c35ddaa80f34993ea3fe8035c959d2b5a2f0182906069e0147cb18"
     },
@@ -551,7 +551,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/total-gizmo.js?v=0.36.18.959",
+      "url": "./src/total-gizmo.js?v=0.36.18.960",
       "target": "src/total-gizmo.js",
       "sha256": "cdfef6a111cd66cb99ec096e1d8068b2f42a63fe815acc64ea217fcd0a938fa9"
     },
@@ -2481,8 +2481,8 @@
     {
       "owner": "index.html",
       "target": "src/viewport-paint.js",
-      "url": "./src/viewport-paint.js?v=0.36.18.951",
-      "sha256": "f82201402a4f035ab55ab4218689e55f5232bd96c3d20486c4b3bc68acf4d11c"
+      "url": "./src/viewport-paint.js?v=0.36.18.960",
+      "sha256": "91b69d98336aa1766139ca47d80c13997cb580644e709efa9c6fe71046e9830b"
     },
     {
       "owner": "src/viewport-paint.js",

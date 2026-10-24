@@ -1,4 +1,4 @@
-# BoxLab AI Handoff — .959 / Paint access from Object radial
+# BoxLab AI Handoff — .960 / Paint brush-tool radial
 
 ## Permanent rule — every build completion
 
@@ -12,7 +12,7 @@ User reaffirmed this permanent instruction on 21 October 2026.
 
 
 
-Build .959 published/verified: runtime57cb1ca5; local/hosted2800PASS;16/16 live matches. .958 user PASS protected. Previous .958 published/verified: runtime8deba41d; local2800PASS;13/13 live files match. See final958 entry. Previous .957 published/verified: runtime cac6a27c;2799 distinct local checks PASS.
+Build .960 validated2802PASS; publication pending. .959 user PASS protected. Previous .959 published/verified: runtime57cb1ca5; local/hosted2800PASS;16/16 live matches. .958 user PASS protected. Previous .958 published/verified: runtime8deba41d; local2800PASS;13/13 live files match. See final958 entry. Previous .957 published/verified: runtime cac6a27c;2799 distinct local checks PASS.
 Pages success;12/12 live files match; hosted regression SUCCESS. .956 PASS protected.
 Audit baseline main82ddf0de; published runtime cac6a27c. See .957 entry.
 User953 Cut UVs/954 picking/952 editor PASS protected;955 device gate still pending.
@@ -3477,3 +3477,28 @@ All16 checked public files byte-match tested checkout (shell/version/new gizmo,
 original painter/adapter/session958/UV957/packing/main954/Multi1.0 and loader graph).
 User958 PASS explicitly protected;959 hands-on gate remains separate. No957 packing
 PASS inferred and no packing/paint/UV/session algorithm changed in959.
+
+## .960 — captioned brush-tool radial in Paint dock; .959 PASS — 24 October 2026
+
+User959 PASS /nextbuild protects original Object radial UV Paint access and accepted
+958 clipping fix. Audit current099f117d: painter's paint-action select owns tool
+settings/change cancellation, Brush/Fill/Eraser/Smudge/Blur already implemented.
+Replace visible select with native details Brush tools picker in SAME Paint dock;
+original select remains hidden as settings/event owner. Five66×52px buttons on a
+220px radial, SVG function icons and visible captions; selected aria-pressed highlight
+and collapsed current-tool caption. Each click checks original active/disabled gate,
+sets original select and dispatches SAME change event (clear staged image/cancel live
+stroke/sync controls). Picker closes on choice and session end. AO disabled selection
+is mirrored. No new viewport input, brush raster/history/paint resource or layer owner.
+Accepted left dock/footer/layers/settings/gesture/tool positions retained. No layer
+radial, facegroups or broad reskin in960; staged graphical UI only on these5 tools.
+Two actual production UI integrations: all5 tools/caption/selection/blur controls/
+no history and disabled refusal; live Pencil stroke→radial switch cancels original
+contact while retaining committed paint/history and navigation. Initial new fixture
+read aria-pressed from property instead of existing attributes map; corrected test
+access, no production workaround or original assertion removed. New+release7PASS,
+original900 UI/core+release12PASS. Full local2802PASS/0FAIL/0skip (97.20s); publication evidence follows.
+DEVICE960: Object→UV Paint→Brush tools; inspect icons/captions, pick Brush/Eraser/
+Fill/Blur/Smudge; picker collapses and current tool caption follows. Paint/UndoRedo,
+finger navigation; Done→reopen and verify compact dock/layers. UV popup clipping
+and959 Object radial entry remain protected. Next feedback before layer/mask radial.
