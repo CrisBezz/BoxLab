@@ -303,9 +303,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/main.js?v=0.36.18.954",
+      "url": "./src/main.js?v=0.36.18.962",
       "target": "src/main.js",
-      "sha256": "e2077661509db3a520ec5d6ef9f69d4937d757e3e20c43d522cd59671b6b420b",
+      "sha256": "e8e1863d26740b3a055e29d73b8f9fe9f7f13f8bc4c6a80de203d560c116d4ea",
       "sourceVersion": "0.35.1"
     },
     {
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.961",
+      "url": "./src/release-bootstrap.js?v=0.36.18.962",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.961",
+      "url": "./src/release-version.js?v=0.36.18.962",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -3113,6 +3113,12 @@
       "url": "./edge-screen-picking.js?v=0.36.18.954",
       "target": "src/edge-screen-picking.js",
       "sha256": "f33deb2304b073b41761071541a8a20b66b2f44a0f2ce9135e5df1c3fa1ae3f3"
+    },
+    {
+      "owner": "src/main.js",
+      "target": "src/viewport-sizing.js",
+      "url": "./viewport-sizing.js?v=0.36.18.962",
+      "sha256": "aac3f643c559187173f28c32da31981c1fea208be5ddce8181d69891afb83c7a"
     }
   ]
 }

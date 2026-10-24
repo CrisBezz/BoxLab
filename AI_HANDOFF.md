@@ -1,4 +1,4 @@
-# BoxLab AI Handoff — .961 / gizmo projection and recurring UI clipping
+# BoxLab AI Handoff — .962 / viewport sizing; .961 rendering FAIL
 
 ## Permanent rule — every build completion
 
@@ -12,7 +12,7 @@ User reaffirmed this permanent instruction on 21 October 2026.
 
 
 
-Build .961 validated2804PASS; publication in progress. .960 brush radial PASS; recurring UI clipping OPEN. Previous .960 published/verified: runtime61f9d1b7; local/hosted2802PASS;16/16 live matches. .959 user PASS protected. Previous .959 published/verified: runtime57cb1ca5; local/hosted2800PASS;16/16 live matches. .958 user PASS protected. Previous .958 published/verified: runtime8deba41d; local2800PASS;13/13 live files match. See final958 entry. Previous .957 published/verified: runtime cac6a27c;2799 distinct local checks PASS.
+Build .962 validated30 relevant checks; publication in progress. .961 user FAIL for right-side UI; rotation workaround. Previous .961 published/verified: runtime5fb4a4fa; local2804PASS; hosted SUCCESS;16/16 live matches. .960 brush radial PASS; recurring UI clipping OPEN. Previous .960 published/verified: runtime61f9d1b7; local/hosted2802PASS;16/16 live matches. .959 user PASS protected. Previous .959 published/verified: runtime57cb1ca5; local/hosted2800PASS;16/16 live matches. .958 user PASS protected. Previous .958 published/verified: runtime8deba41d; local2800PASS;13/13 live files match. See final958 entry. Previous .957 published/verified: runtime cac6a27c;2799 distinct local checks PASS.
 Pages success;12/12 live files match; hosted regression SUCCESS. .956 PASS protected.
 Audit baseline main82ddf0de; published runtime cac6a27c. See .957 entry.
 User953 Cut UVs/954 picking/952 editor PASS protected;955 device gate still pending.
@@ -3545,3 +3545,68 @@ Browser/status remain visible. Move/Rotate/Scale and radial tools still usable;
 Paint/UndoRedo and finger navigation preserved. Next actual961 rendering feedback
 before unrelated features. If recurrence persists, keep independent clipping report
 open and inspect other filtered/overflowing layers; do not infer acceptance.
+
+## Paint UI direction clarified by user — 24 October2026
+
+User says960 dock-contained radial misunderstood intent. Desired SAME floating
+viewport radial theme as Vertex/Edge/Face/Object, with Paint context. Choose brush:
+radial disappears; compact, correctly sized contextual settings at TOP CENTRE;
+remaining viewport clear for painting. Hold EMPTY BACKGROUND to reopen Paint radial,
+choose Blur/etc, then radial disappears and contextual top panel changes. Layers,
+masks and image placement should open contextual panels only when requested.
+Existing left all-controls dock is transitional, not desired final Paint interface.
+User explicitly defers possible bottom-left Paint mode button alongside selection.
+Do not silently replace this request with another radial embedded in a dock.
+Stage migration using current painter/action/history/layer owners and shared panel
+position/compact layout; no new brush engine. Paint-context background hold must
+belong to single existing gesture owner and override modelling invert ONLY while
+painting; fingers still orbit/pan/pinch, Pencil paints, UndoRedo stays in Paint.
+Do not open a radial from a surface paint stroke or navigation; cancel pending hold
+on movement/multitouch. Scope regular modelling radial/gesture owners unchanged.
+This is documented direction;961 fixes rendering only and does not ship this UI.
+
+.961 publication verified: runtime5fb4a4fabeee8c8155b9dfc3cba918536b5bed23,
+exact tested tree00cbdf01bb0719b4dbcad13c4e180202937be354. Local2804PASS,
+0FAIL/0skip; focused7PASS. Pages40073818786 SUCCESS; hosted regression40073818564
+SUCCESS. All16 checked public runtime/loader/protected files byte-match tested tree.
+Device961 red/green lines and orbit-dependent clipping acceptance remains pending;
+no proof of iPad compositor root cause inferred from automated passes.
+
+## .962 — startup/lifecycle viewport sizing; .961 rendering FAIL — 24 October2026
+
+User961 FAIL: right-side UI broken immediately after refresh; portrait→landscape
+restores it. Do NOT mark961 rendering fixed from2804 automated passes.960 brush
+radial acceptance is separate; user's clarified floating viewport Paint radial with
+compact TOP contextual settings remains recorded and is NOT implemented in962.
+Audit main5fb4a4fa: renderer resize runs once at startup and on window.resize only,
+DPR is set once. Later layout/container/visual viewport changes have no sizing owner.
+Original main resize now accepts measured width/height/cappedDPR and updates SAME
+renderer/camera/selection display. New small viewport-sizing scheduler coalesces
+ResizeObserver, window resize/orientation/pageshow, visualViewport resize and semantic
+tool-session transitions into one frame. Startup has an additional settling frame.
+Unchanged observer dimensions no-op; lifecycle transitions request one same-size
+canvas repaint. Zero sizes defer, DPR is capped2, no per-frame polling/synthetic
+resize events/temporary1px jiggle/forcedorientation/second renderer or input owner.
+This follows rotation's resize/repaint path but exact iPad compositor fault remains
+unreproduced;962 is a targeted lifecycle repair requiring device feedback.
+Main changes ONLY helper import, resize function and binding; internal main stamp
+retained. Main loader962 intentional.961 gizmo bounds retained; UV/paint/geometry/
+history, protectedMulti1.0 and frozen releases unchanged. Reviewed asset contract
+adds exact main→viewport-sizing import; shell/recovery/main pins962.
+Three integrations: original main resize callback preserves renderer/camera/position;
+startup/settled layout/container-only resize/DPR/coalescing/no
+polling; same-size pageshow/session/orientation repaint/zero-size/cleanup. Focused7PASS.
+Full/publication evidence follows. Prior961 proof and clarified Paint direction are
+included in this handoff, superseded by explicit961 FAIL above.
+DEVICE962: refresh in LANDSCAPE without rotation; inspect whole right toolbar/Object
+Browser/status. UV tools→Editor→Back/Close, orbit to both sides. Paint→Done checks
+lines independently, then Move/Rotate/Scale and UndoRedo. Report if rotation is still
+needed; do not infer device PASS from tests. Defer Paint layout migration until stable.
+
+.962 targeted validation30PASS/0FAIL/0skip (~1.1s): production sizing scheduler+
+main resize, release contract, original961 ring guards,954 picking,952 UV workspace,
+900 actual Paint/core and960 brush radial. Syntax checks main/helper pass. Prior full
+run was interrupted and temporary log unavailable; no full962 count claimed.
+User asks why builds slow: avoid blocking handover on duplicate local+hosted full
+suite for narrow changes; run relevant checks and verify deployment, report hosted
+full-suite status accurately. GitHub still runs full regression automatically.
