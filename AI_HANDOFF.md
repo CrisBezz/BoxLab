@@ -12,8 +12,9 @@ User reaffirmed this permanent instruction on 21 October 2026.
 
 
 
-Build .957 validated:2799 distinct checks PASS; publication pending. .956 user PASS.
-Current runtime baseline main82ddf0de; see .957 entry for narrow packing change.
+Build .957 published/verified: runtime cac6a27c;2799 distinct local checks PASS.
+Pages success;12/12 live files match; hosted regression SUCCESS. .956 PASS protected.
+Audit baseline main82ddf0de; published runtime cac6a27c. See .957 entry.
 User953 Cut UVs/954 picking/952 editor PASS protected;955 device gate still pending.
 Current focus: shelf packing and existing4096-island workspace controls.
 
@@ -3399,7 +3400,12 @@ determinism, equal-size fallback and actual workspace129/4096/4097 control gatin
 Validation: full suite2797PASS/0FAIL/0skip (98.8s), plus two new shelf tests
 PASS separately (added after full run enumerated files);2799 distinct tests covered.
 Release+new packing/workspace focused11PASS. No assertions removed/relaxed.
-Publication pending; runtime/source checks complete.
+Published runtime cac6a27c2488700ae7c289c1d0fe3418ce41d370; exact tested tree
+c0b12d1cb6abfe78cc6439aab2800fdd8bb265a0 verified before updating main.
+Pages40067515702 SUCCESS;12/12 public files byte-match (all changed runtime/cache
+loaders plus protected main954/Multi1.0). Hosted regression40067515962/job120793756375 SUCCESS; complete hosted logs
+verify2799PASS/0FAIL/0skip. Local full and focused checks above passed.
+No device957 PASS inferred. Docs-only proof commit follows; runtime unchanged.
 Reviewed reverse cache graph957; main954/picker954/gizmo955/Multi1.0/frozen unchanged.
 DEVICE957: unpainted varied-size mesh → Auto atlas → inspect packing; existing UV
 layout → Pack all; UndoRedo; paint then SaveOpen. Painted targets require Clear paint
