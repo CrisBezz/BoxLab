@@ -4,7 +4,7 @@ import {autoCloseSimpleHoles,simpleBoundaryLoops} from './mesh-auto-close-core.j
 import {boundaryDiagnostics} from './mesh-boundary-diagnostics-core.js?v=0.36.18.443';
 import {unifyFaceWinding,flipAllFaces,triangulateMesh} from './mesh-normals-triangulate-core.js?v=0.36.18.443';
 import {inspectImportedUV} from './imported-uv-inspection.js?v=0.36.18.951';
-import {cutNativeUVEdges,clearNativePaint,rotateImportedUV,flipImportedUV,moveImportedUV,scaleImportedUV,rotateImportedUVByAngle,fitImportedUVToTile,packImportedUVIslands,equalizeImportedUVDensity,createPlanarUV,createFaceAtlasUV,createCoplanarAtlasUV,createBoxUV,createCylinderUV,createSphereUV,createTorusUV} from './imported-uv-edit.js?v=0.36.18.953';
+import {stitchNativeUVEdge,cutNativeUVEdges,clearNativePaint,rotateImportedUV,flipImportedUV,moveImportedUV,scaleImportedUV,rotateImportedUVByAngle,fitImportedUVToTile,packImportedUVIslands,equalizeImportedUVDensity,createPlanarUV,createFaceAtlasUV,createCoplanarAtlasUV,createBoxUV,createCylinderUV,createSphereUV,createTorusUV} from './imported-uv-edit.js?v=0.36.18.955';
 import {createUVWorkspace} from './uv-workspace.js?v=0.36.18.952';
 
 // One-shot Edge action uses the original selected edge indices and native history.
@@ -13,6 +13,11 @@ cutUVButton.id='cutUVEdgesBtn';cutUVButton.type='button';cutUVButton.textContent
 cutUVButton.title='Split and repack existing UV islands along selected complete cuts; clear paint first';
 document.querySelector('.mode-tools[data-mode-tools="edge"]')?.appendChild(cutUVButton);
 cutUVButton.addEventListener('click',cutSelectedUVEdges);
+const stitchUVButton=document.createElement('button');
+stitchUVButton.id='stitchUVEdgeBtn';stitchUVButton.type='button';stitchUVButton.textContent='Stitch UVs';
+stitchUVButton.title='Join two flat UV islands across one selected seam and repack; clear paint first';
+document.querySelector('.mode-tools[data-mode-tools="edge"]')?.appendChild(stitchUVButton);
+stitchUVButton.addEventListener('click',stitchSelectedUVEdge);
 function cutSelectedUVEdges(){
  const selection=globalThis.__boxlabSelectionBridge;
  if(currentMode()!=='edge'||selection?.mode?.()!=='edge')return false;
@@ -25,6 +30,21 @@ function cutSelectedUVEdges(){
   globalThis.__boxlabBridgeState?.scene?.traverse(body=>{if(body.userData?.kind==='body')globalThis.__boxlabRenderModes?.apply?.(body);});
  }
  setStatus(result.ok?result.changed?`UVs cut + repacked • ${result.islandCount} islands • Undo to restore`:'Cut UVs • selected edges are already UV seams or mesh boundaries':`Cut UVs • ${result.reason}`);
+ return result.ok;
+}
+
+function stitchSelectedUVEdge(){
+ const selection=globalThis.__boxlabSelectionBridge;
+ if(currentMode()!=='edge'||selection?.mode?.()!=='edge')return false;
+ const object=activeObject(),mesh=liveMesh(),ids=selection.indices?.()||[];
+ if(!object||!mesh||ids.length!==1){setStatus('Stitch UVs • select one shared edge between flat UV islands');return false;}
+ const edges=mesh.edges(),edge=Number.isInteger(ids[0])?edges[ids[0]]:null;
+ const result=stitchNativeUVEdge(object,mesh,globalThis.__boxlabExportAs?.topologySignature,globalThis.__boxlabObjectHistory,edge?[edge.a,edge.b]:null);
+ if(result.ok&&result.changed){
+  manager()?.saveActive?.();
+  globalThis.__boxlabBridgeState?.scene?.traverse(body=>{if(body.userData?.kind==='body')globalThis.__boxlabRenderModes?.apply?.(body);});
+ }
+ setStatus(result.ok?result.changed?`UVs stitched + repacked • ${result.islandCount} islands • Undo to restore`:'Stitch UVs • selected edge is already joined':`Stitch UVs • ${result.reason}`);
  return result.ok;
 }
 

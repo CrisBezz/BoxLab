@@ -10227,3 +10227,72 @@ picker and real Flip/history/input fixtures pass; actual iPad feel/appearance re
 pending. Screenshot952 failure reproduced on same picker in953; no forced stale-cache
 workaround. User952 UI/history PASS protected;953 Cut UVs device gate remains separate.
 Next actual954 feedback before further unwrap/seam features; no new953/954 PASS inferred.
+
+
+## .955 — coplanar Stitch UVs; .953 and .954 user PASS — 24 October 2026 (Brisbane)
+
+User explicitly953PASS and954PASS /nextbuild. Protect complete Edge Cut UVs,
+UndoRedo/Paint/SaveOpen and screen-proximity Edge targeting, Flip/reselect, selected
+neighbour toggle/Pencil paint selection and finger navigation.952 editor UI acceptance
+also retained. Prior pending953/954 notes below are historical, superseded here.
+Independent alpha929/smooth-metal reflection gates are not implied accepted.
+
+Audit main488e34ee: no stitch exists. Original inspector owns manifold adjacency and
+island membership; original Box projection supplies a canonical plane mapping;
+original coplanar seed grouping951, grid Pack and native commit already exist.
+Add Edge radial outer112.5° Stitch UVs, with all prior positions unchanged. Single
+current selected shared edge; original button/action host in MeshHealth and original
+radial one-shot completion. No new popup/raw input/history/mesh/triangulation owner.
+
+First stitch supports TWO islands on SAME oriented flat source plane, native/plain/
+independent unpainted Base meshes only;128faces/20Kcorners. Existing current charts
+must each match canonical plane coordinates under uniform similarity/reflection.
+Moved/rotated/scaled/flipped charts supported; internally distorted/warped/bent/
+non-coplanar charts refuse. Original lower-face chart supplies the fit; move the other
+into its plane frame, snap common vertex-ID corners to ORIGINAL exact anchor values.
+All shared boundaries between that pair join; no spatial welding, per-face topology
+changes or saved seam flags. Original grid Pack then repacks ALL islands with common
+scale and commits ONCE. Moving chart density/orientation matches retained chart before
+Pack; untouched chart shapes/relative density retained. Final inspector must report
+EXACT intended two-to-one membership, no unrelated merges/splits. Same-island joined
+edge no-ops; an internal slit refuses, as no whole-chart join can repair it.
+
+All colour/roughness/metalness paint refuses before staging/history, with explicit
+Object UV Clear paint guidance. Original unsupported target/history/finite/collapse/
+Pack guards retained. No general curved unwrap, cube-net unfolding, optimal packing,
+arbitrary overlap repair or paint resampling. Native source:boxlab corner schema,
+geometry, project/history/export owners remain unchanged. Canonical Box is transient
+validation/alignment only, not a replacement live UV mapping or parallel kernel.
+
+Six new integrations: Cut→Stitch exact endpoints/geometry/peer isolation/repeat no-op;
+rotated/scaled/mirrored either chart and source scale/translation; unrelated island
+membership; non-planar/distorted/boundary/ambiguous/refused targets and history/work
+atomicity; actual UndoRedo/Paint/SaveOpen/GLB; actual Edge callback and radial launch/
+puck restoration. Original953/954 semantic checks retained. Old713/709 Edge inventory
+now21, retaining all previous IDs and shared cross-mode positions. Focused new/Cut/
+picking/radial/release35PASS. Full and publication proof follows. ONLY UV edit,
+MeshHealth callback and gizmo functionality change; other runtime changes are reviewed
+UV/Add/Multi/Lab reverse loader pins955 and shell/recovery. Main954/picker954/cage930/
+Multi1.0/frozen bytes unchanged. No953/954 acceptance lost during seam work.
+
+DEVICE955: UV Plane X2/Y1 → shared Edge Cut UVs → select SAME edge → Stitch UVs.
+UV Editor shows one joined island; Pencil move moves both faces. UndoRedo steps through
+stitch/cut separately. Move/rotate/scale an island before stitching; same flat patch
+joins/re-packs. Paint after stitch, SaveOpen retains result. Already-joined repeat
+no-ops; curved/same-cube-corner faces or painted targets refuse without changing work.
+Next actual955 device feedback before expanding stitch/general unwrap; preserve
+accepted953 cuts/954 picking/952 UI and all protected navigation/modelling behavior.
+
+- [x] USER953 PASS: Cut UVs / island editing / UndoRedo / Paint / SaveOpen protected.
+- [x] USER954 PASS: supplied convex-edge selection / Flip reselect / navigation protected.
+- [ ] DEVICE955: Cut then Stitch a flat UV Plane; island editing, UndoRedo and Paint/SaveOpen.
+
+.955 final local Node24.19.0 full regression: **2789 PASS / 0 FAIL / 0 skipped**
+(93.4s), original2783 retained plus six Stitch integrations. New/Cut/accepted954
+picking/radial/release35PASS. Original953 source-test boundaries kept intact after
+initial new-button placement exposed a fixture slice; button declarations precede
+both callbacks, and original assertions remain.713/709 inventory now21 with every
+old tool retained. No old behavior assertion removed or relaxed. Main/picker/toggle/
+Edge-paint954, cage930/Multi1.0/frozen bytes unchanged. Reviewed9-file reverse UV/
+Add/Multi/Lab/gizmo closure955 and recovery pins; full hosted/Pages/live proof follows.
+Actual955 iPad feel/flat-stitch workflow acceptance pending;953/954 user PASS protected.

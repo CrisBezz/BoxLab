@@ -64,6 +64,56 @@ export function cutNativeUVEdges(object,mesh,topologySignature,history,edgePairs
  const result=commitNativeUV(object,mesh,topologySignature,history,packed.uvCorners);
  return {...result,islandCount:check.islandCount};
 }
+// First stitch: two flat native charts. Reuse canonical Box coordinates only
+// to recover their relative planar placement; retain existing connectivity/Pack/
+// commit owners and refuse distorted or curved charts rather than flatten them.
+export function stitchNativeUVEdge(object,mesh,topologySignature,history,pair){
+ const error=nativeUVTargetError(object,mesh,topologySignature);if(error)return {ok:false,reason:error};
+ if(object.colourPaint||object.roughnessPaint||object.metalnessPaint)return {ok:false,reason:'Clear paint in Object → UV before stitching UVs; existing paint is retained'};
+ if(mesh.faces.length>128||mesh.faces.reduce((n,f)=>n+(Array.isArray(f)?f.length:0),0)>20000)return {ok:false,reason:'Stitch UVs supports up to 128 faces and 20,000 corners'};
+ if(!Array.isArray(pair)||pair.length!==2||pair.some(id=>!Number.isInteger(id)||id<0||id>=mesh.vertices.length)||pair[0]===pair[1])return {ok:false,reason:'Select one shared mesh edge to stitch'};
+ const previous=object.glbPassthrough,report=inspectImportedUV(mesh,previous,topologySignature,{includeEdgeOwners:true});
+ if(report.state!=='ready'||report.missingFaces||report.mappedFaces!==report.faces)return {ok:false,reason:'Complete matching native UVs are required'};
+ const key=pair[0]<pair[1]?`${pair[0]}:${pair[1]}`:`${pair[1]}:${pair[0]}`,owners=report.edgeOwners.get(key);
+ if(owners?.length!==2||owners[0].fi===owners[1].fi||owners[0].a!==owners[1].b||owners[0].b!==owners[1].a)return {ok:false,reason:'Stitch UVs needs one unambiguous shared manifold edge'};
+ const [fixed,moving]=owners,[fixedId,movingId]=owners.map(o=>report.faceIslands[o.fi]);
+ const endpoints=(uv,o)=>pair.map(id=>uv[o.fi][mesh.faces[o.fi].indexOf(id)]);
+ if(fixedId===movingId){const a=endpoints(previous.uvCorners,fixed),b=endpoints(previous.uvCorners,moving);return a.every((p,i)=>p.every((v,k)=>v===b[i][k]))?{ok:true,changed:false,islandCount:report.islandCount}:{ok:false,reason:'Choose a seam between two separate flat UV islands'};}
+ const candidate={},projected=createBoxUV(candidate,mesh,topologySignature,nativeUVCandidate);if(!projected.ok)return projected;
+ const groups=coplanarFaceGroups(mesh),plane=groups[fixed.fi],touched=report.faceIslands.flatMap((id,fi)=>id===fixedId||id===movingId?[fi]:[]);
+ if(touched.some(fi=>groups[fi]!==plane||new Set(mesh.faces[fi]).size!==mesh.faces[fi].length))return {ok:false,reason:'Stitch UVs currently needs two coplanar flat islands'};
+ const canonical=candidate.glbPassthrough.uvCorners;let magnitude=1;
+ for(const face of previous.uvCorners)for(const p of face)for(const v of p)magnitude=Math.max(magnitude,Math.abs(v));
+ const normalized=previous.uvCorners.map(f=>f.map(p=>p.map(v=>v/magnitude)));
+ function frame(island,owner){
+  const [a,b]=endpoints(canonical,owner),[x,y]=endpoints(normalized,owner),d=b.map((v,k)=>v-a[k]),e=y.map((v,k)=>v-x[k]),length=d[0]*d[0]+d[1]*d[1];
+  const ids=report.faceIslands.flatMap((id,fi)=>id===island?[fi]:[]),bounds=importedUVIslandBounds(normalized,ids),tolerance=Math.max(bounds.maxU-bounds.minU,bounds.maxV-bounds.minV)*1e-10;
+  if(!(length>0)||!Math.hypot(...e)||!tolerance)return null;
+  for(const sign of [1,-1]){
+   const map=p=>{const du=p[0]-a[0],dv=p[1]-a[1],u=(du*d[0]+dv*d[1])/length,v=(d[0]*dv-d[1]*du)/length*sign;return [x[0]+u*e[0]-v*e[1],x[1]+u*e[1]+v*e[0]];};
+   if(ids.every(fi=>canonical[fi].every((p,j)=>{const q=map(p),r=normalized[fi][j];return q.every(Number.isFinite)&&Math.hypot(q[0]-r[0],q[1]-r[1])<=tolerance;})))return {map,tolerance};
+  }
+  return null;
+ }
+ const anchor=frame(fixedId,fixed);if(!anchor||!frame(movingId,moving))return {ok:false,reason:'Stitch UVs needs planar charts with uniform scale and no internal distortion'};
+ // Exact native connectivity uses vertex IDs, not geometric proximity. Snap
+ // shared corners to the retained chart's ORIGINAL values after the fit check.
+ const shared=new Map();
+ for(let fi=0;fi<mesh.faces.length;fi++)if(report.faceIslands[fi]===fixedId)mesh.faces[fi].forEach((id,j)=>{
+  const p=previous.uvCorners[fi][j],old=shared.get(id);shared.set(id,shared.has(id)&&(!old||old.some((v,k)=>v!==p[k]))?null:p);
+ });
+ const corners=previous.uvCorners.map((face,fi)=>report.faceIslands[fi]!==movingId?face:face.map((p,j)=>{
+  const q=anchor.map(canonical[fi][j]),id=mesh.faces[fi][j];
+  if(shared.has(id)){const exact=shared.get(id);if(!exact||Math.hypot(q[0]-exact[0]/magnitude,q[1]-exact[1]/magnitude)>anchor.tolerance)return null;return [...exact];}
+  return q.map(v=>v*magnitude);
+ }));
+ if(corners.some(face=>face.some(p=>!p||p.some(v=>!Number.isFinite(v)))))return {ok:false,reason:'Stitch UVs could not align the shared boundary safely'};
+ const ids=new Map(),faceIslands=report.faceIslands.map(id=>{const merged=id===movingId?fixedId:id;if(!ids.has(merged))ids.set(merged,ids.size);return ids.get(merged);}),joined={islandCount:ids.size,faceIslands};
+ const packed=packedLayout(corners,joined);if(packed.reason)return {ok:false,reason:packed.reason};
+ const check=inspectImportedUV(mesh,{...previous,uvCorners:packed.uvCorners},topologySignature);
+ if(check.state!=='ready'||check.faceIslands.some((id,fi)=>id!==faceIslands[fi]))return {ok:false,reason:'Stitch UVs would change an unrelated island connection'};
+ return {...commitNativeUV(object,mesh,topologySignature,history,packed.uvCorners),islandCount:check.islandCount};
+}
 // Equal average UV area per Base surface area; island centres/orientation stay fixed.
 // This does not remove internal stretch or overlap. Pack all remains a separate action.
 export function equalizeImportedUVDensity(object,mesh,topologySignature,history,scope){
