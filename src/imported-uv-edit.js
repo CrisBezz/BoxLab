@@ -123,7 +123,7 @@ export function equalizeImportedUVDensity(object,mesh,topologySignature,history,
 }
 function densityLayout(mesh,payload,report,faceTriangles=null){
  const refuse=()=>({reason:'Equalize density needs non-degenerate UVs and finite planar Base faces'});
- const count=report.islandCount;if(count<1||count>128)return {reason:'Equalize density supports 1–128 UV islands'};
+ const count=report.islandCount;if(count<1||count>4096)return {reason:'Equalize density supports 1–4096 UV islands'};
  const faces=Array.from({length:count},()=>[]);report.faceIslands.forEach((id,fi)=>faces[id].push(fi));
  const bounds=faces.map(ids=>importedUVIslandBounds(payload.uvCorners,ids));
  let worldMagnitude=0,uvMagnitude=0;
@@ -164,7 +164,7 @@ function densityLayout(mesh,payload,report,faceTriangles=null){
 // Deterministic grid packing, not an optimal atlas solver. One common scale
 // preserves existing relative UV density; island bounds stay in separate cells.
 function packedLayout(uvCorners,report){
- const count=report.islandCount;if(count<1||count>128)return {reason:'Pack all supports 1–128 UV islands'};
+ const count=report.islandCount;if(count<1||count>4096)return {reason:'Pack all supports 1–4096 UV islands'};
  const faces=Array.from({length:count},()=>[]);report.faceIslands.forEach((id,fi)=>faces[id].push(fi));
  const bounds=faces.map(ids=>importedUVIslandBounds(uvCorners,ids));let magnitude=0;
  for(const b of bounds)for(const value of Object.values(b))magnitude=Math.max(magnitude,Math.abs(value));
@@ -172,14 +172,17 @@ function packedLayout(uvCorners,report){
  const normalized=bounds.map(b=>({minU:b.minU/magnitude,minV:b.minV/magnitude,width:b.maxU/magnitude-b.minU/magnitude,height:b.maxV/magnitude-b.minV/magnitude}));
  if(normalized.some(b=>!b.width&&!b.height))return {reason:'A UV island has no packable extent'};
  const width=Math.max(...normalized.map(b=>b.width)),height=Math.max(...normalized.map(b=>b.height));let best=null;
+ // Keep accepted small layouts exact. Dense atlases reserve ~20% per axis for
+ // gaps instead of exhausting the tile with a fixed 2% gap per island.
+ const gap=count<=128?.02:.2/Math.ceil(Math.sqrt(count));
  for(let columns=count;columns>=1;columns--){
-  const rows=Math.ceil(count/columns),cellWidth=(.96-(columns-1)*.02)/columns,cellHeight=(.96-(rows-1)*.02)/rows;
+  const rows=Math.ceil(count/columns),cellWidth=(.96-(columns-1)*gap)/columns,cellHeight=(.96-(rows-1)*gap)/rows;
   if(cellWidth<=0||cellHeight<=0)continue;
   const scale=Math.min(width?cellWidth/width:Infinity,height?cellHeight/height:Infinity);
   if(Number.isFinite(scale)&&scale>0&&(!best||scale>best.scale*(1+32*Number.EPSILON)))best={columns,rows,cellWidth,cellHeight,scale};
  }
  if(!best)return {reason:'UV island scale is out of range'};
- const result=uvCorners.map((face,fi)=>{const id=report.faceIslands[fi],b=normalized[id],u=.02+(id%best.columns)*(best.cellWidth+.02)+best.cellWidth/2,v=.02+Math.floor(id/best.columns)*(best.cellHeight+.02)+best.cellHeight/2;return face.map(([x,y])=>[u+((x/magnitude-b.minU)-b.width/2)*best.scale,v+((y/magnitude-b.minV)-b.height/2)*best.scale]);});
+ const result=uvCorners.map((face,fi)=>{const id=report.faceIslands[fi],b=normalized[id],u=.02+(id%best.columns)*(best.cellWidth+gap)+best.cellWidth/2,v=.02+Math.floor(id/best.columns)*(best.cellHeight+gap)+best.cellHeight/2;return face.map(([x,y])=>[u+((x/magnitude-b.minU)-b.width/2)*best.scale,v+((y/magnitude-b.minV)-b.height/2)*best.scale]);});
  // Refuse numeric collapse of any existing island extent rather than losing it.
  if(faces.some((ids,id)=>{const b=importedUVIslandBounds(result,ids),old=bounds[id];return old.maxU>old.minU&&b.maxU===b.minU||old.maxV>old.minV&&b.maxV===b.minV;}))return {reason:'UV packing exceeds the coordinate range'};
  if(result.some((face,fi)=>face.some((uv,j)=>{const k=(j+1)%face.length,a=uvCorners[fi][j],b=uvCorners[fi][k],next=face[k];return (a[0]!==b[0]||a[1]!==b[1])&&uv[0]===next[0]&&uv[1]===next[1]||(Math.fround(a[0])!==Math.fround(b[0])||Math.fround(a[1])!==Math.fround(b[1]))&&Math.fround(uv[0])===Math.fround(next[0])&&Math.fround(uv[1])===Math.fround(next[1]);})))return {reason:'UV packing would collapse an existing UV edge'};
@@ -293,17 +296,18 @@ function commitNativeUV(object,mesh,topologySignature,history,uvCorners){
 export function createFaceAtlasUV(object,mesh,topologySignature,history,owner=globalThis.__boxlabExportAs){
  return createAtlasUV(object,mesh,topologySignature,history,owner,false);
 }
-export function createCoplanarAtlasUV(object,mesh,topologySignature,history,owner=globalThis.__boxlabExportAs){
- return createAtlasUV(object,mesh,topologySignature,history,owner,true);
+export function createCoplanarAtlasUV(object,mesh,topologySignature,history,owner=globalThis.__boxlabExportAs,maxAngle=0){
+ return createAtlasUV(object,mesh,topologySignature,history,owner,true,maxAngle);
 }
-function createAtlasUV(object,mesh,topologySignature,history,owner,coplanar){
+function createAtlasUV(object,mesh,topologySignature,history,owner,coplanar,maxAngle=0){
+ if(!Number.isFinite(maxAngle)||maxAngle<0||maxAngle>30)return {ok:false,reason:'Choose an Auto atlas join angle from 0 to 30 degrees'};
  const error=nativeUVTargetError(object,mesh,topologySignature);if(error)return {ok:false,reason:error};
  if(object.colourPaint||object.roughnessPaint||object.metalnessPaint)return {ok:false,reason:'Clear paint before creating a Face atlas; existing paint is retained'};
- if(mesh.faces.length>128||mesh.faces.reduce((sum,face)=>sum+(Array.isArray(face)?face.length:0),0)>20000)return {ok:false,reason:'Face atlas supports up to 128 faces and 20,000 corners'};
+ if(mesh.faces.length>4096||mesh.faces.reduce((sum,face)=>sum+(Array.isArray(face)?face.length:0),0)>20000)return {ok:false,reason:'Atlas supports up to 4096 faces and 20,000 corners'};
  const candidate={},projected=createBoxUV(candidate,mesh,topologySignature,nativeUVCandidate);
  if(!projected.ok)return projected;
- const groups=coplanar?coplanarFaceGroups(mesh):null;
- const report=coplanar?inspectImportedUV(mesh,candidate.glbPassthrough,topologySignature,{canJoinFaces:(a,b)=>a.a===b.b&&a.b===b.a&&groups[a.fi]===groups[b.fi]}):{islandCount:mesh.faces.length,faceIslands:mesh.faces.map((_,fi)=>fi)};
+ const grouped=coplanar?coplanarFaceGroups(mesh,maxAngle):null,groups=maxAngle?grouped.groups:grouped,cosine=Math.cos(maxAngle*Math.PI/180);
+ const report=coplanar?inspectImportedUV(mesh,candidate.glbPassthrough,topologySignature,{canJoinFaces:(a,b)=>a.a===b.b&&a.b===b.a&&groups[a.fi]===groups[b.fi]&&(!maxAngle||grouped.normals[a.fi].reduce((sum,v,k)=>sum+v*grouped.normals[b.fi][k],0)>=cosine-1e-12)}):{islandCount:mesh.faces.length,faceIslands:mesh.faces.map((_,fi)=>fi)};
  let density=densityLayout(mesh,candidate.glbPassthrough,report);
  if(density.reason==='Equalize density needs non-degenerate UVs and finite planar Base faces'){
   const source=faceAtlasTriangles(mesh,candidate.glbPassthrough,owner);
@@ -316,14 +320,16 @@ function createAtlasUV(object,mesh,topologySignature,history,owner,coplanar){
  return commitNativeUV(object,mesh,topologySignature,history,packed.uvCorners);
 }
 
-// Fixed seed planes avoid accumulating pairwise tolerance along a long strip.
-// Warped/degenerate faces get unique groups; the existing inspector still requires
-// shared manifold edges and exactly matching Box UV endpoints before any join.
-function coplanarFaceGroups(mesh){
+// Fixed seed planes (0°) or normal cones avoid accumulated angle/tolerance drift.
+// Flat-only mode isolates warped faces. The original inspector still requires
+// manifold adjacency and matching Box UV endpoints; angle mode also checks both
+// adjacent face normals at the chosen cutoff. No iterative chart relaxation.
+function coplanarFaceGroups(mesh,maxAngle=0){
  let magnitude=0;
  for(const face of mesh.faces)for(const id of face){const v=mesh.vertices[id];magnitude=Math.max(magnitude,Math.abs(v.x),Math.abs(v.y),Math.abs(v.z));}
- const seeds=[];
- return mesh.faces.map((face,fi)=>{
+ const seeds=[],large=mesh.faces.length>128,buckets=new Map(),normals=[],cosine=Math.cos(maxAngle*Math.PI/180),step=maxAngle?Math.max(1e-9,2*Math.sin(maxAngle*Math.PI/360)):1e-9;
+ const bucketKey=(n,d)=>[...n,d].map(v=>Math.floor(v/step));
+ const groups=mesh.faces.map((face,fi)=>{
   const points=face.map(id=>{const v=mesh.vertices[id];return [v.x/magnitude,v.y/magnitude,v.z/magnitude];}),origin=points[0];
   const local=points.map(p=>p.map((v,k)=>v-origin[k])),normal=[0,0,0];
   let extent=0;
@@ -333,11 +339,26 @@ function coplanarFaceGroups(mesh){
   }
   const length=Math.hypot(...normal);if(!length||!Number.isFinite(length))return fi;
   const n=normal.map(v=>v/length),dot=(a,b)=>a.reduce((sum,v,k)=>sum+v*b[k],0);
-  if(local.some(p=>Math.abs(dot(p,n))>extent*1e-10))return fi;
-  const seed=seeds.find(s=>Math.hypot(...n.map((v,k)=>v-s.n[k]))<=1e-10&&points.every(p=>Math.abs(dot(p.map((v,k)=>v-s.origin[k]),s.n))<=Math.min(extent,s.extent)*1e-10));
+  normals[fi]=n;
+  if(!maxAngle&&local.some(p=>Math.abs(dot(p,n))>extent*1e-10))return fi;
+  let candidates=seeds,key;
+  if(large){
+   key=bucketKey(n,maxAngle?0:dot(origin,n));const found=[];
+   // Fixed lookup/comparison work: overloaded buckets conservatively leave
+   // additional charts separate rather than scan a quadratic list of planes.
+   lookup:for(let a=-1;a<=1;a++)for(let b=-1;b<=1;b++)for(let c=-1;c<=1;c++)for(let d=maxAngle?0:-1;d<=(maxAngle?0:1);d++){
+    const list=buckets.get([key[0]+a,key[1]+b,key[2]+c,key[3]+d].join(':'))||[];
+    for(const seed of list){found.push(seed);if(found.length===64)break lookup;}
+   }
+   candidates=found.sort((a,b)=>a.fi-b.fi);
+  }
+  const seed=candidates.find(s=>maxAngle?dot(n,s.n)>=cosine-1e-12:Math.hypot(...n.map((v,k)=>v-s.n[k]))<=1e-10&&points.every(p=>Math.abs(dot(p.map((v,k)=>v-s.origin[k]),s.n))<=Math.min(extent,s.extent)*1e-10));
   if(seed)return seed.fi;
-  seeds.push({fi,n,origin,extent});return fi;
+  const next={fi,n,origin,extent};seeds.push(next);
+  if(large){const k=key.join(':');if(!buckets.has(k))buckets.set(k,[]);buckets.get(k).push(next);}
+  return fi;
  });
+ return maxAngle?{groups,normals}:groups;
 }
 
 // Borrow triangle ownership from the SAME preview that will display/paint UVs.

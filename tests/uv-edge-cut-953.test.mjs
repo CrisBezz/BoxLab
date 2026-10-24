@@ -33,11 +33,11 @@ test('953 all paint channels/unsupported targets/stale or malformed selection/wo
  const {m,o}=mapped();o.glbPassthrough={...o.glbPassthrough,uvTopologySignature:'stale'};assert(!cut(o,m,[[1,4]]).ok);o.glbPassthrough={...o.glbPassthrough,uvTopologySignature:signature(m),source:'glb'};assert(!cut(o,m,[[1,4]]).ok);
  const big=mapped(grid(72));assert.match(cut(big.o,big.m,[[1,74]]).reason,/20,000/);
 });
-test('953 existing seam/boundary no-op, nonmanifold/same-winding refusal and original pack 128-island cap remain atomic',()=>{
+test('953 existing seam/boundary no-op, nonmanifold/same-winding refusal and pack 4096-island cap remain atomic',()=>{
  const m=EditableMesh.cube(2),o={};createBoxUV(o,m,signature,history);const old=o.glbPassthrough;assert.equal(cut(o,m,[[0,1]]).changed,false);assert.equal(o.glbPassthrough,old);
  const plane=mapped();assert.equal(cut(plane.o,plane.m,[[0,1]]).changed,false);
  for(const faces of [[[0,1,2],[1,0,3],[0,1,4]],[[0,1,2],[0,1,3]]]){const m=new EditableMesh([[0,0,0],[1,0,0],[0,1,0],[0,-1,0],[1,1,0]],faces),o={};createPlanarUV(o,m,signature,history,'xy');assert.match(cut(o,m,[[0,1]]).reason,/manifold/);}
- const large=mapped(grid(12)),pairs=[];for(const e of large.m.edges())if(e.faces.length===2)pairs.push([e.a,e.b]);const previous=large.o.glbPassthrough;assert.match(cut(large.o,large.m,pairs).reason,/128/);assert.equal(large.o.glbPassthrough,previous);
+ const large=mapped(grid(65)),pairs=[];for(const e of large.m.edges())if(e.faces.length===2)pairs.push([e.a,e.b]);const previous=large.o.glbPassthrough;assert.match(cut(large.o,large.m,pairs).reason,/4096/);assert.equal(large.o.glbPassthrough,previous);
 });
 test('953 actual scene Undo/Redo, paint after cut and exact Save/Open plus original GLB UV transport retain split membership',async()=>{
  const r=viewportPaintRuntime();r.manager.replaceActiveMesh(grid());delete r.target().glbPassthrough;createPlanarUV(r.target(),r.live,signature,r.c.__boxlabObjectHistory,'xy');const original=r.target().glbPassthrough,n=r.h.undoStack.length;

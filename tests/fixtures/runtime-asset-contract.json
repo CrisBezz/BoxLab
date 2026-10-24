@@ -310,9 +310,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/mesh-health.js?v=0.36.18.955",
+      "url": "./src/mesh-health.js?v=0.36.18.956",
       "target": "src/mesh-health.js",
-      "sha256": "108f7ee615640e871f8355678c8155f8488ec4fd510c2ab952072687d9477012",
+      "sha256": "1cc340e901babcf6e42c3b409a3782b2debb24c9c5e6bdce22dcad9ebc15ac61",
       "sourceVersion": "0.36.18.880"
     },
     {
@@ -329,9 +329,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/multi-object.js?v=0.36.18.955",
+      "url": "./src/multi-object.js?v=0.36.18.956",
       "target": "src/multi-object.js",
-      "sha256": "57e3cb9f88f39177b802026482cc3a5c7b3a91d77bfcadbef3a17c6ac5a48639"
+      "sha256": "39a7452a1f74e0d1fd57cdc2d979356996017f9b6a46b9d4588cda2e839a96ae"
     },
     {
       "owner": "index.html",
@@ -360,9 +360,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/primitive-ui.js?v=0.36.18.955",
+      "url": "./src/primitive-ui.js?v=0.36.18.956",
       "target": "src/primitive-ui.js",
-      "sha256": "cdb0d2915704560be39d159c28f59916ce223e12195ea917ced26475dbf76298"
+      "sha256": "fb0ffe78c5736105a710d2c779a2de838677aa1a7cc6fa714486c135550be795"
     },
     {
       "owner": "index.html",
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.955",
+      "url": "./src/release-bootstrap.js?v=0.36.18.956",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.955",
+      "url": "./src/release-version.js?v=0.36.18.956",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -2384,9 +2384,9 @@
     },
     {
       "owner": "src/mesh-health.js",
-      "url": "./imported-uv-edit.js?v=0.36.18.955",
+      "url": "./imported-uv-edit.js?v=0.36.18.956",
       "target": "src/imported-uv-edit.js",
-      "sha256": "2cb90053a655e0f8142375fe6d37332a3c7809686a4536a5ff8b55610653665d"
+      "sha256": "a68486386d4c32c8a1a765cc11742aaf2ffa1f2747979fabea3895e106d9e08f"
     },
     {
       "owner": "src/imported-uv-edit.js",
@@ -2756,9 +2756,9 @@
     },
     {
       "owner": "evaluations/uv-paint/lab.js",
-      "url": "./samples.js?v=0.36.18.955",
+      "url": "./samples.js?v=0.36.18.956",
       "target": "evaluations/uv-paint/samples.js",
-      "sha256": "a301a96b7986151d6625ea129abac30214ea8e855df5fefbbd0f83fdba200dc5"
+      "sha256": "f0884aa5c1b95a4ed98cbe23684b6128e61b824b33e8494bc8e18ec5c7665a96"
     },
     {
       "owner": "evaluations/uv-paint/lab.js",
@@ -2804,9 +2804,9 @@
     },
     {
       "owner": "evaluations/uv-paint/index.html",
-      "url": "./lab.js?v=0.36.18.955",
+      "url": "./lab.js?v=0.36.18.956",
       "target": "evaluations/uv-paint/lab.js",
-      "sha256": "524932e8bef9f9008b21d72c7e22aefc6e5a946943306225f1667c9a39a1351e"
+      "sha256": "18d461b03ea6d8ed4c0be4d50ef22ea49a86d58ef61f2ff934f6401c6275a2e6"
     },
     {
       "owner": "index.html",
@@ -3039,14 +3039,14 @@
     {
       "owner": "src/multi-object.js",
       "target": "src/imported-uv-edit.js",
-      "url": "./imported-uv-edit.js?v=0.36.18.955",
-      "sha256": "2cb90053a655e0f8142375fe6d37332a3c7809686a4536a5ff8b55610653665d"
+      "url": "./imported-uv-edit.js?v=0.36.18.956",
+      "sha256": "a68486386d4c32c8a1a765cc11742aaf2ffa1f2747979fabea3895e106d9e08f"
     },
     {
       "owner": "src/primitive-ui.js",
       "target": "src/imported-uv-edit.js",
-      "url": "./imported-uv-edit.js?v=0.36.18.955",
-      "sha256": "2cb90053a655e0f8142375fe6d37332a3c7809686a4536a5ff8b55610653665d"
+      "url": "./imported-uv-edit.js?v=0.36.18.956",
+      "sha256": "a68486386d4c32c8a1a765cc11742aaf2ffa1f2747979fabea3895e106d9e08f"
     },
     {
       "owner": "src/imported-uv-edit.js",
@@ -3104,9 +3104,9 @@
     },
     {
       "owner": "evaluations/uv-paint/samples.js",
-      "url": "../../src/imported-uv-edit.js?v=0.36.18.955",
+      "url": "../../src/imported-uv-edit.js?v=0.36.18.956",
       "target": "src/imported-uv-edit.js",
-      "sha256": "2cb90053a655e0f8142375fe6d37332a3c7809686a4536a5ff8b55610653665d"
+      "sha256": "a68486386d4c32c8a1a765cc11742aaf2ffa1f2747979fabea3895e106d9e08f"
     },
     {
       "owner": "src/main.js",

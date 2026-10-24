@@ -49,7 +49,7 @@ test('951 exact supplied extrusion/scale model retains warped-face repair, equal
 test('951 shared atlas guards refuse all paint channels, unsupported owners, over-limit work and failed history before mutation',()=>{
  for(const patch of [{colourPaint:{}},{roughnessPaint:{}},{metalnessPaint:{}},{locked:true},{sourceId:1},{settings:{subd:true}},{glbPassthrough:{source:'glb'}}]){const o={...patch},before=JSON.stringify(o);let captures=0;assert(!project(o,EditableMesh.cube(2),{capture(){captures++;return{};},checkpointSnapshot:()=>true}).ok);assert.equal(captures,0);assert.equal(JSON.stringify(o),before);}
  for(const h of [null,{capture:()=>null,checkpointSnapshot:()=>true},{capture:()=>({}),checkpointSnapshot:()=>false}]){const o={};assert(!project(o,patch(),h).ok);assert.equal(o.glbPassthrough,undefined);}
- const m=patch();m.faces=Array.from({length:129},()=>[...m.faces[0]]);assert.match(project({},m).reason,/128/);assert(!project({},supplied(),history,null).ok);
+ const m=patch();m.faces=Array.from({length:4097},()=>[...m.faces[0]]);assert.match(project({},m).reason,/4096/);assert(!project({},supplied(),history,null).ok);
 });
 test('951 exact original checkpoint Undo/Redo, painted shared patch and project/GLB transport retain chart membership',async()=>{
  const r=viewportPaintRuntime(),m=patch();r.manager.replaceActiveMesh(m);delete r.target().glbPassthrough;const n=r.h.undoStack.length;
@@ -61,6 +61,6 @@ test('951 exact original checkpoint Undo/Redo, painted shared patch and project/
 });
 test('951 original UV panel exposes optional coplanar atlas and uses current preview/history/selection guards',()=>{
  const m=supplied(),o={id:7},source=fs.readFileSync(new URL('../src/mesh-health.js',import.meta.url),'utf8');let reports=0,status='';
- const c={active:true,objectId:7,activeObject:()=>o,liveMesh:()=>m,currentMode:()=> 'object',createCoplanarAtlasUV,__boxlabExportAs:{...owner,topologySignature:signature},__boxlabObjectHistory:history,renderReport:()=>reports++,setStatus:s=>status=s};vm.createContext(c);vm.runInContext(source.slice(source.indexOf('function coplanarAtlasUVs('),source.indexOf('uvCoplanarAtlas.addEventListener')),c);
- assert(c.coplanarAtlasUVs());assert.match(status,/Coplanar atlas created/);assert.equal(reports,1);assert(check(m,o).islandCount<20);o.roughnessPaint={};assert(!c.coplanarAtlasUVs());assert.match(status,/Clear paint/);c.objectId=8;assert(!c.coplanarAtlasUVs());assert.equal(reports,2);assert.match(source,/uvCoplanarAtlas.disabled=!nativeReady\|\|hasPaint/);
+ const c={active:true,objectId:7,activeObject:()=>o,liveMesh:()=>m,currentMode:()=> 'object',uvAtlasAngle:{value:'0'},createCoplanarAtlasUV,__boxlabExportAs:{...owner,topologySignature:signature},__boxlabObjectHistory:history,renderReport:()=>reports++,setStatus:s=>status=s};vm.createContext(c);vm.runInContext(source.slice(source.indexOf('function coplanarAtlasUVs('),source.indexOf('uvCoplanarAtlas.addEventListener')),c);
+ assert(c.coplanarAtlasUVs());assert.match(status,/Auto atlas created/);assert.equal(reports,1);assert(check(m,o).islandCount<20);o.roughnessPaint={};assert(!c.coplanarAtlasUVs());assert.match(status,/Clear paint/);c.objectId=8;assert(!c.coplanarAtlasUVs());assert.equal(reports,2);assert.match(source,/uvCoplanarAtlas.disabled=!nativeReady\|\|hasPaint/);
 });

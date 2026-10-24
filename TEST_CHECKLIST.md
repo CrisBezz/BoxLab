@@ -10319,3 +10319,103 @@ then SaveOpen retains layout/result. Whole two charts must share one flat source
 plane; curved/cube-corner/bent charts refuse, no general unwrap or seam recipe.
 Actual955 iPad appearance/feel remains pending. Next actual955 feedback before broader
 stitch/unwrap work; retain accepted953 cuts/954 picking/952 UI and original owners.
+
+
+## .956 — bounded angle-based Auto atlas; 4096-face limit — 24 October 2026 (Brisbane)
+
+User requests automatic connected-face stitching during atlas generation, a practical
+face limit, bounded runtime, then suggests edge angle. Also asks whether named
+.boxlab saves can overwrite existing Downloads files. No955 device PASS inferred;
+953 Cut UVs/954 picking/952 editor acceptance remain protected.
+
+Audit main393978b3: Coplanar atlas already joins flat charts through original
+inspector adjacency + Box projection, but was labelled secondary and capped128faces;
+Pack/density also128 with fixed2% gaps, and global plane seed search was quadratic.
+Reuse SAME existing button/owner as primary Auto atlas (before explicit Face atlas),
+add join angle0–30°/default15. API createCoplanarAtlasUV sixth optional angle defaults0,
+preserving accepted flat outputs and manual955 plane grouping.0° = exact prior
+coplanar policy. Positive angle requires BOTH adjacent average face-normal angle
+and a fixed seed-normal cone within cutoff, opposite manifold edge directions and
+EXACT original Box UV endpoints. No drift along curved chains, coordinate welding,
+second triangulator/adjacency/history owner or calls to manual Stitch in a loop.
+
+This is bounded projected-chart grouping, not conformal unwrap/relaxation or arbitrary
+cube-net unfolding. Different Box directions remain seams; higher angle may stretch.
+Warped faces stay separate at0°, may join in angle mode if original950 triangle/area
+validation succeeds. No source polygons/positions/groups or persistent schema changes.
+Original private Box → grouped density → Pack → ONE native commit retained. All paint
+channels still require explicit Clear paint; unsupported/stale/history/work refusal
+atomic. Explicit Face atlas retains one island per face and exact small outputs.
+
+Atlas face cap4096 (32×128), original20K face-corner budget retained. Shared Pack all
+and Equalize density support4096 islands so large atlas remains editable. Manual955
+Stitch still has its independent conservative128-face scope. Original <=128-island
+packing gap2% and exact output retained; larger layouts use gap .2/ceil(sqrt(count)),
+outer margin2%, SAME deterministic common-scale grid search (at most4096 columns).
+At4096 charts this is~3.2px gap on1024 maps; no larger texture resolution claimed.
+
+Same plane/cone grouping owner now indexes seed buckets for >128faces: max81 bucket
+lookups/64 seed candidates per face (27 lookups for positive angle), then ORIGINAL
+strict seed tests. Overloaded buckets conservatively leave extra charts separate.
+Small fixed-plane output path unchanged; no iterative stitching/relaxation/optimal
+packer. Host smoke4096-face original Add Plane:15° Auto34.6ms,0°44.4ms,Face16.7ms;
+these are single local CPU observations, NOT iPad latency or a timing promise.
+
+Seven new integrations cover4096-face Auto/Face, exact joins/geometry/peer ownership/
+repeat/one checkpoint; large Pack/density and reduced wasted UV area; warped fallback/
+disconnected planes; limits/refusals; actual1024-face history/paint/SaveOpen/GLB;
+primary existing UI/angle forwarding; exact same requested download filename twice;
+and shallow/sharp angle thresholds, fixed-cone drift and256-face fast path. Existing
+128-boundary refusal fixtures893/895/949/951/953 moved to4097 without dropping any
+atomicity assertion; prior128 success tests retained.951 panel fixture explicitly0°.
+Original other runtime algorithms retained; full and publication proof follows.
+
+Save audit: projectFileName/exportBasicProject already request EXACT chosen name,
+no appended counter. Safari/iOS Downloads collision naming is outside this download
+API. Current MDN primary compatibility data records showSaveFilePicker unsupported
+in Safari/iOS; Chrome's API documentation explicitly says anchor-download fallback
+cannot overwrite. No risky replacement/hidden internal save/new filesystem feature
+added. Existing Save/Open/codec unchanged; regression proves two identical requested
+names. Sources checked24Oct2026:
+https://raw.githubusercontent.com/mdn/browser-compat-data/main/api/Window.json
+https://developer.chrome.com/docs/capabilities/web-apis/file-system-access#polyfilling
+
+DEVICE956: previously over128-face unpainted mesh → Object UV → Auto atlas15°;
+check time and chart count. Compare0°/15° on shallow bends, sharper corners retain
+seams; greater angles may stretch. UV Editor/Pack/UndoRedo; Paint and SaveOpen result.
+New limits4096faces/20Kcorners, not unlimited. Next follow real iPad quality/latency
+feedback before broadening unwrap;955 manual Stitch device gate remains separate.
+
+## User product direction — Paint, facegroups and graphical UI — 24 October 2026
+
+User explicitly says these are FUTURE GUIDELINES, not immediate requests to implement
+all of them in956. Preserve current atlas build scope. Future direction:
+- Paint facegroups directly on the mesh: assign existing mesh.faceGroups per polygon,
+  not RGB texture pixels. Existing clone/history/project/OBJ/NOM group owners stay
+  authoritative. Reuse surface face picking/Pencil/navigation; a UV-free group-target
+  needs deliberate target validation rather than pretending current UV painter already
+  supports it. One scene checkpoint per stroke; no parallel mesh/group/history kernel.
+- Bring production Paint into mainstream app access; current viewport-paint.js launcher
+  is in File. Reconnect original painter/session, not a second painting implementation.
+- Contextual paint radial for brushes and layers/masks, retaining original controls/
+  action owners and the accepted left dock until deliberately migrated and tested.
+- More graphical UI: consistent function icons with SMALL VISIBLE text captions below,
+  inspired by user's uploaded Nomad Sculpt screenshot0D6C6D33-1097-419E-AC66-52B94B18D841.
+  Keep readable labels/accessibility/touch targets; coherent icon family and active state.
+  Stage changes in small reviewed surfaces; retain accepted radial locations, gestures,
+  Focus, history and modeller behavior. No wholesale reskin automatically authorized
+  as the next untested change. These directions remain in roadmap after atlas feedback.
+
+Audit: mesh.js stores string/null faceGroups and preserves them on clone; original
+facegroup-colours-core displays them. Preview already has source-face triangle mapping.
+956 does not ship facegroup brushes, new Paint entry, paint radial or icon redesign.
+
+.956 final local Node24.19.0 full regression: **2796 PASS / 0 FAIL / 0 skipped**
+(101.5s), original2789 plus seven new atlas/angle/save-name checks. Focused atlas949/
+950/951, cut953/stitch955, Pack/density/release51PASS. Only original limit-boundary
+fixtures moved to requested4097; atomic refusal and prior128 success retained.
+Original951 panel fixture explicitly chooses0° under new UI angle forwarding. No
+skipped behavior checks. Reviewed8-file UV/Add/Multi/Lab reverse cache closure956;
+main/picking954/gizmo955/workspace952/Multi1.0/frozen unchanged. Save/Open owner also
+unchanged; Safari external-download overwrite limitation verified from primary sources.
+Hosted/Pages/live proof follows. No955 or956 device PASS inferred.

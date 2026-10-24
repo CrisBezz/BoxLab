@@ -36,7 +36,7 @@ test('949 Face atlas separates overlapping and subdivided faces, equalizes avera
 
 test('949 Face atlas supports 128 planar faces and stable scales/translations, refuses unavailable warped preview/degenerate/invalid/over-limit work before history',()=>{
  for(const scale of [.001,1,1e100]){const mesh=EditableMesh.cube(2);mesh.vertices.forEach(v=>v.multiplyScalar(scale).addScalar(3*scale));const o={};assert(project(o,mesh).ok);const report=inspectImportedUV(mesh,o.glbPassthrough,signature);assert.equal(report.islandCount,6);assert(o.glbPassthrough.uvCorners.flat(2).every(Number.isFinite));}
- const vertices=[],faces=[];for(let i=0;i<129;i++){const n=vertices.length;vertices.push([i*2,0,0],[i*2+1,0,0],[i*2,1,0]);faces.push([n,n+1,n+2]);}
+ const vertices=[],faces=[];for(let i=0;i<4097;i++){const n=vertices.length;vertices.push([i*2,0,0],[i*2+1,0,0],[i*2,1,0]);faces.push([n,n+1,n+2]);}
  const limit=new EditableMesh(vertices,faces.slice(0,128)),o={};assert(project(o,limit).ok);check(limit,o.glbPassthrough);
  for(const mesh of [new EditableMesh(vertices,faces),new EditableMesh([[0,0,0],[1,0,0],[1,1,.1],[0,1,0]],[[0,1,2,3]]),new EditableMesh([[0,0,0],[1,0,0],[2,0,0]],[[0,1,2]]),new EditableMesh([[0,0,0],[1,0,0],[0,1,0]],[[0,0,2]])]){let captures=0;const obj={};assert(!project(obj,mesh,{capture(){captures++;return{};},checkpointSnapshot:()=>true}).ok);assert.equal(captures,0);assert.equal(obj.glbPassthrough,undefined);}
 });
@@ -68,5 +68,5 @@ test('949 original UV panel Face atlas callback uses current target/history, ref
  const r=editableBooleanRuntime();r.manager.activate(3);const object=()=>r.manager.objects.find(o=>o.id===3),source=fs.readFileSync(new URL('../src/mesh-health.js',import.meta.url),'utf8');let reports=0,message='';
  const c={active:true,objectId:3,currentMode:()=> 'object',activeObject:object,liveMesh:()=>r.live,createFaceAtlasUV,__boxlabExportAs:{topologySignature:signature},__boxlabObjectHistory:r.c.__boxlabObjectHistory,renderReport:()=>reports++,setStatus:s=>message=s};vm.createContext(c);vm.runInContext(source.slice(source.indexOf('function faceAtlasUVs('),source.indexOf('uvFaceAtlas.addEventListener')),c);
  assert(c.faceAtlasUVs());assert.equal(reports,1);assert.match(message,/Face atlas created/);object().colourPaint={};assert(!c.faceAtlasUVs());assert.match(message,/Clear paint/);assert.equal(reports,2);c.objectId=99;assert(!c.faceAtlasUVs());assert.equal(reports,2);
- assert.match(source,/id="meshHealthUVFaceAtlas"/);assert.match(source,/uvFaceAtlas\.disabled=!nativeReady\|\|hasPaint/);assert.match(source,/one island per face, up to 128 faces/i);
+ assert.match(source,/id="meshHealthUVFaceAtlas"/);assert.match(source,/uvFaceAtlas\.disabled=!nativeReady\|\|hasPaint/);assert.match(source,/one island per face, up to 4096 faces/i);
 });
