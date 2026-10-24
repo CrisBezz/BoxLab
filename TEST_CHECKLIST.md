@@ -10563,3 +10563,12 @@ DEVICE960: Object→UV Paint→Brush tools; inspect icons/captions, pick Brush/E
 Fill/Blur/Smudge; picker collapses and current tool caption follows. Paint/UndoRedo,
 finger navigation; Done→reopen and verify compact dock/layers. UV popup clipping
 and959 Object radial entry remain protected. Next feedback before layer/mask radial.
+
+.960 publication: runtime61f9d1b7944fa3417c8639e72ae3394b434e4b4b on main;
+exact tested treeb2ad8cc85e787509d6e3b6c6fc3d845f1069580f matched Git upload.
+Local2802PASS/0FAIL/0skip (97.20s); new/release7PASS and original900/release12PASS.
+Pages40071442619 SUCCESS;16/16 checked public files byte-identical to tested checkout:
+shell/version/new painter, retained959 gizmo/adapter,958 session host,957 UV/packing/
+loaders, main954/Multi1.0 and lab graph. Hosted40071442658/job120805544281 SUCCESS:2802PASS/0FAIL/0skip.
+User959PASS protected. DEVICE960 icon spacing/selection/paint/navigation/history
+acceptance pending; no device PASS inferred. Original layer/mask controls remain.
