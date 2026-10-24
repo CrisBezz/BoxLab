@@ -5980,3 +5980,27 @@ skipped behavior checks. Reviewed8-file UV/Add/Multi/Lab reverse cache closure95
 main/picking954/gizmo955/workspace952/Multi1.0/frozen unchanged. Save/Open owner also
 unchanged; Safari external-download overwrite limitation verified from primary sources.
 Hosted/Pages/live proof follows. No955 or956 device PASS inferred.
+
+
+## .956 publication verified — 24 October 2026
+
+Runtime commit `f0b790fed52ebfb191699d5b9a30ee18792b995b` on main; exact tested tree
+`2702bb86c769e8ca854bf98ccf39d85ac4e482d8`. Local Node24.19.0:2796 PASS,
+0 FAIL/0 skipped (101501.6ms); focused atlas/pack/density/release:51 PASS.
+Hosted Node22 Topology regression run40047733605/job120733187764 SUCCESS:
+2796 PASS,0 FAIL/0 cancelled/0 skipped (146421.2ms), completed2026-10-24T01:02:46Z.
+https://github.com/CrisBezz/BoxLab/actions/runs/40047733605
+Pages run40047733370 SUCCESS. Cache-busted public GETs:20/20 byte-identical to tested
+checkout, including version/index, all8 reviewed UV/Add/Multi/Lab changed assets,
+release loaders, protected954 main/picker/toggle/edge-paint,952 workspace,955 gizmo,
+930 cage batching,Multi1.0 and frozen beta7 marker. First pre-deployment GET returned
+old runtime; fresh requests after deployment matched every file. No mixed live build.
+https://github.com/CrisBezz/BoxLab/actions/runs/40047733370
+
+Ready for DEVICE956: previously over128-face unpainted model → Object UV → Auto atlas
+15°; inspect islands/time. Compare0°/15° shallow bends and sharp seam retention.
+Undo/Redo, paint a new map, then .boxlab Save/Open should preserve UVs and paint.
+953/954/952 PASS protected. No955/956 device PASS inferred. Future facegroup brushes,
+mainstream Paint access, paint/layer radial and captioned icon UI remain recorded
+roadmap directions; none are part of956 runtime. Safari overwrite limitation remains
+browser-owned; Save/Open filename owner unchanged. Docs-only proof commit follows.
