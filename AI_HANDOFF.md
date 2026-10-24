@@ -12,7 +12,8 @@ User reaffirmed this permanent instruction on 21 October 2026.
 
 
 
-Build .955 validated locally2789PASS from main488e34ee; publication proof follows.
+Current published runtime .955 `0b1062de451327f9d685243af31bcbc2e44ba791`.
+Local/hosted2789PASS, Pages success and20/20 live-file byte matches verified below.
 User953 Cut UVs and954 Edge picking PASS recorded/protected, alongside952 editor UI.
 Current focus: same-plane Stitch UVs through original projection/connectivity/history.
 
@@ -1094,7 +1095,7 @@ splitting paths alone makes painting seamless or that CPU timings establish M2 p
 
 ## Next narrow step
 
-Finish955 validation/publication, then request Cut→Stitch on a two-face UV Plane,
+955 publication verified. Await Cut→Stitch on a two-face UV Plane,
 UV island edit, UndoRedo and Paint/SaveOpen. Source charts must be on the same flat
 plane. Follow955 feedback before cube-net/curved-chart/general unwrap expansion.
 953 Cut UVs,954 native screen picking and952 UV Editor are now USER PASS protected.
@@ -3233,3 +3234,26 @@ old tool retained. No old behavior assertion removed or relaxed. Main/picker/tog
 Edge-paint954, cage930/Multi1.0/frozen bytes unchanged. Reviewed9-file reverse UV/
 Add/Multi/Lab/gizmo closure955 and recovery pins; full hosted/Pages/live proof follows.
 Actual955 iPad feel/flat-stitch workflow acceptance pending;953/954 user PASS protected.
+
+
+## .955 publication verified — 24 October 2026 (Brisbane)
+
+Runtime `0b1062de451327f9d685243af31bcbc2e44ba791`, tested tree
+`c82ffe358084236295770486d5a15f781f00e5c6`, published on main. All18 uploaded
+blobs and Git Data tree matched local hashes; fetched main matched exactly and local
+checkout aligned cleanly. Local Node24 full2789PASS/0FAIL/0skip (93.4s); hosted
+Node22 run40045851250/job120727280088 complete logs verify2789/0/0 (244.9s).
+Pages40045851225 build120727283788/deploy120727410695 SUCCESS. All20 checked live
+files byte-match: shell/version, COMPLETE changed UV/Add/Multi/Lab/gizmo graph,
+recovery, retained954 main/picker/component-toggle/Edge-paint, workspace952/cage930/
+Multi1.0/frozenBeta7. Actual original makePlane(2,2,1)+automatic XZ native UV owner
+also smoke-tested Cut→Stitch→one island. This proof changes four continuity files
+only; tested/published runtime retained. User953 and954 PASS recorded/protected.
+
+Build955 complete and ready: unpainted UV Plane X2/Y1 → shared Edge Cut UVs → SAME
+selected seam Stitch UVs → Object UV Editor shows ONE joined island. Pencil island
+move moves both faces; UndoRedo restores/reapplies stitch separately from cut. Paint
+then SaveOpen retains layout/result. Whole two charts must share one flat source
+plane; curved/cube-corner/bent charts refuse, no general unwrap or seam recipe.
+Actual955 iPad appearance/feel remains pending. Next actual955 feedback before broader
+stitch/unwrap work; retain accepted953 cuts/954 picking/952 UI and original owners.
