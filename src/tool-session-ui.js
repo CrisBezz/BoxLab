@@ -303,10 +303,15 @@ function begin({id,title,node,subtitle=''}={}){
     // Paint is the user's compact left-side exception to the shared wide popup.
     // Keep its original footer/actions in place; every other session uses the
     // protected top-centre positioner and wide-layout owner unchanged.
+    host.style.right='';host.style.margin='';host.style.isolation='';host.style.contain='';
     if(id==='uv-paint'){
       delete host.dataset.wideToolPanel;
       Object.assign(host.style,{position:'absolute',left:'8px',top:'12px',transform:'none',width:'272px',maxWidth:'calc(100% - 16px)',maxHeight:'calc(100% - 100px)',overflowY:'auto',boxSizing:'border-box',zIndex:'134'});
-    }else{host.style.width='';placeToolSessionPanel(host);}
+    }else{host.style.width='';placeToolSessionPanel(host);
+      // Keep the UV popup's scrolling clip local on iPad/WebKit. Avoid the
+      // transformed scroll container used by the ordinary centred dock.
+      if(id==='uv-tools')Object.assign(host.style,{left:'8px',right:'8px',margin:'0 auto',transform:'none',isolation:'isolate',contain:'layout paint'});
+    }
   }
   host.hidden=false;
   drawer.dataset.toolSessionActive='true';

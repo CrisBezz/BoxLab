@@ -6033,3 +6033,27 @@ DEVICE957: unpainted varied-size mesh → Auto atlas → inspect packing; existi
 layout → Pack all; UndoRedo; paint then SaveOpen. Painted targets require Clear paint
 before UV repacking. Bigger chart bounding boxes do not guarantee tight concave nesting.
 Next follow actual packing quality/device timing before broader unwrap or UI changes.
+
+## .958 — UV popup clipping containment — 24 October 2026
+
+User screenshot FA9BB69D on957 shows right toolbar and bottom status disappearing
+at the SAME vertical boundary while UV TOOLS popup is open, before UV Workspace.
+Not stale shell; not evidence against957 packing. No957 device PASS inferred.
+Audit shared tool-session-ui begin: UV tools uses transformed scrolling shared dock.
+Existing952 Workspace sibling fix does not apply to this preceding popup.
+Narrow mitigation: original UV-tools host uses left/right8px + auto margins instead
+of translateX centring, local isolation and layout/paint containment. Original nodes,
+listeners, wide body/actions, history and all UV algorithms unchanged. Clear these
+UV-only styles before the next dock (including left Paint); ordinary tools keep
+shared placement. No new editor, pointer listener, resize polling or z-index escalation.
+Exact iPad/WebKit compositor failure is NOT reproduced here; this is a targeted
+containment repair requiring device acceptance, not a proven browser-engine diagnosis.
+New test executes original begin for UV→Paint→ordinary tool and verifies scoped clip,
+transform-free UV placement and style cleanup. Release contract/cache keys reviewed958;
+main954/picker954/Multi1.0/frozen and957 packing/workspace unchanged.
+DEVICE958: repeat Object→UV and Close, watch full top-right toolbar/status; Auto atlas,
+Open UV Editor→Back to3D, then Paint and another tool to check popup positions.
+Next actual958 iPad clipping retest before further unrelated development.
+Initial full run found one old711 assertion requiring left50% for UV as well as
+ordinary tools; updated only UV expectation to inset8px/right8px/no-transform,
+retaining every other launch/close/history check. Focused20PASS. Final full-run2800PASS/0FAIL/0skip (94.95s). Publication evidence follows. No957 packing source changed.
