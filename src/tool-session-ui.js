@@ -1,4 +1,4 @@
-import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.732';
+import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.963';
 const drawer=document.querySelector('#editDrawer');
 const contentRoot=drawer?.querySelector(':scope > .drawer-content')||drawer?.querySelector('.drawer-content');
 const summary=drawer?.querySelector(':scope > summary')||drawer?.querySelector('summary');
@@ -300,13 +300,14 @@ function begin({id,title,node,subtitle=''}={}){
   else{contentRoot?.prepend(host);host.removeAttribute('style');delete host.dataset.wideToolPanel;}
   host.replaceChildren(node);
   if(dock){
-    // Paint is the user's compact left-side exception to the shared wide popup.
+    // Paint uses compact top-centre contextual settings; other sessions retain their layout.
     // Keep its original footer/actions in place; every other session uses the
     // protected top-centre positioner and wide-layout owner unchanged.
     host.style.right='';host.style.margin='';host.style.isolation='';host.style.contain='';
     if(id==='uv-paint'){
       delete host.dataset.wideToolPanel;
-      Object.assign(host.style,{position:'absolute',left:'8px',top:'12px',transform:'none',width:'272px',maxWidth:'calc(100% - 16px)',maxHeight:'calc(100% - 100px)',overflowY:'auto',boxSizing:'border-box',zIndex:'134'});
+      placeToolSessionPanel(host,{compact:true});
+      Object.assign(host.style,{left:'8px',right:'8px',margin:'0 auto',transform:'none',width:'min(600px, calc(100% - 16px))',maxHeight:'min(55%, 420px)'});
     }else{host.style.width='';placeToolSessionPanel(host);
       // Keep the UV popup's scrolling clip local on iPad/WebKit. Avoid the
       // transformed scroll container used by the ordinary centred dock.

@@ -303,9 +303,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/main.js?v=0.36.18.962",
+      "url": "./src/main.js?v=0.36.18.963",
       "target": "src/main.js",
-      "sha256": "e8e1863d26740b3a055e29d73b8f9fe9f7f13f8bc4c6a80de203d560c116d4ea",
+      "sha256": "77a9bb614846eaa6619b7182d794fb78516dc0f7d0f392b100d57b4db7282964",
       "sourceVersion": "0.35.1"
     },
     {
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.962",
+      "url": "./src/release-bootstrap.js?v=0.36.18.963",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.962",
+      "url": "./src/release-version.js?v=0.36.18.963",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -539,9 +539,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/tool-session-ui.js?v=0.36.18.961",
+      "url": "./src/tool-session-ui.js?v=0.36.18.963",
       "target": "src/tool-session-ui.js",
-      "sha256": "bc4e273dd2c35ddaa80f34993ea3fe8035c959d2b5a2f0182906069e0147cb18"
+      "sha256": "a60ef2f61c65a1737cd610f47785792018f8f94786773040a6c5bbf817fde565"
     },
     {
       "owner": "index.html",
@@ -1185,7 +1185,7 @@
       "owner": "src/edge-tool-viewport-session.js",
       "url": "./tool-session-panel-position.js?v=0.36.18.732",
       "target": "src/tool-session-panel-position.js",
-      "sha256": "5844e2d188b157cdf6954c3dcb2de7dd17be5efd00214e5c90cb6aacaae6e7ae"
+      "sha256": "6dde662666ac6602204e4bf05ce521ceb469aff83a8a5bb15658a0c637364ef7"
     },
     {
       "owner": "src/export-as-panel.js",
@@ -1209,13 +1209,13 @@
       "owner": "src/face-align-viewport.js",
       "url": "./tool-session-panel-position.js?v=0.36.18.732",
       "target": "src/tool-session-panel-position.js",
-      "sha256": "5844e2d188b157cdf6954c3dcb2de7dd17be5efd00214e5c90cb6aacaae6e7ae"
+      "sha256": "6dde662666ac6602204e4bf05ce521ceb469aff83a8a5bb15658a0c637364ef7"
     },
     {
       "owner": "src/face-repair-viewport.js",
       "url": "./tool-session-panel-position.js?v=0.36.18.732",
       "target": "src/tool-session-panel-position.js",
-      "sha256": "5844e2d188b157cdf6954c3dcb2de7dd17be5efd00214e5c90cb6aacaae6e7ae"
+      "sha256": "6dde662666ac6602204e4bf05ce521ceb469aff83a8a5bb15658a0c637364ef7"
     },
     {
       "owner": "src/face-split.js",
@@ -1905,61 +1905,61 @@
       "owner": "src/selection-hub-bevel-session.js",
       "url": "./tool-session-panel-position.js?v=0.36.18.732",
       "target": "src/tool-session-panel-position.js",
-      "sha256": "5844e2d188b157cdf6954c3dcb2de7dd17be5efd00214e5c90cb6aacaae6e7ae"
+      "sha256": "6dde662666ac6602204e4bf05ce521ceb469aff83a8a5bb15658a0c637364ef7"
     },
     {
       "owner": "src/selection-hub-bridge-session.js",
       "url": "./tool-session-panel-position.js?v=0.36.18.732",
       "target": "src/tool-session-panel-position.js",
-      "sha256": "5844e2d188b157cdf6954c3dcb2de7dd17be5efd00214e5c90cb6aacaae6e7ae"
+      "sha256": "6dde662666ac6602204e4bf05ce521ceb469aff83a8a5bb15658a0c637364ef7"
     },
     {
       "owner": "src/selection-hub-crease-session.js",
       "url": "./tool-session-panel-position.js?v=0.36.18.732",
       "target": "src/tool-session-panel-position.js",
-      "sha256": "5844e2d188b157cdf6954c3dcb2de7dd17be5efd00214e5c90cb6aacaae6e7ae"
+      "sha256": "6dde662666ac6602204e4bf05ce521ceb469aff83a8a5bb15658a0c637364ef7"
     },
     {
       "owner": "src/selection-hub-face-bridge-session.js",
       "url": "./tool-session-panel-position.js?v=0.36.18.732",
       "target": "src/tool-session-panel-position.js",
-      "sha256": "5844e2d188b157cdf6954c3dcb2de7dd17be5efd00214e5c90cb6aacaae6e7ae"
+      "sha256": "6dde662666ac6602204e4bf05ce521ceb469aff83a8a5bb15658a0c637364ef7"
     },
     {
       "owner": "src/selection-hub-face-value-session.js",
       "url": "./tool-session-panel-position.js?v=0.36.18.732",
       "target": "src/tool-session-panel-position.js",
-      "sha256": "5844e2d188b157cdf6954c3dcb2de7dd17be5efd00214e5c90cb6aacaae6e7ae"
+      "sha256": "6dde662666ac6602204e4bf05ce521ceb469aff83a8a5bb15658a0c637364ef7"
     },
     {
       "owner": "src/selection-hub-knife-session.js",
       "url": "./tool-session-panel-position.js?v=0.36.18.732",
       "target": "src/tool-session-panel-position.js",
-      "sha256": "5844e2d188b157cdf6954c3dcb2de7dd17be5efd00214e5c90cb6aacaae6e7ae"
+      "sha256": "6dde662666ac6602204e4bf05ce521ceb469aff83a8a5bb15658a0c637364ef7"
     },
     {
       "owner": "src/selection-hub-offset-session.js",
       "url": "./tool-session-panel-position.js?v=0.36.18.732",
       "target": "src/tool-session-panel-position.js",
-      "sha256": "5844e2d188b157cdf6954c3dcb2de7dd17be5efd00214e5c90cb6aacaae6e7ae"
+      "sha256": "6dde662666ac6602204e4bf05ce521ceb469aff83a8a5bb15658a0c637364ef7"
     },
     {
       "owner": "src/selection-hub-shell-session.js",
       "url": "./tool-session-panel-position.js?v=0.36.18.732",
       "target": "src/tool-session-panel-position.js",
-      "sha256": "5844e2d188b157cdf6954c3dcb2de7dd17be5efd00214e5c90cb6aacaae6e7ae"
+      "sha256": "6dde662666ac6602204e4bf05ce521ceb469aff83a8a5bb15658a0c637364ef7"
     },
     {
       "owner": "src/selection-hub-slide-session.js",
       "url": "./tool-session-panel-position.js?v=0.36.18.732",
       "target": "src/tool-session-panel-position.js",
-      "sha256": "5844e2d188b157cdf6954c3dcb2de7dd17be5efd00214e5c90cb6aacaae6e7ae"
+      "sha256": "6dde662666ac6602204e4bf05ce521ceb469aff83a8a5bb15658a0c637364ef7"
     },
     {
       "owner": "src/selection-hub-sweep-session.js",
       "url": "./tool-session-panel-position.js?v=0.36.18.732",
       "target": "src/tool-session-panel-position.js",
-      "sha256": "5844e2d188b157cdf6954c3dcb2de7dd17be5efd00214e5c90cb6aacaae6e7ae"
+      "sha256": "6dde662666ac6602204e4bf05ce521ceb469aff83a8a5bb15658a0c637364ef7"
     },
     {
       "owner": "src/sequential-through-fallback.js",
@@ -2044,9 +2044,9 @@
     },
     {
       "owner": "src/tool-session-ui.js",
-      "url": "./tool-session-panel-position.js?v=0.36.18.732",
+      "url": "./tool-session-panel-position.js?v=0.36.18.963",
       "target": "src/tool-session-panel-position.js",
-      "sha256": "5844e2d188b157cdf6954c3dcb2de7dd17be5efd00214e5c90cb6aacaae6e7ae"
+      "sha256": "6dde662666ac6602204e4bf05ce521ceb469aff83a8a5bb15658a0c637364ef7"
     },
     {
       "owner": "src/topbar-layout.js",
@@ -2070,7 +2070,7 @@
       "owner": "src/total-gizmo.js",
       "url": "./tool-session-panel-position.js?v=0.36.18.732",
       "target": "src/tool-session-panel-position.js",
-      "sha256": "5844e2d188b157cdf6954c3dcb2de7dd17be5efd00214e5c90cb6aacaae6e7ae"
+      "sha256": "6dde662666ac6602204e4bf05ce521ceb469aff83a8a5bb15658a0c637364ef7"
     },
     {
       "owner": "src/uniform-inset.js",
@@ -2082,13 +2082,13 @@
       "owner": "src/vertex-tool-viewport-session.js",
       "url": "./tool-session-panel-position.js?v=0.36.18.732",
       "target": "src/tool-session-panel-position.js",
-      "sha256": "5844e2d188b157cdf6954c3dcb2de7dd17be5efd00214e5c90cb6aacaae6e7ae"
+      "sha256": "6dde662666ac6602204e4bf05ce521ceb469aff83a8a5bb15658a0c637364ef7"
     },
     {
       "owner": "src/viewport-selection-panel.js",
       "url": "./tool-session-panel-position.js?v=0.36.18.732",
       "target": "src/tool-session-panel-position.js",
-      "sha256": "5844e2d188b157cdf6954c3dcb2de7dd17be5efd00214e5c90cb6aacaae6e7ae"
+      "sha256": "6dde662666ac6602204e4bf05ce521ceb469aff83a8a5bb15658a0c637364ef7"
     },
     {
       "owner": "src/viewport-toolbar-controls.js",
@@ -2160,7 +2160,7 @@
       "owner": "src/primitive-ui.js",
       "url": "./tool-session-panel-position.js?v=0.36.18.732",
       "target": "src/tool-session-panel-position.js",
-      "sha256": "5844e2d188b157cdf6954c3dcb2de7dd17be5efd00214e5c90cb6aacaae6e7ae"
+      "sha256": "6dde662666ac6602204e4bf05ce521ceb469aff83a8a5bb15658a0c637364ef7"
     },
     {
       "owner": "src/primitive-ui.js",
@@ -2350,7 +2350,7 @@
       "owner": "src/live-array-source-editor.js",
       "url": "./tool-session-panel-position.js?v=0.36.18.732",
       "target": "src/tool-session-panel-position.js",
-      "sha256": "5844e2d188b157cdf6954c3dcb2de7dd17be5efd00214e5c90cb6aacaae6e7ae"
+      "sha256": "6dde662666ac6602204e4bf05ce521ceb469aff83a8a5bb15658a0c637364ef7"
     },
     {
       "owner": "src/live-array-source-core.js",
@@ -2481,8 +2481,8 @@
     {
       "owner": "index.html",
       "target": "src/viewport-paint.js",
-      "url": "./src/viewport-paint.js?v=0.36.18.961",
-      "sha256": "91b69d98336aa1766139ca47d80c13997cb580644e709efa9c6fe71046e9830b"
+      "url": "./src/viewport-paint.js?v=0.36.18.963",
+      "sha256": "c806fb5fda5db781125c5472564e39855162064a6b721480ab8be6b642e81198"
     },
     {
       "owner": "src/viewport-paint.js",

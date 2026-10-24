@@ -568,18 +568,19 @@ function cancelBackgroundHold(reason){
 }
 function backgroundSelectionContext(){return selectionMode+':'+(globalThis.__boxlabObjectManager?.activeId||'active');}
 function readBackgroundSelection(){return selectionMode==='object'?[...(globalThis.__boxlabObjectSelection?.ids||[])]:selectionIndices();}
-function backgroundHoldBlocked(){return !!directTool||!!globalThis.__boxlabToolSession?.isActive?.()||!!globalThis.__boxlabFaceValueViewportSession?.active?.()||!!globalThis.__boxlabEdgeViewportSession?.loopActive?.()||!!globalThis.__boxlabBevelViewportSession?.edgeActive?.()||!!globalThis.__boxlabSlideViewportSession?.active?.()||!!globalThis.__boxlabToolBackgroundExit?.active?.();}
+function backgroundHoldBlocked(){return !!directTool||(!!globalThis.__boxlabToolSession?.isActive?.()&&!globalThis.__boxlabViewportPaint?.backgroundHoldAllowed?.())||!!globalThis.__boxlabFaceValueViewportSession?.active?.()||!!globalThis.__boxlabEdgeViewportSession?.loopActive?.()||!!globalThis.__boxlabBevelViewportSession?.edgeActive?.()||!!globalThis.__boxlabSlideViewportSession?.active?.()||!!globalThis.__boxlabToolBackgroundExit?.active?.();}
 function beginBackgroundHold(event){
   if(backgroundHold)clearTimeout(backgroundHold.timer);
   backgroundHold=null;
   if(event.pointerType==='pen'&&!(event.buttons&1)&&!(event.pressure>0))return;
   if(backgroundHoldBlocked()||globalThis.__boxlabObjectManager?.pickObject?.(event)||globalThis.__boxlabSelectionBridge?.pickObject?.(event))return;
-  const hold={pointerId:event.pointerId,context:backgroundSelectionContext(),mesh,seed:[...readBackgroundSelection()],fired:false,cancelled:false,timer:null};
+  const hold={pointerId:event.pointerId,context:backgroundSelectionContext(),mesh,seed:[...readBackgroundSelection()],paint:!!globalThis.__boxlabViewportPaint?.active,point:{clientX:event.clientX,clientY:event.clientY},fired:false,cancelled:false,timer:null};
   backgroundHold=hold;
   hold.timer=setTimeout(()=>{
     if(backgroundHold!==hold||hold.cancelled||backgroundTap?.pointerId!==hold.pointerId||backgroundTap.moved||backgroundTap.cancelled)return;
-    if(backgroundHoldBlocked()||hold.context!==backgroundSelectionContext()||hold.mesh!==mesh||JSON.stringify(hold.seed)!==JSON.stringify(readBackgroundSelection())){cancelBackgroundHold('context-selection-session');return;}
+    if(backgroundHoldBlocked()||hold.paint!==!!globalThis.__boxlabViewportPaint?.active||hold.context!==backgroundSelectionContext()||hold.mesh!==mesh||JSON.stringify(hold.seed)!==JSON.stringify(readBackgroundSelection())){cancelBackgroundHold('context-selection-session');return;}
     hold.fired=true;
+    if(hold.paint){globalThis.__boxlabViewportPaint?.showTools?.(hold.point);return;}
     resetEdgeHoldCycle();
     if(selectionMode==='object')globalThis.__boxlabObjectSelection?.invert?.(hold.seed);
     else globalThis.__boxlabSelectionSetPolish?.invert?.(hold.seed);

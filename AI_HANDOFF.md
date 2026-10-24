@@ -1,4 +1,4 @@
-# BoxLab AI Handoff — .962 / viewport sizing; .961 rendering FAIL
+# BoxLab AI Handoff — .963 / floating Paint radial; .962 PASS
 
 ## Permanent rule — every build completion
 
@@ -3619,3 +3619,20 @@ Thirty relevant checks PASS; no full962 pass count claimed. Hosted full regressi
 recorded, portrait→landscape workaround is diagnostic only. DEVICE962 fresh-landscape
 load/UV-entry/return/orbit/right toolbar+Objects+status retest required. Paint radial
 redesign remains documented direction, not shipped. No device962 PASS inferred.
+
+
+## .963 — floating Paint radial and contextual controls; .962 PASS — 24 October 2026
+
+User confirms .962 PASS; protect fresh-landscape viewport sizing, UV workspace return,
+orbit visibility and Paint Done rendering. Ship the clarified Paint interaction using
+the existing viewport painter and original main background-hold owner. The floating
+radial offers Brush/Fill/Eraser/Smudge/Blur plus Layers/Mask/Image/AO/Texture pages.
+Choosing an item closes the radial; the original painter controls appear in a compact
+top-centre contextual panel. Holding empty background reopens the Paint radial. Pencil
+strokes, finger navigation, Undo/Redo, resource, AO and image placement continue through
+original owners. Paint hold is allowed only while idle (no stroke/image/AO preview); the
+original hold cancels on movement, multitouch, pointer cancel or session change.
+Paint settings use the shared panel position owner with a compact option; other popup
+layouts remain unchanged. iPad tactile acceptance remains pending.
+
+DEVICE963: Enter UV Paint; use Brush then hold empty space to reopen the floating radial; choose Blur and confirm its top-centre settings; test Layers/Mask/Image/AO/Texture pages, Undo/Redo, Pencil, finger orbit and Done.
