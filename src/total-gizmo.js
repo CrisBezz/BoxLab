@@ -875,7 +875,7 @@ window.addEventListener('boxlab-pencil-background-tap',event=>{
 
 const style=document.createElement('style');
 style.textContent=`
-#totalGizmo{position:absolute;z-index:115;width:${SIZE}px;height:${SIZE}px;transform:translate(-50%,-50%);pointer-events:none;touch-action:none;filter:drop-shadow(0 2px 4px #0009)}
+#totalGizmo{position:absolute;z-index:115;width:${SIZE}px;height:${SIZE}px;transform:translate(-50%,-50%);pointer-events:none;touch-action:none}
 #totalGizmo[hidden]{display:none}
 #totalGizmo .tg-activator{position:absolute;left:50%;top:50%;width:26px;height:26px;transform:translate(-50%,-50%);border:1px solid rgba(238,242,247,.72);border-radius:50%;background:rgba(12,14,18,.78);box-shadow:0 2px 8px rgba(0,0,0,.35);pointer-events:auto;touch-action:none;padding:0;z-index:3}
 #totalGizmo .tg-activator span{position:absolute;left:50%;top:50%;width:6px;height:6px;transform:translate(-50%,-50%);border-radius:50%;background:#eef2f7;opacity:.92}
@@ -886,6 +886,7 @@ style.textContent=`
 #totalGizmo[data-hub-state="closed"][data-mode="vertex"][data-single-component="true"] .tg-activator{transform:translate(calc(-50% + 34px),calc(-50% - 34px))}
 #totalGizmo:not([data-hub-state="transform"]) svg{display:none!important}
 #totalGizmo svg{width:100%;height:100%;overflow:visible}
+#totalGizmo>svg{overflow:hidden}
 #totalGizmo .tg-tool-ring{position:absolute;inset:0;display:none;pointer-events:none}
 #totalGizmo[data-hub-state="tools"][data-mode="face"] .tg-tool-ring[data-ring-mode="face"]{display:block}
 #totalGizmo[data-hub-state="tools"][data-mode="edge"] .tg-tool-ring[data-ring-mode="edge"]{display:block}
@@ -1053,7 +1054,9 @@ function ringBasis(axis){
 }
 function projectedRingPath(center,camera,axis){
   const [u,v]=ringBasis(axis),radius=ringWorldRadius(center,camera),centerScreen=screenPoint(center,camera);
-  const gizmoRect=root.getBoundingClientRect(),sx=SIZE/Math.max(1,gizmoRect.width),sy=SIZE/Math.max(1,gizmoRect.height),segments=96;
+  const gizmoRect=root.getBoundingClientRect();
+  if(root.hidden||!Number.isFinite(gizmoRect.width)||!Number.isFinite(gizmoRect.height)||gizmoRect.width<=0||gizmoRect.height<=0)return '';
+  const sx=SIZE/gizmoRect.width,sy=SIZE/gizmoRect.height,segments=96;
   let d='';
   for(let i=0;i<=segments;i++){
     const a=i/segments*Math.PI*2;
@@ -1063,6 +1066,8 @@ function projectedRingPath(center,camera,axis){
     const screen=screenPoint(world,camera);
     const x=HALF+(screen.x-centerScreen.x)*sx;
     const y=HALF+(screen.y-centerScreen.y)*sy;
+    // Refuse a ring crossing the projection singularity or escaping its local SVG.
+    if(!Number.isFinite(x)||!Number.isFinite(y)||x<0||x>SIZE||y<0||y>SIZE)return '';
     d+=`${i?'L':'M'}${x.toFixed(2)} ${y.toFixed(2)} `;
   }
   return d.trim()+' Z';
@@ -1138,7 +1143,7 @@ function sync(){
   cornerControls.sync();
   cornerControls.position(left,top,vr);
   root.dataset.singleComponent=mode!=='object'&&selectionKey(mesh,mode).split(':')[1]?.split(',').filter(Boolean).length===1?'true':'false';
-  if(!suppressed&&!objectTransformDismissed&&(hubState==='transform'||mode==='object'))syncAxisVisuals(c,camera);
+  if(!root.hidden&&!suppressed&&!objectTransformDismissed&&(hubState==='transform'||mode==='object'))syncAxisVisuals(c,camera);
   syncEdgeExtrudeConstraintVisuals();
 }
 sync();

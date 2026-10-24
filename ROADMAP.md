@@ -6133,3 +6133,37 @@ shell/version/new painter, retained959 gizmo/adapter,958 session host,957 UV/pac
 loaders, main954/Multi1.0 and lab graph. Hosted40071442658/job120805544281 SUCCESS:2802PASS/0FAIL/0skip.
 User959PASS protected. DEVICE960 icon spacing/selection/paint/navigation/history
 acceptance pending; no device PASS inferred. Original layer/mask controls remain.
+
+## .961 — bound hidden gizmo projection and SVG compositor surface; .960 radial PASS
+
+24 October2026. User960 PASS for brush radial; separately reports giant red/green
+lines after Paint Done and recurring right-side UI disappearance following UV tools/
+map views, changing as gizmo/object orbits across screen. Prior958 clipping PASS is
+historical; recurrence is OPEN and not dismissed by prior PASS or Node results.
+Reviewed uploaded1EC44980 screenshot and9.7s ScreenRecording17-11-35 frames1s/7s.
+Video shows live model/gizmo while header/object UI disappears. Exact iPad compositor
+fault remains unreproduced locally; do not claim a proven WebKit engine diagnosis.
+Audit current13a0b4a9: total-gizmo sync sets root.hidden during Paint but still calls
+syncAxisVisuals. projectedRingPath uses SIZE196/max(1,hiddenRect.width0): hidden
+projection magnifies ring coordinates196×; root drop-shadow filter and overflowing
+main SVG allow enormous paint/filter bounds. Both failures plausibly share this
+unbounded presentation surface, unlike previous popup-only mitigation.
+Repair SAME gizmo owner: no axis update while hidden; projectedRingPath returns empty
+for hidden/zero/nonfinite dimensions or any nonfinite/out-of-local196×196 ring point.
+Degenerate rings clear both visible and hit paths through existing sync owner;
+hidden gizmos skip updates and recompute normally when shown.
+Remove root drop-shadow filter; bound only direct main SVG overflow. External radial
+sectors/corner shortcuts remain outside main SVG and keep original placement/input.
+No transform geometry, gesture, UV/paint/history/render kernel or Multi1.0 changes.
+959 radial/960 brush controls and958 popup containment unchanged. This targets the
+actual hidden sizing defect and constrains rendering; iPad retest is still required.
+Two tests execute original ring functions with realThree perspective camera: normal
+XYZ paths, hidden→zero→restore exact recovery, finite local coordinates, invalid
+projection refusal; hidden sync guard/main SVG/filter scope and retained external
+Paint button/shortcut contracts. Focused7PASS; local full2804PASS/0FAIL/0skip (104.73s). Publication evidence follows.
+DEVICE961: Paint→Done on same model; no giant coloured lines. Repeat UV tools→UV
+Editor→Back/Close; orbit model/gizmo into right side and watch entire toolbar/Object
+Browser/status remain visible. Move/Rotate/Scale and radial tools still usable;
+Paint/UndoRedo and finger navigation preserved. Next actual961 rendering feedback
+before unrelated features. If recurrence persists, keep independent clipping report
+open and inspect other filtered/overflowing layers; do not infer acceptance.
