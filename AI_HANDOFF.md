@@ -1,4 +1,4 @@
-# BoxLab AI Handoff — .958 / UV popup clipping containment
+# BoxLab AI Handoff — .959 / Paint access from Object radial
 
 ## Permanent rule — every build completion
 
@@ -12,7 +12,7 @@ User reaffirmed this permanent instruction on 21 October 2026.
 
 
 
-Build .958 published/verified: runtime8deba41d; local2800PASS;13/13 live files match. See final958 entry. Previous .957 published/verified: runtime cac6a27c;2799 distinct local checks PASS.
+Build .959 validated2800PASS; publication in progress. .958 user PASS protected. Previous .958 published/verified: runtime8deba41d; local2800PASS;13/13 live files match. See final958 entry. Previous .957 published/verified: runtime cac6a27c;2799 distinct local checks PASS.
 Pages success;12/12 live files match; hosted regression SUCCESS. .956 PASS protected.
 Audit baseline main82ddf0de; published runtime cac6a27c. See .957 entry.
 User953 Cut UVs/954 picking/952 editor PASS protected;955 device gate still pending.
@@ -3444,3 +3444,26 @@ retained957 UV/packing/loaders and protected main954/Multi1.0. No packing algori
 changes958. Hosted regression40068588195/job120796941024 SUCCESS:2800PASS/0FAIL/0skip.
 Actual intermittent iPad failure not reproduced; DEVICE958 popup/header/status retest
 required. No957/958 device PASS inferred. Docs-only publication proof follows.
+
+## .959 — reconnect production Paint in Object radial; .958 PASS — 24 October 2026
+
+User958 PASS /nextbuild protects UV-popup/header/status clipping repair and style
+cleanup across UV→Paint→ordinary tools. Prior pending958 device notes superseded.
+Audit main85544a7e: original object-radial-session already maps UV Paint to original
+viewportPaintBtn/uv-paint/__boxlabViewportPaint, but total-gizmo ring omitted button.
+Add UV Paint at outer45° radius230; every existing sector stays in place. Original
+adapter launches SAME production painter, owns cancellation/completion/gizmo hide;
+existing File launcher retained. Painter opens left dock and enforces original one
+active independent UV object/paint target guards. No new brush/layer/history/input
+owner, no painter changes or icon overhaul. Original left Paint exception retained.
+Extend original711 inventory/launch/close/spacing fixture with UV Paint; left8px
+expectation includes original Paint dock, all old assertions and positions retained.
+Local full2800PASS/0FAIL/0skip (95.99s); focused19PASS, final radial14PASS.
+No assertions removed. Publication evidence follows. Only runtime functionality: one radial
+button; shell/recovery/gizmo cache pin959 and reviewed asset contract. Session958,
+main954/picker954/Multi1.0/UV957/packing/frozen unchanged.
+DEVICE959: select one UV object → Object radial → UV Paint (outer upper-right);
+Pencil paint, fingers orbit/pan/pinch, UndoRedo stays in Paint; Done→radial→reopen
+same layers. Try UV popup→close→Paint and Paint→Done→another tool. SaveOpen retains
+paint. File Paint entry still works. Invalid/no-UV targets retain original refusal.
+Next feedback on mainstream access before a separate paint-tool/layer radial build.

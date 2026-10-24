@@ -434,6 +434,7 @@ root.innerHTML=`
   <button type="button" class="tg-tool-sector" style="--a:270deg" data-tool-target="#symmetryBisectBtn">Symmetry / Bisect</button>
   <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:270deg;--r:230px" data-tool-target="#meshHealthBtn">Mesh Health</button>
   <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:90deg;--r:230px" data-tool-target="#uvToolsBtn">UV</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:45deg;--r:230px" data-tool-target="#viewportPaintBtn">UV Paint</button>
   <div class="tg-object-outer-guide" aria-hidden="true"></div>
   <button type="button" class="tg-tool-sector" style="--a:180deg" data-tool-target="#outlinerDuplicateBtn">Duplicate</button>
   <button type="button" class="tg-tool-sector tg-tool-danger" style="--a:315deg" data-tool-target="#outlinerDeleteBtn">Delete</button>

@@ -6066,3 +6066,26 @@ retained957 UV/packing/loaders and protected main954/Multi1.0. No packing algori
 changes958. Hosted regression40068588195/job120796941024 SUCCESS:2800PASS/0FAIL/0skip.
 Actual intermittent iPad failure not reproduced; DEVICE958 popup/header/status retest
 required. No957/958 device PASS inferred. Docs-only publication proof follows.
+
+## .959 — reconnect production Paint in Object radial; .958 PASS — 24 October 2026
+
+User958 PASS /nextbuild protects UV-popup/header/status clipping repair and style
+cleanup across UV→Paint→ordinary tools. Prior pending958 device notes superseded.
+Audit main85544a7e: original object-radial-session already maps UV Paint to original
+viewportPaintBtn/uv-paint/__boxlabViewportPaint, but total-gizmo ring omitted button.
+Add UV Paint at outer45° radius230; every existing sector stays in place. Original
+adapter launches SAME production painter, owns cancellation/completion/gizmo hide;
+existing File launcher retained. Painter opens left dock and enforces original one
+active independent UV object/paint target guards. No new brush/layer/history/input
+owner, no painter changes or icon overhaul. Original left Paint exception retained.
+Extend original711 inventory/launch/close/spacing fixture with UV Paint; left8px
+expectation includes original Paint dock, all old assertions and positions retained.
+Local full2800PASS/0FAIL/0skip (95.99s); focused19PASS, final radial14PASS.
+No assertions removed. Publication evidence follows. Only runtime functionality: one radial
+button; shell/recovery/gizmo cache pin959 and reviewed asset contract. Session958,
+main954/picker954/Multi1.0/UV957/packing/frozen unchanged.
+DEVICE959: select one UV object → Object radial → UV Paint (outer upper-right);
+Pencil paint, fingers orbit/pan/pinch, UndoRedo stays in Paint; Done→radial→reopen
+same layers. Try UV popup→close→Paint and Paint→Done→another tool. SaveOpen retains
+paint. File Paint entry still works. Invalid/no-UV targets retain original refusal.
+Next feedback on mainstream access before a separate paint-tool/layer radial build.
