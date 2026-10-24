@@ -12,7 +12,7 @@ User reaffirmed this permanent instruction on 21 October 2026.
 
 
 
-Build .962 validated30 relevant checks; publication in progress. .961 user FAIL for right-side UI; rotation workaround. Previous .961 published/verified: runtime5fb4a4fa; local2804PASS; hosted SUCCESS;16/16 live matches. .960 brush radial PASS; recurring UI clipping OPEN. Previous .960 published/verified: runtime61f9d1b7; local/hosted2802PASS;16/16 live matches. .959 user PASS protected. Previous .959 published/verified: runtime57cb1ca5; local/hosted2800PASS;16/16 live matches. .958 user PASS protected. Previous .958 published/verified: runtime8deba41d; local2800PASS;13/13 live files match. See final958 entry. Previous .957 published/verified: runtime cac6a27c;2799 distinct local checks PASS.
+Build .962 published/verified: runtime9c3d2275;30 relevant checks PASS;4/4 changed live files match. .961 user FAIL for right-side UI; rotation workaround. Previous .961 published/verified: runtime5fb4a4fa; local2804PASS; hosted SUCCESS;16/16 live matches. .960 brush radial PASS; recurring UI clipping OPEN. Previous .960 published/verified: runtime61f9d1b7; local/hosted2802PASS;16/16 live matches. .959 user PASS protected. Previous .959 published/verified: runtime57cb1ca5; local/hosted2800PASS;16/16 live matches. .958 user PASS protected. Previous .958 published/verified: runtime8deba41d; local2800PASS;13/13 live files match. See final958 entry. Previous .957 published/verified: runtime cac6a27c;2799 distinct local checks PASS.
 Pages success;12/12 live files match; hosted regression SUCCESS. .956 PASS protected.
 Audit baseline main82ddf0de; published runtime cac6a27c. See .957 entry.
 User953 Cut UVs/954 picking/952 editor PASS protected;955 device gate still pending.
@@ -3610,3 +3610,12 @@ run was interrupted and temporary log unavailable; no full962 count claimed.
 User asks why builds slow: avoid blocking handover on duplicate local+hosted full
 suite for narrow changes; run relevant checks and verify deployment, report hosted
 full-suite status accurately. GitHub still runs full regression automatically.
+
+.962 published runtime9c3d22757255d582b9de06300b7467dd832972d4; exact uploaded
+and local tested treef46fcbb7020270aecb67c13c0e58066b6e05393a. Pages40095700923
+build/deploy SUCCESS; changed shell/version/main/sizing helper4/4 live byte-match.
+Thirty relevant checks PASS; no full962 pass count claimed. Hosted full regression
+40095701546 in progress at handover; not blocking device retest.961 user FAIL
+recorded, portrait→landscape workaround is diagnostic only. DEVICE962 fresh-landscape
+load/UV-entry/return/orbit/right toolbar+Objects+status retest required. Paint radial
+redesign remains documented direction, not shipped. No device962 PASS inferred.
