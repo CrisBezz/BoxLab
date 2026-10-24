@@ -12,7 +12,7 @@ User reaffirmed this permanent instruction on 21 October 2026.
 
 
 
-Build .958 validated2800PASS; publication in progress; see final958 entry. Previous .957 published/verified: runtime cac6a27c;2799 distinct local checks PASS.
+Build .958 published/verified: runtime8deba41d; local2800PASS;13/13 live files match. See final958 entry. Previous .957 published/verified: runtime cac6a27c;2799 distinct local checks PASS.
 Pages success;12/12 live files match; hosted regression SUCCESS. .956 PASS protected.
 Audit baseline main82ddf0de; published runtime cac6a27c. See .957 entry.
 User953 Cut UVs/954 picking/952 editor PASS protected;955 device gate still pending.
@@ -3435,3 +3435,12 @@ Next actual958 iPad clipping retest before further unrelated development.
 Initial full run found one old711 assertion requiring left50% for UV as well as
 ordinary tools; updated only UV expectation to inset8px/right8px/no-transform,
 retaining every other launch/close/history check. Focused20PASS. Final full-run2800PASS/0FAIL/0skip (94.95s). Publication evidence follows. No957 packing source changed.
+
+.958 publication: runtime8deba41d15d06825d28e0195fe486e0d1499b9e5 on main.
+Tested tree2a806a34735d045e057b2cb6f224e20a60cccbad matched uploaded Git tree exactly.
+Local final2800PASS/0FAIL/0skip; focused20PASS. Pages40068587680 SUCCESS.
+All13 checked public files byte-match tested checkout: shell/version/new session UI,
+retained957 UV/packing/loaders and protected main954/Multi1.0. No packing algorithm
+changes958. Hosted regression40068588195/job120796941024 SUCCESS:2800PASS/0FAIL/0skip.
+Actual intermittent iPad failure not reproduced; DEVICE958 popup/header/status retest
+required. No957/958 device PASS inferred. Docs-only publication proof follows.
