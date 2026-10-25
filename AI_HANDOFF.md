@@ -3875,3 +3875,7 @@ are now ready; remaining modes wait for size/readability feedback.
 Runtime a88c5e146fd1e011b71af5db13fd90fd0cef2b4c; uploaded tree aaec5368d1e3421eb49e7e4fa348357c3f8a47e9 matches tested local defd0613. Current main manifest .969 verified; public cache-busted version.json, index.html, vertex-radial-icons.css and protected face-radial-icons.css all byte-match local.59 focused checks PASS/0 FAIL/0 skip,14 valid SVGs. Hosted Actions status could not be confirmed (public API403, combined statuses empty); do not claim hosted full-suite PASS. User .968 PASS protected; .969 ready for native Vertex icon review. Next Object then Edge/Paint after feedback.
 
 .970 pre-publication validation:67 focused checks PASS/0 FAIL/0 skipped;13 encoded SVGs parse as valid XML. Face/Vertex CSS, gizmo routing JavaScript, protected Multi1.0 and composition stylesheet byte-identical to .969. Native Object icon review pending.
+
+## .970 publication verified — 26 October 2026
+
+Runtime cd3e6b5f6f00eb10960878d5987e51de4e6af462; uploaded tree35d255728a40c7327bbc5422c3f9c2184678fd1d matches local tested edc60c6b. Current main version/shell970 verified. Cache-busted public version.json,index.html,object-radial-icons.css,face-radial-icons.css,vertex-radial-icons.css all byte-match tested checkout.67 focused checks PASS/0 FAIL/0 skip;13 valid SVGs. Pages40246891322 and hosted topology40246891448 were in progress when queried, while live bytes already matched; do not infer hosted full-suite PASS. User .968/.969 PASS protected. Object .970 ready for iPad review; next Edge then Paint.

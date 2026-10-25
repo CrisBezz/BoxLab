@@ -14638,3 +14638,7 @@ return to Face/Vertex and verify accepted appearance/navigation/right toolbar.
 Next Edge icons, then Paint, after device feedback; .970 not yet device accepted.
 
 .970 pre-publication validation:67 focused checks PASS/0 FAIL/0 skipped;13 encoded SVGs parse as valid XML. Face/Vertex CSS, gizmo routing JavaScript, protected Multi1.0 and composition stylesheet byte-identical to .969. Native Object icon review pending.
+
+## .970 publication verified — 26 October 2026
+
+Runtime cd3e6b5f6f00eb10960878d5987e51de4e6af462; uploaded tree35d255728a40c7327bbc5422c3f9c2184678fd1d matches local tested edc60c6b. Current main version/shell970 verified. Cache-busted public version.json,index.html,object-radial-icons.css,face-radial-icons.css,vertex-radial-icons.css all byte-match tested checkout.67 focused checks PASS/0 FAIL/0 skip;13 valid SVGs. Pages40246891322 and hosted topology40246891448 were in progress when queried, while live bytes already matched; do not infer hosted full-suite PASS. User .968/.969 PASS protected. Object .970 ready for iPad review; next Edge then Paint.
