@@ -3819,3 +3819,15 @@ no rendered-browser or native WebKit proof claimed. User's .966 report is archiv
 in docs/ui-debug-invisible-controls-966.md. Device visual gate remains OPEN.
 
 .968 pre-publication validation: 54 focused checks PASS/0 FAIL/0 skipped; all23 encoded SVGs parse as valid XML. Face markup, routing JavaScript, protected Multi1.0 and .967 composition stylesheet remain unchanged. Native iPad visual review pending.
+
+## .968 publication verified — 26 October 2026
+
+Runtime commit17b3d57d588afa2c1859180c2d3dff4b97c8da11; exact uploaded tree
+bd31341293981379ed92b1df700f52087e5c8d42 matches tested local commit0992674d.
+Main .968 manifest fetched and verified. Public cache-busted version.json, index.html
+and face-radial-icons.css all byte-match tested checkout. Focused54 PASS/0 FAIL;
+23 valid embedded SVGs. Hosted regression40244377464 status checked separately;
+no hosted PASS or native iPad visual acceptance inferred. Face-only device tests
+are now ready; remaining modes wait for size/readability feedback.
+
+.968 Pages build/deploy40244377315 completed SUCCESS. Hosted full regression40244377464 was still in progress at publication proof.
