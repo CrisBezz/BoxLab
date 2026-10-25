@@ -14614,3 +14614,7 @@ selections; UndoRedo/navigation; switch to Face to confirm accepted icons unchan
 Native .969 visual acceptance pending. Next Object icons after device feedback.
 
 .969 validation:59 focused checks PASS/0 FAIL/0 skipped. All14 encoded SVGs valid; original gizmo/action JavaScript, accepted Face CSS, protected Multi1.0 and composition stylesheet byte-identical to .968. Native iPad icon review pending.
+
+## .969 publication verified — 26 October 2026
+
+Runtime a88c5e146fd1e011b71af5db13fd90fd0cef2b4c; uploaded tree aaec5368d1e3421eb49e7e4fa348357c3f8a47e9 matches tested local defd0613. Current main manifest .969 verified; public cache-busted version.json, index.html, vertex-radial-icons.css and protected face-radial-icons.css all byte-match local.59 focused checks PASS/0 FAIL/0 skip,14 valid SVGs. Hosted Actions status could not be confirmed (public API403, combined statuses empty); do not claim hosted full-suite PASS. User .968 PASS protected; .969 ready for native Vertex icon review. Next Object then Edge/Paint after feedback.
