@@ -10823,3 +10823,11 @@ untransformed/unclipped VIEW popup contract retained. A local Chromium layout sm
 was attempted but the installed Playwright package has no browser executable here;
 no rendered-browser or native WebKit proof claimed. User's .966 report is archived
 in docs/ui-debug-invisible-controls-966.md. Device visual gate remains OPEN.
+
+
+## .967 protected user PASS — 25 October 2026
+
+- [x] User PERFECT / PASS: right controls remain visible after landscape refresh and UI transitions; retain .967 canvas/UI isolation and visible-page repaint owner.
+- [ ] Future icon builds: review three visual candidates per tool; install only refined user selections, with icon above small visible title. Preserve original action targets, radial positions, touch targets and history/gesture ownership.
+
+Planning update only: runtime .967 unchanged; no new hands-on test required.

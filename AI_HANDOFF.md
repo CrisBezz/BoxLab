@@ -1,5 +1,19 @@
 # BoxLab AI Handoff — .967 / canvas and UI composition repair
 
+## .967 user PERFECT / PASS; radial icon review direction — 25 October 2026
+
+User explicitly accepts .967. Protect the canvas/UI composition boundary, right controls
+visible on landscape refresh and normal UI transitions, and visible-page repaint recovery.
+This closes the .967 invisible-but-clickable right-control device gate; older OPEN notes
+below are historical. Do not infer separate unresolved AO/alpha/reflection acceptance.
+User wants original Nomad-inspired icons with small visible titles below. Audit all radial
+tool names and offer THREE candidates per tool; user selects, then refine before installing.
+See docs/radial-icon-audit-2026-10-25.md for actual inventory, 3 concept directions per
+semantic tool, naming cautions and staged visual review plan. No runtime change/build bump.
+Prior next functional work: UV-free facegroup painting through existing faceGroups owners.
+Bring icon review forward per user direction; no wholesale UI reskin or automatic icon choice.
+
+
 ## .967 publication verified — 25 October 2026
 
 Runtime commit db6c236aaeb1c97e09d1c459c57193a16d94f71c; exact local/uploaded tree c6a8482d6c1bcf675fec34fa11e779d84a0eb706. Full local2815 PASS/0 FAIL/0 skipped (93.9s); focused40 PASS. Pages40185143036 build/deploy SUCCESS. After deployment all6 cache-busted public files matched local bytes: version/index/styles/main/viewport-sizing/gesture-debug. Current main title/data/visible release markers and changed source/stylesheet pins967 verified; protected Multi1.0 unchanged. Hosted regression40185143409 was running at proof time; check actual conclusion before claiming hosted PASS. Prior .966 hosted40183471903 completed SUCCESS. No local rendered-browser execution (browser executable absent) or iPad compositor reproduction claimed. Invisible-but-clickable controls remain OPEN pending DEVICE967 refresh/UI-transition test. User-supplied report evidence is archived; this is a targeted composition repair, not an engine-level root-cause claim.
