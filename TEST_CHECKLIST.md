@@ -10831,3 +10831,13 @@ in docs/ui-debug-invisible-controls-966.md. Device visual gate remains OPEN.
 - [ ] Future icon builds: review three visual candidates per tool; install only refined user selections, with icon above small visible title. Preserve original action targets, radial positions, touch targets and history/gesture ownership.
 
 Planning update only: runtime .967 unchanged; no new hands-on test required.
+
+## Radial visual selection sheets v1 complete — 25 October 2026
+
+Design review only; runtime remains .967 with protected user PERFECT/PASS. All65
+semantic tools now have THREE original vector candidates:195 SVGs on10 sheets.
+Delivered BoxLab-Icon-Selection.pdf, BoxLab-Icon-Review.html and
+BoxLab-Icon-Review-Pack.zip (PDF/HTML/PNG sheets/SVGs/manifest/rebuild source).
+No default/user icon selections; await tool-name + A/B/C choices, then refine before
+installation. Shared symbols retained in one review row; Vertex/Object Join separate.
+See docs/radial-icon-review-v1.md. No new app test or runtime release needed.
