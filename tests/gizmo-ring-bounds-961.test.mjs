@@ -14,5 +14,5 @@ test('961 actual projected ring paths remain bounded through hide/zero-size/rest
 test('961 hidden gizmo no longer updates axis visuals; main SVG bounds overflow without clipping external tool rings and shortcuts',()=>{
  assert.match(source,/if\(!root.hidden&&!suppressed.*syncAxisVisuals/);
  const css=source.match(/#totalGizmo\{[^}]+\}/)[0];assert(!css.includes('filter:'));
- assert(source.includes('#totalGizmo>svg{overflow:hidden}'));assert(source.includes('#totalGizmo .tg-shortcut svg{display:block!important'));assert(source.includes('style="--a:45deg;--r:230px" data-tool-target="#viewportPaintBtn"'));
+ assert(source.includes('#totalGizmo>svg{overflow:hidden}'));assert(source.includes('#totalGizmo .tg-shortcut svg{display:block!important'));assert(!source.includes('data-tool-target="#viewportPaintBtn"'));assert(source.includes('data-tool-target="#uvToolsBtn"'));
 });

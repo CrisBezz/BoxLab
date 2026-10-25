@@ -302,3 +302,14 @@ LEFT of the viewport, bounded/scrolling, advanced controls collapsed, original
 Undo/Redo/Done footer retained. Other tool positions stay unchanged. Object radial
 has a dedicated UV button using existing projection/workspace/history owners;
 Mesh Health is diagnostic/repair UI. Do not reintroduce parallel UV editors.
+
+
+## .965 current Paint workflow and reporting rule — 25 October 2026
+
+Paint settings remain LEFT. Layers remain visible above contextual controls. Bottom
+UV PAINT beside SELECT opens the original UV-validated painter; Object radial has
+no Paint sector. Choices keep Paint radial visible until valid Pencil surface use.
+Empty-background hold reopens it through the original main timer; Done exits.
+Provide meaningful progress updates while building, then explicit ready status and
+3–6 hands-on tests in EVERY completion. Never end an authorized build at a local
+commit/push credential error: connected GitHub is the established publication path.

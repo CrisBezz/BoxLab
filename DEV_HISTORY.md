@@ -14407,3 +14407,45 @@ layouts remain unchanged. iPad tactile acceptance remains pending.
 ## .964 — left side compact Paint settings; user direction — 25 October 2026
 
 User requests Paint contextual popups at LEFT because top-centre settings obstruct the viewport. Keep the floating radial and existing painter/control owners from .963. Reuse shared position owner with compact layout; set Paint host 8px from left/top, width capped at320px, viewport-height scroll. Reduce gaps modestly while preserving readable labels and minimum tap heights. Other tool popups retain top-centre placement. DEVICE964: Brush/Blur left placement, spacing, radial hold/reopen, Pencil, finger navigation, UndoRedo, contextual pages and Done. Next: obtain iPad acceptance of radial + left popup before more controls; then prioritize facegroup painting.
+
+
+## .965 — Paint workflow and UI evidence — 25 October 2026
+
+User .964 PASS accepts LEFT compact Paint popup, but recurring inactive right-side UI
+remains OPEN. Do not infer rendering repaired. Current requested UI: bottom UV PAINT
+beside SELECT; native UV validation before entry; original Object radial Paint sector
+removed. File keeps no duplicate button once bottom bar is ready. Layers now always
+visible at top, selected contextual settings below. Radial choices stay visible until
+Pencil begins a valid surface stroke/image gesture; browsing choices adds no history.
+Repeated Paint entry reopens tools; empty background hold reuses main's single timer
+with explicit Paint background policy, bypassing modelling hit proxies. Done exits;
+Escape cancels live contact without leaving Paint; competing tool launch is refused.
+Invalid/deleted geometry may still close for resource safety.
+
+Smudge audit found bounded 8M-work guard threw and cancelled valid stroke pixels.
+Guard now pauses additional dabs at cap and exposes a lift-to-keep status; lifting
+commits the valid prefix normally. Cancellation/checkpoint refusal still restore.
+No unbounded raster work or changed cap. Map size replaces ambiguous Texture caption:
+colour resolution/legacy512-to1024 enlargement, not a brush.
+
+File → UI Debug extends original opt-in gesture debug: bounded100 events, right-side
+hit-test stacks, bounds/styles/visibility, canvas/visualViewport, session, errors and
+context loss. Capture report then Copy report after inactive UI occurs; flag persists
+through refresh. Diagnostic reads and listeners never consume input. Exact iPad failure
+not reproduced; debug mode gathers evidence, does not claim a compositor repair.
+
+DEVICE965: no-UV object refuses Paint; UV object opens from bottom. Inspect top Layers
+and settings below, browse radial choices then Pencil paint hides it; background hold
+reopens. Long Smudge/lift keeps pixels. Fingers/UndoRedo and Done. Enable UI Debug,
+reproduce right-side failure, Capture report → Copy report and send report.
+
+
+.965 validation: full local Node24 suite2810 PASS/0 FAIL/0 skipped (90.1s);
+focused production/UI/hold/debug/Smudge and release checks passed. Revised old tests
+only where user-directed UI changed (radial persistence, scalar-layer visibility,
+removed Object Paint sector); retained raster cancel/refusal and protected gizmo
+bounds/navigation assertions. Old fixed732 shared-dock pin assertion now uses reviewed
+cache contract; negative background test mutates BOTH native hold branches; debug
+fixture preserves multiple observers and existing runtime-error extraction boundary.
+.964 rendering issue remains OPEN; debug report is diagnostic evidence, not a fix.
+Runtime publication and hosted CI proof are verified separately after this commit.

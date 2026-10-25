@@ -42,6 +42,6 @@ test('835 after-event trace runs after native mode handlers rather than an early
 });
 test('835 runtime and async errors are pinned through existing debug logger only when enabled',()=>{
  const listeners={},lines=[],c={enabled:false,log:(...args)=>lines.push(args),window:{addEventListener:(type,fn)=>listeners[type]=fn}};vm.createContext(c);
- const debug=fs.readFileSync(new URL('../src/gesture-debug.js',import.meta.url),'utf8');vm.runInContext(debug.slice(debug.indexOf('// Keep real browser failures')),c);
+ const debug=fs.readFileSync(new URL('../src/gesture-debug.js',import.meta.url),'utf8');vm.runInContext(debug.slice(debug.indexOf('// Keep real browser failures'),debug.indexOf('// .965 UI evidence')),c);
  listeners.error({message:'render failed',filename:'https://x/main.js',lineno:358});assert.equal(lines.length,0);c.enabled=true;listeners.error({message:'render failed',filename:'https://x/main.js',lineno:358});listeners.unhandledrejection({reason:Error('async failed')});assert.equal(lines[0][0],'LINKED RUNTIME ERROR');assert.equal(lines[0][1].file,'main.js');assert.equal(lines[1][1].message,'async failed');
 });

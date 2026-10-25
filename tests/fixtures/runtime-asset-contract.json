@@ -259,9 +259,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/gesture-debug.js?v=0.36.18.842",
+      "url": "./src/gesture-debug.js?v=0.36.18.965",
       "target": "src/gesture-debug.js",
-      "sha256": "611155d3e5da43a7be35f811ac5a23eec18d3a2c772b6c645895e4836d57894c"
+      "sha256": "d7cd3258e9b6d5f538a566b69bdfaedd0368a1bef0a5a6f99de3fc1dfa2695f7"
     },
     {
       "owner": "index.html",
@@ -303,9 +303,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/main.js?v=0.36.18.964",
+      "url": "./src/main.js?v=0.36.18.965",
       "target": "src/main.js",
-      "sha256": "77a9bb614846eaa6619b7182d794fb78516dc0f7d0f392b100d57b4db7282964",
+      "sha256": "db574f3f6e320a9720638e97ca1264dfe618ede078d06493f88bd592a3c25c68",
       "sourceVersion": "0.35.1"
     },
     {
@@ -341,9 +341,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/object-radial-session.js?v=0.36.18.916",
+      "url": "./src/object-radial-session.js?v=0.36.18.965",
       "target": "src/object-radial-session.js",
-      "sha256": "acd00862861d1824de2377be564512ed334566e20d5efd0d76b8a2381c2be996"
+      "sha256": "b1d2d2370f7955b3f0d72456aca70e83d74d08ac39525babe7b5a65686f9e04b"
     },
     {
       "owner": "index.html",
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.964",
+      "url": "./src/release-bootstrap.js?v=0.36.18.965",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.964",
+      "url": "./src/release-version.js?v=0.36.18.965",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -539,9 +539,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/tool-session-ui.js?v=0.36.18.964",
+      "url": "./src/tool-session-ui.js?v=0.36.18.965",
       "target": "src/tool-session-ui.js",
-      "sha256": "cfbdf0e46612d96de6a0da98aa14bbf40ae2ce0ffe63df87504abcf8aeb5b908"
+      "sha256": "52f542be2b70c4c10df66ccabdb3204cee461bbe06cb705600e16e86c217db6e"
     },
     {
       "owner": "index.html",
@@ -551,9 +551,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/total-gizmo.js?v=0.36.18.961",
+      "url": "./src/total-gizmo.js?v=0.36.18.965",
       "target": "src/total-gizmo.js",
-      "sha256": "493b25f8496d551cce77bb3c71d55558105e2d036b1edd2677cd4c95d9b609ea"
+      "sha256": "33c8f3b8892a2ace31fbec6eaceff882d91721e363f195e701f5da2dd00df28e"
     },
     {
       "owner": "index.html",
@@ -2481,26 +2481,26 @@
     {
       "owner": "index.html",
       "target": "src/viewport-paint.js",
-      "url": "./src/viewport-paint.js?v=0.36.18.964",
-      "sha256": "5793799d6e8b2fa80d26f4bf298aa59450ae76daf56acd0c764c1a549b9246c9"
+      "url": "./src/viewport-paint.js?v=0.36.18.965",
+      "sha256": "b94b9cb9a223e6b95c4538e68482e62e1cbf39ff919fb02f2340419906199dc5"
     },
     {
       "owner": "src/viewport-paint.js",
       "target": "src/viewport-paint-core.js",
-      "url": "./viewport-paint-core.js?v=0.36.18.951",
-      "sha256": "ddd99046aa958ac24ae77b71ef334b5f25498a022a10e9f88ca9d94be5b55368"
+      "url": "./viewport-paint-core.js?v=0.36.18.965",
+      "sha256": "17b65e4635a5f80e139c460b2010a95bd768711915d8f2aaadc26d0a3f27c3a3"
     },
     {
       "owner": "src/viewport-paint.js",
       "target": "evaluations/uv-paint/paint-core.js",
-      "url": "../evaluations/uv-paint/paint-core.js?v=0.36.18.942",
-      "sha256": "f98a67cd37ed67cb622c179a5074937656ce2cec9c8fb414580de44b1b3c3984"
+      "url": "../evaluations/uv-paint/paint-core.js?v=0.36.18.965",
+      "sha256": "54fe0c032112f9c0665d05f3a372af784c0ad30236eb6a0d477e6f591769ae6a"
     },
     {
       "owner": "src/viewport-paint-core.js",
       "target": "evaluations/uv-paint/paint-core.js",
-      "url": "../evaluations/uv-paint/paint-core.js?v=0.36.18.942",
-      "sha256": "f98a67cd37ed67cb622c179a5074937656ce2cec9c8fb414580de44b1b3c3984"
+      "url": "../evaluations/uv-paint/paint-core.js?v=0.36.18.965",
+      "sha256": "54fe0c032112f9c0665d05f3a372af784c0ad30236eb6a0d477e6f591769ae6a"
     },
     {
       "owner": "src/viewport-paint-core.js",
@@ -2744,9 +2744,9 @@
     },
     {
       "owner": "evaluations/uv-paint/lab.js",
-      "url": "./paint-core.js?v=0.36.18.942",
+      "url": "./paint-core.js?v=0.36.18.965",
       "target": "evaluations/uv-paint/paint-core.js",
-      "sha256": "f98a67cd37ed67cb622c179a5074937656ce2cec9c8fb414580de44b1b3c3984"
+      "sha256": "54fe0c032112f9c0665d05f3a372af784c0ad30236eb6a0d477e6f591769ae6a"
     },
     {
       "owner": "evaluations/uv-paint/lab.js",
@@ -2800,13 +2800,13 @@
       "owner": "evaluations/uv-paint/paint-session.js",
       "url": "./paint-core.js?v=0.36.18.942",
       "target": "evaluations/uv-paint/paint-core.js",
-      "sha256": "f98a67cd37ed67cb622c179a5074937656ce2cec9c8fb414580de44b1b3c3984"
+      "sha256": "54fe0c032112f9c0665d05f3a372af784c0ad30236eb6a0d477e6f591769ae6a"
     },
     {
       "owner": "evaluations/uv-paint/index.html",
-      "url": "./lab.js?v=0.36.18.957",
+      "url": "./lab.js?v=0.36.18.965",
       "target": "evaluations/uv-paint/lab.js",
-      "sha256": "9e36bf6d4e73402d1ee586193d4cf7ac6328410a37508c74582227d686f4038a"
+      "sha256": "2a2e39bde1ae874226b24b292c74394bc8a2a3165685cf9b2123a6bd53eb19d4"
     },
     {
       "owner": "index.html",
@@ -3119,6 +3119,12 @@
       "target": "src/viewport-sizing.js",
       "url": "./viewport-sizing.js?v=0.36.18.962",
       "sha256": "aac3f643c559187173f28c32da31981c1fea208be5ddce8181d69891afb83c7a"
+    },
+    {
+      "owner": "src/viewport-paint.js",
+      "url": "./paint-target.js?v=0.36.18.948",
+      "target": "src/paint-target.js",
+      "sha256": "06e443ed09b6c4e730be5d26dc0bc50b190cb2e4f647b2d88e6ac4ca4e3ab589"
     }
   ]
 }

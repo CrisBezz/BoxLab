@@ -148,3 +148,38 @@ window.addEventListener('error',event=>{
 window.addEventListener('unhandledrejection',event=>{
   if(enabled)log('LINKED ASYNC ERROR',{message:event.reason?.message||String(event.reason)});
 });
+
+// .965 UI evidence extends the existing opt-in debug owner. Never consumes input.
+const uiEvidence=[];let uiControls=null,uiReport=null;
+const describe=node=>node?{tag:node.tagName,id:node.id||'',class:String(node.className||'').slice(0,180)}:null;
+function evidence(kind,data){if(!enabled)return;uiEvidence.push({at:Math.round(performance.now()),kind,data});if(uiEvidence.length>100)uiEvidence.shift();}
+function uiSnapshot(){
+ const rect=node=>{if(!node)return null;const r=node.getBoundingClientRect(),s=getComputedStyle(node);return {...describe(node),rect:{x:r.x,y:r.y,width:r.width,height:r.height},hidden:node.hidden,disabled:node.disabled,display:s.display,visibility:s.visibility,pointerEvents:s.pointerEvents,opacity:s.opacity,zIndex:s.zIndex,transform:s.transform,overflow:s.overflow,filter:s.filter,backdropFilter:s.backdropFilter};};
+ const points=[.55,.8,.95].flatMap(x=>[.08,.5,.85].map(y=>({x:Math.round(innerWidth*x),y:Math.round(innerHeight*y)})));
+ return {release:document.querySelector('#appVersion')?.textContent,time:new Date().toISOString(),viewport:{width:innerWidth,height:innerHeight,dpr:devicePixelRatio,visual:window.visualViewport?{width:visualViewport.width,height:visualViewport.height,scale:visualViewport.scale,offsetLeft:visualViewport.offsetLeft,offsetTop:visualViewport.offsetTop}:null},session:globalThis.__boxlabToolSession?.current?.(),paint:!!globalThis.__boxlabViewportPaint?.active,controlsEnabled:globalThis.__boxlabBridgeState?.controls?.enabled,elements:['#app','.topbar','#viewportWrap','#viewport','#totalGizmo','#boxlabToolSessionHost','#viewportSelectionControls','#viewportPaintBtn','.statusbar'].map(q=>({selector:q,...rect(document.querySelector(q))})),canvas:{width:debugCanvas?.width,height:debugCanvas?.height},hitTests:points.map(p=>({...p,stack:document.elementsFromPoint(p.x,p.y).slice(0,6).map(describe)})),events:uiEvidence.slice()};
+}
+function updateUIDebug(){
+ if(!enabled){uiControls?.remove();uiControls=null;uiReport=null;return;}
+ if(uiControls)return;
+ // Keep the debug output accessible from the left while diagnosing the right side.
+ if(panel){panel.style.left='8px';panel.style.right='auto';panel.style.bottom='148px';panel.style.maxHeight='24vh';}
+ uiControls=document.createElement('section');uiControls.id='boxlabUIDebugControls';uiControls.style.cssText='position:fixed;left:8px;bottom:48px;z-index:100001;width:min(340px,90vw);padding:8px;background:#10161ff5;border:1px solid #87bfff;border-radius:8px;color:white;font:11px system-ui;pointer-events:auto';
+ const label=document.createElement('strong');label.textContent='UI DEBUG · capture when right side fails';
+ const capture=document.createElement('button');capture.textContent='Capture report';
+ const copy=document.createElement('button');copy.textContent='Copy report';
+ const off=document.createElement('button');off.textContent='Debug off';
+ const note=document.createElement('span');note.textContent='';note.setAttribute('role','status');
+ uiReport=document.createElement('textarea');uiReport.readOnly=true;uiReport.setAttribute('aria-label','UI debug report');uiReport.style.cssText='display:none;width:100%;box-sizing:border-box;height:80px;font:10px monospace';
+ capture.onclick=()=>{evidence('snapshot',{});uiReport.value=JSON.stringify(uiSnapshot(),null,2);uiReport.style.display='block';note.textContent='Report captured';};
+ copy.onclick=async()=>{if(!uiReport.value)capture.click();try{await navigator.clipboard.writeText(uiReport.value);note.textContent='Copied';}catch{uiReport.style.display='block';uiReport.focus();uiReport.select();note.textContent='Select and copy the report';}};
+ off.onclick=disable;uiControls.append(label,document.createElement('br'),capture,copy,off,note,uiReport);document.body.appendChild(uiControls);
+}
+const uiDebugButton=document.createElement('button');uiDebugButton.type='button';uiDebugButton.textContent='UI Debug';uiDebugButton.title='Record input and layout evidence for inactive UI';uiDebugButton.onclick=toggle;document.querySelector('#fileMenu .top-file-content')?.appendChild(uiDebugButton);
+window.addEventListener('boxlab-gesture-debug-change',updateUIDebug);queueMicrotask(updateUIDebug);
+for(const type of ['pointerdown','pointerup','pointercancel'])window.addEventListener(type,event=>{if(!enabled)return;evidence(type,{pointer:event.pointerType,id:event.pointerId,x:event.clientX,y:event.clientY,target:describe(event.target),hit:describe(document.elementFromPoint(event.clientX,event.clientY)),buttons:event.buttons,defaultPrevented:event.defaultPrevented});if(type==='pointerdown')evidence('input-layout',{rightEdge:innerWidth,canvasWidth:debugCanvas?.width,canvasHeight:debugCanvas?.height,paint:!!globalThis.__boxlabViewportPaint?.active});},{capture:true,passive:true});
+for(const type of ['resize','orientationchange','pageshow','blur','focus','boxlab-tool-session-change'])window.addEventListener(type,event=>evidence(type,{detail:event.detail?.id||null,width:innerWidth,height:innerHeight}));
+window.addEventListener('error',event=>evidence('error',{message:event.message,file:event.filename,line:event.lineno}));window.addEventListener('unhandledrejection',event=>evidence('rejection',{message:event.reason?.message||String(event.reason)}));
+for(const type of ['webglcontextlost','webglcontextrestored'])debugCanvas?.addEventListener(type,()=>evidence(type,{}));
+globalThis.__boxlabGestureDebug.uiSnapshot=uiSnapshot;
+
+for(const type of ['pointerdown','pointerup','click'])window.addEventListener(type,event=>evidence(type+'-bubble',{target:describe(event.target),defaultPrevented:event.defaultPrevented}),{passive:true});

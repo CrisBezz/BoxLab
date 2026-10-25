@@ -30,6 +30,7 @@ function available(label){
 function complete(tool){window.dispatchEvent(new CustomEvent('boxlab-selection-hub-session-complete',{detail:{mode:'object',tool}}));}
 function cancelCurrent(){
  const id=current();if(!id)return false;
+ if(id==='uv-paint')return false;
  if(id==='curve-profile')return !!globalThis.__boxlabCurveProfile?.cancel?.();
  if(id==='boolean-edit')return !!globalThis.__boxlabEditableBoolean?.cancel?.();
  const entry=Object.entries(tools).find(([,s])=>s[1]===id);

@@ -444,6 +444,10 @@ function beginBackgroundTap(event){
   if(event.target!==canvas||(event.pointerType==='mouse'&&event.button!==0))return;
   if(backgroundTap&&backgroundTap.pointerId!==event.pointerId){backgroundTap.cancelled=true;backgroundSelectionTap.reset('secondary-contact');return;}
   if(!event.isPrimary||(globalThis.__boxlabDirectBevel?.faceActive?.()&&!globalThis.__boxlabToolBackgroundExit?.active?.()))return;
+  if(globalThis.__boxlabViewportPaint?.active){
+    if(!globalThis.__boxlabViewportPaint.isBackgroundPoint?.(event)){backgroundTap=null;backgroundSelectionTap.reset('paint-surface');return;}
+    backgroundTap={pointerId:event.pointerId,startX:event.clientX,startY:event.clientY,startedAt:event.timeStamp,moved:false,cancelled:false};beginBackgroundHold(event);return;
+  }
   if(globalThis.__boxlabToolBackgroundExit?.ownsPoint?.(event)){backgroundTap=null;return;}
   if(selectionMode==='vertex'&&globalThis.__boxlabVertexPickAssist?.pick?.(event)){backgroundSelectionTap.reset('vertex-assist-hit');backgroundTap=null;return;}
   if(pick(event)){backgroundSelectionTap.reset('mesh-hit');backgroundTap=null;return;}
@@ -568,12 +572,12 @@ function cancelBackgroundHold(reason){
 }
 function backgroundSelectionContext(){return selectionMode+':'+(globalThis.__boxlabObjectManager?.activeId||'active');}
 function readBackgroundSelection(){return selectionMode==='object'?[...(globalThis.__boxlabObjectSelection?.ids||[])]:selectionIndices();}
-function backgroundHoldBlocked(){return !!directTool||(!!globalThis.__boxlabToolSession?.isActive?.()&&!globalThis.__boxlabViewportPaint?.backgroundHoldAllowed?.())||!!globalThis.__boxlabFaceValueViewportSession?.active?.()||!!globalThis.__boxlabEdgeViewportSession?.loopActive?.()||!!globalThis.__boxlabBevelViewportSession?.edgeActive?.()||!!globalThis.__boxlabSlideViewportSession?.active?.()||!!globalThis.__boxlabToolBackgroundExit?.active?.();}
+function backgroundHoldBlocked(){if(globalThis.__boxlabViewportPaint?.active)return !globalThis.__boxlabViewportPaint.backgroundHoldAllowed?.();return !!directTool||(!!globalThis.__boxlabToolSession?.isActive?.()&&!globalThis.__boxlabViewportPaint?.backgroundHoldAllowed?.())||!!globalThis.__boxlabFaceValueViewportSession?.active?.()||!!globalThis.__boxlabEdgeViewportSession?.loopActive?.()||!!globalThis.__boxlabBevelViewportSession?.edgeActive?.()||!!globalThis.__boxlabSlideViewportSession?.active?.()||!!globalThis.__boxlabToolBackgroundExit?.active?.();}
 function beginBackgroundHold(event){
   if(backgroundHold)clearTimeout(backgroundHold.timer);
   backgroundHold=null;
   if(event.pointerType==='pen'&&!(event.buttons&1)&&!(event.pressure>0))return;
-  if(backgroundHoldBlocked()||globalThis.__boxlabObjectManager?.pickObject?.(event)||globalThis.__boxlabSelectionBridge?.pickObject?.(event))return;
+  if(backgroundHoldBlocked()||!globalThis.__boxlabViewportPaint?.active&&(globalThis.__boxlabObjectManager?.pickObject?.(event)||globalThis.__boxlabSelectionBridge?.pickObject?.(event)))return;
   const hold={pointerId:event.pointerId,context:backgroundSelectionContext(),mesh,seed:[...readBackgroundSelection()],paint:!!globalThis.__boxlabViewportPaint?.active,point:{clientX:event.clientX,clientY:event.clientY},fired:false,cancelled:false,timer:null};
   backgroundHold=hold;
   hold.timer=setTimeout(()=>{

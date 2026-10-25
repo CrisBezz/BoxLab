@@ -30,7 +30,7 @@ function blurSnapshot(bytes,size,domains,links,amount){
 export function createPaintLayer(size=RESOLUTION,{transparent=false}={}){
  if(typeof transparent!=='boolean')throw Error('Invalid paint layer alpha mode');
  if(!Number.isInteger(size)||size<16||size>1024)throw Error('Comparison map budget exceeded');
- const pixels=new Uint8Array(size*size*4).fill(transparent?0:255);let before=null,coverage=null,settings=null,changed=false,disposed=false,dirty=true,erasing=false,blur=null,blurTarget=null,smudging=false,pickup=null,smudgeWork=0,connections=null;
+ const pixels=new Uint8Array(size*size*4).fill(transparent?0:255);let before=null,coverage=null,settings=null,changed=false,disposed=false,dirty=true,erasing=false,blur=null,blurTarget=null,smudging=false,pickup=null,smudgeWork=0,limited=false,connections=null;
  // A small tip-local reservoir, never an atlas-to-atlas line. Pick up only the
  // current original polygon; an unproven face change/miss starts fresh without ink.
  // Mix in 25% stroke-start paint per spaced dab. Premultiplied colour and alpha
@@ -41,7 +41,7 @@ export function createPaintLayer(size=RESOLUTION,{transparent=false}={}){
   const first=!pickup||pickup.face!==face;
   const connected=first&&Number.isInteger(pickup?.face)&&connections?.has(Math.min(face,pickup.face)+':'+Math.max(face,pickup.face));
   const work=width*width+(connected?pickup.valid.length:0);
-  if(smudgeWork+work>8e6)throw Error('Smudge stroke is too long; lift and start a new stroke');
+  if(smudgeWork+work>8e6){limited=true;return false;}
   smudgeWork+=work;
   // A rotationally invariant premultiplied mean crosses a proven manifold edge.
   // No assumption that the two islands share UV orientation, scale or position.
@@ -84,7 +84,7 @@ export function createPaintLayer(size=RESOLUTION,{transparent=false}={}){
   return touched;
  }
  return {
-  pixels,size,
+  pixels,size,get limited(){return limited;},
   begin(value,{erase=false,filter=null,smudge=false}={}){
    if(typeof erase!=='boolean'||erase&&!transparent)throw Error('Alpha erasing requires a transparent paint layer');if(disposed||before)throw Error('Paint layer unavailable');
    if(typeof smudge!=='boolean'||smudge&&(!filter||erase))throw Error('Smudge requires face ownership');
@@ -95,7 +95,7 @@ export function createPaintLayer(size=RESOLUTION,{transparent=false}={}){
    const amount=filter?.amount===undefined?1:filter.amount;if(filter&&(!Number.isInteger(amount)||amount<1||amount>32))throw Error('Blur amount must be 1 to 32');
    let valid=brushSettings(value);if(valid.alphaTip)valid={...valid,alphaTip:captureAlphaTip(valid.alphaTip)};
    const domains=filter?filter.domains.slice():null,links=!smudge&&filter?.neighbours?.slice()||null,start=pixels.slice(),target=filter&&!smudge&&valid.opacity?blurSnapshot(start,size,domains,links,amount):null;
-   settings=valid;blur=domains;blurTarget=target;erasing=erase;before=start;coverage=new Float32Array(size*size);changed=false;smudging=smudge;pickup=null;smudgeWork=0;connections=smudge?new Set((edges||[]).map(p=>p[0]+':'+p[1])):null;
+   settings=valid;blur=domains;blurTarget=target;erasing=erase;before=start;coverage=new Float32Array(size*size);changed=false;smudging=smudge;pickup=null;smudgeWork=0;limited=false;connections=smudge?new Set((edges||[]).map(p=>p[0]+':'+p[1])):null;
   },
   stamp(u,v,pressure=1,face=null){
    if(blur&&(!Number.isInteger(face)||face<0)){resetPickup();return false;}

@@ -284,6 +284,7 @@ function restore(entry){
 }
 function begin({id,title,node,subtitle=''}={}){
   if(!drawer||!host||!node||!id)return false;
+  if(active?.id==='uv-paint'&&id!=='uv-paint')return false;
   if(active&&active.id!==id){
     globalThis.__boxlabObjectRadialSession?.cancelCurrent?.();
     if(active)end(active.id);

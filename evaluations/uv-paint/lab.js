@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
-import {createPaintComparison,brushSettings,topDownPixels} from './paint-core.js?v=0.36.18.942';
+import {createPaintComparison,brushSettings,topDownPixels} from './paint-core.js?v=0.36.18.965';
 import {createStroke} from './stroke.js?v=896';
 import {comparisonSample} from './samples.js?v=0.36.18.957';
 import {createPaintSessionIO,PAINT_SESSION_LIMIT} from './paint-session.js?v=0.36.18.942';
