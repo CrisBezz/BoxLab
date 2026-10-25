@@ -14402,3 +14402,8 @@ original owners. Paint hold is allowed only while idle (no stroke/image/AO previ
 original hold cancels on movement, multitouch, pointer cancel or session change.
 Paint settings use the shared panel position owner with a compact option; other popup
 layouts remain unchanged. iPad tactile acceptance remains pending.
+
+
+## .964 — left side compact Paint settings; user direction — 25 October 2026
+
+User requests Paint contextual popups at LEFT because top-centre settings obstruct the viewport. Keep the floating radial and existing painter/control owners from .963. Reuse shared position owner with compact layout; set Paint host 8px from left/top, width capped at320px, viewport-height scroll. Reduce gaps modestly while preserving readable labels and minimum tap heights. Other tool popups retain top-centre placement. DEVICE964: Brush/Blur left placement, spacing, radial hold/reopen, Pencil, finger navigation, UndoRedo, contextual pages and Done. Next: obtain iPad acceptance of radial + left popup before more controls; then prioritize facegroup painting.

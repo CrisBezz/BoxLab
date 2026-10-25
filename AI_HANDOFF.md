@@ -1,4 +1,4 @@
-# BoxLab AI Handoff — .963 / floating Paint radial; .962 PASS
+# BoxLab AI Handoff — .964 / left compact Paint settings; .962 PASS
 
 ## Permanent rule — every build completion
 
@@ -3636,3 +3636,8 @@ Paint settings use the shared panel position owner with a compact option; other 
 layouts remain unchanged. iPad tactile acceptance remains pending.
 
 DEVICE963: Enter UV Paint; use Brush then hold empty space to reopen the floating radial; choose Blur and confirm its top-centre settings; test Layers/Mask/Image/AO/Texture pages, Undo/Redo, Pencil, finger orbit and Done.
+
+
+## .964 — left side compact Paint settings; user direction — 25 October 2026
+
+User requests Paint contextual popups at LEFT because top-centre settings obstruct the viewport. Keep the floating radial and existing painter/control owners from .963. Reuse shared position owner with compact layout; set Paint host 8px from left/top, width capped at320px, viewport-height scroll. Reduce gaps modestly while preserving readable labels and minimum tap heights. Other tool popups retain top-centre placement. DEVICE964: Brush/Blur left placement, spacing, radial hold/reopen, Pencil, finger navigation, UndoRedo, contextual pages and Done. Next: obtain iPad acceptance of radial + left popup before more controls; then prioritize facegroup painting.

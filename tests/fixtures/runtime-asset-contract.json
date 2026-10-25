@@ -303,7 +303,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/main.js?v=0.36.18.963",
+      "url": "./src/main.js?v=0.36.18.964",
       "target": "src/main.js",
       "sha256": "77a9bb614846eaa6619b7182d794fb78516dc0f7d0f392b100d57b4db7282964",
       "sourceVersion": "0.35.1"
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.963",
+      "url": "./src/release-bootstrap.js?v=0.36.18.964",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.963",
+      "url": "./src/release-version.js?v=0.36.18.964",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -539,9 +539,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/tool-session-ui.js?v=0.36.18.963",
+      "url": "./src/tool-session-ui.js?v=0.36.18.964",
       "target": "src/tool-session-ui.js",
-      "sha256": "a60ef2f61c65a1737cd610f47785792018f8f94786773040a6c5bbf817fde565"
+      "sha256": "cfbdf0e46612d96de6a0da98aa14bbf40ae2ce0ffe63df87504abcf8aeb5b908"
     },
     {
       "owner": "index.html",
@@ -2481,8 +2481,8 @@
     {
       "owner": "index.html",
       "target": "src/viewport-paint.js",
-      "url": "./src/viewport-paint.js?v=0.36.18.963",
-      "sha256": "c806fb5fda5db781125c5472564e39855162064a6b721480ab8be6b642e81198"
+      "url": "./src/viewport-paint.js?v=0.36.18.964",
+      "sha256": "5793799d6e8b2fa80d26f4bf298aa59450ae76daf56acd0c764c1a549b9246c9"
     },
     {
       "owner": "src/viewport-paint.js",
