@@ -1,4 +1,4 @@
-# BoxLab AI Handoff — .966 / continuing Smudge; startup toolbar evidence
+# BoxLab AI Handoff — .967 / canvas and UI composition repair
 
 ## .966 publication verified — 25 October 2026
 
@@ -69,6 +69,36 @@ new report containing controls and startup evidence; tap affected right button f
 if practical. Exact toolbar probe distinguishes offscreen/disabled/occlusion from
 DOM-healthy but visually broken UI; native iPad rendering gate remains OPEN.
 
+
+## .967 — canvas/UI composition boundary; .966 invisible clickable controls — 25 October 2026
+
+User reports right controls remain clickable while visually absent; switching away
+to ChatGPT and back restores appearance. Exact .966 report10:22:08Z shows right
+buttons on-screen/enabled/visible/opacity1, no transforms/filters/clip paths, exact
+button/SVG hit stacks; Undo click reaches window bubble. Paintfalse/sessionnull.
+Startup toolbar grows from134.56px wide at459ms to317.61px at649ms, with correct
+layout but reported invisible pixels. Evidence points to painting/compositing, not
+removed UI, offscreen layout, disabled controls or broad input interception. This
+is an inference, NOT a locally reproduced WebKit-engine diagnosis.
+
+Targeted repair in original stylesheet: viewportWrap isolated stack atz0, original
+canvas bounded by contain:paint with its ownz0; header remainsz10 above viewport.
+Header/status/Object Browser get isolated compositing hints via will-change:opacity,
+without transforms, opacity changes, clipping UI menus or reparenting any control.
+VIEW fixed popup remains viewport-relative; floating tools retain their own owners.
+Original viewport-sizing scheduler now coalesces focus and visible-document events
+through SAME resize/repaint owner; hidden-document events do not redraw. Teardown
+removes both listeners. No synthetic resize, per-frame polling, DOM hiding, reload,
+new renderer/history/input owner or modelling/paint changes. Debug snapshot records
+contain/isolation/will-change so .967 layer rules can be verified on device.
+
+.965 Paint UI PASS protected; .966 continuing-Smudge acceptance remains separate.
+DEVICE967: refresh in landscape repeatedly, verify all right buttons/status and
+Object Browser; interact before changing apps, enter/exit UV Editor and Paint,
+rotate/orbit. Switch away/back verifies recovery does not lose UI/work. If invisible
+controls recur, enable UI Debug before refresh and send Capture/Copy report plus
+screenshot if practical. Repair remains an iPad gate until explicit feedback.
+
 ## Permanent rule — every build completion
 
 The final user-facing reply MUST explicitly say **“The app is ready for testing —
@@ -85,7 +115,7 @@ Historical publication notes (superseded above): Build .962 published/verified: 
 Pages success;12/12 live files match; hosted regression SUCCESS. .956 PASS protected.
 Audit baseline main82ddf0de; published runtime cac6a27c. See .957 entry.
 User953 Cut UVs/954 picking/952 editor PASS protected;955 device gate still pending.
-Current focus: .966 uninterrupted Smudge and exact right-toolbar startup evidence; .965 UI PASS protected, right-side failure OPEN.
+Current focus: .967 iPad composition retest; invisible/clickable right controls remain OPEN until device feedback. .965 UI PASS protected; .966 Smudge gate separate.
 
 ## .956 — bounded angle-based Auto atlas; 4096-face limit — 24 October 2026 (Brisbane)
 
@@ -3731,3 +3761,12 @@ right toolbar centre probes include headerY30 and persist in pageshow evidence.
 Prior .965 hosted regression40181206048 has now completed SUCCESS. Exact supplied
 refresh report observations are archived in docs/ui-debug-refresh-965-report.md.
 Right-side native iPad failure remains OPEN; no rendering fix inferred.
+
+
+.967 validation: full local Node24 suite2815 PASS/0 FAIL/0 skipped (93.9s);
+focused release/sizing/UV/Paint/debug checks40 PASS. New coverage checks focus/visible
+return coalescing, hidden-document refusal and disposal; canvas containment and
+untransformed/unclipped VIEW popup contract retained. A local Chromium layout smoke
+was attempted but the installed Playwright package has no browser executable here;
+no rendered-browser or native WebKit proof claimed. User's .966 report is archived
+in docs/ui-debug-invisible-controls-966.md. Device visual gate remains OPEN.

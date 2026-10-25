@@ -1,4 +1,4 @@
-import {bindViewportSizing} from './viewport-sizing.js?v=0.36.18.962';
+import {bindViewportSizing} from './viewport-sizing.js?v=0.36.18.967';
 import * as THREE from 'three';
 import {pickScreenEdges} from './edge-screen-picking.js?v=0.36.18.954';
 import {createCageBatch,updateCageBatches,addMirrorCageBatch} from './cage-render-batches.js?v=0.36.18.930';

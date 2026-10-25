@@ -14497,3 +14497,42 @@ Right-side native iPad failure remains OPEN; no rendering fix inferred.
 ## .966 publication verified — 25 October 2026
 
 Runtime commit 6dd88794448ffc95293244639ac6509b2253a20b; exact tested/uploaded tree 47553168be0c1612a8cb58ae4abc65400b04213a. Full local2813 PASS/0 FAIL/0 skipped (95.0s); focused41 PASS. Pages run40183471563 SUCCESS. All8 cache-busted public files byte-match local: version/index, painter/core/debug, shared raster, Lab loader/shell. Current main title/data/visible markers and changed pins966 verified; unchanged main965 and protected Multi1.0 retained. Hosted regression40183471903 was running at proof time; check its actual conclusion before claiming hosted PASS. User .965 PASS protects current Paint UI; continuing Smudge .966 and exact toolbar/startup diagnostic reports still require device feedback. Right-side failure is OPEN. This docs-only proof preserves the tested runtime.
+
+
+## .967 — canvas/UI composition boundary; .966 invisible clickable controls — 25 October 2026
+
+User reports right controls remain clickable while visually absent; switching away
+to ChatGPT and back restores appearance. Exact .966 report10:22:08Z shows right
+buttons on-screen/enabled/visible/opacity1, no transforms/filters/clip paths, exact
+button/SVG hit stacks; Undo click reaches window bubble. Paintfalse/sessionnull.
+Startup toolbar grows from134.56px wide at459ms to317.61px at649ms, with correct
+layout but reported invisible pixels. Evidence points to painting/compositing, not
+removed UI, offscreen layout, disabled controls or broad input interception. This
+is an inference, NOT a locally reproduced WebKit-engine diagnosis.
+
+Targeted repair in original stylesheet: viewportWrap isolated stack atz0, original
+canvas bounded by contain:paint with its ownz0; header remainsz10 above viewport.
+Header/status/Object Browser get isolated compositing hints via will-change:opacity,
+without transforms, opacity changes, clipping UI menus or reparenting any control.
+VIEW fixed popup remains viewport-relative; floating tools retain their own owners.
+Original viewport-sizing scheduler now coalesces focus and visible-document events
+through SAME resize/repaint owner; hidden-document events do not redraw. Teardown
+removes both listeners. No synthetic resize, per-frame polling, DOM hiding, reload,
+new renderer/history/input owner or modelling/paint changes. Debug snapshot records
+contain/isolation/will-change so .967 layer rules can be verified on device.
+
+.965 Paint UI PASS protected; .966 continuing-Smudge acceptance remains separate.
+DEVICE967: refresh in landscape repeatedly, verify all right buttons/status and
+Object Browser; interact before changing apps, enter/exit UV Editor and Paint,
+rotate/orbit. Switch away/back verifies recovery does not lose UI/work. If invisible
+controls recur, enable UI Debug before refresh and send Capture/Copy report plus
+screenshot if practical. Repair remains an iPad gate until explicit feedback.
+
+
+.967 validation: full local Node24 suite2815 PASS/0 FAIL/0 skipped (93.9s);
+focused release/sizing/UV/Paint/debug checks40 PASS. New coverage checks focus/visible
+return coalescing, hidden-document refusal and disposal; canvas containment and
+untransformed/unclipped VIEW popup contract retained. A local Chromium layout smoke
+was attempted but the installed Playwright package has no browser executable here;
+no rendered-browser or native WebKit proof claimed. User's .966 report is archived
+in docs/ui-debug-invisible-controls-966.md. Device visual gate remains OPEN.

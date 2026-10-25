@@ -315,3 +315,5 @@ Provide meaningful progress updates while building, then explicit ready status a
 commit/push credential error: connected GitHub is the established publication path.
 
 .966: User .965 PASS preserves current Paint UI; right-side refresh fault remains open. Smudge uses per-input work windows without extra history entries.
+
+.967: invisible but clickable right controls are a painting/composition device gate; do not claim repaired from DOM assertions. Keep VIEW popup untransformed/unclipped and shared canvas sizing owner.
