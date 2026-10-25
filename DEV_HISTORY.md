@@ -14449,3 +14449,8 @@ cache contract; negative background test mutates BOTH native hold branches; debu
 fixture preserves multiple observers and existing runtime-error extraction boundary.
 .964 rendering issue remains OPEN; debug report is diagnostic evidence, not a fix.
 Runtime publication and hosted CI proof are verified separately after this commit.
+
+
+## .965 publication verified — 25 October 2026
+
+Runtime main commit 7d21310a020905f197c8b479ecfc40600c255fe2; exact local/uploaded tree 11869b2fc88aa0a924892c970ffe58133566e14b. Full local suite 2810 PASS, 0 FAIL/0 skipped (90.1s). GitHub Pages build/deploy run40181205440 SUCCESS. Current main version/title/data stamp and changed main/Paint/debug cache pins verified; protected Multi1.0 retained. Hosted full regression run40181206048 was still running when this proof was written; do not infer hosted PASS until checking it. User .964 left placement PASS protected; .965 device UI acceptance and recurring right-side inactive fault remain pending. File → UI Debug → reproduce → Capture report → Copy report is the next diagnostic gate. This is a docs-only proof update; runtime tree above remains the tested publication.

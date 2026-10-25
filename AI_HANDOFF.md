@@ -1,5 +1,10 @@
 # BoxLab AI Handoff — .965 / Paint workflow; right-side UI debug
 
+## .965 publication verified — 25 October 2026
+
+Runtime main commit 7d21310a020905f197c8b479ecfc40600c255fe2; exact local/uploaded tree 11869b2fc88aa0a924892c970ffe58133566e14b. Full local suite 2810 PASS, 0 FAIL/0 skipped (90.1s). GitHub Pages build/deploy run40181205440 SUCCESS. Current main version/title/data stamp and changed main/Paint/debug cache pins verified; protected Multi1.0 retained. Hosted full regression run40181206048 was still running when this proof was written; do not infer hosted PASS until checking it. User .964 left placement PASS protected; .965 device UI acceptance and recurring right-side inactive fault remain pending. File → UI Debug → reproduce → Capture report → Copy report is the next diagnostic gate. This is a docs-only proof update; runtime tree above remains the tested publication.
+
+
 
 ## .965 — Paint workflow and UI evidence — 25 October 2026
 
@@ -43,7 +48,7 @@ User reaffirmed this permanent instruction on 21 October 2026.
 
 
 
-Build .962 published/verified: runtime9c3d2275;30 relevant checks PASS;4/4 changed live files match. .961 user FAIL for right-side UI; rotation workaround. Previous .961 published/verified: runtime5fb4a4fa; local2804PASS; hosted SUCCESS;16/16 live matches. .960 brush radial PASS; recurring UI clipping OPEN. Previous .960 published/verified: runtime61f9d1b7; local/hosted2802PASS;16/16 live matches. .959 user PASS protected. Previous .959 published/verified: runtime57cb1ca5; local/hosted2800PASS;16/16 live matches. .958 user PASS protected. Previous .958 published/verified: runtime8deba41d; local2800PASS;13/13 live files match. See final958 entry. Previous .957 published/verified: runtime cac6a27c;2799 distinct local checks PASS.
+Historical publication notes (superseded above): Build .962 published/verified: runtime9c3d2275;30 relevant checks PASS;4/4 changed live files match. .961 user FAIL for right-side UI; rotation workaround. Previous .961 published/verified: runtime5fb4a4fa; local2804PASS; hosted SUCCESS;16/16 live matches. .960 brush radial PASS; recurring UI clipping OPEN. Previous .960 published/verified: runtime61f9d1b7; local/hosted2802PASS;16/16 live matches. .959 user PASS protected. Previous .959 published/verified: runtime57cb1ca5; local/hosted2800PASS;16/16 live matches. .958 user PASS protected. Previous .958 published/verified: runtime8deba41d; local2800PASS;13/13 live files match. See final958 entry. Previous .957 published/verified: runtime cac6a27c;2799 distinct local checks PASS.
 Pages success;12/12 live files match; hosted regression SUCCESS. .956 PASS protected.
 Audit baseline main82ddf0de; published runtime cac6a27c. See .957 entry.
 User953 Cut UVs/954 picking/952 editor PASS protected;955 device gate still pending.
