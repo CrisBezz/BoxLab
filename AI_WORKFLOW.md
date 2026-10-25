@@ -313,3 +313,5 @@ Empty-background hold reopens it through the original main timer; Done exits.
 Provide meaningful progress updates while building, then explicit ready status and
 3–6 hands-on tests in EVERY completion. Never end an authorized build at a local
 commit/push credential error: connected GitHub is the established publication path.
+
+.966: User .965 PASS preserves current Paint UI; right-side refresh fault remains open. Smudge uses per-input work windows without extra history entries.

@@ -1,4 +1,4 @@
-# BoxLab AI Handoff — .965 / Paint workflow; right-side UI debug
+# BoxLab AI Handoff — .966 / continuing Smudge; startup toolbar evidence
 
 ## .965 publication verified — 25 October 2026
 
@@ -36,6 +36,34 @@ and settings below, browse radial choices then Pencil paint hides it; background
 reopens. Long Smudge/lift keeps pixels. Fingers/UndoRedo and Done. Enable UI Debug,
 reproduce right-side failure, Capture report → Copy report and send report.
 
+
+## .966 — continuing Smudge input windows; startup toolbar evidence — 25 October 2026
+
+User .965 PASS protects bottom Paint entry, persistent radial, Layers-first LEFT
+settings and kept Smudge pixels. User reports Smudge still stops after5–6 passes.
+Original8M raster work cap was contact-wide; renew ONLY its work counters per native
+Smudge input sample, retaining before snapshot/coverage/pickup/dirty pixels. A bounded
+sample may pause dabs, next input resumes. At original12000 path-dab cap, reseed same
+original path owner from last screen input while retaining the raster contact. No
+extra checkpoints or layer finish until physical lift: Undo remains one stroke.
+Cancel/checkpoint refusals retain atomic rollback. Brush/Fill/Eraser/Blur unchanged.
+
+User supplied .965 debug report from refresh failure:1366×886, canvas1366×826CSS /
+2732×1652pixels atDPR2, paintfalse/sessionnull/controlsenabled; sampled right CANVAS
+contacts reach window bubble. No broad overlay in those canvas samples. This does NOT
+prove toolbar hit testing or compositor painting healthy: original grid startsY71
+below60px header and omitted .top-actions/right button rects. User confirms refresh
+can enter failed state directly. Extend existing debug report with exact right-button
+rect/styles/disabled/expanded/centre hit stacks; capture these on persisted-debug
+startup/pageshow/lifecycle and toolbar click. No root cause or rendering fix claimed.
+
+DEVICE966: long repeated Smudge passes under one Pencil contact continue; lift keeps
+result, ONE Undo/Redo restores whole contact, cancel restores pre-contact. All .965
+UI flow remains. Enable UI Debug, refresh directly into right failure, Capture/Copy
+new report containing controls and startup evidence; tap affected right button first
+if practical. Exact toolbar probe distinguishes offscreen/disabled/occlusion from
+DOM-healthy but visually broken UI; native iPad rendering gate remains OPEN.
+
 ## Permanent rule — every build completion
 
 The final user-facing reply MUST explicitly say **“The app is ready for testing —
@@ -52,7 +80,7 @@ Historical publication notes (superseded above): Build .962 published/verified: 
 Pages success;12/12 live files match; hosted regression SUCCESS. .956 PASS protected.
 Audit baseline main82ddf0de; published runtime cac6a27c. See .957 entry.
 User953 Cut UVs/954 picking/952 editor PASS protected;955 device gate still pending.
-Current focus: .965 Paint workflow and right-side UI diagnostic evidence; await iPad acceptance.
+Current focus: .966 uninterrupted Smudge and exact right-toolbar startup evidence; .965 UI PASS protected, right-side failure OPEN.
 
 ## .956 — bounded angle-based Auto atlas; 4096-face limit — 24 October 2026 (Brisbane)
 
@@ -3688,3 +3716,13 @@ cache contract; negative background test mutates BOTH native hold branches; debu
 fixture preserves multiple observers and existing runtime-error extraction boundary.
 .964 rendering issue remains OPEN; debug report is diagnostic evidence, not a fix.
 Runtime publication and hosted CI proof are verified separately after this commit.
+
+
+.966 validation: full local Node24 suite2813 PASS/0 FAIL/0 skipped (95.0s);
+focused Smudge/gesture/UI/debug/Lab/release41 PASS. New checks prove renewed work
+windows retain pixels and cancellation baseline; long actual surface-picked Smudge
+passes original12000 path budget, edits late pixels and commits ONE Undo/Redo entry;
+right toolbar centre probes include headerY30 and persist in pageshow evidence.
+Prior .965 hosted regression40181206048 has now completed SUCCESS. Exact supplied
+refresh report observations are archived in docs/ui-debug-refresh-965-report.md.
+Right-side native iPad failure remains OPEN; no rendering fix inferred.

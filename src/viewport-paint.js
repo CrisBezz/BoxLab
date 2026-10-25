@@ -2,8 +2,8 @@ import {paintTargetKey} from './paint-target.js?v=0.36.18.948';
 import {createPaintLayerList} from './paint-layer-list.js?v=0.36.18.947';
 import {importPaintAlpha} from './paint-alpha-source.js?v=0.36.18.929';
 import {bindPaintColourControls} from './paint-colour-controls.js?v=0.36.18.915';
-import {createViewportPainter} from './viewport-paint-core.js?v=0.36.18.965';
-import {brushSettings} from '../evaluations/uv-paint/paint-core.js?v=0.36.18.965';
+import {createViewportPainter} from './viewport-paint-core.js?v=0.36.18.966';
+import {brushSettings} from '../evaluations/uv-paint/paint-core.js?v=0.36.18.966';
 import {PAINT_BLEND_MODES} from './paint-blend-modes.js?v=0.36.18.903';
 import {importPaintImage} from './paint-image-source.js?v=0.36.18.907';
 import {cyclePaintImageMode} from './paint-image-placement.js?v=0.36.18.907';
@@ -173,7 +173,7 @@ function consume(e){e.preventDefault();e.stopImmediatePropagation();}
 function down(e){if(e.target!==canvas)return;imageRequest++;alphaRequest++;if(e.pointerType==='touch'){if(controller?.drawing||imageGesture){palms.add(e.pointerId);canvas.setPointerCapture(e.pointerId);consume(e);}else touches.add(e.pointerId);return;}
  if(!controller?.active||e.button!==0)return;consume(e);if(e.pointerType==='pen'&&(!e.buttons||e.pressure<=0)||touches.size||contact!==null)return;
  try{if(!imageStage&&!controller.hit(point(e)))return;if(imageStage){const s=imageStage,p=point(e),first=s.surface&&!s.frame,frame=first?controller.surfaceFrame(p,s.source):s.frame;if(first&&!frame){say('Image · pick a visible surface on the selected mesh');return;}hideTools();imageGesture={start:p,placement:structuredClone(s.placement),surface:structuredClone(s.frame),surfaceStart:structuredClone(frame),first,controls:bridge().controls.enabled,moved:false};if(first)s.frame=frame;bridge().controls.enabled=false;contact=e.pointerId;canvas.setPointerCapture(contact);drawImageStage();return;}if(controller.begin(point(e),settings(),input('brush').value,Number(input('mask-value').value),Number(input('roughness-value').value),Number(input('metalness-value').value),input('paint-action').value)){hideTools();contact=e.pointerId;canvas.setPointerCapture(contact);}}catch(error){cancel();say('UV Paint: '+error.message);}}
-function move(e){if(palms.has(e.pointerId)){consume(e);return;}if(contact!==e.pointerId)return;consume(e);if(e.pointerType==='pen'&&!e.buttons)return;if(imageGesture){moveImage(point(e));return;}try{const coalesced=e.getCoalescedEvents?.()||[];for(const p of coalesced.length?coalesced:[e]){if(p.pointerType==='pen'&&!p.buttons)continue;controller.move(point(p));}if(controller.state?.strokeLimited)say('Smudge stroke limit · lift to keep this stroke, then continue');}catch(error){cancel();say('UV Paint: '+error.message);}}
+function move(e){if(palms.has(e.pointerId)){consume(e);return;}if(contact!==e.pointerId)return;consume(e);if(e.pointerType==='pen'&&!e.buttons)return;if(imageGesture){moveImage(point(e));return;}try{const coalesced=e.getCoalescedEvents?.()||[];for(const p of coalesced.length?coalesced:[e]){if(p.pointerType==='pen'&&!p.buttons)continue;controller.move(point(p));}if(controller.state?.strokeLimited)say('Smudge processing bounded · continue moving to resume');}catch(error){cancel();say('UV Paint: '+error.message);}}
 function up(e){touches.delete(e.pointerId);if(palms.delete(e.pointerId)){try{canvas.releasePointerCapture(e.pointerId);}catch{}consume(e);return;}if(contact!==e.pointerId)return;consume(e);try{if(imageGesture){if(e.type!=='pointercancel')moveImage(point(e,true));finishImageGesture(e.type==='pointercancel');}else if(e.type==='pointercancel')controller.cancel();else controller.finish(point(e,true));}catch(error){cancel();say('UV Paint: '+error.message);}release();syncLayers();}
 function cancel(){alphaRequest++;imageRequest++;finishImageGesture(true);controller?.cancel();release();}
 

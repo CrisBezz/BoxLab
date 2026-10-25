@@ -85,6 +85,8 @@ export function createPaintLayer(size=RESOLUTION,{transparent=false}={}){
  }
  return {
   pixels,size,get limited(){return limited;},
+  // Renew per-input work without changing the contact snapshot, coverage or pickup.
+  resetWorkBudget(){smudgeWork=0;limited=false;},
   begin(value,{erase=false,filter=null,smudge=false}={}){
    if(typeof erase!=='boolean'||erase&&!transparent)throw Error('Alpha erasing requires a transparent paint layer');if(disposed||before)throw Error('Paint layer unavailable');
    if(typeof smudge!=='boolean'||smudge&&(!filter||erase))throw Error('Smudge requires face ownership');

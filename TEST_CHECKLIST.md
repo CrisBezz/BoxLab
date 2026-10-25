@@ -10746,3 +10746,41 @@ cache contract; negative background test mutates BOTH native hold branches; debu
 fixture preserves multiple observers and existing runtime-error extraction boundary.
 .964 rendering issue remains OPEN; debug report is diagnostic evidence, not a fix.
 Runtime publication and hosted CI proof are verified separately after this commit.
+
+
+## .966 — continuing Smudge input windows; startup toolbar evidence — 25 October 2026
+
+User .965 PASS protects bottom Paint entry, persistent radial, Layers-first LEFT
+settings and kept Smudge pixels. User reports Smudge still stops after5–6 passes.
+Original8M raster work cap was contact-wide; renew ONLY its work counters per native
+Smudge input sample, retaining before snapshot/coverage/pickup/dirty pixels. A bounded
+sample may pause dabs, next input resumes. At original12000 path-dab cap, reseed same
+original path owner from last screen input while retaining the raster contact. No
+extra checkpoints or layer finish until physical lift: Undo remains one stroke.
+Cancel/checkpoint refusals retain atomic rollback. Brush/Fill/Eraser/Blur unchanged.
+
+User supplied .965 debug report from refresh failure:1366×886, canvas1366×826CSS /
+2732×1652pixels atDPR2, paintfalse/sessionnull/controlsenabled; sampled right CANVAS
+contacts reach window bubble. No broad overlay in those canvas samples. This does NOT
+prove toolbar hit testing or compositor painting healthy: original grid startsY71
+below60px header and omitted .top-actions/right button rects. User confirms refresh
+can enter failed state directly. Extend existing debug report with exact right-button
+rect/styles/disabled/expanded/centre hit stacks; capture these on persisted-debug
+startup/pageshow/lifecycle and toolbar click. No root cause or rendering fix claimed.
+
+DEVICE966: long repeated Smudge passes under one Pencil contact continue; lift keeps
+result, ONE Undo/Redo restores whole contact, cancel restores pre-contact. All .965
+UI flow remains. Enable UI Debug, refresh directly into right failure, Capture/Copy
+new report containing controls and startup evidence; tap affected right button first
+if practical. Exact toolbar probe distinguishes offscreen/disabled/occlusion from
+DOM-healthy but visually broken UI; native iPad rendering gate remains OPEN.
+
+
+.966 validation: full local Node24 suite2813 PASS/0 FAIL/0 skipped (95.0s);
+focused Smudge/gesture/UI/debug/Lab/release41 PASS. New checks prove renewed work
+windows retain pixels and cancellation baseline; long actual surface-picked Smudge
+passes original12000 path budget, edits late pixels and commits ONE Undo/Redo entry;
+right toolbar centre probes include headerY30 and persist in pageshow evidence.
+Prior .965 hosted regression40181206048 has now completed SUCCESS. Exact supplied
+refresh report observations are archived in docs/ui-debug-refresh-965-report.md.
+Right-side native iPad failure remains OPEN; no rendering fix inferred.
