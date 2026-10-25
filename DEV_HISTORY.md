@@ -14536,3 +14536,8 @@ untransformed/unclipped VIEW popup contract retained. A local Chromium layout sm
 was attempted but the installed Playwright package has no browser executable here;
 no rendered-browser or native WebKit proof claimed. User's .966 report is archived
 in docs/ui-debug-invisible-controls-966.md. Device visual gate remains OPEN.
+
+
+## .967 publication verified — 25 October 2026
+
+Runtime commit db6c236aaeb1c97e09d1c459c57193a16d94f71c; exact local/uploaded tree c6a8482d6c1bcf675fec34fa11e779d84a0eb706. Full local2815 PASS/0 FAIL/0 skipped (93.9s); focused40 PASS. Pages40185143036 build/deploy SUCCESS. After deployment all6 cache-busted public files matched local bytes: version/index/styles/main/viewport-sizing/gesture-debug. Current main title/data/visible release markers and changed source/stylesheet pins967 verified; protected Multi1.0 unchanged. Hosted regression40185143409 was running at proof time; check actual conclusion before claiming hosted PASS. Prior .966 hosted40183471903 completed SUCCESS. No local rendered-browser execution (browser executable absent) or iPad compositor reproduction claimed. Invisible-but-clickable controls remain OPEN pending DEVICE967 refresh/UI-transition test. User-supplied report evidence is archived; this is a targeted composition repair, not an engine-level root-cause claim.
