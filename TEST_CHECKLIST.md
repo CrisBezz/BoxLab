@@ -10852,6 +10852,14 @@ See docs/radial-icon-review-v1.md. No new app test or runtime release needed.
 
 .968 Face icon review explicitly PASS on26 October2026.
 
-- [ ] Vertex radial shows14 selected Proof03 icons with small original captions and distinct Vertex Join.
-- [ ] Original positions/actions, available/disabled states, Build Edge/Slide/Bevel sessions and UndoRedo remain usable.
-- [ ] Navigation/right-side UI preserved; accepted Face icons unchanged.
+- [x] Vertex radial shows14 selected Proof03 icons with small original captions and distinct Vertex Join.
+- [x] Original positions/actions, available/disabled states, Build Edge/Slide/Bevel sessions and UndoRedo remain usable.
+- [x] Navigation/right-side UI preserved; accepted Face icons unchanged.
+
+## .970 Object icon device review
+
+.969 Vertex icon review explicitly PASS on26 October2026; .968 Face PASS retained.
+
+- [ ] Object radial shows13 approved icons and small captions; Object Join differs from Vertex Join.
+- [ ] Longer labels fit; Duplicate/UndoRedo, Array/Solidify and UV/Mesh Health launch existing owners.
+- [ ] Multi, navigation and right toolbar remain usable; Face/Vertex accepted icons unchanged.

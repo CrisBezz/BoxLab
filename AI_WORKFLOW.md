@@ -349,3 +349,21 @@ DEVICE969: Vertex selection → radial; inspect14 icons/title size; tap Build Ed
 Slide and Bevel and finish their original sessions; Join/Merge Center on suitable
 selections; UndoRedo/navigation; switch to Face to confirm accepted icons unchanged.
 Native .969 visual acceptance pending. Next Object icons after device feedback.
+
+## .970 — Object radial approved icons; .969 user PASS — 26 October 2026
+
+User “Great PASS /nextbuild” accepts .969 Vertex icons. Protect .968 Face and .969
+Vertex artwork, label format,32px icon size and original actions. Audit current main
+e1047fbf/runtime a88c5e14, shell969 and13 existing Object sectors; no parallel icon
+owner found. Add scoped object-radial-icons.css with approved Proof03 SVGs for all13
+original buttons. Join explicitly uses Object artwork, distinct from Vertex Join.
+Same60px height/112px inner radius/230px outer radius and small captions; Object
+padding3px/gap2px fits two-line Symmetry / Bisect title. Existing angular slots,
+labels/textContent, target IDs, tool availability/actions/history and Multi remain.
+Accepted Face/Vertex CSS bytes and pins retained; gizmo JS, composition stylesheet,
+Paint, geometry and frozen betas unchanged. Object Multi and gizmo shortcuts remain
+original owners. No whole-app reskin or new modelling functionality.
+DEVICE970: Object radial inspect inner/outer icons and longer labels; Duplicate
+and UndoRedo; Array or Solidify opens original settings; UV/Mesh Health panels;
+return to Face/Vertex and verify accepted appearance/navigation/right toolbar.
+Next Edge icons, then Paint, after device feedback; .970 not yet device accepted.

@@ -1,4 +1,23 @@
-# BoxLab AI Handoff — .969 / Vertex radial icon review
+# BoxLab AI Handoff — .970 / Object radial icon review
+
+## .970 — Object radial approved icons; .969 user PASS — 26 October 2026
+
+User “Great PASS /nextbuild” accepts .969 Vertex icons. Protect .968 Face and .969
+Vertex artwork, label format,32px icon size and original actions. Audit current main
+e1047fbf/runtime a88c5e14, shell969 and13 existing Object sectors; no parallel icon
+owner found. Add scoped object-radial-icons.css with approved Proof03 SVGs for all13
+original buttons. Join explicitly uses Object artwork, distinct from Vertex Join.
+Same60px height/112px inner radius/230px outer radius and small captions; Object
+padding3px/gap2px fits two-line Symmetry / Bisect title. Existing angular slots,
+labels/textContent, target IDs, tool availability/actions/history and Multi remain.
+Accepted Face/Vertex CSS bytes and pins retained; gizmo JS, composition stylesheet,
+Paint, geometry and frozen betas unchanged. Object Multi and gizmo shortcuts remain
+original owners. No whole-app reskin or new modelling functionality.
+DEVICE970: Object radial inspect inner/outer icons and longer labels; Duplicate
+and UndoRedo; Array or Solidify opens original settings; UV/Mesh Health panels;
+return to Face/Vertex and verify accepted appearance/navigation/right toolbar.
+Next Edge icons, then Paint, after device feedback; .970 not yet device accepted.
+
 
 ## .969 — Vertex radial approved icons; .968 user PASS — 26 October 2026
 
@@ -3854,3 +3873,5 @@ are now ready; remaining modes wait for size/readability feedback.
 ## .969 publication verified — 26 October 2026
 
 Runtime a88c5e146fd1e011b71af5db13fd90fd0cef2b4c; uploaded tree aaec5368d1e3421eb49e7e4fa348357c3f8a47e9 matches tested local defd0613. Current main manifest .969 verified; public cache-busted version.json, index.html, vertex-radial-icons.css and protected face-radial-icons.css all byte-match local.59 focused checks PASS/0 FAIL/0 skip,14 valid SVGs. Hosted Actions status could not be confirmed (public API403, combined statuses empty); do not claim hosted full-suite PASS. User .968 PASS protected; .969 ready for native Vertex icon review. Next Object then Edge/Paint after feedback.
+
+.970 pre-publication validation:67 focused checks PASS/0 FAIL/0 skipped;13 encoded SVGs parse as valid XML. Face/Vertex CSS, gizmo routing JavaScript, protected Multi1.0 and composition stylesheet byte-identical to .969. Native Object icon review pending.
