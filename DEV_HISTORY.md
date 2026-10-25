@@ -14565,3 +14565,22 @@ BoxLab-Icon-Review-Pack.zip (PDF/HTML/PNG sheets/SVGs/manifest/rebuild source).
 No default/user icon selections; await tool-name + A/B/C choices, then refine before
 installation. Shared symbols retained in one review row; Vertex/Object Join separate.
 See docs/radial-icon-review-v1.md. No new app test or runtime release needed.
+
+## .968 — selected Proof 03 icons in Face radial — 26 October 2026
+
+User approved in-app review after choosing all65 icons and refining Proofs02/03.
+Install first Face radial only per staged audit: all23 original buttons retain exact
+textContent, target selectors, event owners and angular slots (Extrude12/Bevel3).
+Scoped face-radial-icons.css supplies original SVG artwork as non-interactive CSS
+pseudo-elements above existing small labels; no SVG title/text contaminates routing.
+Inner radius112px/76×60 targets accommodate32px icons; outer230px/86×60 retained.
+No changes to geometry, gestures, history, Paint, Multi1.0, other radial modes or
+.967 accepted composition rules. Complete65-icon Proof03 artwork archived in
+ docs/radial-icons-proof-03.json for staged continuation. Bevel stray line removed;
+Bridge restored to Proof01, Map size C. No native iPad visual acceptance inferred.
+DEVICE968: Face selection → tools; inspect all inner/outer labels and artwork,
+Extrude/Inset/Bevel actions and their popups; UndoRedo; finger orbit/pan/pinch;
+right toolbar remains visible. Next refine iPad size/contrast then remaining modes.
+
+
+.968 pre-publication validation: 54 focused checks PASS/0 FAIL/0 skipped; all23 encoded SVGs parse as valid XML. Face markup, routing JavaScript, protected Multi1.0 and .967 composition stylesheet remain unchanged. Native iPad visual review pending.

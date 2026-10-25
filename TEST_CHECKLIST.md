@@ -10841,3 +10841,9 @@ BoxLab-Icon-Review-Pack.zip (PDF/HTML/PNG sheets/SVGs/manifest/rebuild source).
 No default/user icon selections; await tool-name + A/B/C choices, then refine before
 installation. Shared symbols retained in one review row; Vertex/Object Join separate.
 See docs/radial-icon-review-v1.md. No new app test or runtime release needed.
+
+## .968 Face icon device review
+
+- [ ] Face radial shows23 Proof03 icons with original small captions; all tools route unchanged.
+- [ ] Extrude at12 and Bevel at3; icon area taps launch original tool; unavailable states remain clear.
+- [ ] Inner/outer icons remain legible on iPad; navigation, history and .967 right-toolbar visibility preserved.

@@ -317,3 +317,20 @@ commit/push credential error: connected GitHub is the established publication pa
 .966: User .965 PASS preserves current Paint UI; right-side refresh fault remains open. Smudge uses per-input work windows without extra history entries.
 
 .967: invisible but clickable right controls are a painting/composition device gate; do not claim repaired from DOM assertions. Keep VIEW popup untransformed/unclipped and shared canvas sizing owner.
+
+## .968 — selected Proof 03 icons in Face radial — 26 October 2026
+
+User approved in-app review after choosing all65 icons and refining Proofs02/03.
+Install first Face radial only per staged audit: all23 original buttons retain exact
+textContent, target selectors, event owners and angular slots (Extrude12/Bevel3).
+Scoped face-radial-icons.css supplies original SVG artwork as non-interactive CSS
+pseudo-elements above existing small labels; no SVG title/text contaminates routing.
+Inner radius112px/76×60 targets accommodate32px icons; outer230px/86×60 retained.
+No changes to geometry, gestures, history, Paint, Multi1.0, other radial modes or
+.967 accepted composition rules. Complete65-icon Proof03 artwork archived in
+ docs/radial-icons-proof-03.json for staged continuation. Bevel stray line removed;
+Bridge restored to Proof01, Map size C. No native iPad visual acceptance inferred.
+DEVICE968: Face selection → tools; inspect all inner/outer labels and artwork,
+Extrude/Inset/Bevel actions and their popups; UndoRedo; finger orbit/pan/pinch;
+right toolbar remains visible. Next refine iPad size/contrast then remaining modes.
+
