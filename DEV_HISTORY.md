@@ -14492,3 +14492,8 @@ right toolbar centre probes include headerY30 and persist in pageshow evidence.
 Prior .965 hosted regression40181206048 has now completed SUCCESS. Exact supplied
 refresh report observations are archived in docs/ui-debug-refresh-965-report.md.
 Right-side native iPad failure remains OPEN; no rendering fix inferred.
+
+
+## .966 publication verified — 25 October 2026
+
+Runtime commit 6dd88794448ffc95293244639ac6509b2253a20b; exact tested/uploaded tree 47553168be0c1612a8cb58ae4abc65400b04213a. Full local2813 PASS/0 FAIL/0 skipped (95.0s); focused41 PASS. Pages run40183471563 SUCCESS. All8 cache-busted public files byte-match local: version/index, painter/core/debug, shared raster, Lab loader/shell. Current main title/data/visible markers and changed pins966 verified; unchanged main965 and protected Multi1.0 retained. Hosted regression40183471903 was running at proof time; check its actual conclusion before claiming hosted PASS. User .965 PASS protects current Paint UI; continuing Smudge .966 and exact toolbar/startup diagnostic reports still require device feedback. Right-side failure is OPEN. This docs-only proof preserves the tested runtime.
