@@ -1,4 +1,21 @@
-# BoxLab AI Handoff — .968 / Face radial icon review
+# BoxLab AI Handoff — .969 / Vertex radial icon review
+
+## .969 — Vertex radial approved icons; .968 user PASS — 26 October 2026
+
+User says “Great result! PASS /nextbuild” for .968. Protect accepted Face icon
+artwork,32px size, small captions,60px target height and112px inner radius; retained
+Face CSS bytes/cache968. Next agreed mode is Vertex, followed by Object then Edge
+and Paint. All14 existing Vertex tools now use selected/refined Proof03 SVGs via
+scoped vertex-radial-icons.css, same accepted layout. Join uses Join (Vertex) art,
+not Object Join. Original labels/textContent, angular slots, targets, event/history/
+geometry owners and disabled-state styles remain untouched. Extrude12/Bevel3 retained.
+No runtime JavaScript or Multi1.0, .967 composition, Paint, Face/Edge/Object changes.
+.968 runtime17b3d57d; publication docs524ff168 were audited as current main.
+DEVICE969: Vertex selection → radial; inspect14 icons/title size; tap Build Edge,
+Slide and Bevel and finish their original sessions; Join/Merge Center on suitable
+selections; UndoRedo/navigation; switch to Face to confirm accepted icons unchanged.
+Native .969 visual acceptance pending. Next Object icons after device feedback.
+
 
 ## .968 — selected Proof 03 icons in Face radial — 26 October 2026
 
@@ -3831,3 +3848,5 @@ no hosted PASS or native iPad visual acceptance inferred. Face-only device tests
 are now ready; remaining modes wait for size/readability feedback.
 
 .968 Pages build/deploy40244377315 completed SUCCESS. Hosted full regression40244377464 was still in progress at publication proof.
+
+.969 validation:59 focused checks PASS/0 FAIL/0 skipped. All14 encoded SVGs valid; original gizmo/action JavaScript, accepted Face CSS, protected Multi1.0 and composition stylesheet byte-identical to .968. Native iPad icon review pending.

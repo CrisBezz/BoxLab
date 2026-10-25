@@ -10844,6 +10844,14 @@ See docs/radial-icon-review-v1.md. No new app test or runtime release needed.
 
 ## .968 Face icon device review
 
-- [ ] Face radial shows23 Proof03 icons with original small captions; all tools route unchanged.
-- [ ] Extrude at12 and Bevel at3; icon area taps launch original tool; unavailable states remain clear.
-- [ ] Inner/outer icons remain legible on iPad; navigation, history and .967 right-toolbar visibility preserved.
+- [x] Face radial shows23 Proof03 icons with original small captions; all tools route unchanged.
+- [x] Extrude at12 and Bevel at3; icon area taps launch original tool; unavailable states remain clear.
+- [x] Inner/outer icons remain legible on iPad; navigation, history and .967 right-toolbar visibility preserved.
+
+## .969 Vertex icon device review
+
+.968 Face icon review explicitly PASS on26 October2026.
+
+- [ ] Vertex radial shows14 selected Proof03 icons with small original captions and distinct Vertex Join.
+- [ ] Original positions/actions, available/disabled states, Build Edge/Slide/Bevel sessions and UndoRedo remain usable.
+- [ ] Navigation/right-side UI preserved; accepted Face icons unchanged.
