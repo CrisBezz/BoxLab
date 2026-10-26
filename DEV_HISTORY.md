@@ -15290,3 +15290,33 @@ DEVICE984: select two faces, VIEW > Facegroups, name and Assign selected. Select
 other faces and assign same/different name; Clear selected. UndoRedo and Save/Open
 retain groups; UV Paint and navigation stay usable. Next: device acceptance, then
 plan continuous group painting through existing selection/gesture ownership.
+
+## .985 — reuse existing facegroup names; .984 user PASS — 27 October 2026
+
+User PASS984 protects selected-face assignment/clear, UndoRedo and Save/Open.
+Next narrow authoring step reuses current names: VIEW > Facegroups has native name
+suggestions refreshed from authoritative live mesh whenever name input gains focus,
+and Use selected group name copies the uniform group of selected faces into input.
+Mixed groups, ungrouped/no/invalid selection and non-Face mode give explicit reason
+and keep current input. Names are inserted through option.value, never HTML. Reads
+change neither selection, mesh, texture nor history; Assign selected remains sole
+metadata transaction owner. Duplicate names deduplicated; no global remembered list.
+Original name length/validation and editable-object refusal remain. No new pointer
+listener, automatic assignment, new painter/history owner or rendering change.
+
+Audit found Pencil selection ownership shared by edge-paint-select and pencil-orbit
+gate/main. Continuous facegroup brush remains deferred until that existing ownership
+can be extended coherently;985 is group-name reuse, NOT Pencil facegroup painting.
+Runtime changes only facegroup-authoring/render-modes UI, their loader pins985 and
+release/recovery markers; reviewed hashes updated. Protected Multi,984 assignment
+transaction, gestures, UV/Paint/resources and rendering safeguards unchanged.
+24 targeted tests PASS/0FAIL/0skip: group reuse/refusal/read-only/text safety plus
+984 authoring, Facegroups owner, original toolbar, project codec, UV and release.
+Syntax/diff checks pass; native iPad suggestion UI and group-name use need review.
+No full-suite/native compositor proof claimed. Intermittent right-region fault OPEN.
+
+DEVICE985: select grouped faces > VIEW > Facegroups > Use selected group name;
+select different faces and Assign selected with retained name. Focus name field for
+current suggestions. Mixed/ungrouped selection refuses pickup without changing name.
+UndoRedo should affect assignment only, not name reads; Save/Open stays accepted.
+Next device result, then continuous facegroup gesture-owner audit.

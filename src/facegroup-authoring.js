@@ -18,3 +18,17 @@ export function assignSelectedFacegroup({manager,selection,mesh,history,session,
  history.checkpointSnapshot(before);
  return {ok:true,changed:true,count:ids.length,group};
 }
+
+export function existingFacegroupNames(mesh){
+ return [...new Set((mesh?.faceGroups||[]).filter(name=>typeof name==='string'&&name.trim()))].sort((a,b)=>a.localeCompare(b));
+}
+export function selectedFacegroupName(mesh,selection){
+ if(!Array.isArray(mesh?.faces))return {ok:false,reason:'Select an editable mesh'};
+ if(selection?.mode?.()!=='face')return {ok:false,reason:'Select faces in Face mode first'};
+ const ids=[...new Set(selection.indices?.()||[])];
+ if(!ids.length||ids.some(i=>!Number.isInteger(i)||i<0||i>=mesh?.faces?.length))return {ok:false,reason:'Select valid faces first'};
+ const names=new Set(ids.map(i=>mesh.faceGroups?.[i]??null));
+ if(names.size!==1)return {ok:false,reason:'Selected faces belong to different groups'};
+ const name=names.values().next().value;
+ return name?{ok:true,name}:{ok:false,reason:'Selected faces are ungrouped'};
+}

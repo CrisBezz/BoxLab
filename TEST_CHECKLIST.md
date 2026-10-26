@@ -11207,3 +11207,12 @@ unrelatedfeature rollout or speculative further CSS/engine fixes.
 - [ ] No selection/wrong mode/active tool/locked/linked/recipe objects refuse without history.
 - [x] Automated metadata, unchanged geometry/source, no-op, validation/refusal and checkpoint tests pass.
 - [ ] Intermittent right-region rendering/gizmo loss remains OPEN; cannot currently reproduce, not repaired.
+
+## .985 group-name reuse / .984 accepted
+
+- [x] User PASS984 protects selected-face group assignment/clear, UndoRedo and Save/Open.
+- [ ] Select faces in one group; Use selected group name copies its name, changes no faces or history.
+- [ ] Mixed/ungrouped/no selection refuses pickup and retains current name.
+- [ ] Focus name input: existing names offered once each; rename choice followed by Assign selected joins group.
+- [ ] UndoRedo affects actual assignment only; Save/Open retains accepted984 behavior.
+- [x] Automated read-only reuse, invalid/mixed refusal and safe option.value insertion checks pass.

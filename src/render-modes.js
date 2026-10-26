@@ -1,4 +1,4 @@
-import {assignSelectedFacegroup} from './facegroup-authoring.js?v=0.36.18.984';
+import {assignSelectedFacegroup,existingFacegroupNames,selectedFacegroupName} from './facegroup-authoring.js?v=0.36.18.985';
 import {createCommittedPaintSurface} from './paint-target.js?v=0.36.18.948';
 import {createUVImageOverlay} from './uv-image-surface-preview.js?v=0.36.18.892';
 import {createUVCheckerOverlay} from './uv-checker-preview.js?v=0.36.18.879';
@@ -263,9 +263,11 @@ function installFacegroupControls(host){
   panel.id='facegroupViewControls';panel.hidden=true;
   panel.innerHTML=`
     <div class="viewport-menu-label" style="margin-top:9px">Selected Facegroups</div>
-    <label>Group <input id="facegroupName" type="text" value="Group 1" maxlength="64" autocomplete="off" style="width:140px;touch-action:auto"/></label>
+    <label>Group <input id="facegroupName" list="facegroupNames" type="text" value="Group 1" maxlength="64" autocomplete="off" style="width:140px;touch-action:auto"/></label>
     <div class="outliner-actions"><button id="facegroupAssign" type="button">Assign selected</button><button id="facegroupClear" type="button">Clear selected</button></div>
-    <small>Select faces in Face mode; no UVs required.</small>
+    <datalist id="facegroupNames"></datalist>
+    <button id="facegroupUseSelected" type="button">Use selected group name</button>
+    <small>Choose an existing name or type a new one. Select faces in Face mode; no UVs required.</small>
     <div class="viewport-menu-label" style="margin-top:9px">Facegroup Colours</div>
     <div class="viewport-render-grid facegroup-palette-grid">
       <button type="button" data-facegroup-palette="default">Default</button>
@@ -282,6 +284,13 @@ function installFacegroupControls(host){
     </div>`;
   section.appendChild(panel);
   panel.addEventListener('click',event=>{
+    if(event.target.closest('#facegroupUseSelected')){
+      event.preventDefault();event.stopPropagation();
+      const result=selectedFacegroupName(bridge()?.mesh,globalThis.__boxlabSelectionBridge);
+      if(result.ok)panel.querySelector('#facegroupName').value=result.name;
+      if(status)status.textContent=result.ok?`Facegroups · using ${result.name}`:`Facegroups · ${result.reason}`;
+      return;
+    }
     const author=event.target.closest('#facegroupAssign,#facegroupClear');
     if(author){
       event.preventDefault();event.stopPropagation();
@@ -293,6 +302,12 @@ function installFacegroupControls(host){
     if(palette){event.preventDefault();event.stopPropagation();updateFacegroupView({palette:palette.dataset.facegroupPalette});return;}
     if(event.target.closest('#facegroupReseed')){event.preventDefault();event.stopPropagation();updateFacegroupView({seed:facegroupView.seed+1});return;}
     if(event.target.closest('#facegroupReset')){event.preventDefault();event.stopPropagation();facegroupView={...DEFAULT_FACEGROUP_VIEW};saveFacegroupView();syncFacegroupControls();if(mode==='facegroups')applyToSceneBodies();}
+  });
+  panel.querySelector('#facegroupName').addEventListener('focus',()=>{
+    const list=panel.querySelector('#facegroupNames');list.replaceChildren();
+    for(const name of existingFacegroupNames(bridge()?.mesh)){
+      const option=document.createElement('option');option.value=name;list.appendChild(option);
+    }
   });
   panel.querySelector('#facegroupSaturation')?.addEventListener('input',event=>updateFacegroupView({saturation:Number(event.target.value)/100}));
   panel.querySelector('#facegroupLightness')?.addEventListener('input',event=>updateFacegroupView({lightness:Number(event.target.value)/100}));
