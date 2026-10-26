@@ -121,8 +121,8 @@ function close({restore=true}={}){
 function openFromHub(options={}){
   if(bridge()?.mode?.()!=='edge')return false;
   const ids=[...new Set(options.ids||selectedEdges())].filter(Number.isInteger);
-  if(!isSingleBoundaryLoop(ids)){
-    if(status)status.textContent='Bridge • start with one complete boundary loop';
+  if(!combinedValid(ids)&&!isSingleBoundaryLoop(ids)){
+    if(status)status.textContent='Bridge • select two compatible boundaries or start with one complete boundary loop';
     return false;
   }
   active=true;
@@ -132,8 +132,8 @@ function openFromHub(options={}){
   apply.disabled=true;
   stateText.textContent='First boundary ready';
   help.textContent='Add matching boundary • hold Edge → Boundary works well';
-  if(status)status.textContent='Bridge • first boundary kept • add matching second boundary';
-  place();requestAnimationFrame(sync);
+  if(status)status.textContent=combinedValid(ids)?'Bridge • two compatible boundaries ready • Apply Bridge':'Bridge • first boundary kept • add matching second boundary';
+  sync();requestAnimationFrame(sync);
   return true;
 }
 
@@ -164,7 +164,7 @@ document.addEventListener('click',()=>{if(active)queueMicrotask(sync);},true);
 globalThis.__boxlabBridgeViewportSession={
   version:'0.36.18.676',
   active:()=>active,
-  canStart:ids=>isSingleBoundaryLoop(ids||selectedEdges()),
+  canStart:ids=>combinedValid(ids||selectedEdges())||isSingleBoundaryLoop(ids||selectedEdges()),
   openFromHub,
   close,
   element:panel

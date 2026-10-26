@@ -10907,3 +10907,32 @@ User .974 icons PASS; .975 functional gate separate.
 - [ ] World XY holdsZ/XZ holdsY/YZ holdsX during drag, Exact and Repeat; arbitrary view orientation supported.
 - [ ] CentreFree and XYZ arrows remain unchanged; Done/cancel/UndoRedo/navigation restore normally.
 - [ ] Parallel-view refusals do not mutate mesh/history or leave captured input; orbit then retry.
+
+
+## .976 — reconnect ready Edge Bridge selections — 26 October 2026
+
+Audit main81ba4afd/build975. User supplies screenshot975 and exact Edge Fail(1).obj
+(24 vertices/14 quads); retain unchanged fixture tests/fixtures/edge-bridge-976.obj.
+The highlighted boundary pair is OBJ vertices3–10 and23–24 (runtime edges12/35).
+Both have one face owner. Existing fully installed Open Chain Bridge accepts the pair,
+creates quad[3,23,24,10] (OBJ one-based) and passes original topology validation.
+Radial guided session676 incorrectly accepted ONLY one complete boundary loop in
+canStart/openFromHub, disconnecting already-supported ready pairs. Repair SAME
+session: delegate ready-pair eligibility to existing bridgeEdgeSelectionInfo, retain
+single-loop guided entry, sync Apply immediately, show ready status. Original UI,
+topology, winding/quality/transaction guards and history own Apply unchanged.
+Cancel retains initial pair; invalid/interior/missing/single-open-edge inputs refuse.
+No new kernel/gesture, gizmo changes, renderer fixes or icon work.975 pad acceptance
+not inferred from uploaded screenshot.974 icon/971 Array PASS and972/973 visual
+safeguards remain; intermittent right-side fault is still OPEN.
+
+Validation:225 focused Bridge/selection-hub/radial/release tests PASS,0FAIL/0skip.
+Four new real-owner integrations cover supplied pair→actual radial availability→
+original UI Apply→one history step/UndoRedo, Cancel, guided single-loop→second-loop,
+and invalid input atomic refusal. Node DOM adapters are not native iPad proof.
+Changed runtime ONLY selection-hub-bridge-session; reviewed session/recovery pins976,
+release markers976 and asset hashes updated; Multi1.0/frozen/icon/geometry unchanged.
+Publication verification follows separately. DEVICE976: same model/two red edges →
+Edge radial Bridge → Apply Bridge: one closing quad. UndoRedo; reopen then Cancel
+retains pair/geometry. Also sanity-check existing two-loop Bridge. Next actual device
+feedback, then Paint icon rollout; preserve independent975 Extrude pad device gate.
