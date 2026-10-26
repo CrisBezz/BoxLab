@@ -14902,3 +14902,47 @@ feature rollout.974 icon/971 Array acceptance and protectedMulti1.0/frozen uncha
 ## .977 publication verified — 26 October 2026
 
 Runtime acb5e78c23f40c59218d9f805904f559290e7c36; tested/uploaded tree8351748b9a36658137189c1e51b1ecb247751f31, all12 blobs verified. Current main shell/manifest and dynamic drawer/precision pins977 match tested source. All4 cache-busted public files (version,index,drawer-ui,precision-face) byte-match after rollout. Focused final128PASS/0FAIL/0skip; full2833PASS belongs to976 baseline. Hosted workflow results unavailable (query returned no runs), no hosted full977 PASS claimed. Canvas Hide3D→Show3D recovery is user-confirmed; underlying visual fault remains OPEN. DEVICE977 negative Exact near-front/orbit/UndoRedo and Bridge pair; physical refusal and inference/readback remain audit follow-ups. This proof changes documentation only.
+
+## .978 — Edge Bridge preview before Apply — 26 October 2026
+
+User clarifies976 commits after Apply but does not PREVIEW, unlike accepted Face
+Bridge. This is a missing interaction stage, not failed bridge topology. Prior976
+ready-pair launcher repair retained; no broad976/977 PASS inferred. Audit mainf6a3ff30,
+same guided Edge session had no preview owner; Face Bridge mutates preview mesh,
+while accepted Face/Vertex Bevel already shares a rendering-only blue ghost helper.
+Reuse existing createFaceBevelPreview/disposeFaceBevelPreview unchanged for Edge.
+
+SAME selection-hub-bridge-session builds original bridgeSelectedEdges on private
+clone and renders changed polygons with original blue translucent fill/wire helper.
+Original source/selection/metadata/history/project remain untouched until Apply;
+no new modelling/triangulation/history kernel, manager mesh replacement or renderer.
+Candidate clone calls preserve active state.mesh despite historical edges observers.
+Selection-key cache reuses preview during orbit; selected-boundary change rebuilds it,
+incompatible/quality-refused candidates clear it. Guided first loop shows no ghost
+until compatible second boundary selected. Apply disabled without actual preview.
+Apply runs original bridge-ui commit once; Cancel removes ghost and retains initial
+selection. Existing UndoRedo works. Preview renderer/helpers and Face Bridge unchanged.
+
+Session owns source snapshot key, object/mode/lock/scene context. External geometry/
+metadata changes, object/mode/tool change, pagehide dispose ghost WITHOUT restoring
+stale mesh/selection or closing newer tool UI. Original background-exit route still
+calls close; no new raw-pointer owner, per-frame polling or source rollback. Shared
+geometry/material disposal occurs once. Overlay is transient outside scene object
+manager and uses established Bevel blue style, not saved geometry or a second body.
+
+Focused232PASS/0FAIL/0skip (~0.67s): original Bridge/radial/selection contracts and977
+camera regressions; four added real-controller/Three scene tests prove visible ghost
+BEFORE Apply with no source/history changes, one-step commit+UndoRedo, selection
+update/removal/Cancel, source/object/mode/tool/pagehide cleanup, no-scene refusal and
+single geometry/two material disposal. Existing976 harness supplies real scene/shared
+preview functions; no old geometry/history assertion removed. No native iPad visual
+acceptance inferred. Runtime change ONLY original Edge Bridge session; session/recovery
+pins978, unchanged716 renderer import explicitly reviewed in asset contract.
+
+DEVICE978: select same two boundary edges → Edge radial Bridge: BLUE span visible
+BEFORE Apply. Orbit to inspect; Apply keeps bridge and removes blue, UndoRedo.
+Cancel removes blue, preserves original mesh/selection. Guided two-loop selection
+updates preview as second boundary is selected. Face Bridge remains unchanged.
+Right-side fault stays OPEN with confirmed manual Hide3D→Show3D recovery; no rendering
+repair or other .977 exact/inference/readback follow-up included. Next native preview
+feedback, then evidence-led canvas/UI work and remaining audit follow-ups.

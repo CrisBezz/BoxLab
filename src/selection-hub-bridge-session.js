@@ -1,11 +1,13 @@
 import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.732';
 // BoxLab v0.36.18.676 — radial Edge Bridge guided selection session.
-// UX proxy only. bridge-ui.js + bridge-topology.js remain authoritative.
+// Preview uses the original Bridge kernel on a private clone; original UI owns commit/history.
+
+import {createFaceBevelPreview,disposeFaceBevelPreview} from './bevel-face-preview.js?v=0.36.18.716';
 
 const viewportWrap=document.querySelector('#viewportWrap');
 const status=document.querySelector('#selectionStatus');
 const bridgeButton=document.querySelector('#bridgeEdgesBtn');
-let active=false,firstIds=[];
+let active=false,firstIds=[],context=null,preview=null;
 
 const panel=document.createElement('div');
 panel.id='selectionHubBridgeSession';
@@ -67,21 +69,31 @@ function combinedValid(ids=selectedEdges()){
   return !!state()?.mesh?.bridgeEdgeSelectionInfo?.(ids);
 }
 
-function selectionCenterScreen(ids=selectedEdges()){
-  const mesh=state()?.mesh,camera=state()?.camera,canvas=document.querySelector('#viewport');
-  if(!mesh||!camera||!canvas||!ids.length)return null;
-  const verts=new Set(),edges=mesh.edges();
-  ids.forEach(i=>{const e=edges[i];if(e){verts.add(e.a);verts.add(e.b);}});
-  if(!verts.size)return null;
-  const p={x:0,y:0,count:0};
-  const rect=canvas.getBoundingClientRect(),wrap=viewportWrap.getBoundingClientRect();
-  for(const vi of verts){
-    const v=mesh.vertices[vi]?.clone?.().project(camera);if(!v)continue;
-    p.x+=rect.left-wrap.left+(v.x*.5+.5)*rect.width;
-    p.y+=rect.top-wrap.top+(-v.y*.5+.5)*rect.height;
-    p.count++;
-  }
-  return p.count?{x:p.x/p.count,y:p.y/p.count}:null;
+// Source stays authoritative while the rendering-only candidate is on screen.
+function sourceKey(mesh){return JSON.stringify({vertices:mesh.vertices,faces:mesh.faces,
+  groups:mesh.faceGroups,creases:[...(mesh.creases||[])],looseEdges:[...(mesh.looseEdges||[])],looseVertices:[...(mesh.looseVertices||[])]});}
+function editable(){return !document.querySelector('#app')?.classList?.contains('boxlab-active-locked');}
+function contextValid(){return !!context&&editable()&&bridge()?.mode?.()==='edge'
+  &&state()?.mesh===context.mesh&&state()?.scene===context.scene
+  &&globalThis.__boxlabObjectManager?.activeId===context.object&&sourceKey(context.mesh)===context.key;}
+function discardPreview(){disposeFaceBevelPreview(preview?.ghost);preview=null;}
+function syncPreview(ids){
+  const key=ids.slice().sort((a,b)=>a-b).join(',');
+  if(preview?.key===key)return !!preview.ghost;
+  discardPreview();
+  if(!combinedValid(ids))return false;
+  const live=state()?.mesh,before=live.clone(),candidate=before.clone();
+  let result,ghost;
+  // Historical edges() observers may publish a trial; never let a private candidate
+  // replace the active mesh pointer seen by selection, manager or subsequent tools.
+  try{
+    result=candidate.bridgeSelectedEdges(ids);
+    if(result)ghost=createFaceBevelPreview(state()?.scene,candidate,before);
+  }catch{ghost=null;}
+  finally{if(state())state().mesh=live;}
+  if(!result||!ghost){disposeFaceBevelPreview(ghost);return false;}
+  ghost.name='BoxLab Edge Bridge Preview';
+  preview={key,ghost};return true;
 }
 
 function place(){
@@ -90,15 +102,16 @@ function place(){
 
 function sync(){
   if(!active)return;
-  const ids=selectedEdges(),valid=combinedValid(ids);
+  if(!contextValid()){close({restore:false});return;}
+  const ids=selectedEdges(),compatible=combinedValid(ids),valid=syncPreview(ids);
   apply.disabled=!valid;
   if(valid){
-    stateText.textContent='Two compatible boundaries ready';
-    help.textContent='Apply Bridge to connect them';
+    stateText.textContent='Bridge preview ready';
+    help.textContent='Apply Bridge to keep it • Cancel discards preview';
   }else{
     const kept=firstIds.every(id=>ids.includes(id));
-    stateText.textContent=kept?'First boundary ready':'Keep the first boundary selected';
-    help.textContent='Add matching boundary • hold Edge → Boundary works well';
+    stateText.textContent=compatible?'Bridge preview unavailable':kept?'First boundary ready':'Keep the first boundary selected';
+    help.textContent=compatible?'Choose another boundary pair':'Add matching boundary • hold Edge → Boundary works well';
   }
   place();
 }
@@ -112,19 +125,22 @@ function returnPuck(ids){
 
 function close({restore=true}={}){
   const keep=restore?[...firstIds]:selectedEdges();
-  active=false;panel.hidden=true;
+  active=false;panel.hidden=true;discardPreview();context=null;
   if(restore&&bridge()?.mode?.()==='edge')bridge()?.set?.('edge',keep);
-  returnPuck(keep);
+  if(restore)returnPuck(keep);
   firstIds=[];
 }
 
 function openFromHub(options={}){
-  if(bridge()?.mode?.()!=='edge')return false;
+  if(bridge()?.mode?.()!=='edge'||!editable())return false;
   const ids=[...new Set(options.ids||selectedEdges())].filter(Number.isInteger);
   if(!combinedValid(ids)&&!isSingleBoundaryLoop(ids)){
     if(status)status.textContent='Bridge • select two compatible boundaries or start with one complete boundary loop';
     return false;
   }
+  close({restore:false});
+  const mesh=state()?.mesh;
+  context={mesh,scene:state()?.scene,object:globalThis.__boxlabObjectManager?.activeId,key:sourceKey(mesh)};
   active=true;
   firstIds=[...ids];
   bridge()?.set?.('edge',firstIds);
@@ -132,16 +148,17 @@ function openFromHub(options={}){
   apply.disabled=true;
   stateText.textContent='First boundary ready';
   help.textContent='Add matching boundary • hold Edge → Boundary works well';
-  if(status)status.textContent=combinedValid(ids)?'Bridge • two compatible boundaries ready • Apply Bridge':'Bridge • first boundary kept • add matching second boundary';
   sync();requestAnimationFrame(sync);
+  if(status)status.textContent=preview?'Bridge • preview shown • Apply Bridge to keep it':combinedValid(ids)?'Bridge • preview unavailable':'Bridge • first boundary kept • add matching second boundary';
   return true;
 }
 
 apply.addEventListener('click',event=>{
   event.preventDefault();event.stopPropagation();
-  if(!active||!combinedValid())return;
+  if(!active)return;
+  sync();if(!active||apply.disabled||!preview)return;
   const ids=selectedEdges();
-  active=false;panel.hidden=true;
+  active=false;panel.hidden=true;discardPreview();
   const ok=!!globalThis.__boxlabBridgeUI?.bridgeEdgesFromHub?.({ids});
   if(!ok){
     active=true;panel.hidden=false;
@@ -149,7 +166,7 @@ apply.addEventListener('click',event=>{
     sync();
     return;
   }
-  firstIds=[];
+  firstIds=[];context=null;
 });
 
 cancel.addEventListener('click',event=>{
@@ -161,10 +178,14 @@ window.addEventListener('boxlab-bridge-state',()=>{if(active)requestAnimationFra
 document.addEventListener('pointerup',()=>{if(active)queueMicrotask(sync);},true);
 document.addEventListener('click',()=>{if(active)queueMicrotask(sync);},true);
 
+window.addEventListener('pagehide',()=>close({restore:false}));
+window.addEventListener('boxlab-selection-hub-tool',event=>{if(active&&(event.detail?.mode!=='edge'||event.detail?.tool!=='Bridge'))close({restore:false});});
+window.addEventListener('boxlab-tool-session-change',event=>{if(active&&event.detail?.active)close({restore:false});});
+
 globalThis.__boxlabBridgeViewportSession={
   version:'0.36.18.676',
   active:()=>active,
-  canStart:ids=>combinedValid(ids||selectedEdges())||isSingleBoundaryLoop(ids||selectedEdges()),
+  canStart:ids=>editable()&&(combinedValid(ids||selectedEdges())||isSingleBoundaryLoop(ids||selectedEdges())),
   openFromHub,
   close,
   element:panel

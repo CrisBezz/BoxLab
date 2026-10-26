@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.977",
+      "url": "./src/release-bootstrap.js?v=0.36.18.978",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.977",
+      "url": "./src/release-version.js?v=0.36.18.978",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -440,9 +440,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/selection-hub-bridge-session.js?v=0.36.18.976",
+      "url": "./src/selection-hub-bridge-session.js?v=0.36.18.978",
       "target": "src/selection-hub-bridge-session.js",
-      "sha256": "74cea190715afb68298381ab7e9dfb29cc9eb35334f058089f9503af5c4278d9"
+      "sha256": "f73177dbcb22dcafc0b6cbe9a7f937ed7996df0ee190e9d945a556422fc10735"
     },
     {
       "owner": "index.html",
@@ -3185,6 +3185,12 @@
       "url": "./extrude-plane-constraints.js?v=0.36.18.975",
       "target": "src/extrude-plane-constraints.js",
       "sha256": "3ffca356127930cf87e08bd8d1126f0ff7cd48de1329ef6852261892517bc6af"
+    },
+    {
+      "owner": "src/selection-hub-bridge-session.js",
+      "url": "./bevel-face-preview.js?v=0.36.18.716",
+      "target": "src/bevel-face-preview.js",
+      "sha256": "8ac38d680e72c0cd0bfd102ac7e56d2dda61b89fa67f41ff5e90d206cc9cd3a7"
     }
   ]
 }

@@ -178,3 +178,13 @@ background holds retain main's original gesture owner.
 3. Compare physical dragging with Inference Snap off/on; if failure persists send exact
    bottom status text, selected-face screenshot and a .boxlab saved BEFORE the attempt.
 4. Existing Bridge: two red edges → Bridge → Apply, UndoRedo and Cancel retain behavior.
+
+## .978 device correction — preview semantics
+
+The initial wiring audit confirmed Edge Bridge Apply routing, but missed that its
+ready state had no viewport preview. User screenshot976 identifies that missing
+stage explicitly. .978 adds a private-clone blue preview using existing Bridge
+geometry and shared Bevel renderer; original UI still owns Apply/history. Cancel
+discards preview without source edits. This extends audit coverage from launch and
+commit to the missing preview-before-commit interaction.232 focused checks pass;
+actual iPad preview readability/interaction remains DEVICE978 gate.
