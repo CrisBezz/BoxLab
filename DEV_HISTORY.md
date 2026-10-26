@@ -15048,3 +15048,7 @@ stay visible. Existing manual Hide3D→Show3D remains available if brief refresh
 not reproduce its recovery. This is convenient evidence-based RECOVERY, not a claim
 that intermittent painting fault is fixed. Next follow native feedback and investigate
 canvas/UI boundary from evidence; retain all protected979/978 interactions.
+
+## .980 publication verified — 26 October 2026
+
+Runtime5d72ce2bfa18a8d92d512005caa3b8adb5dc8b92; exact tested/uploaded tree4c794620742ddcca5e1a48766c3abecb0cfa1790, all11 blob hashes verified. Current main release/shell/gesture-debug980 pin/source match tested files. All3 cache-busted live files version.json,index.html,gesture-debug.js byte-match. Final39 focusedPASS/0FAIL/0skip (0.28s); no full-suite/hosted result claimed. DEVICE980 ready: File Refresh display without Debug, canvas automatic return/work/UndoRedo retained, actual right-control recurrence recovery. Underlying intermittent fault remains OPEN; no permanent fix claim. Bridge978 and Exact979 user PASS protected. This proof changes documentation only.
