@@ -15146,3 +15146,7 @@ mesh and background hold reopens it. Paint, UndoRedo, Done; UV open/Close still 
 right controls visible without refresh. Next await Paint icon acceptance, then audit
 queued UV-free facegroup painting through existing faceGroups/selection/history owners;
 do not invent a second painter or assume facegroups are absent.
+
+## .982 publication verified — 26 October 2026
+
+Runtime bc99a6f9d8a28762daa3e379b33ec81fde1b9706; exact tested/uploaded tree 4b6b77520aee0844616585a46f65fa57d055a985, all8 blob hashes verified. Main release/shell/new Paint stylesheet match tested source. All3 fresh public files version.json,index.html,paint-radial-icons.css byte-match after rollout. Final33 focused PASS/0 FAIL/0 skipped (4.9s),10 exact valid approved SVGs and zero target-box overlaps; no hosted full-suite or rendered-browser result claimed (workflow query returned no runs). UV981 user PASS is protected, not pending; Paint982 icon readability remains DEVICE982. No runtime JS, accepted modelling icon, Multi1.0 or frozen changes. This publication proof changes documentation only.
