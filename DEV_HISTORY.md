@@ -14823,3 +14823,7 @@ obliquely if plane edge-on. Repeat in Vertex mode. Check XY holdsZ/XZ holdsY/YZ 
 Exact/Repeat/UndoRedo/Cancel and centreFree/XYZ still work. .974 icon PASS retained.
 
 .975 validation:88 focused tests PASS/0 FAIL/0 skipped (~0.56s), including8 new real-owner plane integrations and original Edge/Vertex/Exact/Repeat/cancel/gizmo/release/Array/diagnostic contracts. Syntax checks pass. Original757 fixture now expects plane group alongside axes/centre. Renderer, Multi1.0, Array, diagnostics and all accepted icon/stability CSS byte-unchanged. Native iPad pad size/picking/readability remains device gate.
+
+## .975 publication verified — 26 October 2026
+
+Runtime a3a448bf64e71c1e07200f569375038895f0c441; uploaded tree74fe3638a43564928232eaf25ad5764609e504f5 matches tested localf9113adc. All7 cache-busted public files byte-match: version.json,index.html,edge-extrude,vertex-extrude,total-gizmo,vertex-tool-viewport-session,extrude-plane-constraints.88 focused tests PASS/0 FAIL/0 skip; final5 release checks PASS. Native plane pad acceptance pending. Hosted full-suite result not claimed. User supplied Edge Fail.obj (24 vertices/14 quads, open clean export from892); selected edge/attempt not recorded, no failure cause inferred. Array PASS and icon974 PASS protected; intermittent right-side fault remains watch.
