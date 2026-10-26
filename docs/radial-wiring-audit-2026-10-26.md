@@ -188,3 +188,14 @@ geometry and shared Bevel renderer; original UI still owns Apply/history. Cancel
 discards preview without source edits. This extends audit coverage from launch and
 commit to the missing preview-before-commit interaction.232 focused checks pass;
 actual iPad preview readability/interaction remains DEVICE978 gate.
+
+## .979 follow-up closure — Exact and inference
+
+User Bridge978 PASS protected. Numeric synthetic gestures now bypass screen-space
+inference through the original Face reference owner; physical snapping is unchanged.
+Precision success/readback waits for the existing committed event and records actual
+value (including shell-exit or inset clamp), while refusal preserves previous Repeat
+and reports failure without a false value event. Those two audit follow-ups are
+addressed by979, with517 relevant checks passing; device acceptance remains pending.
+The user's physical Through refusal and recurring right-side rendering remain separate
+open device investigations. No geometry guards or kernels relaxed.

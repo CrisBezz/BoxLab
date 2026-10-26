@@ -36,6 +36,7 @@ function minBoundaryEdge(m,ids){const info=m?.faceRegionsInfo?.(ids);let min=Inf
 function dispatchGesture(start,end){const id=9876,base={bubbles:true,cancelable:true,composed:true,pointerId:id,pointerType:'pen',isPrimary:true,button:0,buttons:1,pressure:.5,clientX:start.x,clientY:start.y};canvas.dispatchEvent(new PointerEvent('pointerdown',base));canvas.dispatchEvent(new PointerEvent('pointermove',{...base,clientX:end.x,clientY:end.y}));canvas.dispatchEvent(new PointerEvent('pointerup',{...base,buttons:0,pressure:0,clientX:end.x,clientY:end.y}));}
 function commitOperation(tool,value,source='drag'){
   const number=Number(value);if((tool!=='extrude'&&tool!=='inset')||!Number.isFinite(number))return null;
+  exactFailure=false;
   const saved={tool,value:number,source,version:'0.36.18.518'};
   globalThis.__boxlabLastFaceOperation=saved;
   (globalThis.__boxlabLastFaceOperations??={})[tool]=saved;
@@ -46,17 +47,27 @@ function commitOperation(tool,value,source='drag'){
 }
 
 let suppressStatusCapture=false;
-function applyExact(){const tool=activeTool(),m=mesh(),ids=faces(),camera=state()?.camera,value=Number(input.value);if(!tool||!m||!ids.length||!camera||!Number.isFinite(value)){readout.textContent='Arm Extrude or Inset, select face(s), then enter a value';return false;}const fi=ids[0],c=centerOfFace(m,fi);if(!c)return false;const start=screenPoint(c,camera);let dx=0,dy=0;
+let exactRequest=null;
+let exactFailure=false;
+function applyExact(){const tool=activeTool(),m=mesh(),ids=faces(),camera=state()?.camera,value=Number(input.value);if(!tool||!m||!ids.length||!camera||!input.value.trim()||!Number.isFinite(value)||value===0||typeof globalThis.__boxlabHistory?.push!=='function'){readout.textContent='Arm Extrude or Inset, select face(s), then enter a value';return false;}const fi=ids[0],c=centerOfFace(m,fi);if(!c)return false;const start=screenPoint(c,camera);let dx=0,dy=0;
   if(tool==='extrude'){
     const n=faceNormalScreen(m,fi,camera),pixels=value/.006;dx=n.x*pixels;dy=n.y*pixels;
   }else{
     const minEdge=minBoundaryEdge(m,ids);if(!minEdge||minEdge<=1e-8){readout.textContent='Inset exact value unavailable for this selection';return false;}const amount=THREE.MathUtils.clamp(Math.abs(value)/(minEdge*.5),.01,.95),pixels=amount/.004;dx=pixels*.5;dy=-pixels*.5;
   }
+  const request={tool,committed:null};exactRequest=request;exactFailure=false;
   suppressStatusCapture=true;
   try{dispatchGesture(start,{x:start.x+dx,y:start.y+dy});}
-  finally{queueMicrotask(()=>{suppressStatusCapture=false;});}
-  commitOperation(tool,value,'exact');
-  return true;
+  finally{exactRequest=null;queueMicrotask(()=>{suppressStatusCapture=false;});}
+  if(request.committed&&Number.isFinite(Number(request.committed.value))){
+    commitOperation(tool,Number(request.committed.value),'exact');
+    return true;
+  }
+  exactFailure=true;
+  const previous=globalThis.__boxlabLastFaceOperations?.[tool];
+  if(previous)input.value=Number(previous.value).toFixed(3);
+  readout.textContent=`Exact ${tool==='extrude'?'Extrude':'Inset'} refused • ${status.textContent||'No change committed'}${previous?` • Last ${Number(previous.value).toFixed(3)}`:''}`;
+  return false;
 }
 function applyFor(tool,value){
   if(tool!=='extrude'&&tool!=='inset')return false;
@@ -164,6 +175,7 @@ function finishGesture(g){
 document.addEventListener('boxlab-face-direct-committed',event=>{
   const detail=event.detail||{};
   if(detail.replay)return;
+  if(exactRequest&&detail.tool===exactRequest.tool){exactRequest.committed=detail;return;}
   if(detail.tool==='extrude'&&Number.isFinite(Number(detail.value))&&Math.abs(Number(detail.value))>1e-6){
     commitOperation('extrude',Number(detail.value),'geometry');
     if(gesture?.tool==='extrude')gesture.repeatable=false;
@@ -178,6 +190,7 @@ document.addEventListener('boxlab-face-direct-committed',event=>{
 document.addEventListener('boxlab-face-direct-press',event=>{
   const detail=event.detail||{},pointerId=detail.pointerId;
   if(pointerId===9876)return;
+  exactFailure=false;
   const tool=detail.tool,fi=detail.hit,ids=[...new Set(detail.workingFaces||[])];
   if((tool!=='extrude'&&tool!=='inset')||!Number.isInteger(fi)||!ids.length)return;
   const m=mesh();if(!m)return;
@@ -202,7 +215,7 @@ window.addEventListener('pointercancel',event=>{if(gesture&&event.pointerId===ge
 
 new MutationObserver(()=>{
   const text=status.textContent||'';
-  if(suppressStatusCapture)return;
+  if(suppressStatusCapture||exactFailure)return;
   if(gesture&&/THROUGH READY|Extrude Through|BLOCKED|rollback/i.test(text)){
     gesture.repeatable=false;return;
   }

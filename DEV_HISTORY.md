@@ -14950,3 +14950,53 @@ feedback, then evidence-led canvas/UI work and remaining audit follow-ups.
 ## .978 publication verified — 26 October 2026
 
 Runtime2cce82749cf3e8818b6a2d86e62572c9f4c32695; exact tested/uploaded tree9bc49bc0186e798fa12942dfdc6aa346a90e3e21, all10 blob hashes verified. Current main release/shell/session978 pin and source match tested checkout. Cache-busted public version.json,index.html,selection-hub-bridge-session.js all byte-match after rollout. Focused232PASS/0FAIL/0skip; hosted query returned no runs, no hosted full-suite result claimed. Edge Bridge blue preview BEFORE Apply, Cancel/source isolation and context disposal are ready for DEVICE978; no native iPad preview acceptance inferred. Face Bridge, original Bridge kernels,977 Exact correction,972/973 rendering safeguards and protected Multi1.0 remain unchanged. Recurring right-side fault stays OPEN. This proof changes documentation only.
+
+## .979 — Exact inference isolation and truthful commit readback; Bridge978 PASS — 26 October 2026
+
+User explicitly PASSes978 Bridge preview before Apply/Cancel; protect its private
+clone/blue ghost/source-neutral preview/one-step original commit and lifecycle.
+User /nextbuild authorizes the two remaining Exact audit fixes. Audit remote/current
+main028718a9, release978. Existing numeric gestures already use reserved pointer9876;
+existing direct committed event owns successful geometry values. No new kernel needed.
+
+Original Face referenceUnderPointer now ignores ONLY numeric pointer9876. Physical
+Pencil/mouse inference and toggle state stay unchanged. Covers Extrude and Inset;
+original model-unit/direction mapping,977 aligned near-front projection, Through
+shell-exit snapping and inset safety clamp remain. Exact still enters original
+controller and guarded geometry/history owners; no separate modelling algorithm.
+
+Precision tracks one synchronous numeric request and listens to ORIGINAL
+boxlab-face-direct-committed. It records success/Repeat/readback only after that
+semantic acknowledgement, using ACTUAL committed value rather than requested input.
+Existing positive/recess/closed-negative/Inset events retained; old open-sheet
+Through success branch now emits same semantic event after original guarded commit.
+Example: requested-2.2 stopping at shell exit-2.0 records/displays-2.0. Inset request
+above safe range displays original clamped distance, never an unperformed100.
+
+No acknowledgement means false/refused status, no fake value-committed event, prior
+successful per-tool Repeat/value retained. Refusal readout survives subsequent status
+observer callbacks, even with no prior success; next physical press/Exact attempt/
+success clears it. Blank/zero/nonfinite input and absent history refuse before
+synthetic geometry dispatch. Original refusal/rollback/selection/history remain.
+Physical drag callbacks still record geometry normally. This is transaction reporting,
+not relaxation of topology refusal or proof of user's physical Through failure repair.
+
+Final517 focusedPASS/0FAIL/0skip (8.7s): new7 actual precision+direct-controller tests
+plus Face/Through/negative/repeat/radial/Bridge/release regression. New fixtures run
+original uniform-inset owner rather than centre-lerp fallback. Test exact.37 at3
+cameras, Through at4near/oblique views, actual exit depth, UndoRedo/one checkpoint,
+refused entire-solid cut with unchanged source/history/last value, actual clamped
+Inset, numeric invalid/no-history refusal, real physical vertex inference vs same
+numeric contact, persistent failure readout. No native iPad acceptance inferred.
+Changed functionality ONLY precision-face and3lines in original multi-face-direct;
+drawer-ui changes child pin only. Reviewed parent/child/direct/recovery pins979 and
+shell markers/asset hashes. Main/geometry/Through kernels/Bridge978/Multi1.0/frozen/
+icons/972plain/973probe remain unchanged. No duplicate history or input owner.
+
+DEVICE979: with inference ON, Face Exact.37 (or convenient value), orbit/Undo/retry;
+result should retain entered distance. Valid Through overshoot displays actual exit.
+Try a refused cut: explicit refusal, previous successful value retained; Undo must
+undo the last successful operation, not an invented failed action. Physical snap
+still works. Bridge preview978 remains accepted. Right-side fault still OPEN; manual
+Hide3D→Show3D recovery confirmed. Next evidence-led canvas/UI work or actual979
+feedback; no new feature/icon expansion before outstanding reliability direction.
