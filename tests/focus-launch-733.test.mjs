@@ -2,9 +2,10 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
+import {assertAssetReference} from './helpers/release-contract.mjs';
 const read=n=>fs.readFileSync(new URL('../'+n,import.meta.url),'utf8'),source=read('src/view-modes.js');
 test('Launch shell starts in Focus before module execution and pins the changed owner',()=>{
- assert.match(read('index.html'),/<html lang="en" class="boxlab-focus-view">/);assert.match(read('index.html'),/view-modes\.js\?v=0\.36\.18\.733/);assert.match(source,/#focusViewBtn\[aria-pressed="true"\]\{background:#f2f5fa!important;color:#111318!important/);
+ assert.match(read('index.html'),/<html lang="en" class="boxlab-focus-view">/);assertAssetReference(read('index.html'),'view-modes.js');assert.match(source,/#focusViewBtn\[aria-pressed="true"\]\{background:#f2f5fa!important;color:#111318!important/);
 });
 test('Existing Focus toggle updates armed icon, accessibility and action label in both directions without changing its SVG',()=>{
  const classes=new Set(['boxlab-focus-view']),attrs={},buttonClasses=new Set();let resize=0;const button={dataset:{iconAction:'focus'},innerHTML:'original SVG',setAttribute:(k,v)=>attrs[k]=v,classList:{toggle:(c,on)=>on?buttonClasses.add(c):buttonClasses.delete(c)}};

@@ -11172,7 +11172,16 @@ unrelatedfeature rollout or speculative further CSS/engine fixes.
 ## .982 Paint icons and protected .981 UV lifecycle
 
 - [x] User PASS981: repeated UV open/Close and Editor return keep right controls visible without Refresh display; retain native top-layer release/host teardown.
-- [ ] DEVICE982: all10 Paint icons match selected Proof03 with readable captions; original centre/control placements and selected/disabled feedback stay usable.
-- [ ] DEVICE982: Brush/Blur/Smudge and Layers/Mask/Image/AO/Map size open original left controls; cycling keeps radial until Pencil surface use; background hold reopens.
+- [x] User PASS982: all10 Paint icons match selected Proof03 with readable captions; original centre/control placements and selected/disabled feedback stay usable.
+- [x] User PASS982: Brush/Blur/Smudge and Layers/Mask/Image/AO/Map size open original left controls; cycling keeps radial until Pencil surface use; background hold reopens.
 - [ ] DEVICE982: Paint UndoRedo/Done, modelling icons and UV Close/right toolbar stay accepted.
 - [x] Artwork audit:10 valid SVGs exact to Proof03, zero target-box overlaps, bounds fit existing350px radial.
+
+
+## .983 startup toolbar / refresh recurrence
+
+- [ ] OPEN: user982 reports invisible right controls immediately after refresh; several refreshes recovered.981 UV acceptance does not close startup visibility.
+- [ ] DEVICE983: repeated reloads retain drawn right toolbar/status before navigation, UV entry, app-switch or rotation.
+- [ ] DEVICE983: Frame All/UndoRedo/Focus/Objects/VIEW work once on original owners; right browser/menu bounds unchanged.
+- [ ] DEVICE983: UV open/Close/Editor Back and accepted Paint icons/workflow remain usable.
+- [x] Automated: single final ordered toolbar in shell; original VIEW/SVG nodes retained on hydration; Objects/Frame bind once; real camera fit; fallback creation retained.

@@ -125,15 +125,15 @@ function syncEdgePreview(){
   if(!edgeSession||edgeSession.key!==edgePreviewKey())previewEdges();
 }
 function installFrameAll(){
-  if(document.querySelector('#frameAllBtn'))return;
   const host=document.querySelector('.top-actions');
   if(!host)return;
-  const b=document.createElement('button');
-  b.id='frameAllBtn';
-  b.type='button';
-  b.textContent='Frame All';
-  b.title='Fit the whole model in view';
-  host.prepend(b);
+  let b=document.querySelector('#frameAllBtn');
+  if(!b){
+    b=document.createElement('button');b.id='frameAllBtn';b.type='button';
+    b.textContent='Frame All';b.title='Fit the whole model in view';host.prepend(b);
+  }
+  if(b.dataset.frameAllBound)return;
+  b.dataset.frameAllBound='true';
   b.addEventListener('click',()=>{
     const s=state(),camera=s?.camera,mesh=s?.mesh;
     if(!camera||!mesh?.vertices?.length)return;

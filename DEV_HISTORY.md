@@ -15150,3 +15150,52 @@ do not invent a second painter or assume facegroups are absent.
 ## .982 publication verified — 26 October 2026
 
 Runtime bc99a6f9d8a28762daa3e379b33ec81fde1b9706; exact tested/uploaded tree 4b6b77520aee0844616585a46f65fa57d055a985, all8 blob hashes verified. Main release/shell/new Paint stylesheet match tested source. All3 fresh public files version.json,index.html,paint-radial-icons.css byte-match after rollout. Final33 focused PASS/0 FAIL/0 skipped (4.9s),10 exact valid approved SVGs and zero target-box overlaps; no hosted full-suite or rendered-browser result claimed (workflow query returned no runs). UV981 user PASS is protected, not pending; Paint982 icon readability remains DEVICE982. No runtime JS, accepted modelling icon, Multi1.0 or frozen changes. This publication proof changes documentation only.
+
+## .983 — stable startup toolbar; .982 Paint PASS, refresh visibility recurrence — 26 October 2026
+
+User: “PASS - refresh made the right controls disappear BUT several refreshes fixed
+the intermittent bug. /nextbuild”. Protect982 Paint icons/workflow. REOPEN right-side
+visual gate after refresh;981 accepted UV lifecycle is not blanket rendering repair.
+No new debug report/browser trace accompanies recurrence; exact engine cause remains
+unproven. Do not ask repeated refreshes as a solution or resume facegroup feature work.
+
+Audit current main940cc66a/runtime bc99a6f9, live982 markers, current script pins,
+original toolbar, View/Frame owners and967 composition/981 lifecycle. Shell initially
+has only Undo/Redo; direct-bevel later prepends Frame, view-modes appends Focus/Objects/
+VIEW, toolbar observer replaces their artwork and reorders them. Prior966 debug records
+right-toolbar width134.56px at459ms ->317.61px at649ms after canvas creation. This is
+confirmed staged startup DOM/layout, NOT proof that it causes native pixel loss.
+
+Seed final five original SVG buttons plus original VIEW markup in initial HTML,
+already in final order. New viewport-toolbar-shell.css makes established header/icon/
+VIEW-summary dimensions available before module/WebGL startup. Old selection modes
+inside header stay out of initial header flow until same topbar owner moves them to
+existing bottom dock. Existing main UndoRedo bindings retained. Original direct-bevel
+Frame All reuses/binds shell button once (old presence early-return would disconnect
+it); exact original camera fitting remains. Original view-modes adopts shell Focus/
+Objects/VIEW nodes, installs same handlers/CSS, preserves SVG/panel identity and order;
+creation fallback retained for embedded shells. Existing late toolbar observer sees
+already decorated/ordered nodes, so no startup button replacement/reorder is needed.
+No duplicate action, new pointer/history owner, WebGL delay/reset, canvas hide/refresh,
+polling, filter/layer hint or new top-layer chrome. UV981 implementation untouched.
+
+This removes a verified startup instability; native iPad visual gate stays OPEN.
+Do not call983 a proven permanent compositor repair. Right status path unchanged.
+Changed runtime functionality only two original action owners plus shell/early CSS;
+view-modes/direct-bevel/recovery pins983 and reviewed hashes. Paint icons982,
+Multi1.0/main/rendering/modelling/frozen implementations unchanged. Existing Focus
+literal733 pin test follows reviewed contract, behavior assertions retained. Bevel
+DOM fixture now supplies its ordinary real-shaped Frame button instead of bare{};
+all existing geometry/history/context assertions retained. New tests execute actual
+VIEW/Frame owners to prove original-node adoption, one click binding, fallback and
+camera fit; shell has single ordered IDs/artwork before module execution.
+Final319 focused PASS/0 FAIL/0 skipped (4.4s), including Bevel geometry/context/
+history, View/Focus/browser/toolbar, menu bounds, UV981 and release contracts.
+Syntax and diff checks pass. No hosted/full-suite/native visual result claimed.
+
+DEVICE983: reload several times and inspect right toolbar/status IMMEDIATELY before
+UV/app-switch/rotation; report any invisible controls. Frame All, UndoRedo, Focus,
+Objects and VIEW each perform original action once. UV tools -> Close and Editor ->
+Back keep981 behavior; Paint icons remain accepted. If visual loss recurs, copy fresh
+UI Debug report before recovery and say whether it occurred immediately on reload.
+Next actual startup feedback/evidence before further rendering changes or new features.

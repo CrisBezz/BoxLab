@@ -130,9 +130,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/direct-bevel.js?v=0.36.18.954",
+      "url": "./src/direct-bevel.js?v=0.36.18.983",
       "target": "src/direct-bevel.js",
-      "sha256": "5342473a880ec351ba598156c6dffc2182b7660ab98f7e79b04bb021112ed5e3"
+      "sha256": "f76a650ce139377e6a8a1506300da5df89d4801bae27450f589f229d8ddc4838"
     },
     {
       "owner": "index.html",
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.982",
+      "url": "./src/release-bootstrap.js?v=0.36.18.983",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.982",
+      "url": "./src/release-version.js?v=0.36.18.983",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -581,9 +581,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/view-modes.js?v=0.36.18.733",
+      "url": "./src/view-modes.js?v=0.36.18.983",
       "target": "src/view-modes.js",
-      "sha256": "30e51cfa0d1e00b1f362055ee318ffd397e5e37440915c593965b21e954e48b5"
+      "sha256": "81d222cdfe4780d6896b5e9f4abab6909b9258e7824239ae22b1db1c760bfb91"
     },
     {
       "owner": "index.html",
@@ -3197,6 +3197,12 @@
       "url": "./paint-radial-icons.css?v=0.36.18.982",
       "target": "paint-radial-icons.css",
       "sha256": "faf34d6e7ef0edbfd647cab0ad0894ea8be3ae7704e02061dcd561477b2cf4d1"
+    },
+    {
+      "owner": "index.html",
+      "url": "./viewport-toolbar-shell.css?v=0.36.18.983",
+      "target": "viewport-toolbar-shell.css",
+      "sha256": "0723e81087ab3f30a99501d15e69c8d597b0695f0eb6ff5985599b2944df89aa"
     }
   ]
 }

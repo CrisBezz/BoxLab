@@ -1,0 +1,15 @@
+/* .983 — final toolbar geometry/artwork before module/WebGL startup.
+   Existing action modules hydrate these same shell nodes; no layer/refresh trick. */
+.topbar > #selectionModes{display:none}
+.brand{order:1;display:flex!important}
+.top-file-menu{order:0}
+.top-actions{order:2;align-items:center}
+.top-actions>button,.top-actions>#viewModes>summary{min-height:38px;height:38px;padding:7px 10px;font-size:13px!important;font-weight:600;line-height:1}
+.top-actions>button[data-icon-action]{width:40px;min-width:40px;padding:7px!important;display:grid;place-items:center}
+.top-actions>button[data-icon-action] svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.top-actions>#viewModes{margin-left:auto;position:relative;z-index:120;flex:0 0 auto}
+.top-actions>#viewModes>summary{list-style:none;display:flex;align-items:center;gap:7px;border:1px solid rgba(255,255,255,.14);border-radius:10px;background:rgba(255,255,255,.045);cursor:pointer;user-select:none;white-space:nowrap;touch-action:manipulation}
+#viewModes>summary::-webkit-details-marker{display:none}
+.viewport-menu-icon{font-size:15px;line-height:1;opacity:.9}
+.viewport-menu-caret{font-size:10px;opacity:.65}
+@media(max-width:900px){.top-actions>button,.top-actions>#viewModes>summary{padding:7px 9px;font-size:13px!important}.top-actions>#viewModes>summary{padding:5px 8px}}

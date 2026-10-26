@@ -6,11 +6,10 @@ const topActions=document.querySelector('.top-actions');
 function state(){return globalThis.__boxlabBridgeState;}
 
 function ensureUI(){
-  if(document.querySelector('#viewModes'))return document.querySelector('#viewModes');
-  const wrap=document.createElement('details');
+  const wrap=document.querySelector('#viewModes')||document.createElement('details');
   wrap.id='viewModes';
   wrap.className='viewport-menu';
-  wrap.innerHTML=`
+  if(!wrap.querySelector('.viewport-menu-panel'))wrap.innerHTML=`
     <summary title="View settings" aria-label="View settings"><span class="viewport-menu-icon">◈</span><span>VIEW</span><span class="viewport-menu-caret">▾</span></summary>
     <div class="viewport-menu-panel">
       <div class="viewport-menu-section">
@@ -37,16 +36,15 @@ function ensureUI(){
       </div>
 
     </div>`;
-  const focusButton=document.createElement('button');
+  const focusButton=document.querySelector('#focusViewBtn')||document.createElement('button');
   focusButton.type='button';
   focusButton.id='focusViewBtn';
-  focusButton.textContent='Focus';
+  if(!focusButton.dataset.iconAction)focusButton.textContent='Focus';
   focusButton.title='Toggle Focus View';
-  const objectButton=document.createElement('button');objectButton.type='button';objectButton.id='objectBrowserBtn';
+  const objectButton=document.querySelector('#objectBrowserBtn')||document.createElement('button');objectButton.type='button';objectButton.id='objectBrowserBtn';
   objectButton.title='Object Browser';objectButton.setAttribute('aria-label','Object Browser');objectButton.setAttribute('aria-expanded','false');objectButton.setAttribute('aria-controls','objectBrowserPanel');
-  objectButton.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();activateObjectListFromView();});
-  topActions?.append(focusButton,objectButton);
-  topActions?.append(wrap);
+  if(!objectButton.dataset.browserBound){objectButton.dataset.browserBound='true';objectButton.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();activateObjectListFromView();});}
+  for(const node of [focusButton,objectButton,wrap])if(node.parentElement!==topActions)topActions?.append(node);
   const style=document.createElement('style');
   style.textContent=`
 #viewModes{position:relative;z-index:120;flex:0 0 auto}
