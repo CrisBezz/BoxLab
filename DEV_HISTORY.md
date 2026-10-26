@@ -15000,3 +15000,7 @@ undo the last successful operation, not an invented failed action. Physical snap
 still works. Bridge preview978 remains accepted. Right-side fault still OPEN; manual
 Hide3D→Show3D recovery confirmed. Next evidence-led canvas/UI work or actual979
 feedback; no new feature/icon expansion before outstanding reliability direction.
+
+## .979 publication verified — 26 October 2026
+
+Runtime6ed08001967ef5f558f84f44d52878603a93b7fa; exact tested/uploaded tree7d82c67d2646ba83c8989b8b8332a3433cd7d24a, all12 blob hashes verified. Current main release/shell and direct/drawer/precision loader keys979 match tested source. All5 cache-busted live files (version,index,drawer-ui,precision-face,multi-face-direct) byte-match after rollout. Final517 focusedPASS/0FAIL/0skip (8.7s); hosted query returned no runs, no hosted or local full979 suite claimed. DEVICE979 ready: inference ON Exact distance across views; refused cut keeps last successful value/history; Through readback reports actual exit. Bridge978 user PASS protected. Right-side recurring visibility remains OPEN with manual Hide3D→Show3D recovery. This proof changes documentation only.
