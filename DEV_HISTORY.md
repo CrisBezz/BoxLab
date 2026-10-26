@@ -14778,3 +14778,7 @@ modes to confirm accepted icons, navigation and right controls remain usable.
 Next Paint icons after Edge feedback. Keep canvas diagnostic if visibility recurs.
 
 .974 validation:58 focused checks PASS/0 FAIL/0 skipped (~0.84s), final reviewed release checks5 PASS after outer height58px sizing adjustment.21 SVGs valid; zero pairwise button-box overlaps at retained angles/radii. Outer58px includes two9px text lines,32px icon,padding/gap/border. All runtimeJS, prior accepted CSS/972 stability and973 probe byte-unchanged. Native label readability pending.
+
+## .974 publication verified — 26 October 2026
+
+Runtime17c1d910f5771214cde3b2cbaf74c6a3c17dae0f; uploaded treebcda162b745e4459cd4494a7e80da8cce1a283ad matches tested localf628959a. Main974 version/shell/new Edge CSS pin verified. Public cache-busted version.json,index.html,edge-radial-icons.css all byte-match tested checkout.58 focused checks PASS/0 FAIL; final release checks5 PASS;21 valid SVGs/zero target overlaps. Pages40256386271 and hosted topology40256386756 were in progress at query; live files subsequently matched, no hosted full-suite PASS claimed. Edge974 ready for native readability/action review. User cannot currently reproduce right fault, not marked fixed;973 probe/972 plain CSS retained. Next Paint icons after feedback; Array971 PASS protected.
