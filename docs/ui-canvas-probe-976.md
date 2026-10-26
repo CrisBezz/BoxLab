@@ -26,3 +26,12 @@ Current device-proven workaround: when it recurs, File→UI Debug→Hide3D only�
 It preserves renderer, mesh, backing dimensions and history using existing opt-in probe.
 No automatic polling/hide-show/reload added. Next narrow visibility task should use
 this evidence; don't repeat blur/disabled-control guesses already contradicted here.
+
+## .980 explicit recovery shortcut
+
+File → Refresh display now performs an explicit, bounded hide/show via the same
+visibility probe owner without enabling debug. One hidden frame, exact restoration,
+250ms fallback and lifecycle cleanup; no model/history/renderer mutation or polling.
+This is a shortcut to the demonstrated workaround, NOT a permanent compositor fix.
+Device testing must establish whether a brief refresh recovers as reliably as the
+original manual diagnostic. Underlying recurring visual fault remains OPEN.

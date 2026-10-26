@@ -11072,3 +11072,47 @@ undo the last successful operation, not an invented failed action. Physical snap
 still works. Bridge preview978 remains accepted. Right-side fault still OPEN; manual
 Hide3D→Show3D recovery confirmed. Next evidence-led canvas/UI work or actual979
 feedback; no new feature/icon expansion before outstanding reliability direction.
+
+## .980 — explicit File Refresh display recovery; .979 user PASS — 26 October 2026
+
+User PASS979 protects Exact inference isolation, actual commit readback, refusal/
+last-value/history and existing physical snapping. Bridge978 PASS remains protected.
+Audit main2f2ee78a/release979. Next reliability focus is recurring right-side UI.
+976 device probe proved Hide3D restored controls and Show3D left them visible; this
+narrows canvas/UI painting interaction but does not establish root cause. No further
+speculative CSS/layer/renderer change or permanent repair claim in980.
+
+Add File → Refresh display, available WITHOUT enabling debug. It uses SAME existing
+createCanvasVisibilityProbe inline visibility save/restore owner. Explicit user click
+hides ONLY original canvas for one presented frame (two RAF callbacks), then restores
+exact original visibility value/priority/absence.250ms timer fallback and pagehide/
+hidden-document/debug-off cancellation ensure restoration if animation frames stall.
+No reload, canvas re-creation/resize/DPR/model/history/selection mutation, new renderer,
+automatic recurring blink, idle polling, navigation or pointer owner. Debug off stays
+off; File closes after successful start, button resets after restore. Confirmation
+says Display refreshed, not that the fault is permanently fixed.
+
+Pending refresh rejects repeats and does not take over manually hidden debug probe.
+Existing probe busy guard now also checks main/Face/Edge/Vertex/Bevel live drags;
+Paint/tool session/gizmo guards retained. Refused entry leaves work untouched and
+asks to finish active operation or Show3D. Debug probe/observation buttons disabled
+briefly during recovery. Optional debug logs record start/end and invalidate stale
+cached reports. Original two-step diagnostic and user-observation flow unchanged.
+
+Final39 focusedPASS/0FAIL/0skip (0.28s): new4 recovery tests + existing debug/display/
+canvas973/Bridge978/Exact979/release contracts. Exact inline restoration across6
+initial states, hidden frame before restore, stalled-frame fallback, cancel/late-frame
+cleanup, busy/manual-probe refusal, scheduler failure restoration, actual File entry
+with debugOFF, pagehide/debug-off cleanup, unchanged backing dimensions and model/
+history identity tested. Original973 tests retained. Shared test helper only gains
+optional File host. No native iPad recovery-speed/visual acceptance inferred.
+Runtime change ONLY gesture-debug; direct shell/recovery pins980 and reviewed hashes.
+979 modelling/Exact,978 Bridge/shared renderer, main/Multi1.0/icons/frozen unchanged.
+
+DEVICE980: File→Refresh display: canvas returns automatically, model/selection stay;
+UndoRedo still acts on actual prior modelling changes. No debug enable required.
+When right controls next disappear, use this one action; report if they return and
+stay visible. Existing manual Hide3D→Show3D remains available if brief refresh does
+not reproduce its recovery. This is convenient evidence-based RECOVERY, not a claim
+that intermittent painting fault is fixed. Next follow native feedback and investigate
+canvas/UI boundary from evidence; retain all protected979/978 interactions.

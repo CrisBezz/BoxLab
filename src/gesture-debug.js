@@ -66,7 +66,7 @@ function setEnabled(next,{persist=true}={}){
   enabled=!!next;
   if(persist){try{localStorage.setItem(PREF_KEY,enabled?'1':'0');}catch{}}
   if(enabled){ensurePanel();log('DEBUG ENABLED');installDeepCaptureTrace();}
-  else{canvasProbe.show();panel?.remove();panel=null;body=null;backgroundBody=null;contactBody=null;seq=0;}
+  else{displayRefresh.cancel();canvasProbe.show();panel?.remove();panel=null;body=null;backgroundBody=null;contactBody=null;seq=0;}
   window.dispatchEvent(new CustomEvent('boxlab-gesture-debug-change',{detail:{enabled}}));
   return enabled;
 }
@@ -166,9 +166,34 @@ function createCanvasVisibilityProbe(canvas,busy=()=>false){
  }
  return {hide,show,active:()=>saved!==null};
 }
-const canvasProbe=createCanvasVisibilityProbe(debugCanvas,()=>!!globalThis.__boxlabViewportPaint?.active||!!globalThis.__boxlabToolSession?.current?.()||!!globalThis.__boxlabActiveGizmoDrag);
-let syncCanvasProbeControls=()=>{};
-window.addEventListener('pagehide',()=>{canvasProbe.show();syncCanvasProbeControls();});
+// Explicit, user-triggered recovery over the SAME diagnostic visibility owner.
+// Two frames allow one hidden canvas paint; the timer/lifecycle path always restores.
+function createCanvasDisplayRefresh(probe,{requestFrame=f=>requestAnimationFrame(f),cancelFrame=id=>cancelAnimationFrame(id),setTimer=(f,ms)=>setTimeout(f,ms),clearTimer=id=>clearTimeout(id),onChange=()=>{}}={}){
+ let pending=false,frames=[],timer=null;
+ function finish(){
+  if(!pending)return false;
+  pending=false;
+  for(const id of frames)cancelFrame(id);frames=[];
+  if(timer!==null)clearTimer(timer);timer=null;
+  probe.show();onChange(false);return true;
+ }
+ function start(){
+  if(pending||probe.active()||!probe.hide())return false;
+  pending=true;
+  try{
+   onChange(true);
+   timer=setTimer(finish,250);
+   frames.push(requestFrame(()=>{if(pending)frames.push(requestFrame(finish));}));
+  }catch{finish();return false;}
+  return true;
+ }
+ return {start,cancel:finish,active:()=>pending};
+}
+const canvasProbe=createCanvasVisibilityProbe(debugCanvas,()=>!!globalThis.__boxlabViewportPaint?.active||!!globalThis.__boxlabToolSession?.current?.()||!!globalThis.__boxlabActiveGizmoDrag||!!globalThis.__boxlabMainDirectTool?.busy?.()||!!globalThis.__boxlabFaceDirect?.dragging?.()||!!globalThis.__boxlabEdgeExtrude?.busy?.()||!!globalThis.__boxlabVertexExtrude?.busy?.()||!!globalThis.__boxlabDirectBevel?.busy?.());
+let syncCanvasProbeControls=()=>{},updateDisplayRefresh=()=>{};
+const displayRefresh=createCanvasDisplayRefresh(canvasProbe,{onChange:active=>{updateDisplayRefresh(active);syncCanvasProbeControls();evidence('display-refresh',{active});if(uiReport)uiReport.value='';}});
+window.addEventListener('pagehide',()=>{displayRefresh.cancel();canvasProbe.show();syncCanvasProbeControls();});
+document.addEventListener('visibilitychange',()=>{if(document.hidden)displayRefresh.cancel();});
 const uiEvidence=[];let uiControls=null,uiReport=null;
 const describe=node=>node?{tag:node.tagName,id:node.id||'',class:String(node.className||'').slice(0,180)}:null;
 function evidence(kind,data){if(!enabled)return;uiEvidence.push({at:Math.round(performance.now()),kind,data});if(uiEvidence.length>100)uiEvidence.shift();}
@@ -199,8 +224,9 @@ function updateUIDebug(){
  uiReport=document.createElement('textarea');uiReport.readOnly=true;uiReport.setAttribute('aria-label','UI debug report');uiReport.style.cssText='display:none;width:100%;box-sizing:border-box;height:80px;font:10px monospace';
  capture.onclick=()=>{evidence('snapshot',{});uiReport.value=JSON.stringify(uiSnapshot(),null,2);uiReport.style.display='block';note.textContent='Report captured';};
  copy.onclick=async()=>{if(!uiReport.value)capture.click();try{await navigator.clipboard.writeText(uiReport.value);note.textContent='Copied';}catch{uiReport.style.display='block';uiReport.focus();uiReport.select();note.textContent='Select and copy the report';}};
- syncCanvasProbeControls=()=>{const active=canvasProbe.active();probe.textContent=active?'Show 3D again':'Hide 3D only';probe.setAttribute('aria-pressed',String(active));visible.hidden=missing.hidden=!active;};
+ syncCanvasProbeControls=()=>{const active=canvasProbe.active();probe.disabled=visible.disabled=missing.disabled=displayRefresh.active();probe.textContent=active?'Show 3D again':'Hide 3D only';probe.setAttribute('aria-pressed',String(active));visible.hidden=missing.hidden=!active;};
  probe.onclick=()=>{
+  if(displayRefresh.active())return;
   const hidden=canvasProbe.active();
   if(hidden)canvasProbe.show();
   else if(!canvasProbe.hide()){note.textContent='Finish the active tool or Paint before this test';return;}
@@ -214,6 +240,14 @@ function updateUIDebug(){
  uiControls.append(label,document.createElement('br'),capture,copy,off,document.createElement('br'),probe,visible,missing,note,uiReport);document.body.appendChild(uiControls);
 }
 const uiDebugButton=document.createElement('button');uiDebugButton.type='button';uiDebugButton.textContent='UI Debug';uiDebugButton.title='Record input and layout evidence for inactive UI';uiDebugButton.onclick=toggle;document.querySelector('#fileMenu .top-file-content')?.appendChild(uiDebugButton);
+const refreshDisplayButton=document.createElement('button');refreshDisplayButton.type='button';refreshDisplayButton.id='refreshDisplayBtn';refreshDisplayButton.textContent='Refresh display';refreshDisplayButton.title='Recover missing controls without reloading your model';
+updateDisplayRefresh=active=>{refreshDisplayButton.disabled=active;refreshDisplayButton.textContent=active?'Refreshing display…':'Refresh display';if(!active){const status=document.querySelector('#selectionStatus');if(status)status.textContent='Display refreshed';}};
+refreshDisplayButton.onclick=()=>{
+ if(!displayRefresh.start()){const status=document.querySelector('#selectionStatus');if(status)status.textContent='Finish the active operation or Show 3D again before refreshing';return;}
+ const menu=document.querySelector('#fileMenu');if(menu)menu.open=false;
+};
+document.querySelector('#fileMenu .top-file-content')?.appendChild(refreshDisplayButton);
+globalThis.__boxlabGestureDebug.refreshDisplay=()=>displayRefresh.start();
 window.addEventListener('boxlab-gesture-debug-change',updateUIDebug);queueMicrotask(updateUIDebug);
 for(const type of ['pointerdown','pointerup','pointercancel'])window.addEventListener(type,event=>{if(!enabled)return;evidence(type,{pointer:event.pointerType,id:event.pointerId,x:event.clientX,y:event.clientY,target:describe(event.target),hit:describe(document.elementFromPoint(event.clientX,event.clientY)),buttons:event.buttons,defaultPrevented:event.defaultPrevented});if(type==='pointerdown')evidence('input-layout',{rightEdge:innerWidth,canvasWidth:debugCanvas?.width,canvasHeight:debugCanvas?.height,paint:!!globalThis.__boxlabViewportPaint?.active});},{capture:true,passive:true});
 for(const type of ['resize','orientationchange','pageshow','blur','focus','boxlab-tool-session-change'])window.addEventListener(type,event=>{if(enabled)evidence(type,{detail:event.detail?.id||null,width:innerWidth,height:innerHeight,controls:uiControlEvidence()});});
