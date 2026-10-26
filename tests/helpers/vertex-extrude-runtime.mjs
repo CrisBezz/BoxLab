@@ -1,3 +1,4 @@
+import {extrudePlaneNormal,projectExtrudePlaneDelta,extrudePlaneExactDirection,extrudePlaneDeltaIsUsable} from '../../src/extrude-plane-constraints.js';
 import fs from 'node:fs';
 import vm from 'node:vm';
 import * as THREE from 'three';
@@ -28,7 +29,7 @@ export function vertexRuntime(m=EditableMesh.cube(),initial=[0],{sourceTransform
   document.querySelector=s=>s==='#app'?{classList:{contains:()=>locked}}:fields.get(s)||null;
   const camera=new THREE.PerspectiveCamera(45,1000/600,.1,100);camera.position.set(0,0,10);camera.lookAt(0,0,0);camera.updateMatrixWorld();
   const state={mesh:m,camera,scene:new THREE.Group(),controls:{enabled:true}};
-  const history=new History();const context={THREE,buildVertexExtrude,Set,Map,document,window,
+  const history=new History();const context={THREE,buildVertexExtrude,extrudePlaneNormal,projectExtrudePlaneDelta,extrudePlaneExactDirection,extrudePlaneDeltaIsUsable,Set,Map,document,window,
     Event:class{constructor(type){this.type=type;}},CustomEvent:class{constructor(type,{detail}={}){Object.assign(this,{type,detail});}},
     requestAnimationFrame:()=>1,cancelAnimationFrame(){},queueMicrotask:f=>queue.push(f),setTimeout(){},
     placeToolSessionPanel:p=>{p.style.left='50%';p.style.top='12px';},__boxlabBridgeState:state,__boxlabHistory:history,

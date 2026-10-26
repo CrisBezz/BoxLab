@@ -1,4 +1,44 @@
-# BoxLab AI Handoff — .974 / Edge icons; intermittent UI watch
+# BoxLab AI Handoff — .975 / world-plane Extrude pads; .974 icons PASS
+
+## .975 — XY/XZ/YZ pads for Edge and Vertex Extrude; .974 icon PASS — 26 October 2026
+
+User .974 icons PASS protected; asks fixed world-plane choices via small square pads
+like main Move gizmo, in BOTH Edge and Vertex Extrude. Audit main2af7fe53/runtime
+17c1d910. Original gizmo already has XY/XZ/YZ polygons but Extrude hid their group;
+Vertex owner accepts only Free/XYZ and Edge accepts original edge-perpendicular
+Plane/XYZ. Extend these SAME owners, no new gesture/topology/history implementation.
+
+Expose existing three plane polygons during Extrude, original main plane colours,
+aria XY/XZ/YZ labels, selected-pad stroke/fill/opacity and “XY plane” badge. Pad tap
+selects constraint only; drag original edge/vertex to extrude. Centre Free and XYZ
+arrows retain previous meanings and controls. Rotation/Scale remain hidden during
+Extrude; Done restores normal gizmo. Old direction row remains hidden (no duplicate).
+
+Shared extrude-plane-constraints helper supplies world normals, omitted-coordinate
+projection and Exact direction. XY→Z fixed, XZ→Y fixed, YZ→X fixed at ORIGINAL
+component coordinates (not global zero). Original gesture owners raycast a plane
+through selected component centre; free-view and edge-perpendicular paths preserved.
+World-plane Edge drag uses named plane directly, not edge-perpendicular projection.
+Exact follows last pull projected into selected plane, or projected view-up/fallback;
+Edge skips collinear directions to avoid zero-area ribbons. Repeat also projects
+last vector after a plane change. Near-parallel ray refuses safely with orbit hint;
+no giant coordinates, extra history or lost navigation. Existing validation/metadata/
+selection/history commit and cancellation owners retained. Internal old version
+stamps retained intentionally; changed loader pins and reviewed hashes975 updated.
+
+Tests execute BOTH actual gesture owners with oblique cameras for all3 planes:
+multi-tip/edge ribbons, signedExact, Repeat, UndoRedo, cancel and constant omitted
+coordinate; true edge-on refusal/firstExact fallback; actual chooser callbacks and
+visible/highlighted pads. Existing757 show-selector assertion expanded to include
+newly exposed plane group; no behavioral protection dropped. Accepted icon CSS,
+Array971 and visibility972/973 safeguards untouched. Intermittent right fault remains
+unproven; user recently unable to reproduce. Next device plane-pad acceptance,
+then Paint icon rollout unless user reprioritizes.
+
+DEVICE975: Edge boundary/loose edge→Extrude→XY/XZ/YZ small squares, drag each; orbit
+obliquely if plane edge-on. Repeat in Vertex mode. Check XY holdsZ/XZ holdsY/YZ holdsX,
+Exact/Repeat/UndoRedo/Cancel and centreFree/XYZ still work. .974 icon PASS retained.
+
 
 ## .974 — approved Edge icons; user resumes icon rollout — 26 October 2026
 
@@ -4023,3 +4063,5 @@ Runtime cbc30cf5e822addb47e0aa3d3b44a3853598fd8f; uploaded tree e8bd5e0cf3d6d519
 ## .974 publication verified — 26 October 2026
 
 Runtime17c1d910f5771214cde3b2cbaf74c6a3c17dae0f; uploaded treebcda162b745e4459cd4494a7e80da8cce1a283ad matches tested localf628959a. Main974 version/shell/new Edge CSS pin verified. Public cache-busted version.json,index.html,edge-radial-icons.css all byte-match tested checkout.58 focused checks PASS/0 FAIL; final release checks5 PASS;21 valid SVGs/zero target overlaps. Pages40256386271 and hosted topology40256386756 were in progress at query; live files subsequently matched, no hosted full-suite PASS claimed. Edge974 ready for native readability/action review. User cannot currently reproduce right fault, not marked fixed;973 probe/972 plain CSS retained. Next Paint icons after feedback; Array971 PASS protected.
+
+.975 validation:88 focused tests PASS/0 FAIL/0 skipped (~0.56s), including8 new real-owner plane integrations and original Edge/Vertex/Exact/Repeat/cancel/gizmo/release/Array/diagnostic contracts. Syntax checks pass. Original757 fixture now expects plane group alongside axes/centre. Renderer, Multi1.0, Array, diagnostics and all accepted icon/stability CSS byte-unchanged. Native iPad pad size/picking/readability remains device gate.

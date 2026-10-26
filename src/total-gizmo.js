@@ -206,7 +206,7 @@ function onHandleDown(event){
     event.preventDefault();event.stopImmediatePropagation();
     const owner=globalThis.__boxlabVertexExtrude;
     if(spec.tool!=='move'||owner.busy())return;
-    owner.setDirection(['x','y','z'].includes(spec.constraint)?spec.constraint:'free');
+    owner.setDirection(['x','y','z','xy','xz','yz'].includes(spec.constraint)?spec.constraint:'free');
     syncEdgeExtrudeConstraintVisuals();
     return;
   }
@@ -214,7 +214,7 @@ function onHandleDown(event){
     event.preventDefault();
     event.stopImmediatePropagation();
     if(spec.tool!=='move'||globalThis.__boxlabEdgeExtrude?.busy?.())return;
-    const constraint=['x','y','z'].includes(spec.constraint)?spec.constraint:'plane';
+    const constraint=['x','y','z','xy','xz','yz'].includes(spec.constraint)?spec.constraint:'plane';
     const arming=globalThis.__boxlabTransformArming;
     if(!arming?.active?.())arming?.activateRealMove?.();
     arming?.setConstraint?.(constraint);
@@ -222,7 +222,7 @@ function onHandleDown(event){
     syncEdgeExtrudeConstraintVisuals();
     gestureDebug('EDGE EXTRUDE GIZMO CONSTRAINT',{constraint,kind:spec.kind||'',pid:event.pointerId});
     window.dispatchEvent(new CustomEvent('boxlab-edge-extrude-gizmo-constraint',{detail:{constraint,kind:spec.kind||''}}));
-    if(status)status.textContent=`Edge Extrude • ${constraint==='plane'?'Plane ⟂ edge':constraint.toUpperCase()+' axis'} • drag selected boundary edge(s)`;
+    if(status)status.textContent=`Edge Extrude • ${constraint==='plane'?'Plane ⟂ edge':constraint.toUpperCase()+(['xy','xz','yz'].includes(constraint)?' plane':' axis')} • drag selected boundary edge(s)`;
     return;
   }
   gestureDebug('GIZMO DOWN',{mode,tool:spec.tool,constraint:spec.constraint,pid:event.pointerId,pointer:event.pointerType});
@@ -330,9 +330,9 @@ root.innerHTML=`
   <circle class="tg-handle tg-screen-ring" data-tool="rotate" data-constraint="free" data-kind="screen" cx="${HALF}" cy="${HALF}" r="35"/>
   <circle class="tg-handle tg-scale-ring" data-tool="scale" data-constraint="free" data-kind="uniform" cx="${HALF}" cy="${HALF}" r="78"/>
   <g class="tg-plane-handles">
-    <polygon class="tg-handle tg-plane tg-plane-xy" data-tool="move" data-constraint="xy" data-kind="plane" points="0,0 0,0 0,0 0,0"/>
-    <polygon class="tg-handle tg-plane tg-plane-xz" data-tool="move" data-constraint="xz" data-kind="plane" points="0,0 0,0 0,0 0,0"/>
-    <polygon class="tg-handle tg-plane tg-plane-yz" data-tool="move" data-constraint="yz" data-kind="plane" points="0,0 0,0 0,0 0,0"/>
+    <polygon class="tg-handle tg-plane tg-plane-xy" role="button" aria-label="XY plane" data-tool="move" data-constraint="xy" data-kind="plane" points="0,0 0,0 0,0 0,0"/>
+    <polygon class="tg-handle tg-plane tg-plane-xz" role="button" aria-label="XZ plane" data-tool="move" data-constraint="xz" data-kind="plane" points="0,0 0,0 0,0 0,0"/>
+    <polygon class="tg-handle tg-plane tg-plane-yz" role="button" aria-label="YZ plane" data-tool="move" data-constraint="yz" data-kind="plane" points="0,0 0,0 0,0 0,0"/>
   </g>
   <g class="tg-move-axes">
     <g class="tg-axis-group tg-x-group">
@@ -472,6 +472,7 @@ edgeExtrudeStyle.textContent=`
 #totalGizmo[data-edge-extrude-constraint="true"] .tg-edge-extrude-badge small{font-size:9px;opacity:.68}
 #totalGizmo[data-edge-extrude-constraint="true"] .tg-handle.edge-extrude-active{filter:brightness(1.55);stroke-width:4}
 #totalGizmo[data-edge-extrude-constraint="true"] .tg-center.edge-extrude-active{stroke-width:4}
+#totalGizmo[data-edge-extrude-constraint="true"] .tg-plane.edge-extrude-active{opacity:1;stroke-width:3!important;fill:rgba(255,255,255,.2)}
 `;
 document.head.appendChild(edgeExtrudeStyle);
 
@@ -479,19 +480,19 @@ function syncEdgeExtrudeConstraintVisuals(){
   const vertex=vertexExtrudeConstraintSession();
   const active=edgeExtrudeConstraintSession||vertex;
   root.dataset.edgeExtrudeConstraint=active?'true':'false';
-  const hideSelectors=['.tg-rotate','.tg-screen-ring','.tg-scale-ring','.tg-scale-node','.tg-plane-handles'];
+  const hideSelectors=['.tg-rotate','.tg-screen-ring','.tg-scale-ring','.tg-scale-node'];
   hideSelectors.forEach(selector=>root.querySelectorAll(selector).forEach(el=>{el.style.display=active?'none':'';}));
-  root.querySelectorAll('.tg-move-axes,.tg-center').forEach(el=>{el.style.display='';});
+  root.querySelectorAll('.tg-move-axes,.tg-center,.tg-plane-handles').forEach(el=>{el.style.display='';});
   if(edgeExtrudeBadge)edgeExtrudeBadge.hidden=!active;
   root.querySelectorAll('.tg-handle').forEach(el=>el.classList.remove('edge-extrude-active'));
   if(!active)return;
   const constraint=vertex?globalThis.__boxlabVertexExtrude.direction():globalThis.__boxlabTransformArming?.constraint?.()||'plane';
-  if(['x','y','z'].includes(constraint)){
+  if(['x','y','z','xy','xz','yz'].includes(constraint)){
     root.querySelectorAll(`.tg-handle[data-tool="move"][data-constraint="${constraint}"]`).forEach(el=>el.classList.add('edge-extrude-active'));
   }else{
     root.querySelector('.tg-center[data-tool="move"]')?.classList.add('edge-extrude-active');
   }
-  const label=constraint==='free'?'Free':constraint==='plane'?'Free ⟂ edge':String(constraint).toUpperCase()+' axis';
+  const label=constraint==='free'?'Free':constraint==='plane'?'Free ⟂ edge':String(constraint).toUpperCase()+(['xy','xz','yz'].includes(constraint)?' plane':' axis');
   edgeExtrudeBadge?.querySelector('small')?.replaceChildren(document.createTextNode(vertex?'Choose axis • drag vertex':'Choose constraint • drag edge'));
   edgeExtrudeBadge?.querySelector('span')?.replaceChildren(document.createTextNode(label));
 }

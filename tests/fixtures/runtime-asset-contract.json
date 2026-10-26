@@ -185,9 +185,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/edge-extrude.js?v=0.36.18.759",
+      "url": "./src/edge-extrude.js?v=0.36.18.975",
       "target": "src/edge-extrude.js",
-      "sha256": "f451fe89467e5ea0bf690a8634b7efed78c6860681de65be5cfc4442afda8509",
+      "sha256": "aadc6e1a7e993193700a2d8af01fcf88092966f94b978793062c2985e6167512",
       "sourceVersion": "0.36.18.759"
     },
     {
@@ -303,7 +303,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/main.js?v=0.36.18.974",
+      "url": "./src/main.js?v=0.36.18.975",
       "target": "src/main.js",
       "sha256": "fa0bd5aa8b23916a7dc9dbd9e7a3009760d4c3950e45602a456ca4abfe12716e",
       "sourceVersion": "0.35.1"
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.974",
+      "url": "./src/release-bootstrap.js?v=0.36.18.975",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.974",
+      "url": "./src/release-version.js?v=0.36.18.975",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -551,9 +551,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/total-gizmo.js?v=0.36.18.971",
+      "url": "./src/total-gizmo.js?v=0.36.18.975",
       "target": "src/total-gizmo.js",
-      "sha256": "6c500ac8d6903efc330197e6f4971b52b6f495f1c85279b60132b68e5957a5da"
+      "sha256": "12786a075a732981247c4cdf8c9b9d3cd1ff279722fc5e643b6a6f425beea43a"
     },
     {
       "owner": "index.html",
@@ -575,9 +575,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/vertex-tool-viewport-session.js?v=0.36.18.759",
+      "url": "./src/vertex-tool-viewport-session.js?v=0.36.18.975",
       "target": "src/vertex-tool-viewport-session.js",
-      "sha256": "d35cf099a6dc619a208f7932b529aa312387d002d7d3e4b2a638046b78897913"
+      "sha256": "9f900906b9501a7746c67b2c931596b0bf3de77d0a2466d8f0ab799e7ef667c6"
     },
     {
       "owner": "index.html",
@@ -587,7 +587,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./styles.css?v=0.36.18.974",
+      "url": "./styles.css?v=0.36.18.975",
       "target": "styles.css",
       "sha256": "13fdb97b208813afca54bb70bc427e6abe6aff7d58f36ead2c9d3213a3e52b88"
     },
@@ -2134,9 +2134,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/vertex-extrude.js?v=0.36.18.752",
+      "url": "./src/vertex-extrude.js?v=0.36.18.975",
       "target": "src/vertex-extrude.js",
-      "sha256": "94b10466dbd7755158b78cdfb3bd65176246380c0e2f4d2c3cad55ede1ff80ad"
+      "sha256": "2decf4933515183648c0754b653f2a52cd5e0a88b1d3373fcc0a1fd07c61d387"
     },
     {
       "owner": "src/vertex-extrude.js",
@@ -3173,6 +3173,18 @@
       "url": "./edge-radial-icons.css?v=0.36.18.974",
       "target": "edge-radial-icons.css",
       "sha256": "994eed9957526d7b8b4777d3f4cf3a30865c50580969e8cbf47694ad250c28d4"
+    },
+    {
+      "owner": "src/edge-extrude.js",
+      "url": "./extrude-plane-constraints.js?v=0.36.18.975",
+      "target": "src/extrude-plane-constraints.js",
+      "sha256": "3ffca356127930cf87e08bd8d1126f0ff7cd48de1329ef6852261892517bc6af"
+    },
+    {
+      "owner": "src/vertex-extrude.js",
+      "url": "./extrude-plane-constraints.js?v=0.36.18.975",
+      "target": "src/extrude-plane-constraints.js",
+      "sha256": "3ffca356127930cf87e08bd8d1126f0ff7cd48de1329ef6852261892517bc6af"
     }
   ]
 }

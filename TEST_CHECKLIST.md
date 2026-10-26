@@ -10894,7 +10894,16 @@ User Array971 works/PASS; right UI971 FAIL remains independent.
 User reports cannot reproduce right visual fault currently; icon rollout resumed
 by explicit instruction. Intermittent fault not marked fixed;973 probe retained.
 
-- [ ] All21 Edge icons match Proof03, small titles fit and outer targets do not overlap.
+- [x] All21 Edge icons match Proof03, small titles fit and outer targets do not overlap.
 - [ ] Extrude12/Bevel3 and original tool actions/disabled states retained.
 - [ ] Slide/Bevel/Loop/CutUV/StitchUV/UndoRedo and navigation remain usable.
 - [ ] Face/Vertex/Object icons and Array PASS unchanged; watch right UI visibility.
+
+## .975 World-plane Extrude pads
+
+User .974 icons PASS; .975 functional gate separate.
+
+- [ ] Both Edge/Vertex Extrude show original XY/XZ/YZ plane squares, selection highlight and named-plane badge.
+- [ ] World XY holdsZ/XZ holdsY/YZ holdsX during drag, Exact and Repeat; arbitrary view orientation supported.
+- [ ] CentreFree and XYZ arrows remain unchanged; Done/cancel/UndoRedo/navigation restore normally.
+- [ ] Parallel-view refusals do not mutate mesh/history or leave captured input; orbit then retry.

@@ -38,7 +38,7 @@ test('shared chooser hides transform controls, highlights chosen axis and restor
  c.edgeExtrudeBadge=badge;c.document.createTextNode=x=>x;
  const controls=new Map();r.querySelectorAll=s=>{if(!controls.has(s))controls.set(s,[{style:{},classList:{add(){},remove(){}}}]);return controls.get(s);};
  vm.runInContext(source.slice(source.indexOf('function syncEdgeExtrudeConstraintVisuals(){'),source.indexOf('\nfunction syncContextToolAvailability')),c);
- f.session.openFromHub({tool:'Extrude'});f.choose('y');assert.equal(badge.hidden,false);assert.equal(controls.get('.tg-rotate')[0].style.display,'none');assert.equal(controls.get('.tg-move-axes,.tg-center')[0].style.display,'');assert.ok(controls.has('.tg-handle[data-tool="move"][data-constraint="y"]'));
+ f.session.openFromHub({tool:'Extrude'});f.choose('y');assert.equal(badge.hidden,false);assert.equal(controls.get('.tg-rotate')[0].style.display,'none');assert.equal(controls.get('.tg-move-axes,.tg-center,.tg-plane-handles')[0].style.display,'');assert.ok(controls.has('.tg-handle[data-tool="move"][data-constraint="y"]'));
  f.click('.vts-done');c.syncEdgeExtrudeConstraintVisuals();assert.equal(badge.hidden,true);assert.equal(controls.get('.tg-rotate')[0].style.display,'');
 });
 test('closing hub during Extrude retires original session and discards live preview',()=>{

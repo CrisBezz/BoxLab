@@ -1,3 +1,4 @@
+import {extrudePlaneNormal,projectExtrudePlaneDelta,extrudePlaneExactDirection} from './extrude-plane-constraints.js?v=0.36.18.975';
 import * as THREE from 'three';
 import {buildVertexExtrude} from './vertex-extrude-core.js?v=0.36.18.752';
 
@@ -45,6 +46,7 @@ function commit(before,result,m=state()?.mesh){
 }
 function exactVector(value){
   const n=Number(value);if(!Number.isFinite(n))return null;
+  if(extrudePlaneNormal(direction)){const up=new THREE.Vector3(0,1,0).applyQuaternion(state()?.camera?.quaternion||new THREE.Quaternion());return extrudePlaneExactDirection(direction,last,up)?.multiplyScalar(n)||null;}
   if(direction!=='free')return axis(direction).multiplyScalar(n);
   const dir=last?.clone()?.normalize()||new THREE.Vector3(0,1,0).applyQuaternion(state()?.camera?.quaternion||new THREE.Quaternion());
   return dir.multiplyScalar(n);
@@ -58,7 +60,7 @@ function apply(value){
 function screen(v){const p=v.clone().project(state().camera),r=canvas.getBoundingClientRect();return new THREE.Vector2(r.left+(p.x*.5+.5)*r.width,r.top+(-p.y*.5+.5)*r.height);}
 function planePoint(e,plane){
   const r=canvas.getBoundingClientRect(),ray=new THREE.Raycaster(),p=new THREE.Vector2((e.clientX-r.left)/r.width*2-1,-((e.clientY-r.top)/r.height*2-1)),out=new THREE.Vector3();
-  ray.setFromCamera(p,state().camera);return ray.ray.intersectPlane(plane,out)?out:null;
+  ray.setFromCamera(p,state().camera);if(Math.abs(ray.ray.direction.dot(plane.normal))<1e-6)return null;return ray.ray.intersectPlane(plane,out)?out:null;
 }
 function consume(e){e.preventDefault();e.stopImmediatePropagation();}
 function release(d){try{canvas.releasePointerCapture?.(d.pointerId);}catch{}if(d.controls)d.controls.enabled=d.controlsEnabled;}
@@ -75,9 +77,9 @@ document.addEventListener('pointerdown',e=>{
   const s=state(),hit=globalThis.__boxlabVertexPickAssist?.nearestVertexAt?.(e.clientX,e.clientY);
   if(!s?.mesh||!s.camera||!Number.isInteger(hit?.i)||!s.mesh.vertices[hit.i])return;
   const previous=selected(),ids=previous.includes(hit.i)?previous:[hit.i],center=s.mesh.vertices[hit.i].clone();
-  const normal=new THREE.Vector3();s.camera.getWorldDirection(normal);
+  const normal=extrudePlaneNormal(direction)||new THREE.Vector3();if(!extrudePlaneNormal(direction))s.camera.getWorldDirection(normal);
   const plane=new THREE.Plane().setFromNormalAndCoplanarPoint(normal,center),start=planePoint(e,plane);
-  if(!start)return;
+  if(!start){if(extrudePlaneNormal(direction)){consume(e);if(status)status.textContent='Vertex Extrude • '+direction.toUpperCase()+' plane is edge-on • orbit to view the plane';}return;}
   consume(e);bridge()?.set?.('vertex',ids);
   const controls=s.controls;
   drag={pointerId:e.pointerId,mesh:s.mesh,before:s.mesh.clone(),previous,ids,seed:hit.i,object:globalThis.__boxlabObjectManager?.activeId,
@@ -90,7 +92,7 @@ document.addEventListener('pointermove',e=>{
   consume(e);if(!validContext(drag)){cancelDrag();disarm();return;}
   const dx=e.clientX-drag.x,dy=e.clientY-drag.y;if(Math.hypot(dx,dy)<8&&!drag.result)return;
   let delta;
-  if(drag.direction==='free'){const p=planePoint(e,drag.plane);if(!p)return;delta=p.sub(drag.start);}
+  if(drag.direction==='free'||extrudePlaneNormal(drag.direction)){const p=planePoint(e,drag.plane);if(!p)return;delta=p.sub(drag.start);if(extrudePlaneNormal(drag.direction))delta=projectExtrudePlaneDelta(delta,drag.direction);}
   else{const v=axis(drag.direction),rail=screen(drag.center.clone().add(v)).sub(screen(drag.center));
     if(rail.lengthSq()<4){if(status)status.textContent='Vertex Extrude • axis points into view • orbit or choose another direction';return;}
     delta=v.multiplyScalar(new THREE.Vector2(dx,dy).dot(rail)/rail.lengthSq());}
@@ -107,7 +109,8 @@ function finish(e){
   const d=drag;drag=null;release(d);
   if(d.result)commit(d.before,d.result,d.mesh);
   else if(d.repeat&&Math.hypot(e.clientX-d.x,e.clientY-d.y)<8){
-    const result=buildVertexExtrude(d.before,[d.seed],last);if(result.ok)commit(d.before,result,d.mesh);
+    const delta=extrudePlaneNormal(d.direction)?projectExtrudePlaneDelta(last,d.direction):last;
+    const result=buildVertexExtrude(d.before,[d.seed],delta);if(result.ok)commit(d.before,result,d.mesh);
     // Repeat remains ready for more source taps, matching Face Repeat Previous.
     repeat=true;notify();
   }else{
@@ -142,6 +145,6 @@ document.addEventListener('click',e=>{
 },true);
 globalThis.__boxlabVertexExtrude={version:'0.36.18.752',available,arm,disarm,busy:()=>!!drag,isArmed:()=>armed,apply,
   ownsPoint:e=>armed&&!!((drag&&drag.pointerId===e?.pointerId)||([e?.clientX,e?.clientY].every(Number.isFinite)&&Number.isInteger(globalThis.__boxlabVertexPickAssist?.nearestVertexAt?.(e.clientX,e.clientY)?.i))),
-  setDirection:value=>{if(!drag&&['free','x','y','z'].includes(value)){direction=value;repeat=false;notify();}},direction:()=>direction,
+  setDirection:value=>{if(!drag&&['free','x','y','z','xy','xz','yz'].includes(value)){direction=value;repeat=false;notify();}},direction:()=>direction,
   last:()=>last?.clone()||null,repeat:()=>repeat,toggleRepeat:()=>{if(!drag&&last){repeat=!repeat;notify();}},sync};
 sync();
