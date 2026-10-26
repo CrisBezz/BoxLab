@@ -11198,3 +11198,12 @@ unrelatedfeature rollout or speculative further CSS/engine fixes.
 - [x] Supplied startup/pageshow toolbar width stable317.609375; canvas2732x1652; no active UV top layer. DOM evidence does not establish floor/shadow rendering.
 - [x] Initial screenshot inspected: .983 top-right controls visible; straight vertical shading seam near right quarter; floor continues on both sides, separate sloping distant edge.
 - [ ] Small orbit WITHOUT refresh/app-switch: report whether seam stays fixed on screen, moves with ground, or disappears before choosing source change. No repeat initial screenshot/debug dump needed.
+
+## .984 selected-face group authoring
+
+- [ ] Face mode: select faces, VIEW > Facegroups > name > Assign selected; only chosen faces change group.
+- [ ] Same name joins group; different name separates; Clear selected leaves other groups intact.
+- [ ] Undo/Redo, Save/Open retain groups and geometry/UVs; no UV requirement.
+- [ ] No selection/wrong mode/active tool/locked/linked/recipe objects refuse without history.
+- [x] Automated metadata, unchanged geometry/source, no-op, validation/refusal and checkpoint tests pass.
+- [ ] Intermittent right-region rendering/gizmo loss remains OPEN; cannot currently reproduce, not repaired.

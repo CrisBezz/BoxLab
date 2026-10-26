@@ -378,21 +378,21 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.983",
+      "url": "./src/release-bootstrap.js?v=0.36.18.984",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.983",
+      "url": "./src/release-version.js?v=0.36.18.984",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
     {
       "owner": "index.html",
-      "url": "./src/render-modes.js?v=0.36.18.948",
+      "url": "./src/render-modes.js?v=0.36.18.984",
       "target": "src/render-modes.js",
-      "sha256": "5db28227b77b1196caee499811f88bf1bb3b50c8091679ab894f02bc83e79d6c"
+      "sha256": "16576d305cfe9aa52fcc67b29b31a021e25ef04dcc41c4c1dff87cdc59fbac1c"
     },
     {
       "owner": "index.html",
@@ -3203,6 +3203,12 @@
       "url": "./viewport-toolbar-shell.css?v=0.36.18.983",
       "target": "viewport-toolbar-shell.css",
       "sha256": "0723e81087ab3f30a99501d15e69c8d597b0695f0eb6ff5985599b2944df89aa"
+    },
+    {
+      "owner": "src/render-modes.js",
+      "url": "./facegroup-authoring.js?v=0.36.18.984",
+      "target": "src/facegroup-authoring.js",
+      "sha256": "21e887fded63ecbcffe75e879c70073432cdf11a690d4036c913527d644ec537"
     }
   ]
 }

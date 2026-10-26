@@ -1,3 +1,4 @@
+import {assignSelectedFacegroup} from './facegroup-authoring.js?v=0.36.18.984';
 import {createCommittedPaintSurface} from './paint-target.js?v=0.36.18.948';
 import {createUVImageOverlay} from './uv-image-surface-preview.js?v=0.36.18.892';
 import {createUVCheckerOverlay} from './uv-checker-preview.js?v=0.36.18.879';
@@ -261,6 +262,10 @@ function installFacegroupControls(host){
   const panel=document.createElement('div');
   panel.id='facegroupViewControls';panel.hidden=true;
   panel.innerHTML=`
+    <div class="viewport-menu-label" style="margin-top:9px">Selected Facegroups</div>
+    <label>Group <input id="facegroupName" type="text" value="Group 1" maxlength="64" autocomplete="off" style="width:140px;touch-action:auto"/></label>
+    <div class="outliner-actions"><button id="facegroupAssign" type="button">Assign selected</button><button id="facegroupClear" type="button">Clear selected</button></div>
+    <small>Select faces in Face mode; no UVs required.</small>
     <div class="viewport-menu-label" style="margin-top:9px">Facegroup Colours</div>
     <div class="viewport-render-grid facegroup-palette-grid">
       <button type="button" data-facegroup-palette="default">Default</button>
@@ -277,6 +282,13 @@ function installFacegroupControls(host){
     </div>`;
   section.appendChild(panel);
   panel.addEventListener('click',event=>{
+    const author=event.target.closest('#facegroupAssign,#facegroupClear');
+    if(author){
+      event.preventDefault();event.stopPropagation();
+      const result=assignSelectedFacegroup({manager:manager(),selection:globalThis.__boxlabSelectionBridge,mesh:bridge()?.mesh,history:globalThis.__boxlabObjectHistory,session:globalThis.__boxlabToolSession,name:author.id==='facegroupClear'?null:panel.querySelector('#facegroupName').value});
+      if(status)status.textContent=result.ok?(result.changed?`Facegroups · ${result.count} faces · ${result.group??'cleared'}`:'Facegroups · no change needed'):`Facegroups · ${result.reason}`;
+      return;
+    }
     const palette=event.target.closest('[data-facegroup-palette]');
     if(palette){event.preventDefault();event.stopPropagation();updateFacegroupView({palette:palette.dataset.facegroupPalette});return;}
     if(event.target.closest('#facegroupReseed')){event.preventDefault();event.stopPropagation();updateFacegroupView({seed:facegroupView.seed+1});return;}

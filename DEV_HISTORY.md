@@ -15262,3 +15262,31 @@ User requires every reply to end with current status and a short list of possibl
 things to test; recorded permanently in workflow and handoff. /nextbuild requested;
 rendering source change still requires the pending orbit/seam observation described
 in current handoff. No runtime change or new numbered release in this update.
+
+## .984 — selected-face group authoring — 27 October 2026
+
+User cannot currently reproduce the right-region fault and authorizes resuming
+development. Keep it OPEN: seam was screen-fixed, returned after view switching,
+and user reports gizmo/UI disappears in that region while toolbar remains visible.
+Do not claim a vignette-only cause or permanent repair. Rendering is unchanged.
+
+First narrow step toward UV-free facegroup painting: VIEW > Facegroups now offers
+a group name plus Assign selected / Clear selected. Select faces in Face mode
+first. Existing selection/navigation owners remain; this is explicit selected-face
+authoring, NOT a continuous Pencil facegroup brush. Same names join an existing
+group; Clear restores ungrouped metadata. No UV requirement or texture modification.
+Original manager replaceActiveMesh and scene capture/checkpointSnapshot own the
+transaction. Refuse locked/reference/linked/recipe objects, active tools, invalid
+selection/name or missing history before mutation; no-op creates no checkpoint.
+Only faceGroups change on a clone; geometry/UV/resources retain original ownership.
+Existing Facegroups render, save and export paths display/persist the metadata.
+New module loaded by original render-modes; changed render/recovery pins984, shell
+markers and reviewed asset hashes. Protected Multi and rendering safeguards untouched.
+15 focused checks PASS including new metadata/no-op/refusal/checkpoint tests,
+existing Facegroups owner, toolbar and release contracts. Additional codec/UV tests
+reported separately. No native iPad or complete suite PASS claimed.
+
+DEVICE984: select two faces, VIEW > Facegroups, name and Assign selected. Select
+other faces and assign same/different name; Clear selected. UndoRedo and Save/Open
+retain groups; UV Paint and navigation stay usable. Next: device acceptance, then
+plan continuous group painting through existing selection/gesture ownership.
