@@ -10879,3 +10879,12 @@ User Array971 works/PASS; right UI971 FAIL remains independent.
 - [ ] Plain opaque UI keeps all right controls visible on repeated landscape refresh, before app switching.
 - [ ] Object Browser/VIEW/UV Editor/Array transitions and navigation retain visible UI and unchanged hit targets.
 - [ ] Disabled/active controls remain clear via original opacity, borders and stroke feedback.
+
+## .973 Opt-in canvas diagnostic device gate
+
+.972 visual fault persists with plain profile verified; Array971 user PASS retained.
+
+- [ ] During failure: Hide3D only, observe right toolbar, record visible/missing without app switching.
+- [ ] Show3D restores canvas/model; note whether right UI fails again.
+- [ ] Copy report includes canvas-probe-observation and restored state.
+- [ ] Debug off/pagehide always restores prior canvas visibility; no scene/history changes.

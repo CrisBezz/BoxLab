@@ -14719,3 +14719,35 @@ Array971 PASS protected; Edge/Paint icon rollout remains paused for visibility.
 ## .972 publication verified — 26 October 2026
 
 Runtime a799ee6af0f4dee09eee7b614dad3d3e991364cc; uploaded tree a363ffe4385ee26f1bab62c9c21cbffd2230025c matches tested local7556cec7. Main972 version and new stylesheet pin verified; all3 cache-busted public files version.json/index.html/ui-stability.css byte-match tested checkout.39 focused tests PASS/0 FAIL/0 skip. Pages40253411508 was queued and hosted topology40253412100 in progress at last query; live bytes subsequently matched, no hosted full-suite PASS claimed. User Array971 PASS protected. .972 opaque/plain UI device test ready, recurring right-side rendering remains OPEN until explicit feedback. No native compositor root cause claimed.
+
+## .973 — opt-in canvas visibility probe; .972 visual FAIL — 26 October 2026
+
+User supplies .972 report01:18:45Z after recurring right-side fault. .972 plain
+profile is confirmed active: header/status willChange auto; all sampled filters and
+backdrop filters none. Layout/hits are still healthy, so blur/layer-hint removal did
+not repair visual loss. No stale-shell explanation or .972 visual PASS. Array971
+user PASS retained. Do not continue speculative cosmetic fixes or icon rollout.
+
+Audit main2646e5cb/runtimea799ee6a. Extend ONLY existing File→UI Debug owner with
+“Hide 3D only” / “Show 3D again”. This explicit diagnostic temporarily sets original
+canvas inline visibility hidden!important, retaining layout/backing dimensions,
+renderer/model/history. Restore exact prior inline value/priority (or absence),
+on Show, Debug off and pagehide. Refuse entry during Paint, active tool or gizmo drag;
+restoration always works. No reload, second renderer, resize, polling or new raw
+pointer consumer. Disabled debug/default app unchanged. Existing CSS972 retained.
+
+While hidden, user chooses “Right UI visible” or “Still missing”; bounded evidence
+records subjective outcome plus canvas hidden flag and current toolbar probes.
+Capture/Copy includes canvasProbe state. Show clears cached report so next Copy
+includes both observation and restoration events. UI log controls remain on left.
+This is a diagnostic build, not a claim that controls are fixed. The outcome will
+separate canvas participation from UI-only painting; neither outcome alone proves
+an engine root cause. Tests cover exact restoration, busy refusal, actual buttons,
+observation, off/pagehide cleanup, and unchanged canvas dimensions/model/history.
+
+DEVICE973: while right controls visually missing, BEFORE app switching, use File→
+UI Debug→Hide 3D only. Inspect top-right toolbar; choose visible/missing result.
+Show3D again→Copy report and send. Also say if restored3D makes rightUI disappear
+again. This is the next decision gate; Array remains accepted; no modelling changes.
+
+.973 validation:26 focused tests PASS/0 FAIL/0 skipped (~3.4s); original debug/paint/history/Array and release contracts retained. Two new tests exercise exact visibility/priority restoration, busy refusal and actual debug-button observation/off/pagehide flow; dimensions/model/history remain unchanged. Main renderer/sizing/Array/gizmo and all CSS byte-identical to972. No native UI repair claimed.

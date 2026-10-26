@@ -6520,3 +6520,33 @@ FrameAll/Undo/Redo/Focus/Objects/VIEW and right status. Open Objects and VIEW me
 Array preview/Apply/Undo, UV Editor enter/exit and orbit to right edge. If visual
 loss recurs, exact972 UI Debug report plus screenshot still needed; gate OPEN.
 Array971 PASS protected; Edge/Paint icon rollout remains paused for visibility.
+
+## .973 — opt-in canvas visibility probe; .972 visual FAIL — 26 October 2026
+
+User supplies .972 report01:18:45Z after recurring right-side fault. .972 plain
+profile is confirmed active: header/status willChange auto; all sampled filters and
+backdrop filters none. Layout/hits are still healthy, so blur/layer-hint removal did
+not repair visual loss. No stale-shell explanation or .972 visual PASS. Array971
+user PASS retained. Do not continue speculative cosmetic fixes or icon rollout.
+
+Audit main2646e5cb/runtimea799ee6a. Extend ONLY existing File→UI Debug owner with
+“Hide 3D only” / “Show 3D again”. This explicit diagnostic temporarily sets original
+canvas inline visibility hidden!important, retaining layout/backing dimensions,
+renderer/model/history. Restore exact prior inline value/priority (or absence),
+on Show, Debug off and pagehide. Refuse entry during Paint, active tool or gizmo drag;
+restoration always works. No reload, second renderer, resize, polling or new raw
+pointer consumer. Disabled debug/default app unchanged. Existing CSS972 retained.
+
+While hidden, user chooses “Right UI visible” or “Still missing”; bounded evidence
+records subjective outcome plus canvas hidden flag and current toolbar probes.
+Capture/Copy includes canvasProbe state. Show clears cached report so next Copy
+includes both observation and restoration events. UI log controls remain on left.
+This is a diagnostic build, not a claim that controls are fixed. The outcome will
+separate canvas participation from UI-only painting; neither outcome alone proves
+an engine root cause. Tests cover exact restoration, busy refusal, actual buttons,
+observation, off/pagehide cleanup, and unchanged canvas dimensions/model/history.
+
+DEVICE973: while right controls visually missing, BEFORE app switching, use File→
+UI Debug→Hide 3D only. Inspect top-right toolbar; choose visible/missing result.
+Show3D again→Copy report and send. Also say if restored3D makes rightUI disappear
+again. This is the next decision gate; Array remains accepted; no modelling changes.

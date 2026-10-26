@@ -66,7 +66,7 @@ function setEnabled(next,{persist=true}={}){
   enabled=!!next;
   if(persist){try{localStorage.setItem(PREF_KEY,enabled?'1':'0');}catch{}}
   if(enabled){ensurePanel();log('DEBUG ENABLED');installDeepCaptureTrace();}
-  else{panel?.remove();panel=null;body=null;backgroundBody=null;contactBody=null;seq=0;}
+  else{canvasProbe.show();panel?.remove();panel=null;body=null;backgroundBody=null;contactBody=null;seq=0;}
   window.dispatchEvent(new CustomEvent('boxlab-gesture-debug-change',{detail:{enabled}}));
   return enabled;
 }
@@ -150,6 +150,25 @@ window.addEventListener('unhandledrejection',event=>{
 });
 
 // .965 UI evidence extends the existing opt-in debug owner. Never consumes input.
+function createCanvasVisibilityProbe(canvas,busy=()=>false){
+ let saved=null;
+ function show(){
+  if(!saved)return false;
+  if(saved.value)canvas.style.setProperty('visibility',saved.value,saved.priority);
+  else canvas.style.removeProperty('visibility');
+  saved=null;return true;
+ }
+ function hide(){
+  if(saved)return true;
+  if(!canvas?.style?.setProperty||busy())return false;
+  saved={value:canvas.style.getPropertyValue('visibility'),priority:canvas.style.getPropertyPriority('visibility')};
+  canvas.style.setProperty('visibility','hidden','important');return true;
+ }
+ return {hide,show,active:()=>saved!==null};
+}
+const canvasProbe=createCanvasVisibilityProbe(debugCanvas,()=>!!globalThis.__boxlabViewportPaint?.active||!!globalThis.__boxlabToolSession?.current?.()||!!globalThis.__boxlabActiveGizmoDrag);
+let syncCanvasProbeControls=()=>{};
+window.addEventListener('pagehide',()=>{canvasProbe.show();syncCanvasProbeControls();});
 const uiEvidence=[];let uiControls=null,uiReport=null;
 const describe=node=>node?{tag:node.tagName,id:node.id||'',class:String(node.className||'').slice(0,180)}:null;
 function evidence(kind,data){if(!enabled)return;uiEvidence.push({at:Math.round(performance.now()),kind,data});if(uiEvidence.length>100)uiEvidence.shift();}
@@ -160,10 +179,10 @@ function uiControlEvidence(){
 function uiSnapshot(){
  const rect=node=>{if(!node)return null;const r=node.getBoundingClientRect(),s=getComputedStyle(node);return {...describe(node),rect:{x:r.x,y:r.y,width:r.width,height:r.height},hidden:node.hidden,disabled:node.disabled,display:s.display,visibility:s.visibility,pointerEvents:s.pointerEvents,opacity:s.opacity,zIndex:s.zIndex,transform:s.transform,overflow:s.overflow,contain:s.contain,isolation:s.isolation,willChange:s.willChange,filter:s.filter,backdropFilter:s.backdropFilter};};
  const points=[.55,.8,.95].flatMap(x=>[.08,.5,.85].map(y=>({x:Math.round(innerWidth*x),y:Math.round(innerHeight*y)})));
- return {release:document.querySelector('#appVersion')?.textContent,time:new Date().toISOString(),viewport:{width:innerWidth,height:innerHeight,dpr:devicePixelRatio,visual:window.visualViewport?{width:visualViewport.width,height:visualViewport.height,scale:visualViewport.scale,offsetLeft:visualViewport.offsetLeft,offsetTop:visualViewport.offsetTop}:null},session:globalThis.__boxlabToolSession?.current?.(),paint:!!globalThis.__boxlabViewportPaint?.active,controlsEnabled:globalThis.__boxlabBridgeState?.controls?.enabled,elements:['#app','.topbar','#viewportWrap','#viewport','#totalGizmo','#boxlabToolSessionHost','#viewportSelectionControls','#viewportPaintBtn','.statusbar'].map(q=>({selector:q,...rect(document.querySelector(q))})),controls:uiControlEvidence(),canvas:{width:debugCanvas?.width,height:debugCanvas?.height},hitTests:points.map(p=>({...p,stack:document.elementsFromPoint(p.x,p.y).slice(0,6).map(describe)})),events:uiEvidence.slice()};
+ return {canvasProbe:{hidden:canvasProbe.active()},release:document.querySelector('#appVersion')?.textContent,time:new Date().toISOString(),viewport:{width:innerWidth,height:innerHeight,dpr:devicePixelRatio,visual:window.visualViewport?{width:visualViewport.width,height:visualViewport.height,scale:visualViewport.scale,offsetLeft:visualViewport.offsetLeft,offsetTop:visualViewport.offsetTop}:null},session:globalThis.__boxlabToolSession?.current?.(),paint:!!globalThis.__boxlabViewportPaint?.active,controlsEnabled:globalThis.__boxlabBridgeState?.controls?.enabled,elements:['#app','.topbar','#viewportWrap','#viewport','#totalGizmo','#boxlabToolSessionHost','#viewportSelectionControls','#viewportPaintBtn','.statusbar'].map(q=>({selector:q,...rect(document.querySelector(q))})),controls:uiControlEvidence(),canvas:{width:debugCanvas?.width,height:debugCanvas?.height},hitTests:points.map(p=>({...p,stack:document.elementsFromPoint(p.x,p.y).slice(0,6).map(describe)})),events:uiEvidence.slice()};
 }
 function updateUIDebug(){
- if(!enabled){uiControls?.remove();uiControls=null;uiReport=null;return;}
+ if(!enabled){canvasProbe.show();uiControls?.remove();uiControls=null;uiReport=null;return;}
  if(uiControls)return;
  // Keep the debug output accessible from the left while diagnosing the right side.
  if(panel){panel.style.left='8px';panel.style.right='auto';panel.style.bottom='148px';panel.style.maxHeight='24vh';}
@@ -172,11 +191,27 @@ function updateUIDebug(){
  const capture=document.createElement('button');capture.textContent='Capture report';
  const copy=document.createElement('button');copy.textContent='Copy report';
  const off=document.createElement('button');off.textContent='Debug off';
+ const probe=document.createElement('button');probe.textContent='Hide 3D only';probe.id='uiDebugCanvasProbeBtn';
+ const visible=document.createElement('button');visible.textContent='Right UI visible';
+ const missing=document.createElement('button');missing.textContent='Still missing';
+ visible.hidden=missing.hidden=true;
  const note=document.createElement('span');note.textContent='';note.setAttribute('role','status');
  uiReport=document.createElement('textarea');uiReport.readOnly=true;uiReport.setAttribute('aria-label','UI debug report');uiReport.style.cssText='display:none;width:100%;box-sizing:border-box;height:80px;font:10px monospace';
  capture.onclick=()=>{evidence('snapshot',{});uiReport.value=JSON.stringify(uiSnapshot(),null,2);uiReport.style.display='block';note.textContent='Report captured';};
  copy.onclick=async()=>{if(!uiReport.value)capture.click();try{await navigator.clipboard.writeText(uiReport.value);note.textContent='Copied';}catch{uiReport.style.display='block';uiReport.focus();uiReport.select();note.textContent='Select and copy the report';}};
- off.onclick=disable;uiControls.append(label,document.createElement('br'),capture,copy,off,note,uiReport);document.body.appendChild(uiControls);
+ syncCanvasProbeControls=()=>{const active=canvasProbe.active();probe.textContent=active?'Show 3D again':'Hide 3D only';probe.setAttribute('aria-pressed',String(active));visible.hidden=missing.hidden=!active;};
+ probe.onclick=()=>{
+  const hidden=canvasProbe.active();
+  if(hidden)canvasProbe.show();
+  else if(!canvasProbe.hide()){note.textContent='Finish the active tool or Paint before this test';return;}
+  const active=canvasProbe.active();syncCanvasProbeControls();
+  evidence('canvas-probe',{hidden:active,controls:uiControlEvidence()});uiReport.value='';
+  note.textContent=active?'3D hidden. Are the right controls visible? Choose below, then Show 3D again.':'3D restored; model unchanged';
+ };
+ const observation=value=>{evidence('canvas-probe-observation',{hidden:canvasProbe.active(),rightUI:value});capture.click();note.textContent='Observation captured; Show 3D again, then Copy report';};
+ visible.onclick=()=>observation('visible');missing.onclick=()=>observation('missing');
+ off.onclick=disable;uiControls.style.maxHeight='45vh';uiControls.style.overflowY='auto';
+ uiControls.append(label,document.createElement('br'),capture,copy,off,document.createElement('br'),probe,visible,missing,note,uiReport);document.body.appendChild(uiControls);
 }
 const uiDebugButton=document.createElement('button');uiDebugButton.type='button';uiDebugButton.textContent='UI Debug';uiDebugButton.title='Record input and layout evidence for inactive UI';uiDebugButton.onclick=toggle;document.querySelector('#fileMenu .top-file-content')?.appendChild(uiDebugButton);
 window.addEventListener('boxlab-gesture-debug-change',updateUIDebug);queueMicrotask(updateUIDebug);
