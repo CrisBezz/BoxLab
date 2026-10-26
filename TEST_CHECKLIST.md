@@ -11196,4 +11196,5 @@ unrelatedfeature rollout or speculative further CSS/engine fixes.
 
 - [ ] OPEN: new capture has visible UI but missing right ground shading. Keep separate from earlier invisible-controls failure.
 - [x] Supplied startup/pageshow toolbar width stable317.609375; canvas2732x1652; no active UV top layer. DOM evidence does not establish floor/shadow rendering.
-- [ ] Screenshot and small orbit: determine whether shading boundary stays fixed on screen or moves with ground before choosing source change.
+- [x] Initial screenshot inspected: .983 top-right controls visible; straight vertical shading seam near right quarter; floor continues on both sides, separate sloping distant edge.
+- [ ] Small orbit WITHOUT refresh/app-switch: report whether seam stays fixed on screen, moves with ground, or disappears before choosing source change. No repeat initial screenshot/debug dump needed.

@@ -15243,3 +15243,15 @@ actual missing region and whether its boundary stays at same SCREEN x during a s
 orbit or moves with ground. This separates screen-region loss from world-space floor/
 shadow extent; no further debug dump or recovery refresh required for this comparison.
 No runtime/build changes;983 remains current. Paint982/functional983 PASS protected.
+
+## .983 screenshot inspection — 27 October 2026
+
+Inspected user screenshot37C6C308-C62D-4039-846F-397257AA2C0C.png (07:38).
+Top-right controls visible; cube casts leftward shadow. Straight vertical shading
+seam near right quarter crosses a floor that continues on both sides; distant floor
+edge is separately visible and sloping. Floor termination is therefore not supported
+as the explanation for this seam. Original floor/light/contact/atmosphere owners
+audited; no root cause or permanent rendering repair inferred. Next: small orbit
+without refresh/app-switch, observe seam fixed/moving/disappearing. Existing initial
+screenshot request fulfilled. Documentation only; release983 and all runtime pins
+unchanged. No automated/runtime/device PASS claimed from screenshot inspection.

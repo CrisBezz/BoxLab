@@ -6998,3 +6998,12 @@ actual missing region and whether its boundary stays at same SCREEN x during a s
 orbit or moves with ground. This separates screen-region loss from world-space floor/
 shadow extent; no further debug dump or recovery refresh required for this comparison.
 No runtime/build changes;983 remains current. Paint982/functional983 PASS protected.
+
+## .983 screenshot evidence follow-up — 27 October 2026
+
+Initial screenshot now inspected: visible toolbar, cast cube shadow, vertical tonal
+seam near right quarter while floor continues across it. Keep rendering issue OPEN;
+do not treat that seam as the floor's distant edge or assume a larger floor fixes it.
+Next small orbit comparison (fixed screen position / ground-relative / disappears),
+without refresh or app-switch, before selecting a rendering change. No new runtime
+build; .983 remains current. Accepted Paint icons and modelling behavior retained.

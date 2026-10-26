@@ -1,5 +1,21 @@
 # BoxLab AI Handoff — .983 / stable startup toolbar; refresh visual gate OPEN
 
+## .983 screenshot inspected — vertical shading seam — 27 October 2026
+
+Inspected the user's 07:38 screenshot, 37C6C308-C62D-4039-846F-397257AA2C0C.png.
+It shows .983, visible top-right controls, a cube with a leftward cast shadow,
+and a straight vertical tonal discontinuity near the right quarter of the viewport.
+The floor continues on BOTH sides of that discontinuity; its visible distant edge
+is a separate sloping boundary. This is not evidence that the floor ends at the
+vertical seam. Do not enlarge the floor or shadow camera as an assumed repair.
+The image alone cannot distinguish WebGL shading from the CSS atmosphere layer or
+native composition. Original studio-atmosphere owns a multiply-blended radial
+vignette; render-modes/studio-scene-fix own floor/light; studio-polish owns contact.
+Next device check: small orbit WITHOUT refresh/app-switch; does the vertical seam
+remain at the same screen position, move with the ground, or disappear? Screenshot
+evidence is now available: do not ask for the same initial image again. No new debug
+dump needed for this comparison. Runtime remains .983; no new feature build/test.
+
 ## .983 evidence — UI visible, right ground shading missing — 27 October 2026
 
 New user983 report at2026-10-26T21:36:08.875Z explicitly says UI IS VISIBLE but ground
