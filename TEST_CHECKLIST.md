@@ -11168,3 +11168,11 @@ right edge. Controls must stay drawn and usable. UI Debug if recurrence: host pa
 should be drawer afterclose, popovernull/topLayerfalse, containnone; send new report.
 Do not close visual issue from automated PASS. Next actual981device result before
 unrelatedfeature rollout or speculative further CSS/engine fixes.
+
+## .982 Paint icons and protected .981 UV lifecycle
+
+- [x] User PASS981: repeated UV open/Close and Editor return keep right controls visible without Refresh display; retain native top-layer release/host teardown.
+- [ ] DEVICE982: all10 Paint icons match selected Proof03 with readable captions; original centre/control placements and selected/disabled feedback stay usable.
+- [ ] DEVICE982: Brush/Blur/Smudge and Layers/Mask/Image/AO/Map size open original left controls; cycling keeps radial until Pencil surface use; background hold reopens.
+- [ ] DEVICE982: Paint UndoRedo/Done, modelling icons and UV Close/right toolbar stay accepted.
+- [x] Artwork audit:10 valid SVGs exact to Proof03, zero target-box overlaps, bounds fit existing350px radial.

@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.981",
+      "url": "./src/release-bootstrap.js?v=0.36.18.982",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.981",
+      "url": "./src/release-version.js?v=0.36.18.982",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -3191,6 +3191,12 @@
       "url": "./bevel-face-preview.js?v=0.36.18.716",
       "target": "src/bevel-face-preview.js",
       "sha256": "8ac38d680e72c0cd0bfd102ac7e56d2dda61b89fa67f41ff5e90d206cc9cd3a7"
+    },
+    {
+      "owner": "index.html",
+      "url": "./paint-radial-icons.css?v=0.36.18.982",
+      "target": "paint-radial-icons.css",
+      "sha256": "faf34d6e7ef0edbfd647cab0ad0894ea8be3ae7704e02061dcd561477b2cf4d1"
     }
   ]
 }

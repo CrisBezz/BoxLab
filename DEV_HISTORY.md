@@ -15108,3 +15108,41 @@ unrelatedfeature rollout or speculative further CSS/engine fixes.
 ## .981 publication verified — 26 October 2026
 
 Runtimedbe1336800d86f4aa8265169711e4ad2b83e39b9; exact tested/uploaded treee45f640e3361de7b44b8eb2d42333de8db95d5f7, all13 blob hashes verified. Current main release/shell and session/health/debug981 keys/source match tested files. All5 cache-busted public files version,index,tool-session-ui,mesh-health,gesture-debug byte-match after rollout. Final364 focusedPASS/0FAIL/0skip (4.5s); no full/hosted/native WebKit result claimed. Structural UV popup repair is READY for DEVICE981 repeated UV open/Close and Editor/Back WITHOUT Refresh, app-switch or rotation. Hidden host now parks inside drawer-content (parentId can be null because that div has no ID); popup is released/unstyled. Underlying visibility gate stays OPEN until native confirmation, not closed by Node tests. No automatic recovery invoked. .980 PASS applies only to recovery feature;979Exact/978Bridge acceptance protected. This proof changes documentation only.
+
+## .982 — approved Paint radial icons; .981 user PASS — 26 October 2026
+
+User explicitly PASSes .981 and requests /nextbuild. Protect the accepted UV popup
+native-top-layer lifecycle, complete Close teardown and Editor handoff; this supersedes
+older pending DEVICE981 notes. No Refresh display is required for that accepted flow.
+Earlier .967 acceptance subsequently regressed, so retain diagnostics and investigate
+any recurrence from fresh evidence rather than declaring every rendering path proven.
+Bridge978, Exact979, Array971 and accepted modelling icons remain protected.
+
+Audit main24f53cc3/runtime dbe13368, matching live981 shell/manifest, recent commits,
+radial wiring inventory and selected65-tool Proof03 artwork. All confirmed audit
+repairs are accepted; physical Through refusal still lacks its affected source/gesture.
+Resume queued final Paint icon stage, not a speculative further rendering change.
+All10 existing Paint actions/pages already have original buttons, labels, placement,
+state and dispatch in viewport-paint.js. New scoped paint-radial-icons.css supplies
+EXACT approved Proof03 Brush/Fill/Eraser/Smudge/Blur/Layers/Mask/Image/AO/Map size SVGs
+as noninteractive32px pseudo-elements above original small captions. Hide their old
+22px inline artwork visually; original DOM/text/actions remain. Same76px button width,
+132px radius/350px surface/angles, explicit60px height; centre Paint control untouched.
+Ten valid SVGs byte-match selected artwork; all target boxes fit existing bounds with
+ZERO pairwise overlaps. Existing active/disabled feedback retained.
+
+Runtime JavaScript, Paint gestures/resource/history, left settings/Layers, all modelling
+icons and981 surface repair are byte-unchanged. Only new stylesheet, shell/recovery
+keys982, manifest and reviewed asset contract change. No automatic refresh, new popup,
+input owner, brush/kernel or frozen/Multi1.0 change. Native readability is DEVICE982.
+Validation:33 focused PASS/0 FAIL/0 skipped (4.9s), covering existing Paint tools/
+workflow/continuing Smudge, UV981 lifecycle, Bridge/Exact and release contracts.
+Ten SVG XML/exact-artwork and original radial bounds/overlap checks pass. No local
+rendered browser/native iPad appearance result claimed. Publication proof follows.
+
+DEVICE982: UV PAINT -> inspect10 icons/captions; choose Brush/Blur/Smudge and confirm
+left settings. Browse Layers/Mask/Image/AO/Map size; radial stays until Pencil touches
+mesh and background hold reopens it. Paint, UndoRedo, Done; UV open/Close still leaves
+right controls visible without refresh. Next await Paint icon acceptance, then audit
+queued UV-free facegroup painting through existing faceGroups/selection/history owners;
+do not invent a second painter or assume facegroups are absent.
