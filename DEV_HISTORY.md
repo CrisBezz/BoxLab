@@ -14898,3 +14898,7 @@ and pre-attempt.boxlab if recurring. Bridge pair Apply/Cancel retained. If right
 fails use existing Hide3D→Show3D;977 does NOT claim to repair visibility. Next prioritize
 evidence-led canvas/UI diagnosis, then exact-result/inference follow-ups before more
 feature rollout.974 icon/971 Array acceptance and protectedMulti1.0/frozen unchanged.
+
+## .977 publication verified — 26 October 2026
+
+Runtime acb5e78c23f40c59218d9f805904f559290e7c36; tested/uploaded tree8351748b9a36658137189c1e51b1ecb247751f31, all12 blobs verified. Current main shell/manifest and dynamic drawer/precision pins977 match tested source. All4 cache-busted public files (version,index,drawer-ui,precision-face) byte-match after rollout. Focused final128PASS/0FAIL/0skip; full2833PASS belongs to976 baseline. Hosted workflow results unavailable (query returned no runs), no hosted full977 PASS claimed. Canvas Hide3D→Show3D recovery is user-confirmed; underlying visual fault remains OPEN. DEVICE977 negative Exact near-front/orbit/UndoRedo and Bridge pair; physical refusal and inference/readback remain audit follow-ups. This proof changes documentation only.
