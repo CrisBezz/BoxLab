@@ -15203,3 +15203,20 @@ Next actual startup feedback/evidence before further rendering changes or new fe
 ## .983 publication verified — 26 October 2026
 
 Runtime 155c5e61f3af3a1ab3cfda365d39d824a840f559; exact tested/uploaded tree b0e99ab4a076aef57b4efd027dec40ee85174324, all13 blob hashes verified. Main shell/release/new early toolbar CSS and two original action-owner pins/source match tested files. All5 fresh live files version.json,index.html,viewport-toolbar-shell.css,src/direct-bevel.js,src/view-modes.js byte-match after rollout. Final319 focused PASS/0 FAIL/0 skipped (4.4s); no hosted full-suite/rendered/native result claimed (workflow query returned no runs). Paint982 user PASS protected. Refresh-triggered invisible right controls remain OPEN despite earlier981 acceptance;983 removes verified late startup toolbar construction but is not a proven permanent native rendering repair. DEVICE983 browser reload before UV/app-switch/rotation, original toolbar actions once, then accepted UV/Paint smoke. This proof changes documentation only.
+
+## .983 device feedback — first-refresh visibility FAIL — 26 October 2026
+
+User: “PASS / First refresh still causes loss of right hand side”. Record functional
+PASS separately; .983 startup rendering repair FAILED its native visual gate. Static
+initial toolbar did not eliminate the first-refresh problem. Do not keep presenting
+startup construction as the cause or .983 as a permanent fix. No new source/debug
+report supplied yet. Preserve accepted982 Paint icons, original toolbar actions and
+981 UV teardown; overall intermittent visual failure remains OPEN.
+
+Next evidence: enable File -> UI Debug before reproducing a browser reload; on the
+FIRST failed load, Capture report -> Copy report BEFORE another refresh, app-switch,
+rotation or Hide3D/Refresh display. This captures983 startup width/DOM/top-layer state
+for comparison with966/980. It cannot directly diagnose browser compositor pixels;
+if DOM is again healthy, don't claim the report proves an engine cause or repeat
+speculative CSS/layer tweaks. Need native rendering evidence for further source work.
+No new runtime/build in this feedback-only update; no new hands-on feature test.

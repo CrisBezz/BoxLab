@@ -11185,3 +11185,9 @@ unrelatedfeature rollout or speculative further CSS/engine fixes.
 - [ ] DEVICE983: Frame All/UndoRedo/Focus/Objects/VIEW work once on original owners; right browser/menu bounds unchanged.
 - [ ] DEVICE983: UV open/Close/Editor Back and accepted Paint icons/workflow remain usable.
 - [x] Automated: single final ordered toolbar in shell; original VIEW/SVG nodes retained on hydration; Objects/Frame bind once; real camera fit; fallback creation retained.
+
+## .983 native feedback — first-refresh failure
+
+- [x] User functional PASS983 recorded; accepted Paint982 and original toolbar actions retained.
+- [ ] FAILED/OPEN: first refresh still loses right controls on983; startup shell stabilization did not pass native visibility.
+- [ ] Capture fresh983 UI Debug on FIRST failed load before any recovery or app-switch; static-toolbar hypothesis is not a confirmed root cause.

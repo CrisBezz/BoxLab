@@ -1,5 +1,22 @@
 # BoxLab AI Handoff — .983 / stable startup toolbar; refresh visual gate OPEN
 
+## .983 device feedback — first-refresh visibility FAIL — 26 October 2026
+
+User: “PASS / First refresh still causes loss of right hand side”. Record functional
+PASS separately; .983 startup rendering repair FAILED its native visual gate. Static
+initial toolbar did not eliminate the first-refresh problem. Do not keep presenting
+startup construction as the cause or .983 as a permanent fix. No new source/debug
+report supplied yet. Preserve accepted982 Paint icons, original toolbar actions and
+981 UV teardown; overall intermittent visual failure remains OPEN.
+
+Next evidence: enable File -> UI Debug before reproducing a browser reload; on the
+FIRST failed load, Capture report -> Copy report BEFORE another refresh, app-switch,
+rotation or Hide3D/Refresh display. This captures983 startup width/DOM/top-layer state
+for comparison with966/980. It cannot directly diagnose browser compositor pixels;
+if DOM is again healthy, don't claim the report proves an engine cause or repeat
+speculative CSS/layer tweaks. Need native rendering evidence for further source work.
+No new runtime/build in this feedback-only update; no new hands-on feature test.
+
 ## .983 — stable startup toolbar; .982 Paint PASS, refresh visibility recurrence — 26 October 2026
 
 User: “PASS - refresh made the right controls disappear BUT several refreshes fixed
