@@ -15104,3 +15104,7 @@ right edge. Controls must stay drawn and usable. UI Debug if recurrence: host pa
 should be drawer afterclose, popovernull/topLayerfalse, containnone; send new report.
 Do not close visual issue from automated PASS. Next actual981device result before
 unrelatedfeature rollout or speculative further CSS/engine fixes.
+
+## .981 publication verified — 26 October 2026
+
+Runtimedbe1336800d86f4aa8265169711e4ad2b83e39b9; exact tested/uploaded treee45f640e3361de7b44b8eb2d42333de8db95d5f7, all13 blob hashes verified. Current main release/shell and session/health/debug981 keys/source match tested files. All5 cache-busted public files version,index,tool-session-ui,mesh-health,gesture-debug byte-match after rollout. Final364 focusedPASS/0FAIL/0skip (4.5s); no full/hosted/native WebKit result claimed. Structural UV popup repair is READY for DEVICE981 repeated UV open/Close and Editor/Back WITHOUT Refresh, app-switch or rotation. Hidden host now parks inside drawer-content (parentId can be null because that div has no ID); popup is released/unstyled. Underlying visibility gate stays OPEN until native confirmation, not closed by Node tests. No automatic recovery invoked. .980 PASS applies only to recovery feature;979Exact/978Bridge acceptance protected. This proof changes documentation only.
