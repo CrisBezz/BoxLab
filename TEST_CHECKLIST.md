@@ -10870,3 +10870,12 @@ See docs/radial-icon-review-v1.md. No new app test or runtime release needed.
 - [ ] Live Array native UVs survive count edits/reopen/Convert/UndoRedo and SaveOpen without reprojection.
 - [ ] Paint/stale UVs refuse before changes; independent-copy failure leaves no partial scene.
 - [ ] Right toolbar remains visible after refresh, Array/Cancel/Done and navigation; .970 recurrence OPEN until device feedback.
+
+## .972 Plain UI rendering device gate
+
+User Array971 works/PASS; right UI971 FAIL remains independent.
+
+- [x] Ordinary and Live Array971 accepted by user (“Array now works”).
+- [ ] Plain opaque UI keeps all right controls visible on repeated landscape refresh, before app switching.
+- [ ] Object Browser/VIEW/UV Editor/Array transitions and navigation retain visible UI and unchanged hit targets.
+- [ ] Disabled/active controls remain clear via original opacity, borders and stroke feedback.

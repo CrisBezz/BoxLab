@@ -1,4 +1,35 @@
-# BoxLab AI Handoff — .971 / native-UV Array repair and UI recurrence
+# BoxLab AI Handoff — .972 / plain UI rendering; Array PASS
+
+## .972 — plain UI rendering; Array PASS, visual fault still open — 26 October 2026
+
+User says “Array now works but right hand side of screen is still failing”. Record
+Array971 acceptance only; do not infer971 visual PASS or close recurring visibility.
+Audit main c311992b/runtime13ad9e62. Array nativeUV helper and both paths untouched.
+.967 layer hints and971 SVG glow removal proved insufficient on real iPad.
+Current screenshot/report indicates visually absent but DOM-healthy controls;
+not locally reproduced, no confirmed browser-engine diagnosis.
+
+Audit found backdrop blur still active in floating panels/File/VIEW/bottom modes,
+legacy tool popups and rename dialog. Header/status/ObjectBrowser retain .967
+will-change:opacity hints. New single ui-stability.css default disables both
+prefixed/unprefixed backdrop filters under #app, decorative filters on buttons and
+gizmo SVGs, and extra opacity-layer hints on those three UI roots. Existing opacity,
+borders/fills/strokes still show disabled/active state. Opaque dark surfaces replace
+frosted panel backgrounds. Dynamic later tool styles are overridden via!important.
+No transforms, reparenting, polling, hidden→shown tricks, renderer/history/input
+changes, layout offsets, display/visibility, geometry or accepted icons changed.
+.967 canvas isolation/contain, header z10 and fixed VIEW popup placement retained.
+The plain profile is a controlled rendering reduction, not a proven engine fix.
+WebKit primary source explains backdrop filters composite background content and
+need extra rendering passes: https://webkit.org/blog/3632/introducing-backdrop-filters/ .
+This supports removing that rendering path; it does not identify this exact bug.
+
+DEVICE972: refresh landscape multiple times BEFORE switching apps; inspect right
+FrameAll/Undo/Redo/Focus/Objects/VIEW and right status. Open Objects and VIEW menus;
+Array preview/Apply/Undo, UV Editor enter/exit and orbit to right edge. If visual
+loss recurs, exact972 UI Debug report plus screenshot still needed; gate OPEN.
+Array971 PASS protected; Edge/Paint icon rollout remains paused for visibility.
+
 
 ## .971 — native-UV Array compatibility; right UI recurrence — 26 October 2026
 
@@ -3921,3 +3952,5 @@ Runtime cd3e6b5f6f00eb10960878d5987e51de4e6af462; uploaded tree35d255728a40c7327
 ## .971 publication verified — 26 October 2026
 
 Runtime13ad9e6204ae75525d1dc2957554d3ae588e21e9; uploaded tree2eeaaad200b4d7cad6b321c3438ecdf9d2d6554d matches tested local3c1eea80. Main .971 manifest/pins verified. All5 cache-busted live files byte-match:version.json,index.html,linear-array,array-native-uv,total-gizmo. Pages40249928997 completed SUCCESS. Focused100 PASS/0 FAIL/0 skip; hosted full regression40249929436 was in progress at proof, not claimed PASS. Device gate remains for Array ordinary/Live and recurring right-side visuals. Source editing native-UV Live Array remains unsupported (Convert first). .968/.969 artwork PASS retained; .970 overall acceptance not inferred. Next respond to .971 device results before Edge/Paint icon work.
+
+.972 pre-publication validation:39 focused tests PASS/0 FAIL/0 skipped. Reviewed release contract includes new UI-only stylesheet. Array/helper/gizmo/main composition stylesheet and accepted icon sheets are byte-unchanged. No local native iPad rendering reproduction or visual repair claimed.
