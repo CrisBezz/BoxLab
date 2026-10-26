@@ -14,6 +14,8 @@ style.id='boxlabToolSessionStyle';
 style.textContent=`
 #editDrawer[data-tool-session-active="true"]>.drawer-content>:not(#boxlabToolSessionHost){display:none!important}
 #boxlabToolSessionHost[hidden]{display:none!important}
+#boxlabToolSessionHost[popover]{color:inherit}
+#boxlabToolSessionHost[popover]::backdrop{background:transparent;pointer-events:none}
 #boxlabToolSessionHost{display:block!important}
 #boxlabToolSessionHost[data-viewport-dock="true"]{width:310px;padding:12px;border-radius:12px;background:rgba(22,25,31,.96);border:1px solid rgba(255,255,255,.2);box-shadow:0 8px 28px #0005;pointer-events:auto}
 #boxlabToolSessionHost[data-viewport-dock="true"] .outliner-actions{display:grid;gap:5px}
@@ -274,6 +276,36 @@ document.addEventListener('pointerup',()=>queueMicrotask(()=>queueMicrotask(inst
 document.querySelectorAll('#selectionModes button').forEach(button=>button.addEventListener('click',()=>queueMicrotask(installFaceControlOrder)));
 
 let active=null;
+let uvSurfaceMounted=false;
+function positionUVSurface(){
+  if(!uvSurfaceMounted||active?.id!=='uv-tools')return;
+  const rect=document.querySelector('#viewportWrap')?.getBoundingClientRect?.();
+  const top=Math.max(0,rect?.top??60)+12;
+  Object.assign(host.style,{position:'fixed',top:top+'px',bottom:'auto',left:'8px',right:'8px',margin:'0 auto',transform:'none',contain:'none',isolation:'auto',maxHeight:`calc(100dvh - ${top+12}px)`});
+}
+function releaseUVSurface(){
+  if(!uvSurfaceMounted)return;
+  try{host.hidePopover?.();}catch{}
+  host.removeAttribute('popover');delete host.dataset.uvTopLayer;
+  window.removeEventListener?.('resize',positionUVSurface);
+  window.visualViewport?.removeEventListener('resize',positionUVSurface);
+  uvSurfaceMounted=false;
+}
+function mountUVSurface(){
+  if(active?.id!=='uv-tools'||typeof host.showPopover!=='function')return false;
+  host.setAttribute('popover','manual');uvSurfaceMounted=true;
+  positionUVSurface();
+  try{host.showPopover();host.dataset.uvTopLayer='true';}
+  catch{releaseUVSurface();return false;}
+  window.addEventListener('resize',positionUVSurface);
+  window.visualViewport?.addEventListener('resize',positionUVSurface);
+  return true;
+}
+function suspendUVSurface(id){
+  if(active?.id!=='uv-tools'||id!==active.id)return false;
+  releaseUVSurface();host.hidden=true;return true;
+}
+
 
 function restore(entry){
   if(!entry?.node)return;
@@ -299,6 +331,7 @@ function begin({id,title,node,subtitle=''}={}){
   host.dataset.viewportDock=String(dock);
   if(dock){document.querySelector('#viewportWrap')?.appendChild(host);}
   else{contentRoot?.prepend(host);host.removeAttribute('style');delete host.dataset.wideToolPanel;}
+  releaseUVSurface();
   host.replaceChildren(node);
   if(dock){
     // Paint keeps contextual settings at the left edge; other sessions retain their layout.
@@ -312,10 +345,11 @@ function begin({id,title,node,subtitle=''}={}){
     }else{host.style.width='';placeToolSessionPanel(host);
       // Keep the UV popup's scrolling clip local on iPad/WebKit. Avoid the
       // transformed scroll container used by the ordinary centred dock.
-      if(id==='uv-tools')Object.assign(host.style,{left:'8px',right:'8px',margin:'0 auto',transform:'none',isolation:'isolate',contain:'layout paint'});
+      if(id==='uv-tools')Object.assign(host.style,{left:'8px',right:'8px',margin:'0 auto',transform:'none',isolation:'auto',contain:'none'});
     }
   }
   host.hidden=false;
+  if(dock&&id==='uv-tools'&&!mountUVSurface())Object.assign(host.style,{position:'absolute',top:'12px',bottom:'',maxHeight:'calc(100% - 24px)'});
   drawer.dataset.toolSessionActive='true';
   drawer.dataset.keepOpen='true';
   drawer.open=true;
@@ -326,10 +360,15 @@ function begin({id,title,node,subtitle=''}={}){
 function end(id=null){
   if(!active)return false;
   if(id&&active.id!==id)return false;
-  const old=active;active=null;
+  const old=active;
+  host.hidden=true;releaseUVSurface();active=null;
   restore(old);
   host.replaceChildren();
   host.hidden=true;
+  if(old.id==='uv-tools'){
+    contentRoot?.prepend(host);host.removeAttribute('style');
+    delete host.dataset.viewportDock;delete host.dataset.wideToolPanel;
+  }
   delete drawer.dataset.toolSessionActive;
   if(old.keepOpen===undefined)delete drawer.dataset.keepOpen;else drawer.dataset.keepOpen=old.keepOpen;
   drawer.open=old.open!==false;
@@ -348,6 +387,7 @@ function isActive(id=null){return !!active&&(!id||active.id===id);}
 function current(){return active?{id:active.id,title:active.title}:null;}
 
 globalThis.__boxlabToolSession={begin,end,isActive,current,host};
+globalThis.__boxlabToolSession.suspendSurface=suspendUVSurface;
 
 
 function installBooleanToolSession(){

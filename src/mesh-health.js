@@ -174,7 +174,7 @@ function openUVEditor(){
   queueMicrotask(()=>{if(active)renderReport();});
  }});
  if(!uvWorkspace)return false;
- renderReport();if(!uvWorkspace.open())return false;panel.hidden=true;return true;
+ renderReport();if(!uvWorkspace.open())return false;panel.hidden=true;toolSession()?.suspendSurface?.(sessionId());return true;
 }
 uvOpen.addEventListener('click',openUVEditor);
 uvDetails.addEventListener('toggle',()=>{if(active&&uvDetails.open)renderUVReport(activeObject(),liveMesh());});

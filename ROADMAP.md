@@ -6819,3 +6819,55 @@ stay visible. Existing manual Hide3D→Show3D remains available if brief refresh
 not reproduce its recovery. This is convenient evidence-based RECOVERY, not a claim
 that intermittent painting fault is fixed. Next follow native feedback and investigate
 canvas/UI boundary from evidence; retain all protected979/978 interactions.
+
+## .981 — UV popup top layer and complete surface teardown; .980 recovery PASS only — 26 October 2026
+
+User980 PASS accepts explicit recovery, but rejects needing manual Refresh as a
+solution and supplies reproducible UV window report07:51:09Z. Keep right-side visual
+failure OPEN; don't misrecord980 as UI repair PASS.979 Exact and978 Bridge protected.
+Audit currentmaina00685a8: eventchain is Object UVtools88180→meshHealthClose92850→
+finalsessionnull, no UV Editor/paint/displayrefresh needed. Controls/geometry/hits
+healthy; hidden sharedhost remains viewport-contained with z134/overflowauto/
+containlayoutpaint/isolationisolate. Source end lacked viewport-style/placement
+cleanup. Exact evidence summary in docs/ui-uv-trigger-980.md; no proven engine cause.
+
+Repair original tool-session-ui owner, NOT an automatic workaround. UV tools uses
+manual native Popover top layer if supported; original host/control nodes remain in
+DOM so existing scoped wide CSS/listeners/actions survive. Fixed positioning follows
+viewport top+12px; dynamic viewport height bounds, window/visual resize listeners
+active only while shown. Original .958 transformfree position retained, but failed
+paint-containment layer removed. Transparent noninteractive backdrop, inherited text
+colour; no modal/inert/focus-trap or new raw-pointer owner. Other tools unchanged.
+
+On Close/context switch, hide/release native surface before returning original
+controls; clear popover/dock/wide flags and ALL inline viewport styles; park empty
+hidden host back in drawer. UV Editor handoff explicitly suspends source surface
+before first workspace paint while preserving original logicalsession until Back/
+Close. Thus no empty top-layer popup above2D editor. Existing workspace952 and all
+UV/atlas/history/math owners untouched. Native unsupported/throwing API falls back
+safely to original untransformed absolute panel, without containment; same cleanup.
+No canvasvisibility/refresh/resize/renderer reset, timer, per-frame polling or mesh
+change introduced. Existing manual recovery remains available but is not invoked.
+
+Existing debug snapshot now includes source-parent/popover/topLayer state plus
+meshHealthSession and boxlabUVWorkspace, so native rendering mode/clean close can be
+verified if recurrence persists. This is evidence, not replacement controls.
+364 targetedPASS/0FAIL/0skip (4.5s):5new controller/native-API-double tests cover15
+open/close cycles, exact original nodes/context, top-layer release/styles/parking,
+UV Editor handoff, resize/disposal, other-tool switch and unsupported/throw fallback.
+OriginalUV/workspace/session/health/debug/Bridge/Exact/release checks retained.958
+test now rejects old containment rather than preserving a mitigation that failed
+ondevice. No local native WebKit visual reproduction/guaranteed permanent repair
+claimed. Device must confirm this structural source fix prevents the trigger.
+
+Changed runtime only original sharedsession/meshhealth handoff/debug evidence; direct
+shell/recovery keys981 and reviewed hashes. Native API supported since Safari17;
+primary sources in incidentdoc. No shared layout/positioner edits, duplicate popup,
+UV kernel,main,980 recovery implementation,979Exact,978Bridge,Multi1.0 or frozen changes.
+
+DEVICE981: without Refresh/app-switch/rotation, repeatedly Object→UV→Close, inspect
+right toolbar/status each cycle; then Auto atlas/Open UV Editor/Back and orbit to
+right edge. Controls must stay drawn and usable. UI Debug if recurrence: host parent
+should be drawer afterclose, popovernull/topLayerfalse, containnone; send new report.
+Do not close visual issue from automated PASS. Next actual981device result before
+unrelatedfeature rollout or speculative further CSS/engine fixes.

@@ -259,9 +259,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/gesture-debug.js?v=0.36.18.980",
+      "url": "./src/gesture-debug.js?v=0.36.18.981",
       "target": "src/gesture-debug.js",
-      "sha256": "1c33cafa7dc05d97b698be07ab5b535a4f37336f3c781261d5270ec978856640"
+      "sha256": "3d70c631c02b98f2de185f05ac7520c4b174502fd3040eeab21627db7154eefb"
     },
     {
       "owner": "index.html",
@@ -310,9 +310,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/mesh-health.js?v=0.36.18.961",
+      "url": "./src/mesh-health.js?v=0.36.18.981",
       "target": "src/mesh-health.js",
-      "sha256": "18a99f63b89cf5821f5295d8a9ee5f3631e6dfbd3e21acaebaa95b55d944be8a",
+      "sha256": "34213eefaa86b2256aa7a75189165cc3e5196d31608b31872c0ff619c203bd70",
       "sourceVersion": "0.36.18.880"
     },
     {
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.980",
+      "url": "./src/release-bootstrap.js?v=0.36.18.981",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.980",
+      "url": "./src/release-version.js?v=0.36.18.981",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -539,9 +539,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/tool-session-ui.js?v=0.36.18.965",
+      "url": "./src/tool-session-ui.js?v=0.36.18.981",
       "target": "src/tool-session-ui.js",
-      "sha256": "52f542be2b70c4c10df66ccabdb3204cee461bbe06cb705600e16e86c217db6e"
+      "sha256": "0bacb11535356fec590166779e6f517d582533ab7d2f692b60f809fdd9df75a4"
     },
     {
       "owner": "index.html",
