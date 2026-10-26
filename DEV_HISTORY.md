@@ -14679,3 +14679,7 @@ watch right toolbar and send UI Debug report if fault returns. Existing Face/Ver
 Object artwork unchanged. Next device feedback before Edge/Paint icons.
 
 .971 validation:100 focused tests PASS/0 FAIL/0 skipped (~1.8s); syntax checks for Array/helper/gizmo pass. New actual-manager tests cover ordinary native-UV copies, exact authored UV preservation, Live count/reopen/Convert, UndoRedo, project codec, stale/paint refusal and copy-failure scene rollback. Existing literal Array861 pin checks (382/384/418) now use reviewed asset contract; semantic assertions retained. Two SVG glow-filter removals are not native visual proof.
+
+## .971 publication verified — 26 October 2026
+
+Runtime13ad9e6204ae75525d1dc2957554d3ae588e21e9; uploaded tree2eeaaad200b4d7cad6b321c3438ecdf9d2d6554d matches tested local3c1eea80. Main .971 manifest/pins verified. All5 cache-busted live files byte-match:version.json,index.html,linear-array,array-native-uv,total-gizmo. Pages40249928997 completed SUCCESS. Focused100 PASS/0 FAIL/0 skip; hosted full regression40249929436 was in progress at proof, not claimed PASS. Device gate remains for Array ordinary/Live and recurring right-side visuals. Source editing native-UV Live Array remains unsupported (Convert first). .968/.969 artwork PASS retained; .970 overall acceptance not inferred. Next respond to .971 device results before Edge/Paint icon work.
