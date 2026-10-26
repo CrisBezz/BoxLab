@@ -14715,3 +14715,7 @@ loss recurs, exact972 UI Debug report plus screenshot still needed; gate OPEN.
 Array971 PASS protected; Edge/Paint icon rollout remains paused for visibility.
 
 .972 pre-publication validation:39 focused tests PASS/0 FAIL/0 skipped. Reviewed release contract includes new UI-only stylesheet. Array/helper/gizmo/main composition stylesheet and accepted icon sheets are byte-unchanged. No local native iPad rendering reproduction or visual repair claimed.
+
+## .972 publication verified — 26 October 2026
+
+Runtime a799ee6af0f4dee09eee7b614dad3d3e991364cc; uploaded tree a363ffe4385ee26f1bab62c9c21cbffd2230025c matches tested local7556cec7. Main972 version and new stylesheet pin verified; all3 cache-busted public files version.json/index.html/ui-stability.css byte-match tested checkout.39 focused tests PASS/0 FAIL/0 skip. Pages40253411508 was queued and hosted topology40253412100 in progress at last query; live bytes subsequently matched, no hosted full-suite PASS claimed. User Array971 PASS protected. .972 opaque/plain UI device test ready, recurring right-side rendering remains OPEN until explicit feedback. No native compositor root cause claimed.
