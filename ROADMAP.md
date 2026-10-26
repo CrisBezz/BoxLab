@@ -6975,3 +6975,26 @@ for comparison with966/980. It cannot directly diagnose browser compositor pixel
 if DOM is again healthy, don't claim the report proves an engine cause or repeat
 speculative CSS/layer tweaks. Need native rendering evidence for further source work.
 No new runtime/build in this feedback-only update; no new hands-on feature test.
+
+## .983 evidence — UI visible, right ground shading missing — 27 October 2026
+
+New user983 report at2026-10-26T21:36:08.875Z explicitly says UI IS VISIBLE but ground
+plane shading is missing on the right. Treat this capture as a ground/render symptom,
+not another visually absent toolbar. Earlier first-refresh UI failures remain separate
+OPEN evidence; this capture alone neither retracts them nor proves permanent UI repair.
+
+Toolbar width317.609375 at debug-startup1296ms and pageshow2814ms is stable. Canvas
+CSS1366x826/backing2732x1652/DPR2, sessionnull/Paintfalse, UV workspace absent. Hidden
+session host is unstyled/popovernull/topLayerfalse; no retained UV overlay in capture.
+No reported error/context-loss event in supplied bounded log. DOM/hit probes cannot
+show WebGL floor/shadow pixels or identify the browser compositor as root cause.
+
+Read-only source audit: render-modes owns a finite Studio floor (minimum24 world units)
+and finite directional shadow frustum; studio-scene-fix updates same floor/light;
+studio-polish adds contact shadow, atmosphere adds CSS multiply vignette. Multiple
+rendering contributors, no evidence yet which is missing. Do not enlarge floor,
+shadow bounds or change CSS/blending from this report alone. Request screenshot of
+actual missing region and whether its boundary stays at same SCREEN x during a small
+orbit or moves with ground. This separates screen-region loss from world-space floor/
+shadow extent; no further debug dump or recovery refresh required for this comparison.
+No runtime/build changes;983 remains current. Paint982/functional983 PASS protected.

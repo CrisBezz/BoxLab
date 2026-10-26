@@ -11191,3 +11191,9 @@ unrelatedfeature rollout or speculative further CSS/engine fixes.
 - [x] User functional PASS983 recorded; accepted Paint982 and original toolbar actions retained.
 - [ ] FAILED/OPEN: first refresh still loses right controls on983; startup shell stabilization did not pass native visibility.
 - [ ] Capture fresh983 UI Debug on FIRST failed load before any recovery or app-switch; static-toolbar hypothesis is not a confirmed root cause.
+
+## .983 ground-region evidence — 27 October 2026
+
+- [ ] OPEN: new capture has visible UI but missing right ground shading. Keep separate from earlier invisible-controls failure.
+- [x] Supplied startup/pageshow toolbar width stable317.609375; canvas2732x1652; no active UV top layer. DOM evidence does not establish floor/shadow rendering.
+- [ ] Screenshot and small orbit: determine whether shading boundary stays fixed on screen or moves with ground before choosing source change.
