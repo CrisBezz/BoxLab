@@ -522,3 +522,11 @@ then Paint icon rollout unless user reprioritizes.
 DEVICE975: Edge boundary/loose edge→Extrude→XY/XZ/YZ small squares, drag each; orbit
 obliquely if plane edge-on. Repeat in Vertex mode. Check XY holdsZ/XZ holdsY/YZ holdsX,
 Exact/Repeat/UndoRedo/Cancel and centreFree/XYZ still work. .974 icon PASS retained.
+
+## Permanent completion format — 27 October 2026
+
+User instruction: ALWAYS end every reply with the current status and a short list
+of possible things to test. Include current build, whether work is complete or
+ongoing, and whether a new build has shipped. Keep hands-on checks short and
+realistic; distinguish pending diagnostics from tests of newly shipped behavior.
+Apply this to progress handovers and blocked/no-code replies as well as releases.

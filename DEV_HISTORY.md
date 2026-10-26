@@ -15255,3 +15255,10 @@ audited; no root cause or permanent rendering repair inferred. Next: small orbit
 without refresh/app-switch, observe seam fixed/moving/disappearing. Existing initial
 screenshot request fulfilled. Documentation only; release983 and all runtime pins
 unchanged. No automated/runtime/device PASS claimed from screenshot inspection.
+
+## Completion reporting instruction — 27 October 2026
+
+User requires every reply to end with current status and a short list of possible
+things to test; recorded permanently in workflow and handoff. /nextbuild requested;
+rendering source change still requires the pending orbit/seam observation described
+in current handoff. No runtime change or new numbered release in this update.

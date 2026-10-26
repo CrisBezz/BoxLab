@@ -4500,3 +4500,11 @@ Runtime bc99a6f9d8a28762daa3e379b33ec81fde1b9706; exact tested/uploaded tree 4b6
 ## .983 publication verified — 26 October 2026
 
 Runtime 155c5e61f3af3a1ab3cfda365d39d824a840f559; exact tested/uploaded tree b0e99ab4a076aef57b4efd027dec40ee85174324, all13 blob hashes verified. Main shell/release/new early toolbar CSS and two original action-owner pins/source match tested files. All5 fresh live files version.json,index.html,viewport-toolbar-shell.css,src/direct-bevel.js,src/view-modes.js byte-match after rollout. Final319 focused PASS/0 FAIL/0 skipped (4.4s); no hosted full-suite/rendered/native result claimed (workflow query returned no runs). Paint982 user PASS protected. Refresh-triggered invisible right controls remain OPEN despite earlier981 acceptance;983 removes verified late startup toolbar construction but is not a proven permanent native rendering repair. DEVICE983 browser reload before UV/app-switch/rotation, original toolbar actions once, then accepted UV/Paint smoke. This proof changes documentation only.
+
+## Permanent completion format — 27 October 2026
+
+User instruction: ALWAYS end every reply with the current status and a short list
+of possible things to test. Include current build, whether work is complete or
+ongoing, and whether a new build has shipped. Keep hands-on checks short and
+realistic; distinguish pending diagnostics from tests of newly shipped behavior.
+Apply this to progress handovers and blocked/no-code replies as well as releases.
