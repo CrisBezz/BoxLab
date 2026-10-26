@@ -14946,3 +14946,7 @@ updates preview as second boundary is selected. Face Bridge remains unchanged.
 Right-side fault stays OPEN with confirmed manual Hide3D→Show3D recovery; no rendering
 repair or other .977 exact/inference/readback follow-up included. Next native preview
 feedback, then evidence-led canvas/UI work and remaining audit follow-ups.
+
+## .978 publication verified — 26 October 2026
+
+Runtime2cce82749cf3e8818b6a2d86e62572c9f4c32695; exact tested/uploaded tree9bc49bc0186e798fa12942dfdc6aa346a90e3e21, all10 blob hashes verified. Current main release/shell/session978 pin and source match tested checkout. Cache-busted public version.json,index.html,selection-hub-bridge-session.js all byte-match after rollout. Focused232PASS/0FAIL/0skip; hosted query returned no runs, no hosted full-suite result claimed. Edge Bridge blue preview BEFORE Apply, Cancel/source isolation and context disposal are ready for DEVICE978; no native iPad preview acceptance inferred. Face Bridge, original Bridge kernels,977 Exact correction,972/973 rendering safeguards and protected Multi1.0 remain unchanged. Recurring right-side fault stays OPEN. This proof changes documentation only.
