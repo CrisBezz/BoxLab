@@ -1,4 +1,51 @@
-# BoxLab AI Handoff — .985 / facegroup name reuse; .984 PASS protected
+# BoxLab AI Handoff — .986 / Pencil facegroup strokes; .985 PASS protected
+
+## .986 — Pencil facegroup strokes; .985 user PASS — 27 October 2026
+
+User PASS985 protects name reuse/suggestions and984 assignment/clear/UndoRedo/SaveOpen.
+VIEW > Facegroups > choose name > Pencil facegroup strokes closes VIEW and arms
+Pencil-only surface strokes in Face mode. Pending unique visible face hits are
+collected privately and count shown in status; GROUP COLOURS UPDATE ON PENCIL LIFT,
+not during contact. Lift commits through accepted assignSelectedFacegroup and
+original manager/scene history once. No UVs required. Existing selection is untouched.
+Reopen VIEW > Stop facegroup strokes; changing group name or picking another name
+stops old named brush; rearm to paint new group. Switching render look also stops.
+
+Original edge-paint-select owns down/move/end/cancel and visible first-hit raycast;
+no parallel raw-pointer brush owner. Existing Pencil gate recognizes armed Face
+brush as modelling intent on mesh; background Pencil navigation still forwards.
+Finger navigation remains; a secondary canvas contact cancels pending stroke.
+Capture loss, pointercancel, hidden/pagehide, orbit claim and Stop discard pending
+faces and restore exact prior controls.enabled. Coalesced contact samples and lift
+hit included; no interpolation/radius brush in this first build. Through selection
+depth does NOT assign hidden/back faces: uses nearest face only. Existing Lasso,
+FaceDirect/main direct tools and split/offset owners keep priority.
+
+Controller refuses unsafe objects/tools/context; completion rechecks object, mesh
+identity, geometry/groups signature, look/mode and original authoring gates. History
+or geometry changes during contact discard stroke. No source preview mutation or
+cancel rollback needed; duplicate/no-op faces do not create history. New pure stroke
+controller imports original authoring helper; render owner supplies existing globals.
+No geometry/UV/texture kernel or new history owner. Protected Multi untouched.
+
+84 targeted checks PASS/0FAIL/0skip; expanded stroke test also passes actual original
+selection-brush+Pencil gate with real Three face raycasts, lift, cancellation, secondary
+touch, lost capture, pagehide, restored controls and background navigation. Controller
+tests cover staging, unique faces, one checkpoint, refusal/stale context and no-op.
+Existing selection/Lasso/Pencil,954 picking,984/985 authoring, toolbar, Facegroups,
+project codec, UV and release contracts retained. Syntax/diff checks pass. No native
+iPad/full-suite or rendered proof claimed. Existing runtime tests' visibility mock
+lacks document events: visibility cleanup uses window capture, preserving fixture
+and Lasso checks unchanged. Mesh clone lazily initializes loose-element bookkeeping;
+source invariance test compares actual vertices/faces/groups, not auxiliary caches.
+
+Changed owners: edge-paint-select, Pencil gate, render-modes and new stroke controller;
+reviewed direct/child/recovery keys986 and hashes. Existing authoring helper stays985.
+Intermittent right-region rendering/gizmo fault remains OPEN; no rendering fix claimed.
+DEVICE986: Face mode > VIEW Facegroups > name > Pencil facegroup strokes; draw across
+faces, lift to see group. Multiple strokes, one Undo per stroke/Redo. Finger orbit,
+Stop, choose another name/rearm, SaveOpen. Clear selected remains984 behavior. Next
+follow device stroke acceptance before adding live previews, brush radius or eraser.
 
 ## .985 — reuse existing facegroup names; .984 user PASS — 27 October 2026
 

@@ -198,9 +198,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/edge-paint-select.js?v=0.36.18.954",
+      "url": "./src/edge-paint-select.js?v=0.36.18.986",
       "target": "src/edge-paint-select.js",
-      "sha256": "5700d04cc9228d92221384fac8bd1d90742019d1fed3e1d168cfd5ba3feb0bce"
+      "sha256": "5b9b5466501dd39056de1e0c935213449ca7882b60ec5e244b88d1554c048b5f"
     },
     {
       "owner": "index.html",
@@ -354,9 +354,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/pencil-orbit-gate.js?v=0.36.18.766",
+      "url": "./src/pencil-orbit-gate.js?v=0.36.18.986",
       "target": "src/pencil-orbit-gate.js",
-      "sha256": "e19958cbb1b4d5e3285dd1c9b4c74724d4214c472c189bd7b9833d8c520b419c"
+      "sha256": "9221e7ae729b10b06a55d798845b2a3dfcb2526563ca31081f11d90757e105aa"
     },
     {
       "owner": "index.html",
@@ -378,21 +378,21 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.985",
+      "url": "./src/release-bootstrap.js?v=0.36.18.986",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.985",
+      "url": "./src/release-version.js?v=0.36.18.986",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
     {
       "owner": "index.html",
-      "url": "./src/render-modes.js?v=0.36.18.985",
+      "url": "./src/render-modes.js?v=0.36.18.986",
       "target": "src/render-modes.js",
-      "sha256": "04d91400527bf409d35523c47ad17589b1f8fde7367425fe8473932fac7016c9"
+      "sha256": "976310cae666b3765197133c85aed876a8a7aa95d4fff1e1f7647249972d064d"
     },
     {
       "owner": "index.html",
@@ -3208,6 +3208,18 @@
       "owner": "src/render-modes.js",
       "url": "./facegroup-authoring.js?v=0.36.18.985",
       "target": "src/facegroup-authoring.js",
+      "sha256": "3b8b6418be47ed40f1fb458c05bdd796b10a263ebacbfa06c00bbcab8959840e"
+    },
+    {
+      "owner": "src/render-modes.js",
+      "target": "src/facegroup-stroke.js",
+      "url": "./facegroup-stroke.js?v=0.36.18.986",
+      "sha256": "226628b74553052f13159a4b070aa6b6209aee3ac7900fa3c0c43c121a5df804"
+    },
+    {
+      "owner": "src/facegroup-stroke.js",
+      "target": "src/facegroup-authoring.js",
+      "url": "./facegroup-authoring.js?v=0.36.18.985",
       "sha256": "3b8b6418be47ed40f1fb458c05bdd796b10a263ebacbfa06c00bbcab8959840e"
     }
   ]

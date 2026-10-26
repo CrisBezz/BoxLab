@@ -1,3 +1,4 @@
+import {createFacegroupStroke} from './facegroup-stroke.js?v=0.36.18.986';
 import {assignSelectedFacegroup,existingFacegroupNames,selectedFacegroupName} from './facegroup-authoring.js?v=0.36.18.985';
 import {createCommittedPaintSurface} from './paint-target.js?v=0.36.18.948';
 import {createUVImageOverlay} from './uv-image-surface-preview.js?v=0.36.18.892';
@@ -8,6 +9,9 @@ import {applyMirror} from './mirror.js';
 import {subdivide} from './subdivision.js';
 
 const status=document.querySelector('#selectionStatus');
+const facegroupStroke=createFacegroupStroke({context:()=>({manager:manager(),selection:globalThis.__boxlabSelectionBridge,mesh:bridge()?.mesh,history:globalThis.__boxlabObjectHistory,session:globalThis.__boxlabToolSession,controls:bridge()?.controls,look:mode}),notify:text=>{if(status)status.textContent=text;}});
+globalThis.__boxlabFacegroupStroke=facegroupStroke;
+
 let mode='studio';
 let lastBody=null;
 let studioRig=null;
@@ -265,6 +269,8 @@ function installFacegroupControls(host){
     <div class="viewport-menu-label" style="margin-top:9px">Selected Facegroups</div>
     <label>Group <input id="facegroupName" list="facegroupNames" type="text" value="Group 1" maxlength="64" autocomplete="off" style="width:140px;touch-action:auto"/></label>
     <div class="outliner-actions"><button id="facegroupAssign" type="button">Assign selected</button><button id="facegroupClear" type="button">Clear selected</button></div>
+    <button id="facegroupStrokeToggle" type="button" aria-pressed="false">Pencil facegroup strokes</button>
+    <small>Strokes assign visible faces on lift; fingers navigate. Reopen VIEW to stop.</small>
     <datalist id="facegroupNames"></datalist>
     <button id="facegroupUseSelected" type="button">Use selected group name</button>
     <small>Choose an existing name or type a new one. Select faces in Face mode; no UVs required.</small>
@@ -284,10 +290,17 @@ function installFacegroupControls(host){
     </div>`;
   section.appendChild(panel);
   panel.addEventListener('click',event=>{
+    if(event.target.closest('#facegroupStrokeToggle')){
+      event.preventDefault();event.stopPropagation();const button=panel.querySelector('#facegroupStrokeToggle');
+      if(facegroupStroke.armed)facegroupStroke.stop();else facegroupStroke.arm(panel.querySelector('#facegroupName').value);
+      button.setAttribute('aria-pressed',String(facegroupStroke.armed));button.textContent=facegroupStroke.armed?'Stop facegroup strokes':'Pencil facegroup strokes';
+      if(facegroupStroke.armed)document.querySelector('#viewModes')?.removeAttribute('open');
+      return;
+    }
     if(event.target.closest('#facegroupUseSelected')){
       event.preventDefault();event.stopPropagation();
       const result=selectedFacegroupName(bridge()?.mesh,globalThis.__boxlabSelectionBridge);
-      if(result.ok)panel.querySelector('#facegroupName').value=result.name;
+      if(result.ok){panel.querySelector('#facegroupName').value=result.name;panel.querySelector('#facegroupName').dispatchEvent(new Event('input'));}
       if(status)status.textContent=result.ok?`Facegroups · using ${result.name}`:`Facegroups · ${result.reason}`;
       return;
     }
@@ -302,6 +315,9 @@ function installFacegroupControls(host){
     if(palette){event.preventDefault();event.stopPropagation();updateFacegroupView({palette:palette.dataset.facegroupPalette});return;}
     if(event.target.closest('#facegroupReseed')){event.preventDefault();event.stopPropagation();updateFacegroupView({seed:facegroupView.seed+1});return;}
     if(event.target.closest('#facegroupReset')){event.preventDefault();event.stopPropagation();facegroupView={...DEFAULT_FACEGROUP_VIEW};saveFacegroupView();syncFacegroupControls();if(mode==='facegroups')applyToSceneBodies();}
+  });
+  panel.querySelector('#facegroupName').addEventListener('input',()=>{
+    if(facegroupStroke.armed){facegroupStroke.stop();const button=panel.querySelector('#facegroupStrokeToggle');button.setAttribute('aria-pressed','false');button.textContent='Pencil facegroup strokes';}
   });
   panel.querySelector('#facegroupName').addEventListener('focus',()=>{
     const list=panel.querySelector('#facegroupNames');list.replaceChildren();
@@ -378,3 +394,5 @@ facegroupUiStyle.textContent=`
 }
 `;
 document.head.append(facegroupUiStyle);
+
+document.addEventListener('boxlab-render-mode-change',event=>{if(event.detail?.mode!=='facegroups'){facegroupStroke.stop();const button=document.querySelector('#facegroupStrokeToggle');if(button){button.setAttribute('aria-pressed','false');button.textContent='Pencil facegroup strokes';}}});

@@ -11216,3 +11216,13 @@ unrelatedfeature rollout or speculative further CSS/engine fixes.
 - [ ] Focus name input: existing names offered once each; rename choice followed by Assign selected joins group.
 - [ ] UndoRedo affects actual assignment only; Save/Open retains accepted984 behavior.
 - [x] Automated read-only reuse, invalid/mixed refusal and safe option.value insertion checks pass.
+
+## .986 Pencil facegroup strokes
+
+- [x] User PASS985 protects existing-name reuse and984 authoring/history/save baseline.
+- [ ] Face mode > VIEW Facegroups > name > Pencil facegroup strokes; stroke visible faces, lift assigns group. No UV required.
+- [ ] Colours update ON LIFT; each changed stroke is one Undo/Redo entry, no-op strokes add none.
+- [ ] Fingers navigate; second canvas contact cancels current stroke; Stop restores ordinary selection.
+- [ ] Change/pick name and rearm; switch look stops brush; Save/Open retains groups.
+- [x] Automated pure/real owner routing covers source-neutral staging, cancellation, lost capture/pagehide, controls restoration, stale context, one checkpoint and background Pencil navigation.
+- [ ] Native Pencil/gesture acceptance pending; rendering fault remains OPEN independently.

@@ -363,7 +363,7 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
         const controlsEnabled=globalThis.__boxlabBridgeState?.controls?.enabled!==false;
         const lassoActive=!!globalThis.__boxlabLasso?.isArmed?.();
         const blocked=!!meshHit||lassoActive;
-        const modellingToolActive=faceToolActive||mainDirectActive||lassoActive;
+        const modellingToolActive=faceToolActive||mainDirectActive||lassoActive||(selectionMode==='face'&&!!globalThis.__boxlabFacegroupStroke?.armed);
         const deferred=blocked&&!modellingToolActive;
         // Background Pencil tap candidacy is owned by window-capture tracking,
         // independent of whether OrbitControls receives this pointerdown.

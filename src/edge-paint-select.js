@@ -56,6 +56,13 @@ depthButtons.forEach(button => button.addEventListener('click', () => {
 }));
 
 canvas?.addEventListener('pointerdown', event => {
+  const groups=globalThis.__boxlabFacegroupStroke;
+  if(groups?.pointerId!==null&&groups?.pointerId!==undefined&&groups.pointerId!==event.pointerId)groups.cancel();
+  if(event.pointerType==='pen'&&event.button===0&&event.pressure>0&&groups?.armed&&!globalThis.__boxlabLasso?.isArmed?.()&&!globalThis.__boxlabFaceDirect?.active?.()&&!globalThis.__boxlabMainDirectTool?.ownsModellingGesture?.()&&!globalThis.__boxlabFaceSplit?.isArmed?.()&&!globalThis.__boxlabOffsetLoop?.isArmed?.()){
+    const first=hitIndices(event,'face')[0];
+    if(groups.begin(event.pointerId,first)){pendingPaint=null;paint=null;try{canvas.setPointerCapture?.(event.pointerId);}catch{groups.cancel();}event.preventDefault();event.stopImmediatePropagation();return;}
+  }
+
   if(globalThis.__boxlabLasso?.isArmed?.()){pendingPaint=null;return;}
   if(globalThis.__boxlabFaceSplit?.isArmed?.()||globalThis.__boxlabOffsetLoop?.isArmed?.()) return;
   const type = mode();
@@ -69,6 +76,13 @@ canvas?.addEventListener('pointerdown', event => {
 }, true);
 
 canvas?.addEventListener('pointermove', event => {
+  const groups=globalThis.__boxlabFacegroupStroke;
+  if(groups?.pointerId===event.pointerId){
+    event.preventDefault();event.stopImmediatePropagation();
+    if(event.buttons&&event.pressure>0){for(const point of event.getCoalescedEvents?.().length?event.getCoalescedEvents():[event])groups.add(event.pointerId,hitIndices(point,'face')[0]);}
+    return;
+  }
+
   if(globalThis.__boxlabLasso?.isArmed?.()&&!paint){pendingPaint=null;return;}
   if (pendingPaint && pendingPaint.pointerId === event.pointerId && !paint) {
     if(globalThis.__boxlabModelessSelection?.browsing?.(event.pointerId)){
@@ -94,6 +108,13 @@ canvas?.addEventListener('pointermove', event => {
 }, true);
 
 function endPaint(event) {
+  const groups=globalThis.__boxlabFacegroupStroke;
+  if(groups?.pointerId===event.pointerId){
+    event.preventDefault();event.stopImmediatePropagation();
+    if(event.type==='pointercancel')groups.cancel();else{groups.add(event.pointerId,hitIndices(event,'face')[0]);groups.finish(event.pointerId);}
+    try{canvas.releasePointerCapture?.(event.pointerId);}catch{}return;
+  }
+
   if (pendingPaint?.pointerId === event.pointerId) {
     pendingPaint=null;
     return;
@@ -116,6 +137,7 @@ window.addEventListener('pointercancel', event=>{
 
 window.addEventListener('boxlab-pencil-orbit-claim',event=>{
   const pointerId=event.detail?.pointerId;
+  if(globalThis.__boxlabFacegroupStroke?.pointerId===pointerId)globalThis.__boxlabFacegroupStroke.cancel();
   if(pendingPaint?.pointerId===pointerId)pendingPaint=null;
   if(paint?.pointerId===pointerId){
     paint=null;
@@ -131,3 +153,7 @@ globalThis.__boxlabPaintSelectDebug={
   depth:()=>paintDepth,
   multiEnabled:()=>!!multiToggle?.checked
 };
+
+canvas?.addEventListener('lostpointercapture',event=>{if(globalThis.__boxlabFacegroupStroke?.pointerId===event.pointerId)globalThis.__boxlabFacegroupStroke.cancel();});
+window.addEventListener('pagehide',()=>globalThis.__boxlabFacegroupStroke?.cancel());
+window.addEventListener('visibilitychange',()=>{if(document.hidden)globalThis.__boxlabFacegroupStroke?.cancel();},true);
