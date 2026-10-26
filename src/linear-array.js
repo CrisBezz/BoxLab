@@ -1,3 +1,4 @@
+import {arrayNativeUVSource,arrayNativeUVResult} from './array-native-uv.js?v=0.36.18.971';
 import * as THREE from 'three';
 import './live-array-source-editor.js?v=0.36.18.861';
 import {createArrayRecipe,evaluateArray,reopenArray,arrayItemMatrix} from './live-array-core.js?v=0.36.18.861';
@@ -345,12 +346,16 @@ function applyArray({convert=false}={}){
   if(convert&&(!liveInput?.checked||!source.arrayRecipe))return false;
   if(endpointLength()<1e-6){setStatus('Array refused • end copy must be moved away from source');return false;}
   if(liveInput?.checked){
-    if(source.sourceId||source.booleanRecipe||source.glbPassthrough||source.materials||source.textures||source.mesh?.uvs||source.mesh?.faceUVs||source.mesh?.uvLayers||source.mesh?.materialSlots||(source.settings?.subd&&!source.arrayRecipe)||Object.values(source.settings?.mirror||{}).some(Boolean)){setStatus('Live Array requires an independent geometry object');return false;}
+    if(source.sourceId||source.booleanRecipe||(source.glbPassthrough&&source.glbPassthrough.source!=='boxlab')||source.colourPaint||source.roughnessPaint||source.metalnessPaint||source.materials||source.textures||source.mesh?.uvs||source.mesh?.faceUVs||source.mesh?.uvLayers||source.mesh?.materialSlots||(source.settings?.subd&&!source.arrayRecipe)||Object.values(source.settings?.mirror||{}).some(Boolean)){setStatus('Live Array requires an independent geometry object');return false;}
     try{
       const recipe=createArrayRecipe(sessionSource||source.mesh,count(),localEndpoint().toArray(),transformOptions()),result=evaluateArray(recipe);
+      const nativeUV=source.glbPassthrough?arrayNativeUVSource(source,sessionSource||source.mesh,true):null;
+      const resultUV=nativeUV?arrayNativeUVResult(nativeUV,result,count()):null;
+      if(nativeUV)recipe.nativeUV=nativeUV;
       restoreResult();
       const before=globalThis.__boxlabObjectHistory?.capture?.();
       if(!before||!m.replaceActiveMesh?.(result))throw Error('Live Array replacement unavailable');
+      if(resultUV)source.glbPassthrough=resultUV;
       if(convert)delete source.arrayRecipe;
       else source.arrayRecipe=recipe;
       globalThis.__boxlabObjectHistory?.checkpointSnapshot?.(before,before.objects.find(o=>o.id===source.id)?.mesh);
@@ -359,6 +364,30 @@ function applyArray({convert=false}={}){
       setStatus(convert?'Array converted · one editable mesh · Undo restores Live Array':'Live Array · one object · reopen Array to edit count and END placement');
       return true;
     }catch(error){setStatus('Live Array refused · '+error.message);return false;}
+  }
+  // Linked instances cannot own native UV resources. Reuse ordinary Add/Duplicate
+  // metadata for independent UV copies; retain the linked path for geometry-only.
+  if(source.glbPassthrough?.source==='boxlab'){
+    const owner=globalThis.__boxlabObjectHistory;
+    let before=null;
+    try{
+      const payload=arrayNativeUVSource(source,source.mesh),total=count();
+      if(!owner?.capture||!owner?.checkpointSnapshot||!owner?.restore||!m.addMesh)throw Error('Array scene history is not ready');
+      before=owner.capture();if(!before)throw Error('Could not capture Array history');
+      m.saveActive?.();const sourceId=source.id,created=[];
+      for(let i=1;i<total;i++){
+        const copy=m.addMesh(source.mesh,m.nextDuplicateName?.(source.name),{settings:source.settings,glbPassthrough:{...payload,uvCorners:payload.uvCorners.map(f=>f.map(p=>[...p]))},enterObjectMode:false});
+        if(!copy)throw Error('UV copy could not be created');
+        if(!nudgeLive(endpoint.clone().multiplyScalar(i/(total-1))))throw Error('Active Array copy unavailable');
+        m.saveActive?.();created.push(copy.id);
+      }
+      m.activate?.(sourceId);
+      if(!owner.checkpointSnapshot(before))throw Error('Could not record Array history');
+      globalThis.__boxlabObjectSelection?.refresh?.();
+      globalThis.__boxlabLinearArrayLastResult={version:'0.36.18.971',sourceId,createdIds:created,count:total,endpoint:endpoint.toArray()};
+      setStatus(`Array • ${created.length} independent UV copies • evenly distributed`);
+      return true;
+    }catch(error){if(before)owner.restore(before);setStatus('Array refused · '+error.message);return false;}
   }
   const before=globalThis.__boxlabObjectHistory?.capture?.()||null;
   m.saveActive?.();

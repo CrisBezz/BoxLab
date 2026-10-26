@@ -10863,3 +10863,10 @@ See docs/radial-icon-review-v1.md. No new app test or runtime release needed.
 - [ ] Object radial shows13 approved icons and small captions; Object Join differs from Vertex Join.
 - [ ] Longer labels fit; Duplicate/UndoRedo, Array/Solidify and UV/Mesh Health launch existing owners.
 - [ ] Multi, navigation and right toolbar remain usable; Face/Vertex accepted icons unchanged.
+
+## .971 Array + right UI device gate
+
+- [ ] Default UV cube ordinary Array succeeds with independent UV copies, one UndoRedo entry and SaveOpen.
+- [ ] Live Array native UVs survive count edits/reopen/Convert/UndoRedo and SaveOpen without reprojection.
+- [ ] Paint/stale UVs refuse before changes; independent-copy failure leaves no partial scene.
+- [ ] Right toolbar remains visible after refresh, Array/Cancel/Done and navigation; .970 recurrence OPEN until device feedback.

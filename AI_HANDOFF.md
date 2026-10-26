@@ -1,4 +1,40 @@
-# BoxLab AI Handoff — .970 / Object radial icon review
+# BoxLab AI Handoff — .971 / native-UV Array repair and UI recurrence
+
+## .971 — native-UV Array compatibility; right UI recurrence — 26 October 2026
+
+User .970 reports ordinary Array “linked duplicate could not be created” and Live
+Array “requires an independent geometry object” on default UV cube. Audit main
+ aa37c161/runtime cd3e6b5f: linkedDuplicateObject intentionally refuses native UV
+resources, Live Array blanket-rejects any glbPassthrough; default UVs introduced
+later now make both old Array paths refuse. No .970 PASS inferred; .968/.969 icon
+PASS retained. Pause Edge/Paint icon rollout for these fixes.
+
+Original Array owner now uses ordinary manager.addMesh for independent native-UV
+copies, keeping exact face-corner UVs/settings, original placements and ONE history
+checkpoint. Geometry-only Array retains linked path. New small array-native-uv helper
+reuses original UV inspector/topology signature, validates complete current native
+payloads, refuses paint/imported resources/stale UVs before mutation. Independent
+copy failure restores captured scene. No global linked/UV/mesh engine changes.
+Live Array repeats exact original source UVs per copy (deliberate UV overlap), stores
+nativeUV source payload in existing JSON recipe and updates native result payload.
+Count/END reopen/Convert/UndoRedo/project codec retain it; no schema bump, reprojection
+or texture loss. Paint remains refused; source editing for native-UV Live Arrays
+remains refused by original source editor—Convert to Mesh before component changes.
+
+User .970 report00:27:56Z reopens right-side visual fault despite .967 safeguards:
+1366×886,DPR2,canvas2732×1652; no session/Paint, hidden gizmo; toolbar enabled/visible,
+in bounds and exact hit stacks. Canvas isolation/contain and header isolation active.
+Not disabled controls, missing DOM or stale967 pins. Two remaining per-SVG handle
+hover/active drop-shadow filters in original gizmo removed; stroke/opacity feedback,
+hit proxies, bounds, input and composition967 remain. This is a targeted reduction
+of filtered SVG surfaces, NOT proof of WebKit root cause or a guaranteed UI repair.
+Native .971 visibility retest required. See docs/ui-recurrence-970.md.
+
+DEVICE971: default cube ordinary Array6 copies; UndoRedo. New cube Live Array6,
+reopen/count edit/Convert, SaveOpen/UV preview. Repeat refresh/Array/Done/navigation,
+watch right toolbar and send UI Debug report if fault returns. Existing Face/Vertex/
+Object artwork unchanged. Next device feedback before Edge/Paint icons.
+
 
 ## .970 — Object radial approved icons; .969 user PASS — 26 October 2026
 
@@ -3879,3 +3915,5 @@ Runtime a88c5e146fd1e011b71af5db13fd90fd0cef2b4c; uploaded tree aaec5368d1e3421e
 ## .970 publication verified — 26 October 2026
 
 Runtime cd3e6b5f6f00eb10960878d5987e51de4e6af462; uploaded tree35d255728a40c7327bbc5422c3f9c2184678fd1d matches local tested edc60c6b. Current main version/shell970 verified. Cache-busted public version.json,index.html,object-radial-icons.css,face-radial-icons.css,vertex-radial-icons.css all byte-match tested checkout.67 focused checks PASS/0 FAIL/0 skip;13 valid SVGs. Pages40246891322 and hosted topology40246891448 were in progress when queried, while live bytes already matched; do not infer hosted full-suite PASS. User .968/.969 PASS protected. Object .970 ready for iPad review; next Edge then Paint.
+
+.971 validation:100 focused tests PASS/0 FAIL/0 skipped (~1.8s); syntax checks for Array/helper/gizmo pass. New actual-manager tests cover ordinary native-UV copies, exact authored UV preservation, Live count/reopen/Convert, UndoRedo, project codec, stale/paint refusal and copy-failure scene rollback. Existing literal Array861 pin checks (382/384/418) now use reviewed asset contract; semantic assertions retained. Two SVG glow-filter removals are not native visual proof.

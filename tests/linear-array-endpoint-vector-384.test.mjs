@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -8,7 +9,7 @@ const version=JSON.parse(fs.readFileSync(new URL('../version.json',import.meta.u
 
 test('Endpoint-vector Array runtime follows current app build',()=>{
   const wrapper=index.match(/linear-array\.js\?v=([^"]+)/)?.[1];
-  assert.equal(wrapper,'0.36.18.861'); // Persistent Array extends the existing owner.
+  assertAssetReference(index,'linear-array.js'); // Persistent Array extends the existing owner.
 });
 
 test('384 starts with source plus one END copy and no spacing slider',()=>{

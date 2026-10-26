@@ -367,3 +367,38 @@ DEVICE970: Object radial inspect inner/outer icons and longer labels; Duplicate
 and UndoRedo; Array or Solidify opens original settings; UV/Mesh Health panels;
 return to Face/Vertex and verify accepted appearance/navigation/right toolbar.
 Next Edge icons, then Paint, after device feedback; .970 not yet device accepted.
+
+## .971 — native-UV Array compatibility; right UI recurrence — 26 October 2026
+
+User .970 reports ordinary Array “linked duplicate could not be created” and Live
+Array “requires an independent geometry object” on default UV cube. Audit main
+ aa37c161/runtime cd3e6b5f: linkedDuplicateObject intentionally refuses native UV
+resources, Live Array blanket-rejects any glbPassthrough; default UVs introduced
+later now make both old Array paths refuse. No .970 PASS inferred; .968/.969 icon
+PASS retained. Pause Edge/Paint icon rollout for these fixes.
+
+Original Array owner now uses ordinary manager.addMesh for independent native-UV
+copies, keeping exact face-corner UVs/settings, original placements and ONE history
+checkpoint. Geometry-only Array retains linked path. New small array-native-uv helper
+reuses original UV inspector/topology signature, validates complete current native
+payloads, refuses paint/imported resources/stale UVs before mutation. Independent
+copy failure restores captured scene. No global linked/UV/mesh engine changes.
+Live Array repeats exact original source UVs per copy (deliberate UV overlap), stores
+nativeUV source payload in existing JSON recipe and updates native result payload.
+Count/END reopen/Convert/UndoRedo/project codec retain it; no schema bump, reprojection
+or texture loss. Paint remains refused; source editing for native-UV Live Arrays
+remains refused by original source editor—Convert to Mesh before component changes.
+
+User .970 report00:27:56Z reopens right-side visual fault despite .967 safeguards:
+1366×886,DPR2,canvas2732×1652; no session/Paint, hidden gizmo; toolbar enabled/visible,
+in bounds and exact hit stacks. Canvas isolation/contain and header isolation active.
+Not disabled controls, missing DOM or stale967 pins. Two remaining per-SVG handle
+hover/active drop-shadow filters in original gizmo removed; stroke/opacity feedback,
+hit proxies, bounds, input and composition967 remain. This is a targeted reduction
+of filtered SVG surfaces, NOT proof of WebKit root cause or a guaranteed UI repair.
+Native .971 visibility retest required. See docs/ui-recurrence-970.md.
+
+DEVICE971: default cube ordinary Array6 copies; UndoRedo. New cube Live Array6,
+reopen/count edit/Convert, SaveOpen/UV preview. Repeat refresh/Array/Done/navigation,
+watch right toolbar and send UI Debug report if fault returns. Existing Face/Vertex/
+Object artwork unchanged. Next device feedback before Edge/Paint icons.

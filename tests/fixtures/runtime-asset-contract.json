@@ -259,7 +259,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/gesture-debug.js?v=0.36.18.970",
+      "url": "./src/gesture-debug.js?v=0.36.18.971",
       "target": "src/gesture-debug.js",
       "sha256": "a502b5c866d590c878a62b5c9d816b0d064631deb86c146508f3038ec10de7cc"
     },
@@ -285,9 +285,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/linear-array.js?v=0.36.18.861",
+      "url": "./src/linear-array.js?v=0.36.18.971",
       "target": "src/linear-array.js",
-      "sha256": "2b6fc7c70907e709ff3ffe7bfde15d7bdf7c0b683de52902400c5f457f0242d9"
+      "sha256": "16032af386e3c3f296fa13a343a513d17f5cdf66544df42b2bd05e8a3c057a29"
     },
     {
       "owner": "index.html",
@@ -303,7 +303,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/main.js?v=0.36.18.970",
+      "url": "./src/main.js?v=0.36.18.971",
       "target": "src/main.js",
       "sha256": "fa0bd5aa8b23916a7dc9dbd9e7a3009760d4c3950e45602a456ca4abfe12716e",
       "sourceVersion": "0.35.1"
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.970",
+      "url": "./src/release-bootstrap.js?v=0.36.18.971",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.970",
+      "url": "./src/release-version.js?v=0.36.18.971",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -551,9 +551,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/total-gizmo.js?v=0.36.18.965",
+      "url": "./src/total-gizmo.js?v=0.36.18.971",
       "target": "src/total-gizmo.js",
-      "sha256": "33c8f3b8892a2ace31fbec6eaceff882d91721e363f195e701f5da2dd00df28e"
+      "sha256": "6c500ac8d6903efc330197e6f4971b52b6f495f1c85279b60132b68e5957a5da"
     },
     {
       "owner": "index.html",
@@ -587,7 +587,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./styles.css?v=0.36.18.970",
+      "url": "./styles.css?v=0.36.18.971",
       "target": "styles.css",
       "sha256": "13fdb97b208813afca54bb70bc427e6abe6aff7d58f36ead2c9d3213a3e52b88"
     },
@@ -3143,6 +3143,24 @@
       "url": "./object-radial-icons.css?v=0.36.18.970",
       "target": "object-radial-icons.css",
       "sha256": "9bcb43f1737f7be954ed678665bc65754490f416dfc618f0c64a976be3781ec6"
+    },
+    {
+      "owner": "src/linear-array.js",
+      "url": "./array-native-uv.js?v=0.36.18.971",
+      "target": "src/array-native-uv.js",
+      "sha256": "fce1cd2c239b9f98719309b1b63b1a24948e1abe8db78c8022c2f665b1a25c8a"
+    },
+    {
+      "owner": "src/array-native-uv.js",
+      "url": "./imported-uv-inspection.js?v=0.36.18.951",
+      "target": "src/imported-uv-inspection.js",
+      "sha256": "52dfd22f7cdb37029dd2b0e701e1b43ec5f547e602af0727fe2d3f9dae14ea64"
+    },
+    {
+      "owner": "src/array-native-uv.js",
+      "url": "./mesh-topology-signature.js?v=0.36.18.939",
+      "target": "src/mesh-topology-signature.js",
+      "sha256": "eb5661253bc7c4874251267e81af20c544ae188dda69c402948858ab6c9e23c2"
     }
   ]
 }
