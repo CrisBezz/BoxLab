@@ -10888,3 +10888,13 @@ User Array971 works/PASS; right UI971 FAIL remains independent.
 - [ ] Show3D restores canvas/model; note whether right UI fails again.
 - [ ] Copy report includes canvas-probe-observation and restored state.
 - [ ] Debug off/pagehide always restores prior canvas visibility; no scene/history changes.
+
+## .974 Edge icon device review
+
+User reports cannot reproduce right visual fault currently; icon rollout resumed
+by explicit instruction. Intermittent fault not marked fixed;973 probe retained.
+
+- [ ] All21 Edge icons match Proof03, small titles fit and outer targets do not overlap.
+- [ ] Extrude12/Bevel3 and original tool actions/disabled states retained.
+- [ ] Slide/Bevel/Loop/CutUV/StitchUV/UndoRedo and navigation remain usable.
+- [ ] Face/Vertex/Object icons and Array PASS unchanged; watch right UI visibility.

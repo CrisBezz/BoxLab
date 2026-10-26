@@ -14755,3 +14755,26 @@ again. This is the next decision gate; Array remains accepted; no modelling chan
 ## .973 publication verified — 26 October 2026
 
 Runtime cbc30cf5e822addb47e0aa3d3b44a3853598fd8f; uploaded tree e8bd5e0cf3d6d519b82d8d361dd46eabc4fc1bf4 matches tested local e5b23e9a. Main .973 version/debug pin verified; public cache-busted version.json,index.html,gesture-debug.js all byte-match tested files. Pages40254207091 completed SUCCESS. Focused26 PASS/0 FAIL/0 skip; hosted topology40254207098 in progress at proof, no hosted full-suite PASS claimed. DIAGNOSTIC READY: hide only 3D while failure present, record visible/missing, Show3D, Copy report. No visual repair claimed. Array971 PASS retained; .972 plain-profile FAIL recorded.
+
+## .974 — approved Edge icons; user resumes icon rollout — 26 October 2026
+
+User cannot currently reproduce right-side fault on973 and explicitly requests
+“Move onto updating icons as before /nextbuild”. This authorizes resuming icons;
+NOT a proven compositor repair or broad973 PASS. Keep intermittent visibility OPEN,
+retain opt-in973 canvas probe and972 plain UI. Array971 PASS protected.
+Audit current main46dcc231/runtimecbc30cf5, shell973 and all21 existing Edge tools.
+Add only edge-radial-icons.css: approved Proof03 artwork,32px icons and original
+small captions. Includes revised Offset/MergeDist/FillFace/Dissolve and restored
+Bridge. Extrude12/Bevel3 and ALL source target IDs/labels/angular slots retained.
+Inner same76×60/r112 as Face/Vertex; outer68×58/r230 fits dense original spacing,
+9px titles/line-height1/padding2px allow two-line captions without enlarging ring.
+One-off rectangle check confirms0 pairwise button overlaps across21 targets.
+Exact original tool event/availability/UV/history owners and all runtimeJS retained.
+Face/Vertex/Object sheets, Array,973 debug and972 stability CSS/pins unchanged.
+
+DEVICE974: Edge selection→radial inspect icons/titles/dense outer spacing; try Slide,
+Bevel and Loop; Cut/Stitch UV access and UndoRedo on suitable mesh. Switch other
+modes to confirm accepted icons, navigation and right controls remain usable.
+Next Paint icons after Edge feedback. Keep canvas diagnostic if visibility recurs.
+
+.974 validation:58 focused checks PASS/0 FAIL/0 skipped (~0.84s), final reviewed release checks5 PASS after outer height58px sizing adjustment.21 SVGs valid; zero pairwise button-box overlaps at retained angles/radii. Outer58px includes two9px text lines,32px icon,padding/gap/border. All runtimeJS, prior accepted CSS/972 stability and973 probe byte-unchanged. Native label readability pending.

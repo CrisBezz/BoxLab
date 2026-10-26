@@ -462,3 +462,24 @@ DEVICE973: while right controls visually missing, BEFORE app switching, use File
 UI Debug→Hide 3D only. Inspect top-right toolbar; choose visible/missing result.
 Show3D again→Copy report and send. Also say if restored3D makes rightUI disappear
 again. This is the next decision gate; Array remains accepted; no modelling changes.
+
+## .974 — approved Edge icons; user resumes icon rollout — 26 October 2026
+
+User cannot currently reproduce right-side fault on973 and explicitly requests
+“Move onto updating icons as before /nextbuild”. This authorizes resuming icons;
+NOT a proven compositor repair or broad973 PASS. Keep intermittent visibility OPEN,
+retain opt-in973 canvas probe and972 plain UI. Array971 PASS protected.
+Audit current main46dcc231/runtimecbc30cf5, shell973 and all21 existing Edge tools.
+Add only edge-radial-icons.css: approved Proof03 artwork,32px icons and original
+small captions. Includes revised Offset/MergeDist/FillFace/Dissolve and restored
+Bridge. Extrude12/Bevel3 and ALL source target IDs/labels/angular slots retained.
+Inner same76×60/r112 as Face/Vertex; outer68×58/r230 fits dense original spacing,
+9px titles/line-height1/padding2px allow two-line captions without enlarging ring.
+One-off rectangle check confirms0 pairwise button overlaps across21 targets.
+Exact original tool event/availability/UV/history owners and all runtimeJS retained.
+Face/Vertex/Object sheets, Array,973 debug and972 stability CSS/pins unchanged.
+
+DEVICE974: Edge selection→radial inspect icons/titles/dense outer spacing; try Slide,
+Bevel and Loop; Cut/Stitch UV access and UndoRedo on suitable mesh. Switch other
+modes to confirm accepted icons, navigation and right controls remain usable.
+Next Paint icons after Edge feedback. Keep canvas diagnostic if visibility recurs.
