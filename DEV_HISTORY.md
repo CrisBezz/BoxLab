@@ -14856,3 +14856,45 @@ Publication verification follows separately. DEVICE976: same model/two red edges
 Edge radial Bridge → Apply Bridge: one closing quad. UndoRedo; reopen then Cancel
 retains pair/geometry. Also sanity-check existing two-loop Bridge. Next actual device
 feedback, then Paint icon rollout; preserve independent975 Extrude pad device gate.
+
+## .977 — radial wiring audit and near-front Exact Extrude — 26 October 2026
+
+User requests audit of all radial tools; orbit sometimes changes Through refusal.
+Audit current main563fede9/build976. Full route inventory81 entries (Face23/Edge21/
+Vertex14/Object13/Paint10), original targets/availability/context adapters/action owners:
+ docs/radial-wiring-audit-2026-10-26.md. No missing action owner or wrong-mode target
+found in source review; this is not exhaustive native-gesture/mesh certification.
+976 Bridge launcher defect repaired/published; all3 changed live files byte-match.
+Baseline976 FULL2833PASS/0FAIL/0skip (100.7s), focused225PASS.
+
+Confirmed separate Exact bug: precision-face projected-normal fallback threshold1e-5px
+versus actual multi-face-direct gesture1e-4px can invert sign in narrow near-front
+camera band. Existing bevel-inset750 face7, camera centre+normal*5+(0,1e-6,0): Exact
+-2.2 incorrectly extrudes+2.2; orbit.01 cuts inward. Align ORIGINAL precision cutoff
+to gesture1e-4 ONLY. No main/drag/kernel/geometry/history/inference/physical input change.
+Dynamic precision-face child and drawer-ui parent/shell keys977 refreshed; original
+internal stamps retained. Reviewed hashes and release recovery/shell markers977.
+Three new tests use actual precision projection + native controller/fallback:10 angles,
+exact closed output/UndoRedo, old-code mutation sensitivity, five physical drags and
+pure-plan invariance. Focused final128PASS/0FAIL/0skip, not full977 rerun.
+
+User's physical Through refusal remains unproven on affected model. Camera changes
+projected dragging and reference inference; no blanket refusal fix claimed. Audit
+also records two follow-ups: numeric synthetic input still traverses inference, and
+precision success/readback lacks downstream commit acknowledgement. Keep these OPEN
+for narrow result/constraint work; don't relax topology guards or replace kernel.
+
+New visibility evidence while977 prepared: exact976 report04:53:18Z shows hide canvas
+at24626, rightUI visible observation35014, restore37246. User confirms controls STAY
+visible after Show3D. Top-level hidden:false is restored state. Layout/styles/hits
+healthy throughout; noPaint/session, plain972 active. This implicates a canvas/UI
+painting interaction but no engine root cause or permanent fix is proven. Retain
+OPEN recurrence and device-proven manual Hide3D→Show3D recovery; no automatic blink,
+poll/reload/renderer change. See docs/ui-canvas-probe-976.md for precise evidence.
+
+DEVICE977: confirm977, same negative Exact on near-front then slightly orbited view;
+UndoRedo; retry original physical Through with inference off/on, send exact refusal
+and pre-attempt.boxlab if recurring. Bridge pair Apply/Cancel retained. If right UI
+fails use existing Hide3D→Show3D;977 does NOT claim to repair visibility. Next prioritize
+evidence-led canvas/UI diagnosis, then exact-result/inference follow-ups before more
+feature rollout.974 icon/971 Array acceptance and protectedMulti1.0/frozen unchanged.

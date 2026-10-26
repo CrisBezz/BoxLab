@@ -167,9 +167,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.938",
+      "url": "./src/drawer-ui.js?v=0.36.18.977",
       "target": "src/drawer-ui.js",
-      "sha256": "4c3a4b4a2adf37cee17a291421913b3e81a12212ac6bf521511b17ef5855e460"
+      "sha256": "fd52b27e1777d076fd6091be4f586baa6ef976e9c34d91a701d214ef598eb384"
     },
     {
       "owner": "index.html",
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.976",
+      "url": "./src/release-bootstrap.js?v=0.36.18.977",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.976",
+      "url": "./src/release-version.js?v=0.36.18.977",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -967,9 +967,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./precision-face.js?v=0.36.18.732",
+      "url": "./precision-face.js?v=0.36.18.977",
       "target": "src/precision-face.js",
-      "sha256": "10e47be7283b46a5db3da809641ac718a79b628497d5488a897fa53ac79288ec"
+      "sha256": "a6b0e50bdb4c18456a1d080c7cd702a90f2d3f7c5c76da66b0e9b5ddb8845dfb"
     },
     {
       "owner": "src/drawer-ui.js",
