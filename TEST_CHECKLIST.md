@@ -11429,3 +11429,22 @@ these overlapping sets are not a combined distinct test count. Device acceptance
 pending. Intermittent right-region rendering remains OPEN. Publish pending commits,
 verify current main and live version/index/direct/export/packed/core/palette assets,
 then provide short DEVICE994 and DEVICE993 hands-on checks.
+
+## .994 publication verified — 27 October 2026
+
+Published runtime c5db2e56ad2a71d2590f4172b4efd1e76a9d1151, tree
+ad464a29e6750afc119407302aa6ffa9f2a074b8, exactly matches tested/uploaded local
+ca297398 tree. All17 changed blobs verified before atomic non-forced main update.
+Fetched origin/main confirms runtime commit/tree. Pages40458723639 completed SUCCESS.
+All10 fresh live checks byte-match: version.json,index.html,multi-face-direct,
+nomad-export-core,nomad-packed-maps,export-as-panel,facegroup-colours-core,Lab loader,
+AI_HANDOFF.md and AI_WORKFLOW.md. Seven final release checks pass. Hosted full
+Topology40458725555 was in progress when checked; no hosted full-suite PASS claimed.
+No runtime changes after focused validation. This publication proof is docs-only.
+User standing approval is reaffirmed in THIS chat and AI_WORKFLOW/AI_HANDOFF; no
+further publication permission question for BoxLab. Historical LOCAL ONLY/approval
+block entries are superseded. Build994 is LIVE and READY FOR TESTING, includes993.
+DEVICE994: native NOM six named groups have six distinct colours/correct regions;
+textures unchanged. DEVICE993: Face Apply Exact twice, Done, UndoRedo; Inset Exact
+and ordinary Pencil drag sanity.992 facegroup list acceptance still pending;991 PASS
+protected. Recurring right-region rendering remains OPEN. Next act on device feedback.
