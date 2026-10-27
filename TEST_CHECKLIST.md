@@ -11270,3 +11270,10 @@ unrelatedfeature rollout or speculative further CSS/engine fixes.
 - [ ] Done stops brush/hides dock; mode/look/another tool closes it, navigation unaffected. Reopen retains original values.
 - [x] Automated original-node/value/listener lifecycle, Done, command routing and active-tool refusal checks pass.
 - [ ] Native iPad dock readability/tap/typing/picker gate pending; keep watch for rendering recurrence.
+
+## .991 rendering recurrence evidence
+
+- [x] Native991 VIEW open/close transitions and990 closed displaynone/zero bounds confirmed by report.
+- [ ] FAILED/OPEN: user right-region visual loss recurs despite correct menu state; no permanent990 repair claim.
+- [ ]991 left dock native UX still pending; parked authoring nodes legitimately have zero bounds until opened.
+- [ ] If persistent: compare left dock visibility to affected right region; no repeat canvas/toggle dump requested.

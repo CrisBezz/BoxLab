@@ -1,5 +1,31 @@
 # BoxLab AI Handoff — .991 / compact facegroup paint dock; .990 PASS protected
 
+## .991 right-region recurrence — 27 October 2026, 04:01:19Z
+
+User explicitly reports right-hand issue AGAIN on991. Do not treat990 functional
+PASS as permanent rendering acceptance; retain closed-panel lifecycle protection
+while reopening broad visibility gate.991 dock UX has NOT received user PASS.
+Supplied report: Facegroups/Face, no active stroke/session/texture Paint; canvas
+visible2732x1652, viewport1366x886/DPR2. Studio overlay opacity0. VIEW native
+toggle evidence at28391/29205/30086/31107 shows open true/false/true/false. Open
+panel rect998/66/360/811.984, scrollHeight980/clientHeight810; closed displaynone
+and zero rect. Thus native input and990 closed-surface removal work, but do NOT
+eliminate user's visual loss. Do not repeat native-toggle failure or retained closed
+VIEW panel as explanation for this capture. Transparent Studio layer remains in
+DOM; opacity0 weakens visible-vignette explanation without proving engine cause.
+Controls/DOM/hits healthy is not pixel evidence. Gizmo explicitly hidden here.
+
+In991 authoring nodes are parked in hidden home until Open facegroup paint controls.
+Their zero bounds even while VIEW open are EXPECTED; palette appearance controls
+remain in VIEW. Debug's groupPicker optionCount1 can simply mean empty named-group
+list plus placeholder. Do not infer selector regression or missing authoring nodes.
+Current debug does not sample new dock root. Source/UX991 remains pending device
+acceptance. Runtime remains991; no speculative rendering changes in this update.
+Live version/index/render-modes/dock byte-match verified;91 focused tests were
+validated before publication. Next test new left dock and compare its visibility
+with affected right region if recurrence persists; no repeated Hide3D/toggle dumps
+needed. Root cause remains unconfirmed.
+
 ## .991 — compact left facegroup paint dock; .990 user PASS — 27 October 2026
 
 User PASS990 protects explicit closed VIEW surface and original open/scroll/picker
