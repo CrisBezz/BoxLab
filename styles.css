@@ -125,8 +125,7 @@
 #fileMenu .top-file-content .segmented{gap:2px;padding:2px}
 #fileMenu .top-file-content .segmented button{min-height:28px;padding:3px 5px;margin-top:0}
 
-/* .967: bound WebGL painting independently of the DOM interface. Preserve popup
-   overflow/fixed positioning: no transform or paint containment on UI menus. */
-#viewportWrap{isolation:isolate;z-index:0}
-#viewport{position:relative;z-index:0;contain:paint;isolation:isolate}
-.topbar,.statusbar,#objectBrowserPanel{isolation:isolate;will-change:opacity}
+/* .999 — plain initial viewport stack. Native WebGL canvas owns its surface;
+   UI z-order does not require CSS paint containment or extra opacity layers. */
+#viewportWrap{z-index:0}
+#viewport{position:relative;z-index:0}

@@ -1,3 +1,33 @@
+## .999 — rebuild initial viewport baseline; .998 FAIL — 27 October 2026
+
+User explicitly FAILs .998: right-side viewport patch exists immediately after
+refresh, VIEW initially works, then selecting Facegroups leaves it blank. Screenshot
+715C468D-4F44-4AF8-8E86-5F1B083F9DFC.png shows the bottom/right tonal boundary before
+VIEW opens. Do not repeat menu-only frame/scroller changes or infer success from
+healthy DOM bounds. .997/.998 are not complete visibility repairs.
+
+Rebuild the existing initial presentation path: remove .967 CSS paint containment,
+canvas/wrapper/header isolation and opacity-layer requests; retain original z-order.
+Retire the full-viewport HTML multiply vignette and its mode opacity animation;
+existing Studio WebGL lights, ground and shadows remain authoritative. The original
+main renderer now uses one atomic setDrawingBufferSize for actual dimensions/DPR
+changes, without initial setPixelRatio followed by size reset, and does not rewrite
+canvas backing dimensions on same-size startup/visibility/session callbacks.
+No second renderer, canvas recreation, forced hide/show or refresh loop. No menu,
+Facegroups modelling/colour, geometry, history, gesture or frozen Multi changes.
+The vignette is intentionally removed: a slightly less dark edge is expected.
+
+Validation: 20 focused startup/sizing/composition/VIEW/release checks PASS; syntax
+and whitespace clean. Broader and publication results: docs/publication-999.md.
+No native pixel proof is claimed. .999 is a baseline retest, not an accepted fix.
+Keep feature work paused until initial refresh and Facegroups visibility are stable.
+Standing user authorization to commit/push/publish remains in force.
+
+DEVICE999, in order: refresh and inspect bottom/right BEFORE opening VIEW; open
+Studio VIEW; select Facegroups, scroll and reopen VIEW; return Studio; select/move
+near the right edge and inspect gizmo; verify orbit/pan/pinch and Undo/Redo. Report
+which earliest stage fails. Current build .999; readiness = device retest pending.
+
 ## .998 — Facegroups transition repair, native acceptance pending — 27 October 2026
 
 User clarified: VIEW works in Studio, then becomes empty when Facegroups is selected.
@@ -18,7 +48,8 @@ continues; no repeat approval needed. Current build .998, ready for device retes
 ## .997 initial Studio success; Facegroups transition remains OPEN — 27 October 2026
 
 User: “View works great - there is still a patch on the right that's hiding the
-gizmo contents.” Accept/protect997 VIEW rendering repair specifically; do not infer
+gizmo contents.” This initial Studio success was subsequently superseded by the
+Facegroups failure and explicit .998 FAIL. Do not infer
 broad right-region/gizmo acceptance. Keep996 File menu PASS and994 acceptance.
 
 New997 report08:04:53.110Z: Studio/Face, viewport1366x886,DPR2,canvas2732x1652,
@@ -35,8 +66,8 @@ Toggle-time records at29629/43262/44313 show openTRUE with panelhiddenTRUE; clos
 42140/43804/44827 show previous visible panel bounds. Debug observes toggle at window
 capture, while surface visibility is mirrored by MutationObserver. These transition
 samples can precede the visibility update; they are not by themselves persistent
-VIEW failure evidence. User explicitly confirms VIEW now works. Preserve accepted
-surface structure; if future reporting work is needed, sample settled state rather
+VIEW failure evidence. User initially confirmed Studio VIEW; Facegroups still failed.
+Retain existing control identity; if future reporting work is needed, sample settled state rather
 than claiming these transition records show a remaining visible closed panel.
 
 Source audit: Total Gizmo root remains original196px viewport child, translated to

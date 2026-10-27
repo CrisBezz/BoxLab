@@ -167,9 +167,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.998",
+      "url": "./src/drawer-ui.js?v=0.36.18.999",
       "target": "src/drawer-ui.js",
-      "sha256": "6438ffec2843671c023c96e6e7e13ba6aa7d1bd9df4e389ba5db700e9fe84458"
+      "sha256": "3d449c96e968733b57eb56177745f21f782a83639832d5b111f334759e29446c"
     },
     {
       "owner": "index.html",
@@ -303,9 +303,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/main.js?v=0.36.18.975",
+      "url": "./src/main.js?v=0.36.18.999",
       "target": "src/main.js",
-      "sha256": "fa0bd5aa8b23916a7dc9dbd9e7a3009760d4c3950e45602a456ca4abfe12716e",
+      "sha256": "4fbef203250f483b836902689c9e4d0b2417187244ae04b87e783d94d88a8174",
       "sourceVersion": "0.35.1"
     },
     {
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.998",
+      "url": "./src/release-bootstrap.js?v=0.36.18.999",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.998",
+      "url": "./src/release-version.js?v=0.36.18.999",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -587,9 +587,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./styles.css?v=0.36.18.975",
+      "url": "./styles.css?v=0.36.18.999",
       "target": "styles.css",
-      "sha256": "13fdb97b208813afca54bb70bc427e6abe6aff7d58f36ead2c9d3213a3e52b88"
+      "sha256": "340d07fa57d5f53ad25ca8f0f4b080cd27895d1c4d1b880076fc74e0d1cde32d"
     },
     {
       "owner": "index.html",
@@ -876,9 +876,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.998",
+      "url": "./face-workflow-layout.js?v=0.36.18.999",
       "target": "src/face-workflow-layout.js",
-      "sha256": "b218c1549b2f0fb0aba537d91da9eac59d11bc8c4fed145d34e8c2ca9952fb2f"
+      "sha256": "daa37a51251850ef5d12e0ac47402a8682f455e58e2ef97d2eb0d9b138860945"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1446,9 +1446,9 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./studio-atmosphere.js?v=0.36.18.189",
+      "url": "./studio-atmosphere.js?v=0.36.18.999",
       "target": "src/studio-atmosphere.js",
-      "sha256": "cca49fb489e88e287e4a738f08d1829116b99b1c110ac9ef8c8fc15e38083a22",
+      "sha256": "45dfbc61be7505d39ca0620246f0d455af17f0f436774e973286a9d2fa8010dc",
       "sourceVersion": "0.36.18.189"
     },
     {

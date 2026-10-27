@@ -15,7 +15,7 @@ import { nearestCrossObjectSnap, componentSnapDelta } from './cross-object-snap-
 
 const VERSION='0.35.1';
 const canvas=document.querySelector('#viewport'),wrap=document.querySelector('#viewportWrap');
-const renderer=new THREE.WebGLRenderer({canvas,antialias:true});renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.shadowMap.enabled=false;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+const renderer=new THREE.WebGLRenderer({canvas,antialias:true});renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.shadowMap.enabled=false;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
 const scene=new THREE.Scene();scene.background=new THREE.Color(0x111318);
 const camera=new THREE.PerspectiveCamera(42,1,.01,100);camera.position.set(4.2,3.1,4.6);
 globalThis.__boxlabPencilOrbitGate?.beginOrbitRegistration?.();
@@ -370,7 +370,15 @@ function syncDirectToolControls(){const loop=document.querySelector('#loopCutBtn
 function syncCreaseControl(){if(selection?.type!=='edge'||!selectionCount())return;const current=mesh.edgeCrease(selection.index),pct=current>0?Math.round(current*100):100;document.querySelector('#creaseStrength').value=String(pct);document.querySelector('#creaseStrengthOut').textContent=`${pct}%`;}
 function syncMirrorAlignControl(){const b=document.querySelector('#alignMirrorBtn'),axes=activeMirrorAxes().map(a=>a.toUpperCase());b.textContent=axes.length?`Align Object to Mirror ${axes.join('')}`:'Align Object to Mirror';}
 function updateScreenSpaceSelection(){const height=Math.max(1,renderer.domElement.clientHeight),fov=THREE.MathUtils.degToRad(camera.fov);root.children.forEach(object=>{const pixels=object.userData?.screenPixels;if(!pixels)return;const distance=Math.max(.001,camera.position.distanceTo(object.position)),size=2*Math.tan(fov*.5)*distance/height*pixels;if(object.userData.screenShape==='edge')object.scale.set(size,1,size);else object.scale.setScalar(size);});updateCageBatches(root);}
-function resize(w=wrap.clientWidth,h=wrap.clientHeight,dpr=Math.min(window.devicePixelRatio||1,2)){if(w<=0||h<=0)return;if(renderer.getPixelRatio()!==dpr)renderer.setPixelRatio(dpr);renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();updateScreenSpaceSelection();}
+function resize(w=wrap.clientWidth,h=wrap.clientHeight,dpr=Math.min(window.devicePixelRatio||1,2)){
+ if(w<=0||h<=0||dpr<=0||![w,h,dpr].every(Number.isFinite))return;
+ // Establish the final drawing buffer once. Lifecycle/settling callbacks with
+ // unchanged bounds must not rewrite canvas.width/height and reset its surface.
+ const size=renderer.getSize(new THREE.Vector2());
+ if(size.x!==w||size.y!==h||renderer.getPixelRatio()!==dpr)renderer.setDrawingBufferSize(w,h,dpr);
+ if(camera.aspect!==w/h){camera.aspect=w/h;camera.updateProjectionMatrix();}
+ updateScreenSpaceSelection();
+}
 function setPointer(event){const r=canvas.getBoundingClientRect();pointer.x=((event.clientX-r.left)/r.width)*2-1;pointer.y=-((event.clientY-r.top)/r.height)*2+1;}
 function pickKindHits(event,kind){setPointer(event);if(kind==='edge'&&root.children.some(o=>o.userData.kind==='edge'&&o.isLine))return pickScreenEdges(event,camera,canvas,root.children);raycaster.setFromCamera(pointer,camera);return raycaster.intersectObjects(root.children.filter(o=>o.userData.kind===kind),false).map(hit=>({type:kind,index:hit.object.userData.index,distance:hit.distance}));}
 function pickKind(event,kind){const hits=pickKindHits(event,kind);return hits.length?{type:kind,index:hits[0].index}:null;}
