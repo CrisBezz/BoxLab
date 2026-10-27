@@ -16,3 +16,6 @@
 
 /* .990 — closed VIEW has no fixed scrolling surface, including before modules load. */
 #viewModes:not([open]) > .viewport-menu-panel{display:none!important}
+
+/* .997 — external VIEW surface starts hidden and has zero closed layout. */
+#viewModesPanel[hidden]{display:none!important}

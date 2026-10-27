@@ -1,3 +1,4 @@
+import {mountViewMenuSurface} from './view-menu-surface.js?v=0.36.18.997';
 import * as THREE from 'three';
 
 const status=document.querySelector('#selectionStatus');
@@ -9,9 +10,9 @@ function ensureUI(){
   const wrap=document.querySelector('#viewModes')||document.createElement('details');
   wrap.id='viewModes';
   wrap.className='viewport-menu';
-  if(!wrap.querySelector('.viewport-menu-panel'))wrap.innerHTML=`
+  if(!document.querySelector('#viewModesPanel')&&!wrap.querySelector('.viewport-menu-panel'))wrap.innerHTML=`
     <summary title="View settings" aria-label="View settings"><span class="viewport-menu-icon">◈</span><span>VIEW</span><span class="viewport-menu-caret">▾</span></summary>
-    <div class="viewport-menu-panel">
+    <div id="viewModesPanel" class="viewport-menu-panel" hidden>
       <div class="viewport-menu-section">
         <div class="viewport-menu-label">View Direction</div>
         <div class="viewport-view-grid">
@@ -52,6 +53,7 @@ function ensureUI(){
 #viewModes>summary::-webkit-details-marker{display:none}
 #viewModes[open]>summary{background:rgba(255,255,255,.1)}
 #viewModes:not([open]) > .viewport-menu-panel{display:none!important}
+#viewModesPanel[hidden]{display:none!important}
 .viewport-menu-icon{font-size:15px;line-height:1;opacity:.9}.viewport-menu-caret{font-size:10px;opacity:.65}
 .viewport-menu-panel{position:fixed;right:max(8px,env(safe-area-inset-right));top:calc(var(--boxlab-topbar-h,60px) + 6px);z-index:200;width:min(360px,calc(100vw - 16px));max-height:calc(100dvh - var(--boxlab-topbar-h,60px) - 14px);overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;scrollbar-gutter:stable;padding:10px;border:1px solid rgba(255,255,255,.14);border-radius:11px;background:rgba(17,19,24,.98);box-shadow:0 14px 34px rgba(0,0,0,.38);backdrop-filter:blur(18px);pointer-events:auto;touch-action:pan-y}
 .viewport-menu-section+.viewport-menu-section{margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.09)}
@@ -113,7 +115,7 @@ function setView(view){
   camera.lookAt(center);
   camera.updateProjectionMatrix();
   if(controls?.target){controls.target.copy(center);controls.update?.();}
-  document.querySelectorAll('#viewModes button[data-view]').forEach(button=>button.classList.toggle('active',button.dataset.view===view));
+  document.querySelectorAll('#viewModesPanel button[data-view],#viewModes button[data-view]').forEach(button=>button.classList.toggle('active',button.dataset.view===view));
   if(status)status.textContent=`View • ${view==='axon'?'3D Axon':view[0].toUpperCase()+view.slice(1)}`;
 }
 
@@ -165,6 +167,8 @@ function toggleFocusView(){
 }
 
 const ui=ensureUI();
+const viewSurface=mountViewMenuSurface({menu:ui,panel:document.querySelector('#viewModesPanel')||ui?.querySelector('.viewport-menu-panel'),parent:document.querySelector('#app')||document.body});
+const viewPanel=viewSurface?.panel;
 const gestureDebugButton=document.querySelector('#gestureDebugToggle');
 function syncGestureDebugButton(){
   if(!gestureDebugButton)return;
@@ -209,7 +213,7 @@ function activateButton(button){
 const focusTopButton=document.querySelector('#focusViewBtn');
 focusTopButton?.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();toggleFocusView();});
 let suppressSyntheticClickUntil=0;
-ui?.addEventListener('click',event=>{
+viewPanel?.addEventListener('click',event=>{
   const button=event.target.closest('button[data-view],#viewObjectListBtn');
   if(!button)return;
   if(performance.now()<suppressSyntheticClickUntil){event.preventDefault();event.stopPropagation();return;}
@@ -218,7 +222,7 @@ ui?.addEventListener('click',event=>{
 
 // iPadOS can suppress synthesized clicks in this panel, so touch/Pencil activates
 // on pointerup. Suppress the following synthetic click so toggles fire only once.
-ui?.addEventListener('pointerup',event=>{
+viewPanel?.addEventListener('pointerup',event=>{
   if(event.pointerType==='mouse')return;
   const button=event.target.closest('button[data-view],button[data-render],#viewObjectListBtn');
   if(!button)return;
@@ -228,7 +232,7 @@ ui?.addEventListener('pointerup',event=>{
 
 document.addEventListener('pointerdown',event=>{
   if(!ui?.open)return;
-  if(event.target?.closest?.('#viewModes'))return;
+  if(event.target?.closest?.('#viewModes,#viewModesPanel'))return;
   ui.open=false;
 },true);
 

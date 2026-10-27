@@ -206,7 +206,7 @@ function viewMenuEvidence(){
  const read=selector=>{
   const node=document.querySelector(selector);if(!node)return {selector,present:false};
   const r=node.getBoundingClientRect(),style=getComputedStyle(node);
-  return {selector,present:true,rect:{x:r.x,y:r.y,width:r.width,height:r.height},hidden:!!node.hidden,
+  return {selector,present:true,parentId:node.parentElement?.id||null,rect:{x:r.x,y:r.y,width:r.width,height:r.height},hidden:!!node.hidden,
    display:style.display,visibility:style.visibility,opacity:style.opacity,overflowX:style.overflowX,overflowY:style.overflowY,clipPath:style.clipPath,contain:style.contain,transform:style.transform,zIndex:style.zIndex,mixBlendMode:style.mixBlendMode,
    scrollTop:node.scrollTop??null,scrollHeight:node.scrollHeight??null,clientHeight:node.clientHeight??null};
  };
@@ -215,7 +215,7 @@ function viewMenuEvidence(){
   selectionMode:globalThis.__boxlabSelectionBridge?.mode?.()??null,
   facegroupStroke:{armed:!!stroke?.armed,pointerId:stroke?.pointerId??null,mode:stroke?.armed?(stroke.group===null?'erase':'assign'):null},
   groupPicker:{present:!!picker,optionCount:picker?.options?.length??null,selectedIndex:picker?.selectedIndex??null,disabled:picker?!!picker.disabled:null},
-  nodes:['#viewModes .viewport-menu-panel','#facegroupViewControls','#facegroupNames','#facegroupSaturation','#facegroupLightness','#facegroupReset','#boxlabStudioAtmosphere'].map(read)};
+  nodes:['#viewModesPanel','#facegroupViewControls','#facegroupNames','#facegroupSaturation','#facegroupLightness','#facegroupReset','#boxlabStudioAtmosphere'].map(read)};
 }
 function uiSnapshot(){
  const rect=node=>{if(!node)return null;const r=node.getBoundingClientRect(),s=getComputedStyle(node);return {...describe(node),rect:{x:r.x,y:r.y,width:r.width,height:r.height},hidden:node.hidden,disabled:node.disabled,parentId:node.parentElement?.id||null,popover:node.getAttribute?.('popover')||null,topLayer:node.getAttribute?.('popover')==='manual'&&node.matches?.(':popover-open')===true,display:s.display,visibility:s.visibility,pointerEvents:s.pointerEvents,opacity:s.opacity,zIndex:s.zIndex,transform:s.transform,overflow:s.overflow,contain:s.contain,isolation:s.isolation,willChange:s.willChange,filter:s.filter,backdropFilter:s.backdropFilter};};

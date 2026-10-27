@@ -15847,3 +15847,66 @@ Save/Open a test .boxlab; import/export and NOMAD original actions; Refresh disp
 still available. Do not reset a working model to test styling. Right-menu rendering
 remains OPEN;995 Facegroup device acceptance still pending. Standing publication
 approval retained. Next follow996 menu/iPad spacing and995 tool feedback.
+
+## .997 — external original VIEW surface; .996 user PASS — 27 October 2026
+
+User996 PASS protects arranged File menu, original actions and spacing. User now
+identifies affected surface precisely: VIEW outer frame toggles but its contents
+never draw. Report996 at07:41:06Z shows open43289/47255, closed45303/54977. Open
+panel998/66/360/811.984,scrollHeight980/clientHeight810; actual saturation/lightness/
+reset controls have normal layout bounds. Closed displaynone/zero bounds works.
+This is drawn-content failure, not proof of missing nodes or a failed native toggle.
+Group-list null optionCount/index is expected DIV list; hidden gizmo in this capture
+is not evidence of gizmo painting failure. Do not request another identical report.
+
+User adds a useful chronology clue: current right VIEW trouble seemed to start when
+Facegroup items were added. Facegroup controls grow VIEW from earlier Studio754px
+content to980px and activate overflow at810px. That points to the fixed scrolling
+surface inside native details as a plausible trigger; it is NOT engine/root-cause
+proof and does not rewrite older966+ right-region reports as all starting at984.
+
+Existing VIEW panel is a fixed overflowing direct child of native <details>, whose
+browser-disclosed contents have a separate visibility/painting lifecycle. New small
+view-menu-surface moves that SAME panel ONCE under #app, outside native disclosure
+and header clipping/stacking ancestry. Original native #viewModes details.open is
+STILL sole open state. One attribute-filtered MutationObserver mirrors current open
+into explicit panel.hidden and summary aria-expanded/controls. No duplicate toggle,
+open boolean, new raw-pointer owner, second popup/content copy or automatic repaint.
+Closed external panel is displaynone/zero-layout from early shell stylesheet onward.
+Existing fixed position/width/max-height/scroll/touch styles remain; scroll offset
+restores on reopening. Same DOM IDs/values/listeners remain. Rehydration detects
+external panel rather than recreating contents. Keyboard Tab/ArrowDown from open
+summary enters panel; ShiftTab returns, Escape closes native owner/returns focus.
+
+Original view-modes click/pointerup delegation now binds original external panel;
+existing synthesized-click suppression retained. Outside-close accepts BOTH trigger
+and panel; active-view highlighting searches stable panel ID. Clean View uses new
+ID with legacy fallback, preserving original overlay owner. UI Debug samples new
+#viewModesPanel and parentId, retaining existing controls/mode/scroll/toggle evidence.
+No canvas/renderer/atmosphere/Paint/UV/facegroup/geometry/history/Multi1.0 changes.
+File996 stylesheet and functional owners unchanged. This is a targeted structural
+repair requiring native feedback, NOT a proven permanent WebKit/root-cause repair.
+
+Reviewed cache closure: view-modes→new surface997; Clean View→Face workflow→drawer
+997; debug/early toolbar/shell/recovery997. Drawer also aligns its stale project-
+installer child key938 to accepted shell996, avoiding competing cached installer
+versions; no new project installer code. Existing old internal stamps retained.
+
+Final93 focused PASS/0FAIL/0skip (~0.75s):7 new surface identity/observer/idempotence/
+coalesced state/scroll/inside-outside activation/Pencil suppression/keyboard tests,
+original startup toolbar/FrameAll/menu/Clean View/Facegroup/brush/dock/File/debug/
+display/release contracts. JS syntax and diff clean. View scroll test parser now
+selects its two max-height-bearing base/media rules instead of also counting990's
+closed descendant-display selector; all height/overflow assertions retained, and
+997 has explicit closed-surface coverage. No CSS/rendered/native/full-suite proof
+claimed from controlled DOM tests. Later hosted status and exact publication/live
+proof recorded in docs/publication-997.md; consult before describing delivery.
+
+DEVICE997: fresh997 open VIEW: directions/looks/controls must visibly draw, not only
+frame. Compare Studio and Facegroups (overflow case); scroll to bottom, toggle looks
+and reopen with finger/Pencil. Close VIEW via trigger/outside tap; open File and
+return. Face radial FACEGROUP still opens original left dock. Confirm without app-
+switch/Refresh display workaround. .996 PASS is protected;995 acceptance not inferred.
+Current VIEW pixel acceptance remains pending; broader historical right-region issue
+stays OPEN until native feedback. Next assess997 iPad result before more rendering
+changes or facegroup-seam UV/material work. Standing push/publish approval applies.

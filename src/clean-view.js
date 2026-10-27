@@ -56,7 +56,7 @@ function setEnabled(next){
 function toggle(){return setEnabled(!enabled);}
 
 function ensureUI(){
-  const panel=document.querySelector('#viewModes .viewport-menu-panel');
+  const panel=document.querySelector('#viewModesPanel')||document.querySelector('#viewModes .viewport-menu-panel');
   if(!panel)return false;
   let section=document.querySelector('#viewportDisplaySection');
   if(!section){

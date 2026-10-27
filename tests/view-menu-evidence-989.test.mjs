@@ -5,7 +5,7 @@ function fixture(){
  const f=gestureDebugRuntime();
  const node=(extra={})=>({tagName:'DIV',id:'',className:'',hidden:false,scrollTop:0,scrollHeight:1000,clientHeight:600,getBoundingClientRect:()=>({x:990,y:66,left:990,top:66,width:360,height:600}),...extra});
  const menu=node({id:'viewModes',open:true}),panel=node({classList:{contains:s=>s==='viewport-menu-panel'}}),picker=node({options:[{},{},{}],selectedIndex:1,disabled:false});
- const map=new Map([['#viewModes',menu],['#viewModes .viewport-menu-panel',panel],['#facegroupNames',picker],['#viewportRenderLooks [data-render].active',{dataset:{render:'facegroups'}}]]);
+ const map=new Map([['#viewModes',menu],['#viewModesPanel',panel],['#facegroupNames',picker],['#viewportRenderLooks [data-render].active',{dataset:{render:'facegroups'}}]]);
  f.c.document.querySelector=s=>map.get(s)||null;f.c.getComputedStyle=()=>({display:'block',visibility:'visible',opacity:'1',overflowY:'auto',clipPath:'none',mixBlendMode:'normal'});
  f.c.__boxlabSelectionBridge={mode:()=> 'face'};f.c.__boxlabFacegroupStroke={armed:true,pointerId:null,group:null};
  return {...f,menu,panel,picker};

@@ -45,7 +45,9 @@ export function assertFileMenuRules(transform){
  assert.equal(blocks[1]['max-width'],'calc(100vw - 16px)');
 }
 export function assertViewportMenuRules(transform){
- const blocks=rules(menuLayoutRuntime(transform).styles[2],'.viewport-menu-panel');assert.equal(blocks.length,2);
+ // Closed descendant-display rules also end in this selector; inspect the two
+ // actual viewport-size rules here. Closed-state lifecycle has separate coverage.
+ const blocks=rules(menuLayoutRuntime(transform).styles[2],'.viewport-menu-panel').filter(block=>'max-height' in block);assert.equal(blocks.length,2);
  for(const block of blocks)assert.equal(block['max-height'],'calc(100dvh - var(--boxlab-topbar-h,60px) - 14px)');
  assert.equal(blocks[0].top,'calc(var(--boxlab-topbar-h,60px) + 6px)');
  assert.equal(blocks[0]['overflow-y'],'auto');assert.equal(blocks[0]['overscroll-behavior'],'contain');assert.equal(blocks[0]['-webkit-overflow-scrolling'],'touch');assert.equal(blocks[0]['touch-action'],'pan-y');
