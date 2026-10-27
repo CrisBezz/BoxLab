@@ -63,17 +63,22 @@ function spacedFaceGroupColours(groups,settings={}){
   });
   return map;
 }
+// Shared mesh-order palette for viewport colours and UI swatches.
+export function faceGroupPalette(mesh,settings={}){
+  const orderedGroups=[];
+  const seen=new Set();
+  for(let fi=0;fi<(mesh?.faces?.length||0);fi++){
+    const group=typeof mesh.faceGroups?.[fi]==='string'&&mesh.faceGroups[fi].trim()?mesh.faceGroups[fi].trim():null;
+    if(group&&!seen.has(group)){seen.add(group);orderedGroups.push(group);}
+  }
+  return spacedFaceGroupColours(orderedGroups,settings);
+}
 export function applyFaceGroupColours(geometry,mesh,settings={}){
   if(!geometry?.getAttribute||!mesh?.faces)return{ok:false,groups:0,faces:0};
   const position=geometry.getAttribute('position');
   if(!position)return{ok:false,groups:0,faces:0};
-  const orderedGroups=[];
-  const seen=new Set();
-  for(let fi=0;fi<mesh.faces.length;fi++){
-    const group=typeof mesh.faceGroups?.[fi]==='string'&&mesh.faceGroups[fi].trim()?mesh.faceGroups[fi].trim():null;
-    if(group&&!seen.has(group)){seen.add(group);orderedGroups.push(group);}
-  }
-  const palette=spacedFaceGroupColours(orderedGroups,settings);
+  const palette=faceGroupPalette(mesh,settings);
+  const orderedGroups=[...palette.keys()];
   const colours=[];
   let expectedVertices=0;
   for(let fi=0;fi<mesh.faces.length;fi++){

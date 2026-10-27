@@ -8,8 +8,8 @@ test('existing names are unique, current and read-only, including arbitrary text
  const before=JSON.stringify(mesh);assert.deepEqual(existingFacegroupNames(mesh),['Roof','Wall']);assert.equal(JSON.stringify(mesh),before);
  assert.deepEqual(existingFacegroupNames(null),[]);const name='<img src=x onerror=alert(1)>';
  assert.deepEqual(existingFacegroupNames({faceGroups:[name,name,'',null]}),[name]);
- const source=fs.readFileSync(new URL('../src/render-modes.js',import.meta.url),'utf8');
- assert.match(source,/option\.value=name;list\.appendChild\(option\)/);assert.match(source,/list\.replaceChildren\(\)/);
+ const source=fs.readFileSync(new URL('../src/facegroup-list.js',import.meta.url),'utf8');
+ assert.match(source,/label\.textContent=name/);assert.doesNotMatch(source,/innerHTML/);
 });
 test('selected group reuse accepts uniform groups and refuses mixed, ungrouped or invalid selections',()=>{
  const before=JSON.stringify(mesh);assert.deepEqual(selectedFacegroupName(mesh,selection([0,2,2])),{ok:true,name:'Roof'});

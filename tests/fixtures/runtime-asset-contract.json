@@ -378,21 +378,21 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.991",
+      "url": "./src/release-bootstrap.js?v=0.36.18.992",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.991",
+      "url": "./src/release-version.js?v=0.36.18.992",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
     {
       "owner": "index.html",
-      "url": "./src/render-modes.js?v=0.36.18.991",
+      "url": "./src/render-modes.js?v=0.36.18.992",
       "target": "src/render-modes.js",
-      "sha256": "16560254cb92ab0c4dcd2f2e45ae0c5a1a4f1a827d0cc047720157c622e297b9"
+      "sha256": "1b252cca248bbdf599678d0017eba41561bbb8946387a0a95e7f7719d1d6958f"
     },
     {
       "owner": "index.html",
@@ -1852,9 +1852,9 @@
     },
     {
       "owner": "src/render-modes.js",
-      "url": "./facegroup-colours-core.js?v=0.36.18.547",
+      "url": "./facegroup-colours-core.js?v=0.36.18.992",
       "target": "src/facegroup-colours-core.js",
-      "sha256": "0dd92518a11cbdc48d8fdf5121a30203f587a42ec34fe84662227aa238aed002"
+      "sha256": "048fb521def009766bd75115b562603d926405f910bf93ab848a40806f589834"
     },
     {
       "owner": "src/revolve-profile.js",
@@ -3233,6 +3233,12 @@
       "target": "src/tool-session-panel-position.js",
       "url": "./tool-session-panel-position.js?v=0.36.18.963",
       "sha256": "6dde662666ac6602204e4bf05ce521ceb469aff83a8a5bb15658a0c637364ef7"
+    },
+    {
+      "owner": "src/render-modes.js",
+      "target": "src/facegroup-list.js",
+      "url": "./facegroup-list.js?v=0.36.18.992",
+      "sha256": "66e9b2c351c8d14d74d92d7d235dabdeb90f27d635976f57cb4d2b4edf85eef6"
     }
   ]
 }

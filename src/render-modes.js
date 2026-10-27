@@ -1,3 +1,4 @@
+import {createFacegroupList} from './facegroup-list.js?v=0.36.18.992';
 import {createFacegroupPaintDock} from './facegroup-paint-dock.js?v=0.36.18.991';
 import {createFacegroupStroke} from './facegroup-stroke.js?v=0.36.18.987';
 import {assignSelectedFacegroup,existingFacegroupNames,selectedFacegroupName} from './facegroup-authoring.js?v=0.36.18.985';
@@ -5,7 +6,7 @@ import {createCommittedPaintSurface} from './paint-target.js?v=0.36.18.948';
 import {createUVImageOverlay} from './uv-image-surface-preview.js?v=0.36.18.892';
 import {createUVCheckerOverlay} from './uv-checker-preview.js?v=0.36.18.879';
 import * as THREE from 'three';
-import {applyFaceGroupColours,DEFAULT_FACEGROUP_VIEW,normaliseFacegroupView} from './facegroup-colours-core.js?v=0.36.18.547';
+import {applyFaceGroupColours,faceGroupPalette,DEFAULT_FACEGROUP_VIEW,normaliseFacegroupView} from './facegroup-colours-core.js?v=0.36.18.992';
 import {applyMirror} from './mirror.js';
 import {subdivide} from './subdivision.js';
 
@@ -13,6 +14,7 @@ const status=document.querySelector('#selectionStatus');
 const facegroupStroke=createFacegroupStroke({context:()=>({manager:manager(),selection:globalThis.__boxlabSelectionBridge,mesh:bridge()?.mesh,history:globalThis.__boxlabObjectHistory,session:globalThis.__boxlabToolSession,controls:bridge()?.controls,look:mode}),notify:text=>{if(status)status.textContent=text;}});
 globalThis.__boxlabFacegroupStroke=facegroupStroke;
 let facegroupDock=null;
+let facegroupList=null;
 
 let mode='studio';
 let lastBody=null;
@@ -240,21 +242,16 @@ function setMode(next){
 }
 
 const baseAdd=THREE.Group.prototype.add;
-if(!THREE.Group.prototype.__boxlabRenderModesInstalled){THREE.Group.prototype.add=function(...objects){const result=baseAdd.apply(this,objects);for(const object of objects)if(object?.userData?.kind==='body'){applyMode(object);if(mode==='facegroups'&&object.userData.boxlabFacegroupPending)retryPendingFacegroup(object);}return result;};THREE.Group.prototype.__boxlabRenderModesInstalled=true;}
+if(!THREE.Group.prototype.__boxlabRenderModesInstalled){THREE.Group.prototype.add=function(...objects){const result=baseAdd.apply(this,objects);for(const object of objects)if(object?.userData?.kind==='body'){if(facegroupDock?.visible)queueMicrotask(syncFacegroupNamePicker);applyMode(object);if(mode==='facegroups'&&object.userData.boxlabFacegroupPending)retryPendingFacegroup(object);}return result;};THREE.Group.prototype.__boxlabRenderModesInstalled=true;}
 
 
 // Mesh Health owns UV edits; refresh their temporary view after its session exits.
 window.addEventListener('boxlab-tool-session-change',event=>{if((mode==='uvchecker'||mode==='uvimage')&&event.detail?.id==='mesh-health'&&!event.detail.active)applyToSceneBodies();});
 
 function syncFacegroupNamePicker(){
-  const list=document.querySelector('#facegroupNames'),input=document.querySelector('#facegroupName');if(!list)return;
-  list.replaceChildren();
-  const names=existingFacegroupNames(bridge()?.mesh),placeholder=document.createElement('option');
-  placeholder.value='';placeholder.textContent=names.length?'Choose existing group…':'No named groups yet';list.appendChild(placeholder);
-  for(const name of names){
-    const option=document.createElement('option');option.textContent=name;option.value=name;list.appendChild(option);
-  }
-  list.value=names.includes(input?.value)?input.value:'';
+  if(!facegroupList)return;
+  const mesh=bridge()?.mesh,colours=faceGroupPalette(mesh,facegroupView);
+  facegroupList.update({names:existingFacegroupNames(mesh),colours:new Map([...colours].map(([name,colour])=>[name,'#'+colour.getHexString()])),selected:document.querySelector('#facegroupName')?.value.trim()});
 }
 function syncFacegroupControls(){
   syncFacegroupNamePicker();
@@ -282,7 +279,7 @@ function installFacegroupControls(host){
     <button id="facegroupOpenPaint" type="button">Open facegroup paint controls</button>
     <div id="facegroupAuthoringHome" hidden><div id="facegroupAuthoringControls">
       <label>Group name <input id="facegroupName" type="text" value="Group 1" maxlength="64" autocomplete="off" style="touch-action:auto"/></label>
-      <label>Existing group <select id="facegroupNames" aria-label="Existing facegroup" style="touch-action:manipulation"></select></label>
+      <div class="facegroup-list-label">Facegroups</div><div id="facegroupNames" role="group" aria-label="Facegroups, colour and group name"></div>
       <div class="facegroup-dock-tools"><button id="facegroupStrokeToggle" type="button" aria-pressed="false">Paint</button><button id="facegroupEraseToggle" type="button" aria-pressed="false">Erase</button></div>
       <small>Face mode · Pencil paints on lift; fingers navigate.</small>
       <details><summary>Selected faces</summary>
@@ -342,18 +339,18 @@ function installFacegroupControls(host){
   panel.addEventListener('click',controlClick);facegroupDock.element.addEventListener('click',controlClick);
   document.querySelector('#facegroupName').addEventListener('input',()=>{
     if(facegroupStroke.armed){facegroupStroke.stop();syncFacegroupStrokeControls();}
+    syncFacegroupNamePicker();
   });
   document.querySelector('#facegroupName').addEventListener('change',()=>{
     if(facegroupDock.visible){facegroupStroke.arm(document.querySelector('#facegroupName').value);syncFacegroupStrokeControls();}
   });
-  document.querySelector('#facegroupNames').addEventListener('focus',syncFacegroupNamePicker);
-  document.querySelector('#facegroupNames').addEventListener('change',()=>{
-    const name=document.querySelector('#facegroupNames').value;if(!name)return;
+  facegroupList=createFacegroupList({root:document.querySelector('#facegroupNames'),document,onSelect:name=>{
     document.querySelector('#facegroupName').value=name;
     document.querySelector('#facegroupName').dispatchEvent(new Event('input'));
     if(globalThis.__boxlabFacegroupDock?.visible){facegroupStroke.arm(name);syncFacegroupStrokeControls();}
+    syncFacegroupNamePicker();
     if(status)status.textContent=`Facegroups · using ${name}`;
-  });
+  }});
   document.querySelector('#viewModes')?.addEventListener('toggle',syncFacegroupNamePicker);
   panel.querySelector('#facegroupSaturation')?.addEventListener('input',event=>updateFacegroupView({saturation:Number(event.target.value)/100}));
   panel.querySelector('#facegroupLightness')?.addEventListener('input',event=>updateFacegroupView({lightness:Number(event.target.value)/100}));
@@ -434,6 +431,12 @@ facegroupUiStyle.textContent+=`
 #facegroupPaintDock .facegroup-dock-tools,#facegroupPaintDock .outliner-actions{display:grid;grid-template-columns:1fr 1fr;gap:6px}
 #facegroupPaintDock button[aria-pressed=true]{background:#eef1f7;color:#15171b}
 #facegroupPaintDock summary{cursor:pointer;min-height:32px;padding-top:8px}
+#facegroupNames{display:grid;gap:4px;max-height:200px;overflow-y:auto;overscroll-behavior:contain}
+#facegroupPaintDock .facegroup-list-row{display:grid;grid-template-columns:36px minmax(0,1fr);align-items:center;gap:8px;width:100%;min-height:46px;text-align:left;border:1px solid #ffffff20;border-radius:7px;background:#202630;color:#eef1f7}
+#facegroupPaintDock .facegroup-list-row[aria-pressed=true]{background:#164568;border-color:#60b5ff;color:#fff}
+#facegroupPaintDock .facegroup-list-swatch{display:block;width:34px;height:34px;border-radius:5px;border:1px solid #ffffff40}
+#facegroupPaintDock .facegroup-list-row strong{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px}
+#facegroupPaintDock .facegroup-list-row:focus-visible{outline:2px solid #fff;outline-offset:-2px}
 #facegroupPaintDock small{line-height:1.4;color:#b4bdca}
 `;
 document.head.append(facegroupUiStyle);

@@ -1,4 +1,44 @@
-# BoxLab AI Handoff — .991 / compact facegroup paint dock; .990 PASS protected
+# BoxLab AI Handoff — .992 / facegroup colour-name list; .991 PASS protected
+
+## .992 — facegroup colour/name list; .991 user PASS — 27 October 2026
+
+User confirms991 paint controls work great after refresh and explicitly PASS991.
+Protect compact left dock, original controls, persistent Paint/Erase, Done and stroke
+history/navigation. Screenshot D8EC492A shows right VIEW border/background with
+blank interior before refresh; keep intermittent rendering gate OPEN independently.
+
+992 replaces Existing group native dropdown with a bounded200px layer-style list:
+one tap target per named group, colour swatch + safe text name, selected-row highlight.
+Name field still creates new groups; choosing a row reuses original input and arms
+original Paint mode. Rows are presentation only, no mesh/history/material mutation.
+Shared faceGroupPalette exposes EXACT existing viewport mesh-order/golden-ratio
+colour map; both renderer and list use it. Palette/reseed/lightness/saturation update
+swatches, original rendering algorithm unchanged. Rows keep node/focus identity on
+selection/colour refresh; group membership rebuilds layout only when changed.
+Refresh current mesh on open, name/edit/selection, palette changes and queued original
+body rebuilds (stroke commit, active object switch, UndoRedo); no polling/new pointer
+owner. Names are textContent, never HTML. Empty list explains name + paint workflow.
+Legacy988 picker tests migrate to new list adapter preserving current-mesh/name/no
+mutation coverage; new renderer tests cover selection/identity/empty/text safety,
+original brush callback and swatch-to-render-attribute parity across all4 palettes.
+Stroke987/authoring985/dock991/UV/Paint/main/Multi1.0 and990 VIEW rule unchanged.
+Validation:93 targeted PASS/0FAIL/0skip; syntax and diff checks pass. Reviewed
+changed render/core/new-list and shell/recovery cache keys; no full-suite/native
+rendering proof claimed. The prior985 safe-text assertion now targets list labels
+instead of native option implementation.992 awaits iPad list acceptance.
+
+Future user goal: Facegroup boundaries define UV island seams, then group-targeted
+image/PBR assignment. Audit original UV atlas/seam/stitch and paint mask/material
+owners first. First likely route shared atlas with per-group masks/baking; separate
+material slots require renderer/save/OBJ/GLB/NOM audit. This build DOES NOT implement
+unwrap-by-groups or per-group materials, and must not imply they exist. Same-name
+disconnected face patches may yield multiple islands; geometry stays welded.
+
+DEVICE992: open Facegroups paint dock; paint2+ group names, inspect swatch/name rows.
+Tap rows and paint/erase; selected name/highlight and UndoRedo refresh list. Adjust
+VIEW palette/reseed and reopen dock: swatches follow viewport base colours (lighting
+can shade model). Long names/many groups stay compact; Done/finger navigation.
+
 
 ## .991 right-region recurrence — 27 October 2026, 04:01:19Z
 
