@@ -1,3 +1,4 @@
+import {installFacegroupUVWorkflow} from '../src/facegroup-uv-workflow.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -49,7 +50,7 @@ function uiFixture(){
  const object=fixture(),nodes=new Map(),events=new Map();
  const node=id=>{if(nodes.has(id))return nodes.get(id);const listeners=new Map(),n={id,hidden:false,style:{},dataset:{},children:[],open:false,addEventListener(t,fn){listeners.set(t,fn);},fire(t){listeners.get(t)?.({});},append(...x){this.children.push(...x);},appendChild(x){this.append(x);},replaceChildren(){this.children=[];},querySelector(s){return node(s.slice(1));},getContext:()=>canvas().getContext()};nodes.set(id,n);return n;};
  const launch=node('meshHealthBtn'),activeMode=node('mode');activeMode.dataset.mode='object';const session=[];
- const context={console,inspectImportedUV,drawImportedUV,analyzeMeshHealth,safeRepairMesh,autoCloseSimpleHoles,simpleBoundaryLoops,boundaryDiagnostics,unifyFaceWinding,flipAllFaces,triangulateMesh,
+ const context={installFacegroupUVWorkflow:options=>installFacegroupUVWorkflow({...options,requestFrame:()=>0,cancelFrame(){}}),console,inspectImportedUV,drawImportedUV,analyzeMeshHealth,safeRepairMesh,autoCloseSimpleHoles,simpleBoundaryLoops,boundaryDiagnostics,unifyFaceWinding,flipAllFaces,triangulateMesh,
  document:{createElement:()=>node('element'+nodes.size),querySelector:s=>s.includes('button.active')?activeMode:s.startsWith('#')?node(s.slice(1)):node('tools'),querySelectorAll:()=>[]},
  window:{addEventListener:(t,fn)=>events.set(t,fn)},__boxlabObjectManager:{activeId:1,objects:[object],saveActive(){}},__boxlabBridgeState:{mesh:object.mesh},__boxlabExportAs:{topologySignature:signature},__boxlabToolSession:{begin:x=>session.push(x.id),end:x=>session.push('end:'+x)},__boxlabObjectHistory:{checkpointSnapshot(){throw Error('Inspection must not write history');}}};
  vm.createContext(context);const source=fs.readFileSync(new URL('../src/mesh-health.js',import.meta.url),'utf8');vm.runInContext(source.replace(/^import .*;\n/gm,''),context);
@@ -61,4 +62,12 @@ test('862 existing Mesh Health launch/expand/Refresh/close owns read-only UV ins
  r.node('meshHealthUVDetails').open=true;r.node('meshHealthUVDetails').fire('toggle');r.object.mesh.faces[0].reverse();r.node('meshHealthRefresh').fire('click');assert.match(r.node('meshHealthUVSummary').textContent,/no longer match/);assert.equal(r.node('meshHealthUVPreview').hidden,true);assert.equal(JSON.stringify(r.object.glbPassthrough),before);
  r.node('meshHealthClose').fire('click');assert.equal(r.context.__boxlabMeshHealth.active,false);assert.deepEqual(r.session,['mesh-health','end:mesh-health']);
  r.launch.fire('click');r.activeMode.dataset.mode='face';r.events.get('boxlab-bridge-state')();assert.equal(r.context.__boxlabMeshHealth.active,false);
+});
+
+test('1000 missing-UV handoff opens the original UV session and puts its reminder at the top without inspecting repairs',()=>{
+ const r=uiFixture();delete r.object.glbPassthrough;
+ assert.equal(r.context.__boxlabUVTools.open({notice:'Valid UVs required for UV Paint.'}),true);
+ assert.equal(r.node('uvToolsNotice').hidden,false);assert.equal(r.node('uvToolsNotice').textContent,'Valid UVs required for UV Paint.');
+ assert.equal(r.node('meshHealthTitle').textContent,'UV');assert.deepEqual(r.session,['uv-tools']);assert.equal(r.context.__boxlabUVTools.busy,false);
+ r.context.__boxlabUVTools.close();assert.equal(r.context.__boxlabUVTools.active,false);
 });

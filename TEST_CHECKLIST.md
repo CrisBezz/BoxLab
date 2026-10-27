@@ -1,3 +1,50 @@
+## .1000 — UV Paint handoff and Facegroups → UV Seams — 27 October 2026
+
+User says “PASS 999 so far”. Record PROVISIONAL .999 PASS and protect the exact
+main/styles/retired-atmosphere startup baseline. This is not an unlimited native
+visibility acceptance. User explicitly requests the next UV/Facegroups workflow.
+
+UV PAINT now uses the existing paintTargetKey validator before entering Paint.
+Missing/stale/incompatible UVs open the ORIGINAL UV session through __boxlabUVTools,
+with “Valid UVs required for UV Paint” at the TOP. No UV/paint/history is authored
+by the redirect. Valid targets in Facegroups view switch through the existing Studio
+button, stopping the original Facegroup stroke/dock owners, before Paint opens.
+Finished UV-tools sessions hand off directly to bottom UV PAINT; busy unwraps require
+Finish/Cancel first. Existing other-tool protections remain intact.
+
+UV menu adds “Facegroups → UV Seams”, orbitable orange boundary preview, explicit
+“Confirm UV Unwrap”, elapsed timer and Cancel. Preview has no history or UV edits,
+no raw pointer consumer and no control disabling. Connected equal-name regions form
+charts, including an unassigned region; disconnected regions form separate islands.
+Native mesh boundary and differing-group edges delimit patches. Original geometry,
+groups, names, palette and selection are retained. Planar patches keep exact shapes;
+curved disk patches use bounded positive-weight harmonic flattening with periodic
+frame yields. Original UV preview triangulation validates every flattened face;
+original density, packing, native UV commit, project transport and ONE history
+checkpoint remain authoritative. Completion selects existing UV Checker and keeps
+orange patch boundaries visible in 3D while the UV session stays open. Closing,
+changing target, entering UV Editor or cancelling releases the owned seam overlay.
+
+Honest limits: 4096 faces / 20,000 corners; plain independent unlocked Base mesh,
+SubD/Mirror off, no stored paint. Closed groups, holes/handles, pinches, inconsistent
+winding, non-manifold edges, solver failure/work overflow refuse without mutation
+and ask for additional Facegroup boundaries. Never silently insert cuts within a
+group. Curved patches can stretch; existing flat atlas remains available.
+
+Testing: new UV projection/packing/curved chart/resource/SaveOpen checks; real Paint
+entry and UV session handoff; timed confirm/cancel/target-change and overlay cleanup.
+Repaired old test harnesses for original Sweep UV-release hook and dynamically loaded
+Facegroup dock cache owner; no Sweep or dock runtime edits. Final full-suite and live
+publication results: docs/publication-1000.md. No native iPad feature PASS inferred.
+Standing push/publish authorization continues. .996 File and .994 palette protected.
+
+DEVICE1000: (1) no-UV object → UV PAINT → original UV menu + top reminder;
+(2) valid UV object in Facegroups → UV PAINT → Studio + paint;
+(3) UV → Facegroups → UV Seams → orbit/check → Confirm UV Unwrap → timer → checker
+and orange boundaries; (4) Undo/Redo and Save/Open retain UVs/groups; Cancel creates
+no UV/history edits. Also check .999 initial/right viewport remains healthy.
+Current build .1000; feature acceptance pending device test.
+
 ## .999 — rebuild initial viewport baseline; .998 FAIL — 27 October 2026
 
 User explicitly FAILs .998: right-side viewport patch exists immediately after

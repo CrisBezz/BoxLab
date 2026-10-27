@@ -1,3 +1,4 @@
+import {planFacegroupSeams,unwrapFacegroupCharts} from './facegroup-uv-core.js?v=0.36.18.1000';
 import {meshTopologySignature} from './mesh-topology-signature.js?v=0.36.18.939';
 import {inspectImportedUV,importedUVIslandCentre,importedUVIslandBounds,rotateImportedUVPoint} from './imported-uv-inspection.js?v=0.36.18.951';
 // UV transforms keep the existing stored face-corner channel
@@ -314,6 +315,23 @@ export function createFaceAtlasUV(object,mesh,topologySignature,history,owner=gl
 }
 export function createCoplanarAtlasUV(object,mesh,topologySignature,history,owner=globalThis.__boxlabExportAs,maxAngle=0){
  return createAtlasUV(object,mesh,topologySignature,history,owner,true,maxAngle);
+}
+// Facegroup charts reuse native UV validation, density, packing and ONE checkpoint.
+export async function createFacegroupAtlasUV(object,mesh,topologySignature,history,owner=globalThis.__boxlabExportAs,options={}){
+ const error=nativeUVTargetError(object,mesh,topologySignature);if(error)return {ok:false,reason:error};
+ if(object.colourPaint||object.roughnessPaint||object.metalnessPaint)return {ok:false,reason:'Clear paint before Facegroup unwrap; existing paint is retained'};
+ const signature=JSON.stringify([mesh.vertices,mesh.faces,mesh.faceGroups]),previous=object.glbPassthrough;
+ const plan=planFacegroupSeams(mesh);if(!plan.ok)return plan;
+ const flat=await unwrapFacegroupCharts(mesh,plan,options);if(!flat.ok)return flat;
+ if(options.cancelled?.()||JSON.stringify([mesh.vertices,mesh.faces,mesh.faceGroups])!==signature||object.glbPassthrough!==previous)return {ok:false,reason:'Mesh, Facegroups or UVs changed; preview the seams again'};
+ const payload={version:1,source:'boxlab',uvTopologySignature:topologySignature(mesh),uvCorners:flat.uvCorners};
+ const triangles=faceAtlasTriangles(mesh,payload,owner);if(triangles.reason)return {ok:false,reason:triangles.reason};
+ const density=densityLayout(mesh,payload,plan,triangles.triangles);if(density.reason)return {ok:false,reason:density.reason};
+ const packed=packedLayout(density.uvCorners,plan);if(packed.reason)return {ok:false,reason:packed.reason};
+ const validation=inspectImportedUV(mesh,{...payload,uvCorners:packed.uvCorners},topologySignature);
+ if(validation.state!=='ready'||validation.islandCount!==plan.islandCount||validation.faceIslands.some((id,fi)=>id!==plan.faceIslands[fi]))return {ok:false,reason:'UV patch boundaries did not match Facegroups'};
+ if(options.cancelled?.()||nativeUVTargetError(object,mesh,topologySignature)||object.colourPaint||object.roughnessPaint||object.metalnessPaint)return {ok:false,reason:'Unwrap cancelled: target is no longer editable'};
+ return {...commitNativeUV(object,mesh,topologySignature,history,packed.uvCorners),islandCount:plan.islandCount};
 }
 function createAtlasUV(object,mesh,topologySignature,history,owner,coplanar,maxAngle=0){
  if(!Number.isFinite(maxAngle)||maxAngle<0||maxAngle>30)return {ok:false,reason:'Choose an Auto atlas join angle from 0 to 30 degrees'};

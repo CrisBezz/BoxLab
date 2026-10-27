@@ -159,10 +159,22 @@ function close(){historyContext=null;opening++;controller?.close();stopped();}
 function makeController(){const b=bridge();if(!b?.camera||!b.scene||!b.controls)throw Error('Viewport not ready');return createViewportPainter({newColourSize:1024,target,activeId:()=>manager()?.activeId,body:()=>{let found;b.scene.traverse(o=>{if(o.userData?.kind==='body')found=o;});return found;},owner:globalThis.__boxlabExportAs,camera:b.camera,controls:b.controls,scene:b.scene,checkpoint:()=>globalThis.__boxlabObjectHistory?.checkpoint?.(),objects:()=>manager()?.objects||[],onClose:stopped,refresh:body=>globalThis.__boxlabRenderModes?.apply?.(body),allowed:()=>globalThis.__boxlabSelectionBridge?.mode?.()==='object'&&tools()?.isActive?.('uv-paint')&&globalThis.__boxlabRenderModes?.paintVisible?.()!==false});}
 async function open(restore=null){let instance;try{
  historyContext=restore;
- if(controller?.active){showTools();return;}if(tools()?.isActive?.())throw Error('Finish the current tool first');
+ if(controller?.active){showTools();return;}
+ if(tools()?.isActive?.('uv-tools')){
+  if(globalThis.__boxlabUVTools?.busy)throw Error('Finish or Cancel the UV unwrap first');
+  globalThis.__boxlabUVTools?.close?.();
+ }
+ if(tools()?.isActive?.())throw Error('Finish the current tool first');
  const ids=globalThis.__boxlabObjectSelection?.ids;if(ids?.size>1)throw Error('Select one object for UV Paint');if(ids?.size===1&&!ids.has(manager()?.activeId))throw Error('Activate the selected object first');
  if(globalThis.__boxlabSelectionBridge?.mode?.()!=='object')document.querySelector('#selectionModes [data-mode="object"]')?.click();
- manager()?.saveActive?.();paintTargetKey(target(),target()?.mesh,globalThis.__boxlabExportAs);if(!bridge()?.controls?.enabled)throw Error('Finish the current gesture first');
+ manager()?.saveActive?.();
+ try{paintTargetKey(target(),target()?.mesh,globalThis.__boxlabExportAs);}
+ catch(error){
+  close();const notice='Valid UVs required for UV Paint. '+error.message;
+  globalThis.__boxlabUVTools?.open?.({notice});say(notice);return;
+ }
+ if(!bridge()?.controls?.enabled)throw Error('Finish the current gesture first');
+ if(document.querySelector('#viewportRenderLooks [data-render="facegroups"].active'))document.querySelector('#viewportRenderLooks [data-render="studio"]')?.click();
  if(globalThis.__boxlabRenderModes?.paintVisible?.()===false)throw Error('Switch VIEW to Studio, Solid or UV Image for painting');
  globalThis.__boxlabTransformArming?.disarm?.();instance=controller=makeController();panel.hidden=false;if(!tools()?.begin?.({id:'uv-paint',title:'UV Paint',node:panel}))throw Error('Tool session unavailable');
  globalThis.__boxlabTotalGizmo?.resetTransient?.({hideFloat:true});const token=++opening;await instance.open();if(token!==opening){instance.close();return;}historyContext=null;if(restore){const state=instance.state;if(state.layers.some(l=>l.id===restore.selected))instance.selectLayer(restore.selected);const selected=instance.state.layers.find(l=>l.id===instance.state.selected);if(restore.paintTarget!=='mask'||selected?.mask)instance.selectPaintTarget(restore.paintTarget);instance.selectPreviewMode(restore.previewMode);}syncLayers();showPage(restore?.paintPage||'brush');if(!restore)showTools();document.querySelector('#fileMenu')?.removeAttribute('open');say('UV Paint · colour texture '+instance.state.resolution+' × '+instance.state.resolution+' · Pencil paints; fingers navigate · Undo/Redo keeps Paint open');requestAnimationFrame(()=>frame(instance));

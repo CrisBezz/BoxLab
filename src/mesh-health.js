@@ -1,10 +1,11 @@
+import {installFacegroupUVWorkflow} from './facegroup-uv-workflow.js?v=0.36.18.1000';
 import {analyzeMeshHealth} from './mesh-health-core.js?v=0.36.18.443';
 import {safeRepairMesh} from './mesh-health-repair-core.js?v=0.36.18.443';
 import {autoCloseSimpleHoles,simpleBoundaryLoops} from './mesh-auto-close-core.js?v=0.36.18.443';
 import {boundaryDiagnostics} from './mesh-boundary-diagnostics-core.js?v=0.36.18.443';
 import {unifyFaceWinding,flipAllFaces,triangulateMesh} from './mesh-normals-triangulate-core.js?v=0.36.18.443';
 import {inspectImportedUV} from './imported-uv-inspection.js?v=0.36.18.951';
-import {stitchNativeUVEdge,cutNativeUVEdges,clearNativePaint,rotateImportedUV,flipImportedUV,moveImportedUV,scaleImportedUV,rotateImportedUVByAngle,fitImportedUVToTile,packImportedUVIslands,equalizeImportedUVDensity,createPlanarUV,createFaceAtlasUV,createCoplanarAtlasUV,createBoxUV,createCylinderUV,createSphereUV,createTorusUV} from './imported-uv-edit.js?v=0.36.18.957';
+import {stitchNativeUVEdge,cutNativeUVEdges,clearNativePaint,rotateImportedUV,flipImportedUV,moveImportedUV,scaleImportedUV,rotateImportedUVByAngle,fitImportedUVToTile,packImportedUVIslands,equalizeImportedUVDensity,createPlanarUV,createFaceAtlasUV,createCoplanarAtlasUV,createBoxUV,createCylinderUV,createSphereUV,createTorusUV} from './imported-uv-edit.js?v=0.36.18.1000';
 import {createUVWorkspace} from './uv-workspace.js?v=0.36.18.957';
 
 // One-shot Edge action uses the original selected edge indices and native history.
@@ -67,6 +68,7 @@ panel.id='meshHealthSession';
 panel.className='boxlab-tool-session-shell mesh-health-session';
 panel.hidden=true;
 panel.innerHTML=`
+  <div id="uvToolsNotice" role="status" aria-live="polite" class="boxlab-tool-session-subtitle" style="grid-column:1/-1;color:#ffd38a" hidden></div>
   <div class="boxlab-tool-session-title"><span id="meshHealthTitle">Mesh Health</span><span id="meshHealthSubtitle" class="boxlab-tool-session-subtitle">Inspect · safe repair</span></div>
   <div id="meshHealthDiagnosticsSummary">
   <div id="meshHealthVerdict" style="font-size:16px;font-weight:750;padding:4px 0"></div>
@@ -430,6 +432,7 @@ function launch({uvOnly:showUV=false}={}){
   const object=activeObject(),mesh=liveMesh();
   if(currentMode()!=='object'||!object||!mesh)return;
   if(active)close();
+  const reminder=panel.querySelector('#uvToolsNotice');if(reminder){reminder.hidden=true;reminder.textContent='';}
   uvOnly=showUV;
   panel.querySelector('#meshHealthTitle').textContent=uvOnly?'UV':'Mesh Health';
   panel.querySelector('#meshHealthSubtitle').textContent=uvOnly?'Project · edit UVs':'Inspect · safe repair';
@@ -461,3 +464,22 @@ document.querySelector('#resetBtn')?.addEventListener('click',()=>{if(active)clo
 document.querySelectorAll('#selectionModes button').forEach(button=>button.addEventListener('click',()=>{if(active&&currentMode()!=='object')close();}));
 
 globalThis.__boxlabMeshHealth={version:VERSION,analyze:analyzeMeshHealth,repair,autoClose,selectBoundary,selectNonManifold,unifyWinding,flipNormals,triangulate,get active(){return active;},get last(){return last;},get boundary(){return lastBoundary;},refresh:renderReport,close};
+
+const uvNotice=panel.querySelector('#uvToolsNotice');
+globalThis.__boxlabUVTools={
+ open({notice=''}={}){
+  launch({uvOnly:true});if(!active||!uvOnly)return false;
+  uvNotice.textContent=notice;uvNotice.hidden=!notice;return true;
+ },close,get busy(){return facegroupUVFlow.busy;},get active(){return active&&uvOnly;}
+};
+const facegroupUVFlow=installFacegroupUVWorkflow({document,host:uvDetails,notice:uvNotice,say:setStatus,
+ getContext:()=>{
+  if(!active||!uvOnly||uvWorkspace?.active||currentMode()!=='object'||activeObject()?.id!==objectId)return null;
+  let body;const scene=globalThis.__boxlabBridgeState?.scene;scene?.traverse(o=>{if(o.userData?.kind==='body')body=o;});
+  return {object:activeObject(),mesh:liveMesh(),scene,body,owner:globalThis.__boxlabExportAs,history:globalThis.__boxlabObjectHistory};
+ },onCommit:()=>{
+  manager()?.saveActive?.();
+  document.querySelector('#viewportRenderLooks [data-render="uvchecker"]')?.click();
+  renderReport();
+ }
+});
