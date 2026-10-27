@@ -7207,3 +7207,38 @@ app-switch. New viewMenu.open and panel nodes now separate native state from pai
 Try scroll inside panel if possible, capture again only if changed. If fault does
 not recur, no forced reproduction required. Next native evidence; feature trajectory
 can resume after feedback while retaining this open rendering gate.
+
+## .990 — explicit closed VIEW surface removal — 27 October 2026
+
+User /nextbuild after two989 captures. At00:58:35Z canvasProbehiddenTRUE and two
+subjective rightUI:missing observations; at00:58:50Z canvas restored/hiddenFALSE.
+Both Studio/Face, no brush/session/UV workspace, native VIEW openFALSE, yet fixed
+panel rect982/114.5/360/756, scrollHeight/clientHeight754. No VIEW down/toggle in
+recorded interval: these do not diagnose an attempted open panel. Hiding3D no longer
+restored UI in this recurrence; do not repeat old canvas-only recovery guarantee.
+Computed layout/healthy hits are not proof of drawn pixels or engine root cause.
+
+Audit original view-modes: fixed overflowing panel relies entirely on native
+closed-details content suppression; no explicit closed display rule. Add scoped
+#viewModes:not([open]) > .viewport-menu-panel {display:none!important} in original
+early toolbar stylesheet AND original view-modes style fallback. Thus closed VIEW
+has zero panel layout/scrolling surface before hydration and after all native or
+programmatic closes. Opening removes ONLY this closed-state rule and uses original
+fixed panel/scroll/settings. Native details.open remains sole state owner; original
+nodes/listeners/control identity preserved. No JS toggle, reparent, extra menu, timer,
+refresh/blink, renderer/CSS-blend change or raw-pointer owner.
+
+This is a narrow closed-surface lifecycle hardening, NOT proof the nonzero closed
+box caused every right-region fault, or a guaranteed permanent compositor repair.
+Open-panel clipping/whole viewport rendering gate remains OPEN until native feedback.
+989 diagnostics retained. Only early toolbar CSS and original VIEW style function
+change; reviewed shell/VIEW/CSS/recovery990 pins/hashes. All geometry/brush/UV/Multi
+implementations unchanged. No989 PASS inferred from debug reports.988 acceptance
+retained.32 focused PASS/0FAIL/0skip: original startup toolbar/hydration/action
+identity, release, report/probe/recovery and984–988 authorship/stroke/selector.
+Syntax/diff pass; no native/rendered/full-suite proof claimed.
+DEVICE990: fresh reload, VIEW open/close several times; scroll and group picker.
+Closed VIEW debug panel rect should be zero/displaynone; open must show original
+settings. Watch right toolbar/footer/gizmo if visible, without forced reproduction.
+If recurrence, existing989 report plus visible symptom; no repeated hide/show needed.
+Next actual990 native feedback before speculative layer changes.

@@ -35,3 +35,13 @@ subsequently PASS988 accepts group-selector workflow, not permanent rendering re
 989 extends original debug report with native open, panel geometry/scroll and
 mode/facegroup state plus opt-in passive toggle/scroll evidence. No runtime
 rendering/layout change and no automatic recovery.
+
+## .989 restored/hidden canvas comparison and .990
+
+Two989 reports00:58:35Z and00:58:50Z show canvas hidden then restored; user observed
+rightUI missing twice while hidden. VIEW openfalse both; fixed panel retained
+360x756 layout rect at982/114.5. No VIEW input/toggle recorded. This does not show
+failed native menu opening. Same viewport/backing and no active UV/session/brush.
+990 explicitly displaynone's closed panel in early CSS and original owner fallback,
+retaining native details state and original open panel. Confirmed source lifecycle
+hardening; nonzero closed bounds are not proven root cause of rendering fault.

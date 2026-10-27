@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.989",
+      "url": "./src/release-bootstrap.js?v=0.36.18.990",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.989",
+      "url": "./src/release-version.js?v=0.36.18.990",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -581,9 +581,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/view-modes.js?v=0.36.18.983",
+      "url": "./src/view-modes.js?v=0.36.18.990",
       "target": "src/view-modes.js",
-      "sha256": "81d222cdfe4780d6896b5e9f4abab6909b9258e7824239ae22b1db1c760bfb91"
+      "sha256": "e6cf3f3b4985f6ee5df6a5c2a884e4cae56c952f951ef8a9c4131afe55c92e03"
     },
     {
       "owner": "index.html",
@@ -3200,9 +3200,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./viewport-toolbar-shell.css?v=0.36.18.983",
+      "url": "./viewport-toolbar-shell.css?v=0.36.18.990",
       "target": "viewport-toolbar-shell.css",
-      "sha256": "0723e81087ab3f30a99501d15e69c8d597b0695f0eb6ff5985599b2944df89aa"
+      "sha256": "6ff4078ba5e9a0a30cb3d14dfda59420bd1c374a66653a7dca8e5f4f68763a93"
     },
     {
       "owner": "src/render-modes.js",

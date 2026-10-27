@@ -51,6 +51,7 @@ function ensureUI(){
 #viewModes>summary{list-style:none;display:flex;align-items:center;gap:7px;min-height:34px;padding:5px 10px;border:1px solid rgba(255,255,255,.14);border-radius:8px;background:rgba(255,255,255,.045);font-size:12px;font-weight:600;cursor:pointer;user-select:none;white-space:nowrap;touch-action:manipulation}
 #viewModes>summary::-webkit-details-marker{display:none}
 #viewModes[open]>summary{background:rgba(255,255,255,.1)}
+#viewModes:not([open]) > .viewport-menu-panel{display:none!important}
 .viewport-menu-icon{font-size:15px;line-height:1;opacity:.9}.viewport-menu-caret{font-size:10px;opacity:.65}
 .viewport-menu-panel{position:fixed;right:max(8px,env(safe-area-inset-right));top:calc(var(--boxlab-topbar-h,60px) + 6px);z-index:200;width:min(360px,calc(100vw - 16px));max-height:calc(100dvh - var(--boxlab-topbar-h,60px) - 14px);overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;scrollbar-gutter:stable;padding:10px;border:1px solid rgba(255,255,255,.14);border-radius:11px;background:rgba(17,19,24,.98);box-shadow:0 14px 34px rgba(0,0,0,.38);backdrop-filter:blur(18px);pointer-events:auto;touch-action:pan-y}
 .viewport-menu-section+.viewport-menu-section{margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.09)}

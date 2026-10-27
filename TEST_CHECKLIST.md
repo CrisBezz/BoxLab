@@ -11252,3 +11252,11 @@ unrelatedfeature rollout or speculative further CSS/engine fixes.
 - [ ] If fault recurs, debug on > VIEW attempt > Capture/Copy before recovery; report includes viewMenu.open, panel nodes/scroll and render/stroke state.
 - [ ] No forced reproduction needed if fault absent; rendering issue stays OPEN.
 - [x] Actual report/observer tests distinguish open/closed/missing, capture scroll/modes, keep DOM unchanged and avoid measurements when debug off.
+
+## .990 closed VIEW surface lifecycle
+
+- [ ] Fresh launch/reload: right UI drawn; VIEW closed initially, no ghost panel surface.
+- [ ] Repeated VIEW open/close, scroll, group picker and tool buttons retain behavior.
+- [ ] Debug closed VIEW: panel displaynone/zero rect; open VIEW: ordinary panel bounds/scroll.
+- [x] Original toolbar/action/node identity, release and debug/authoring checks pass.
+- [ ] OPEN: native right-region rendering;990 closed-surface hardening is not permanent repair proof.

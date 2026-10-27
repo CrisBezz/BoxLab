@@ -13,3 +13,6 @@
 .viewport-menu-icon{font-size:15px;line-height:1;opacity:.9}
 .viewport-menu-caret{font-size:10px;opacity:.65}
 @media(max-width:900px){.top-actions>button,.top-actions>#viewModes>summary{padding:7px 9px;font-size:13px!important}.top-actions>#viewModes>summary{padding:5px 8px}}
+
+/* .990 — closed VIEW has no fixed scrolling surface, including before modules load. */
+#viewModes:not([open]) > .viewport-menu-panel{display:none!important}
