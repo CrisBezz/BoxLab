@@ -42,7 +42,7 @@ test('Top-bar shortcut protects active tools and unavailable drawer without chan
  for(const options of [{busy:true},{available:false}]){const f=viewShortcut({...options,mode:'face'});assert.equal(f.run(),false);assert.equal(f.modeClicks,0);assert.equal(f.toggles,0);assert.equal(f.menu.open,true);}
 });
 test('Top-bar Object Browser uses existing iPad pointerup/synthetic-click suppression',()=>{
- const events={},button={dataset:{view:'front'}},c={ui:{addEventListener:(type,fn)=>events[type]=fn},performance:{now:()=>100},activateButton(){c.calls++;},calls:0,document:{addEventListener(){}}};
+ const events={},button={dataset:{view:'front'}},c={viewPanel:{addEventListener:(type,fn)=>events[type]=fn},performance:{now:()=>100},activateButton(){c.calls++;},calls:0,document:{addEventListener(){}}};
  vm.createContext(c);vm.runInContext(source.slice(source.indexOf('let suppressSyntheticClickUntil'),source.indexOf("document.addEventListener('pointerdown'",source.indexOf('let suppressSyntheticClickUntil'))),c);
  const event={pointerType:'pen',target:{closest:()=>button},preventDefault(){},stopPropagation(){}};events.pointerup(event);events.click(event);assert.equal(c.calls,1);
  assert.doesNotMatch(source,/id="viewObjectListBtn"/);
