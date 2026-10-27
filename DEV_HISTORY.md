@@ -16074,3 +16074,26 @@ DEVICE1001: fresh load -> UV Editor, inspect full right border/Checker/Image/top
 buttons; Back to3D and reopen several times without app-switch/recovery. Pan/pinch,
 select/Pencil-move an island, UndoRedo. Back to3D -> VIEW Studio/Facegroups -> UV
 Editor; inspect right side again. .1000 accepted workflow stays protected.
+
+## .1001 recurrence — blank Facegroups VIEW and right-region gizmo loss — 28 October 2026
+
+User previously PASSed1001, now reports Facegroups VIEW blank and gizmo disappears
+on right, without former bottom-right ground tonal line. Reopen native visibility
+gate; retain1000 feature acceptance and1001 functional/UV-specific PASS only.
+Screenshot0BC723EC-C3F4-4F53-BFD5-EA081926119F.png visibly confirms1001, Facegroups
+colours, Edge mode, full top-right toolbar and empty open VIEW frame. Gizmo is
+visible near centre in this screenshot; disappearance at right is user-observed,
+not captured as a clipped gizmo here. No new debug report supplied.
+
+Source explanation:999 retired screen-wide DOM multiply vignette; render-modes
+shows Studio floor/lights/shadows ONLY in Studio, not Facegroups. Thus absence of
+old ground line in Facegroups is not proof of recovery and cannot reliably signal
+UI health.1001 only removed UV workspace isolation/containment; VIEW and gizmo
+runtime unchanged. Neither finding proves root cause of blank menu/gizmo loss.
+
+No new runtime build or speculative CSS repair in this evidence update. Current
+release1001. Prioritize this recurrence before implementing requested Fill Face /
+Fill Facegroup; that request remains active and unshipped. Next useful device
+comparison: close VIEW, move same visible gizmo across right region, then compare
+Studio versus Facegroups without reload/app-switch/recovery. Do not demand another
+identical hidden-gizmo dump or treat healthy DOM/hits as pixel proof.
