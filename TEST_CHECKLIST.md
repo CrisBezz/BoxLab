@@ -11244,3 +11244,11 @@ unrelatedfeature rollout or speculative further CSS/engine fixes.
 - [ ] Eraser987 and Save/Open remain device review; no987 PASS inferred.
 - [x] Automated actual option population/change callbacks, refresh/empty/text safety and retained authoring/stroke regressions pass.
 - [ ] OPEN: lower-right/VIEW menu blank or gone in987. DOM/hit health does not prove pixel rendering. See docs/ui-right-region-987.md.
+
+## .989 VIEW panel diagnostics / .988 acceptance
+
+- [x] User PASS988 protects native Existing group dropdown and related authoring flow.
+- [ ] Normal VIEW/scroll/group picker remain usable with debug off.
+- [ ] If fault recurs, debug on > VIEW attempt > Capture/Copy before recovery; report includes viewMenu.open, panel nodes/scroll and render/stroke state.
+- [ ] No forced reproduction needed if fault absent; rendering issue stays OPEN.
+- [x] Actual report/observer tests distinguish open/closed/missing, capture scroll/modes, keep DOM unchanged and avoid measurements when debug off.

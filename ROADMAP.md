@@ -7172,3 +7172,38 @@ group, reopen VIEW and confirm listed; UndoRedo changes assignments only. Retest
 erase and Save/Open if convenient. If VIEW blanks again, note scroll behavior and
 whether explicit File Refresh display restores; no repeated debug dump required.
 Next native selector/eraser feedback; broader rendering diagnosis remains separate.
+
+## .989 — VIEW open/panel/scroll evidence; .988 user PASS — 27 October 2026
+
+User PASS988 protects real Existing group dropdown, assignment reuse and existing
+name/stroke/eraser workflows; functional acceptance does not close recurring VIEW
+rendering issue. Latest988 dump00:41:42Z proves Pencil down/up/click reaches VIEW
+summary without preventDefault, with same healthy1366x886/DPR2 layout and no UV
+top layer. It omits native details.open, panel rect/scroll and mode, so cannot tell
+closed menu from an open but unpainted panel. Do not request another identical dump
+or claim engine cause; same existing opt-in debug owner gains missing evidence.
+
+Snapshot now includes viewMenu: native open state (null if missing), actual active
+render button, selection mode, facegroup stroke armed/contact/assign-or-erase,
+group-picker option count/index/disabled (not group names), VIEW panel and selected
+facegroup-control bounds/visibility/overflow/scrollTop/scrollHeight/clientHeight,
+plus Studio overlay style including mixBlendMode. Existing control/DOM evidence
+retained. Native toggle captures final open state; panel scroll captures its current
+position. Both passive window-capture observers measure ONLY when debug enabled,
+append to existing bounded100-event buffer, never consume input, focus/open/scroll
+menus or invoke refresh. No polling, new popup or automatic repaint.
+
+Changed runtime ONLY gesture-debug; original source debug/recovery989 keys and
+release markers/reviewed hash. All rendering/CSS/VIEW/native selector/brush/history/
+modelling/Multi implementations unchanged. This is DIAGNOSTIC, not a rendering fix.
+29 focused checks PASS/0FAIL/0skip: new actual whole-debug report/observer tests
+(open/closed/missing, geometry/scroll, modes/picker, read-only/debug-off refusal),
+original probe/recovery/debug/release and984–988 authoring/stroke/selector tests.
+Syntax/diff checks pass; no native/full-suite or permanent repair proof claimed.
+
+DEVICE989: normal VIEW and Existing group remain accepted. If menu disappears or
+blanks, File > UI Debug > try VIEW once > Capture/Copy before Refresh display or
+app-switch. New viewMenu.open and panel nodes now separate native state from paint.
+Try scroll inside panel if possible, capture again only if changed. If fault does
+not recur, no forced reproduction required. Next native evidence; feature trajectory
+can resume after feedback while retaining this open rendering gate.

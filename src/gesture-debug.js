@@ -201,10 +201,26 @@ function uiControlEvidence(){
  const selectors=['.top-actions','#frameAllBtn','#undoBtn','#redoBtn','#focusViewBtn','#objectBrowserBtn','#viewModes','#objectBrowserPanel'];
  return selectors.map(selector=>{const node=document.querySelector(selector);if(!node)return {selector,present:false};const r=node.getBoundingClientRect(),s=getComputedStyle(node),x=Math.round(r.left+r.width/2),y=Math.round(r.top+r.height/2);return {selector,present:true,...describe(node),rect:{x:r.x,y:r.y,width:r.width,height:r.height},hidden:!!node.hidden,disabled:!!node.disabled,expanded:node.getAttribute?.('aria-expanded'),style:{display:s.display,visibility:s.visibility,pointerEvents:s.pointerEvents,opacity:s.opacity,zIndex:s.zIndex,transform:s.transform,overflow:s.overflow,contain:s.contain,isolation:s.isolation,willChange:s.willChange,clipPath:s.clipPath,filter:s.filter,backdropFilter:s.backdropFilter},centre:{x,y,inside:x>=0&&y>=0&&x<innerWidth&&y<innerHeight,stack:document.elementsFromPoint(x,y).slice(0,6).map(describe)}};});
 }
+// Read-only popup evidence: DOM/hit state is not proof that pixels were painted.
+function viewMenuEvidence(){
+ const read=selector=>{
+  const node=document.querySelector(selector);if(!node)return {selector,present:false};
+  const r=node.getBoundingClientRect(),style=getComputedStyle(node);
+  return {selector,present:true,rect:{x:r.x,y:r.y,width:r.width,height:r.height},hidden:!!node.hidden,
+   display:style.display,visibility:style.visibility,opacity:style.opacity,overflowX:style.overflowX,overflowY:style.overflowY,clipPath:style.clipPath,contain:style.contain,transform:style.transform,zIndex:style.zIndex,mixBlendMode:style.mixBlendMode,
+   scrollTop:node.scrollTop??null,scrollHeight:node.scrollHeight??null,clientHeight:node.clientHeight??null};
+ };
+ const menu=document.querySelector('#viewModes'),picker=document.querySelector('#facegroupNames'),stroke=globalThis.__boxlabFacegroupStroke;
+ return {open:menu?!!menu.open:null,renderMode:document.querySelector('#viewportRenderLooks [data-render].active')?.dataset?.render??null,
+  selectionMode:globalThis.__boxlabSelectionBridge?.mode?.()??null,
+  facegroupStroke:{armed:!!stroke?.armed,pointerId:stroke?.pointerId??null,mode:stroke?.armed?(stroke.group===null?'erase':'assign'):null},
+  groupPicker:{present:!!picker,optionCount:picker?.options?.length??null,selectedIndex:picker?.selectedIndex??null,disabled:picker?!!picker.disabled:null},
+  nodes:['#viewModes .viewport-menu-panel','#facegroupViewControls','#facegroupNames','#facegroupSaturation','#facegroupLightness','#facegroupReset','#boxlabStudioAtmosphere'].map(read)};
+}
 function uiSnapshot(){
  const rect=node=>{if(!node)return null;const r=node.getBoundingClientRect(),s=getComputedStyle(node);return {...describe(node),rect:{x:r.x,y:r.y,width:r.width,height:r.height},hidden:node.hidden,disabled:node.disabled,parentId:node.parentElement?.id||null,popover:node.getAttribute?.('popover')||null,topLayer:node.getAttribute?.('popover')==='manual'&&node.matches?.(':popover-open')===true,display:s.display,visibility:s.visibility,pointerEvents:s.pointerEvents,opacity:s.opacity,zIndex:s.zIndex,transform:s.transform,overflow:s.overflow,contain:s.contain,isolation:s.isolation,willChange:s.willChange,filter:s.filter,backdropFilter:s.backdropFilter};};
  const points=[.55,.8,.95].flatMap(x=>[.08,.5,.85].map(y=>({x:Math.round(innerWidth*x),y:Math.round(innerHeight*y)})));
- return {canvasProbe:{hidden:canvasProbe.active()},release:document.querySelector('#appVersion')?.textContent,time:new Date().toISOString(),viewport:{width:innerWidth,height:innerHeight,dpr:devicePixelRatio,visual:window.visualViewport?{width:visualViewport.width,height:visualViewport.height,scale:visualViewport.scale,offsetLeft:visualViewport.offsetLeft,offsetTop:visualViewport.offsetTop}:null},session:globalThis.__boxlabToolSession?.current?.(),paint:!!globalThis.__boxlabViewportPaint?.active,controlsEnabled:globalThis.__boxlabBridgeState?.controls?.enabled,elements:['#app','.topbar','#viewportWrap','#viewport','#totalGizmo','#boxlabToolSessionHost','#meshHealthSession','#boxlabUVWorkspace','#viewportSelectionControls','#viewportPaintBtn','.statusbar'].map(q=>({selector:q,...rect(document.querySelector(q))})),controls:uiControlEvidence(),canvas:{width:debugCanvas?.width,height:debugCanvas?.height},hitTests:points.map(p=>({...p,stack:document.elementsFromPoint(p.x,p.y).slice(0,6).map(describe)})),events:uiEvidence.slice()};
+ return {viewMenu:viewMenuEvidence(),canvasProbe:{hidden:canvasProbe.active()},release:document.querySelector('#appVersion')?.textContent,time:new Date().toISOString(),viewport:{width:innerWidth,height:innerHeight,dpr:devicePixelRatio,visual:window.visualViewport?{width:visualViewport.width,height:visualViewport.height,scale:visualViewport.scale,offsetLeft:visualViewport.offsetLeft,offsetTop:visualViewport.offsetTop}:null},session:globalThis.__boxlabToolSession?.current?.(),paint:!!globalThis.__boxlabViewportPaint?.active,controlsEnabled:globalThis.__boxlabBridgeState?.controls?.enabled,elements:['#app','.topbar','#viewportWrap','#viewport','#totalGizmo','#boxlabToolSessionHost','#meshHealthSession','#boxlabUVWorkspace','#viewportSelectionControls','#viewportPaintBtn','.statusbar'].map(q=>({selector:q,...rect(document.querySelector(q))})),controls:uiControlEvidence(),canvas:{width:debugCanvas?.width,height:debugCanvas?.height},hitTests:points.map(p=>({...p,stack:document.elementsFromPoint(p.x,p.y).slice(0,6).map(describe)})),events:uiEvidence.slice()};
 }
 function updateUIDebug(){
  if(!enabled){canvasProbe.show();uiControls?.remove();uiControls=null;uiReport=null;return;}
@@ -257,3 +273,6 @@ globalThis.__boxlabGestureDebug.uiSnapshot=uiSnapshot;
 queueMicrotask(()=>{if(enabled)evidence('debug-startup',{controls:uiControlEvidence()});});
 
 for(const type of ['pointerdown','pointerup','click'])window.addEventListener(type,event=>evidence(type+'-bubble',{target:describe(event.target),defaultPrevented:event.defaultPrevented,...(type==='click'&&event.target?.closest?.('.top-actions')?{controls:uiControlEvidence()}: {})}),{passive:true});
+
+window.addEventListener('toggle',event=>{if(enabled&&event.target?.id==='viewModes')evidence('view-toggle',viewMenuEvidence());},{capture:true,passive:true});
+window.addEventListener('scroll',event=>{if(enabled&&event.target?.classList?.contains('viewport-menu-panel'))evidence('view-scroll',viewMenuEvidence());},{capture:true,passive:true});

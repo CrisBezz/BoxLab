@@ -25,3 +25,13 @@ Independent confirmed usability fault: existing-group suggestions did not open.
 985/987 UI used text input+datalist, not an explicit group selector.988 replaces
 that dependency with native select plus original editable new-name field. This
 repairs the group-list access path, not the broader rendering fault. No987 PASS.
+
+## .988 follow-up and .989 instrumentation
+
+User supplied988 dump00:41:42.391Z: unblocked Pencil down/up/click at VIEW summary
+x1308/y41, same healthy canvas/layout, footer visible in DOM. Open/panel state still
+absent, so no conclusion whether native toggle failed or paint was missing. User
+subsequently PASS988 accepts group-selector workflow, not permanent rendering repair.
+989 extends original debug report with native open, panel geometry/scroll and
+mode/facegroup state plus opt-in passive toggle/scroll evidence. No runtime
+rendering/layout change and no automatic recovery.
