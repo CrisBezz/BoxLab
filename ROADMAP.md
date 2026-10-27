@@ -7140,3 +7140,35 @@ DEVICE987: group faces, arm Erase group strokes, draw and lift; only sampled fac
 become ungrouped. UndoRedo once per stroke; erase ungrouped face adds no Undo. Switch
 back to named Pencil strokes; stop and navigate. Save/Open retains groups. Next
 follow device eraser acceptance before live feedback/radius work.
+
+## .988 — explicit existing-group selector; .987 rendering recurrence — 27 October 2026
+
+User reports entire VIEW menu temporarily vanished (not reproducible now), following
+987 lower-right blank area/report and screenshot. No987 PASS inferred. Protect986
+strokes and985/984 accepted workflows; rendering issue OPEN. Evidence summarized
+in docs/ui-right-region-987.md, including limits of healthy DOM/hits and hidden
+gizmo in this specific capture. Do not claim Studio-only cause or UI repair.
+
+Independent actionable user failure: group list DOES NOT OPEN. Audit original
+985 name input+datalist: name suggestions are not an explicit dropdown. Replace
+with separate native Existing group select (same names from authoritative live
+mesh) and keep original editable Group input for new names. No custom popup or new
+pointer owner. Native select options have safe value/textContent, unique sorted
+names and empty-state prompt. Refresh on VIEW toggle, Facegroups UI sync and after
+assignment/clear, retaining current name when it exists. Choice copies name into
+original input and dispatches its accepted input event, stopping previous armed
+strokes/eraser; no mesh/selection/history change until actual assignment/stroke.
+This is a group-selector fix, not a viewport/compositor repair.
+
+Changed functionality ONLY render-modes UI; reviewed render/recovery988 pins and
+release markers/hashes. Gesture/gate/stroke/authoring/UV/geometry/Multi owners
+unchanged.88 targeted checks PASS/0FAIL/0skip: new actual picker population/change
+callbacks, fresh/empty/unsafe-text cases, plus retained metadata/stroke/eraser,
+Pencil/Lasso/picking,toolbar,project,UV and release tests. Syntax/diff checks pass.
+Native iPad select opening needs hands-on review; no full-suite/rendered proof claimed.
+DEVICE988: Face mode > VIEW Facegroups > Existing group opens real native list;
+choose group, select more faces and Assign selected. Type another name to create
+group, reopen VIEW and confirm listed; UndoRedo changes assignments only. Retest
+erase and Save/Open if convenient. If VIEW blanks again, note scroll behavior and
+whether explicit File Refresh display restores; no repeated debug dump required.
+Next native selector/eraser feedback; broader rendering diagnosis remains separate.

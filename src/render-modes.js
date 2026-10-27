@@ -244,7 +244,18 @@ if(!THREE.Group.prototype.__boxlabRenderModesInstalled){THREE.Group.prototype.ad
 // Mesh Health owns UV edits; refresh their temporary view after its session exits.
 window.addEventListener('boxlab-tool-session-change',event=>{if((mode==='uvchecker'||mode==='uvimage')&&event.detail?.id==='mesh-health'&&!event.detail.active)applyToSceneBodies();});
 
+function syncFacegroupNamePicker(){
+  const list=document.querySelector('#facegroupNames'),input=document.querySelector('#facegroupName');if(!list)return;
+  list.replaceChildren();
+  const names=existingFacegroupNames(bridge()?.mesh),placeholder=document.createElement('option');
+  placeholder.value='';placeholder.textContent=names.length?'Choose existing group…':'No named groups yet';list.appendChild(placeholder);
+  for(const name of names){
+    const option=document.createElement('option');option.textContent=name;option.value=name;list.appendChild(option);
+  }
+  list.value=names.includes(input?.value)?input.value:'';
+}
 function syncFacegroupControls(){
+  syncFacegroupNamePicker();
   const panel=document.querySelector('#facegroupViewControls');if(!panel)return;
   panel.hidden=mode!=='facegroups';
   panel.querySelectorAll('[data-facegroup-palette]').forEach(button=>button.classList.toggle('active',button.dataset.facegroupPalette===facegroupView.palette));
@@ -267,12 +278,12 @@ function installFacegroupControls(host){
   panel.id='facegroupViewControls';panel.hidden=true;
   panel.innerHTML=`
     <div class="viewport-menu-label" style="margin-top:9px">Selected Facegroups</div>
-    <label>Group <input id="facegroupName" list="facegroupNames" type="text" value="Group 1" maxlength="64" autocomplete="off" style="width:140px;touch-action:auto"/></label>
+    <label>Group <input id="facegroupName" type="text" value="Group 1" maxlength="64" autocomplete="off" style="width:140px;touch-action:auto"/></label>
     <div class="outliner-actions"><button id="facegroupAssign" type="button">Assign selected</button><button id="facegroupClear" type="button">Clear selected</button></div>
     <button id="facegroupStrokeToggle" type="button" aria-pressed="false">Pencil facegroup strokes</button>
     <button id="facegroupEraseToggle" type="button" aria-pressed="false">Erase group strokes</button>
     <small>Strokes assign or clear visible faces on lift; fingers navigate. Reopen VIEW to stop.</small>
-    <datalist id="facegroupNames"></datalist>
+    <label>Existing group <select id="facegroupNames" aria-label="Existing facegroup" style="max-width:220px;min-height:36px;touch-action:manipulation"></select></label>
     <button id="facegroupUseSelected" type="button">Use selected group name</button>
     <small>Choose an existing name or type a new one. Select faces in Face mode; no UVs required.</small>
     <div class="viewport-menu-label" style="margin-top:9px">Facegroup Colours</div>
@@ -311,6 +322,7 @@ function installFacegroupControls(host){
     if(author){
       event.preventDefault();event.stopPropagation();
       const result=assignSelectedFacegroup({manager:manager(),selection:globalThis.__boxlabSelectionBridge,mesh:bridge()?.mesh,history:globalThis.__boxlabObjectHistory,session:globalThis.__boxlabToolSession,name:author.id==='facegroupClear'?null:panel.querySelector('#facegroupName').value});
+      syncFacegroupNamePicker();
       if(status)status.textContent=result.ok?(result.changed?`Facegroups · ${result.count} faces · ${result.group??'cleared'}`:'Facegroups · no change needed'):`Facegroups · ${result.reason}`;
       return;
     }
@@ -322,12 +334,13 @@ function installFacegroupControls(host){
   panel.querySelector('#facegroupName').addEventListener('input',()=>{
     if(facegroupStroke.armed){facegroupStroke.stop();syncFacegroupStrokeControls();}
   });
-  panel.querySelector('#facegroupName').addEventListener('focus',()=>{
-    const list=panel.querySelector('#facegroupNames');list.replaceChildren();
-    for(const name of existingFacegroupNames(bridge()?.mesh)){
-      const option=document.createElement('option');option.value=name;list.appendChild(option);
-    }
+  panel.querySelector('#facegroupNames').addEventListener('change',()=>{
+    const name=panel.querySelector('#facegroupNames').value;if(!name)return;
+    panel.querySelector('#facegroupName').value=name;
+    panel.querySelector('#facegroupName').dispatchEvent(new Event('input'));
+    if(status)status.textContent=`Facegroups · using ${name}`;
   });
+  document.querySelector('#viewModes')?.addEventListener('toggle',syncFacegroupNamePicker);
   panel.querySelector('#facegroupSaturation')?.addEventListener('input',event=>updateFacegroupView({saturation:Number(event.target.value)/100}));
   panel.querySelector('#facegroupLightness')?.addEventListener('input',event=>updateFacegroupView({lightness:Number(event.target.value)/100}));
   panel.querySelector('#facegroupUngrouped')?.addEventListener('input',event=>updateFacegroupView({ungrouped:event.target.value}));

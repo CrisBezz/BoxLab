@@ -378,21 +378,21 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.987",
+      "url": "./src/release-bootstrap.js?v=0.36.18.988",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.987",
+      "url": "./src/release-version.js?v=0.36.18.988",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
     {
       "owner": "index.html",
-      "url": "./src/render-modes.js?v=0.36.18.987",
+      "url": "./src/render-modes.js?v=0.36.18.988",
       "target": "src/render-modes.js",
-      "sha256": "4247b531e1f8db2ada7847496e096a1ad0bea22ea73cd87b67bb5cb17dc7e436"
+      "sha256": "13701bfa5a2b7a4d340d952de1d729700e23e6066f188b51813a9f02538e624d"
     },
     {
       "owner": "index.html",

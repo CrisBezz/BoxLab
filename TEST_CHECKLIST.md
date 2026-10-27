@@ -11235,3 +11235,12 @@ unrelatedfeature rollout or speculative further CSS/engine fixes.
 - [ ] Already ungrouped stroke adds no history; switch back to named strokes and Stop.
 - [ ] Save/Open and finger navigation remain accepted; native eraser review pending.
 - [x] Automated eraser staging/no-op/untouched data/checkpoint/cancel/switch tests pass.
+
+## .988 existing-group dropdown repair / rendering recurrence
+
+- [ ] Native Existing group dropdown opens on iPad; select existing name, assign new faces.
+- [ ] Original Group text input creates new names; reopening VIEW lists current mesh groups.
+- [ ] Selector choice changes no geometry/history and stops prior brush; UndoRedo affects actual assignment.
+- [ ] Eraser987 and Save/Open remain device review; no987 PASS inferred.
+- [x] Automated actual option population/change callbacks, refresh/empty/text safety and retained authoring/stroke regressions pass.
+- [ ] OPEN: lower-right/VIEW menu blank or gone in987. DOM/hit health does not prove pixel rendering. See docs/ui-right-region-987.md.
