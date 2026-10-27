@@ -1,3 +1,25 @@
+## .1002 — uniform Facegroup colours, including undersides — 28 October 2026
+
+User screenshot4DED25F9 shows bottom faces nearly black in Facegroups and requests
+equalized shading. Original render-modes facegroupMaterial now uses unlit
+MeshBasicMaterial with vertexColors and toneMapped:false instead of lit Standard.
+Every front-facing polygon displays its existing group palette colour independent
+of light/normal orientation. Original FrontSide, polygon offset, backface diagnostic,
+palette/list/name data, selection/brush/history, other VIEW materials and renderer
+lights remain unchanged. Bottom faces can now be read while orbiting underneath.
+This deliberately flattens Facegroups shading; Studio retains original depth/lighting.
+
+Scope is only original material plus reviewed render/shell/recovery1002 pins and
+release markers. No UI/composition/gizmo changes; blank VIEW/right-region recurrence
+stays OPEN. .1000 feature and .1001 functional acceptance retained. Requested UV
+Fill Face/Facegroup with expansion remains active but unshipped; do not claim it
+was included here. Validation/publication: docs/publication-1002.md.
+
+DEVICE1002: Facegroups -> orbit below mesh; assigned undersides show same group
+colour as upper faces. Paint/erase groups, UndoRedo; list colours remain consistent.
+Switch Studio -> Facegroups: Studio lighting returns, group view is evenly coloured.
+Current1002 native appearance acceptance pending; right-region fault still separate.
+
 ## .1001 recurrence — blank Facegroups VIEW and right-region gizmo loss — 28 October 2026
 
 User previously PASSed1001, now reports Facegroups VIEW blank and gizmo disappears

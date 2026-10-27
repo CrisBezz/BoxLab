@@ -43,7 +43,8 @@ const studioMaterial=new THREE.MeshStandardMaterial({color:0xaeb9c7,roughness:.4
 const studioInactiveMaterial=new THREE.MeshStandardMaterial({color:0x98a6b8,roughness:.52,metalness:.02,emissive:0x03060a,emissiveIntensity:.06,side:THREE.FrontSide,polygonOffset:true,polygonOffsetFactor:1,polygonOffsetUnits:1});
 const checkerHiddenMaterial=new THREE.MeshBasicMaterial({colorWrite:false,depthWrite:false});
 const backfaceMaterial=new THREE.MeshStandardMaterial({color:0xf2a766,roughness:.78,metalness:0,side:THREE.BackSide,polygonOffset:true,polygonOffsetFactor:1,polygonOffsetUnits:1});
-const facegroupMaterial=new THREE.MeshStandardMaterial({vertexColors:true,roughness:.66,metalness:0,side:THREE.FrontSide,polygonOffset:true,polygonOffsetFactor:1,polygonOffsetUnits:1});
+// Facegroup inspection uses uniform palette colours on every face orientation.
+const facegroupMaterial=new THREE.MeshBasicMaterial({vertexColors:true,toneMapped:false,side:THREE.FrontSide,polygonOffset:true,polygonOffsetFactor:1,polygonOffsetUnits:1});
 
 function makeMatcapTexture(){
   const canvas=document.createElement('canvas');canvas.width=256;canvas.height=256;
