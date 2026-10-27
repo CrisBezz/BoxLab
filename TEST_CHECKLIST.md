@@ -1,3 +1,23 @@
+## .1002 user PASS; shared gizmo/menu audit — 28 October 2026
+
+User PASS1002 protects uniform Facegroup colour including undersides; Studio
+lighting remains separate. User requests another investigation of gizmo/menu loss.
+Both Studio and Facegroups affected; do not repeat that comparison. No new runtime
+fix established. Gizmo local SVG overflow:hidden moves with original196px root;
+VIEW fixed external sibling under app has different ancestry. No shared application
+clip or scissor call established that explains both lost surfaces. Do not remove
+protected SVG clipping speculatively. Prior UV screenshot cutoff near1024 CSS /
+2048 physical pixels at DPR2 suggests a resolution-dependent paint/composition
+hypothesis, not proof of GPU/texture-limit/WebKit cause. Next narrow diagnostic
+candidate: explicit temporary1x versus automatic2x rendering using authoritative
+viewport sizing owner, preserving CSS size/model/history and restoring on exit.
+Not implemented; do not claim diagnostic controls exist or a fix is ready.
+
+Current live1002; no new runtime build in this audit.69 focused tests belong to
+1002 material change, not pixel-loss proof. Fill Face/Facegroup remains requested
+and unshipped. No new device test required in this audit; do not ask for repeated
+hidden-gizmo reports or identical Studio/Facegroups comparison.
+
 ## .1002 — uniform Facegroup colours, including undersides — 28 October 2026
 
 User screenshot4DED25F9 shows bottom faces nearly black in Facegroups and requests
