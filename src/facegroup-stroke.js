@@ -1,4 +1,4 @@
-import {assignSelectedFacegroup} from './facegroup-authoring.js?v=0.36.18.985';
+import {assignSelectedFacegroup} from './facegroup-authoring.js?v=0.36.18.995';
 const signature=mesh=>JSON.stringify([mesh?.vertices,mesh?.faces,mesh?.faceGroups]);
 // The existing selection-brush event owner supplies hits and pointer completion.
 export function createFacegroupStroke({context,notify=()=>{}}){

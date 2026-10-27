@@ -1,7 +1,7 @@
 // Presentation only: the original name/brush controls own painting and history.
 export function createFacegroupList({root,document,onSelect}){
  const rows=new Map();let layout='';
- function update({names,colours,selected}){
+ function update({names,colours,selected,pending=new Set()}){
   const key=JSON.stringify(names);
   if(key!==layout){
    layout=key;
@@ -16,7 +16,7 @@ export function createFacegroupList({root,document,onSelect}){
    if(names.length)root.replaceChildren(...names.map(name=>rows.get(name).button));
    else{const empty=document.createElement('small');empty.textContent='No named groups yet. Enter a name and paint faces.';root.replaceChildren(empty);}
   }
-  for(const name of names){const row=rows.get(name);row.swatch.style.backgroundColor=colours.get(name);row.button.setAttribute('aria-pressed',String(name===selected));row.button.setAttribute('aria-label',`Paint group ${name}`);}
+  for(const name of names){const row=rows.get(name);row.swatch.style.backgroundColor=colours.get(name);row.button.setAttribute('aria-pressed',String(name===selected));row.button.setAttribute('aria-label',`Paint group ${name}${pending.has(name)?' (new, paint faces to save)':''}`);row.button.title=pending.has(name)?'New group — paint faces to save':name;}
  }
  return {update};
 }

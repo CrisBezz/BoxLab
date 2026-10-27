@@ -7485,3 +7485,70 @@ DEVICE994: native NOM six named groups have six distinct colours/correct regions
 textures unchanged. DEVICE993: Face Apply Exact twice, Done, UndoRedo; Inset Exact
 and ordinary Pencil drag sanity.992 facegroup list acceptance still pending;991 PASS
 protected. Recurring right-region rendering remains OPEN. Next act on device feedback.
+
+## .995 — FACEGROUP Face radial and ADD+; .994 user PASS — 27 October 2026
+
+User explicitly PASSes994; protect native NOM distinct group colours and993 Exact
+Extrude/Inset capture/Done/UndoRedo repair. User asks Face radial FACEGROUP with
+linework cube/red-green-yellow faces, automatic Facegroups look, original left list,
+and ADD+ numbered new groups. Existing dock/stroke/authoring/palette remain owners.
+
+Face radial now has24 tools. FACEGROUP reuses original #facegroupOpenPaint target
+for inventory but launches original dock SEMANTICALLY (no hidden VIEW button click).
+It selects original Facegroups look, closes VIEW and opens same left dock/name/list/
+Paint/Erase/selected-face nodes. Original authoring editable-target gate is shared
+with Assign, not copied; locked/reference/linked/live-modifier/tool-session/active-
+drag targets refuse. Done stops brush, parks controls and emits original Face hub
+completion once; another radial tool or mode/session change closes the dock.
+
+All23 pre-existing Face targets, labels, icons, angles/radii and cross-mode shared
+placements remain EXACTLY unchanged. FACEGROUP fits between original rings at330°/
+r168 with74x60 target and original32px icon/small title format. Three SVG cube faces
+red/green/yellow with light linework. New button has no bounds overlap with any old
+button. A16-sector outer reflow was considered but rejected because it displaced
+shared cross-mode slots; not shipped. No unrelated icon reskin or pointer owner.
+
+ADD+ picks unique Group N, incrementing past current/existing/draft numbers; adds
+safe colour/name row and arms original Paint. Does NOT immediately reassign current
+selection or create history. Empty groups are UI drafts scoped by actual object
+identity in WeakMap, surviving dock close/reopen/object switches in this session.
+They are saved/exported ONLY after painting or Assign selected through existing
+faceGroups metadata. UI explicitly says paint/assign to save; no new project schema.
+Reload/project replacement drops unused drafts. Assigned groups retain original
+palette; drafts preview subsequent spaced colours via SAME palette helper. Painting
+out of draft order refreshes swatches to actual mesh-order colours (not fixed
+user-chosen group colours). Palette/reseed controls remain in VIEW. Safe names and
+integer-limit numbering tested; no HTML insertion/model/UV/material/paint changes.
+
+Validation165 targeted PASS/0FAIL/0skip (~1.7s), including8 new draft/real-control/
+semantic radial/real dock Done tests, all existing Facegroup data/palette/brush/
+eraser/authoring/selector/dock, radial modes/shared positions, accepted994 Exact/
+NOM, and reviewed release contracts. All24 embedded Face SVGs parse; syntax and
+diff clean. Existing709 Face count23→24 is sole radial contract expansion; original
+outer15×24° and shared Edge/Vertex slots stay protected. Picker/dock fixtures adapted
+to the original shared open owner and draft adapter without dropping source/selection/
+refusal checks. No full-suite/rendered-browser/native iPad proof claimed.
+
+Changed runtime: original render-modes, small drafts helper, original list and shared
+editable-authoring gate; stroke changes import pin ONLY. Total Gizmo changes one
+button/availability/semantic launch/completion. Reviewed shell/render/stroke/author/
+list/drafts/gizmo/icon/recovery995 cache closure. Facegroup palette992 and native NOM994,
+993 Exact, main/Multi1.0/UV/Paint/geometry/frozen bytes unchanged.
+
+Right-hand rendering issue stays OPEN. Reviewed latest992 capture: VIEW native open/
+close and explicit zero-sized closed panel work; canvas hide did not restore rightUI;
+styles/hit stacks cannot establish visible pixels. This build adds direct LEFT dock
+access but DOES NOT claim a compositor/right-menu repair. Retain existing diagnostics
+and user File Refresh display; do not repeat proven-insufficient blur/closed-details/
+canvas-only explanations or force another identical dump. Further rendering work
+requires visible affected region/structural reproduction, not speculative CSS churn.
+
+Current runtime/publication evidence lives in docs/publication-995.md (commit/tree,
+Pages/live checks and hosted status); consult it before describing publication.
+Standing user push/publish approval remains active; do not ask again.
+DEVICE995: Face select→radial FACEGROUP cube; auto Facegroups look + original LEFT
+list. ADD+ two new numbered rows/different swatches, paint each/erase; UndoRedo one
+step per stroke. Done→radial again; ordinary Face Exact and finger navigation.
+SaveOpen painted groups; unused drafts are intentionally not saved. Watch right VIEW
+menu separately; if recurrence, screenshot/identify visible area, no forced recreation.
+Next follow native995 feedback; facegroup-seam UV/material work remains deferred.

@@ -1,9 +1,13 @@
 // Metadata authoring through the original mesh and scene-history owners.
+export function facegroupAuthoringTarget({manager,mesh,session}){
+ const object=manager?.objects?.find(o=>o.id===manager.activeId);
+ if(!object||!mesh?.clone||object.locked||object.kind==='reference'||object.sourceId||object.arrayRecipe||object.booleanRecipe||object.curveProfile)return {ok:false,reason:'Select an editable mesh'};
+ if(session?.isActive?.())return {ok:false,reason:'Finish the active tool first'};
+ return {ok:true,object};
+}
 export function assignSelectedFacegroup({manager,selection,mesh,history,session,name}){
  const fail=reason=>({ok:false,reason});
- const object=manager?.objects?.find(o=>o.id===manager.activeId);
- if(!object||!mesh?.clone||object.locked||object.kind==='reference'||object.sourceId||object.arrayRecipe||object.booleanRecipe||object.curveProfile)return fail('Select an editable mesh');
- if(session?.isActive?.())return fail('Finish the active tool first');
+ const target=facegroupAuthoringTarget({manager,mesh,session});if(!target.ok)return target;
  if(selection?.mode?.()!=='face')return fail('Select faces in Face mode first');
  const ids=[...new Set(selection.indices?.()||[])];
  if(!ids.length||ids.some(i=>!Number.isInteger(i)||i<0||i>=mesh.faces.length))return fail('Select valid faces first');

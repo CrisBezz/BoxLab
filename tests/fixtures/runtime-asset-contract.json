@@ -378,21 +378,21 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.994",
+      "url": "./src/release-bootstrap.js?v=0.36.18.995",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.994",
+      "url": "./src/release-version.js?v=0.36.18.995",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
     {
       "owner": "index.html",
-      "url": "./src/render-modes.js?v=0.36.18.992",
+      "url": "./src/render-modes.js?v=0.36.18.995",
       "target": "src/render-modes.js",
-      "sha256": "1b252cca248bbdf599678d0017eba41561bbb8946387a0a95e7f7719d1d6958f"
+      "sha256": "4f22a0c010072fc3ec2ffe75783e5c084dd10a9b5394d0ce17f7c21bd32751be"
     },
     {
       "owner": "index.html",
@@ -551,9 +551,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/total-gizmo.js?v=0.36.18.975",
+      "url": "./src/total-gizmo.js?v=0.36.18.995",
       "target": "src/total-gizmo.js",
-      "sha256": "12786a075a732981247c4cdf8c9b9d3cd1ff279722fc5e643b6a6f425beea43a"
+      "sha256": "0e4cd22a9bb63789f66dee730b014975d5505440fb179319b4e4362e88b1c589"
     },
     {
       "owner": "index.html",
@@ -3128,9 +3128,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./face-radial-icons.css?v=0.36.18.968",
+      "url": "./face-radial-icons.css?v=0.36.18.995",
       "target": "face-radial-icons.css",
-      "sha256": "7e8e7638772a9b166144bb9b30fcb4f08b7813784b5dfedaa3a73ffe90463e46"
+      "sha256": "1757bceee5ccca90d084b7afb32cc8f59d7a92024bcd1758bdf46dbcb3cfa882"
     },
     {
       "owner": "index.html",
@@ -3206,21 +3206,21 @@
     },
     {
       "owner": "src/render-modes.js",
-      "url": "./facegroup-authoring.js?v=0.36.18.985",
+      "url": "./facegroup-authoring.js?v=0.36.18.995",
       "target": "src/facegroup-authoring.js",
-      "sha256": "3b8b6418be47ed40f1fb458c05bdd796b10a263ebacbfa06c00bbcab8959840e"
+      "sha256": "943d540360e3df3ab2646cb1c5ddc2d5967517a88375bf9934571b345cf0c917"
     },
     {
       "owner": "src/render-modes.js",
       "target": "src/facegroup-stroke.js",
-      "url": "./facegroup-stroke.js?v=0.36.18.987",
-      "sha256": "f4cde8b45bf83c126fd07627d60533d8ffadf6311d633666a8798604c92cadb7"
+      "url": "./facegroup-stroke.js?v=0.36.18.995",
+      "sha256": "3dc715ff5f0e5898bbc050df3087136e532b35b0a56f0def5814042d6f51ab3b"
     },
     {
       "owner": "src/facegroup-stroke.js",
       "target": "src/facegroup-authoring.js",
-      "url": "./facegroup-authoring.js?v=0.36.18.985",
-      "sha256": "3b8b6418be47ed40f1fb458c05bdd796b10a263ebacbfa06c00bbcab8959840e"
+      "url": "./facegroup-authoring.js?v=0.36.18.995",
+      "sha256": "943d540360e3df3ab2646cb1c5ddc2d5967517a88375bf9934571b345cf0c917"
     },
     {
       "owner": "src/render-modes.js",
@@ -3237,11 +3237,23 @@
     {
       "owner": "src/render-modes.js",
       "target": "src/facegroup-list.js",
-      "url": "./facegroup-list.js?v=0.36.18.992",
-      "sha256": "66e9b2c351c8d14d74d92d7d235dabdeb90f27d635976f57cb4d2b4edf85eef6"
+      "url": "./facegroup-list.js?v=0.36.18.995",
+      "sha256": "dd0597a1ec08297b982f2dae30828dfecbab024dfde0947350f686a4a2bea3b3"
     },
     {
       "owner": "src/nomad-export-core.js",
+      "url": "./facegroup-colours-core.js?v=0.36.18.992",
+      "target": "src/facegroup-colours-core.js",
+      "sha256": "048fb521def009766bd75115b562603d926405f910bf93ab848a40806f589834"
+    },
+    {
+      "owner": "src/render-modes.js",
+      "url": "./facegroup-drafts.js?v=0.36.18.995",
+      "target": "src/facegroup-drafts.js",
+      "sha256": "2796ec4953353f85bcbd65263eec91b87984119e62c9c63c05d3b5426fcab9f0"
+    },
+    {
+      "owner": "src/facegroup-drafts.js",
       "url": "./facegroup-colours-core.js?v=0.36.18.992",
       "target": "src/facegroup-colours-core.js",
       "sha256": "048fb521def009766bd75115b562603d926405f910bf93ab848a40806f589834"

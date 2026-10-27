@@ -379,6 +379,7 @@ root.innerHTML=`
   <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:288.000deg;--r:230px" data-tool-target="#cleanVerticesBtn">Clean Vertices</button>
   <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:312.000deg;--r:230px" data-tool-target="#mergeByDistanceBtn">Merge Dist</button>
   <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:336.000deg;--r:230px" data-tool-target="#extractFacesBtn">Extract</button>
+  <button type="button" class="tg-tool-sector tg-tool-mid" style="--a:330deg;--r:168px" data-tool-target="#facegroupOpenPaint">FACEGROUP</button>
   <button type="button" class="tg-tool-center" aria-label="Close Face contextual tools" title="Close tools">×</button>
 </div>
 <div class="tg-tool-ring" data-ring-mode="edge" aria-label="Edge contextual tools">
@@ -504,8 +505,9 @@ function syncContextToolAvailability(){
     const bridgeStart=sector.closest('.tg-tool-ring')?.dataset.ringMode==='edge'&&sector.textContent?.trim()==='Bridge'&&!!globalThis.__boxlabBridgeViewportSession?.canStart?.([...new Set(globalThis.__boxlabSelectionBridge?.indices?.()||[])]);
     const faceRepair=sector.closest('.tg-tool-ring')?.dataset.ringMode==='face'&&['Close Holes','Quad Cleanup','Quadify N-gons','Clean Vertices','Merge Dist'].includes(sector.textContent?.trim());
     const faceAlign=sector.closest('.tg-tool-ring')?.dataset.ringMode==='face'&&sector.textContent?.trim()==='Align';
+    const facegroup=sector.closest('.tg-tool-ring')?.dataset.ringMode==='face'&&sector.textContent?.trim()==='FACEGROUP';
     const faceBevel=sector.closest('.tg-tool-ring')?.dataset.ringMode==='face'&&sector.textContent?.trim()==='Bevel';
-    let unavailable=faceBevel?!globalThis.__boxlabDirectBevel?.faceBevelInfo?.()?.ok:faceAlign?!globalThis.__boxlabFaceAlignViewportSession?.available?.():faceRepair?!globalThis.__boxlabFaceRepairViewportSession?.available?.(sector.textContent.trim()):!target||(!bridgeStart&&!!target.disabled);
+    let unavailable=facegroup?!globalThis.__boxlabFacegroupDock?.available?.():faceBevel?!globalThis.__boxlabDirectBevel?.faceBevelInfo?.()?.ok:faceAlign?!globalThis.__boxlabFaceAlignViewportSession?.available?.():faceRepair?!globalThis.__boxlabFaceRepairViewportSession?.available?.(sector.textContent.trim()):!target||(!bridgeStart&&!!target.disabled);
     const active=!!target&&(target.classList.contains('active')||target.getAttribute('aria-pressed')==='true');
     const vertexReadOnly=sector.closest('.tg-tool-ring')?.dataset.ringMode==='vertex'&&!!document.querySelector('#app')?.classList?.contains('boxlab-active-locked');
     const vertexSession=sector.closest('.tg-tool-ring')?.dataset.ringMode==='vertex'&&['Extrude','Add','Build Edge','Bevel','Slide','Merge Dist','Clean Vertices'].includes(sector.textContent?.trim());
@@ -591,6 +593,8 @@ toolSectors.forEach(button=>{
       launchAccepted=!!globalThis.__boxlabSweepPath?.launchSelection?.();
     }else if(mode==='face'&&toolLabel==='Bevel'){
       // Semantic launch below arms the existing Bevel owner without switching modes.
+    }else if(mode==='face'&&toolLabel==='FACEGROUP'){
+      launchAccepted=!!globalThis.__boxlabFacegroupDock?.openFromHub?.();
     }else if(mode==='face'&&toolLabel==='Align'){
       launchAccepted=!!globalThis.__boxlabFaceAlignViewportSession?.openFromHub?.();
     }else if(radialFaceRepair){
@@ -669,7 +673,7 @@ window.addEventListener('boxlab-selection-hub-session-complete',event=>{
   }
   if(event.detail?.mode!=='face')return;
   const tool=event.detail?.tool;
-  if(!['Knife','Shell','Sweep','Bridge','Extrude','Inset','Close Holes','Quad Cleanup','Quadify N-gons','Clean Vertices','Merge Dist','Align','Bevel'].includes(tool))return;
+  if(!['Knife','Shell','Sweep','Bridge','Extrude','Inset','Close Holes','Quad Cleanup','Quadify N-gons','Clean Vertices','Merge Dist','Align','Bevel','FACEGROUP'].includes(tool))return;
   hubSuppressedKey='';
   resetTransientState?.({hideFloat:true});
   const mesh=state()?.mesh,current=currentMode();
