@@ -210,9 +210,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/export-as-panel.js?v=0.36.18.948",
+      "url": "./src/export-as-panel.js?v=0.36.18.994",
       "target": "src/export-as-panel.js",
-      "sha256": "075efaf0177f70750d9e91c8c12eb014d7a154e3e6641d791f42d149f4abace6",
+      "sha256": "9c672a87f34e897c8a690514a6b99f6e2ad897d3f21a5cbd669d808a584cc57d",
       "sourceVersion": "0.36.18.892"
     },
     {
@@ -317,9 +317,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/multi-face-direct.js?v=0.36.18.979",
+      "url": "./src/multi-face-direct.js?v=0.36.18.993",
       "target": "src/multi-face-direct.js",
-      "sha256": "c9b72ec8e3073668601eda497b24a37f40c83a09916aed69511636d466a1e508"
+      "sha256": "9af3f9f04c5188058e178bcf64263ad4ea46c6b4736499146109555706c92d37"
     },
     {
       "owner": "index.html",
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.992",
+      "url": "./src/release-bootstrap.js?v=0.36.18.994",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.992",
+      "url": "./src/release-version.js?v=0.36.18.994",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -1189,9 +1189,9 @@
     },
     {
       "owner": "src/export-as-panel.js",
-      "url": "./nomad-packed-maps.js?v=0.36.18.948",
+      "url": "./nomad-packed-maps.js?v=0.36.18.994",
       "target": "src/nomad-packed-maps.js",
-      "sha256": "bd32484f4ab490a29a98b066936c9cff2ef82a555412c5bc6f0721d90a008977"
+      "sha256": "2d2bbfbe7649860eb705ef3873f5e2eac64429e60d2eebf06b20e8f43ad60f86"
     },
     {
       "owner": "src/export-as-panel.js",
@@ -2450,9 +2450,9 @@
     },
     {
       "owner": "src/nomad-packed-maps.js",
-      "url": "./nomad-export-core.js?v=0.36.18.948",
+      "url": "./nomad-export-core.js?v=0.36.18.994",
       "target": "src/nomad-export-core.js",
-      "sha256": "01b2f610d53b84b926b5d783f7379c80b18c72d6cd9f354956ded959dee92828"
+      "sha256": "910370b6bb42ec39c071469de9d6672f50b85cfb4f695182c9bf0446d3e6d4a4"
     },
     {
       "owner": "src/nomad-export-core.js",
@@ -2768,9 +2768,9 @@
     },
     {
       "owner": "evaluations/uv-paint/lab.js",
-      "url": "../../src/export-as-panel.js?v=0.36.18.948",
+      "url": "../../src/export-as-panel.js?v=0.36.18.994",
       "target": "src/export-as-panel.js",
-      "sha256": "075efaf0177f70750d9e91c8c12eb014d7a154e3e6641d791f42d149f4abace6"
+      "sha256": "9c672a87f34e897c8a690514a6b99f6e2ad897d3f21a5cbd669d808a584cc57d"
     },
     {
       "owner": "src/paint-layer-stack.js",
@@ -2804,9 +2804,9 @@
     },
     {
       "owner": "evaluations/uv-paint/index.html",
-      "url": "./lab.js?v=0.36.18.966",
+      "url": "./lab.js?v=0.36.18.994",
       "target": "evaluations/uv-paint/lab.js",
-      "sha256": "bb5cefb4c2002672e81bcf73f0a6049f4c23ad486a300ac47827c6add2654e7f"
+      "sha256": "fa5ad66be433289b8eb08745e44e1c6497eed13ed00701e199a1a3e9aa084a02"
     },
     {
       "owner": "index.html",
@@ -3239,6 +3239,12 @@
       "target": "src/facegroup-list.js",
       "url": "./facegroup-list.js?v=0.36.18.992",
       "sha256": "66e9b2c351c8d14d74d92d7d235dabdeb90f27d635976f57cb4d2b4edf85eef6"
+    },
+    {
+      "owner": "src/nomad-export-core.js",
+      "url": "./facegroup-colours-core.js?v=0.36.18.992",
+      "target": "src/facegroup-colours-core.js",
+      "sha256": "048fb521def009766bd75115b562603d926405f910bf93ab848a40806f589834"
     }
   ]
 }

@@ -7353,3 +7353,116 @@ DEVICE992: open Facegroups paint dock; paint2+ group names, inspect swatch/name 
 Tap rows and paint/erase; selected name/highlight and UndoRedo refresh list. Adjust
 VIEW palette/reseed and reopen dock: swatches follow viewport base colours (lighting
 can shade model). Long names/many groups stay compact; Done/finger navigation.
+
+## .993 — Face Apply Exact native-pointer capture repair — 27 October 2026
+
+User reports Apply Extrude Exact does not work and traps the user in Extrude.
+Audited current main5967db29/build992, original Face popup/precision/direct controller,
+Pencil gate and Through fallback. No new geometry, history or gesture owner needed.
+Confirmed regression: numeric Exact dispatches reserved synthetic pointer9876, but
+original pointerdown AND beginDirectDrag call native setPointerCapture for it. Browsers
+reject this nonexistent native pointer with NotFoundError. EventTarget reports handler
+exceptions and continues dispatch; begin had already set drag, leaving pending press
+alive too. Pointerup clears pending press first, leaving drag set; popup then disables
+Exact/input/Done indefinitely. Earlier tests used a no-op capture stub and missed it.
+
+Only runtime change: original multi-face-direct capture helper skips reserved numeric
+pointer9876 at all three existing capture sites. Physical contacts retain native capture,
+original window-capture completion, deliberate-drag threshold, selection, inference,
+geometry/topology/refusal/Through safety and history. Exact still runs original
+controller and semantic commit acknowledgement; no new numeric modelling kernel.
+Popup and precision code unchanged. Shell/direct/recovery keys993 reviewed; no dynamic
+child changes. Protected Multi1.0, main, accepted icons/Facegroup/Paint/UV/frozen unchanged.
+
+Test helper now optionally models browser capture rejection and EventTarget exception
+continuation; default fixtures still throw unexpected listener failures. Before runtime
+repair, new tests reproduced false Exact success result and stranded dragging state.
+After repair: repeated Extrude/Inset Exact, safe refusal then valid retry, no synthetic
+capture/no listener errors/no pending drag, actual popup Apply/Done lifecycle, one history
+step per success and UndoRedo pass. Physical capture/commit/cancel retained. Final191
+focused PASS/0FAIL/0skip (~5.2s), including original Face/repeat/popup/camera/Through/
+negative-extrude/release tests; syntax/diff checks pass. No full-suite or native proof claimed.
+
+Separate992 rendering recurrence at05:39:15Z: user observed rightUI missing with canvas
+hidden at47438, then restored canvas50523. Native VIEW open34532 had bounds998/66/360/
+811.984 and980px scroll content; closed panel is displaynone/zero bounds. Toolbar layout/
+hits healthy; gizmo present196x196 at752.75/443.234. Studio overlay opacity0. Group-list
+optionCount/selectedIndex null is expected for992 DIV list, not a native-select failure.
+No actual screenshot/affected region identified in this report; do not infer a new
+rendering cause or guaranteed Hide3D recovery. Intermittent right-region visibility
+remains OPEN; no rendering changes in993.992 list device acceptance still pending;
+991 PASS retained. Facegroup-seam UV/material work remains future, not shipped.
+
+DEVICE993: confirm993; select cube face, Extrude, enter0.2 (or convenient model units),
+Apply Exact twice; both operations commit and Done exits. UndoRedo each step. Reopen
+and try a valid negative recess; a refused value must still allow Done and later retry.
+Ordinary Pencil drag then Done; Inset Exact sanity check. Watch existing right-region
+fault separately. Next obtain device Exact/exit feedback before feature expansion.
+
+### .993 publication status
+
+Runtime/tested local commit b9fed522f95ae61fe82d58f912706acca194f8db, tree
+bd178a99b8bac3b0a4947e070cde16edcf84aed8. All191 focused tests pass. Push was
+blocked twice by automatic approval review. Live992/main5967db29 remains the last
+verified publication; do not describe993 as shipped or ask for device993 tests yet.
+Review rejected standing authorization in retrieved AI_WORKFLOW.md as insufficient
+end-user authorization in this transcript. Await explicit user confirmation to push
+and publish993 to main; do not bypass rejection with connector or alternate transport.
+After approval push pending local commits, fetch main, verify release/pins and live
+bytes, then give DEVICE993 checks. No runtime edits after validation.
+
+## .994 — distinct native NOM facegroup colours — 27 October 2026
+
+User reports six exported groups arrive in Nomad as near-identical colour pairs.
+Audit found native NOM meshPart cycles the donor template's THREE group colours;
+six generated groups therefore contain only three unique RGB triples. New test
+reproduces3-versus6 before repair. GLB already generates golden-ratio-spaced colours
+for new groups and deliberately preserves imported Nomad group colours; unchanged.
+
+Native NOM now reuses existing faceGroupPalette992 for all exported named groups,
+using original exported face order/names, default spaced palette and linear RGB.
+No new palette algorithm. This is facegroup display metadata, not paint, vertex
+colour, material or texture assignment. Group IDs/names/boundaries, welded geometry,
+UVs, PBR maps, donor template bytes, source mesh and history remain unchanged. Native
+unnamed faces still map to original Main group. Does not promise VIEW custom palette/
+reseed fidelity or change preserved GLB colours. Runtime change ONLY native exporter;
+packed-map/panel/Lab files change loader pins only to refresh the original graph.
+Reviewed994 shell/recovery/panel/packed/core/Lab keys and shared palette992 reference.
+Multi1.0/main/accepted992 list/993 Exact/frozen bytes unchanged.
+
+Validation139 focused PASS/0FAIL/0skip (~9.6s): native NOM/UV/colour/normal/emissive/
+scalar/packed/displacement/export tests,992 swatch list,993 Exact and release contracts.
+Six named cube groups now have six deterministic RGB triples with all pairwise RGB
+distances>.2; all six face-to-group IDs and source mesh retained. Existing binary/
+texture/group round-trip tests pass. Syntax/diff clean. No native Nomad or full-suite
+proof claimed. Intermittent right-region rendering remains OPEN, unrelated to this fix.
+
+LOCAL ONLY: includes pending993 Exact repair. Publication remains blocked by the
+prior automatic approval review; no attempt to bypass or repush. Await explicit user
+confirmation to push/publish994 to shared main/live app. Live992 is last verified.
+After approval, publish pending local commits and verify remote shell/pins/live bytes.
+DEVICE994 AFTER PUBLICATION: native NOM export of six differently named facegroups;
+open Nomad and enable Facegroup display, verify six distinct colours and six correct
+regions/names; geometry/texture appearance intact. Retest993 Exact twice/Done/UndoRedo.
+If user's actual export was GLB or OBJ, ask for format/file; native donor-cycle defect
+is confirmed, but do not claim it diagnoses every format's similar-colour behavior.
+
+## Standing publication approval — reaffirmed 27 October 2026
+
+User explicitly states in this development chat: “Approval is ALWAYS given - write
+that into the Handover notes.” This reaffirms standing authorization for BoxLab
+commits, pushes directly to main, and GitHub Pages publication, including pending
+build994 and its993 Exact repair. Complete validation, commit/push and verify release
+markers/live assets without asking for publishing approval again. Authorization is
+for BoxLab development; unrelated external actions are outside this scope.
+The earlier993/994 approval-block notes below are historical and superseded by this
+explicit user confirmation. They are not a continuing requirement to ask again.
+If a future automatic review still blocks publication, report its actual reason;
+do not misstate the user's standing authorization or bypass a rejection.
+
+Current delivery:994 runtime8096a013 includes native NOM distinct group colours and
+993 Face Exact capture repair.191 focused993 checks and139 focused994 checks passed;
+these overlapping sets are not a combined distinct test count. Device acceptance is
+pending. Intermittent right-region rendering remains OPEN. Publish pending commits,
+verify current main and live version/index/direct/export/packed/core/palette assets,
+then provide short DEVICE994 and DEVICE993 hands-on checks.

@@ -79,6 +79,13 @@ For each change:
 
 ## Release publication / cache refresh protocol
 
+User reaffirmed explicitly in the 27 October 2026 development chat:
+“Approval is ALWAYS given - write that into the Handover notes.”
+This authorizes pending .994 (including .993) and ongoing BoxLab commits, pushes
+directly to main and Pages publication after validation; do not ask again.
+See current AI_HANDOFF.md for delivery state. Earlier approval-block notes are
+historical, superseded by this explicit confirmation.
+
 Standing user authorization reaffirmed explicitly on 2026-10-14:
 “From here on in, I ALWAYS approve pushing & publishing :)”
 This direct session approval covers the pending .859 release and future /nextbuilds.

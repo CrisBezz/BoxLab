@@ -1,3 +1,4 @@
+import {faceGroupPalette} from './facegroup-colours-core.js?v=0.36.18.992';
 import {preparedPaintImage,preparedRoughnessImage,preparedMetalnessImage,paintExportGeometryObject} from './paint-export.js?v=0.36.18.948';
 import {nomadDisplacementMap} from './nomad-displacement-map.js?v=0.36.18.892';
 import {uvImageSurfaceSource,uvImageMaterialSource} from './uv-image-surface-preview.js?v=0.36.18.892';
@@ -63,10 +64,11 @@ function meshPart(mesh,name,donor,cornerUVs=null){
  const views=Object.fromEntries(sizes.map(([key],i)=>[key,new DataView(parts[i].buffer)]));
  mesh.vertices.forEach((p,i)=>{for(const [j,axis] of ['x','y','z'].entries()){views.vertices.setFloat32(i*12+j*4,p[axis],true);views.normals.setFloat32(i*12+j*4,normals[i][axis],true);}});
  if(cornerUVs)uvs.forEach((uv,i)=>uv.forEach((value,j)=>views.uvs.setFloat32(i*8+j*4,value,true)));
+ const palette=faceGroupPalette({faces,faceGroups:groups});
  const names=[...new Set(groups)];if(names.length>65536)throw Error('Too many Nomad facegroups');const slots=new Map(names.map((n,i)=>[n,i]));
  faces.forEach((face,i)=>{face.forEach((vi,j)=>{views.faces.setInt32(i*16+j*4,vi,true);views.faces_uv.setInt32(i*16+j*4,cornerUVs?uvFaces[i][j]:vi,true);});views.faces_group.setUint16(i*2,slots.get(groups[i]),true);});
  const out=clone(donor);for(const key of Object.keys(out))if(key.startsWith('config_'))delete out[key];delete out.mesh_type;for(const key of DATA_FIELDS)delete out[key];
- Object.assign(out,fields,{name,count_vertex:vcount,count_uv:uvcount,count_face:fcount,index_group:0,groups:names.map((name,i)=>({name,color:clone(donor.groups?.[i%Math.max(1,donor.groups?.length||0)]?.color||[.5,.5,.5])})),symmetry_x:false,symmetry_y:false,symmetry_z:false});
+ Object.assign(out,fields,{name,count_vertex:vcount,count_uv:uvcount,count_face:fcount,index_group:0,groups:names.map(name=>({name,color:palette.get(name).toArray()})),symmetry_x:false,symmetry_y:false,symmetry_z:false});
  const bin=new Uint8Array(offset);let at=0;for(const part of parts){bin.set(part,at);at+=part.length;}return {mesh:out,bin};
 }
 // Native colour-image convention observed in the user's textured Nomad donor:

@@ -24,9 +24,9 @@ export function uploadedFixture({before=false}={}){
 export const snapshot=m=>JSON.stringify({vertices:m.vertices,faces:m.faces,creases:[...m.creases],groups:m.faceGroups,looseEdges:[...(m.looseEdges||[])],looseVertices:[...(m.looseVertices||[])]});
 export function volume(m){let total=0;for(const face of m.faces)for(let i=1;i<face.length-1;i++)total+=m.vertices[face[0]].dot(m.vertices[face[i]].clone().cross(m.vertices[face[i+1]]))/6;return total;}
 
-export function faceRuntime(m,ids,{fallback=false,sourceTransform=source=>source}={}){
-  const documentHandlers=new Map(),windowHandlers=new Map(),events=[],elements=new Map();
-  const element=()=>({classList:{contains:()=>false,toggle(){},remove(){}},dispatchEvent(){},getBoundingClientRect:()=>({left:0,top:0,width:900,height:600}),setPointerCapture(){},hasPointerCapture:()=>false});
+export function faceRuntime(m,ids,{fallback=false,sourceTransform=source=>source,nativeCapture=false}={}){
+  const documentHandlers=new Map(),windowHandlers=new Map(),events=[],elements=new Map(),captureRequests=[],listenerErrors=[];
+  const element=()=>({classList:{contains:()=>false,toggle(){},remove(){}},dispatchEvent(){},getBoundingClientRect:()=>({left:0,top:0,width:900,height:600}),setPointerCapture(id){captureRequests.push(id);if(nativeCapture&&id===9876)throw new DOMException('No active native pointer','NotFoundError');},hasPointerCapture:()=>false});
   const get=selector=>{if(!elements.has(selector))elements.set(selector,element());return elements.get(selector);};
   const camera=new THREE.PerspectiveCamera(45,1.5,.1,100);camera.position.set(5,3,5);camera.lookAt(0,0,0);camera.updateMatrixWorld();
   let selected=[...ids];const state={mesh:m,camera},history=new History();
@@ -44,10 +44,12 @@ export function faceRuntime(m,ids,{fallback=false,sourceTransform=source=>source
   vm.runInContext(source+"\n globalThis.testOwner={begin:beginDirectDrag,finish,setTool:tool=>{armed=tool;},drag:()=>drag};",context);
   const owner=context.testOwner;
   const event=(type,x=400,y=300)=>({type,target:get('#viewport'),pointerId:22,isPrimary:true,clientX:x,clientY:y,preventDefault(){},stopImmediatePropagation(){}});
+  // Browser EventTarget reports listener exceptions, then continues dispatch.
+  const invoke=(fn,e)=>{try{fn(e);}catch(error){if(!nativeCapture)throw error;listenerErrors.push(error);}};
   const pointerDispatch=e=>{
     e.target=get('#viewport');e.stopped=false;e.preventDefault=()=>{e.prevented=true;};e.stopImmediatePropagation=()=>{e.stopped=true;};
-    for(const fn of windowHandlers.get(e.type)||[]){fn(e);if(e.stopped)return;}
-    for(const fn of documentHandlers.get(e.type)||[]){fn(e);if(e.stopped)return;}
+    for(const fn of windowHandlers.get(e.type)||[]){invoke(fn,e);if(e.stopped)return;}
+    for(const fn of documentHandlers.get(e.type)||[]){invoke(fn,e);if(e.stopped)return;}
   };
   if(fallback){
     get('#extrudeBtn').classList.contains=()=>context.__boxlabFaceDirect.tool()==='extrude';
@@ -56,7 +58,7 @@ export function faceRuntime(m,ids,{fallback=false,sourceTransform=source=>source
     const fallbackSource=fs.readFileSync(new URL('../../src/sequential-through-fallback.js',import.meta.url),'utf8').replace(/^import .*;\n/gm,'');
     vm.runInContext('(function(){'+fallbackSource+'\n})()',context);
   }
-  return {history,state,events,context,elements,pointer:(type,extra={})=>{const e={...event(type),...extra};pointerDispatch(e);return e;},selected:()=>selected,api:context.__boxlabFaceDirect,owner,
+  return {history,state,events,context,elements,captureRequests,listenerErrors,pointer:(type,extra={})=>{const e={...event(type),...extra};pointerDispatch(e);return e;},selected:()=>selected,api:context.__boxlabFaceDirect,owner,
     physicalCut(distance,type='pointerup'){
       owner.setTool('extrude');pointerDispatch(event('pointerdown'));
       const normal=context.projectedNormal(m,{normal:m.faceNormal(ids[0]),regionVertices:m.faces[ids[0]]},camera),sign=Math.sign(distance),x=400+normal.x*9*sign,y=300+normal.y*9*sign;

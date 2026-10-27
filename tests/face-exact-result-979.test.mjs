@@ -10,8 +10,8 @@ import {faceRuntime,snapshot,volume} from './helpers/negative-extrude-runtime.mj
 globalThis.document={querySelector:()=>null};installFaceRegion(EditableMesh);delete globalThis.document;
 vm.runInNewContext(fs.readFileSync(new URL('../src/uniform-inset.js',import.meta.url),'utf8').replace(/^import .*;\n/gm,''),{EditableMesh,THREE});
 const precision=fs.readFileSync(new URL('../src/precision-face.js',import.meta.url),'utf8').replace(/^import .*;\n/gm,'');
-function runtime(mesh,ids){
- const r=faceRuntime(mesh,ids,{fallback:true}),created=[],observers=[];
+function runtime(mesh,ids,options={}){
+ const r=faceRuntime(mesh,ids,{fallback:true,...options}),created=[],observers=[];
  const element=()=>{const e={style:{},value:'',textContent:'',append(){},addEventListener(){},blur(){}};created.push(e);return e;};
  r.context.document.createElement=element;
  r.context.document.querySelector('[data-mode-tools="face"]').append=()=>{};
@@ -55,4 +55,66 @@ test('979 real inference owner still picks physical vertex references but refuse
 
 test('979 refusal stays visible through later status observer callbacks even with no prior successful value',()=>{
  const m=EditableMesh.cube(2),r=runtime(m,[1]);assert.equal(r.precision.applyFor('extrude',-100),false);const error=r.readout();assert.match(error,/refused/);r.observe();assert.equal(r.readout(),error);assert.equal(r.precision.last(),null);
+});
+
+
+test('993 Exact never captures a nonexistent native pointer or strands a drag, for Extrude and Inset',()=>{
+ for(const tool of ['extrude','inset']){
+  const m=EditableMesh.cube(2),r=runtime(m,[1],{nativeCapture:true}),before=snapshot(m);
+  for(const value of [.2,.15]){
+   assert.equal(r.precision.applyFor(tool,value),true);
+   assert.equal(r.api.dragging(),false);assert.equal(r.api.pending(),null);assert.equal(r.api.active(),false);
+  }
+  assert.equal(r.history.undoStack.length,2);assert.equal(r.listenerErrors.length,0);
+  assert.ok(!r.captureRequests.includes(9876));
+  const after=snapshot(m.clone()),undo=r.history.undo(m),original=r.history.undo(undo);
+  assert.equal(snapshot(original),before);assert.equal(snapshot(r.history.redo(r.history.redo(original))),after);
+ }
+});
+
+test('993 refused Exact releases all input state and allows a subsequent valid operation',()=>{
+ const m=EditableMesh.cube(2),r=runtime(m,[1],{nativeCapture:true}),before=snapshot(m);
+ assert.equal(r.precision.applyFor('extrude',-100),false);assert.equal(snapshot(m),before);
+ assert.equal(r.history.undoStack.length,0);assert.equal(r.api.dragging(),false);assert.equal(r.api.pending(),null);
+ assert.equal(r.precision.applyFor('extrude',.2),true);assert.equal(r.history.undoStack.length,1);
+ assert.equal(r.listenerErrors.length,0);assert.equal(r.api.active(),false);
+});
+
+
+test('993 actual Face popup keeps Apply and Done usable after browser-style Exact dispatch',()=>{
+ for(const value of [.2,-100]){
+  const m=EditableMesh.cube(2),r=runtime(m,[1],{nativeCapture:true}),handlers=new Map(),fields=new Map();
+  const element=()=>({style:{},hidden:true,value:'',textContent:'',classList:{toggle(){}},setAttribute(){},appendChild(){},addEventListener(type,fn){this[type]=fn;},querySelector(q){if(!fields.has(q))fields.set(q,element());return fields.get(q);}});
+  r.context.__boxlabPrecisionFace=r.precision;
+  const savedQuery=r.context.document.querySelector;
+  r.context.document.querySelector=q=>q==='#app'?null:savedQuery(q);
+  r.context.document.createElement=element;r.context.document.head=element();
+  savedQuery('#viewportWrap').appendChild=()=>{};
+  const add=r.context.window.addEventListener;
+  r.context.window.addEventListener=(type,fn)=>{add(type,fn);handlers.set(type,fn);};
+  r.context.window.dispatchEvent=()=>{};
+  r.context.requestAnimationFrame=()=>1;r.context.cancelAnimationFrame=()=>{};r.context.placeToolSessionPanel=()=>{};
+  const source=fs.readFileSync(new URL('../src/selection-hub-face-value-session.js',import.meta.url),'utf8').replace(/^import .*;\n/gm,'');
+  vm.runInContext('(function(){'+source+'\n})();',r.context);
+  r.owner.setTool('extrude');handlers.get('boxlab-selection-hub-tool')({detail:{mode:'face',tool:'Extrude'}});
+  fields.get('input').value=String(value);r.context.__boxlabFaceValueViewportSession.sync();
+  const event={preventDefault(){},stopPropagation(){}};
+  fields.get('.shfv-apply').click(event);
+  assert.equal(fields.get('.shfv-done').disabled,false);assert.equal(fields.get('input').disabled,false);
+  assert.equal(r.api.dragging(),false);assert.equal(r.api.pending(),null);
+  fields.get('.shfv-done').click(event);
+  assert.equal(r.context.__boxlabFaceValueViewportSession.active(),false);assert.equal(r.api.active(),false);
+  assert.equal(r.history.undoStack.length,value>0?1:0);assert.equal(r.listenerErrors.length,0);
+ }
+});
+
+
+test('993 physical Pencil drags retain native capture, commit and cancellation behavior',()=>{
+ for(const type of ['pointerup','pointercancel']){
+  const m=EditableMesh.cube(2),r=faceRuntime(m,[1],{fallback:true,nativeCapture:true}),before=snapshot(m);
+  r.physicalCut(.2,type);
+  assert.ok(r.captureRequests.includes(22));assert.equal(r.listenerErrors.length,0);assert.equal(r.api.dragging(),false);
+  assert.equal(r.history.undoStack.length,type==='pointerup'?1:0);
+  if(type==='pointercancel')assert.equal(snapshot(m),before);
+ }
 });

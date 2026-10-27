@@ -57,3 +57,18 @@ test('Existing save owner receives NOM extension and description while retaining
 test('Native NOM uses a browser anchor download and retains URL for preview without calling share/save-picker',()=>{
  const calls=[],anchor={click(){calls.push('click');},remove(){calls.push('remove');}},timers=[];const c={URL:{createObjectURL:()=> 'blob:nom',revokeObjectURL:url=>calls.push(url)},document:{createElement:()=>anchor,body:{appendChild:()=>calls.push('append')}},setTimeout:(fn,ms)=>timers.push({fn,ms})};vm.createContext(c);vm.runInContext(source.slice(source.indexOf('function downloadBlob('),source.indexOf('async function shareBlob(')),c);c.downloadBlob(new Blob(['NOM']),'Body.nom',60000);assert.equal(anchor.download,'Body.nom');assert.equal(anchor.href,'blob:nom');assert.deepEqual(calls,['append','click','remove']);assert.equal(timers[0].ms,60000);timers[0].fn();assert.equal(calls.at(-1),'blob:nom');const nomad=source.slice(source.indexOf('async function exportNomad('),source.indexOf('function extension('));assert.doesNotMatch(nomad,/saveBlob|navigator.share|showSaveFilePicker/);
 });
+
+
+test('994 native NOM gives six facegroups distinct spaced colours, without donor cycling or geometry edits',()=>{
+ const object=cube();object.mesh.faceGroups=['One','Two','Three','Four','Five','Six'];const before=object.mesh.clone();
+ const a=buildNomadProject([object],template),b=buildNomadProject([object],template),project=readNomadProject(a.bytes);
+ const groups=project.json.meshes[0].groups;
+ assert.deepEqual(groups.map(group=>group.name),object.mesh.faceGroups);
+ assert.equal(new Set(groups.map(group=>JSON.stringify(group.color))).size,6);
+ for(let i=0;i<groups.length;i++)for(let j=0;j<i;j++){
+  const distance=Math.hypot(...groups[i].color.map((value,k)=>value-groups[j].color[k]));
+  assert.ok(distance>.2,`groups ${i}/${j} must not form near-identical pairs (${distance})`);
+ }
+ assert.deepEqual(a.bytes,b.bytes);assert.deepEqual(object.mesh,before);
+ object.mesh.faces.forEach((_,i)=>assert.equal(field(project,0,'faces_group').getUint16(i*2,true),i));
+});

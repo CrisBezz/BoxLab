@@ -129,6 +129,14 @@ window.addEventListener('boxlab-bridge-state',()=>{
   queueMicrotask(()=>{syncButtons();updateStatus();});
 });
 
+// Exact uses reserved synthetic pointer 9876, which has no native contact to
+// capture. A NotFoundError here used to leave both pending press and drag alive;
+// pointerup then cleared only the press, stranding the popup in its busy state.
+function captureDirectPointer(pointerId){
+  if(pointerId===9876)return;
+  canvas.setPointerCapture?.(pointerId);
+}
+
 function beginDirectDrag(event,hit,selectionBefore,workingFaces){
   const m=mesh(),camera=state()?.camera;
   if(!m||!camera||!Number.isInteger(hit)||!workingFaces?.length)return false;
@@ -140,7 +148,7 @@ function beginDirectDrag(event,hit,selectionBefore,workingFaces){
     controlRegion=armed==='extrude'?{normal:worldNormal,regionVertices:[...hitFace]}:region,
     regionCenter=centerOf(m,controlRegion.regionVertices);
   drag={id:event.pointerId,x:event.clientX,y:event.clientY,tool:armed,m,before:m.clone(),faces:[...workingFaces],selectionBefore:[...selectionBefore],hitFaceIndex:hit,hitWasSelected:selectionBefore.includes(hit),normal:projectedNormal(m,controlRegion,camera),worldNormal,regionCenter,camera,changed:false,preview:false,snap:null,throughPlan:null,blocked:false,shellHit:null,lastValue:null,preparedThrough:armed==='extrude'&&workingFaces.length===1?planThrough(m,workingFaces[0]):null};
-  canvas.setPointerCapture?.(event.pointerId);
+  captureDirectPointer(event.pointerId);
   return true;
 }
 
@@ -185,7 +193,7 @@ document.addEventListener('pointerdown',event=>{
     pendingBackgroundPress={id:event.pointerId,x:event.clientX,y:event.clientY,moved:false};
     event.preventDefault();
     event.stopImmediatePropagation();
-    canvas.setPointerCapture?.(event.pointerId);
+    captureDirectPointer(event.pointerId);
     return;
   }
   const workingFaces=synthetic&&selectionBefore.length?[...selectionBefore]:(selectionBefore.includes(hit)?[...selectionBefore]:[hit]);
@@ -213,7 +221,7 @@ document.addEventListener('pointerdown',event=>{
   }}));
   event.preventDefault();
   event.stopImmediatePropagation();
-  canvas.setPointerCapture?.(event.pointerId);
+  captureDirectPointer(event.pointerId);
 },true);
 document.addEventListener('pointermove',event=>{
   if(pendingBackgroundPress?.id===event.pointerId){
