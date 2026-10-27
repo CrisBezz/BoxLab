@@ -7112,3 +7112,31 @@ DEVICE986: Face mode > VIEW Facegroups > name > Pencil facegroup strokes; draw a
 faces, lift to see group. Multiple strokes, one Undo per stroke/Redo. Finger orbit,
 Stop, choose another name/rearm, SaveOpen. Clear selected remains984 behavior. Next
 follow device stroke acceptance before adding live previews, brush radius or eraser.
+
+## .987 — Pencil facegroup eraser; .986 user PASS — 27 October 2026
+
+User PASS986 protects Pencil assignment-on-lift, one-step history, cancellation,
+Stop/navigation and group persistence. Add Erase group strokes beside the original
+Pencil facegroup strokes button in VIEW > Facegroups. Same controller and SAME
+existing gesture owner; explicit null group requests accepted Clear metadata path.
+No second brush, pointer handler or history implementation. Eraser stages sampled
+visible faces and clears on lift; untouched groups/geometry/UV/resources preserved.
+Already-ungrouped strokes are no-ops without history. No typed name needed to erase.
+
+Assign/Erase controls show independent pressed/Stop labels through one shared
+sync function. Choosing the other mode cancels pending stroke and arms new mode;
+clicking active mode stops. Name edits/pickup and switching render look stop both.
+Controller reports clear/assign pending and completion distinctly; null group is
+separate from armed state, so Stop cannot accidentally enable erasing. Existing
+986 gesture/gate modules byte-unchanged; only stroke controller/render UI plus
+reviewed child/render/recovery987 pins, shell markers/hashes change.
+
+86 targeted checks PASS/0FAIL/0skip, including new eraser staging, untouched groups/
+geometry, one checkpoint, no-op, cancel/switch/Stop tests; retained actual986
+Pencil/selection owner integration, existing Lasso/Pencil/picking,984/985 metadata,
+Facegroups/toolbar/project/UV/release tests. Syntax/diff checks pass. No native/full
+suite proof claimed. Intermittent rendering/gizmo loss remains OPEN, not repaired.
+DEVICE987: group faces, arm Erase group strokes, draw and lift; only sampled faces
+become ungrouped. UndoRedo once per stroke; erase ungrouped face adds no Undo. Switch
+back to named Pencil strokes; stop and navigate. Save/Open retains groups. Next
+follow device eraser acceptance before live feedback/radius work.

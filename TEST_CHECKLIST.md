@@ -11226,3 +11226,12 @@ unrelatedfeature rollout or speculative further CSS/engine fixes.
 - [ ] Change/pick name and rearm; switch look stops brush; Save/Open retains groups.
 - [x] Automated pure/real owner routing covers source-neutral staging, cancellation, lost capture/pagehide, controls restoration, stale context, one checkpoint and background Pencil navigation.
 - [ ] Native Pencil/gesture acceptance pending; rendering fault remains OPEN independently.
+
+## .987 Pencil facegroup eraser
+
+- [x] User PASS986 protects named Pencil strokes and accepted history/navigation.
+- [ ] VIEW Facegroups > Erase group strokes; sampled faces become ungrouped ON LIFT.
+- [ ] Other groups/geometry/UVs unchanged; one Undo/Redo per changed erase stroke.
+- [ ] Already ungrouped stroke adds no history; switch back to named strokes and Stop.
+- [ ] Save/Open and finger navigation remain accepted; native eraser review pending.
+- [x] Automated eraser staging/no-op/untouched data/checkpoint/cancel/switch tests pass.

@@ -1,4 +1,4 @@
-import {createFacegroupStroke} from './facegroup-stroke.js?v=0.36.18.986';
+import {createFacegroupStroke} from './facegroup-stroke.js?v=0.36.18.987';
 import {assignSelectedFacegroup,existingFacegroupNames,selectedFacegroupName} from './facegroup-authoring.js?v=0.36.18.985';
 import {createCommittedPaintSurface} from './paint-target.js?v=0.36.18.948';
 import {createUVImageOverlay} from './uv-image-surface-preview.js?v=0.36.18.892';
@@ -270,7 +270,8 @@ function installFacegroupControls(host){
     <label>Group <input id="facegroupName" list="facegroupNames" type="text" value="Group 1" maxlength="64" autocomplete="off" style="width:140px;touch-action:auto"/></label>
     <div class="outliner-actions"><button id="facegroupAssign" type="button">Assign selected</button><button id="facegroupClear" type="button">Clear selected</button></div>
     <button id="facegroupStrokeToggle" type="button" aria-pressed="false">Pencil facegroup strokes</button>
-    <small>Strokes assign visible faces on lift; fingers navigate. Reopen VIEW to stop.</small>
+    <button id="facegroupEraseToggle" type="button" aria-pressed="false">Erase group strokes</button>
+    <small>Strokes assign or clear visible faces on lift; fingers navigate. Reopen VIEW to stop.</small>
     <datalist id="facegroupNames"></datalist>
     <button id="facegroupUseSelected" type="button">Use selected group name</button>
     <small>Choose an existing name or type a new one. Select faces in Face mode; no UVs required.</small>
@@ -290,10 +291,12 @@ function installFacegroupControls(host){
     </div>`;
   section.appendChild(panel);
   panel.addEventListener('click',event=>{
-    if(event.target.closest('#facegroupStrokeToggle')){
-      event.preventDefault();event.stopPropagation();const button=panel.querySelector('#facegroupStrokeToggle');
-      if(facegroupStroke.armed)facegroupStroke.stop();else facegroupStroke.arm(panel.querySelector('#facegroupName').value);
-      button.setAttribute('aria-pressed',String(facegroupStroke.armed));button.textContent=facegroupStroke.armed?'Stop facegroup strokes':'Pencil facegroup strokes';
+    const strokeButton=event.target.closest('#facegroupStrokeToggle,#facegroupEraseToggle');
+    if(strokeButton){
+      event.preventDefault();event.stopPropagation();
+      const group=strokeButton.id==='facegroupEraseToggle'?null:panel.querySelector('#facegroupName').value.trim();
+      if(facegroupStroke.armed&&facegroupStroke.group===group)facegroupStroke.stop();else facegroupStroke.arm(group);
+      syncFacegroupStrokeControls();
       if(facegroupStroke.armed)document.querySelector('#viewModes')?.removeAttribute('open');
       return;
     }
@@ -317,7 +320,7 @@ function installFacegroupControls(host){
     if(event.target.closest('#facegroupReset')){event.preventDefault();event.stopPropagation();facegroupView={...DEFAULT_FACEGROUP_VIEW};saveFacegroupView();syncFacegroupControls();if(mode==='facegroups')applyToSceneBodies();}
   });
   panel.querySelector('#facegroupName').addEventListener('input',()=>{
-    if(facegroupStroke.armed){facegroupStroke.stop();const button=panel.querySelector('#facegroupStrokeToggle');button.setAttribute('aria-pressed','false');button.textContent='Pencil facegroup strokes';}
+    if(facegroupStroke.armed){facegroupStroke.stop();syncFacegroupStrokeControls();}
   });
   panel.querySelector('#facegroupName').addEventListener('focus',()=>{
     const list=panel.querySelector('#facegroupNames');list.replaceChildren();
@@ -395,4 +398,11 @@ facegroupUiStyle.textContent=`
 `;
 document.head.append(facegroupUiStyle);
 
-document.addEventListener('boxlab-render-mode-change',event=>{if(event.detail?.mode!=='facegroups'){facegroupStroke.stop();const button=document.querySelector('#facegroupStrokeToggle');if(button){button.setAttribute('aria-pressed','false');button.textContent='Pencil facegroup strokes';}}});
+function syncFacegroupStrokeControls(){
+  for(const [id,erase,label] of [['facegroupStrokeToggle',false,'Pencil facegroup strokes'],['facegroupEraseToggle',true,'Erase group strokes']]){
+    const button=document.querySelector('#'+id);if(!button)continue;
+    const active=facegroupStroke.armed&&(facegroupStroke.group===null)===erase;
+    button.setAttribute('aria-pressed',String(active));button.textContent=active?'Stop '+(erase?'erasing groups':'facegroup strokes'):label;
+  }
+}
+document.addEventListener('boxlab-render-mode-change',event=>{if(event.detail?.mode!=='facegroups'){facegroupStroke.stop();syncFacegroupStrokeControls();}});
