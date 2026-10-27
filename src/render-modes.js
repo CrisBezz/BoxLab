@@ -1,3 +1,4 @@
+import {createFacegroupPaintDock} from './facegroup-paint-dock.js?v=0.36.18.991';
 import {createFacegroupStroke} from './facegroup-stroke.js?v=0.36.18.987';
 import {assignSelectedFacegroup,existingFacegroupNames,selectedFacegroupName} from './facegroup-authoring.js?v=0.36.18.985';
 import {createCommittedPaintSurface} from './paint-target.js?v=0.36.18.948';
@@ -11,6 +12,7 @@ import {subdivide} from './subdivision.js';
 const status=document.querySelector('#selectionStatus');
 const facegroupStroke=createFacegroupStroke({context:()=>({manager:manager(),selection:globalThis.__boxlabSelectionBridge,mesh:bridge()?.mesh,history:globalThis.__boxlabObjectHistory,session:globalThis.__boxlabToolSession,controls:bridge()?.controls,look:mode}),notify:text=>{if(status)status.textContent=text;}});
 globalThis.__boxlabFacegroupStroke=facegroupStroke;
+let facegroupDock=null;
 
 let mode='studio';
 let lastBody=null;
@@ -277,15 +279,17 @@ function installFacegroupControls(host){
   const panel=document.createElement('div');
   panel.id='facegroupViewControls';panel.hidden=true;
   panel.innerHTML=`
-    <div class="viewport-menu-label" style="margin-top:9px">Selected Facegroups</div>
-    <label>Group <input id="facegroupName" type="text" value="Group 1" maxlength="64" autocomplete="off" style="width:140px;touch-action:auto"/></label>
-    <div class="outliner-actions"><button id="facegroupAssign" type="button">Assign selected</button><button id="facegroupClear" type="button">Clear selected</button></div>
-    <button id="facegroupStrokeToggle" type="button" aria-pressed="false">Pencil facegroup strokes</button>
-    <button id="facegroupEraseToggle" type="button" aria-pressed="false">Erase group strokes</button>
-    <small>Strokes assign or clear visible faces on lift; fingers navigate. Reopen VIEW to stop.</small>
-    <label>Existing group <select id="facegroupNames" aria-label="Existing facegroup" style="max-width:220px;min-height:36px;touch-action:manipulation"></select></label>
-    <button id="facegroupUseSelected" type="button">Use selected group name</button>
-    <small>Choose an existing name or type a new one. Select faces in Face mode; no UVs required.</small>
+    <button id="facegroupOpenPaint" type="button">Open facegroup paint controls</button>
+    <div id="facegroupAuthoringHome" hidden><div id="facegroupAuthoringControls">
+      <label>Group name <input id="facegroupName" type="text" value="Group 1" maxlength="64" autocomplete="off" style="touch-action:auto"/></label>
+      <label>Existing group <select id="facegroupNames" aria-label="Existing facegroup" style="touch-action:manipulation"></select></label>
+      <div class="facegroup-dock-tools"><button id="facegroupStrokeToggle" type="button" aria-pressed="false">Paint</button><button id="facegroupEraseToggle" type="button" aria-pressed="false">Erase</button></div>
+      <small>Face mode · Pencil paints on lift; fingers navigate.</small>
+      <details><summary>Selected faces</summary>
+        <div class="outliner-actions"><button id="facegroupAssign" type="button">Assign selected</button><button id="facegroupClear" type="button">Clear selected</button></div>
+        <button id="facegroupUseSelected" type="button">Use selected group name</button>
+      </details>
+    </div></div>
     <div class="viewport-menu-label" style="margin-top:9px">Facegroup Colours</div>
     <div class="viewport-render-grid facegroup-palette-grid">
       <button type="button" data-facegroup-palette="default">Default</button>
@@ -301,12 +305,16 @@ function installFacegroupControls(host){
       <button id="facegroupReset" type="button">Reset</button>
     </div>`;
   section.appendChild(panel);
-  panel.addEventListener('click',event=>{
+  facegroupDock=createFacegroupPaintDock({document,viewport:document.querySelector('#viewportWrap'),node:panel.querySelector('#facegroupAuthoringControls'),home:panel.querySelector('#facegroupAuthoringHome'),onClose:()=>{facegroupStroke.stop();syncFacegroupStrokeControls();},onOpen:()=>{syncFacegroupNamePicker();if(globalThis.__boxlabSelectionBridge?.mode?.()!=='face')document.querySelector('#selectionModes [data-mode="face"]')?.click();if(!facegroupStroke.armed)facegroupStroke.arm(document.querySelector('#facegroupName').value);syncFacegroupStrokeControls();document.querySelector('#viewModes')?.removeAttribute('open');}});
+  globalThis.__boxlabFacegroupDock=facegroupDock;
+  const controlClick=event=>{
+    if(event.target.closest('#facegroupOpenPaint')){event.preventDefault();event.stopPropagation();if(globalThis.__boxlabToolSession?.isActive?.()){if(status)status.textContent='Finish the active tool before facegroup painting';return;}facegroupDock.open();return;}
+
     const strokeButton=event.target.closest('#facegroupStrokeToggle,#facegroupEraseToggle');
     if(strokeButton){
       event.preventDefault();event.stopPropagation();
-      const group=strokeButton.id==='facegroupEraseToggle'?null:panel.querySelector('#facegroupName').value.trim();
-      if(facegroupStroke.armed&&facegroupStroke.group===group)facegroupStroke.stop();else facegroupStroke.arm(group);
+      const group=strokeButton.id==='facegroupEraseToggle'?null:document.querySelector('#facegroupName').value.trim();
+      facegroupStroke.arm(group);
       syncFacegroupStrokeControls();
       if(facegroupStroke.armed)document.querySelector('#viewModes')?.removeAttribute('open');
       return;
@@ -314,14 +322,14 @@ function installFacegroupControls(host){
     if(event.target.closest('#facegroupUseSelected')){
       event.preventDefault();event.stopPropagation();
       const result=selectedFacegroupName(bridge()?.mesh,globalThis.__boxlabSelectionBridge);
-      if(result.ok){panel.querySelector('#facegroupName').value=result.name;panel.querySelector('#facegroupName').dispatchEvent(new Event('input'));}
+      if(result.ok){document.querySelector('#facegroupName').value=result.name;document.querySelector('#facegroupName').dispatchEvent(new Event('input'));if(facegroupDock.visible){facegroupStroke.arm(result.name);syncFacegroupStrokeControls();}}
       if(status)status.textContent=result.ok?`Facegroups · using ${result.name}`:`Facegroups · ${result.reason}`;
       return;
     }
     const author=event.target.closest('#facegroupAssign,#facegroupClear');
     if(author){
       event.preventDefault();event.stopPropagation();
-      const result=assignSelectedFacegroup({manager:manager(),selection:globalThis.__boxlabSelectionBridge,mesh:bridge()?.mesh,history:globalThis.__boxlabObjectHistory,session:globalThis.__boxlabToolSession,name:author.id==='facegroupClear'?null:panel.querySelector('#facegroupName').value});
+      const result=assignSelectedFacegroup({manager:manager(),selection:globalThis.__boxlabSelectionBridge,mesh:bridge()?.mesh,history:globalThis.__boxlabObjectHistory,session:globalThis.__boxlabToolSession,name:author.id==='facegroupClear'?null:document.querySelector('#facegroupName').value});
       syncFacegroupNamePicker();
       if(status)status.textContent=result.ok?(result.changed?`Facegroups · ${result.count} faces · ${result.group??'cleared'}`:'Facegroups · no change needed'):`Facegroups · ${result.reason}`;
       return;
@@ -330,14 +338,20 @@ function installFacegroupControls(host){
     if(palette){event.preventDefault();event.stopPropagation();updateFacegroupView({palette:palette.dataset.facegroupPalette});return;}
     if(event.target.closest('#facegroupReseed')){event.preventDefault();event.stopPropagation();updateFacegroupView({seed:facegroupView.seed+1});return;}
     if(event.target.closest('#facegroupReset')){event.preventDefault();event.stopPropagation();facegroupView={...DEFAULT_FACEGROUP_VIEW};saveFacegroupView();syncFacegroupControls();if(mode==='facegroups')applyToSceneBodies();}
-  });
-  panel.querySelector('#facegroupName').addEventListener('input',()=>{
+  };
+  panel.addEventListener('click',controlClick);facegroupDock.element.addEventListener('click',controlClick);
+  document.querySelector('#facegroupName').addEventListener('input',()=>{
     if(facegroupStroke.armed){facegroupStroke.stop();syncFacegroupStrokeControls();}
   });
-  panel.querySelector('#facegroupNames').addEventListener('change',()=>{
-    const name=panel.querySelector('#facegroupNames').value;if(!name)return;
-    panel.querySelector('#facegroupName').value=name;
-    panel.querySelector('#facegroupName').dispatchEvent(new Event('input'));
+  document.querySelector('#facegroupName').addEventListener('change',()=>{
+    if(facegroupDock.visible){facegroupStroke.arm(document.querySelector('#facegroupName').value);syncFacegroupStrokeControls();}
+  });
+  document.querySelector('#facegroupNames').addEventListener('focus',syncFacegroupNamePicker);
+  document.querySelector('#facegroupNames').addEventListener('change',()=>{
+    const name=document.querySelector('#facegroupNames').value;if(!name)return;
+    document.querySelector('#facegroupName').value=name;
+    document.querySelector('#facegroupName').dispatchEvent(new Event('input'));
+    if(globalThis.__boxlabFacegroupDock?.visible){facegroupStroke.arm(name);syncFacegroupStrokeControls();}
     if(status)status.textContent=`Facegroups · using ${name}`;
   });
   document.querySelector('#viewModes')?.addEventListener('toggle',syncFacegroupNamePicker);
@@ -409,13 +423,29 @@ facegroupUiStyle.textContent=`
   gap:5px;
 }
 `;
+facegroupUiStyle.textContent+=`
+#facegroupPaintDock{display:grid;gap:8px;padding:10px;border:1px solid #ffffff30;border-radius:12px;background:#12151b;color:#eef1f7;font-size:12px}
+#facegroupPaintDock[hidden]{display:none!important}
+#facegroupPaintDock .facegroup-dock-header{display:flex;align-items:center;justify-content:space-between;gap:8px}
+#facegroupAuthoringControls{display:grid;gap:8px}
+#facegroupAuthoringControls label{display:grid;gap:4px}
+#facegroupPaintDock input,#facegroupPaintDock select{width:100%;min-width:0;min-height:36px;font:inherit;color:inherit;background:#202630;border:1px solid #ffffff30;border-radius:6px;padding:5px}
+#facegroupPaintDock button{min-height:36px;padding:6px 8px;font-size:12px}
+#facegroupPaintDock .facegroup-dock-tools,#facegroupPaintDock .outliner-actions{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+#facegroupPaintDock button[aria-pressed=true]{background:#eef1f7;color:#15171b}
+#facegroupPaintDock summary{cursor:pointer;min-height:32px;padding-top:8px}
+#facegroupPaintDock small{line-height:1.4;color:#b4bdca}
+`;
 document.head.append(facegroupUiStyle);
 
 function syncFacegroupStrokeControls(){
-  for(const [id,erase,label] of [['facegroupStrokeToggle',false,'Pencil facegroup strokes'],['facegroupEraseToggle',true,'Erase group strokes']]){
+  for(const [id,erase,label] of [['facegroupStrokeToggle',false,'Paint'],['facegroupEraseToggle',true,'Erase']]){
     const button=document.querySelector('#'+id);if(!button)continue;
     const active=facegroupStroke.armed&&(facegroupStroke.group===null)===erase;
-    button.setAttribute('aria-pressed',String(active));button.textContent=active?'Stop '+(erase?'erasing groups':'facegroup strokes'):label;
+    button.setAttribute('aria-pressed',String(active));button.textContent=label;
   }
 }
-document.addEventListener('boxlab-render-mode-change',event=>{if(event.detail?.mode!=='facegroups'){facegroupStroke.stop();syncFacegroupStrokeControls();}});
+document.addEventListener('boxlab-render-mode-change',event=>{if(event.detail?.mode!=='facegroups'){facegroupDock?.close();facegroupStroke.stop();syncFacegroupStrokeControls();}});
+
+document.addEventListener('click',event=>{const modeButton=event.target?.closest?.('#selectionModes button');if(modeButton&&modeButton.dataset.mode!=='face')facegroupDock?.close();},true);
+window.addEventListener('boxlab-tool-session-change',event=>{if(event.detail?.active)facegroupDock?.close();});

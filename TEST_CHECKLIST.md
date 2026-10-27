@@ -11260,3 +11260,13 @@ unrelatedfeature rollout or speculative further CSS/engine fixes.
 - [ ] Debug closed VIEW: panel displaynone/zero rect; open VIEW: ordinary panel bounds/scroll.
 - [x] Original toolbar/action/node identity, release and debug/authoring checks pass.
 - [ ] OPEN: native right-region rendering;990 closed-surface hardening is not permanent repair proof.
+
+## .991 compact facegroup paint dock
+
+- [x] User PASS990 protects closed VIEW surface lifecycle and accepted menu/picker behavior.
+- [ ] Open facegroup paint controls shows compact LEFT dock; VIEW closes, Face mode selected through original button.
+- [ ] Existing group / completed name edit arms Paint; persistent Paint/Erase switch without reopening VIEW.
+- [ ] Selected faces advanced Assign/Clear/Use name remain; strokes/UndoRedo/SaveOpen keep original behavior.
+- [ ] Done stops brush/hides dock; mode/look/another tool closes it, navigation unaffected. Reopen retains original values.
+- [x] Automated original-node/value/listener lifecycle, Done, command routing and active-tool refusal checks pass.
+- [ ] Native iPad dock readability/tap/typing/picker gate pending; keep watch for rendering recurrence.

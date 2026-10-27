@@ -378,21 +378,21 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.990",
+      "url": "./src/release-bootstrap.js?v=0.36.18.991",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.990",
+      "url": "./src/release-version.js?v=0.36.18.991",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
     {
       "owner": "index.html",
-      "url": "./src/render-modes.js?v=0.36.18.988",
+      "url": "./src/render-modes.js?v=0.36.18.991",
       "target": "src/render-modes.js",
-      "sha256": "13701bfa5a2b7a4d340d952de1d729700e23e6066f188b51813a9f02538e624d"
+      "sha256": "16560254cb92ab0c4dcd2f2e45ae0c5a1a4f1a827d0cc047720157c622e297b9"
     },
     {
       "owner": "index.html",
@@ -3221,6 +3221,18 @@
       "target": "src/facegroup-authoring.js",
       "url": "./facegroup-authoring.js?v=0.36.18.985",
       "sha256": "3b8b6418be47ed40f1fb458c05bdd796b10a263ebacbfa06c00bbcab8959840e"
+    },
+    {
+      "owner": "src/render-modes.js",
+      "target": "src/facegroup-paint-dock.js",
+      "url": "./facegroup-paint-dock.js?v=0.36.18.991",
+      "sha256": "6dab3ad3785239d63bf7d2bfd41facc85ccf7df45f1cdb7cc15de6c6523458c8"
+    },
+    {
+      "owner": "src/facegroup-paint-dock.js",
+      "target": "src/tool-session-panel-position.js",
+      "url": "./tool-session-panel-position.js?v=0.36.18.963",
+      "sha256": "6dde662666ac6602204e4bf05ce521ceb469aff83a8a5bb15658a0c637364ef7"
     }
   ]
 }

@@ -15,7 +15,7 @@ test('actual picker populates explicit native options from current mesh without 
 });
 test('native select choice hands name to original input event; datalist dependency removed',()=>{
  assert.match(source,/<select id="facegroupNames"/);assert.doesNotMatch(source,/<datalist|list="facegroupNames"/);
- const start=source.indexOf("  panel.querySelector('#facegroupNames').addEventListener('change',()=>{");const end=source.indexOf("  document.querySelector('#viewModes')",start);assert.ok(start>0&&end>start);
+ const start=source.indexOf("  document.querySelector('#facegroupNames').addEventListener('change',()=>{");const end=source.indexOf("  document.querySelector('#viewModes')",start);assert.ok(start>0&&end>start);
  const select={value:'Roof'},input={value:'Wall',dispatchEvent:e=>events.push(e.type)},events=[],listeners={},status={};
- const c={panel:{querySelector:s=>s==='#facegroupNames'?{...select,addEventListener:(t,fn)=>listeners[t]=fn}:input},Event:class{constructor(type){this.type=type;}},status};vm.createContext(c);vm.runInContext(source.slice(start,end),c);listeners.change();assert.equal(input.value,'Roof');assert.deepEqual(events,['input']);assert.equal(status.textContent,'Facegroups · using Roof');
+ const c={document:{querySelector:s=>s==='#facegroupNames'?{...select,addEventListener:(t,fn)=>listeners[t]=fn}:input},Event:class{constructor(type){this.type=type;}},status};vm.createContext(c);vm.runInContext(source.slice(start,end),c);listeners.change();assert.equal(input.value,'Roof');assert.deepEqual(events,['input']);assert.equal(status.textContent,'Facegroups · using Roof');
 });

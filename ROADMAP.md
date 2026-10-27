@@ -7242,3 +7242,49 @@ Closed VIEW debug panel rect should be zero/displaynone; open must show original
 settings. Watch right toolbar/footer/gizmo if visible, without forced reproduction.
 If recurrence, existing989 report plus visible symptom; no repeated hide/show needed.
 Next actual990 native feedback before speculative layer changes.
+
+## .991 — compact left facegroup paint dock; .990 user PASS — 27 October 2026
+
+User PASS990 protects explicit closed VIEW surface and original open/scroll/picker
+behavior; continue watching intermittent rendering rather than claiming engine root
+cause. User asks better facegroup painting UI/UX. Audit accepted authoring/stroke/
+VIEW/session/position owners on baseline990. Existing controls lived inside VIEW
+and stopped brush whenever revisited, requiring repeated menu cycling.
+
+VIEW > Facegroups now offers Open facegroup paint controls. Opens compact290px
+left dock8px from viewport top/left using ORIGINAL compact panel position helper;
+paints default current group and invokes ORIGINAL Face mode button if needed.
+Existing name input/native Existing group picker, Paint/Erase and selected-face
+commands are SAME DOM nodes reparented from hidden home in VIEW, not cloned/proxied.
+Palette/colour appearance stays in VIEW. Name and Existing group sit above two
+clear pressed Paint/Erase mode buttons; advanced Assign/Clear/Use selected commands
+collapse under Selected faces. Done is always at dock header; stops brush and parks
+original controls back in hidden home, dock displaynone. Facegroups look remains
+so user can inspect painted groups. No need to reopen VIEW between strokes/tools.
+
+Paint/Erase now persistent radio-style choices; Done exits. Existing group choice
+or completed name edit arms chosen named paint while dock open; typing pauses old
+brush until change/commit. Use selected group name also rearms named Paint in dock.
+Picker refreshes on focus and existing VIEW/assignment routes. Original stroke-on-
+lift, unique-face staging, one-step history/cancel/resource owners unchanged. No
+new raw-pointer/paint/history owner or UV requirement. Shared placement helper used
+compact with explicit Paint-left exception; no new filter/contain/layer/repaint hint.
+Dock closes on render-look change, non-Face mode click (read-only capture), or start
+of another original tool session. Opening refuses a current session rather than
+abandoning its preview. Scene/selection/history unaffected by dock close.
+
+Runtime changes only original render UI and small reparenting dock helper; original
+stroke/gate/geometry/UV/main/Multi/990 VIEW implementations byte-unchanged. Reviewed
+render/new-child/recovery991 pins and hashes. Picker test now queries document IDs
+for original controls after relocation, preserving its choice/input assertions.
+91 targeted PASS/0FAIL/0skip: new actual dock lifecycle/value/listener identity over
+12 reopen cycles, Done/unavailable parent, actual command routing/persistent modes/
+active-tool refusal; retained picker/stroke/eraser/metadata, native selection/Pencil/
+Lasso/picking,toolbar/project/UV/release. Syntax/diff checks pass. No native/rendered/
+full-suite proof claimed. Native dock spacing and typing/dropdown usability pending.
+
+DEVICE991: VIEW Facegroups > Open facegroup paint controls; verify left dock and
+automatic Face mode, close VIEW. Select group or type a name, Pencil stroke/lift;
+Paint/Erase without reopening VIEW. Selected faces advanced commands; UndoRedo.
+Done hides dock/stops brush, fingers navigate; reopen retains name; Save/Open.
+Next native UX feedback before extra cursor/radius/live colour feedback.
