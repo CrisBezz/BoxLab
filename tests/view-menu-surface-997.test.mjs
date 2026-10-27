@@ -69,3 +69,14 @@ test('keyboard entry/return works with external panel and Escape closes the nati
  f.panel.dispatchEvent({type:'keydown',...event('Escape')});assert.equal(f.menu.open,false);assert.equal(summaryFocus,2);assert.equal(prevented,3);
  f.observers[0].fn();assert.equal(f.panel.hidden,true);
 });
+
+test('998 Facegroups overflow stays in the inner scroller and reopening restores that scroller',()=>{
+ const f=fixture(true),{node}=orderedDOM(),scroll=node('viewModesScroll');scroll.scrollTop=0;
+ f.panel.append(scroll);scroll.append(f.button);f.panel.querySelector=s=>s==='#viewModesScroll'?scroll:f.button;
+ const surface=mountViewMenuSurface(f.args);assert.equal(surface.scrollElement,scroll);
+ scroll.scrollHeight=980;scroll.clientHeight=790;scroll.scrollTop=175;
+ f.setOpen(false);scroll.scrollTop=0;f.setOpen(true);
+ assert.equal(scroll.scrollTop,175);assert.equal(f.panel.scrollTop,0);assert.equal(f.button.parentElement,scroll);
+ for(const path of ['index.html','src/view-modes.js'])assert.match(fs.readFileSync(new URL('../'+path,import.meta.url),'utf8'),/id="viewModesScroll" class="viewport-menu-scroll"/);
+ assert.match(fs.readFileSync(new URL('../src/clean-view.js',import.meta.url),'utf8'),/querySelector\('#viewModesScroll'\)\|\|panel/);
+});

@@ -64,7 +64,7 @@ function ensureUI(){
     section.id='viewportDisplaySection';
     section.className='viewport-menu-section';
     section.innerHTML='<div class="viewport-menu-label">Display</div><div class="viewport-render-grid"><button id="cleanViewBtn" type="button" aria-pressed="false">Clean View</button></div>';
-    panel.appendChild(section);
+    (document.querySelector('#viewModesScroll')||panel).appendChild(section);
     const button=section.querySelector('#cleanViewBtn');
     button?.addEventListener('click',event=>{
       event.preventDefault();event.stopPropagation();

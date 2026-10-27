@@ -8,14 +8,15 @@ export function mountViewMenuSurface({menu,panel,parent,Observer=globalThis.Muta
  panel.id='viewModesPanel';
  panel.setAttribute('role','region');panel.setAttribute('aria-label','View settings');
  summary?.setAttribute('aria-controls',panel.id);
- let scrollTop=panel.scrollTop||0;
+ const scrollElement=panel.querySelector('#viewModesScroll')||panel;
+ let scrollTop=scrollElement.scrollTop||0;
  // A closed panel must have no layout surface, including during its initial move.
  panel.hidden=true;
  parent.appendChild(panel);
  function sync(){
   const open=!!menu.open;
-  if(!open&&!panel.hidden)scrollTop=panel.scrollTop;
-  if(panel.hidden===open){panel.hidden=!open;if(open)panel.scrollTop=scrollTop;}
+  if(!open&&!panel.hidden)scrollTop=scrollElement.scrollTop;
+  if(panel.hidden===open){panel.hidden=!open;if(open)scrollElement.scrollTop=scrollTop;}
   summary?.setAttribute('aria-expanded',String(open));
  }
  const observer=typeof Observer==='function'?new Observer(sync):null;
@@ -31,6 +32,6 @@ export function mountViewMenuSurface({menu,panel,parent,Observer=globalThis.Muta
   if(event.key==='Escape'){menu.open=false;summary?.focus();event.preventDefault();event.stopPropagation();}
   else if(event.key==='Tab'&&event.shiftKey&&event.target===firstControl()){event.preventDefault();summary?.focus();}
  });
- const surface={panel,sync};surfaces.set(menu,surface);sync();
+ const surface={panel,scrollElement,sync};surfaces.set(menu,surface);sync();
  return surface;
 }

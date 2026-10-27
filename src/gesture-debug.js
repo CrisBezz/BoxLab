@@ -215,7 +215,7 @@ function viewMenuEvidence(){
   selectionMode:globalThis.__boxlabSelectionBridge?.mode?.()??null,
   facegroupStroke:{armed:!!stroke?.armed,pointerId:stroke?.pointerId??null,mode:stroke?.armed?(stroke.group===null?'erase':'assign'):null},
   groupPicker:{present:!!picker,optionCount:picker?.options?.length??null,selectedIndex:picker?.selectedIndex??null,disabled:picker?!!picker.disabled:null},
-  nodes:['#viewModesPanel','#facegroupViewControls','#facegroupNames','#facegroupSaturation','#facegroupLightness','#facegroupReset','#boxlabStudioAtmosphere'].map(read)};
+  nodes:['#viewModesPanel','#facegroupViewControls','#facegroupNames','#facegroupSaturation','#facegroupLightness','#facegroupReset','#boxlabStudioAtmosphere','#viewModesScroll'].map(read)};
 }
 function uiSnapshot(){
  const rect=node=>{if(!node)return null;const r=node.getBoundingClientRect(),s=getComputedStyle(node);return {...describe(node),rect:{x:r.x,y:r.y,width:r.width,height:r.height},hidden:node.hidden,disabled:node.disabled,parentId:node.parentElement?.id||null,popover:node.getAttribute?.('popover')||null,topLayer:node.getAttribute?.('popover')==='manual'&&node.matches?.(':popover-open')===true,display:s.display,visibility:s.visibility,pointerEvents:s.pointerEvents,opacity:s.opacity,zIndex:s.zIndex,transform:s.transform,overflow:s.overflow,contain:s.contain,isolation:s.isolation,willChange:s.willChange,filter:s.filter,backdropFilter:s.backdropFilter};};
@@ -275,4 +275,4 @@ queueMicrotask(()=>{if(enabled)evidence('debug-startup',{controls:uiControlEvide
 for(const type of ['pointerdown','pointerup','click'])window.addEventListener(type,event=>evidence(type+'-bubble',{target:describe(event.target),defaultPrevented:event.defaultPrevented,...(type==='click'&&event.target?.closest?.('.top-actions')?{controls:uiControlEvidence()}: {})}),{passive:true});
 
 window.addEventListener('toggle',event=>{if(enabled&&event.target?.id==='viewModes')evidence('view-toggle',viewMenuEvidence());},{capture:true,passive:true});
-window.addEventListener('scroll',event=>{if(enabled&&event.target?.classList?.contains('viewport-menu-panel'))evidence('view-scroll',viewMenuEvidence());},{capture:true,passive:true});
+window.addEventListener('scroll',event=>{if(enabled&&(event.target?.classList?.contains('viewport-menu-panel')||event.target?.classList?.contains('viewport-menu-scroll')))evidence('view-scroll',viewMenuEvidence());},{capture:true,passive:true});

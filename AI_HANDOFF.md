@@ -1,4 +1,56 @@
-# BoxLab AI Handoff — .997 / external VIEW panel; .996 PASS; native rendering retest
+## .998 — Facegroups transition repair, native acceptance pending — 27 October 2026
+
+User clarified: VIEW works in Studio, then becomes empty when Facegroups is selected.
+.997 is partial Studio success, not overall VIEW acceptance. Facegroups adds enough
+content to overflow the menu (reported scrollHeight 980 versus clientHeight 810).
+.998 separates the fixed external frame from a bounded normal-flow inner scroller,
+retaining original controls, IDs, delegation, native open owner and Clean View section.
+The fixed frame no longer owns touch overflow. Inner scroll position survives closing.
+The right-side gizmo patch remains OPEN; no visible-gizmo capture proves its cause.
+Protected: accepted .996 File menu and .994 palette, original Multi and gestures.
+Validation: focused VIEW/layout/release/facegroup/File tests; native device test still
+required: open Studio VIEW, switch Facegroups, scroll to bottom, close/reopen, return
+Studio, and inspect right-side gizmo. Standing commit/push/publication authorization
+continues; no repeat approval needed. Current build .998, ready for device retest only.
+
+# BoxLab AI Handoff — .997 Studio VIEW partial success; Facegroups transition fails
+
+## .997 initial Studio success; Facegroups transition remains OPEN — 27 October 2026
+
+User: “View works great - there is still a patch on the right that's hiding the
+gizmo contents.” Accept/protect997 VIEW rendering repair specifically; do not infer
+broad right-region/gizmo acceptance. Keep996 File menu PASS and994 acceptance.
+
+New997 report08:04:53.110Z: Studio/Face, viewport1366x886,DPR2,canvas2732x1652,
+controls enabled, no tool session/texture Paint, canvasProbehiddenfalse. Final VIEW
+closed, external #viewModesPanel parentapp/hidden/displaynone/zero bounds, so no
+retained closed VIEW rectangle is established at capture. totalGizmo explicitly
+hidden/displaynone/zero bounds too: this report does NOT capture a visible partly
+clipped gizmo. Do not treat that intentional hidden state as spatial clipping proof.
+Studio atmosphere is active, opacity1/multiply, but this alone does not prove it
+causes the patch (older reports included non-Studio/opacity0 failures). Healthy
+right-toolbar layout/hits remain non-pixel evidence.
+
+Toggle-time records at29629/43262/44313 show openTRUE with panelhiddenTRUE; closes
+42140/43804/44827 show previous visible panel bounds. Debug observes toggle at window
+capture, while surface visibility is mirrored by MutationObserver. These transition
+samples can precede the visibility update; they are not by themselves persistent
+VIEW failure evidence. User explicitly confirms VIEW now works. Preserve accepted
+surface structure; if future reporting work is needed, sample settled state rather
+than claiming these transition records show a remaining visible closed panel.
+
+Source audit: Total Gizmo root remains original196px viewport child, translated to
+selection; its primary SVG intentionally clips to its own bounds while shortcut SVGs
+remain overflowvisible. No specific wrong screen-fixed clip rect or covering DOM node
+was established. Do not remove protected SVG clipping or move gizmo parent/coordinates
+speculatively. No code/build change from this update. Runtime remains997.
+
+Next useful native evidence: screenshot while gizmo is VISIBLE and crossing patch,
+so arrows/rings versus radial labels/buttons and fixed patch boundary can be compared.
+Quick Studio→Solid→Studio comparison may separate Studio presentation dependence;
+it is a diagnostic comparison, not a guaranteed recovery or engine diagnosis.
+No need for another identical dump with gizmo hidden. Preserve original navigation,
+selection/history and accepted VIEW owner until evidence supports a narrow repair.
 
 ## .997 — external original VIEW surface; .996 user PASS — 27 October 2026
 

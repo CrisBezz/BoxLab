@@ -167,9 +167,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.997",
+      "url": "./src/drawer-ui.js?v=0.36.18.998",
       "target": "src/drawer-ui.js",
-      "sha256": "c7c87636896587f62420bade5b8f9e47d0b4603619fd34100a3b704aa77e729a"
+      "sha256": "6438ffec2843671c023c96e6e7e13ba6aa7d1bd9df4e389ba5db700e9fe84458"
     },
     {
       "owner": "index.html",
@@ -259,9 +259,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/gesture-debug.js?v=0.36.18.997",
+      "url": "./src/gesture-debug.js?v=0.36.18.998",
       "target": "src/gesture-debug.js",
-      "sha256": "bc6b5758f599be6ba74652ab5e85b678d81abb1bded2199b08ba0f3b2d3a1acd"
+      "sha256": "1ee5aafcf47d6451df3c00909840a685727d471f65a33fcb55bc985e072d9d4a"
     },
     {
       "owner": "index.html",
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.997",
+      "url": "./src/release-bootstrap.js?v=0.36.18.998",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.997",
+      "url": "./src/release-version.js?v=0.36.18.998",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -581,9 +581,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/view-modes.js?v=0.36.18.997",
+      "url": "./src/view-modes.js?v=0.36.18.998",
       "target": "src/view-modes.js",
-      "sha256": "db0487ccb3bfa575e13136552408a913a206186f73ab1adcc6400cd023001c8c"
+      "sha256": "ae06f237a8cbb4c5e68af05ab42f146ee89d522ddc6170e0898c4f0e70bcfffc"
     },
     {
       "owner": "index.html",
@@ -876,9 +876,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.997",
+      "url": "./face-workflow-layout.js?v=0.36.18.998",
       "target": "src/face-workflow-layout.js",
-      "sha256": "591aef06e538153a4fad6d6cfd1c35e29e7b135d9ffd7bf0018c0bd3ba524071"
+      "sha256": "b218c1549b2f0fb0aba537d91da9eac59d11bc8c4fed145d34e8c2ca9952fb2f"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1261,9 +1261,9 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./clean-view.js?v=0.36.18.997",
+      "url": "./clean-view.js?v=0.36.18.998",
       "target": "src/clean-view.js",
-      "sha256": "88d8ebef2618e0986d681c75b128d80c577cb01d764691981d188ed2df1af0d5",
+      "sha256": "e45e8e1321fe351b6fc26875ebb88b204ae42cb76ae9a98247a14eba90290c32",
       "sourceVersion": "0.36.18.845"
     },
     {
@@ -3200,7 +3200,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./viewport-toolbar-shell.css?v=0.36.18.997",
+      "url": "./viewport-toolbar-shell.css?v=0.36.18.998",
       "target": "viewport-toolbar-shell.css",
       "sha256": "74213bf438a0805db09ec8cfad4eec097c3180a5ee7eb143d07a9899827e4d6a"
     },
@@ -3266,9 +3266,9 @@
     },
     {
       "owner": "src/view-modes.js",
-      "url": "./view-menu-surface.js?v=0.36.18.997",
+      "url": "./view-menu-surface.js?v=0.36.18.998",
       "target": "src/view-menu-surface.js",
-      "sha256": "421e44b741ee76208bba249999985fb04e90874989e6c92d59bfd0931f4cb91a"
+      "sha256": "19df35c9e5e6dbcfb09fd2afc1e7aba63080ab6265ed59e6ad5034a089f878f6"
     }
   ]
 }

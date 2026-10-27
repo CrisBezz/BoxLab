@@ -1,4 +1,4 @@
-import {mountViewMenuSurface} from './view-menu-surface.js?v=0.36.18.997';
+import {mountViewMenuSurface} from './view-menu-surface.js?v=0.36.18.998';
 import * as THREE from 'three';
 
 const status=document.querySelector('#selectionStatus');
@@ -13,6 +13,7 @@ function ensureUI(){
   if(!document.querySelector('#viewModesPanel')&&!wrap.querySelector('.viewport-menu-panel'))wrap.innerHTML=`
     <summary title="View settings" aria-label="View settings"><span class="viewport-menu-icon">◈</span><span>VIEW</span><span class="viewport-menu-caret">▾</span></summary>
     <div id="viewModesPanel" class="viewport-menu-panel" hidden>
+      <div id="viewModesScroll" class="viewport-menu-scroll">
       <div class="viewport-menu-section">
         <div class="viewport-menu-label">View Direction</div>
         <div class="viewport-view-grid">
@@ -36,6 +37,7 @@ function ensureUI(){
         </div>
       </div>
 
+      </div>
     </div>`;
   const focusButton=document.querySelector('#focusViewBtn')||document.createElement('button');
   focusButton.type='button';
@@ -55,7 +57,9 @@ function ensureUI(){
 #viewModes:not([open]) > .viewport-menu-panel{display:none!important}
 #viewModesPanel[hidden]{display:none!important}
 .viewport-menu-icon{font-size:15px;line-height:1;opacity:.9}.viewport-menu-caret{font-size:10px;opacity:.65}
-.viewport-menu-panel{position:fixed;right:max(8px,env(safe-area-inset-right));top:calc(var(--boxlab-topbar-h,60px) + 6px);z-index:200;width:min(360px,calc(100vw - 16px));max-height:calc(100dvh - var(--boxlab-topbar-h,60px) - 14px);overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;scrollbar-gutter:stable;padding:10px;border:1px solid rgba(255,255,255,.14);border-radius:11px;background:rgba(17,19,24,.98);box-shadow:0 14px 34px rgba(0,0,0,.38);backdrop-filter:blur(18px);pointer-events:auto;touch-action:pan-y}
+.viewport-menu-panel{position:fixed;right:max(8px,env(safe-area-inset-right));top:calc(var(--boxlab-topbar-h,60px) + 6px);z-index:200;width:min(360px,calc(100vw - 16px));max-height:calc(100dvh - var(--boxlab-topbar-h,60px) - 14px);overflow:visible;padding:10px;border:1px solid rgba(255,255,255,.14);border-radius:11px;background:rgba(17,19,24,.98);box-shadow:0 14px 34px rgba(0,0,0,.38);backdrop-filter:blur(18px);pointer-events:auto}
+.viewport-menu-scroll{max-height:calc(100dvh - var(--boxlab-topbar-h,60px) - 36px);overflow-y:auto;overscroll-behavior:contain;scrollbar-gutter:stable;touch-action:pan-y}
+
 .viewport-menu-section+.viewport-menu-section{margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.09)}
 .viewport-menu-label{font-size:10px;text-transform:uppercase;letter-spacing:.08em;opacity:.55;margin:0 2px 6px}
 .viewport-view-grid,.viewport-render-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}

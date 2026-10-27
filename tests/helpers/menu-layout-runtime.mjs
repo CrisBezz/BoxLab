@@ -50,6 +50,9 @@ export function assertViewportMenuRules(transform){
  const blocks=rules(menuLayoutRuntime(transform).styles[2],'.viewport-menu-panel').filter(block=>'max-height' in block);assert.equal(blocks.length,2);
  for(const block of blocks)assert.equal(block['max-height'],'calc(100dvh - var(--boxlab-topbar-h,60px) - 14px)');
  assert.equal(blocks[0].top,'calc(var(--boxlab-topbar-h,60px) + 6px)');
- assert.equal(blocks[0]['overflow-y'],'auto');assert.equal(blocks[0]['overscroll-behavior'],'contain');assert.equal(blocks[0]['-webkit-overflow-scrolling'],'touch');assert.equal(blocks[0]['touch-action'],'pan-y');
+ assert.equal(blocks[0].overflow,'visible');assert.equal(blocks[0]['overflow-y'],undefined);
+ const scroll=rules(menuLayoutRuntime(transform).styles[2],'.viewport-menu-scroll');assert.equal(scroll.length,1);
+ assert.equal(scroll[0]['max-height'],'calc(100dvh - var(--boxlab-topbar-h,60px) - 36px)');
+ assert.equal(scroll[0]['overflow-y'],'auto');assert.equal(scroll[0]['overscroll-behavior'],'contain');assert.equal(scroll[0]['touch-action'],'pan-y');assert.equal(scroll[0]['-webkit-overflow-scrolling'],undefined);
  assert.equal(blocks[0].width,'min(360px,calc(100vw - 16px))');assert.equal(blocks[1].width,'min(340px,calc(100vw - 16px))');
 }
