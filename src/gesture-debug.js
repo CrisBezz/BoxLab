@@ -255,14 +255,14 @@ function updateUIDebug(){
  off.onclick=disable;uiControls.style.maxHeight='45vh';uiControls.style.overflowY='auto';
  uiControls.append(label,document.createElement('br'),capture,copy,off,document.createElement('br'),probe,visible,missing,note,uiReport);document.body.appendChild(uiControls);
 }
-const uiDebugButton=document.createElement('button');uiDebugButton.type='button';uiDebugButton.textContent='UI Debug';uiDebugButton.title='Record input and layout evidence for inactive UI';uiDebugButton.onclick=toggle;document.querySelector('#fileMenu .top-file-content')?.appendChild(uiDebugButton);
+const uiDebugButton=document.createElement('button');uiDebugButton.type='button';uiDebugButton.textContent='UI Debug';uiDebugButton.title='Record input and layout evidence for inactive UI';uiDebugButton.onclick=toggle;(document.querySelector('#fileDiagnostics')||document.querySelector('#fileMenu .top-file-content'))?.appendChild(uiDebugButton);
 const refreshDisplayButton=document.createElement('button');refreshDisplayButton.type='button';refreshDisplayButton.id='refreshDisplayBtn';refreshDisplayButton.textContent='Refresh display';refreshDisplayButton.title='Recover missing controls without reloading your model';
 updateDisplayRefresh=active=>{refreshDisplayButton.disabled=active;refreshDisplayButton.textContent=active?'Refreshing display…':'Refresh display';if(!active){const status=document.querySelector('#selectionStatus');if(status)status.textContent='Display refreshed';}};
 refreshDisplayButton.onclick=()=>{
  if(!displayRefresh.start()){const status=document.querySelector('#selectionStatus');if(status)status.textContent='Finish the active operation or Show 3D again before refreshing';return;}
  const menu=document.querySelector('#fileMenu');if(menu)menu.open=false;
 };
-document.querySelector('#fileMenu .top-file-content')?.appendChild(refreshDisplayButton);
+(document.querySelector('#fileDiagnostics')||document.querySelector('#fileMenu .top-file-content'))?.appendChild(refreshDisplayButton);
 globalThis.__boxlabGestureDebug.refreshDisplay=()=>displayRefresh.start();
 window.addEventListener('boxlab-gesture-debug-change',updateUIDebug);queueMicrotask(updateUIDebug);
 for(const type of ['pointerdown','pointerup','pointercancel'])window.addEventListener(type,event=>{if(!enabled)return;evidence(type,{pointer:event.pointerType,id:event.pointerId,x:event.clientX,y:event.clientY,target:describe(event.target),hit:describe(document.elementFromPoint(event.clientX,event.clientY)),buttons:event.buttons,defaultPrevented:event.defaultPrevented});if(type==='pointerdown')evidence('input-layout',{rightEdge:innerWidth,canvasWidth:debugCanvas?.width,canvasHeight:debugCanvas?.height,paint:!!globalThis.__boxlabViewportPaint?.active});},{capture:true,passive:true});

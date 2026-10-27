@@ -1,4 +1,44 @@
-# BoxLab AI Handoff — .995 / FACEGROUP radial + ADD+; .994 PASS; rendering gate OPEN
+# BoxLab AI Handoff — .996 / File menu layout; .994 PASS; rendering gate OPEN
+
+## .996 — File menu arrangement from user image — 27 October 2026
+
+User requests File menu order/format from attached IMG_8339.png. Audited current
+main44db0b9f/runtime995, existing shell/File/export/project/debug installers and
+viewport-contained menu styles. No995 PASS inferred;994 PASS remains protected.
+
+File menu now has four semantic sections in requested order: original Open .boxlab
+from Files and Save .boxlab; Import (Editable/Reference, split groups, import);
+Export (filename, Format OBJ/GLB, Geometry Base/SubD, Export/Save, NOMAD); utilities
+(Home Screen, Reset, UI Debug, Refresh display, Check project snapshot). Shell
+supplies named slots; original project/debug installers append SAME original buttons,
+inputs/status nodes/listeners there with existing-host fallbacks. No cloning, second
+menu/handler, observers, keyboard/tab-order CSS tricks or new save/export owners.
+Original Quick OBJ and Lab link nodes remain hidden for legacy owners; duplicate
+Quick OBJ/Lab entry is omitted from visible requested menu.
+
+Scoped file-menu.css gives consistent section rules/gaps/uppercase headings,320px
+viewport-bounded width,36px action targets,32px segmented controls, aligned filename
+field and readable12px text. Max-height tracks original topbar/safe area; vertical
+scroll/touch-pan/overscroll containment remain. Hidden attributes honored; empty
+slots/status do not leave gaps. No new blur/filter/transform/contain/compositor hint.
+Other UI styles unchanged. This does not repair recurring right-region rendering.
+
+Runtime changes only shell/layout stylesheet and original object-management/debug
+installer destinations. Project codec/history/save/open/geometry/selection, export/
+NOM/paint/UV/995 Facegroup/993 Exact/Multi1.0/frozen unchanged. Reviewed996 shell/new
+CSS/project-installer/debug/recovery pins and asset hashes; internal stamps retained.
+All original File action/input IDs retained once. HTML sections/order/unique IDs
+checked. Existing50 menu input/config/name/layout/toolbar/project Open/GLB/paint/
+display-refresh/release checks PASS/0FAIL/0skip (~1.12s); JS syntax/diff clean. No
+new cosmetic tests or full-suite/native rendered proof claimed. Publication commit/
+tree/live evidence is recorded in docs/publication-996.md before completion.
+
+DEVICE996: File shows Open/Save first, then Import/Export/utilities as image; spacing,
+filename/segmented controls readable. Scroll to bottom in landscape and portrait.
+Save/Open a test .boxlab; import/export and NOMAD original actions; Refresh display
+still available. Do not reset a working model to test styling. Right-menu rendering
+remains OPEN;995 Facegroup device acceptance still pending. Standing publication
+approval retained. Next follow996 menu/iPad spacing and995 tool feedback.
 
 ## .995 — FACEGROUP Face radial and ADD+; .994 user PASS — 27 October 2026
 

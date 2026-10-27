@@ -259,9 +259,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/gesture-debug.js?v=0.36.18.989",
+      "url": "./src/gesture-debug.js?v=0.36.18.996",
       "target": "src/gesture-debug.js",
-      "sha256": "1b70e21861e15f68655e2ec936f87504cc52da16f3dbdaaf0205d87c5caf4832"
+      "sha256": "cd8cc3115b732fe16770d91d003ddcfed22f5e2236235c6651e95d51e4d38a88"
     },
     {
       "owner": "index.html",
@@ -335,9 +335,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/object-management.js?v=0.36.18.938",
+      "url": "./src/object-management.js?v=0.36.18.996",
       "target": "src/object-management.js",
-      "sha256": "261239a8182ed7339dfc20abffbc7cd476e8337338be094c070bf42fa8746a82"
+      "sha256": "b493b609529c28c1c93a3cdfc89c5d013f74eb65978317b7685d181605121e42"
     },
     {
       "owner": "index.html",
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.995",
+      "url": "./src/release-bootstrap.js?v=0.36.18.996",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.995",
+      "url": "./src/release-version.js?v=0.36.18.996",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -933,7 +933,7 @@
       "owner": "src/drawer-ui.js",
       "url": "./object-management.js?v=0.36.18.938",
       "target": "src/object-management.js",
-      "sha256": "261239a8182ed7339dfc20abffbc7cd476e8337338be094c070bf42fa8746a82"
+      "sha256": "b493b609529c28c1c93a3cdfc89c5d013f74eb65978317b7685d181605121e42"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -3257,6 +3257,12 @@
       "url": "./facegroup-colours-core.js?v=0.36.18.992",
       "target": "src/facegroup-colours-core.js",
       "sha256": "048fb521def009766bd75115b562603d926405f910bf93ab848a40806f589834"
+    },
+    {
+      "owner": "index.html",
+      "url": "./file-menu.css?v=0.36.18.996",
+      "target": "file-menu.css",
+      "sha256": "6029f600d4a565c27d2b245ce99d1f5b1acab4827acd8c4aeb2078b5d42e55c2"
     }
   ]
 }

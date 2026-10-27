@@ -328,7 +328,8 @@ function installProjectAudit(){
  const input=document.createElement('input');input.id='projectOpenBasicInput';input.type='file';input.accept='';input.hidden=true;
  open.addEventListener('click',()=>{output.textContent='Choose a .boxlab file in the picker (Browse → Downloads). Other files will be refused.';input.click();});
  input.addEventListener('change',()=>{const file=input.files?.[0];input.value='';void openBasicProject(file,output);});
- menu.append(button,save,open,input,output);
+ (menu.querySelector('#fileProjectActions')||menu).append(open,save,input);
+ (menu.querySelector('#fileProjectCheck')||menu).append(button,output);
 }
 globalThis.__boxlabProjectSnapshotAudit={version:'0.36.18.828',inspect:auditProjectSnapshot};
 function initialize(){if(globalThis.__boxlabObjectSelectionRuntime?.initialized)return true;if(!manager()||!drawer||!list)return false;globalThis.__boxlabObjectSelectionRuntime={initialized:true,owner:toolbarOwner};buildToolbar();selectedIds=new Set(activeId()==null?[]:[activeId()]);installCaptureHandlers();installObserver();updateUI();globalThis.__boxlabObjectSelection={__authoritative:true,owner:toolbarOwner,get ids(){return new Set(selectedIds);},get multi(){return multiEnabled;},invert(seed=[...selectedIds]){const have=new Set(seed);multiEnabled=true;selectedIds=new Set(objects().filter(o=>o.visible!==false&&!have.has(o.id)).map(o=>o.id));updateUI();},get wholeGroupId(){return selectedWholeGroupId();},select(ids=[]){multiEnabled=true;selectedIds=new Set(ids);updateUI();},single(id=activeId()){multiEnabled=false;selectedIds=new Set(id==null?[]:[id]);updateUI();},clear(){selectedIds.clear();updateUI();},refresh(){updateUI();}};globalThis.__boxlabObjectGroups={groupSelection,ungroupSelection,selectGroup,renameGroup,refresh:updateUI,label:groupLabel,members:groupMembers,completeSelectedGroupIds:selectedCompleteGroupIds};installHistoryBridge();installProjectAudit();return true;}
