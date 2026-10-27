@@ -310,9 +310,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/mesh-health.js?v=0.36.18.1000",
+      "url": "./src/mesh-health.js?v=0.36.18.1001",
       "target": "src/mesh-health.js",
-      "sha256": "cd58b611b8ccd6716246f92952721b8c760226030e874569407a26860841073d",
+      "sha256": "4a10625eccb67b69eeef3f0deec44cda3f207fab534035eab06c1e711e08d0ef",
       "sourceVersion": "0.36.18.880"
     },
     {
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.1000",
+      "url": "./src/release-bootstrap.js?v=0.36.18.1001",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1000",
+      "url": "./src/release-version.js?v=0.36.18.1001",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -2396,9 +2396,9 @@
     },
     {
       "owner": "src/mesh-health.js",
-      "url": "./uv-workspace.js?v=0.36.18.957",
+      "url": "./uv-workspace.js?v=0.36.18.1001",
       "target": "src/uv-workspace.js",
-      "sha256": "a74de12a44419f3849d4e1f52f596446fa2947ca4ef93f5ce84a4191944812dc"
+      "sha256": "82e166e1887417ba79c0bb12dae63a375c6bd6487086bb9c55b74e8795b64bb7"
     },
     {
       "owner": "src/uv-workspace.js",

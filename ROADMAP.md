@@ -1,3 +1,38 @@
+## .1001 — UV Editor plain composition; .1000 feature PASS — 27 October 2026
+
+User explicitly PASSes .1000 features, but reports right-side loss after entering
+UV Editor. Protect .1000 UV validation/Studio handoff/Facegroup unwrap behavior;
+do not interpret feature PASS as native visibility acceptance.
+
+IMG_8342.png shows editor chrome cut off near screen x1024 CSS (image x2048),
+including partial Checker label, right editor surface and top-right toolbar.
+Underlying 3D floor remains visible at right. Report 09:41:45Z: uv-tools session,
+uvchecker/Object, workspace visible at8/68/1350/793 under app; toolbar bounds/hits
+healthy, VIEW closed/hidden, atmosphere absent, gizmo intentionally hidden.
+Canvas2732x1652/DPR2. No evidence of missing DOM, stale release or UV topology loss.
+Hide3D button clicks in supplied log do not establish an observed diagnostic result.
+
+Source audit found UV entry still reintroduced old .952 isolation on viewport and
+workspace, plus isolation/paint containment on UV canvas wrapper. This survived .999's
+plain startup baseline. Remove those CSS declarations and active :has viewport rule
+ONLY in original uv-workspace. Retain sibling root, z9 under header10, fixed insets,
+scrolling, overflow clipping, original controls/canvas identity, sizing and gestures.
+Mesh Health changes child cache key only; shell parent/recovery keys1001 reviewed.
+No renderer, model/history/UV/paint algorithms, main999/styles999, Multi1.0 or frozen
+changes. This closes a verified baseline mismatch, NOT proven WebKit root cause or
+permanent right-region repair. Native visibility gate stays OPEN until device feedback.
+
+Existing .952 CSS contract now protects plain UV composition, retaining all original
+header/exit/geometry/scroll bounds and lifecycle/navigation/history assertions.
+Validation/publication results: docs/publication-1001.md. Standing push/publish
+approval applies. Next prioritize native UV-entry result before further rendering
+changes; do not repeat blur/vignette/closed-menu hypotheses already disproved.
+
+DEVICE1001: fresh load -> UV Editor, inspect full right border/Checker/Image/top
+buttons; Back to3D and reopen several times without app-switch/recovery. Pan/pinch,
+select/Pencil-move an island, UndoRedo. Back to3D -> VIEW Studio/Facegroups -> UV
+Editor; inspect right side again. .1000 accepted workflow stays protected.
+
 ## .1000 — UV Paint handoff and Facegroups → UV Seams — 27 October 2026
 
 User says “PASS 999 so far”. Record PROVISIONAL .999 PASS and protect the exact

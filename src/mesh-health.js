@@ -6,7 +6,7 @@ import {boundaryDiagnostics} from './mesh-boundary-diagnostics-core.js?v=0.36.18
 import {unifyFaceWinding,flipAllFaces,triangulateMesh} from './mesh-normals-triangulate-core.js?v=0.36.18.443';
 import {inspectImportedUV} from './imported-uv-inspection.js?v=0.36.18.951';
 import {stitchNativeUVEdge,cutNativeUVEdges,clearNativePaint,rotateImportedUV,flipImportedUV,moveImportedUV,scaleImportedUV,rotateImportedUVByAngle,fitImportedUVToTile,packImportedUVIslands,equalizeImportedUVDensity,createPlanarUV,createFaceAtlasUV,createCoplanarAtlasUV,createBoxUV,createCylinderUV,createSphereUV,createTorusUV} from './imported-uv-edit.js?v=0.36.18.1000';
-import {createUVWorkspace} from './uv-workspace.js?v=0.36.18.957';
+import {createUVWorkspace} from './uv-workspace.js?v=0.36.18.1001';
 
 // One-shot Edge action uses the original selected edge indices and native history.
 const cutUVButton=document.createElement('button');

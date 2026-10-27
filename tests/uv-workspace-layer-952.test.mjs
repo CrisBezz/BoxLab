@@ -28,9 +28,14 @@ test('952 deferred opening measurement and visual viewport resize use final CSS 
   f.api.close();f.api.open();const late=[...f.frames.values()][0];assert.equal(f.frames.size,1);f.api.close();assert.equal(f.frames.size,0);f.canvas.rect.width=400;late();assert.equal(f.canvas.width,1440);assert.deepEqual(f.history,[]);
  }finally{f.restore();}
 });
-test('952 CSS isolates only active UV layers, keeps header priority and places one reachable Back to 3D beside title with bounded scrolling canvas',()=>{
+test('1001 UV entry preserves plain composition, header priority and reachable Back to 3D with bounded scrolling canvas',()=>{
  const f=fixture();try{
-  const css=f.head.children[0].textContent;assert.match(css,/#app:has\(> #boxlabUVWorkspace:not\(\[hidden\]\)\) > #viewportWrap/);assert.match(css,/#viewportWrap:has\(> #boxlabUVWorkspace:not\(\[hidden\]\)\)\{isolation:isolate\}/);assert.match(css,/#boxlabUVWorkspace\{position:fixed;top:calc\(var\(--boxlab-topbar-h/);assert.match(css,/z-index:9;isolation:isolate;overflow:auto/);assert.match(css,/\.uv-canvas-wrap\{flex:1 0 120px;min-height:120px;isolation:isolate;contain:paint/);assert.match(css,/canvas\{position:absolute;inset:0/);
+  const css=f.head.children[0].textContent;
+  assert.doesNotMatch(css,/isolation\s*:|contain\s*:|:has\(/,'UV entry must not restore retired viewport isolation or paint containment');
+  assert.match(css,/#boxlabUVWorkspace\{position:fixed;top:calc\(var\(--boxlab-topbar-h/);
+  assert.match(css,/z-index:9;overflow:auto/);
+  assert.match(css,/\.uv-canvas-wrap\{flex:1 0 120px;min-height:120px;min-width:0;position:relative/);
+  assert.match(css,/overflow:hidden/);assert.match(css,/canvas\{position:absolute;inset:0/);
   const html=f.root.innerHTML;assert.equal((html.match(/data-uv="done"/g)||[]).length,1);assert.match(html,/<strong class="uv-title">UV Editor<\/strong><button data-uv="done" type="button">Back to 3D<\/button>/);
   const shell=fs.readFileSync(new URL('../styles.css',import.meta.url),'utf8');assert.match(shell,/\.topbar\{[^}]*z-index:10/);
  }finally{f.restore();}

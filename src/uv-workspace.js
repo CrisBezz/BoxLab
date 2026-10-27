@@ -6,19 +6,18 @@ import {createUVNavigation} from './uv-navigation.js?v=0.36.18.868';
 export function createUVWorkspace({canvas,note,controls,onDone,onHistory,onTransform=()=>false,canEdit=()=>true,getTransformContext=()=>null}){
  const parent=document.querySelector('#viewportWrap');if(!parent)return null;
  const style=document.createElement('style');style.textContent=`
- /* Keep the UV canvas out of the WebGL viewport's compositing subtree.
-    Preserve .924's header-above-viewport ordering only while UV is visible. */
- #app:has(> #boxlabUVWorkspace:not([hidden])) > #viewportWrap,
- #viewportWrap:has(> #boxlabUVWorkspace:not([hidden])){isolation:isolate}
+ /* Match the plain .999 viewport baseline during UV entry too. The existing
+    sibling workspace and z-order keep the header above the editor without
+    changing viewport isolation or introducing paint-containment surfaces. */
  #boxlabUVWorkspace[hidden]{display:none!important}
- #boxlabUVWorkspace{position:fixed;top:calc(var(--boxlab-topbar-h,max(60px,calc(48px + env(safe-area-inset-top)))) + 8px);left:8px;right:8px;bottom:max(8px,env(safe-area-inset-bottom));z-index:9;isolation:isolate;overflow:auto;overscroll-behavior:contain;display:flex;flex-direction:column;gap:8px;padding:10px;box-sizing:border-box;min-width:0;min-height:0;border:1px solid #536073;border-radius:12px;background:#151c27;color:#edf3fa;box-shadow:0 12px 36px #0009;font-size:12px;touch-action:pan-y}
+ #boxlabUVWorkspace{position:fixed;top:calc(var(--boxlab-topbar-h,max(60px,calc(48px + env(safe-area-inset-top)))) + 8px);left:8px;right:8px;bottom:max(8px,env(safe-area-inset-bottom));z-index:9;overflow:auto;overscroll-behavior:contain;display:flex;flex-direction:column;gap:8px;padding:10px;box-sizing:border-box;min-width:0;min-height:0;border:1px solid #536073;border-radius:12px;background:#151c27;color:#edf3fa;box-shadow:0 12px 36px #0009;font-size:12px;touch-action:pan-y}
  #boxlabUVWorkspace > :not(.uv-canvas-wrap){flex-shrink:0}
  #boxlabUVWorkspace [data-uv="done"]{margin-right:auto;flex-shrink:0}
  #boxlabUVWorkspace .uv-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
  #boxlabUVWorkspace button[aria-pressed="true"]{background:#335d80;border-color:#72bfff;color:#fff}
  #boxlabUVWorkspace .uv-title{font-size:14px;flex:0 0 auto;font-weight:700;min-width:100px}
  #boxlabUVWorkspace button{min-height:36px;font-size:12px;padding:5px 10px;margin:0}
- #boxlabUVWorkspace .uv-canvas-wrap{flex:1 0 120px;min-height:120px;isolation:isolate;contain:paint;min-width:0;position:relative;background:#101722;border:1px solid #334256;border-radius:6px;overflow:hidden}
+ #boxlabUVWorkspace .uv-canvas-wrap{flex:1 0 120px;min-height:120px;min-width:0;position:relative;background:#101722;border:1px solid #334256;border-radius:6px;overflow:hidden}
  #boxlabUVWorkspace canvas{position:absolute;inset:0;width:100%!important;height:100%!important;max-width:none!important;margin:0!important;touch-action:none;display:block}
  #boxlabUVWorkspace canvas[hidden]{display:none!important}
  #boxlabUVWorkspace select{max-width:170px;min-height:36px;font-size:12px;background:#202c3d;color:inherit;border:1px solid #536073;border-radius:4px}
