@@ -32,3 +32,14 @@ test('973 actual debug controls record hidden-canvas observation, restore on Sho
  probe.onclick();f.api.disable();assert.equal(c.style.getPropertyValue('visibility'),'');assert.equal(c.width,2732);assert.equal(c.height,1652);
  assert(!f.c.__boxlabHistory);assert(!f.c.__boxlabBridgeState);
 });
+
+test('1003 actual debug render scale button refuses busy state, switches without history, and Debug off restores automatic',()=>{
+ const f=gestureDebugRuntime({canvas:canvas()});f.c.getComputedStyle=()=>({});let requested=null;const calls=[];
+ f.c.__boxlabViewportRenderScale={get requested(){return requested;},set(v){requested=v;calls.push(v);}};
+ f.events.get('boxlab-gesture-debug-change').fn({});
+ const controls=f.root.children.find(n=>n.id==='boxlabUIDebugControls'),button=controls.children.find(n=>n.id==='uiDebugRenderScaleBtn');
+ f.c.__boxlabToolSession={current:()=>({id:'uv-tools'})};button.onclick();assert.deepEqual(calls,[]);delete f.c.__boxlabToolSession;
+ f.c.__boxlabFaceDirect={dragging:()=>true};button.onclick();assert.deepEqual(calls,[]);delete f.c.__boxlabFaceDirect;
+ button.onclick();assert.equal(requested,1);assert.equal(f.api.uiSnapshot().renderScale.requested,1);assert.match(button.textContent,/Restore/);
+ button.onclick();assert.equal(requested,null);button.onclick();f.api.disable();assert.equal(requested,null);assert(!f.c.__boxlabHistory);
+});

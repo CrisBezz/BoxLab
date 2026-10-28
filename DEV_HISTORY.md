@@ -16139,3 +16139,36 @@ Current live1002; no new runtime build in this audit.69 focused tests belong to
 1002 material change, not pixel-loss proof. Fill Face/Facegroup remains requested
 and unshipped. No new device test required in this audit; do not ask for repeated
 hidden-gizmo reports or identical Studio/Facegroups comparison.
+
+## .1003 — explicit render-resolution diagnostic; .1002 PASS protected — 28 October 2026
+
+User requests further attempts after model change. Implement controlled1x versus
+normal DPR through ORIGINAL viewport-sizing owner; default remains automatic capped2.
+File -> UI Debug -> Test1× render resolution toggles temporary cap1; same button
+restores normal. Disabled Debug and pagehide restore automatic. No localStorage,
+renderer replacement, CSS resize, model/history edits, forced canvas visibility,
+synthetic resize or per-frame polling. Only original coalesced resize callback writes
+backing buffer. Genuine resize/tool/mode lifecycle keeps requested cap. Disposing
+sizing cancels pending frames, removes API/listeners and restores prior API identity.
+
+Button refuses Paint, active tool/session/drag, disabled orbit controls, existing
+canvas probe/refresh. Exit operation before scale change; restoration on Debug off
+always works. Snapshot includes requested cap and actual backing dimensions. Compare
+right-region pixels immediately after1x AND after repeating failing workflow; then
+restore normal and repeat. A single recovery on either switch may merely reflect
+buffer reallocation, not prove DPR dependence. Native pixel result remains pending;
+this is diagnostic, not claimed permanent gizmo/menu fix. Earlier both-mode evidence
+retained; no repeated Studio-versus-Facegroups diagnosis needed.
+
+Main changes viewport-sizing import key ONLY; sizing/debug owners changed, shell/
+recovery keys1003 reviewed. Existing .999 resize allocation/renderer/camera code,
+.1002 unlit Facegroups, palette, modelling/UV/Paint, Multi1.0 and frozen bytes retained.
+Tests execute actual scale API and debug button (busy refusal, switch/restore,
+snapshot, Debug off), original viewport sizes/coalescing/pagehide/cleanup and unchanged
+scene/history contracts. Validation/publication: docs/publication-1003.md.
+
+DEVICE1003: while fault visible, finish tool -> File/UI Debug -> Test1× render
+resolution. Inspect right gizmo/menu; repeat original failing workflow at1x. Restore
+normal resolution and repeat. Copy report while affected. Report whether1x prevents
+recurrence, both switches only recover temporarily, or neither helps. Debug off
+restores normal;1x intentionally looks softer. Fill Face/Facegroup remains unshipped.
