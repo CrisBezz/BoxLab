@@ -1,3 +1,4 @@
+import {selectionGraph,stepRegion} from '../src/face-selection-regions.js';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
@@ -8,7 +9,7 @@ const owner=main.slice(main.indexOf('function applyVerticalSelectionScrub('),mai
 const advanced=fs.readFileSync(new URL('../src/advanced-selection.js',import.meta.url),'utf8');
 function fixture(base=[2]){
   const handlers=new Map(),nodes=new Map(),status={textContent:''};
-  const context=vm.createContext({
+  const context=vm.createContext({selectionGraph,stepRegion,
     selection:null,selectionMode:'edge',SELECTION_SCRUB_LOCK:18,SELECTION_VERTICAL_STEP:30,
     makeSelection:(type,indices)=>({type,indices:[...indices]}),renderMesh(){},gestureDebug(){},
     MouseEvent:class{},document:{querySelector(id){
@@ -19,7 +20,7 @@ function fixture(base=[2]){
   });
   context.__boxlabSelectionBridge={mode:()=>'edge',indices:()=>context.selection?.indices||[],set:(_type,indices)=>{context.selection={type:'edge',indices};}};
   context.__boxlabBridgeState={mesh:{vertices:Array.from({length:6},()=>({})),edges:()=>Array.from({length:5},(_,i)=>({a:i,b:i+1,faces:[]}))}};
-  vm.runInContext(advanced,context);vm.runInContext(owner,context);
+  vm.runInContext(advanced.replace(/^import[^;]+;\s*$/gm,''),context);vm.runInContext(owner,context);
   const hold={type:'edge',gestureBaseIndices:base,verticalDirection:null,verticalSteps:0,pointerId:1};
   return {scrub:dy=>context.applyVerticalSelectionScrub(hold,dy),ids:()=>Array.from(context.selection.indices).sort((a,b)=>a-b),status};
 }

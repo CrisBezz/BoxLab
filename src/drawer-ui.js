@@ -104,7 +104,7 @@ import('./select-self-intersecting-faces.js?v=0.36.18.65').catch(error => consol
 import('./select-concave-faces.js?v=0.36.18.66').catch(error => console.warn('BoxLab Select Concave Faces failed to load', error));
 import('./select-convex-faces.js?v=0.36.18.67').catch(error => console.warn('BoxLab Select Convex Faces failed to load', error));
 import('./select-flat-faces.js?v=0.36.18.68').catch(error => console.warn('BoxLab Select Flat Faces failed to load', error));
-import('./select-coplanar-region.js?v=0.36.18.69').catch(error => console.warn('BoxLab Select Coplanar Region failed to load', error));
+import('./select-coplanar-region.js?v=0.36.18.1004').catch(error => console.warn('BoxLab Select Coplanar Region failed to load', error));
 import('./join-selected-coplanar-faces.js?v=0.36.18.342').catch(error => console.warn('BoxLab Join Selected Coplanar Faces failed to load', error));
 import('./select-face-islands.js?v=0.36.18.72').catch(error => console.warn('BoxLab Select Face Islands failed to load', error));
 import('./select-connected-shell.js?v=0.36.18.73').catch(error => console.warn('BoxLab Select Connected Shell failed to load', error));

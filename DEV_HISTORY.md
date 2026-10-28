@@ -16172,3 +16172,55 @@ resolution. Inspect right gizmo/menu; repeat original failing workflow at1x. Res
 normal resolution and repeat. Copy report while affected. Report whether1x prevents
 recurrence, both switches only recover temporarily, or neither helps. Debug off
 restores normal;1x intentionally looks softer. Fill Face/Facegroup remains unshipped.
+
+## .1004 — UV Paint Fill Face / Facegroup and hold expansion — 28 October 2026
+
+User reports1x seems to stay healthy and explicitly parks right-region testing unless
+it recurs. Record provisional1x stability only, not proven root cause/permanent fix.
+Keep1003 sizing/debug bytes and default automatic DPR unchanged;1x is still temporary
+and resets on reload/Debug off/pagehide. Resume requested UV Paint fill expansion.
+
+Original Fill radial sector remains in its accepted position/artwork. Compact LEFT
+settings add Face (default), Facegroup and Whole object scope. Pencil/mouse tap fills
+clicked original polygon, not one rendered triangle. Face hold420ms expands preview
+to connected coplanar region; up grows/down shrinks from fixed planar base in30px
+steps with18px neutral band (max32 steps); right uses original Face Loop and left
+Face Ring. Direction reversal recomputes baseline pixels rather than accumulating
+opacity. Before hold, movement>8px cancels tap. Release commits one original paint
+checkpoint; cancel/scope/tool/body/history loss restores baseline and clears timer.
+Fingers still navigate. Scope changes never alter modelling selection or Facegroups.
+
+Facegroup scope shows SAME orange non-pickable boundary preview as UV seam review;
+click fills all same-name faces on target, including disconnected patches. Ungrouped
+faces refuse with assignment hint. Scope exit/Done/body loss disposes overlay;
+world matrix follows original body. UV review now shares extracted original boundary
+renderer, retaining its exact seams/colour/timer/unwrap/cancellation behavior.
+
+Copied existing read-only Coplanar inspect, quad-strip trace and Grow/Shrink math to
+shared face-selection-regions; ORIGINAL selection UI owners call those same functions.
+No duplicate geometry kernel or selection simulation. Raster original fill accepts
+optional texel mask and baseline replacement; coverage/alpha/opacity/scalar/mask,
+resource/pool validation, scene history, SaveOpen/export remain original owners.
+Face masks use original UV texel ownership; require non-overlapping, nondegenerate
+UVs in tile0–1, original bounded geometry/work limits. Shared/ambiguous boundary
+texels stay conservative; no painting onto a different face's owned interior texels.
+Whole object fill retains earlier behavior. Existing image-colour refusal retained.
+
+Reviewed1004 reverse cache closure: shared modules, selection owners/Coplanar drawer,
+paint raster/core/UI and Lab loaders, UV workflow/MeshHealth, shell/recovery. Internal
+stamps retained. Main1003, viewport sizing/debug1003, accepted uniform Facegroups1002,
+SVG/gizmo/right-region composition, palette, Multi1.0 and frozen releases unchanged.
+Tests: actual region/painter/UI/UndoRedo/subset SaveOpen, preview reversal/opacity,
+all-name group fill/overlay cleanup, original selection gestures and paint suite.
+Legacy926/927 UI fixtures now explicitly choose Whole object for their full-texture
+assertions; original pixel/UndoRedo/SaveOpen/native-export protections retained.
+Test adapters import extracted real selection functions; no behavioral assertions
+removed. Results and publication evidence: docs/publication-1004.md.
+
+DEVICE1004: UV Paint -> Fill -> Face; tap one polygon, then hold on coplanar patch,
+slide up/down and right/left, release; reversing/shrinking removes abandoned preview.
+UndoRedo one gesture. Choose Facegroup: orange boundaries visible; tap named group,
+only that group's faces fill; Brush/Done removes boundaries. Whole object still fills
+all; SaveOpen retains paint. No new right-side diagnostic test requested. If earlier
+fault returns after reload, existing1x control remains available; do not call it fixed.
+Current1004 feature acceptance pending native Pencil test.

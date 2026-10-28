@@ -118,10 +118,12 @@ export function createPaintLayer(size=RESOLUTION,{transparent=false}={}){
    }
    if(touched){dirty=true;changed=true;}return touched;
   },
-  fill(){
+  fill(mask=null,{replace=false}={}){
    if(disposed||!before||blur)throw Error('Paint layer unavailable for fill');
+   if(mask!==null&&(!(mask instanceof Uint8Array)||mask.length!==size*size))throw Error('Invalid fill mask');
+   if(replace){pixels.set(before);coverage.fill(0);changed=false;dirty=true;}
    const rgb=[1,3,5].map(i=>parseInt(settings.colour.slice(i,i+2),16));let touched=false;
-   for(let at=0;at<size*size;at++)if(applyCoverage(at,settings.opacity,rgb))touched=true;
+   for(let at=0;at<size*size;at++)if((mask===null||mask[at])&&applyCoverage(at,settings.opacity,rgb))touched=true;
    if(touched){dirty=true;changed=true;}return touched;
   },
   resetPickup,

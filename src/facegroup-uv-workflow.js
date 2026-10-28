@@ -1,3 +1,4 @@
+import {createFacegroupBoundaryPreview} from './facegroup-boundary-preview.js?v=0.36.18.1004';
 import * as THREE from 'three';
 import {planFacegroupSeams} from './facegroup-uv-core.js?v=0.36.18.1000';
 import {createFacegroupAtlasUV} from './imported-uv-edit.js?v=0.36.18.1000';
@@ -9,7 +10,7 @@ export function installFacegroupUVWorkflow({document,host,notice,getContext,onCo
  const control=name=>row.querySelector(`[data-fguv="${name}"]`),preview=control('preview'),confirm=control('confirm'),cancel=control('cancel'),timer=control('timer');
  let state=null,overlay=null,frame=null,token=0,busy=false,started=0,lastCheck=0;
  function message(text){notice.hidden=false;notice.textContent=text;say(text);}
- function disposeOverlay(){if(!overlay)return;overlay.removeFromParent();overlay.geometry.dispose();overlay.material.dispose();overlay=null;}
+ function disposeOverlay(){if(!overlay)return;overlay.dispose();overlay=null;}
  function reset(){token++;busy=false;state=null;disposeOverlay();if(frame!==null)cancelFrame(frame);frame=null;confirm.hidden=cancel.hidden=true;preview.disabled=confirm.disabled=false;timer.textContent='';}
  function stillCurrent(){const c=getContext();return !!c&&c.object===state?.object&&c.mesh===state?.mesh&&c.object.glbPassthrough===state?.payload;}
  function tick(){
@@ -17,7 +18,7 @@ export function installFacegroupUVWorkflow({document,host,notice,getContext,onCo
   if(!stillCurrent()){reset();message('UV target changed · preview Facegroup seams again');return;}
   if(!busy&&now()-lastCheck>200){lastCheck=now();if(fingerprint(state.mesh)!==state.key){reset();message('Mesh or Facegroups changed · preview seams again');return;}}
   const body=getContext()?.body;
-  if(overlay&&body){body.updateWorldMatrix(true,false);overlay.matrix.copy(body.matrixWorld);overlay.matrixWorldNeedsUpdate=true;}
+  if(overlay&&body)overlay.update();
   if(busy){const text=`Unwrapping · ${((now()-started)/1000).toFixed(1)} s`;if(timer.textContent!==text)timer.textContent=text;}
   frame=requestFrame(tick);
  }
@@ -26,10 +27,7 @@ export function installFacegroupUVWorkflow({document,host,notice,getContext,onCo
   if(c.object.locked||c.object.sourceId||c.object.kind==='reference'||c.object.booleanRecipe||c.object.arrayRecipe||c.object.curveProfile||c.object.materials||c.object.textures||c.object.glbPassthrough&&c.object.glbPassthrough.source!=='boxlab'||c.object.settings?.subd||Object.values(c.object.settings?.mirror||{}).some(Boolean)||c.object.colourPaint||c.object.roughnessPaint||c.object.metalnessPaint){message('Use an unlocked Base mesh with SubD/Mirror off; clear paint before unwrapping');return false;}
   const plan=planFacegroupSeams(c.mesh);if(!plan.ok){message(plan.reason);return false;}
   if(!c.scene||!c.body){message('Viewport is not ready');return false;}
-  const positions=[];for(const pair of plan.seams)for(const id of pair){const p=c.mesh.vertices[id];positions.push(p.x,p.y,p.z);}
-  const geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));
-  overlay=new THREE.LineSegments(geometry,new THREE.LineBasicMaterial({color:0xffb23e,depthTest:false,depthWrite:false}));
-  overlay.userData.boxlabRenderOverlay=true;overlay.userData.boxlabFacegroupUVSeams=true;overlay.renderOrder=150;overlay.raycast=()=>{};overlay.matrixAutoUpdate=false;c.scene.add(overlay);
+  overlay=createFacegroupBoundaryPreview({mesh:c.mesh,body:c.body,scene:c.scene,edges:plan.seams});
   state={...c,payload:c.object.glbPassthrough,key:fingerprint(c.mesh),plan};lastCheck=now();confirm.hidden=cancel.hidden=false;
   message(`Facegroup seams highlighted · ${plan.islandCount} UV patches. Orbit to check, then Confirm UV Unwrap. Existing UVs will be replaced.`);tick();return true;
  }

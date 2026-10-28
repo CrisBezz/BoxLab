@@ -1,3 +1,4 @@
+import {selectionGraph,stepRegion} from '../../src/face-selection-regions.js';
 import fs from 'node:fs';
 import vm from 'node:vm';
 import * as THREE from 'three';
@@ -9,7 +10,7 @@ import {vertexRuntime} from './vertex-extrude-runtime.mjs';
 // Canvas down is a controlled seed adapter, not the full main application.
 export function wireCube(){const cube=EditableMesh.cube(2),m=new EditableMesh(cube.vertices.map(v=>v.toArray()),[]);for(const e of cube.edges())m.addLooseEdge(e.a,e.b);return m;}
 export function edgeHoldRuntime(m=wireCube(),initial=[]){
- const f=vertexRuntime(m,initial),c=f.context,timers=new Map();let timer=0,orbit=0;f.setMode('edge');
+ const f=vertexRuntime(m,initial),c=f.context,timers=new Map();Object.assign(c,{selectionGraph,stepRegion});let timer=0,orbit=0;f.setMode('edge');
  c.setTimeout=(fn,ms)=>{const id=++timer;timers.set(id,{fn,ms});return id;};c.clearTimeout=id=>timers.delete(id);
  c.MouseEvent=class extends c.Event{preventDefault(){} stopImmediatePropagation(){this.stopped=true;}};Object.assign(c,{scaffoldLoopCandidates,performance:{now:()=>1000},canvas:f.canvas,controls:f.state.controls});
  for(const id of ['selectLoopBtn','selectBoundaryBtn','selectRingBtn','growSelectionBtn','shrinkSelectionBtn','fillFaceBtn','multiSelectToggle','loopSlide','loopSlideOut']){const el=c.document.createElement('button');el.id=id;}

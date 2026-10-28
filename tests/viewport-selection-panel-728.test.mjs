@@ -1,3 +1,4 @@
+import {selectionGraph,stepRegion} from '../src/face-selection-regions.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -33,7 +34,7 @@ test('Selection popout retains original host, late Object toolbar, IDs and origi
 test('Original component grow/connected owners still act through moved controls',()=>{
  const f=fixture();for(const id of ['growSelectionBtn','shrinkSelectionBtn','connectedSelectionBtn','angleSelectionBtn','normalSelectionBtn','angleSelectThreshold','angleSelectThresholdOut'])f.component.append(f.make(id));
  let ids=[0];f.c.__boxlabSelectionBridge={mode:()=> 'vertex',indices:()=>ids,set:(mode,x)=>ids=[...x]};f.c.__boxlabBridgeState={mesh:{vertices:[{}, {}, {}],edges:()=>[{a:0,b:1},{a:1,b:2}]}};
- vm.runInContext(read('advanced-selection.js'),f.c);const api=f.install();api.toggle();f.nodes.get('#growSelectionBtn').click();assert.deepEqual(ids,[0,1]);f.nodes.get('#connectedSelectionBtn').click();assert.deepEqual(ids,[0,1,2]);
+ Object.assign(f.c,{selectionGraph,stepRegion});vm.runInContext(read('advanced-selection.js').replace(/^import[^;]+;\s*$/gm,''),f.c);const api=f.install();api.toggle();f.nodes.get('#growSelectionBtn').click();assert.deepEqual(ids,[0,1]);f.nodes.get('#connectedSelectionBtn').click();assert.deepEqual(ids,[0,1,2]);
 });
 test('Original Object layout remains contextual after host moves out of drawer',()=>{
  const f=fixture(),toolbar=f.make('objectManagementTools');f.drawer.append(toolbar);f.c.document.querySelector=(q)=>q.includes('button.active')?{dataset:{mode:'object'}}:q==='#selectionDrawer .always-selection-title'?f.drawer.children[0]:f.nodes.get(q);

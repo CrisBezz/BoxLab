@@ -1,4 +1,4 @@
-import {installFacegroupUVWorkflow} from './facegroup-uv-workflow.js?v=0.36.18.1000';
+import {installFacegroupUVWorkflow} from './facegroup-uv-workflow.js?v=0.36.18.1004';
 import {analyzeMeshHealth} from './mesh-health-core.js?v=0.36.18.443';
 import {safeRepairMesh} from './mesh-health-repair-core.js?v=0.36.18.443';
 import {autoCloseSimpleHoles,simpleBoundaryLoops} from './mesh-auto-close-core.js?v=0.36.18.443';
