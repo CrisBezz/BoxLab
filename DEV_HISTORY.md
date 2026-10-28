@@ -16597,3 +16597,16 @@ motion or Redo. In UV Paint vertical3finger UP enlarges/DOWN shrinks with stroke
 lift hides preview and settings remain. Try five tip presets/large Pencil stroke;
 UndoRedo one stroke,3finger TAP Redo,Done/navigation. No repeat A/B batch required now.
 Next respond to native1010 gesture/brush feel; broader brushes/refinements stay staged.
+
+.1010 publication verified:
+Published runtime7afc6a6120d7b866edeac1fc2fe5dea8cb96e596; exact tested/uploaded
+tree0630b7328b31726e140e5f8ecbcec53fa345cae4. All28 blobs verified before atomic
+non-forced expected-main ref update; fetched main/tree match tested checkout.
+Pages40780100247 completed SUCCESS.18 cache-busted live files byte-match:version,
+index,main,free-orbit-controls,three-finger-commands,viewport-paint,viewport-paint-core,
+paint-brush-presets,paint-brush-preview,shared paint-core,paint-session,Lab js/html,
+shell-comparison,drawer-ui,face-workflow-layout,release-bootstrap,release-version.
+Full local2955 PASS/0FAIL/0skip/0cancel (117.01s); hosted40780100180 in_progress at
+proof,not claimed PASS.1010 LIVE/READY for native orbit/light/Paint gesture checks.
+1009 comparison user ALL PASS protected;no repeat A/B required.1010 native gesture
+feel and larger-brush latency are not established by Node checks;await device feedback.

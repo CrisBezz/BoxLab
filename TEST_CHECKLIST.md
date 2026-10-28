@@ -1,5 +1,6 @@
 ## .1010 — navigation, light and Paint gesture regression — 29 October2026
 
+- [x]Published runtime7afc6a61,tested tree0630b732,Pages40780100247 SUCCESS,18/18 live byte matches.
 - [x]Full local2955 PASS/0FAIL/0skip/0cancel (117.01s),10 new actual-owner checks;syntax/whitespace clean.
 - [x]User1009 A/B/A ALL PASS:5 complete A +5 complete B,0 rated FAIL,20 unrated excluded; version identity1009 and saved/backing1x confirmed. Protect exact workflow acceptance; keep A default. See docs/shell-comparison-results-1009.md.
 - [x]Real native-controller subclass crosses both poles,keeps distance/target,native pan/dolly after inverted orbit,inertia decay/contact stop/disabled/view reset.

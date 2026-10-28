@@ -1,5 +1,9 @@
 ## .1010 — free orbit and three-finger light / brush controls — 29 October2026
 
+Current:1010 LIVE,runtime7afc6a61,tested tree0630b732;Pages40780100247 SUCCESS,
+18/18 live files byte-match. Local2955 PASS;hosted CI in_progress at proof.
+Publication evidence:docs/publication-1010.md.1009 comparison PASS protected.
+
 Baseline main8e00f2b8/runtime1e34c432, live1009. User explicitly requests free orbit,
 inertia,3-finger horizontal light rotation,Paint vertical size + stroke preview,
 larger brush and more standard tips. This authorizes changing former upright orbit
@@ -48,8 +52,8 @@ User1009 A/B/A explicitly ALL PASS now protected:5 complete A +5 complete B,0 ra
 FAIL;20 unrated excluded. Both shell/checklist1009,actual/saved1x. See exact IDs and
 limits in docs/shell-comparison-results-1009.md. Keep A default,comparison gate complete;
 no B superiority/permanent engine repair inferred. Historical pixel fault watch remains.
-Initial publication was held while user's experiment ran; it is now complete, publish
-1010 after validation under existing standing authorization. No repeat approval needed.
+Initial publication was held while user's experiment ran; experiment is now complete
+and1010 is published after validation under existing standing authorization.
 
 Tests execute real Three rotation/native pan/dolly,actual main tap handler,command
 axis/drain/cancel,production Paint UI and pixel raster/preview,presets,large brush work
@@ -3238,7 +3242,7 @@ splitting paths alone makes painting seamless or that CPU timings establish M2 p
 1009 comparison is user ALL PASS for5 complete A +5 complete B at saved1x; preserve
 acceptance and current A default. Do not require another batch before feature work.
 1010 implements requested free orbit/light+Paint gestures,larger brush/presets/preview.
-Complete publication verification,then collect native1010 tactile feedback. Historical
+Publication verified;collect native1010 tactile feedback. Historical
 intermittent screen issue remains watch; no permanent root cause or B advantage claimed.
 
 ## Protected interaction and modelling baseline
