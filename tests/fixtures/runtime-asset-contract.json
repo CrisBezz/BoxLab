@@ -259,9 +259,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/gesture-debug.js?v=0.36.18.1003",
+      "url": "./src/gesture-debug.js?v=0.36.18.1005",
       "target": "src/gesture-debug.js",
-      "sha256": "68c98a7249d33970a0b9364ea7dd4a4a7dbf963d7a887f05c4a44df063cff984"
+      "sha256": "0b034554f7b5b2afc8b435395dc5fbf806aade609032ee647b886c0bb8563a8b"
     },
     {
       "owner": "index.html",
@@ -303,9 +303,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/main.js?v=0.36.18.1003",
+      "url": "./src/main.js?v=0.36.18.1005",
       "target": "src/main.js",
-      "sha256": "f35b2261c8c6751cd65278818a9e57562fadf73d53984781a8a723d9676bee58",
+      "sha256": "ad96e57842438ae2e0db4c308857b1638d4794ad5634c63266604710bd5c5c27",
       "sourceVersion": "0.35.1"
     },
     {
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.1004",
+      "url": "./src/release-bootstrap.js?v=0.36.18.1005",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1004",
+      "url": "./src/release-version.js?v=0.36.18.1005",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -3117,8 +3117,8 @@
     {
       "owner": "src/main.js",
       "target": "src/viewport-sizing.js",
-      "url": "./viewport-sizing.js?v=0.36.18.1003",
-      "sha256": "f27f576fa3a8e20f642143628a1ed478aa657be7d80c67ebc8395b4adcae5b39"
+      "url": "./viewport-sizing.js?v=0.36.18.1005",
+      "sha256": "f62748bb6d0949d11dc509b3ecdb357b906d7d006ab157d38c330d12297d5472"
     },
     {
       "owner": "src/viewport-paint.js",

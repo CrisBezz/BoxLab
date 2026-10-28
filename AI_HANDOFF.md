@@ -1,3 +1,44 @@
+## .1005 — opt-in startup 1x, after .1004 recurrence — 28 October 2026
+
+User reports right-side failure following refresh to1004. Report03:21:34Z confirms
+requested1x AND actual1366x826 backing (CSS1366x826/DPR2). No stale release or failed
+live resolution switch. Startup logged at1489/pageshow3188; at7715 canvas2732x1652,
+then1x requested7831 and1366x826 by11190. Thus failure persists in captured1x state,
+but this launch began at2x. Earlier1x stability is NOT a reliable repair. Current-
+resolution-only/2048 WebGL-backing-limit explanation is insufficient. Initial2x
+allocation remains a hypothesis, not proven cause. Do not say1x cannot fail.
+
+Capture: Studio/Face, no session/Paint, VIEW correctly closed/hidden with zero bounds,
+no atmosphere, UV workspace absent. Visible DOM gizmo196x196 at753.69/408.77;
+its right edge949.69 is short of earlier1024CSS cutoff. This report does not capture
+where visible gizmo pixels disappear. Toolbar DOM/hits healthy; no visual success
+inferred. Nothing ties fault to new1004 fill.1004 feature acceptance remains pending.
+
+New File -> UI Debug -> Keep1× on reload explicitly saves1x launch preference and
+applies current1x. Same button becomes Use normal on reload to remove preference.
+Original temporary Test1×/Restore normal controls retained. Debug off/pagehide now
+restore SAVED launch preference (normal when none), rather than always clearing1x.
+Default normal capped2 unchanged for users who do not opt in. localStorage denial/
+invalid values fall back to normal; failed save reported honestly, no false success.
+Snapshot includes savedStartup; debug-startup now records requested/saved/backing size.
+No automatic blink/reload, CSS/GPU-hint/menu/gizmo/geometry/history/paint changes.
+
+Original sizing owner reads preference before binding; existing main immediate
+resize now reads initialized owner request, so FIRST full drawing-buffer allocation
+can be1x, not initial2x followed by delayed downgrade. Coalesced sizing remains only
+lifecycle owner. Explicit change refusal while tools/Paint/drag/probes busy retained.
+Tests execute actual first main allocation (1366x826x1, no2x intermediate), saved
+binding restart, reset/pagehide/default restoration, storage failure/invalid values,
+actual buttons/snapshot and nearby viewport/UV/Paint. Publication/results recorded
+in docs/publication-1005.md. No native pixel repair claimed; right-region gate OPEN.
+
+DEVICE1005: Finish tools -> File/UI Debug -> Keep1× on reload. Confirm button reads
+Use normal on reload, then refresh ONCE. Inspect right toolbar/menu/gizmo immediately
+and after normal navigation. Copy report if failure returns; savedStartup1 plus
+requested1/backing1366x826 establishes fresh1x launch. Debug off keeps saved1x. Use
+normal on reload restores original resolution if wanted. No repeated cache-clearing
+or identical old diagnostics requested.1004 Fill behavior retained; not marked PASS.
+
 ## .1004 — UV Paint Fill Face / Facegroup and hold expansion — 28 October 2026
 
 User reports1x seems to stay healthy and explicitly parks right-region testing unless

@@ -66,7 +66,7 @@ function setEnabled(next,{persist=true}={}){
   enabled=!!next;
   if(persist){try{localStorage.setItem(PREF_KEY,enabled?'1':'0');}catch{}}
   if(enabled){ensurePanel();log('DEBUG ENABLED');installDeepCaptureTrace();}
-  else{globalThis.__boxlabViewportRenderScale?.set(null);displayRefresh.cancel();canvasProbe.show();panel?.remove();panel=null;body=null;backgroundBody=null;contactBody=null;seq=0;}
+  else{restoreRenderScale();displayRefresh.cancel();canvasProbe.show();panel?.remove();panel=null;body=null;backgroundBody=null;contactBody=null;seq=0;}
   window.dispatchEvent(new CustomEvent('boxlab-gesture-debug-change',{detail:{enabled}}));
   return enabled;
 }
@@ -189,6 +189,7 @@ function createCanvasDisplayRefresh(probe,{requestFrame=f=>requestAnimationFrame
  }
  return {start,cancel:finish,active:()=>pending};
 }
+function restoreRenderScale(){const scale=globalThis.__boxlabViewportRenderScale;if(scale?.reset)scale.reset();else scale?.set(null);}
 const viewportBusy=()=>!!globalThis.__boxlabViewportPaint?.active||!!globalThis.__boxlabToolSession?.current?.()||!!globalThis.__boxlabActiveGizmoDrag||!!globalThis.__boxlabMainDirectTool?.busy?.()||!!globalThis.__boxlabFaceDirect?.dragging?.()||!!globalThis.__boxlabEdgeExtrude?.busy?.()||!!globalThis.__boxlabVertexExtrude?.busy?.()||!!globalThis.__boxlabDirectBevel?.busy?.();
 const canvasProbe=createCanvasVisibilityProbe(debugCanvas,viewportBusy);
 let syncCanvasProbeControls=()=>{},updateDisplayRefresh=()=>{};
@@ -221,10 +222,10 @@ function viewMenuEvidence(){
 function uiSnapshot(){
  const rect=node=>{if(!node)return null;const r=node.getBoundingClientRect(),s=getComputedStyle(node);return {...describe(node),rect:{x:r.x,y:r.y,width:r.width,height:r.height},hidden:node.hidden,disabled:node.disabled,parentId:node.parentElement?.id||null,popover:node.getAttribute?.('popover')||null,topLayer:node.getAttribute?.('popover')==='manual'&&node.matches?.(':popover-open')===true,display:s.display,visibility:s.visibility,pointerEvents:s.pointerEvents,opacity:s.opacity,zIndex:s.zIndex,transform:s.transform,overflow:s.overflow,contain:s.contain,isolation:s.isolation,willChange:s.willChange,filter:s.filter,backdropFilter:s.backdropFilter};};
  const points=[.55,.8,.95].flatMap(x=>[.08,.5,.85].map(y=>({x:Math.round(innerWidth*x),y:Math.round(innerHeight*y)})));
- return {renderScale:{requested:globalThis.__boxlabViewportRenderScale?.requested??null},viewMenu:viewMenuEvidence(),canvasProbe:{hidden:canvasProbe.active()},release:document.querySelector('#appVersion')?.textContent,time:new Date().toISOString(),viewport:{width:innerWidth,height:innerHeight,dpr:devicePixelRatio,visual:window.visualViewport?{width:visualViewport.width,height:visualViewport.height,scale:visualViewport.scale,offsetLeft:visualViewport.offsetLeft,offsetTop:visualViewport.offsetTop}:null},session:globalThis.__boxlabToolSession?.current?.(),paint:!!globalThis.__boxlabViewportPaint?.active,controlsEnabled:globalThis.__boxlabBridgeState?.controls?.enabled,elements:['#app','.topbar','#viewportWrap','#viewport','#totalGizmo','#boxlabToolSessionHost','#meshHealthSession','#boxlabUVWorkspace','#viewportSelectionControls','#viewportPaintBtn','.statusbar'].map(q=>({selector:q,...rect(document.querySelector(q))})),controls:uiControlEvidence(),canvas:{width:debugCanvas?.width,height:debugCanvas?.height},hitTests:points.map(p=>({...p,stack:document.elementsFromPoint(p.x,p.y).slice(0,6).map(describe)})),events:uiEvidence.slice()};
+ return {renderScale:{requested:globalThis.__boxlabViewportRenderScale?.requested??null,savedStartup:globalThis.__boxlabViewportRenderScale?.saved??null},viewMenu:viewMenuEvidence(),canvasProbe:{hidden:canvasProbe.active()},release:document.querySelector('#appVersion')?.textContent,time:new Date().toISOString(),viewport:{width:innerWidth,height:innerHeight,dpr:devicePixelRatio,visual:window.visualViewport?{width:visualViewport.width,height:visualViewport.height,scale:visualViewport.scale,offsetLeft:visualViewport.offsetLeft,offsetTop:visualViewport.offsetTop}:null},session:globalThis.__boxlabToolSession?.current?.(),paint:!!globalThis.__boxlabViewportPaint?.active,controlsEnabled:globalThis.__boxlabBridgeState?.controls?.enabled,elements:['#app','.topbar','#viewportWrap','#viewport','#totalGizmo','#boxlabToolSessionHost','#meshHealthSession','#boxlabUVWorkspace','#viewportSelectionControls','#viewportPaintBtn','.statusbar'].map(q=>({selector:q,...rect(document.querySelector(q))})),controls:uiControlEvidence(),canvas:{width:debugCanvas?.width,height:debugCanvas?.height},hitTests:points.map(p=>({...p,stack:document.elementsFromPoint(p.x,p.y).slice(0,6).map(describe)})),events:uiEvidence.slice()};
 }
 function updateUIDebug(){
- if(!enabled){globalThis.__boxlabViewportRenderScale?.set(null);canvasProbe.show();uiControls?.remove();uiControls=null;uiReport=null;return;}
+ if(!enabled){restoreRenderScale();canvasProbe.show();uiControls?.remove();uiControls=null;uiReport=null;return;}
  if(uiControls)return;
  // Keep the debug output accessible from the left while diagnosing the right side.
  if(panel){panel.style.left='8px';panel.style.right='auto';panel.style.bottom='148px';panel.style.maxHeight='24vh';}
@@ -235,7 +236,16 @@ function updateUIDebug(){
  const off=document.createElement('button');off.textContent='Debug off';
  const probe=document.createElement('button');probe.textContent='Hide 3D only';probe.id='uiDebugCanvasProbeBtn';
  const scaleButton=document.createElement('button');scaleButton.id='uiDebugRenderScaleBtn';
- const syncScale=()=>{scaleButton.textContent=globalThis.__boxlabViewportRenderScale?.requested===1?'Restore normal resolution':'Test 1× render resolution';};syncScale();
+ const startupScaleButton=document.createElement('button');startupScaleButton.id='uiDebugStartupScaleBtn';
+ const syncScale=()=>{const scale=globalThis.__boxlabViewportRenderScale;scaleButton.textContent=scale?.requested===1?'Restore normal resolution':'Test 1× render resolution';startupScaleButton.textContent=scale?.saved===1?'Use normal on reload':'Keep 1× on reload';};syncScale();
+ startupScaleButton.onclick=()=>{
+  const scale=globalThis.__boxlabViewportRenderScale;
+  if(!scale?.remember){note.textContent='Viewport sizing is not ready';return;}
+  if(displayRefresh.active()||canvasProbe.active()||viewportBusy()||globalThis.__boxlabBridgeState?.controls?.enabled===false){note.textContent='Finish the current tool/gesture and Show 3D before changing startup resolution';return;}
+  const saved=scale.saved===1?null:1;
+  if(!scale.remember(saved)){note.textContent='Could not save startup resolution; the temporary test is still available';return;}
+  syncScale();uiReport.value='';evidence('startup-render-scale',{saved});note.textContent=saved===1?'1× saved for startup · refresh once to test a fresh 1× launch':'Normal resolution saved for startup';
+ };
  scaleButton.onclick=()=>{
   const scale=globalThis.__boxlabViewportRenderScale;
   if(!scale){note.textContent='Viewport sizing is not ready';return;}
@@ -263,7 +273,7 @@ function updateUIDebug(){
  const observation=value=>{evidence('canvas-probe-observation',{hidden:canvasProbe.active(),rightUI:value});capture.click();note.textContent='Observation captured; Show 3D again, then Copy report';};
  visible.onclick=()=>observation('visible');missing.onclick=()=>observation('missing');
  off.onclick=disable;uiControls.style.maxHeight='45vh';uiControls.style.overflowY='auto';
- uiControls.append(label,document.createElement('br'),capture,copy,off,document.createElement('br'),probe,visible,missing,document.createElement('br'),scaleButton,note,uiReport);document.body.appendChild(uiControls);
+ uiControls.append(label,document.createElement('br'),capture,copy,off,document.createElement('br'),probe,visible,missing,document.createElement('br'),scaleButton,startupScaleButton,note,uiReport);document.body.appendChild(uiControls);
 }
 const uiDebugButton=document.createElement('button');uiDebugButton.type='button';uiDebugButton.textContent='UI Debug';uiDebugButton.title='Record input and layout evidence for inactive UI';uiDebugButton.onclick=toggle;(document.querySelector('#fileDiagnostics')||document.querySelector('#fileMenu .top-file-content'))?.appendChild(uiDebugButton);
 const refreshDisplayButton=document.createElement('button');refreshDisplayButton.type='button';refreshDisplayButton.id='refreshDisplayBtn';refreshDisplayButton.textContent='Refresh display';refreshDisplayButton.title='Recover missing controls without reloading your model';
@@ -280,7 +290,7 @@ for(const type of ['resize','orientationchange','pageshow','blur','focus','boxla
 window.addEventListener('error',event=>evidence('error',{message:event.message,file:event.filename,line:event.lineno}));window.addEventListener('unhandledrejection',event=>evidence('rejection',{message:event.reason?.message||String(event.reason)}));
 for(const type of ['webglcontextlost','webglcontextrestored'])debugCanvas?.addEventListener(type,()=>evidence(type,{}));
 globalThis.__boxlabGestureDebug.uiSnapshot=uiSnapshot;
-queueMicrotask(()=>{if(enabled)evidence('debug-startup',{controls:uiControlEvidence()});});
+queueMicrotask(()=>{if(enabled)evidence('debug-startup',{renderScale:globalThis.__boxlabViewportRenderScale?.requested??null,savedStartup:globalThis.__boxlabViewportRenderScale?.saved??null,canvasWidth:debugCanvas?.width,canvasHeight:debugCanvas?.height,controls:uiControlEvidence()});});
 
 for(const type of ['pointerdown','pointerup','click'])window.addEventListener(type,event=>evidence(type+'-bubble',{target:describe(event.target),defaultPrevented:event.defaultPrevented,...(type==='click'&&event.target?.closest?.('.top-actions')?{controls:uiControlEvidence()}: {})}),{passive:true});
 

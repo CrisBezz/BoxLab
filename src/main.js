@@ -1,4 +1,4 @@
-import {bindViewportSizing} from './viewport-sizing.js?v=0.36.18.1003';
+import {bindViewportSizing} from './viewport-sizing.js?v=0.36.18.1005';
 import * as THREE from 'three';
 import {pickScreenEdges} from './edge-screen-picking.js?v=0.36.18.954';
 import {createCageBatch,updateCageBatches,addMirrorCageBatch} from './cage-render-batches.js?v=0.36.18.930';
@@ -370,7 +370,7 @@ function syncDirectToolControls(){const loop=document.querySelector('#loopCutBtn
 function syncCreaseControl(){if(selection?.type!=='edge'||!selectionCount())return;const current=mesh.edgeCrease(selection.index),pct=current>0?Math.round(current*100):100;document.querySelector('#creaseStrength').value=String(pct);document.querySelector('#creaseStrengthOut').textContent=`${pct}%`;}
 function syncMirrorAlignControl(){const b=document.querySelector('#alignMirrorBtn'),axes=activeMirrorAxes().map(a=>a.toUpperCase());b.textContent=axes.length?`Align Object to Mirror ${axes.join('')}`:'Align Object to Mirror';}
 function updateScreenSpaceSelection(){const height=Math.max(1,renderer.domElement.clientHeight),fov=THREE.MathUtils.degToRad(camera.fov);root.children.forEach(object=>{const pixels=object.userData?.screenPixels;if(!pixels)return;const distance=Math.max(.001,camera.position.distanceTo(object.position)),size=2*Math.tan(fov*.5)*distance/height*pixels;if(object.userData.screenShape==='edge')object.scale.set(size,1,size);else object.scale.setScalar(size);});updateCageBatches(root);}
-function resize(w=wrap.clientWidth,h=wrap.clientHeight,dpr=Math.min(window.devicePixelRatio||1,2)){
+function resize(w=wrap.clientWidth,h=wrap.clientHeight,dpr=Math.min(window.devicePixelRatio||1,window.__boxlabViewportRenderScale?.requested??2)){
  if(w<=0||h<=0||dpr<=0||![w,h,dpr].every(Number.isFinite))return;
  // Establish the final drawing buffer once. Lifecycle/settling callbacks with
  // unchanged bounds must not rewrite canvas.width/height and reset its surface.

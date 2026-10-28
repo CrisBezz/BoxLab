@@ -43,3 +43,13 @@ test('1003 actual debug render scale button refuses busy state, switches without
  button.onclick();assert.equal(requested,1);assert.equal(f.api.uiSnapshot().renderScale.requested,1);assert.match(button.textContent,/Restore/);
  button.onclick();assert.equal(requested,null);button.onclick();f.api.disable();assert.equal(requested,null);assert(!f.c.__boxlabHistory);
 });
+
+test('1005 actual startup button records saved preference, refuses busy changes and reports storage failure without claiming success',()=>{
+ const f=gestureDebugRuntime({canvas:canvas()});f.c.getComputedStyle=()=>({});let saved=null,requested=null,fail=false;
+ f.c.__boxlabViewportRenderScale={get requested(){return requested;},get saved(){return saved;},set(v){requested=v;},reset(){requested=saved;},remember(v){if(fail)return false;saved=requested=v;return true;}};
+ f.events.get('boxlab-gesture-debug-change').fn({});const controls=f.root.children.find(n=>n.id==='boxlabUIDebugControls'),button=controls.children.find(n=>n.id==='uiDebugStartupScaleBtn');
+ f.c.__boxlabToolSession={current:()=>({id:'uv-paint'})};button.onclick();assert.equal(saved,null);delete f.c.__boxlabToolSession;
+ button.onclick();assert.equal(saved,1);assert.equal(f.api.uiSnapshot().renderScale.savedStartup,1);assert.match(button.textContent,/Use normal/);assert(f.api.uiSnapshot().events.some(e=>e.kind==='startup-render-scale'));
+ f.api.disable();assert.equal(requested,1);button.onclick();assert.equal(saved,null);
+ fail=true;button.onclick();assert.equal(saved,null);assert(controls.children.some(n=>/Could not save startup/.test(n.textContent)));
+});

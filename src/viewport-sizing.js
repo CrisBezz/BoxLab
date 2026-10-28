@@ -1,19 +1,27 @@
+const STARTUP_SCALE_KEY='boxlab.viewport-render-scale.v1';
+function savedScale(win){try{return win.localStorage?.getItem(STARTUP_SCALE_KEY)==='1'?1:null;}catch{return null;}}
 // One coalesced sizing owner; no synthetic resize events or per-frame polling.
 export function bindViewportSizing({element,resize,win=window,doc=win.document,Observer=globalThis.ResizeObserver}){
- let frame=null,settle=null,last='',force=false,ratioLimit=null,disposed=false;
+ let frame=null,settle=null,last='',force=false,ratioLimit=savedScale(win),disposed=false;
  const size=()=>[element.clientWidth,element.clientHeight,Math.min(win.devicePixelRatio||1,ratioLimit??2)];
  function apply(){frame=null;const [w,h,dpr]=size();if(w<=0||h<=0||![w,h,dpr].every(Number.isFinite))return;const key=[w,h,dpr].join(':');if(force||key!==last){force=false;last=key;resize(w,h,dpr);}}
  function schedule(repaint=false){force=force||repaint;if(frame===null)frame=win.requestAnimationFrame(apply);}
  const changed=()=>schedule(),repaint=()=>schedule(true);
- // Explicit, transient diagnostic. All backing-size changes still use this owner.
+ // Explicit diagnostic and opt-in launch preference; same original resize owner.
  const previousScale=win.__boxlabViewportRenderScale;
- const scale={get requested(){return ratioLimit;},set(value){
+ const scale={get requested(){return ratioLimit;},get saved(){return savedScale(win);},
+ reset(){return scale.set(savedScale(win));},
+ remember(value){
+  if(disposed)return false;if(value!==null&&value!==1)throw Error('Startup scale must be 1 or automatic');
+  try{if(!win.localStorage)return false;if(value===1)win.localStorage.setItem(STARTUP_SCALE_KEY,'1');else win.localStorage.removeItem(STARTUP_SCALE_KEY);}catch{return false;}
+  if(savedScale(win)!==value)return false;scale.set(value);return true;
+ },set(value){
   if(disposed)return false;
   if(value!==null&&value!==1)throw Error('Render scale must be 1 or automatic');
   if(value===ratioLimit)return false;ratioLimit=value;schedule(true);return true;
  }};
  win.__boxlabViewportRenderScale=scale;
- const resetScale=()=>scale.set(null);
+ const resetScale=()=>scale.reset();
  win.addEventListener('pagehide',resetScale);
  const visible=()=>{if(doc?.visibilityState!=='hidden')repaint();};
  const observer=Observer?new Observer(changed):null;observer?.observe(element);
