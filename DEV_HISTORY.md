@@ -16516,3 +16516,15 @@ Alternate A/B inside app without app-switch/recovery, startup FIRST; retain reso
 and orientation. Original checklist Hide/UV Back/Paint Done still usable. Follow with B
 selection/navigation/gizmo/UV/Paint/UndoRedo/SaveOpen parity before default adoption.
 Next act on interleaved native evidence; no speculative compositor or UI reskin change.
+
+.1009 publication verified:
+Published runtime1e34c432796a475b934244bb630c1cb3455d3930; exact tested/uploaded
+tree20cb43c138b60d9b374cc9314f408a75469ed069. All18 blob hashes verified before
+atomic non-forced expected-main update; fetched origin/main and tree match local.
+Pages40683927107 completed SUCCESS. Nine cache-busted live files byte-match:
+version.json,index.html,release-bootstrap,release-version,scene-obj-export-238,
+shell-comparison,direct-topology-conformance-guard,drawer-ui,face-workflow-layout.
+Final release+identity9 checks PASS. Full local2945 PASS/0FAIL/0skip/0cancel;
+hosted40683927745 in_progress at publication proof (no hosted PASS claimed).
+1009 LIVE/READY for version-reporting/native comparison tests. No native WebKit
+rendering repair or device1009 PASS inferred; beta screen gate remains OPEN.

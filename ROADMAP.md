@@ -1,5 +1,9 @@
 ## .1009 — immutable loaded-shell identity; OBJ release writer removed — 28 October 2026
 
+Current:1009 LIVE, runtime1e34c432; Pages40683927107 SUCCESS; all9 live files
+byte-match tested tree20cb43c1. Local2945 PASS; hosted CI in_progress at proof.
+See docs/publication-1009.md. Screen beta gate remains OPEN.
+
 Baseline main cf5f8da7 / runtime09b73cc0, live1008 markers and existing pins audited.
 Original classic head release-bootstrap captures the initial HTML title synchronously
 as non-writable/non-configurable __boxlabLoadedShellVersion BEFORE comparison and
