@@ -14,4 +14,8 @@ src/viewport-sizing.js,src/gesture-debug.js;1005 shell/parent/child/debug pins v
 or permanent right-region repair inferred. No runtime edits after focused validation.
 No permanent right-region fix claimed;1004 fill retained without runtime edits.
 
-Hosted regression40626823442: in_progress; conclusion pending at last check. No unverified hosted full-suite claim.
+Hosted regression40626823442 completed SUCCESS (verified 28 October 2026).
+Continuation audit on main dbc716d4: fresh local Node24.22.1 full suite
+2926 PASS / 0 FAIL / 0 skipped (109.81s). Docs-head Pages40626977468 SUCCESS.
+All five original live1005 release files still byte-match main. No runtime change
+or new build; saved1x fresh-launch and1004 Pencil Fill device gates remain pending.

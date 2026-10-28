@@ -1,3 +1,16 @@
+## .1005 continuation audit — 28 October 2026
+
+Audited current main dbc716d4 (runtime 698ef508); no runtime changes or new build.
+Fresh local Node24.22.1 full regression: 2926 PASS / 0 FAIL / 0 skipped (109.81s).
+Hosted regression40626823442 and Pages40626977468 completed SUCCESS.
+Live version/index/main/viewport-sizing/gesture-debug all byte-match current main;
+release markers and reviewed1005 sizing/debug/parent pins agree; protected Multi1.0 retained.
+Existing1004 Face/Facegroup/Whole object Fill and1005 saved-startup1x reuse their
+original owners. Neither has new device acceptance; right-region visibility remains OPEN.
+Next: DEVICE1005 saved1x fresh reload, then DEVICE1004 Pencil Fill/hold/UndoRedo.
+Obtain that result before another speculative rendering change; do not infer a repair
+from automated regression or healthy DOM/hit tests. No PASS inferred from this audit.
+
 ## .1005 — opt-in startup 1x, after .1004 recurrence — 28 October 2026
 
 User reports right-side failure following refresh to1004. Report03:21:34Z confirms
