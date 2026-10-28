@@ -2,7 +2,7 @@
 // Move the original canvas once; no second renderer, input owner or live profile swap.
 (() => {
  'use strict';
- const RELEASE='0.36.18.1006',KEY='boxlab.shell-comparison.v1',LIMIT=30;
+ const RELEASE='0.36.18.1007',KEY='boxlab.shell-comparison.v1',LIMIT=30;
  const url=new URL(window.location.href),choice=url.searchParams.get('shellTest');
  const active=choice==='current'||choice==='separated',mode=active?choice:'current';
  const doc=document,app=doc.querySelector('#app'),wrap=doc.querySelector('#viewportWrap'),canvas=doc.querySelector('#viewport');
@@ -16,7 +16,7 @@
   ['startup','Startup — before opening any menu','Look at the bottom RIGHT status (Face mode / nothing selected / Multi) and top-right toolbar. Mark FAIL if either is missing. Rate this FIRST, before collapsing the list or opening File/VIEW.'],
   ['view','VIEW / Facegroups','Open VIEW. Choose Facegroups. Can you see the settings and colours? Close and reopen VIEW once. Mark FAIL for an empty or missing menu.'],
   ['gizmo','Gizmo across the right side','Close VIEW. In Face mode select a face and show its gizmo. Orbit/pan so the selection moves from centre to the right side. Do the gizmo and status remain visible?'],
-  ['uv','UV Editor → Back to 3D','Finish tools. Object mode → radial UV → UV Editor. Inspect its right edge, then Back to 3D and Close the UV tools. Recheck right status and VIEW contents.'],
+  ['uv','UV Editor → Back to 3D','Finish tools. Object mode → radial UV → UV Editor. The checklist parks lower-left so Back to 3D stays clear at the top. Collapse the list for more space. Inspect the right edge, then Back to 3D and Close UV tools. Recheck right status and VIEW contents.'],
   ['paint','UV Paint → Done / navigation','On the default UV cube tap UV PAINT, then Done. Orbit, two-finger pan and pinch. Recheck right status, toolbar, VIEW and gizmo. No new Fill test is required.']
  ];
  let log={version:1,release:RELEASE,runs:[]},storageOK=true;
@@ -24,11 +24,11 @@
   const saved=window.localStorage.getItem(KEY);
   if(saved&&saved.length<2000000){
    const data=JSON.parse(saved);
-   if(data.version===1&&data.release===RELEASE&&Array.isArray(data.runs))
-    log.runs=data.runs.filter(r=>r&&['current','separated'].includes(r.mode)&&typeof r.id==='string'&&r.ratings&&typeof r.ratings==='object').slice(-LIMIT);
+   if(data.version===1&&[RELEASE,'0.36.18.1006'].includes(data.release)&&Array.isArray(data.runs))
+    log.runs=data.runs.filter(r=>r&&['current','separated'].includes(r.mode)&&typeof r.id==='string'&&r.ratings&&typeof r.ratings==='object').slice(-LIMIT).map(r=>({...r,release:r.release||data.release}));
   }
  }catch{storageOK=false;}
- const run=active?{id:Date.now()+'-'+Math.random().toString(36).slice(2,9),mode,started:new Date().toISOString(),ratings:{},notes:'',observations:{}}:null;
+ const run=active?{id:Date.now()+'-'+Math.random().toString(36).slice(2,9),release:RELEASE,mode,started:new Date().toISOString(),ratings:{},notes:'',observations:{}}:null;
  if(run){log.runs.push(run);log.runs=log.runs.slice(-LIMIT);}
  function save(){
   try{const value=JSON.stringify(log);if(value.length>=2000000)throw Error('Test log full');window.localStorage.setItem(KEY,value);storageOK=window.localStorage.getItem(KEY)===value;}
@@ -57,7 +57,7 @@
  function el(tag,text){const n=doc.createElement(tag);if(text!==undefined)n.textContent=text;return n;}
  function button(text,action){const b=el('button',text);b.type='button';b.addEventListener('click',action);return b;}
  const header=el('div');header.className='shell-test-header';
- const title=el('strong',active?(mode==='current'?'A · Current shell':'B · Separated canvas'):'Screen comparison · .1006');
+ const title=el('strong',active?(mode==='current'?'A · Current shell':'B · Separated canvas'):'Screen comparison · .1007');
  const body=el('div');body.className='shell-test-body';
  const collapse=button('Collapse',()=>{body.hidden=!body.hidden;collapse.textContent=body.hidden?'Test list':'Collapse';});
  header.append(title,collapse);panel.append(header,body);
@@ -106,7 +106,7 @@
  body.append(el('small','This is a structural comparison, not a confirmed screen repair. Results stay in this browser (last 30 loads); use Copy results after testing.'));
  function update(){
   for(const r of rows)r.button.setAttribute('aria-pressed',String(run?.ratings[r.key]===r.result));
-  const lines=['.1006 · '+(active?(mode==='current'?'A current':'B separated'):'not started')];
+  const lines=['.1007 · '+(active?(mode==='current'?'A current':'B separated'):'not started')];
   for(const profile of ['current','separated']){
    const runs=log.runs.filter(r=>r.mode===profile),complete=runs.filter(r=>steps.every(([k])=>['pass','fail'].includes(r.ratings[k]))).length;
    const failed=runs.filter(r=>r.hadFailure||steps.some(([k])=>r.ratings[k]==='fail')).length;

@@ -90,3 +90,9 @@ test('1006 original Paint image overlay uses the separated canvas parent and pre
  const f=fixture('separated'),prior=globalThis.document;globalThis.document=f.doc;
  try{const overlay=createPaintImageOverlay(f.canvas,{width:1,height:1,pixels:new Uint8Array([255,0,0,255])});overlay.draw({centre:[0,0],size:[1,1],rotation:0});const parent=f.canvas.parentElement,node=parent.children.find(n=>n!==f.canvas);assert.equal(node.style.left,'0px');assert.equal(node.style.top,'0px');assert.equal(node.width,1366);assert.equal(node.height,826);overlay.dispose();assert.equal(parent.children.length,1);assert.equal(parent.children[0],f.canvas);}finally{globalThis.document=prior;}
 });
+test('1007 existing 1006 partial ratings, notes and first failure survive the patch with original release provenance; fresh load is not pre-rated',()=>{
+ const old={id:'native-a-1',mode:'current',started:'2026-10-28',ratings:{startup:'pass',view:'pass',gizmo:'pass'},notes:'UV Back obscured',failure:{release:'1006',canvas:{width:1366}},hadFailure:true};
+ const data=new Map([[key,JSON.stringify({version:1,release:'0.36.18.1006',runs:[old]})]]),f=fixture('current',{data});
+ const runs=f.api.report().runs;assert.equal(runs.length,2);assert.deepEqual(JSON.parse(JSON.stringify(runs[0])),{...old,release:'0.36.18.1006'});assert.equal(runs[1].release,'0.36.18.1007');assert.deepEqual(Object.keys(runs[1].ratings),[]);
+ const next=fixture('separated',{data});assert.equal(next.api.report().runs[0].notes,old.notes);assert.equal(next.api.report().runs[0].release,'0.36.18.1006');assert.equal(next.api.report().runs[2].release,'0.36.18.1007');
+});

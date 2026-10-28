@@ -16372,3 +16372,32 @@ across actual A→B reload, copied log, exact shared viewport bounds and centre-
 hit routing, original SELECT and visible Facegroups settings. WebGL disabled in this
 browser for both old1005 and1006, so NO cloud modelling/native iPad repair proof.
 1006 LIVE and ready for device comparison; screen beta blocker remains OPEN.
+
+## .1007 — unblock UV Back to 3D beneath comparison checklist — 28 October 2026
+
+User cannot complete A's UV return check: the left checklist covers original Back
+to3D, including its collapsed header. This is a checklist-placement failure, not
+native rendering acceptance/failure. Audited current main0d0074f0/runtime2f23e802,
+full required documents and original UV workspace.hidden/Back callback ownership.
+
+Only while original #boxlabUVWorkspace is NOT hidden, shared A/B checklist parks
+in lower-left between50dvh and bottom140px/safe inset. Expanded and collapsed list
+both clear the upper UV toolbar. Original UV hidden state drives CSS :has; closing
+returns original upper placement. No observer/polling, viewport resize, canvas/model/
+editor/Back owner modification or automatic display recovery. Both profile structures,
+renderer resolution, original tool IDs/listeners/history, Fill PASS and Multi1.0 retained.
+In-app UV step explains the docking; Collapse remains available for extra room.
+
+1007 log reader accepts1006 records and stamps their original release, preserving
+partial ratings, notes and first-failure evidence exactly. New1007 load is separate
+and unrated; never copy earlier passes into a fresh startup. Same bounded key30loads,
+no log clearing.1007 shell/new script/CSS/recovery pins and hashes reviewed.
+34 focused checks PASS/0FAIL/0skip: comparison/persistence/migration, original UV
+workspace/Back/navigation/top-layer lifecycle, VIEW and release contracts. Syntax/diff
+clean. No new full local suite claim; prior1006 full2935 remains historical evidence.
+Publication evidence: docs/publication-1007.md. Screen beta gate remains OPEN.
+
+DEVICE1007: reopen A UV Editor; full checklist should park lower-left, Back to3D
+visible/clickable at top. Collapse/reopen list, Back, then check same B flow. Existing
+1006 ratings remain in Copy results; subsequent loads start new unrated entries.
+Resume A/B comparison in app, keeping resolution unchanged. No repeated Fill test.

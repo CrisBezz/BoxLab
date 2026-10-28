@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.1006",
+      "url": "./src/release-bootstrap.js?v=0.36.18.1007",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1006",
+      "url": "./src/release-version.js?v=0.36.18.1007",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -3344,15 +3344,15 @@
     },
     {
       "owner": "index.html",
-      "url": "./shell-comparison.css?v=0.36.18.1006",
+      "url": "./shell-comparison.css?v=0.36.18.1007",
       "target": "shell-comparison.css",
-      "sha256": "4f18083de3a7f792cc308144743a531e495fd76705fc18e458dc645e47243714"
+      "sha256": "85d04264195cd1362f2623790f8531265f7c08c9489927a9db44bb641e19fc17"
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1006",
+      "url": "./src/shell-comparison.js?v=0.36.18.1007",
       "target": "src/shell-comparison.js",
-      "sha256": "40c1f04fa28ba5b95be4b162cb5b3a5f9b79e79fa77b497673906bda21c37986"
+      "sha256": "619b8d5c46bc5356d4a144ab4898f89078018ea0eab9bb7bef90937288ce001c"
     }
   ]
 }

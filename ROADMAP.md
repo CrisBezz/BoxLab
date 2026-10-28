@@ -1,3 +1,12 @@
+## .1007 — unblock comparison before interpreting its results — 28 October 2026
+
+A's UV Back control was covered by the comparison checklist. Fix only test-list
+placement using original workspace hidden state: lower-left while UV Editor open,
+normal top-left on exit. Same docking in A and B; retain all renderer/tool owners.
+Preserve1006 log with per-run release provenance, fresh1007 loads remain unrated.
+Resume native A/B comparison; no rendering PASS/FAIL inferred from an obscured exit
+control. Original screen issue still blocks beta. See publication-1007 and handoff.
+
 ## .1006 — native shell comparison is the beta gate — 28 October 2026
 
 User authorizes comparison build with an in-app test list because switching apps

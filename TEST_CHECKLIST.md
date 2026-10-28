@@ -1,3 +1,11 @@
+## .1007 — checklist must clear UV exit controls — 28 October 2026
+
+- [x] User1006 A UV check blocked by test list; do not count as native compositor evidence.
+- [x] 34 focused comparison/original UV/VIEW/release checks PASS, including exact1006 log migration and unrated new1007 load.
+- [ ] UV Editor: expanded AND collapsed checklist below upper toolbar in A and B; Back to3D is visible and receives input.
+- [ ] Back/Close returns checklist to normal top-left; viewport size/resolution/UV/history/navigation unchanged.
+- [ ] Copy results retains1006 entries/notes/ratings/failure evidence tagged1006, new runs tagged1007; no prior PASS auto-copied.
+
 ## .1006 — shell comparison regression and native gate — 28 October 2026
 
 - [x]1004 Fill behaviour explicitly user PASS; preserve accepted Face/Facegroup/Object scopes and hold/history.
