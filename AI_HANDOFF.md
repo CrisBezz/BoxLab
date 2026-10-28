@@ -1,3 +1,62 @@
+## .1006 — controlled shell comparison with in-app test list — 28 October 2026
+
+User explicitly authorizes /nextbuild and requires instructions INSIDE the app:
+switching away to chat can heal the native fault and invalidates observation.
+Audited main a70b0f9c/runtime698ef508, workflow/full handoff/checklist/roadmap and
+recent history, live1005 markers/pins and actual canvas/UI/VIEW/input/paint-overlay
+owners. No comparison runner existed.1004 Fill user PASS remains protected;
+1005 screen FAIL is a beta blocker. No permanent rendering repair claimed.
+
+New File > Screen comparison / test list. Direct test URLs use shellTest=current
+(A) or shellTest=separated (B). Default entry keeps existing structure; test entry
+opens SAME left checklist before modelling modules execute, including on reload.
+B alone moves SAME original #viewport canvas into #boxlabComparisonCanvasSurface,
+a sibling immediately before original #viewportWrap within #app. Canvas and UI now
+have separate viewport surfaces. Same viewport dimensions/topbar offsets, same
+canvas ID/listeners/backing-size owner/renderer/model/history/selection/tool nodes.
+Original UI wrapper stays in place; transparent pointer-pass-through empty space,
+actual controls and UV canvas remain interactive; original gizmo SVG hit proxies
+and noninteractive root/status retain their own rules. No blanket reparenting of
+UI, extra canvas/renderer, GPU hints, forced repaint or new gesture owner. Original
+Paint image overlay follows canvas parent and matching viewport coordinates.
+
+A/B changes only on EXPLICIT full reload; no live profile swap that could heal
+failure before comparison. In-app startup/status/toolbar, VIEW Facegroups, gizmo
+right side, UV Editor return and Paint return/navigation checks have PASS/FAIL,
+notes, Collapse/Test list, per-profile completed/failed counts and Copy results.
+Initial/rated-unset loads never become passes. First failure stays recorded even
+if a step is rerated; evidence reads original debug snapshot without enabling it,
+without refresh, bounded fields only. Actual CSS/backing/DPR/requested/saved startup
+resolution recorded with each rating. No automatic resolution change. Keep same
+resolution/orientation/default cube in both profiles; aim5 completed loads each.
+
+Last30 loads persist locally under boxlab.shell-comparison.v1, build-tagged/bounded.
+Storage denial/corruption/no-op writes handled honestly; failed persistence refuses
+in-app reload, Copy has selectable in-panel fallback. Project must be saved first:
+explicit transient discard acknowledgement and original busy-state guards precede
+Reload/Switch/Exit. Scene edits are NOT transported across reload; no autosave,
+project/schema/history mutation or automatic reset. Exit removes test query on next
+reload; default normal app returns and results retained. No app switching needed
+until completed results are copied. URLs survive original release-cache recovery.
+
+Changed runtime only NEW shell-comparison.js/CSS and original HTML/recovery keys1006;
+all existing modelling/Paint/Fill/main1005/sizing1005/debug1005/VIEW998/Multi1.0 and
+frozen beta bytes/pins retained. Reviewed asset contract adds two new exact assets;
+no blanket repinning. Nine new actual-owner tests plus41 nearby checks:50 focused
+PASS, no failures/skips. Full local2935 PASS/0 FAIL/0skip (102.51s).
+Publication results: docs/publication-1006.md.
+Local browser executable installation unavailable (download was not valid zip);
+no local rendered or native iPad success inferred from Node/DOM tests.
+
+DEVICE1006: Save real project. File > Screen comparison / test list > acknowledge
+test scene disposable > Start A current + reload. Follow list; rate startup BEFORE
+opening menus/collapsing. Complete checks, reload same shell up to5 loads, Switch B
+and repeat without leaving browser or changing resolution. Record FAIL immediately;
+aim5 each, may switch early on failure. Copy results AFTER testing, then send chat.
+Native visibility gate remains OPEN; do not infer full beta readiness from one good
+run or claim canvas/UI separation proved an engine cause. If both fail, reduce shell
+further from evidence rather than wholesale reskin or repeated cosmetic patches.
+
 ## .1005 device feedback — Fill PASS; screen FAIL — 28 October 2026
 
 User explicitly PASSes Fill behaviour. Protect1004 Face/Facegroup/Whole object Fill,
@@ -2948,12 +3007,10 @@ splitting paths alone makes painting seamless or that CPU timings establish M2 p
 
 ## Next narrow step
 
-Finish956 validation/publication. Test Auto atlas on user's formerly over128-face
-mesh, compare0°/15° grouping, latency, UV Editor/Pack/UndoRedo and Paint/SaveOpen.
-4096faces/20Kcorners; grouping uses existing Box chart directions and may stretch.
-Safari download overwrite limitation explained; do not promise silent replacement.
-955 Stitch device acceptance remains separate.953/954/952 protected; alpha929 and
-smooth-metal reflection gates independent. Follow device feedback before expansion.
+Complete .1006 publication verification, then collect native A/B results using the
+in-app checklist. This supersedes the historical .956 next-step text. Protect Fill
+PASS and all accepted owners. Right-region screen failure blocks the next beta;
+no speculative full UI rewrite, resolution change or permanent repair claim.
 
 ## Protected interaction and modelling baseline
 

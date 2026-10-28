@@ -1,3 +1,19 @@
+## .1006 — native shell comparison is the beta gate — 28 October 2026
+
+User authorizes comparison build with an in-app test list because switching apps
+heals the fault. A current and B separated-canvas use identical original tools,
+renderer and resolution. B moves only original canvas to sibling viewport surface;
+original UI/gesture/geometry/history owners retained. Default app remains current.
+Five-step left checklist/ratings/notes/counters/Copy survive reloads; explicit
+reload-only A/B, scene-discard acknowledgement, bounded result storage and busy guards.
+Protect1004 Fill user PASS; screen1005 FAIL remains release-blocking. No native
+repair claim. Collect5 completed loads per profile if practical; incomplete loads
+are not passes and first failures remain recorded. Native startup status/menu/gizmo
+and UV/Paint return results decide next shell reduction/consolidation. Both fail:
+reduce further using evidence. B stays healthy: expand native regression before
+adopting structure. No broad visual reskin/parallel tool or renderer implementation.
+See AI_HANDOFF.md and docs/publication-1006.md; tester follows instructions in app.
+
 ## .1005 device feedback — Fill PASS; screen FAIL — 28 October 2026
 
 User explicitly PASSes Fill behaviour. Protect1004 Face/Facegroup/Whole object Fill,

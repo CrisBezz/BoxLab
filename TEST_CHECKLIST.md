@@ -1,3 +1,17 @@
+## .1006 — shell comparison regression and native gate — 28 October 2026
+
+- [x]1004 Fill behaviour explicitly user PASS; preserve accepted Face/Facegroup/Object scopes and hold/history.
+- [x]1005 screen explicitly FAIL: empty Facegroup menu / missing bottom-right status at startup; beta blocker remains OPEN.
+- [x]1006 A retains original hierarchy; B moves SAME canvas once before modules, retaining viewport/UI/renderer/input owners and dimensions.
+- [x]1006 actual in-app checklist PASS/FAIL, notes, first-failure evidence, persistent bounded build-tagged logs, incomplete-versus-complete counts.
+- [x]1006 storage corruption/denial/no-op failure, clipboard fallback, discard acknowledgement and busy guards; no silent reload/model loss.
+- [x]1006 explicit reload-only profile switching, unchanged resolution settings; original Paint image-overlay parent/coordinates/disposal retained.
+- [x]50 focused automated checks PASS; complete current-suite/publication evidence in docs/publication-1006.md.
+- [ ]DEVICE1006 A: use in-app five-step list across up to5 reloads, startup FIRST before menus/collapse. No app-switch.
+- [ ]DEVICE1006 B: same iPad/orientation/resolution/default cube; same five steps across up to5 reloads. No forced display recovery.
+- [ ]Copy results after testing; retain which profile/load/step failed. Correct DOM/bounds do NOT establish visible pixels.
+- [ ]Native B input parity: canvas orbit/pan/pinch, gizmo handles, UV workspace and Paint UI remain interactive; original pass-through overlays stay non-pickable.
+
 ## .1005 device feedback — Fill PASS; screen FAIL — 28 October 2026
 
 User explicitly PASSes Fill behaviour. Protect1004 Face/Facegroup/Whole object Fill,

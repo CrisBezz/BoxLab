@@ -1,0 +1,37 @@
+/* .1006 B only: original canvas and original viewport UI are sibling surfaces.
+   Keep viewport bounds/IDs and every existing tool node/listener. No GPU hints. */
+html[data-boxlab-shell="separated"] #boxlabComparisonCanvasSurface {
+ position:absolute;left:0;right:0;bottom:0;
+ top:var(--boxlab-topbar-h,max(60px,calc(48px + env(safe-area-inset-top))));
+ z-index:0;background:#111318;
+}
+html[data-boxlab-shell="separated"] #viewportWrap {
+ z-index:1;background:transparent;pointer-events:none;
+}
+/* Only actual UI surfaces receive input; empty viewport space reaches the SAME
+   canvas. Gizmo/radial SVG hit proxies retain their original pointer-event rules. */
+html[data-boxlab-shell="separated"] #viewportWrap :where(button,input,select,textarea,summary,label,canvas,[contenteditable="true"],[role="button"],.floating-panel,#objectBrowserPanel,#boxlabUVWorkspace,#boxlabToolSessionHost,#viewportSelectionControls,#selectionModes) {
+ pointer-events:auto;
+}
+/* Identical, left-accessible test UI in A and B, present from their first load. */
+#boxlabShellTest {
+ position:fixed;left:max(8px,env(safe-area-inset-left));
+ top:calc(var(--boxlab-topbar-h,60px) + 8px);z-index:100002;
+ width:min(320px,calc(100vw - 16px));max-height:calc(100dvh - var(--boxlab-topbar-h,60px) - 160px);
+ overflow-y:auto;overscroll-behavior:contain;touch-action:pan-y;
+ border:1px solid #7396bc;border-radius:8px;background:#121923;color:#eef1f7;
+ font:12px/1.4 system-ui;padding:8px;pointer-events:auto;
+}
+#boxlabShellTest[hidden],#boxlabShellTest [hidden]{display:none!important}
+#boxlabShellTest .shell-test-header{display:flex;align-items:center;justify-content:space-between;gap:6px}
+#boxlabShellTest p{margin:6px 0}
+#boxlabShellTest button{min-height:36px;padding:6px 8px;font:inherit;border-radius:6px}
+#boxlabShellTest button[aria-pressed="true"]{background:#e7f1ff;color:#121923;border-color:#e7f1ff}
+#boxlabShellTest .shell-test-step{padding:8px 0;border-top:1px solid #ffffff25}
+#boxlabShellTest .shell-test-actions{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
+#boxlabShellTest .shell-test-actions>button{flex:1}
+#boxlabShellTest textarea{width:100%;font:inherit;color:inherit;background:#0d121a;border:1px solid #ffffff40;border-radius:5px;touch-action:auto;user-select:text;-webkit-user-select:text}
+#boxlabShellTest .shell-test-summary{font:11px/1.5 system-ui;white-space:pre-wrap;overflow-wrap:anywhere;margin:6px 0}
+#boxlabShellTest .shell-test-discard{display:flex;gap:6px;align-items:flex-start;margin:8px 0}
+#boxlabShellTest input[type="checkbox"]{flex:none;width:20px;height:20px;margin:0}
+@media(orientation:portrait) and (max-width:900px){#boxlabShellTest{display:none}}

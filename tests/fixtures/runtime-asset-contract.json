@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.1005",
+      "url": "./src/release-bootstrap.js?v=0.36.18.1006",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1005",
+      "url": "./src/release-version.js?v=0.36.18.1006",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -3341,6 +3341,18 @@
       "url": "./facegroup-boundary-preview.js?v=0.36.18.1004",
       "target": "src/facegroup-boundary-preview.js",
       "sha256": "f9d102509273646d6e4718521ebf0aa2f5604393591b58daaf146859bb3785f1"
+    },
+    {
+      "owner": "index.html",
+      "url": "./shell-comparison.css?v=0.36.18.1006",
+      "target": "shell-comparison.css",
+      "sha256": "4f18083de3a7f792cc308144743a531e495fd76705fc18e458dc645e47243714"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/shell-comparison.js?v=0.36.18.1006",
+      "target": "src/shell-comparison.js",
+      "sha256": "40c1f04fa28ba5b95be4b162cb5b3a5f9b79e79fa77b497673906bda21c37986"
     }
   ]
 }
