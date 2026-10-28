@@ -1,5 +1,16 @@
 ## .1006 — controlled shell comparison with in-app test list — 28 October 2026
 
+Published runtime2f23e8021fb9d17c01d2ece9ff802f2a8113e10d, tested/uploaded tree
+d0985e5829b08483cbb814e5f15419a3f858974d (all11 blob hashes matched before atomic
+non-forced main update). Fetched main/tree verified; Pages40663446569 and hosted
+regression40663447564 SUCCESS. Eight live release/shell/new assets/main/sizing/
+recovery files byte-match local. Five final release-contract checks PASS.
+Cloud Chrome UI-only smoke confirms rendered checklist, rating/notes persistence
+across actual A→B reload, copied log, exact shared viewport bounds and centre-canvas
+hit routing, original SELECT and visible Facegroups settings. WebGL disabled in this
+browser for both old1005 and1006, so NO cloud modelling/native iPad repair proof.
+1006 LIVE and ready for device comparison; screen beta blocker remains OPEN.
+
 User explicitly authorizes /nextbuild and requires instructions INSIDE the app:
 switching away to chat can heal the native fault and invalidates observation.
 Audited main a70b0f9c/runtime698ef508, workflow/full handoff/checklist/roadmap and
@@ -3007,8 +3018,7 @@ splitting paths alone makes painting seamless or that CPU timings establish M2 p
 
 ## Next narrow step
 
-Complete .1006 publication verification, then collect native A/B results using the
-in-app checklist. This supersedes the historical .956 next-step text. Protect Fill
+Collect native .1006 A/B results using the in-app checklist; publication is verified. This supersedes the historical .956 next-step text. Protect Fill
 PASS and all accepted owners. Right-region screen failure blocks the next beta;
 no speculative full UI rewrite, resolution change or permanent repair claim.
 

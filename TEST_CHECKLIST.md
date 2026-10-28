@@ -6,7 +6,8 @@
 - [x]1006 actual in-app checklist PASS/FAIL, notes, first-failure evidence, persistent bounded build-tagged logs, incomplete-versus-complete counts.
 - [x]1006 storage corruption/denial/no-op failure, clipboard fallback, discard acknowledgement and busy guards; no silent reload/model loss.
 - [x]1006 explicit reload-only profile switching, unchanged resolution settings; original Paint image-overlay parent/coordinates/disposal retained.
-- [x]50 focused automated checks PASS; complete current-suite/publication evidence in docs/publication-1006.md.
+- [x]50 focused + full2935 local PASS/0FAIL/0skip; hosted40663447564 and Pages40663446569 SUCCESS;8 live files match.
+- [x]Cloud UI-only A→B/rating/notes/Copy/viewport/hit/SELECT/Facegroups smoke passes; WebGL disabled, no native pixel acceptance.
 - [ ]DEVICE1006 A: use in-app five-step list across up to5 reloads, startup FIRST before menus/collapse. No app-switch.
 - [ ]DEVICE1006 B: same iPad/orientation/resolution/default cube; same five steps across up to5 reloads. No forced display recovery.
 - [ ]Copy results after testing; retain which profile/load/step failed. Correct DOM/bounds do NOT establish visible pixels.

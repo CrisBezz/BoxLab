@@ -10,8 +10,9 @@ Protect1004 Fill user PASS; screen1005 FAIL remains release-blocking. No native
 repair claim. Collect5 completed loads per profile if practical; incomplete loads
 are not passes and first failures remain recorded. Native startup status/menu/gizmo
 and UV/Paint return results decide next shell reduction/consolidation. Both fail:
-reduce further using evidence. B stays healthy: expand native regression before
-adopting structure. No broad visual reskin/parallel tool or renderer implementation.
+reduce further using evidence. A fails/B stays healthy: expand native regression
+before adopting structure. Both healthy: fault not reproduced, comparison inconclusive.
+B alone fails: reject B structure. No broad visual reskin/parallel tool or renderer implementation.
 See AI_HANDOFF.md and docs/publication-1006.md; tester follows instructions in app.
 
 ## .1005 device feedback — Fill PASS; screen FAIL — 28 October 2026

@@ -16361,3 +16361,14 @@ aim5 each, may switch early on failure. Copy results AFTER testing, then send ch
 Native visibility gate remains OPEN; do not infer full beta readiness from one good
 run or claim canvas/UI separation proved an engine cause. If both fail, reduce shell
 further from evidence rather than wholesale reskin or repeated cosmetic patches.
+
+Published runtime2f23e8021fb9d17c01d2ece9ff802f2a8113e10d, tested/uploaded tree
+d0985e5829b08483cbb814e5f15419a3f858974d (all11 blob hashes matched before atomic
+non-forced main update). Fetched main/tree verified; Pages40663446569 and hosted
+regression40663447564 SUCCESS. Eight live release/shell/new assets/main/sizing/
+recovery files byte-match local. Five final release-contract checks PASS.
+Cloud Chrome UI-only smoke confirms rendered checklist, rating/notes persistence
+across actual A→B reload, copied log, exact shared viewport bounds and centre-canvas
+hit routing, original SELECT and visible Facegroups settings. WebGL disabled in this
+browser for both old1005 and1006, so NO cloud modelling/native iPad repair proof.
+1006 LIVE and ready for device comparison; screen beta blocker remains OPEN.
