@@ -16278,3 +16278,27 @@ original owners. Neither has new device acceptance; right-region visibility rema
 Next: DEVICE1005 saved1x fresh reload, then DEVICE1004 Pencil Fill/hold/UndoRedo.
 Obtain that result before another speculative rendering change; do not infer a repair
 from automated regression or healthy DOM/hit tests. No PASS inferred from this audit.
+
+## .1005 device feedback — Fill PASS; screen FAIL — 28 October 2026
+
+User explicitly PASSes Fill behaviour. Protect1004 Face/Facegroup/Whole object Fill,
+hold expansion, original raster/input/history owners and current accepted UI; no
+new Fill changes requested. This acceptance supersedes pending Fill gates below.
+User explicitly FAILs screen behaviour: Facegroup menu still empty. During refresh,
+bottom-right startup messages normally settle to Face mode / nothing selected / Multi;
+absence of that message lets user identify the failed right region immediately.
+This is a useful startup symptom before opening the menu, not proof of an empty
+selection/group model, failed status writer or a specific browser-engine cause.
+Original main.updateStatus owns status text; existing Multi initialization can update
+its wording. Status footer and VIEW use different UI owners; no missing shared action
+or confirmed common application clip established. No speculative runtime/CSS repair.
+Fresh saved1x launch is NOT verified by this feedback alone: no savedStartup/requested/
+backing dimensions supplied. Confirm whether Keep1x on reload was enabled before the
+failed refresh before declaring first-allocation1x disproven. Prior live1x recurrence
+and current screen FAIL retained; do not claim1005 repaired visibility or request the
+same old diagnostics. Current runtime1005; no new build or tests in this feedback update.
+User now identifies this as a blocker for the next beta and asks whether an interface
+rebuild is appropriate. Recommended next engineering direction: controlled shell
+isolation/reconstruction with existing tool/DOM/action owners, same accepted appearance,
+and native startup/reload comparison; no wholesale reskin or duplicate kernels.
+This is a proposal, not implemented or claimed to guarantee a rendering repair.

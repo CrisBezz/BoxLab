@@ -19,3 +19,9 @@ Continuation audit on main dbc716d4: fresh local Node24.22.1 full suite
 2926 PASS / 0 FAIL / 0 skipped (109.81s). Docs-head Pages40626977468 SUCCESS.
 All five original live1005 release files still byte-match main. No runtime change
 or new build; saved1x fresh-launch and1004 Pencil Fill device gates remain pending.
+
+28 October device feedback: user PASS for1004 Fill behaviour (protected), FAIL for
+screen behaviour (Facegroup menu empty; bottom-right status missing during startup).
+No saved-startup/requested/backing values accompany feedback; fresh saved1x launch
+not yet confirmed. Screen remains OPEN/FAILED; no permanent rendering repair claimed.
+No runtime edits/new build or new automated test run in this feedback-only update.
