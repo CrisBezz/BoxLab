@@ -1,3 +1,38 @@
+## .1008 native comparison results — 28 October 2026
+
+User supplied Copy results at2026-10-28T11:41:00.510Z (21:41 Brisbane).
+A/current:6 complete .1008 runs:2 all-five FAIL,4 all-five PASS;1 additional
+unrated .1008 load excluded. B/separated:5 complete all-five PASS,0 FAIL;
+1 four-of-five PASS (Paint unrated) and1 unrated load excluded from complete count.
+Older .1006 partial/unrated records excluded. Protect the reported PASS observations
+for those runs; they do not erase A failures or establish permanent screen repair.
+See docs/shell-comparison-results-1008.md for run IDs, audit and next gate.
+
+Both profiles report1366x886 CSS viewport, DPR2,1366x826 canvas CSS/backing,
+requested1 and savedStartup1. A failed twice after saved1x startup: first-allocation
+1x is NOT sufficient prevention. A canvas parent viewportWrap; B parent
+boxlabComparisonCanvasSurface confirms actual structural switch without dimensions
+change. A first-failure snapshot is STARTUP: closed VIEW / hidden gizmo there are
+expected states, NOT proof those nodes were incorrectly hidden at later checks.
+
+All new observations say checklistRelease1008 but shellRelease450. Audited live-main
+source: src/scene-obj-export-238.js lines5-11 hardcode450 and overwrite BOTH label
+text and dataset.releaseVersion. The diagnostic reads that mutable dataset; therefore
+450 is contaminated metadata, NOT evidence an old450 HTML shell was loaded. .1008
+running-shell identity fix is incomplete: release-version can capture contaminated
+data depending on module order; current test only covers text overwrite, not dataset
+mutation by the real exporter. Next narrow runtime work must remove secondary release
+writes/use an immutable initial shell identity and regression-test the actual writer.
+Do not change OBJ geometry/export behavior or ask for repeated cache clearing.
+
+Decision: B is promising, not proven. A failed then had4 healthy runs BEFORE B;
+time/order confounding prevents attributing B health solely to separation. Keep beta
+screen gate OPEN. Next native gate: interleave A/B through original in-app reload
+controls (same1x/orientation/default cube; startup first), then B navigation/selection/
+gizmo/UV/Paint/UndoRedo/save-open parity before adopting B as default. No wholesale
+interface reskin or duplicate tool/renderer/kernel. No additional runtime shipped in
+this feedback session; .1008 remains live. No tests rerun for documentation only.
+
 ## .1008 — running-code identity and unobstructed UV test controls — 28 October 2026
 
 - [x] Screenshot confirms apparent1007 and blocked A UV return; first3 A PASS toggles observed for ONE run, no broad rendering PASS inferred.
