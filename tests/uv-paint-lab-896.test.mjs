@@ -11,7 +11,7 @@ test('896 single-layer raster has exact sRGB endpoints, per-stroke opacity cap, 
  const rows=topDownPixels(l);assert.deepEqual([...rows.slice((31*32)*4,31*32*4+4)],pixel(l,0,0));assert.deepEqual([...rows.slice(0,4)],pixel(l,0,31));
  l.begin({colour:'#000000',radius:4,pressure:true});assert(!l.stamp(.5,.5,0));assert(!l.finish());
  l.begin({colour:'#000000',radius:4,hardness:1});l.stamp(.5,.5,.25);assert.deepEqual(pixel(l,18,16),[255,255,255,255]);l.finish(true);assert.deepEqual(l.pixels,first);
- for(const s of [{radius:49},{opacity:NaN},{colour:'red'}])assert.throws(()=>l.begin(s));l.dispose();assert.throws(()=>l.begin({}));
+ for(const s of [{radius:257},{opacity:NaN},{colour:'red'}])assert.throws(()=>l.begin(s));l.dispose();assert.throws(()=>l.begin({}));
 });
 test('896 paired history commits once even if only one brush changes, bounds history, rolls back cancellation and retires Redo on changed commits',()=>{
  const c=createPaintComparison(16,2),white=c.layers[0].pixels.slice();c.begin({colour:'#000000',radius:2});c.layers[1].stamp(.5,.5);assert(c.finish());assert.equal(c.state.undo,1);const black=c.layers[1].pixels.slice();assert(c.undo());c.layers.forEach(l=>assert.deepEqual(l.pixels,white));assert(c.redo());assert.deepEqual(c.layers[1].pixels,black);

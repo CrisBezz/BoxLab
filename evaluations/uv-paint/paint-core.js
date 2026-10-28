@@ -3,7 +3,7 @@ import {captureAlphaTip,alphaTipCoverage} from './alpha-tip.js?v=0.36.18.929';
 export const RESOLUTION=512;
 export function brushSettings(value={}){
  const s={colour:'#e34b37',radius:10,hardness:.7,opacity:1,pressure:true,...value};
- if(!/^#[\da-f]{6}$/i.test(s.colour)||![s.radius,s.hardness,s.opacity].every(Number.isFinite)||s.radius<1||s.radius>48||s.hardness<0||s.hardness>1||s.opacity<0||s.opacity>1||typeof s.pressure!=='boolean'||!Number.isFinite(s.tipRotation??0)||Math.abs(s.tipRotation??0)>360)throw Error('Invalid brush settings');
+ if(!/^#[\da-f]{6}$/i.test(s.colour)||![s.radius,s.hardness,s.opacity].every(Number.isFinite)||s.radius<1||s.radius>256||s.hardness<0||s.hardness>1||s.opacity<0||s.opacity>1||typeof s.pressure!=='boolean'||!Number.isFinite(s.tipRotation??0)||Math.abs(s.tipRotation??0)>360)throw Error('Invalid brush settings');
  return Object.freeze(s);
 }
 // Repeat the existing centre4/cardinal1 kernel over the stroke-start snapshot.
@@ -105,6 +105,10 @@ export function createPaintLayer(size=RESOLUTION,{transparent=false}={}){
    const p=settings.pressure?Math.min(1,Math.max(0,pressure)):1;if(!p||!settings.opacity){resetPickup();return false;}
    const radius=Math.max(.35,settings.radius*p),cx=u*(size-1),cy=v*(size-1),rgb=[1,3,5].map(i=>parseInt(settings.colour.slice(i,i+2),16)),extent=settings.alphaTip?radius*Math.SQRT2:radius,angle=(settings.tipRotation??0)*Math.PI/180,cos=Math.cos(angle),sin=Math.sin(angle);let touched=false;
    if(smudging&&!carry(cx,cy,face,radius,cos,sin))return false;
+   if(!smudging&&settings.radius>48){
+    const work=(Math.min(size-1,Math.ceil(cy+extent+1))-Math.max(0,Math.floor(cy-extent-1))+1)*(Math.min(size-1,Math.ceil(cx+extent+1))-Math.max(0,Math.floor(cx-extent-1))+1);
+    if(smudgeWork+work>8e6){limited=true;return false;}smudgeWork+=work;
+   }
    for(let y=Math.max(0,Math.floor(cy-extent-1));y<=Math.min(size-1,Math.ceil(cy+extent+1));y++)for(let x=Math.max(0,Math.floor(cx-extent-1));x<=Math.min(size-1,Math.ceil(cx+extent+1));x++){
     if(blur&&blur[x+y*size]!==face)continue;
     if(smudging&&(Math.abs(x-pickup.x)>pickup.extent||Math.abs(y-pickup.y)>pickup.extent))continue;

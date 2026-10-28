@@ -1,3 +1,72 @@
+## .1010 — free orbit and three-finger light / brush controls — 29 October2026
+
+Baseline main8e00f2b8/runtime1e34c432, live1009. User explicitly requests free orbit,
+inertia,3-finger horizontal light rotation,Paint vertical size + stroke preview,
+larger brush and more standard tips. This authorizes changing former upright orbit
+behavior; no unrelated modelling or UI cleanup. Audit original main touch/tap owner,
+Three0.179.1 OrbitControls,Studio light-angle owner199 and production Paint/alpha.
+
+FreeOrbitControls subclasses SAME Three controller; only rotation math becomes
+camera-relative quaternion tumble across both poles, including inverted views.
+Native pointer registration/Pencil gate/pan/pinch/wheel/target/change events retained.
+Original damping.08 provides inertia; next contact,disabled tool or external camera
+view change stops spin. No second pointer owner,model rotation/kernel or ground move.
+Never clear native pan/dolly on ordinary idle rotation updates: this was caught and
+corrected during1010 validation, now explicitly tested including upside-down pan.
+
+Main's existing touchstart/move/end/tap owner delegates3-finger commands to a pure
+state helper (NO listeners). Third finger pauses navigation;12px threshold locks first
+dominant direction. Horizontal rotates original Studio angle (.5degrees/CSSpx,wrap
+±180) via existing setter/UI/persistence; unlit looks need Studio/material preview to
+see lighting. Vertical IN Paint sets same radius control exponentially:UP larger/DOWN
+smaller. Fill,image placement,AO,stroke/drag/busy sessions refuse size changes. Controls
+restore only after ALL contacts lift; cancel/blur/pagehide/hidden restore safely.
+Two-finger tap Undo and three-finger tap Redo retain original history owners; moved
+or4-finger gestures never become Redo. Finger1 orbit/finger2 pan+pinch retained.
+
+Paint original raster/settings radius1–256texels (old48); maximum diameter512texels.
+Only NEW >48 ordinary/Blur strokes gain8million raster-pixel work window,renewed
+per input with SAME snapshot/coverage/history; existing Smudge budget retained.
+No silent resize,new texture schema or history entry for changing settings. Built-in
+Soft round/Hard round/Flat/Chisel/Dry bristle use original hardness/alpha-tip raster;
+imported PNG tips/rotation retained. No airbrush/time-accumulation promise.
+
+Vertical size drag shows a top-centre noninteractive preview card with actual original
+raster stroke,selected colour/opacity/hardness/tip and radius readout. Preview represents
+a1024texel chart at quarter scale,NOT guaranteed world/screen surface footprint across
+UV densities. One queued frame uses latest size; lift/cancel/Done hides and suppresses
+late draws. No mesh hit proxy,scene/paint-resource/history mutation. Cancel restores
+pre-drag size; ordinary release keeps size. Existing LEFT Paint settings preserved.
+
+Reviewed1010 reverse cache graph:main + new controls/helper;production Paint/raster/
+new preset/preview;shared Lab/session imports (pins only),shell/recovery/release and
+layout/drawer canonical release-loader parents. Unchanged assets retain older keys.
+Protected Multi1.0/frozenBeta2–7/geometry/UV/Fill1004/accepted icons unchanged. Runtime
+comparison1010 only code labels + migration1009;both structures/default/resolution intact.
+
+User1009 A/B/A explicitly ALL PASS now protected:5 complete A +5 complete B,0 rated
+FAIL;20 unrated excluded. Both shell/checklist1009,actual/saved1x. See exact IDs and
+limits in docs/shell-comparison-results-1009.md. Keep A default,comparison gate complete;
+no B superiority/permanent engine repair inferred. Historical pixel fault watch remains.
+Initial publication was held while user's experiment ran; it is now complete, publish
+1010 after validation under existing standing authorization. No repeat approval needed.
+
+Tests execute real Three rotation/native pan/dolly,actual main tap handler,command
+axis/drain/cancel,production Paint UI and pixel raster/preview,presets,large brush work
+renewal,cancel and ONE Undo.928 history fixture now stops extraction before new command
+initialization and injects actual helper; all original history assertions retained.
+896 invalid-radius fixture49→257 follows deliberate new limit. Full/focused results and
+publication proof in docs/publication-1010.md. Full local Node24.22.1:
+2955 PASS/0FAIL/0skip/0cancel (117.01s),including10 new actual-owner checks.
+Syntax/whitespace clean. Native iPad1010 feel remains pending.
+
+DEVICE1010: continuous1finger tumble past top/bottom;flick/re-touch stops;pan/pinch
+and view buttons still work.3finger horizontal Studio drag rotates light without model
+motion or Redo. In UV Paint vertical3finger UP enlarges/DOWN shrinks with stroke sample;
+lift hides preview and settings remain. Try five tip presets/large Pencil stroke;
+UndoRedo one stroke,3finger TAP Redo,Done/navigation. No repeat A/B batch required now.
+Next respond to native1010 gesture/brush feel; broader brushes/refinements stay staged.
+
 ## .1009 — immutable loaded-shell identity; OBJ release writer removed — 28 October 2026
 
 Current:1009 LIVE, runtime1e34c432; Pages40683927107 SUCCESS; all9 live files

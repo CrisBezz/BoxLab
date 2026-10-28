@@ -1,3 +1,16 @@
+## .1010 — navigation, light and Paint gesture regression — 29 October2026
+
+- [x]Full local2955 PASS/0FAIL/0skip/0cancel (117.01s),10 new actual-owner checks;syntax/whitespace clean.
+- [x]User1009 A/B/A ALL PASS:5 complete A +5 complete B,0 rated FAIL,20 unrated excluded; version identity1009 and saved/backing1x confirmed. Protect exact workflow acceptance; keep A default. See docs/shell-comparison-results-1009.md.
+- [x]Real native-controller subclass crosses both poles,keeps distance/target,native pan/dolly after inverted orbit,inertia decay/contact stop/disabled/view reset.
+- [x]Main actual touch owner retains2tapUndo/3tapRedo;3drag has axis lock/no history/drains all contacts/cancel restore. No second raw event owner.
+- [x]Original Paint UI size1–256,standard five tips,preview uses original raster and coalesces latest setting;late/hidden preview suppressed. Size changes create no paint resource/history;cancel restores.
+- [x]Large raster work window remains bounded,renews same snapshot,exact cancel;actual large Pencil stroke is ONE UndoRedo.
+- [ ]DEVICE1010 free tumble/inertia touch-stop,onefinger orbit,twofinger pan/pinch,view commands.
+- [ ]Studio3finger horizontal rotates light;tap3 still Redo,gesture release restores navigation.
+- [ ]Paint3finger vertical UP larger/DOWN smaller;stroke sample/readout,lift hides;presets/large stroke/UndoRedo/Done. Existing Fill/left dock untouched.
+- [ ]No native1010 PASS inferred from Node;no extra A/B batch required now.
+
 ## .1009 — protect loaded shell provenance — 28 October 2026
 
 - [x]Published runtime1e34c432, exact tested tree20cb43c1, Pages40683927107 SUCCESS and all9 live files byte-match; docs/publication-1009.md.
