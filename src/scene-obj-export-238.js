@@ -6,9 +6,7 @@ const VERSION='0.36.18.450';
 const baseButton=document.querySelector('#exportBaseBtn');
 const subdButton=document.querySelector('#exportSubdBtn');
 const status=document.querySelector('#selectionStatus');
-const versionNode=document.querySelector('#appVersion');
-if(versionNode){versionNode.textContent=`v${VERSION}`;versionNode.dataset.releaseVersion=VERSION;}
-document.title=`BoxLab v${VERSION}`;
+// Visible release identity belongs to release-version.js, not this export stamp.
 
 function manager(){return globalThis.__boxlabObjectManager||null;}
 function sceneObjects(){

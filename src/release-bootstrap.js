@@ -4,6 +4,11 @@
 (() => {
   const titleMatch = document.title.match(/BoxLab\s+v([^\s]+)/i);
   const running = titleMatch?.[1] || null;
+  // This classic head script executes before any legacy module can stamp the
+  // title/label. Keep the loaded HTML identity separate from mutable UI metadata.
+  if (running && !Object.hasOwn(globalThis, '__boxlabLoadedShellVersion')) {
+    Object.defineProperty(globalThis, '__boxlabLoadedShellVersion', { value: running });
+  }
   const manifestUrl = new URL('./version.json', window.location.href);
   manifestUrl.searchParams.set('_', String(Date.now()));
 

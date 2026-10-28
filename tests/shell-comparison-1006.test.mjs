@@ -5,6 +5,7 @@ import vm from 'node:vm';
 import {createPaintImageOverlay} from '../src/paint-image-overlay.js';
 const read=p=>fs.readFileSync(new URL('../'+p,import.meta.url),'utf8');
 const source=read('src/shell-comparison.js');
+const release=JSON.parse(read('version.json')).version;
 const key='boxlab.shell-comparison.v1';
 function fixture(profile='',options={}){
  const data=options.data||new Map(),writes=[],navigations=[],observers=[],events=new Map();let deny=options.deny||false,copyFails=false;
@@ -29,6 +30,7 @@ function fixture(profile='',options={}){
  const doc={documentElement:html,body,createElement:tag=>new Node(tag),querySelector:q=>q.startsWith('#')?all().find(n=>n.id===q.slice(1))||null:null};
  const storage={getItem(k){if(deny)throw Error('blocked');return data.get(k)??null;},setItem(k,v){if(deny)throw Error('blocked');if(!options.noopStorage)data.set(k,v);}};
  const c={document:doc,URL,Date,Math,window:null};
+ Object.defineProperty(c,'__boxlabLoadedShellVersion',{value:options.loadedShell||release});
  c.window=c;c.location={href:'https://example.test/BoxLab/?build=0.36.18.1006'+(profile?'&shellTest='+profile:''),assign:href=>navigations.push(href)};
  c.addEventListener=(type,fn)=>events.set(type,fn);
  c.MutationObserver=class{constructor(fn){this.fn=fn;observers.push(this);}observe(root,config){this.root=root;this.config=config;this.active=true;}disconnect(){this.active=false;}};
@@ -95,8 +97,8 @@ test('1006 original Paint image overlay uses the separated canvas parent and pre
 test('1007 existing 1006 partial ratings, notes and first failure survive the patch with original release provenance; fresh load is not pre-rated',()=>{
  const old={id:'native-a-1',mode:'current',started:'2026-10-28',ratings:{startup:'pass',view:'pass',gizmo:'pass'},notes:'UV Back obscured',failure:{release:'1006',canvas:{width:1366}},hadFailure:true};
  const data=new Map([[key,JSON.stringify({version:1,release:'0.36.18.1006',runs:[old]})]]),f=fixture('current',{data});
- const runs=f.api.report().runs;assert.equal(runs.length,2);assert.deepEqual(JSON.parse(JSON.stringify(runs[0])),{...old,release:'0.36.18.1006'});assert.equal(runs[1].release,'0.36.18.1008');assert.deepEqual(Object.keys(runs[1].ratings),[]);
- const next=fixture('separated',{data});assert.equal(next.api.report().runs[0].notes,old.notes);assert.equal(next.api.report().runs[0].release,'0.36.18.1006');assert.equal(next.api.report().runs[2].release,'0.36.18.1008');
+ const runs=f.api.report().runs;assert.equal(runs.length,2);assert.deepEqual(JSON.parse(JSON.stringify(runs[0])),{...old,release:'0.36.18.1006'});assert.equal(runs[1].release,release);assert.deepEqual(Object.keys(runs[1].ratings),[]);
+ const next=fixture('separated',{data});assert.equal(next.api.report().runs[0].notes,old.notes);assert.equal(next.api.report().runs[0].release,'0.36.18.1006');assert.equal(next.api.report().runs[2].release,release);
 });
 test('1008 actual checklist observes original UV hidden/creation state, docks inline, fully hides/reopens and releases lifecycle observer without touching Back',()=>{
  for(const profile of ['current','separated']){
@@ -112,5 +114,14 @@ test('1008 actual checklist observes original UV hidden/creation state, docks in
 });
 test('1008 prior1007 logs remain tagged correctly and running checklist code stamps itself independently of app label',()=>{
  const f=fixture('current',{data:new Map([[key,JSON.stringify({version:1,release:'0.36.18.1007',runs:[{id:'old7',mode:'current',ratings:{startup:'pass'},notes:'native screenshot1007'}]})]])});
- assert.equal(f.api.report().runs[0].release,'0.36.18.1007');assert.equal(f.api.report().runs[0].notes,'native screenshot1007');assert(f.nodes().some(n=>n.tagName==='STRONG'&&n.textContent.includes('.1008')));assert.equal(f.api.environment().checklistRelease,'0.36.18.1008');
+ assert.equal(f.api.report().runs[0].release,'0.36.18.1007');assert.equal(f.api.report().runs[0].notes,'native screenshot1007');assert(f.nodes().some(n=>n.tagName==='STRONG'&&n.textContent.includes('.'+release.split('.').at(-1))));assert.equal(f.api.environment().checklistRelease,release);
+});
+
+test('1009 comparison reads immutable shell identity even when legacy label metadata is contaminated; old1008 ratings stay exact',()=>{
+ const old={id:'native8',release:'0.36.18.1008',mode:'separated',ratings:{startup:'pass',view:'fail'},observations:{startup:{shellRelease:'0.36.18.450'}},notes:'original evidence',hadFailure:true};
+ const data=new Map([[key,JSON.stringify({version:1,release:'0.36.18.1008',runs:[old]})]]);
+ const f=fixture('separated',{data,loadedShell:release});
+ const label=f.doc.createElement('span');label.id='appVersion';label.dataset.releaseVersion='0.36.18.450';f.app.append(label);
+ f.api.rate('startup','pass');const runs=f.api.report().runs;assert.deepEqual(JSON.parse(JSON.stringify(runs[0])),old);assert.equal(runs[1].release,release);assert.equal(runs[1].observations.startup.shellRelease,release);assert.equal(runs[1].ratings.view,undefined);
+ assert.equal(label.dataset.releaseVersion,'0.36.18.450');assert.equal(f.navigations.length,0);assert(f.nodes().some(n=>n.textContent.includes('Alternate A and B')));
 });

@@ -16477,3 +16477,42 @@ controls (same1x/orientation/default cube; startup first), then B navigation/sel
 gizmo/UV/Paint/UndoRedo/save-open parity before adopting B as default. No wholesale
 interface reskin or duplicate tool/renderer/kernel. No additional runtime shipped in
 this feedback session; .1008 remains live. No tests rerun for documentation only.
+
+## .1009 — immutable loaded-shell identity; OBJ release writer removed — 28 October 2026
+
+Baseline main cf5f8da7 / runtime09b73cc0, live1008 markers and existing pins audited.
+Original classic head release-bootstrap captures the initial HTML title synchronously
+as non-writable/non-configurable __boxlabLoadedShellVersion BEFORE comparison and
+modelling modules. Existing release-version prefers that value, restores both label
+text and data-release-version and observes that attribute; public stamp cannot adopt
+an arbitrary version. version.json remains available-latest only. Existing startup
+cache-recovery/retry and app-return behavior retained; no new updater/repaint owner.
+
+Remove ONLY secondary app label/dataset/title writes from scene-obj-export-238.
+Its internal450 stamp, OBJ headers/filenames/MIME, Base/SubD geometry/preflight,
+source/history and event routing remain unchanged. Original comparison reads immutable
+shell identity, stamps executed1009 independently, preserves1006/1007/1008 records,
+ratings/notes/first failures exactly, and starts fresh unrated1009 loads. In-app guidance
+now says alternate A/B with original explicit reload controls, same1x/orientation/cube.
+Neither profile structure nor default changes; no pixel repair/native PASS claimed.
+
+Reviewed1009 cache closure: bootstrap/release/comparison, canonical direct+nested OBJ
+and its conformance parent, canonical direct+nested release and layout/drawer parents.
+CSS1008 retained unchanged. Protected Multi1.0, frozen betas, main/sizing/debug, original
+Fill1004 PASS and accepted modelling/Paint/UV owners untouched. Previous1008 A4PASS/2FAIL
+and B5PASS observations remain protected for THOSE runs; beta screen gate stays OPEN.
+
+48 focused checks PASS/0FAIL/0skip. Five new checks cover actual exporter before/after
+release initialization, Base/SubD output equality/source isolation, early immutable
+capture, adversarial metadata + manifest/offline returns, comparison identity and exact
+1008 evidence retention. Re-running new exporter regression against pre-fix wrapper
+fails as expected. Existing canonical-loader tests follow reviewed1009 pins; no semantic
+protection removed. Full local Node24.22.1:2945 PASS/0FAIL/0skip/0cancel (117.67s).
+Publication proof: docs/publication-1009.md.
+
+DEVICE1009: visible app and checklist both1009; Copy current environment/new rated
+observations shellRelease1009, old1008 observations450 remain historical (do not rewrite).
+Alternate A/B inside app without app-switch/recovery, startup FIRST; retain resolution
+and orientation. Original checklist Hide/UV Back/Paint Done still usable. Follow with B
+selection/navigation/gizmo/UV/Paint/UndoRedo/SaveOpen parity before default adoption.
+Next act on interleaved native evidence; no speculative compositor or UI reskin change.

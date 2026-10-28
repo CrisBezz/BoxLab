@@ -2,7 +2,7 @@
 // Move the original canvas once; no second renderer, input owner or live profile swap.
 (() => {
  'use strict';
- const RELEASE='0.36.18.1008',KEY='boxlab.shell-comparison.v1',LIMIT=30;
+ const RELEASE='0.36.18.1009',KEY='boxlab.shell-comparison.v1',LIMIT=30;
  const url=new URL(window.location.href),choice=url.searchParams.get('shellTest');
  const active=choice==='current'||choice==='separated',mode=active?choice:'current';
  const doc=document,app=doc.querySelector('#app'),wrap=doc.querySelector('#viewportWrap'),canvas=doc.querySelector('#viewport');
@@ -24,7 +24,7 @@
   const saved=window.localStorage.getItem(KEY);
   if(saved&&saved.length<2000000){
    const data=JSON.parse(saved);
-   if(data.version===1&&[RELEASE,'0.36.18.1006','0.36.18.1007'].includes(data.release)&&Array.isArray(data.runs))
+   if(data.version===1&&[RELEASE,'0.36.18.1006','0.36.18.1007','0.36.18.1008'].includes(data.release)&&Array.isArray(data.runs))
     log.runs=data.runs.filter(r=>r&&['current','separated'].includes(r.mode)&&typeof r.id==='string'&&r.ratings&&typeof r.ratings==='object').slice(-LIMIT).map(r=>({...r,release:r.release||data.release}));
   }
  }catch{storageOK=false;}
@@ -39,7 +39,7 @@
  // Read evidence only. A healthy DOM/renderer dimension never implies visible pixels.
  function environment(){
   const rect=canvas.getBoundingClientRect(),scale=window.__boxlabViewportRenderScale;
-  return {time:new Date().toISOString(),checklistRelease:RELEASE,shellRelease:doc.querySelector('#appVersion')?.dataset?.releaseVersion??null,width:window.innerWidth,height:window.innerHeight,dpr:window.devicePixelRatio,
+  return {time:new Date().toISOString(),checklistRelease:RELEASE,shellRelease:window.__boxlabLoadedShellVersion??null,width:window.innerWidth,height:window.innerHeight,dpr:window.devicePixelRatio,
    canvas:{parent:canvas.parentElement?.id,cssWidth:rect.width,cssHeight:rect.height,width:canvas.width,height:canvas.height},
    requested:scale?.requested??null,savedStartup:scale?.saved??null,statusText:doc.querySelector('#selectionStatus')?.textContent??null,
    renderMode:doc.querySelector('#viewportRenderLooks [data-render].active')?.dataset?.render??null,
@@ -57,10 +57,10 @@
  function el(tag,text){const n=doc.createElement(tag);if(text!==undefined)n.textContent=text;return n;}
  function button(text,action){const b=el('button',text);b.type='button';b.addEventListener('click',action);return b;}
  const header=el('div');header.className='shell-test-header';
- const title=el('strong',active?(mode==='current'?'A · Current · .1008':'B · Separated · .1008'):'Screen comparison · .1008');
+ const title=el('strong',active?(mode==='current'?'A · Current · .1009':'B · Separated · .1009'):'Screen comparison · .1009');
  const body=el('div');body.className='shell-test-body';
  const collapse=button('Collapse',()=>{body.hidden=!body.hidden;collapse.textContent=body.hidden?'Test list':'Collapse';});
- const launcher=button('TEST LIST · .1008',showPanel);launcher.id='shellTestReopen';launcher.hidden=true;
+ const launcher=button('TEST LIST · .1009',showPanel);launcher.id='shellTestReopen';launcher.hidden=true;
  launcher.style.cssText='display:none;position:fixed;left:8px;top:50dvh;z-index:100003;min-height:40px;';
  const hide=button('Hide list',()=>{panel.hidden=true;launcher.hidden=false;launcher.style.display='block';stopDock();});
  header.append(title,collapse,hide);panel.append(header,body);
@@ -112,7 +112,7 @@
  const reload=button(active?'Reload same shell':'Start A · current + reload',()=>launch(active?mode:'current'));
  const switchMode=button(active?(mode==='current'?'Switch to B + reload':'Switch to A + reload'):'Start B · separated + reload',()=>launch(mode==='current'?'separated':'current'));
  navigation.append(reload,switchMode);body.append(navigation);
- body.append(el('p','Aim for 5 completed loads of A and 5 of B. Untested steps are not passes. You may switch early after a failure. Rate startup before changing anything. No app-switch or forced display recovery during a run.'));
+ body.append(el('p','Alternate A and B with Switch + reload, keeping the same resolution, orientation and default cube. Aim for 5 completed loads of each. Earlier results stay in Copy results. Untested steps are not passes. You may switch early after a failure. Rate startup before changing anything. No app-switch or forced display recovery during a run.'));
  const report=el('textarea');report.readOnly=true;report.rows=8;report.hidden=true;report.setAttribute('aria-label','Screen comparison results');
  const copy=button('Copy results',async()=>{
   report.value=JSON.stringify({test:'BoxLab shell comparison',release:RELEASE,active:active?mode:null,environment:environment(),log},null,2);
@@ -123,7 +123,7 @@
  body.append(el('small','This is a structural comparison, not a confirmed screen repair. Results stay in this browser (last 30 loads); use Copy results after testing.'));
  function update(){
   for(const r of rows)r.button.setAttribute('aria-pressed',String(run?.ratings[r.key]===r.result));
-  const lines=['.1008 · '+(active?(mode==='current'?'A current':'B separated'):'not started')];
+  const lines=['.1009 · '+(active?(mode==='current'?'A current':'B separated'):'not started')];
   for(const profile of ['current','separated']){
    const runs=log.runs.filter(r=>r.mode===profile),complete=runs.filter(r=>steps.every(([k])=>['pass','fail'].includes(r.ratings[k]))).length;
    const failed=runs.filter(r=>r.hadFailure||steps.some(([k])=>r.ratings[k]==='fail')).length;

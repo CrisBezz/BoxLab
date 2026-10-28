@@ -4,7 +4,7 @@ const tick=()=>new Promise(r=>setImmediate(r));
 test('1008 all current release-owner loaders resolve to one canonical module URL',()=>{
  const shell=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8'),layout=fs.readFileSync(new URL('../src/face-workflow-layout.js',import.meta.url),'utf8'),drawer=fs.readFileSync(new URL('../src/drawer-ui.js',import.meta.url),'utf8');
  const direct=shell.match(/src\/release-version\.js\?v=([^"']+)/)[1],nested=layout.match(/release-version\.js\?v=([^"']+)/)[1];assert.equal(direct,nested);
- assert.match(drawer,/face-workflow-layout\.js\?v=0\.36\.18\.1008/);assert.match(shell,/drawer-ui\.js\?v=0\.36\.18\.1008/);
+ assert.match(drawer,/face-workflow-layout\.js\?v=0\.36\.18\.1009/);assert.match(shell,/drawer-ui\.js\?v=0\.36\.18\.1009/);
 });
 test('1008 network latest and app-return events cannot relabel old executed shell as a newer or older build; no forced recovery',async()=>{
  let latest='0.36.18.1007',redirects=0,callback;const events=new Map(),label={dataset:{releaseVersion:'0.36.18.1006'},textContent:'v0.36.18.1006'},doc={title:'BoxLab v0.36.18.1006',querySelector:()=>label,addEventListener:(k,f)=>events.set(k,f),hidden:false};

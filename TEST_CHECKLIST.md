@@ -1,3 +1,14 @@
+## .1009 — protect loaded shell provenance — 28 October 2026
+
+- [x] Classic head captures immutable shell identity before comparison/modules; actual OBJ exporter cannot write app version in either initialization order.
+- [x] Original release owner repairs label AND dataset; metadata contamination before initialization, attribute-only mutation, arbitrary stamp argument, newer manifest and offline return cannot relabel loaded code.
+- [x] Real OBJ Base/SubD wrapper output equals original production core with internal450 stamp; source mesh remains unchanged. Existing MIME/round-trip tests retained.
+- [x] Comparison uses immutable identity, independently stamps1009, preserves exact1006/1007/1008 ratings/notes/first failures, and never copies PASS into new loads.
+- [x]Full local2945 PASS/0FAIL/0skip/0cancel (117.67s).48 focused checks PASS; old actual exporter fails new regression. Protected Multi1.0/frozen/model/Paint/UV owners unchanged.
+- [ ]DEVICE1009 visible app/checklist1009 and new Copy observations shellRelease1009; retain historical450 metadata unchanged.
+- [ ]Alternate A/B with in-app controls, same resolution/orientation/default cube, startup FIRST; original five visible checks. Beta screen gate remains OPEN.
+- [ ]B extended parity: navigation/selection/gizmo, UV Back/Paint Done, UndoRedo and SaveOpen before default adoption. No device1009 acceptance inferred from Node.
+
 ## .1008 native comparison results — 28 October 2026
 
 User supplied Copy results at2026-10-28T11:41:00.510Z (21:41 Brisbane).
