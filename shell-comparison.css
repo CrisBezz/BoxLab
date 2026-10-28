@@ -23,7 +23,7 @@ html[data-boxlab-shell="separated"] #viewportWrap :where(button,input,select,tex
  font:12px/1.4 system-ui;padding:8px;pointer-events:auto;
 }
 #boxlabShellTest[hidden],#boxlabShellTest [hidden]{display:none!important}
-#boxlabShellTest .shell-test-header{display:flex;align-items:center;justify-content:space-between;gap:6px}
+#boxlabShellTest .shell-test-header{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px}
 #boxlabShellTest p{margin:6px 0}
 #boxlabShellTest button{min-height:36px;padding:6px 8px;font:inherit;border-radius:6px}
 #boxlabShellTest button[aria-pressed="true"]{background:#e7f1ff;color:#121923;border-color:#e7f1ff}
@@ -34,9 +34,6 @@ html[data-boxlab-shell="separated"] #viewportWrap :where(button,input,select,tex
 #boxlabShellTest .shell-test-summary{font:11px/1.5 system-ui;white-space:pre-wrap;overflow-wrap:anywhere;margin:6px 0}
 #boxlabShellTest .shell-test-discard{display:flex;gap:6px;align-items:flex-start;margin:8px 0}
 #boxlabShellTest input[type="checkbox"]{flex:none;width:20px;height:20px;margin:0}
-/* .1007: UV's original Back to 3D/toolbar must stay unobstructed even when
-   the checklist is expanded. Observe original hidden state; no resize or timer. */
-body:has(#boxlabUVWorkspace:not([hidden])) #boxlabShellTest {
- top:50dvh;bottom:max(140px,calc(env(safe-area-inset-bottom) + 132px));max-height:none;
-}
+/* .1008 UV docking is inline in the checklist owner; Hide fully removes it. */
+#shellTestReopen[hidden]{display:none!important}
 @media(orientation:portrait) and (max-width:900px){#boxlabShellTest{display:none}}

@@ -1,3 +1,14 @@
+## .1008 — running-code identity and unobstructed UV test controls — 28 October 2026
+
+- [x] Screenshot confirms apparent1007 and blocked A UV return; first3 A PASS toggles observed for ONE run, no broad rendering PASS inferred.
+- [x] Network latest may differ; displayed version/title stay on loaded shell through pageshow/visibilitychange/legacy overwrite; no forced recovery.
+- [x] Direct/nested release owner use same1008 URL; layout/drawer parent pins refreshed, protected Multi1.0 unchanged.
+- [x] Actual runner Hide removes full list; small left-centre TEST LIST reopens with ratings preserved. Independent checklist .1008 stamp.
+- [x] Actual app/UV hidden-state observer drives inline docking, restores on Back, stops on Hide/pagehide and resumes appropriately; no viewport/model writes.
+- [x]1006/1007 records and notes retain original release; fresh1008 results remain unrated.
+- [ ]DEVICE1008 checklist header .1008, A UV Back visible/clickable after Hide even if docking fails; reopen list, preserve ratings.
+- [ ]Same B UV check, then finish native A/B; original beta rendering gate remains OPEN.
+
 ## .1007 — checklist must clear UV exit controls — 28 October 2026
 
 - [x] User1006 A UV check blocked by test list; do not count as native compositor evidence.

@@ -2,7 +2,7 @@
 // Move the original canvas once; no second renderer, input owner or live profile swap.
 (() => {
  'use strict';
- const RELEASE='0.36.18.1007',KEY='boxlab.shell-comparison.v1',LIMIT=30;
+ const RELEASE='0.36.18.1008',KEY='boxlab.shell-comparison.v1',LIMIT=30;
  const url=new URL(window.location.href),choice=url.searchParams.get('shellTest');
  const active=choice==='current'||choice==='separated',mode=active?choice:'current';
  const doc=document,app=doc.querySelector('#app'),wrap=doc.querySelector('#viewportWrap'),canvas=doc.querySelector('#viewport');
@@ -16,7 +16,7 @@
   ['startup','Startup — before opening any menu','Look at the bottom RIGHT status (Face mode / nothing selected / Multi) and top-right toolbar. Mark FAIL if either is missing. Rate this FIRST, before collapsing the list or opening File/VIEW.'],
   ['view','VIEW / Facegroups','Open VIEW. Choose Facegroups. Can you see the settings and colours? Close and reopen VIEW once. Mark FAIL for an empty or missing menu.'],
   ['gizmo','Gizmo across the right side','Close VIEW. In Face mode select a face and show its gizmo. Orbit/pan so the selection moves from centre to the right side. Do the gizmo and status remain visible?'],
-  ['uv','UV Editor → Back to 3D','Finish tools. Object mode → radial UV → UV Editor. The checklist parks lower-left so Back to 3D stays clear at the top. Collapse the list for more space. Inspect the right edge, then Back to 3D and Close UV tools. Recheck right status and VIEW contents.'],
+  ['uv','UV Editor → Back to 3D','Finish tools. Object mode → radial UV → UV Editor. The checklist parks lower-left. If it covers ANY control, use Hide list, then the small TEST LIST button to reopen. Inspect the right edge, then Back to 3D at the top and Close UV tools. Recheck right status and VIEW contents.'],
   ['paint','UV Paint → Done / navigation','On the default UV cube tap UV PAINT, then Done. Orbit, two-finger pan and pinch. Recheck right status, toolbar, VIEW and gizmo. No new Fill test is required.']
  ];
  let log={version:1,release:RELEASE,runs:[]},storageOK=true;
@@ -24,7 +24,7 @@
   const saved=window.localStorage.getItem(KEY);
   if(saved&&saved.length<2000000){
    const data=JSON.parse(saved);
-   if(data.version===1&&[RELEASE,'0.36.18.1006'].includes(data.release)&&Array.isArray(data.runs))
+   if(data.version===1&&[RELEASE,'0.36.18.1006','0.36.18.1007'].includes(data.release)&&Array.isArray(data.runs))
     log.runs=data.runs.filter(r=>r&&['current','separated'].includes(r.mode)&&typeof r.id==='string'&&r.ratings&&typeof r.ratings==='object').slice(-LIMIT).map(r=>({...r,release:r.release||data.release}));
   }
  }catch{storageOK=false;}
@@ -39,7 +39,7 @@
  // Read evidence only. A healthy DOM/renderer dimension never implies visible pixels.
  function environment(){
   const rect=canvas.getBoundingClientRect(),scale=window.__boxlabViewportRenderScale;
-  return {time:new Date().toISOString(),width:window.innerWidth,height:window.innerHeight,dpr:window.devicePixelRatio,
+  return {time:new Date().toISOString(),checklistRelease:RELEASE,shellRelease:doc.querySelector('#appVersion')?.dataset?.releaseVersion??null,width:window.innerWidth,height:window.innerHeight,dpr:window.devicePixelRatio,
    canvas:{parent:canvas.parentElement?.id,cssWidth:rect.width,cssHeight:rect.height,width:canvas.width,height:canvas.height},
    requested:scale?.requested??null,savedStartup:scale?.saved??null,statusText:doc.querySelector('#selectionStatus')?.textContent??null,
    renderMode:doc.querySelector('#viewportRenderLooks [data-render].active')?.dataset?.render??null,
@@ -57,10 +57,27 @@
  function el(tag,text){const n=doc.createElement(tag);if(text!==undefined)n.textContent=text;return n;}
  function button(text,action){const b=el('button',text);b.type='button';b.addEventListener('click',action);return b;}
  const header=el('div');header.className='shell-test-header';
- const title=el('strong',active?(mode==='current'?'A · Current shell':'B · Separated canvas'):'Screen comparison · .1007');
+ const title=el('strong',active?(mode==='current'?'A · Current · .1008':'B · Separated · .1008'):'Screen comparison · .1008');
  const body=el('div');body.className='shell-test-body';
  const collapse=button('Collapse',()=>{body.hidden=!body.hidden;collapse.textContent=body.hidden?'Test list':'Collapse';});
- header.append(title,collapse);panel.append(header,body);
+ const launcher=button('TEST LIST · .1008',showPanel);launcher.id='shellTestReopen';launcher.hidden=true;
+ launcher.style.cssText='display:none;position:fixed;left:8px;top:50dvh;z-index:100003;min-height:40px;';
+ const hide=button('Hide list',()=>{panel.hidden=true;launcher.hidden=false;launcher.style.display='block';stopDock();});
+ header.append(title,collapse,hide);panel.append(header,body);
+ // Observe ONLY original app/UV hidden state. Inline positioning avoids reliance
+ // on ancestor :has invalidation; neither viewport dimensions nor renderer change.
+ let lastDock=null,watching=false;
+ const observer=typeof window.MutationObserver==='function'?new window.MutationObserver(syncDock):null;
+ function syncDock(){
+  const editor=doc.querySelector('#boxlabUVWorkspace'),dock=!!editor&&!editor.hidden;
+  if(dock===lastDock)return;lastDock=dock;
+  panel.style.top=dock?'50dvh':'';panel.style.bottom=dock?'max(140px,calc(env(safe-area-inset-bottom) + 132px))':'';panel.style.maxHeight=dock?'none':'';
+ }
+ function stopDock(){observer?.disconnect();watching=false;}
+ function watchDock(){if(observer&&!watching){observer.observe(app,{childList:true,subtree:true,attributes:true,attributeFilter:['hidden']});watching=true;}syncDock();}
+ function showPanel(){panel.hidden=false;launcher.hidden=true;launcher.style.display='none';body.hidden=false;collapse.textContent='Collapse';watchDock();}
+ window.addEventListener('pagehide',stopDock);
+ window.addEventListener('pageshow',()=>{if(!panel.hidden)watchDock();});
  body.append(el('p','Stay in this browser throughout each run. Save your real project first; use the default cube. A and B use the same tools, renderer and resolution setting. Keep orientation and resolution unchanged.'));
  body.append(el('p',active?'Record what you SEE. A FAIL saves a layout snapshot without refreshing the display. Collapse this list after rating startup if it covers tools.':'Start A below, then follow this list after the reload. The list opens automatically on every test load.'));
  const rows=[];
@@ -106,7 +123,7 @@
  body.append(el('small','This is a structural comparison, not a confirmed screen repair. Results stay in this browser (last 30 loads); use Copy results after testing.'));
  function update(){
   for(const r of rows)r.button.setAttribute('aria-pressed',String(run?.ratings[r.key]===r.result));
-  const lines=['.1007 · '+(active?(mode==='current'?'A current':'B separated'):'not started')];
+  const lines=['.1008 · '+(active?(mode==='current'?'A current':'B separated'):'not started')];
   for(const profile of ['current','separated']){
    const runs=log.runs.filter(r=>r.mode===profile),complete=runs.filter(r=>steps.every(([k])=>['pass','fail'].includes(r.ratings[k]))).length;
    const failed=runs.filter(r=>r.hadFailure||steps.some(([k])=>r.ratings[k]==='fail')).length;
@@ -129,9 +146,9 @@
   }
   save();update();if(storageOK)status.textContent=key+' '+result.toUpperCase()+' saved. No display refresh performed.';return true;
  }
- doc.body.appendChild(panel);update();
- const fileButton=button('Screen comparison / test list',()=>{panel.hidden=false;const file=doc.querySelector('#fileMenu');if(file)file.open=false;});fileButton.id='shellComparisonBtn';
+ doc.body.appendChild(panel);doc.body.appendChild(launcher);if(active)watchDock();update();
+ const fileButton=button('Screen comparison / test list',()=>{showPanel();const file=doc.querySelector('#fileMenu');if(file)file.open=false;});fileButton.id='shellComparisonBtn';
  (doc.querySelector('#fileDiagnostics')||doc.querySelector('#fileMenu .top-file-content'))?.appendChild(fileButton);
- window.__boxlabShellComparison={mode:active?mode:null,open:()=>{panel.hidden=false;},environment,rate,launch,
+ window.__boxlabShellComparison={mode:active?mode:null,open:showPanel,environment,rate,launch,
   report:()=>JSON.parse(JSON.stringify(log))};
 })();

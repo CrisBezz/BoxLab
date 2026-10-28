@@ -16401,3 +16401,44 @@ DEVICE1007: reopen A UV Editor; full checklist should park lower-left, Back to3D
 visible/clickable at top. Collapse/reopen list, Back, then check same B flow. Existing
 1006 ratings remain in Copy results; subsequent loads start new unrated entries.
 Resume A/B comparison in app, keeping resolution unchanged. No repeated Fill test.
+
+## .1008 — honest running version + explicit checklist Hide/dock — 28 October 2026
+
+User screenshot ECB0936F-F359-4A03-BAC0-4A49881698AB.png shows visible1007, A,
+UV Editor, checklist still upper-left covering Back to3D. A startup/VIEW/gizmo
+PASS buttons are selected for that observed run; UV blocked, not a compositor FAIL.
+Do not ask for another identical screenshot or repeat cache clearing.
+
+Audit found a concrete version-owner defect: refresh() stamped network version.json
+latest into label/title on pageshow/visibilitychange without loading that release.
+Thus visible1007 ALONE did not prove1007 shell/script/CSS. Old UV instruction text
+in screenshot is consistent with older checklist code; CSS :has failure is NOT
+established. Record outcome as user blocked, not proof of a WebKit selector failure.
+
+Original release-version now retains loaded HTML data-release-version on refresh;
+network latest exposed separately in original API.latest. No automatic reload/heal
+or new updater. Original startup release-bootstrap recovery retained. Audited second
+release import under face-workflow-layout935; repin SAME release owner to1008 so
+both direct/nested imports resolve to one module URL, plus parent layout/drawer cache
+closure. Only import-key changes in layout/drawer; no UI/tool reimplementation.
+
+Checklist title and small reopen button bake their OWN .1008 code stamp, independent
+of app/network label. Explicit Hide list completely hides original section; small
+left-centre TEST LIST .1008 reopens full list, preserving results/notes. Both profiles
+identical controls. In-app UV instructions explain Hide. App-scoped MutationObserver
+reads actual original UV workspace creation/hidden state and sets inline lower-left
+dock; on close clears inline docking. No :has dependency/polling/raw-pointer owner,
+viewport resize, renderer or model/history/UV/Back owner changes. Observer absent
+in normal unopened runner, stops on Hide/pagehide and resumes on reopen/pageshow.
+Retain1006/1007 logs with original per-run release; new1008 load remains unrated.
+
+37 focused comparison/UV/top-layer/release checks PASS, including new actual-owner
+Hide/reopen/dock/lifecycle,1007 provenance, canonical loading and old-shell/new-server
+return behavior. Syntax/whitespace clean. Full-suite/publication evidence follows in
+docs/publication-1008.md. Protected Fill/Multi/frozen/runtime modelling unchanged.
+
+DEVICE1008: browser reload once; CHECKLIST HEADER itself must say .1008. Reopen UV
+Editor in A; checklist parks below toolbar. Hide list must reveal ALL upper controls;
+Back to3D uses original button. TEST LIST reopens ratings, earlier1006/1007 records
+remain in Copy. Same B check; resume comparison. Current UV block remains pending
+native retest; original screen beta blocker OPEN, no permanent pixel repair claimed.

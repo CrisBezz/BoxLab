@@ -7,7 +7,7 @@ const read=p=>fs.readFileSync(new URL('../'+p,import.meta.url),'utf8');
 const source=read('src/shell-comparison.js');
 const key='boxlab.shell-comparison.v1';
 function fixture(profile='',options={}){
- const data=options.data||new Map(),writes=[],navigations=[];let deny=options.deny||false,copyFails=false;
+ const data=options.data||new Map(),writes=[],navigations=[],observers=[],events=new Map();let deny=options.deny||false,copyFails=false;
  class Node{
   constructor(tag='div',id=''){this.tagName=tag.toUpperCase();this.id=id;this.children=[];this.dataset={};this.attrs={};this.listeners={};this.style={};this.hidden=false;this.disabled=false;this.checked=false;this.value='';this._text='';}
   set textContent(v){this._text=v;this.children=[];}get textContent(){return this._text+this.children.map(c=>c.textContent).join('');}
@@ -30,10 +30,12 @@ function fixture(profile='',options={}){
  const storage={getItem(k){if(deny)throw Error('blocked');return data.get(k)??null;},setItem(k,v){if(deny)throw Error('blocked');if(!options.noopStorage)data.set(k,v);}};
  const c={document:doc,URL,Date,Math,window:null};
  c.window=c;c.location={href:'https://example.test/BoxLab/?build=0.36.18.1006'+(profile?'&shellTest='+profile:''),assign:href=>navigations.push(href)};
+ c.addEventListener=(type,fn)=>events.set(type,fn);
+ c.MutationObserver=class{constructor(fn){this.fn=fn;observers.push(this);}observe(root,config){this.root=root;this.config=config;this.active=true;}disconnect(){this.active=false;}};
  Object.assign(c,{localStorage:storage,innerWidth:1366,innerHeight:886,devicePixelRatio:2,navigator:{clipboard:{async writeText(v){if(copyFails)throw Error('denied');writes.push(v);}}}});
  vm.createContext(c);vm.runInContext(source,c);
  const api=c.__boxlabShellComparison,panel=doc.querySelector('#boxlabShellTest'),nodes=()=>all(panel),button=text=>nodes().find(n=>n.tagName==='BUTTON'&&n.textContent===text),role=()=>nodes().find(n=>n.attrs.role==='status');
- return{c,api,doc,html,app,wrap,canvas,status,data,writes,navigations,panel,button,nodes,role,deny:()=>{deny=true;},copyFail:()=>{copyFails=true;},inputCalls:()=>inputCalls};
+ return{c,api,doc,html,app,wrap,canvas,status,data,writes,navigations,panel,button,nodes,role,events,observers,mutate:()=>observers.filter(o=>o.active).forEach(o=>o.fn()),deny:()=>{deny=true;},copyFail:()=>{copyFails=true;},inputCalls:()=>inputCalls};
 }
 test('1006 normal entry is opt-in and A preserves original canvas/UI nodes, listeners and dimensions',()=>{
  const normal=fixture();assert.equal(normal.api.mode,null);assert(normal.panel.hidden);assert.equal(normal.canvas.parentElement,normal.wrap);assert.equal(normal.html.dataset.boxlabShell,undefined);assert.equal(normal.data.size,0);
@@ -93,6 +95,22 @@ test('1006 original Paint image overlay uses the separated canvas parent and pre
 test('1007 existing 1006 partial ratings, notes and first failure survive the patch with original release provenance; fresh load is not pre-rated',()=>{
  const old={id:'native-a-1',mode:'current',started:'2026-10-28',ratings:{startup:'pass',view:'pass',gizmo:'pass'},notes:'UV Back obscured',failure:{release:'1006',canvas:{width:1366}},hadFailure:true};
  const data=new Map([[key,JSON.stringify({version:1,release:'0.36.18.1006',runs:[old]})]]),f=fixture('current',{data});
- const runs=f.api.report().runs;assert.equal(runs.length,2);assert.deepEqual(JSON.parse(JSON.stringify(runs[0])),{...old,release:'0.36.18.1006'});assert.equal(runs[1].release,'0.36.18.1007');assert.deepEqual(Object.keys(runs[1].ratings),[]);
- const next=fixture('separated',{data});assert.equal(next.api.report().runs[0].notes,old.notes);assert.equal(next.api.report().runs[0].release,'0.36.18.1006');assert.equal(next.api.report().runs[2].release,'0.36.18.1007');
+ const runs=f.api.report().runs;assert.equal(runs.length,2);assert.deepEqual(JSON.parse(JSON.stringify(runs[0])),{...old,release:'0.36.18.1006'});assert.equal(runs[1].release,'0.36.18.1008');assert.deepEqual(Object.keys(runs[1].ratings),[]);
+ const next=fixture('separated',{data});assert.equal(next.api.report().runs[0].notes,old.notes);assert.equal(next.api.report().runs[0].release,'0.36.18.1006');assert.equal(next.api.report().runs[2].release,'0.36.18.1008');
+});
+test('1008 actual checklist observes original UV hidden/creation state, docks inline, fully hides/reopens and releases lifecycle observer without touching Back',()=>{
+ for(const profile of ['current','separated']){
+  const f=fixture(profile);f.api.rate('startup','pass');const uv=f.doc.createElement('section');uv.id='boxlabUVWorkspace';uv.hidden=true;let backCalls=0;
+  const back=f.doc.createElement('button');back.addEventListener('click',()=>{backCalls++;uv.hidden=true;});uv.append(back);f.app.append(uv);f.mutate();assert.equal(f.panel.style.top,'');
+  uv.hidden=false;f.mutate();assert.equal(f.panel.style.top,'50dvh');assert.equal(f.panel.style.maxHeight,'none');assert.equal(f.observers[0].root,f.app);assert.deepEqual(Array.from(f.observers[0].config.attributeFilter),['hidden']);
+  f.button('Hide list').click();assert.equal(f.panel.hidden,true);const reopen=f.doc.querySelector('#shellTestReopen');assert.equal(reopen.hidden,false);assert.equal(reopen.style.display,'block');assert.equal(f.observers[0].active,false);
+  assert.equal(f.api.report().runs[0].ratings.startup,'pass');reopen.click();assert.equal(f.panel.hidden,false);assert.equal(reopen.hidden,true);assert.equal(f.panel.style.top,'50dvh');assert.equal(f.observers[0].active,true);
+  back.click();f.mutate();assert.equal(backCalls,1);assert.equal(f.panel.style.top,'');assert.equal(f.panel.style.bottom,'');assert.equal(back.parentElement,uv);
+  f.events.get('pagehide')();assert.equal(f.observers[0].active,false);f.events.get('pageshow')();assert.equal(f.observers[0].active,true);assert.equal(f.navigations.length,0);assert.equal(f.canvas.width,2732);
+ }
+ const normal=fixture();assert.equal(normal.observers[0].active,undefined);normal.api.open();assert(normal.observers[0].active);
+});
+test('1008 prior1007 logs remain tagged correctly and running checklist code stamps itself independently of app label',()=>{
+ const f=fixture('current',{data:new Map([[key,JSON.stringify({version:1,release:'0.36.18.1007',runs:[{id:'old7',mode:'current',ratings:{startup:'pass'},notes:'native screenshot1007'}]})]])});
+ assert.equal(f.api.report().runs[0].release,'0.36.18.1007');assert.equal(f.api.report().runs[0].notes,'native screenshot1007');assert(f.nodes().some(n=>n.tagName==='STRONG'&&n.textContent.includes('.1008')));assert.equal(f.api.environment().checklistRelease,'0.36.18.1008');
 });

@@ -1,3 +1,14 @@
+## .1008 — verify executed code; resume comparison with Hide escape — 28 October 2026
+
+Screenshot1007 still obstructs A UV Back. Found original release-version advanced
+visible label on app return without reloading code; fix label to loaded shell and
+canonicalize both current release-owner loaders. This is a confirmed metadata bug,
+not proven source of right-region pixel loss. Checklist independently stamps1008.
+Explicit Hide/reopen guarantees tester can clear viewport controls, inline docking
+observes actual UV state without :has. Same changes A/B; preserve prior logs/PASSes.
+Resume native comparison after one1008 load. Keep original screen beta blocker OPEN;
+no broad reskin or modelling change. Do not interpret stale labels as runtime proof.
+
 ## .1007 — unblock comparison before interpreting its results — 28 October 2026
 
 A's UV Back control was covered by the comparison checklist. Fix only test-list

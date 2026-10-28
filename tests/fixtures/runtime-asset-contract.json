@@ -167,9 +167,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1004",
+      "url": "./src/drawer-ui.js?v=0.36.18.1008",
       "target": "src/drawer-ui.js",
-      "sha256": "f73d394f28bd179b05f0717fcf8ef1614f5902b64b048477611d7f9b4b7ccc8e"
+      "sha256": "17eedb8ff3541181ec43e476fd94c8373173eaec2ff1b4ad81ecbccaa5126be6"
     },
     {
       "owner": "index.html",
@@ -378,15 +378,15 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.1007",
+      "url": "./src/release-bootstrap.js?v=0.36.18.1008",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1007",
+      "url": "./src/release-version.js?v=0.36.18.1008",
       "target": "src/release-version.js",
-      "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
+      "sha256": "b36a65862749293957a1a53bdb2c90d42f7b538e5eaccd815224b5465145efd5"
     },
     {
       "owner": "index.html",
@@ -876,9 +876,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.999",
+      "url": "./face-workflow-layout.js?v=0.36.18.1008",
       "target": "src/face-workflow-layout.js",
-      "sha256": "daa37a51251850ef5d12e0ac47402a8682f455e58e2ef97d2eb0d9b138860945"
+      "sha256": "059b9d99324f306b734b7fd9063fb7fcd8fcce79ebe356ae21cd06cec449c2b2"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1373,9 +1373,9 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.935",
+      "url": "./release-version.js?v=0.36.18.1008",
       "target": "src/release-version.js",
-      "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
+      "sha256": "b36a65862749293957a1a53bdb2c90d42f7b538e5eaccd815224b5465145efd5"
     },
     {
       "owner": "src/face-workflow-layout.js",
@@ -3344,15 +3344,15 @@
     },
     {
       "owner": "index.html",
-      "url": "./shell-comparison.css?v=0.36.18.1007",
+      "url": "./shell-comparison.css?v=0.36.18.1008",
       "target": "shell-comparison.css",
-      "sha256": "85d04264195cd1362f2623790f8531265f7c08c9489927a9db44bb641e19fc17"
+      "sha256": "5dbf64999ca10c3069432b59cf545ecbd499ff1216d17547416f8f476f4c0f49"
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1007",
+      "url": "./src/shell-comparison.js?v=0.36.18.1008",
       "target": "src/shell-comparison.js",
-      "sha256": "619b8d5c46bc5356d4a144ab4898f89078018ea0eab9bb7bef90937288ce001c"
+      "sha256": "eaab5d235cae866886914bb32802680d61560f555dab2421ef2eaee6768efdbe"
     }
   ]
 }

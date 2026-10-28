@@ -1,8 +1,10 @@
 // BoxLab release version owner.
-// version.json is the network source of truth; the HTML shell stamp prevents legacy modules from owning the visible version.
+// version.json announces available releases; only the loaded shell identifies
+// running code. Returning to an old tab must never advertise unexecuted code.
 const label=document.querySelector('#appVersion');
 const SHELL_VERSION=String(label?.dataset?.releaseVersion||'').trim();
 let VERSION=(SHELL_VERSION||document.title.match(/BoxLab\s+v([^\s]+)/i)?.[1]||label?.textContent?.replace(/^v/,'')||'').trim();
+let LATEST_VERSION=null;
 
 globalThis.__boxlabReleaseVersionObserver?.disconnect?.();
 
@@ -13,7 +15,7 @@ function stamp(version=VERSION){
   if(label&&label.textContent!==`v${VERSION}`)label.textContent=`v${VERSION}`;
   const title=`BoxLab v${VERSION}`;
   if(document.title!==title)document.title=title;
-  globalThis.__boxlabReleaseVersion={version:VERSION,stamp,refresh};
+  globalThis.__boxlabReleaseVersion={version:VERSION,latest:LATEST_VERSION,stamp,refresh};
 }
 
 async function refresh(){
@@ -24,8 +26,8 @@ async function refresh(){
     if(!response.ok)throw new Error(`release manifest ${response.status}`);
     const data=await response.json();
     const latest=String(data?.version||'').trim();
-    if(latest)stamp(latest);
-    else stamp(SHELL_VERSION||VERSION);
+    if(latest)LATEST_VERSION=latest;
+    stamp(SHELL_VERSION||VERSION);
   }catch(error){
     console.warn('BoxLab release version check failed',error);
     stamp(SHELL_VERSION||VERSION);
