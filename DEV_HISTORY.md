@@ -16866,3 +16866,14 @@ whether file is local/iCloud/another provider; don't change decoding based on an
 unopened file. Broader native NOM geometry/UV gate and paint/material stage remain
 as recorded in1013. User's positive right-side observation retained.
 Publication evidence: docs/publication-1014.md (verification follows).
+
+.1014 publication verified — 29 October 2026:
+Runtime8a33141cc957ce054294a9a08141257d6c11d39a; tested/uploaded tree
+e7d18056cc99d81c0f0618a5f70674ad89101d31. All12 blobs hash-verified before atomic
+non-forced expected-main update; fetched main tree exactly matches local checkout.
+Pages40827906168 completed SUCCESS.10/10 cache-busted live files match, including
+unfiltered shell, release-loader chain and unchanged importer/decoder/Multi1.0.
+26 focused checks PASS,syntax/whitespace clean. Full local1013 baseline2983 PASS
+retained; no fresh full local run for shell-only change. Hosted40827907551 still
+in_progress at proof,not claimed PASS. .1014 LIVE/READY for native chooser retest;
+actual iPad Files selectability and subsequent NOM import remain pending.

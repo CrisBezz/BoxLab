@@ -5,7 +5,7 @@
 - [x] Supported extensions still validated by app; unrelated extension refuses before file read or object addition. NOM content parser unchanged.
 - [x]26 focused checks PASS; original NOM compressed/raw/legacy/native donor, actual import/UV SaveOpen/GLB/NOM tests and release identity retained. Syntax/whitespace clean.
 - [x]Full1013 baseline2983 PASS retained; no fresh full local rerun for this shell-only change. Decoder/importer/exporter/protected navigation/UI/Multi/betas unchanged.
-- [ ]Publication/Pages/live proof follows.
+- [x]Runtime8a33141c/treee7d18056/Pages40827906168 SUCCESS;10/10 live byte matches; docs/publication-1014.md. Hosted40827907551 running at proof.
 - [ ]DEVICE1014 refresh; File Import: .nom can be selected and import starts. Existing OBJ/GLB remains selectable. If still grey, identify Files provider/location.
 
 ## .1013 — native Nomad geometry import — 29 October 2026

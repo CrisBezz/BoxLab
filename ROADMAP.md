@@ -1,6 +1,7 @@
 ## .1014 — unfiltered native file chooser for NOM — 29 October 2026
 
-Status: .1014 validated, publishing. Baseline maind5bf9f6a/runtime2e31ed3d (.1013).
+Status: .1014 LIVE / READY for testing. Runtime8a33141c; Pages40827906168 SUCCESS;
+10/10 live byte matches. See docs/publication-1014.md. Baseline maind5bf9f6a/runtime2e31ed3d (.1013).
 User reports NOM files GREYED OUT in iPad Files before selection. This blocks native
 1013 acceptance before decoder runs; do not treat as a parse failure or native PASS.
 
@@ -36,7 +37,18 @@ native geometry import should run. Try existing OBJ/GLB once. If still grey, rep
 whether file is local/iCloud/another provider; don't change decoding based on an
 unopened file. Broader native NOM geometry/UV gate and paint/material stage remain
 as recorded in1013. User's positive right-side observation retained.
-Publication evidence: docs/publication-1014.md (verification follows).
+Publication evidence: docs/publication-1014.md (verified).
+
+.1014 publication verified — 29 October 2026:
+Runtime8a33141cc957ce054294a9a08141257d6c11d39a; tested/uploaded tree
+e7d18056cc99d81c0f0618a5f70674ad89101d31. All12 blobs hash-verified before atomic
+non-forced expected-main update; fetched main tree exactly matches local checkout.
+Pages40827906168 completed SUCCESS.10/10 cache-busted live files match, including
+unfiltered shell, release-loader chain and unchanged importer/decoder/Multi1.0.
+26 focused checks PASS,syntax/whitespace clean. Full local1013 baseline2983 PASS
+retained; no fresh full local run for shell-only change. Hosted40827907551 still
+in_progress at proof,not claimed PASS. .1014 LIVE/READY for native chooser retest;
+actual iPad Files selectability and subsequent NOM import remain pending.
 
 ## .1013 — native NOM polygon import — 29 October 2026
 
