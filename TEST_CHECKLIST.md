@@ -1,3 +1,10 @@
+## .1014 protected user acceptance — 29 October 2026
+
+- [x] Explicit user “PERFECT 1014 PASS”: protect native NOM chooser and accepted selection/import workflow. Do not reintroduce picker accept filtering.
+- [x] Hosted full regression40827907551 SUCCESS and Pages40827906168 SUCCESS rechecked after publication. No new code/build for this acceptance record.
+- [x] Current runtime remains1014; NOM paint/material/layer preservation remains unimplemented. No full colour/material round-trip acceptance inferred.
+- [ ] Optional existing-scope confidence check: imported NOM Save/Open .boxlab, mapped UV Editor. No new mandatory tests requested.
+
 ## .1014 — selectable NOM files / native chooser — 29 October 2026
 
 - [x] Record1013 device blocker: NOM greyed out BEFORE selection; decoder/native import remains ungraded.
@@ -6,7 +13,7 @@
 - [x]26 focused checks PASS; original NOM compressed/raw/legacy/native donor, actual import/UV SaveOpen/GLB/NOM tests and release identity retained. Syntax/whitespace clean.
 - [x]Full1013 baseline2983 PASS retained; no fresh full local rerun for this shell-only change. Decoder/importer/exporter/protected navigation/UI/Multi/betas unchanged.
 - [x]Runtime8a33141c/treee7d18056/Pages40827906168 SUCCESS;10/10 live byte matches; docs/publication-1014.md. Hosted40827907551 running at proof.
-- [ ]DEVICE1014 refresh; File Import: .nom can be selected and import starts. Existing OBJ/GLB remains selectable. If still grey, identify Files provider/location.
+- [x]DEVICE1014 user PASS: native NOM picker/import workflow accepted; reported grey-file blocker closed for tested case.
 
 ## .1013 — native Nomad geometry import — 29 October 2026
 

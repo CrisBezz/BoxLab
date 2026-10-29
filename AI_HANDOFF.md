@@ -1,3 +1,27 @@
+## .1014 user PASS / next recommendation — 29 October 2026
+
+Current: .1014 LIVE and USER ACCEPTED. User explicitly: “PERFECT 1014 PASS”.
+Protect the unfiltered native mesh chooser and accepted NOM selection/import flow;
+do not reinstate accept filtering, wildcard MIME workarounds or duplicate pickers.
+This supersedes earlier .1014 pending-picker notes below. It does not add paint,
+materials or editable layers to the geometry/UV-only implementation.
+Runtime8a33141c, publication docs/publication-1014.md. Hosted full regression
+40827907551 now completed SUCCESS; Pages40827906168 SUCCESS (rechecked).
+User's positive right-side-screen observation remains recorded; no new A/B batch.
+
+User asks “Whats next?”; this is a roadmap discussion, not a new feature build.
+Recommended next narrow candidate: native NOM painted-colour preservation, so the
+imported mesh can retain Nomad appearance. Audit existing vertex-colour preview,
+project codec and GLB/NOM export owners plus source-layer compositing first; define
+bounded supported channels before implementation. Reuse existing resource/geometry
+owners, no duplicate renderer or paint kernel. Subsequent stages: roughness/metalness,
+then embedded image textures and richer layer/repeat support. Those are proposals,
+not features shipped or automatic commitments. .1011 gesture/.1012 gizmo/compact
+individual feel has no separate explicit grading beyond supplied build feedback.
+No runtime code, release version, cache pins or new build changed in this session.
+No new mandatory device test. Optional confidence check: imported NOM -> Save/Open
+.boxlab and mapped UV Editor; this is existing .1013 geometry/UV scope, not colour.
+
 ## .1014 — unfiltered native file chooser for NOM — 29 October 2026
 
 Status: .1014 LIVE / READY for testing. Runtime8a33141c; Pages40827906168 SUCCESS;
