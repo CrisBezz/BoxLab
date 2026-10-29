@@ -1,3 +1,12 @@
+## Planned native NOM material-retention gates — 29 October 2026
+
+User direction: UV/embedded textures/PBR first; vertex paint deferred. Strategy only;
+.1014 remains accepted, no implementation or new device-test request this session.
+
+- [ ] Future NOM->.boxlab Save/Open->NOM preserves original image byte hashes/bit depth, map bindings/UV settings/material factors (including opacity/emissive/displacement), with unchanged supported mapping.
+- [ ] Future UV/topology/import-scale handling marks stale bindings and preserves retained resources; no silent map loss, resampling or false rendering support.
+- [ ] Future slots distinguish displayed from retained-only maps. Emissive self-lit preview, opacity cutout/blending and optional bounded displacement preview are separate device/benchmark gates.
+
 ## .1014 protected user acceptance — 29 October 2026
 
 - [x] Explicit user “PERFECT 1014 PASS”: protect native NOM chooser and accepted selection/import workflow. Do not reintroduce picker accept filtering.

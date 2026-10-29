@@ -1,3 +1,51 @@
+## Texture/PBR priority and retained-map proposal — 29 October 2026
+
+Current runtime remains .1014 LIVE / USER PASS. User explicitly corrects earlier
+vertex-paint recommendation: low-poly BoxLab needs UVs, embedded textures and PBR;
+vertex colours are secondary/deferred until mesh density becomes practical. This
+supersedes the painted-vertex-colour next-build proposal below. No new build asked
+for or implemented during this strategy discussion.
+
+User asks whether opacity/displacement/emissive can be retained without display,
+or should be implemented. Recommendation (proposal, not shipped): preserve all
+native NOM map slots first as an encoded material resource bundle, independently
+of renderer support. Retain original encoded bytes/bit depth, slot/image/material
+associations, UV set/transforms/sampling/channel packing, colour-space semantics,
+factors and displacement strength/midpoint/world/projection settings. Keep original
+import scale/unit semantics; do not silently apply world displacement values to a
+rescaled mesh. Reuse existing resource pools/codecs/export owners with truthful
+native NOM provenance; no fake GLB provenance or second material/paint kernel.
+
+Pass-through acceptance gate: NOM import -> .boxlab Save/Open -> NOM export retains
+map byte hashes, assignments and settings when supported source mapping is unchanged.
+UV/topology edits must track compatibility and clearly flag invalid bindings; no
+silent resource deletion, re-encoding/resizing or false preview/round-trip claims.
+Memory budgets still apply; retain unused maps encoded, avoid eager GPU decode.
+Slots can show available preview versus retained-for-export status.
+
+Audit: project-glb-resources already pools/preserves imported GLB bytes + material
+JSON; nomad-export-core/nativeMaterialMaps and nomad-displacement-map already export
+supported GLB-derived emissive/displacement data. Native NOM import still explicitly
+ignores paint/material/image resources. Existing surface preview accepts opaque
+materials and currently uses a colour MeshBasicMaterial overlay. Therefore current
+BoxLab is not a complete native NOM PBR viewer; reconnect/extend original owners.
+Existing native export has strict source/projection/sampler/material limits, so raw
+retention and corresponding native NOM export support need explicit tests first.
+
+Rendering recommendation after retention: base colour + normal/roughness/metalness;
+emissive preview early (self-lit appearance, not automatic scene lighting/bloom),
+opacity next (cutout then blending/sorting/picking/shadows), displacement retained
+only initially. Displacement moves existing vertices; detailed results need enough
+vertices, not mandatory automatic subdivision. Later optional bounded render-only
+subdivision/displacement must preserve editable Base and pass device memory/speed
+benchmarks. No dense preview or performance benefit implied in current build.
+Primary renderer reference: https://threejs.org/docs/pages/MeshStandardMaterial.html .
+
+Next narrow candidate is native NOM texture/material retention and round-trip
+validation; scope preview additions separately as audit permits. This is a recorded
+recommendation, not implementation authorization for a new feature build. No
+runtime/release/cache changes and no new hands-on tests this session.
+
 ## .1014 user PASS / next recommendation — 29 October 2026
 
 Current: .1014 LIVE and USER ACCEPTED. User explicitly: “PERFECT 1014 PASS”.
