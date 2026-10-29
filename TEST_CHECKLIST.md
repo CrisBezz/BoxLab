@@ -8,7 +8,7 @@
 - [x] Compact picker fit covers320/390/450/678/760 widths; actual sync moves picker only. Icon targets44/48px, Paint292px, normal wide layout restores.
 - [x] 35 focused +22 contract/corner checks PASS; nine new tests. Dark/light projected SVG inspected (not browser/native proof).
 - [x] Full local2974 PASS/0FAIL/0skip/0cancel (104.38s); syntax/whitespace clean.
-- [ ] Publication/live byte verification follows before completion.
+- [x] Runtimeb6a6d9d8 / tree5b091b02 / Pages40819129157 SUCCESS;17/17 live files byte-match; docs/publication-1012.md. Hosted40819129612 still running at proof.
 - [ ] DEVICE1012 grey ball over light/dark model; front-only RGB arcs; grey drag rotates about view with faint yellow press, UndoRedo and Multi/group.
 - [ ] Move centre/XYZ/planes/orange Scale/corner controls/Exact remain usable; no accidental rear-ring grabs.
 - [ ] Split View -> Continue compact; modes/radial/Paint icons fit and launch same tools; Done/UndoRedo, pane widening restores labels. Check full-screen return/no-inertia/twofinger twist and Paint/light gestures.

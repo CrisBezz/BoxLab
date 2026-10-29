@@ -1,11 +1,12 @@
 ## .1012 — view-axis rotation ball and optional compact Split View — 29 October 2026
 
-Status: .1012 validated on main, publishing; baseline2c6899d3 / live1011 f9899386.
+Status: .1012 LIVE / READY for testing. Runtime b6a6d9d8; Pages40819129157 SUCCESS.
+17/17 live byte matches; baseline2c6899d3. Full proof: docs/publication-1012.md.
 Full local Node24.22.1: 2974 PASS / 0 FAIL / 0 skipped / 0 cancelled (104.38s).
 Syntax/whitespace clean. Protected Multi1.0, frozen betas, main/free-orbit1011,
-Paint/three-finger1010 unchanged. Publication/live verification follows.
+Paint/three-finger1010 unchanged. Publication verified below.
 
-Publication and final regression evidence will be recorded in docs/publication-1012.md.
+Publication and final regression evidence: docs/publication-1012.md.
 User .1010 PASS and completed .1009 A/B/A PASS remain protected; no .1011 or .1012
 native acceptance inferred. No repeat comparison batch requested; A stays default.
 
@@ -51,7 +52,7 @@ Main/free-orbit1011, Paint/three-finger1010, accepted icon CSS and protected Mul
 and frozen Beta2–7 remain byte/pin unchanged. No large UI cleanup applied.
 
 Validation: 9 new actual-owner/presentation checks; 35 focused +22 contract/corner
-checks pass. Final complete-suite result recorded below before publication. Older
+checks pass. Final complete suite:2974 PASS/0FAIL/0skip/0cancel (104.38s). Older
 .358 object-origin fixed-pin assertion now uses reviewed asset contract for the
 explicitly requested owner change; protected Multi1.0 assertion unchanged. .712
 screen-circle assertion follows new grey markup but retains View owner and Move
@@ -67,6 +68,17 @@ from1010/1011 remain; native1011 feel and1012 checks pending explicit PASS.
 
 Next: respond to native gizmo/compact feedback, keep visibility fault watch honest;
 no new A/B batches or unsupported permanent compositor repair claim.
+
+.1012 publication verified — 29 October 2026:
+Runtime b6a6d9d8c26f594a73b24ad82803afedd469566b; tested/uploaded tree
+5b091b02c0efcaa67d076f8f1648a78c0bd28bbd. All22 blobs verified before atomic,
+non-forced expected-main update; fetched main exactly matches tested local tree.
+Pages40819129157 completed SUCCESS.17/17 cache-busted live files byte-match,
+including all changed runtime/loader assets plus protected navigation/Paint/Multi.
+Local2974 PASS/0FAIL/0skip/0cancel (104.38s), final7 release checks PASS.
+Hosted40819129612 in_progress at proof; not claimed PASS.10 protected navigation,
+Paint, Multi and icon files are byte-identical to baseline. .1012 LIVE/READY for
+native gizmo/compact checks; no native1011/1012 PASS inferred. See publication proof.
 
 ## .1011 — immediate navigation and two-finger anchored twist — 29 October2026
 

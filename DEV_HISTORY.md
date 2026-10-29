@@ -16737,3 +16737,14 @@ no new A/B batches or unsupported permanent compositor repair claim.
 Full local Node24.22.1: 2974 PASS / 0 FAIL / 0 skipped / 0 cancelled (104.38s).
 Syntax/whitespace clean. Protected Multi1.0, frozen betas, main/free-orbit1011,
 Paint/three-finger1010 unchanged. Publication/live verification follows.
+
+.1012 publication verified — 29 October 2026:
+Runtime b6a6d9d8c26f594a73b24ad82803afedd469566b; tested/uploaded tree
+5b091b02c0efcaa67d076f8f1648a78c0bd28bbd. All22 blobs verified before atomic,
+non-forced expected-main update; fetched main exactly matches tested local tree.
+Pages40819129157 completed SUCCESS.17/17 cache-busted live files byte-match,
+including all changed runtime/loader assets plus protected navigation/Paint/Multi.
+Local2974 PASS/0FAIL/0skip/0cancel (104.38s), final7 release checks PASS.
+Hosted40819129612 in_progress at proof; not claimed PASS.10 protected navigation,
+Paint, Multi and icon files are byte-identical to baseline. .1012 LIVE/READY for
+native gizmo/compact checks; no native1011/1012 PASS inferred. See publication proof.
