@@ -1,5 +1,9 @@
 ## .1011 — immediate navigation and two-finger anchored twist — 29 October2026
 
+Current:1011 LIVE,runtimef9899386,tested treeb72a6e24;Pages40807730838 SUCCESS,
+11/11 live byte matches. Local2965 PASS;hosted CI in_progress at proof.
+Publication evidence:docs/publication-1011.md.1010 PASS protected,1011 feel pending.
+
 User “1010 PASS” protects unrestricted one-finger orbit,Studio3finger light,Paint
 vertical size/preview,presets/larger radius and original history/navigation behavior.
 User explicitly reverses inertia preference: remove its tail. Do not preserve1010
@@ -3285,7 +3289,7 @@ splitting paths alone makes painting seamless or that CPU timings establish M2 p
 
 User1010 PASS is protected,inertia explicitly superseded by1011 no-tail request.
 1011 adds anchored two-finger screen-plane twist using existing controller;one-finger
-3D orbit and1010 lighting/Paint/history remain. Verify publication,then native1011
+3D orbit and1010 lighting/Paint/history remain. Publication verified;next native1011
 pan/pinch/twist,release-stop and contact transition feel.1009 A/B complete;keep A.
 
 ## Protected interaction and modelling baseline
