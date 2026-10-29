@@ -17070,3 +17070,16 @@ no user acceptance inferred. All four handoff documents updated; retained NOM/PB
 proposal remains separate. DEVICE1016: Object rings/greyball direction and scale
 outward/inward from all quadrants; multi-vertex/edge/face Move/Rotate/Scale with
 finger/Pencil; selections,UndoRedo,tap/cancel and Multi/group sanity.
+
+## .1016 user PASS — 30 October 2026
+
+User explicitly replies “PASS” to shipped .1016 gizmo repair. Current build1016
+(runtime25cef857) is LIVE / USER ACCEPTED. Protect accepted Object rotation/scale
+directions, explicit handle constraints over Axis Snap, component touch/Pencil/mouse
+handoff and existing history/selection behaviour. This supersedes earlier1016
+pending native acceptance notes; no separate1015 native NOM acceptance inferred.
+No runtime, release markers or cache pins changed for this acceptance record.
+No fresh automated run or mandatory hands-on test needed for documentation only.
+Next recorded candidate remains native NOM texture/PBR retention with Save/Open/NOM
+round-trip verification, separately scoped from rendering/displacement preview.
+No new feature build requested by PASS alone.

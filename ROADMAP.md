@@ -1,3 +1,16 @@
+## .1016 user PASS — 30 October 2026
+
+User explicitly replies “PASS” to shipped .1016 gizmo repair. Current build1016
+(runtime25cef857) is LIVE / USER ACCEPTED. Protect accepted Object rotation/scale
+directions, explicit handle constraints over Axis Snap, component touch/Pencil/mouse
+handoff and existing history/selection behaviour. This supersedes earlier1016
+pending native acceptance notes; no separate1015 native NOM acceptance inferred.
+No runtime, release markers or cache pins changed for this acceptance record.
+No fresh automated run or mandatory hands-on test needed for documentation only.
+Next recorded candidate remains native NOM texture/PBR retention with Save/Open/NOM
+round-trip verification, separately scoped from rendering/displacement preview.
+No new feature build requested by PASS alone.
+
 .1016 publication verified — 30 October 2026:
 Runtime25cef85786cab23110e7d95d4776e05a8f3053d9; tested/uploaded tree
 9d729ee31107db225a9851206746aa37df91856a exactly matches fetched origin/main.
@@ -14,7 +27,7 @@ finger/Pencil; selections,UndoRedo,tap/cancel and Multi/group sanity.
 
 ## .1016 — gizmo direction and component-touch repair — 30 October 2026
 
-Status:1016 LIVE / READY for testing; runtime25cef857. Baseline main97a294d0/runtime
+Status:1016 LIVE / USER ACCEPTED; runtime25cef857. Baseline main97a294d0/runtime
 6511ca38 (.1015). User reports opposite Object rotation/scale and component gizmos
 not acting. No1015 native PASS inferred;1014 acceptance and1015 NOM affine fix retained.
 
