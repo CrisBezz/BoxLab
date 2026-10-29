@@ -17013,7 +17013,7 @@ regression test; second cube-only copy is useful geometry/UV sanity check.
 
 ## .1016 — gizmo direction and component-touch repair — 30 October 2026
 
-Status: validated locally; publication pending. Baseline main97a294d0/runtime
+Status:1016 LIVE / READY for testing; runtime25cef857. Baseline main97a294d0/runtime
 6511ca38 (.1015). User reports opposite Object rotation/scale and component gizmos
 not acting. No1015 native PASS inferred;1014 acceptance and1015 NOM affine fix retained.
 
@@ -17056,3 +17056,17 @@ orange ring outward/inward on left/right/top/bottom; select several vertices, ed
 or face -> expand gizmo -> Move/Rotate/Scale with finger/Pencil; selection/UndoRedo/
 Cancel and Multi/group sanity. Next follow native feedback, then NOM map-retention
 proposal separately. Publication evidence: docs/publication-1016.md.
+
+.1016 publication verified — 30 October 2026:
+Runtime25cef85786cab23110e7d95d4776e05a8f3053d9; tested/uploaded tree
+9d729ee31107db225a9851206746aa37df91856a exactly matches fetched origin/main.
+All15 blobs hash-verified before atomic non-forced expected-main update. Pages40958753692
+completed SUCCESS;12/12 fresh live byte matches: manifest,shell,transform-upgrade,
+object-origin,drawer,face-layout,bootstrap,release,comparison and unchanged Total Gizmo,
+Multi1.0 and NOM decoder. Full local Node24.22.1:2992 PASS/0FAIL/0skip/0cancel
+(114.10s);40 focused PASS,syntax/whitespace clean. Hosted40958754318 remains
+in_progress at proof,not claimed PASS. .1016 LIVE / READY for native iPad tests;
+no user acceptance inferred. All four handoff documents updated; retained NOM/PBR
+proposal remains separate. DEVICE1016: Object rings/greyball direction and scale
+outward/inward from all quadrants; multi-vertex/edge/face Move/Rotate/Scale with
+finger/Pencil; selections,UndoRedo,tap/cancel and Multi/group sanity.
