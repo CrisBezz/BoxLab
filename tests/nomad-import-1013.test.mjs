@@ -87,3 +87,10 @@ test('1013 native import retains disconnected coincident indices rather than run
  const native=buildNomadProject([{name:'Coincident spare',mesh,settings:{}}],template).bytes,r=importRuntime();
  await r.c.importFile({name:'Spare.nom',size:native.length,arrayBuffer:async()=>native.buffer});assert.equal(r.added.length,1);assert.equal(r.added[0].mesh.vertices.length,9);assert.equal(r.added[0].name,'Coincident spare');
 });
+
+test('1014 mesh chooser has no native type filter; original dispatcher still rejects unrelated files before reading',async()=>{
+ const html=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8'),input=html.match(/<input\b[^>]*id="importMeshInput"[^>]*>/)?.[0];
+ assert(input);assert.match(input,/type="file"/);assert.doesNotMatch(input,/\b(?:accept|capture|multiple)\s*=/);
+ const r=importRuntime();await r.c.importFile({name:'Notes.txt',size:3,arrayBuffer:()=>{throw Error('must not read');}});
+ assert.equal(r.added.length,0);assert.match(r.c.status.textContent,/choose an OBJ, GLB, GLTF or NOM file/);
+});

@@ -167,9 +167,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1013",
+      "url": "./src/drawer-ui.js?v=0.36.18.1014",
       "target": "src/drawer-ui.js",
-      "sha256": "db2f9085e8660c7b50b84ae9190e29c24fb829a2e34e3279b6f7bb43c0c2cc22"
+      "sha256": "ec85f4d75e5f1677ca326a039e3d8803052c595b52501656b980f88579108de6"
     },
     {
       "owner": "index.html",
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.1013",
+      "url": "./src/release-bootstrap.js?v=0.36.18.1014",
       "target": "src/release-bootstrap.js",
       "sha256": "fe3e41b43e5df07fb5252936bff4e2a7c4f47fcb38f89b2cb6204fc5712e1698"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1013",
+      "url": "./src/release-version.js?v=0.36.18.1014",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -876,9 +876,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1013",
+      "url": "./face-workflow-layout.js?v=0.36.18.1014",
       "target": "src/face-workflow-layout.js",
-      "sha256": "c31db714d06f8ababdd14d79c041e4884df10c5d834ec2d5e7194340084d8ac4"
+      "sha256": "69e97a057ffd4d469e3ee0929c78e340ce487c0ce822a21851f5c654d59ebbad"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1373,7 +1373,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1013",
+      "url": "./release-version.js?v=0.36.18.1014",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -3350,9 +3350,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1013",
+      "url": "./src/shell-comparison.js?v=0.36.18.1014",
       "target": "src/shell-comparison.js",
-      "sha256": "41ff90dddb0c8f9af1b5201776612a3eb173cdc102f3bdab784f74377fd87289"
+      "sha256": "dbb24385147cda7cbc21abc7a13b5601dd61eb5bfc70fb8474aa8c43503cf7ff"
     },
     {
       "owner": "src/main.js",

@@ -1,3 +1,13 @@
+## .1014 — selectable NOM files / native chooser — 29 October 2026
+
+- [x] Record1013 device blocker: NOM greyed out BEFORE selection; decoder/native import remains ungraded.
+- [x] Original #importMeshInput has no accept/capture/multiple filter; no dynamic module reinstates it. Same button/input/listener/dispatcher retained.
+- [x] Supported extensions still validated by app; unrelated extension refuses before file read or object addition. NOM content parser unchanged.
+- [x]26 focused checks PASS; original NOM compressed/raw/legacy/native donor, actual import/UV SaveOpen/GLB/NOM tests and release identity retained. Syntax/whitespace clean.
+- [x]Full1013 baseline2983 PASS retained; no fresh full local rerun for this shell-only change. Decoder/importer/exporter/protected navigation/UI/Multi/betas unchanged.
+- [ ]Publication/Pages/live proof follows.
+- [ ]DEVICE1014 refresh; File Import: .nom can be selected and import starts. Existing OBJ/GLB remains selectable. If still grey, identify Files provider/location.
+
 ## .1013 — native Nomad geometry import — 29 October 2026
 
 - [x] User: right-side screen issue seems fixed; record positive device observation, no permanent-root-cause or full1012 PASS inference. Existing1010/1009 PASS protected.

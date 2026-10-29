@@ -1,3 +1,43 @@
+## .1014 — unfiltered native file chooser for NOM — 29 October 2026
+
+Status: .1014 validated, publishing. Baseline maind5bf9f6a/runtime2e31ed3d (.1013).
+User reports NOM files GREYED OUT in iPad Files before selection. This blocks native
+1013 acceptance before decoder runs; do not treat as a parse failure or native PASS.
+
+Audit: only #importMeshInput shell attribute sets its type restriction; importer
+and later modules never rewrite accept. Existing project Open already uses an
+unfiltered input. Remove ONLY accept=".obj,.glb,.gltf,.nom" from original mesh chooser.
+No wildcard MIME replacement, guessed NOM MIME/UTType, duplicate picker, renaming,
+permissions flow or new JS file handler. Button still names supported formats;
+original dispatcher refuses unrelated extensions before reading and original NOM
+parser validates signature/sections/geometry after selection. Importer/core bytes
+and1013 cache pins retained, including limits and geometry/UV-only scope.
+
+This targets native type filtering; exact iPad Files/provider cause not proven.
+HTML Standard explains accept is a native picker hint, using platform type tables:
+https://html.spec.whatwg.org/multipage/input.html#attr-input-accept . Historical
+WebKit229456 documents greyed-out iOS files with wildcard filtering; resolved bug
+is not a diagnosis of current device. Never substitute accept="*/*" here.
+https://bugs.webkit.org/show_bug.cgi?id=229456 . Native picker validation remains
+pending; no DOM/Node claim that Safari's actual chooser has been repaired.
+
+26 focused checks PASS: original NOM decoder/actual dispatch/codec/GLB/NOM tests,
+import controls, current release/assets/identity; one new guard asserts the same
+shell chooser is unfiltered and unrelated files are refused before reads/adds.
+Syntax/whitespace clean. Shell-only feature fix; full local baseline1013 had2983
+PASS, not rerun for unchanged decoder/geometry. Hosted CI result recorded at proof.
+Canonical1014 release/bootstrap/comparison + release->face-layout->drawer pins
+reviewed; comparison migrates1013 with ratings intact, A default unchanged.
+Protected Multi1.0/frozenbetas, NOM importer/export/donor,1012 gizmo+compact,
+1011 navigation and1010 Paint/three-finger code remain unchanged.
+
+DEVICE1014: refresh to1014; File Import -> NOM should be selectable, then original
+native geometry import should run. Try existing OBJ/GLB once. If still grey, report
+whether file is local/iCloud/another provider; don't change decoding based on an
+unopened file. Broader native NOM geometry/UV gate and paint/material stage remain
+as recorded in1013. User's positive right-side observation retained.
+Publication evidence: docs/publication-1014.md (verification follows).
+
 ## .1013 — native NOM polygon import — 29 October 2026
 
 Status: .1013 LIVE / READY for testing. Runtime2e31ed3d; Pages40821570325 SUCCESS;
