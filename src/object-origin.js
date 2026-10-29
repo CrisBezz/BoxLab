@@ -280,7 +280,7 @@ function startPivotGesture(event){
   const center=ensureOrigin(object,mesh), normal=camera.getWorldDirection(new THREE.Vector3()).normalize(), plane=new THREE.Plane().setFromNormalAndCoplanarPoint(normal,center), start=planePoint(event,plane,camera);
   if(!start) return;
   const c=constraint(), explicit=['x','y','z'].includes(c)?c:null, centerScreen=screenPoint(center,camera);
-  gesture={id:event.pointerId,t,mesh,camera,center,centerScreen,startX:event.clientX,startY:event.clientY,startVector:new THREE.Vector2(event.clientX,event.clientY).sub(centerScreen),axis:explicit,screenRotate:t==='rotate'&&globalThis.__boxlabActiveGizmoDrag?.kind==='screen',auto:c==='auto',axes:screenAxes(center,camera),original:mesh.vertices.map(v=>v.clone()),before:mesh.clone(),changed:false};
+  gesture={id:event.pointerId,t,mesh,camera,center,centerScreen,startX:event.clientX,startY:event.clientY,startVector:new THREE.Vector2(event.clientX,event.clientY).sub(centerScreen),axis:explicit,gizmoOwned:!!globalThis.__boxlabActiveGizmoDrag,screenRotate:t==='rotate'&&globalThis.__boxlabActiveGizmoDrag?.kind==='screen',auto:c==='auto',axes:screenAxes(center,camera),original:mesh.vertices.map(v=>v.clone()),before:mesh.clone(),changed:false};
   event.preventDefault(); event.stopImmediatePropagation(); canvas.setPointerCapture?.(event.pointerId);
 }
 function movePivotGesture(event){
@@ -290,17 +290,18 @@ function movePivotGesture(event){
   if(!g.changed && d.length()<DRAG_THRESHOLD) return;
   if(!g.changed){
     g.changed=true; globalThis.__boxlabHistory?.push?.(g.before);
-    if(!g.screenRotate&&(g.auto || axisSnapToggle?.checked)) g.axis=chooseAxis(d,g.axes);
+    if(!g.screenRotate&&(g.auto || (!g.gizmoOwned&&axisSnapToggle?.checked))) g.axis=chooseAxis(d,g.axes);
   }
   restore(g);
   if(g.t==='scale'){
-    const factor=THREE.MathUtils.clamp(Math.exp((dx-dy)*.006),.05,20);
+    const factor=scaleDragFactor(g,event,d);
     for(const v of g.mesh.vertices){ const p=v.sub(g.center); if(g.axis)p[g.axis]*=factor; else p.multiplyScalar(factor); v.add(g.center); }
     if(status) status.textContent=`Scale • Origin • ${g.axis?g.axis.toUpperCase():'Uniform'} • ${factor.toFixed(2)}×`;
   } else {
     const cv=new THREE.Vector2(event.clientX,event.clientY).sub(g.centerScreen); let angle;
     if(g.startVector.length()>18 && cv.length()>18){ const a=g.startVector.clone().normalize(),b=cv.clone().normalize(); angle=Math.atan2(a.x*b.y-a.y*b.x,THREE.MathUtils.clamp(a.dot(b),-1,1)); }
     else angle=dx*.012;
+    if(g.gizmoOwned&&g.axis&&axisVector(g.axis).dot(g.camera.getWorldDirection(new THREE.Vector3()))<0)angle=-angle;
     const snapOn=document.querySelector('#transformSnapBtn')?.classList.contains('active') ?? true;
     if(snapOn) angle=THREE.MathUtils.degToRad(Math.round(THREE.MathUtils.radToDeg(angle)/15)*15);
     const av=g.axis?axisVector(g.axis):g.camera.getWorldDirection(new THREE.Vector3()).normalize(), q=new THREE.Quaternion().setFromAxisAngle(av,angle);
@@ -373,6 +374,17 @@ function restoreMulti(targets){
     setOrigin(target.originalOrigin,target.object);
   }
 }
+// Handle drags follow their projected rail/radius; legacy canvas drags retain
+// their original diagonal mapping. Geometry, pivots and history stay here.
+function scaleDragFactor(g,event,d){
+  if(!g.gizmoOwned)return THREE.MathUtils.clamp(Math.exp((d.x-d.y)*.006),.05,20);
+  if(g.axis){
+    const rail=g.axes[g.axis],unit=rail?.lengthSq()>=4?rail.clone().normalize():new THREE.Vector2(1,0);
+    return THREE.MathUtils.clamp(Math.exp(d.dot(unit)*.012),.05,20);
+  }
+  const radius=new THREE.Vector2(event.clientX,event.clientY).sub(g.centerScreen).length();
+  return THREE.MathUtils.clamp(Math.exp((radius-g.startVector.length())*.006),.05,20);
+}
 function scaleOrigin(point,pivot,factor,axis){
   const p=point.clone().sub(pivot);
   if(axis)p[axis]*=factor;else p.multiplyScalar(factor);
@@ -387,7 +399,7 @@ function startMultiPivotGesture(event){
   const normal=camera.getWorldDirection(new THREE.Vector3()).normalize(), plane=new THREE.Plane().setFromNormalAndCoplanarPoint(normal,interactionCenter), start=planePoint(event,plane,camera);
   if(!start)return;
   const c=constraint(), axis=['x','y','z'].includes(c)?c:null, centerScreen=screenPoint(interactionCenter,camera);
-  multiGesture={id:event.pointerId,t:tool(),camera,targets,locked,center,interactionCenter,centerScreen,start,startX:event.clientX,startY:event.clientY,startVector:new THREE.Vector2(event.clientX,event.clientY).sub(centerScreen),plane,axis,screenRotate:tool()==='rotate'&&globalThis.__boxlabActiveGizmoDrag?.kind==='screen',auto:c==='auto',axes:screenAxes(interactionCenter,camera),changed:false};
+  multiGesture={id:event.pointerId,t:tool(),camera,targets,locked,center,interactionCenter,centerScreen,start,startX:event.clientX,startY:event.clientY,startVector:new THREE.Vector2(event.clientX,event.clientY).sub(centerScreen),plane,axis,gizmoOwned:!!globalThis.__boxlabActiveGizmoDrag,screenRotate:tool()==='rotate'&&globalThis.__boxlabActiveGizmoDrag?.kind==='screen',auto:c==='auto',axes:screenAxes(interactionCenter,camera),changed:false};
   event.preventDefault(); event.stopImmediatePropagation(); canvas.setPointerCapture?.(event.pointerId);
 }
 function multiAxisMoveAmount(g,event){
@@ -404,7 +416,7 @@ function moveMultiPivotGesture(event){
     g.changed=true;
     const active=g.targets.find(target=>target.object.id===manager()?.activeId);
     if(active)globalThis.__boxlabHistory?.push?.(active.mesh.clone());
-    if(!g.screenRotate&&(g.auto||axisSnapToggle?.checked))g.axis=chooseAxis(d,g.axes);
+    if(!g.screenRotate&&(g.auto||(!g.gizmoOwned&&axisSnapToggle?.checked)))g.axis=chooseAxis(d,g.axes);
   }
   restoreMulti(g.targets);
   if(g.t==='move'){
@@ -420,7 +432,7 @@ function moveMultiPivotGesture(event){
     }
     if(status)status.textContent=`Move • ${g.targets.length} grouped objects • ${g.axis?g.axis.toUpperCase():'Free'}`;
   }else if(g.t==='scale'){
-    const factor=THREE.MathUtils.clamp(Math.exp((dx-dy)*.006),.05,20);
+    const factor=scaleDragFactor(g,event,d);
     for(const target of g.targets){
       const pivot=pivotMode==='individual'?target.originalOrigin:g.center;
       for(const v of target.mesh.vertices){ const p=v.sub(pivot); if(g.axis)p[g.axis]*=factor;else p.multiplyScalar(factor); v.add(pivot); }
@@ -430,6 +442,7 @@ function moveMultiPivotGesture(event){
   }else{
     const p=new THREE.Vector2(event.clientX,event.clientY).sub(g.centerScreen); if(p.lengthSq()<4||g.startVector.lengthSq()<4)return;
     let angle=Math.atan2(g.startVector.x*p.y-g.startVector.y*p.x,g.startVector.dot(p));
+    if(g.gizmoOwned&&g.axis&&axisVector(g.axis).dot(g.camera.getWorldDirection(new THREE.Vector3()))<0)angle=-angle;
     const snapOn=document.querySelector('#transformSnapBtn')?.classList.contains('active')??true;
     if(snapOn)angle=THREE.MathUtils.degToRad(Math.round(THREE.MathUtils.radToDeg(angle)/15)*15);
     const av=g.axis?axisVector(g.axis):g.camera.getWorldDirection(new THREE.Vector3()).normalize(), q=new THREE.Quaternion().setFromAxisAngle(av,angle);

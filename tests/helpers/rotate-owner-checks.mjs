@@ -16,7 +16,7 @@ export function checkRotateGizmo(){
   r.dispatch('pointermove',p.x,p.y+60);r.dispatch('pointermove',p.x,p.y+60);
   const selected=mode==='vertex'?ids:mode==='edge'?(()=>{const e=r.mesh.edges()[0];return[e.a,e.b];})():mode==='face'?r.mesh.faces[0]:r.mesh.vertices.map((_,i)=>i);
   const centre=new THREE.Vector3();for(const id of selected)centre.add(new THREE.Vector3(...before[id]));centre.divideScalar(selected.length);
-  const q=new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,0,1),Math.PI/2);
+  const q=new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,0,1),-Math.PI/2);
   r.mesh.vertices.forEach((v,i)=>{const expected=new THREE.Vector3(...before[i]);if(selected.includes(i))expected.sub(centre).applyQuaternion(q).add(centre);assert.ok(v.distanceTo(expected)<1e-9);});
   assert.equal(r.history.undoStack.length,1);r.dispatch('pointerup',p.x,p.y+60);assert.deepEqual(r.selected(),ids);assert.equal(r.events.filter(e=>e.type==='boxlab-transform-end').length,mode==='object'?0:1);
   const after=snapshot(r.mesh),undone=r.history.undo(r.mesh);assert.deepEqual(snapshot(undone),before);assert.deepEqual(snapshot(r.history.redo(undone)),after);

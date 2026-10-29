@@ -1,3 +1,14 @@
+## .1016 — gizmo directions / component touch — 30 October 2026
+
+- [x] Reproduce component touch handoff refusal, explicit constraints overwritten by Axis Snap, XYZ opposite screen winding and quadrant-dependent uniform scale; original3 new tests fail before repair.
+- [x] Existing semantic owner accepts touch/Pencil/mouse only on explicit gizmo launch; canvas touch navigation gate and component no-synthetic-replay retained. Actual onHandleDown capture verified for Move/Rotate/Scale in Vertex/Edge/Face.
+- [x] ExplicitXYZ/free/uniform remains authoritative with Axis Snap ON; rotation direction across both camera sides/inverted views; uniform radius out/in all quadrants; selected-only changes, one history entry, selection retained.
+- [x] Original Multi/group owner XYZ rotation/axis+uniform scale, pivots/origins and cancellation covered. Protected Multi1.0 unchanged.
+- [x] Component tap/cancel explicitly clears transient gizmo state; cancel restores geometry and no-op tap leaves history unchanged. Grey View-axis ball and legacy canvas ownership retained.
+- [x] Six new tests plus nearby/old gizmo/rotation/Multi/release checks:40 focused PASS. Full local Node24.22.1:2992 PASS/0FAIL/0skip/0cancel (114.10s); syntax/whitespace clean.
+- [x] Reviewed1016 transform/object-origin/cache graph; Total Gizmo artwork1012, native NOM1015, navigation/Paint and frozen betas unchanged. No1015 native PASS inferred.
+- [ ] DEVICE1016 Object XYZ and grey rotation direction; orange uniform ring outward/inward around all quadrants, axis scale; component multi-vertex/edge/face Move/Rotate/Scale with finger/Pencil; UndoRedo/cancel and Multi/group.
+
 ## .1015 — native affine-row rounding repair — 29 October 2026
 
 - [x] Actual MAP TEST.nom reproduces pre-fix refusal at Text matrix[15]=0.9999997615814209; patched decode imports Cube496v/504f and Text7911v/7916f with UVs. Source bytes unchanged.

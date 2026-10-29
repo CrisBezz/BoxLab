@@ -1,3 +1,49 @@
+## .1016 — gizmo direction and component-touch repair — 30 October 2026
+
+Status: validated locally; publication pending. Baseline main97a294d0/runtime
+6511ca38 (.1015). User reports opposite Object rotation/scale and component gizmos
+not acting. No1015 native PASS inferred;1014 acceptance and1015 NOM affine fix retained.
+
+Audited original Total Gizmo onHandleDown -> transform-upgrade semantic owner and
+Object/Multi fallback -> original object-origin. Confirmed component touch refused
+at semantic begin; Object falls back to synthetic pen, component intentionally blocks
+canvas replay. Remove touch rejection ONLY from explicit semantic begin; actual canvas
+touch gate/Orbit owner remains. Pencil/mouse path retained; no new pointer listener.
+
+Explicit gizmo constraints now outrank Axis Snap in BOTH existing transform owners;
+only Auto opts into inference. Previously Axis Snap could replace XYZ or uniform/free
+with an unrelated drag-inferred axis. XYZ gizmo rotation corrects screen winding by
+axis dot camera view direction; opposite camera side/inverted view supported. Grey
+View-axis ball stays original camera-axis rotation. Uniform scale uses radius change
+from initial centre in every quadrant (outward grows/inward shrinks); axis scale uses
+original projected positive rail. Legacy canvas gestures retain previous mapping.
+Object-origin/Multi reuse same existing pivot/origin/history/geometry owners; protected
+multi-object-transform.js1.0 unchanged. No duplicate modelling kernel or UI reskin.
+
+Semantic component tap/cancel now explicitly resets transient gizmo state because
+owner window-capture completion consumes raw event before Total Gizmo sees it. Cancel
+restores original vertices; tap does not create history or open Exact entry. Committed
+drags retain original completion/Exact. Selection and ordinary undo/redo stay owners.
+
+Six new tests execute actual owners and Total Gizmo semantic handoff with touch,
+Pencil/mouse, Vertex/Edge/Face selected-only moves, XYZ clockwise90 across both camera
+sides/inverted views/Axis Snap ON, uniform scale all quadrants, Multi/group pivots/
+origins/scale/cancel and tap reset. First3 tests fail against pre-fix owners. Historical
+rotate-owner helper expected Z quaternion changes +90 to -90 for clockwise screen
+motion facing +Z; all selection/history/legacy assertions retained (requested fix).
+40 focused checks PASS; full local Node24.22.1:2992 PASS/0FAIL/0skip/0cancel
+(114.10s). Syntax/whitespace clean. No native Safari feel claimed.
+
+Reviewed1016 shell/bootstrap/release/comparison, transform-upgrade and
+release->face-layout->drawer->object-origin cache graph. Total Gizmo visual1012 bytes/
+pin unchanged, importer/decoder1015 unchanged, comparison migrates1015 ratings with
+A default/no repeat A/B. FrozenBeta2–7, accepted navigation/Paint/NOM/resource/UV/kernel
+owners unchanged. DEVICE1016 Object XYZ rings from front/back and grey View ball;
+orange ring outward/inward on left/right/top/bottom; select several vertices, edge
+or face -> expand gizmo -> Move/Rotate/Scale with finger/Pencil; selection/UndoRedo/
+Cancel and Multi/group sanity. Next follow native feedback, then NOM map-retention
+proposal separately. Publication evidence: docs/publication-1016.md.
+
 .1015 publication verified — 29 October 2026:
 Runtime6511ca38297fb7b5e9f2bf51f029dffe3e6cfb2d; tested/uploaded tree
 b60c4c6ae0f673e21f9271a4df47d7bd7dcf42f0 exactly matches fetched origin/main.
