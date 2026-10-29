@@ -141,6 +141,7 @@ function startGesture(event){
     plane,axes:screenAxes(c,camera),axis,
     auto:gizmoConstraint==='auto'||(!gizmo&&constraint==='auto'),
     gizmoOwned:!!gizmo,
+    screenRotate:t==='rotate'&&gizmo?.kind==='screen',
     gizmoConstraint:gizmoConstraint||null,
     original:new Map(indices.map(i=>[i,mesh.vertices[i].clone()])),
     before:mesh.clone(),changed:false,snap:null
@@ -178,6 +179,7 @@ function beginGizmoGesture(spec,event){
     plane,axes:screenAxes(c,camera),axis,planeConstraint,
     auto:spec.constraint==='auto',
     gizmoOwned:true,
+    screenRotate:t==='rotate'&&spec.kind==='screen',
     gizmoConstraint:spec.constraint||'free',
     original:new Map(indices.map(i=>[i,mesh.vertices[i].clone()])),
     before:mesh.clone(),changed:false,snap:null
@@ -188,7 +190,7 @@ function beginGizmoGesture(spec,event){
 }
 document.addEventListener('pointerdown',startGesture,true);
 
-document.addEventListener('pointermove',event=>{const g=gesture;if(!g||g.id!==event.pointerId)return;event.preventDefault();event.stopImmediatePropagation();const dx=event.clientX-g.startX,dy=event.clientY-g.startY,d=new THREE.Vector2(dx,dy);if(!g.changed&&d.length()<DRAG_THRESHOLD)return;if(!g.changed){g.changed=true;globalThis.__boxlabHistory?.push(g.before);if(g.auto||axisSnapOn())g.axis=chooseAxis(d,g.axes);}restore(g);if(g.t==='move'){let delta;if(g.axis)delta=axisVector(g.axis).multiplyScalar(axisAmount(g,d));else{const now=planePoint(event,g.plane,g.camera);if(!now)return;delta=now.sub(g.start);}const inferred=applyReferenceInference(g,delta,event);delta=inferred.delta;g.snap=inferred.snap;g.indices.forEach(i=>g.mesh.vertices[i].add(delta));if(status)status.textContent=`Move • ${g.axis?g.axis.toUpperCase():g.planeConstraint?g.planeConstraint.toUpperCase():g.auto||axisSnapOn()?'Auto':'Free'}${g.snap?` • Reference ${g.snap.type}`:''}`;}else if(g.t==='scale'){
+document.addEventListener('pointermove',event=>{const g=gesture;if(!g||g.id!==event.pointerId)return;event.preventDefault();event.stopImmediatePropagation();const dx=event.clientX-g.startX,dy=event.clientY-g.startY,d=new THREE.Vector2(dx,dy);if(!g.changed&&d.length()<DRAG_THRESHOLD)return;if(!g.changed){g.changed=true;globalThis.__boxlabHistory?.push(g.before);if(!g.screenRotate&&(g.auto||axisSnapOn()))g.axis=chooseAxis(d,g.axes);}restore(g);if(g.t==='move'){let delta;if(g.axis)delta=axisVector(g.axis).multiplyScalar(axisAmount(g,d));else{const now=planePoint(event,g.plane,g.camera);if(!now)return;delta=now.sub(g.start);}const inferred=applyReferenceInference(g,delta,event);delta=inferred.delta;g.snap=inferred.snap;g.indices.forEach(i=>g.mesh.vertices[i].add(delta));if(status)status.textContent=`Move • ${g.axis?g.axis.toUpperCase():g.planeConstraint?g.planeConstraint.toUpperCase():g.auto||axisSnapOn()?'Auto':'Free'}${g.snap?` • Reference ${g.snap.type}`:''}`;}else if(g.t==='scale'){
   clearRefVisual();
   let gestureAmount;
   if(g.gizmoOwned&&g.axis){

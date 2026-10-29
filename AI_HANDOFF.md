@@ -1,3 +1,73 @@
+## .1012 — view-axis rotation ball and optional compact Split View — 29 October 2026
+
+Status: .1012 validated on main, publishing; baseline2c6899d3 / live1011 f9899386.
+Full local Node24.22.1: 2974 PASS / 0 FAIL / 0 skipped / 0 cancelled (104.38s).
+Syntax/whitespace clean. Protected Multi1.0, frozen betas, main/free-orbit1011,
+Paint/three-finger1010 unchanged. Publication/live verification follows.
+
+Publication and final regression evidence will be recorded in docs/publication-1012.md.
+User .1010 PASS and completed .1009 A/B/A PASS remain protected; no .1011 or .1012
+native acceptance inferred. No repeat comparison batch requested; A stays default.
+
+User's final grey-circle clarification is authoritative: rotate the OBJECT around the
+SCREEN/VIEW axis after aligning the camera. This is NOT a 3D arcball or camera orbit.
+Audit found this already in transform-upgrade (single/components) and object-origin
+(Multi/groups); reuse their existing View quaternion, pivot/origin, selection and
+history owners. Explicit kind=screen now prevents Axis Snap inferring XYZ for this
+handle only. Other constraints, angle detents, Exact-entry behavior and kernels stay.
+An earlier unshipped 3D trackball prototype was discarded following clarification;
+no trackball helper, second transform kernel or new raw pointer listener ships.
+
+Total Gizmo replaces old small white View ring with a 52 CSSpx grey rotation ball:
+very faint neutral fill, dark charcoal outline, slight yellow active highlight. It is
+behind existing XYZ arcs/arrows/pads/scale nodes/Move centre; those retain priority.
+XYZ paths AND their hit proxies contain only the camera-facing semicircle; no rear
+hit geometry, closing chord or opaque occluding disc. Face-on limb stays a full ring.
+Orange Scale circle, corner controls, projected axes, clipping/singularity refusal,
+Extrude planes and original Exact flow retained. Reference: IMG_8352.png and
+44FFE5E2-ECFA-4300-B539-7F13E195BAAE.png supplied in current chat. Dark/light SVG
+projection preview inspected; not a Safari pixel/hit-testing or native acceptance claim.
+
+Split View: original portrait gate offers Continue in compact view. Explicit choice
+persists for this browser session (storage-denied fallback stays in memory). Active
+only in narrow panes; widening restores normal labels/layout automatically. New
+compact-layout.js + scoped CSS are presentation only. Original mode/tool/Paint nodes,
+textContent, selected artwork, dispatch and disabled states stay authoritative; labels
+remain accessible as aria-label/title. Radials fit within pane, icon-only targets >=44px;
+extra-narrow <=400px uses the same original tool buttons as a four-column icon grid.
+Only tool-picker centre is fitted; transform gizmo remains on selected geometry.
+Paint radial 292px /48px targets, shorter layer list and single-column brush settings;
+original LEFT dock, labels/values and Done/Undo/Redo retained. No renderer, backing
+size, model, history, reparenting, synthetic resize, polling or gesture changes.
+Existing sizing observer handles revealed app/real pane resize. BFCache return
+reconnects decoration observer; pagehide disconnects it. Reference split screenshot
+195C705C-0E7B-4E54-9369-5B8DB758DF2E.png. iPad feel/visual parity still pending.
+
+Reviewed cache closure: total-gizmo, transform-upgrade, object-origin via drawer,
+canonical release-version via face-workflow-layout/drawer, bootstrap and comparison
+pins .1012; new compact assets .1012. Comparison only code labels/log migration1011;
+old ratings and structure unchanged. Internal old module stamps intentionally stay.
+Main/free-orbit1011, Paint/three-finger1010, accepted icon CSS and protected Multi1.0
+and frozen Beta2–7 remain byte/pin unchanged. No large UI cleanup applied.
+
+Validation: 9 new actual-owner/presentation checks; 35 focused +22 contract/corner
+checks pass. Final complete-suite result recorded below before publication. Older
+.358 object-origin fixed-pin assertion now uses reviewed asset contract for the
+explicitly requested owner change; protected Multi1.0 assertion unchanged. .712
+screen-circle assertion follows new grey markup but retains View owner and Move
+centre/corner protections. .961 checks open front path without closing rear chord;
+.570 checks original proxy routing while grey ball uses its own filled hit region.
+
+DEVICE1012: inspect gizmo over dark background/light object while orbiting; no rear
+arcs. Drag grey interior around centre: object rotates about aligned view, subtle
+yellow press; Move centre/XYZ/Scale still work. UndoRedo; try Multi/group. Split View
+portrait notice -> Continue compact; mode/tool/Paint icons fit, choose tool/Paint,
+Done; resize pane/full screen restores normal labels. Navigation and Paint gestures
+from1010/1011 remain; native1011 feel and1012 checks pending explicit PASS.
+
+Next: respond to native gizmo/compact feedback, keep visibility fault watch honest;
+no new A/B batches or unsupported permanent compositor repair claim.
+
 ## .1011 — immediate navigation and two-finger anchored twist — 29 October2026
 
 Current:1011 LIVE,runtimef9899386,tested treeb72a6e24;Pages40807730838 SUCCESS,

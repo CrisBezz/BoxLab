@@ -280,7 +280,7 @@ function startPivotGesture(event){
   const center=ensureOrigin(object,mesh), normal=camera.getWorldDirection(new THREE.Vector3()).normalize(), plane=new THREE.Plane().setFromNormalAndCoplanarPoint(normal,center), start=planePoint(event,plane,camera);
   if(!start) return;
   const c=constraint(), explicit=['x','y','z'].includes(c)?c:null, centerScreen=screenPoint(center,camera);
-  gesture={id:event.pointerId,t,mesh,camera,center,centerScreen,startX:event.clientX,startY:event.clientY,startVector:new THREE.Vector2(event.clientX,event.clientY).sub(centerScreen),axis:explicit,auto:c==='auto',axes:screenAxes(center,camera),original:mesh.vertices.map(v=>v.clone()),before:mesh.clone(),changed:false};
+  gesture={id:event.pointerId,t,mesh,camera,center,centerScreen,startX:event.clientX,startY:event.clientY,startVector:new THREE.Vector2(event.clientX,event.clientY).sub(centerScreen),axis:explicit,screenRotate:t==='rotate'&&globalThis.__boxlabActiveGizmoDrag?.kind==='screen',auto:c==='auto',axes:screenAxes(center,camera),original:mesh.vertices.map(v=>v.clone()),before:mesh.clone(),changed:false};
   event.preventDefault(); event.stopImmediatePropagation(); canvas.setPointerCapture?.(event.pointerId);
 }
 function movePivotGesture(event){
@@ -290,7 +290,7 @@ function movePivotGesture(event){
   if(!g.changed && d.length()<DRAG_THRESHOLD) return;
   if(!g.changed){
     g.changed=true; globalThis.__boxlabHistory?.push?.(g.before);
-    if(g.auto || axisSnapToggle?.checked) g.axis=chooseAxis(d,g.axes);
+    if(!g.screenRotate&&(g.auto || axisSnapToggle?.checked)) g.axis=chooseAxis(d,g.axes);
   }
   restore(g);
   if(g.t==='scale'){
@@ -387,7 +387,7 @@ function startMultiPivotGesture(event){
   const normal=camera.getWorldDirection(new THREE.Vector3()).normalize(), plane=new THREE.Plane().setFromNormalAndCoplanarPoint(normal,interactionCenter), start=planePoint(event,plane,camera);
   if(!start)return;
   const c=constraint(), axis=['x','y','z'].includes(c)?c:null, centerScreen=screenPoint(interactionCenter,camera);
-  multiGesture={id:event.pointerId,t:tool(),camera,targets,locked,center,interactionCenter,centerScreen,start,startX:event.clientX,startY:event.clientY,startVector:new THREE.Vector2(event.clientX,event.clientY).sub(centerScreen),plane,axis,auto:c==='auto',axes:screenAxes(interactionCenter,camera),changed:false};
+  multiGesture={id:event.pointerId,t:tool(),camera,targets,locked,center,interactionCenter,centerScreen,start,startX:event.clientX,startY:event.clientY,startVector:new THREE.Vector2(event.clientX,event.clientY).sub(centerScreen),plane,axis,screenRotate:tool()==='rotate'&&globalThis.__boxlabActiveGizmoDrag?.kind==='screen',auto:c==='auto',axes:screenAxes(interactionCenter,camera),changed:false};
   event.preventDefault(); event.stopImmediatePropagation(); canvas.setPointerCapture?.(event.pointerId);
 }
 function multiAxisMoveAmount(g,event){
@@ -404,7 +404,7 @@ function moveMultiPivotGesture(event){
     g.changed=true;
     const active=g.targets.find(target=>target.object.id===manager()?.activeId);
     if(active)globalThis.__boxlabHistory?.push?.(active.mesh.clone());
-    if(g.auto||axisSnapToggle?.checked)g.axis=chooseAxis(d,g.axes);
+    if(!g.screenRotate&&(g.auto||axisSnapToggle?.checked))g.axis=chooseAxis(d,g.axes);
   }
   restoreMulti(g.targets);
   if(g.t==='move'){

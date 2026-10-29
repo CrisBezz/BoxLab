@@ -11,10 +11,10 @@ const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
 // Execute the actual proxy construction block. DOM and event delivery are explicit
 // doubles; this checks owner wiring, not Safari's native SVG hit-testing.
 function hitZones(source=gizmo){
-  const start=source.indexOf("for(const el of [...root.querySelectorAll('.tg-handle:not(.tg-center):not(.tg-plane)')]){");
+  const start=source.indexOf("for(const el of [...root.querySelectorAll('.tg-handle:not(.tg-center):not(.tg-plane):not(.tg-rotation-ball)')]){");
   const end=source.indexOf("for(const el of root.querySelectorAll('.tg-handle'))",start);
   assert.ok(start>=0&&end>start,'actual hit-proxy construction block exists');
-  const kinds=['tg-axis','tg-scale-node','tg-arc','tg-screen-ring','tg-scale-ring'];
+  const kinds=['tg-axis','tg-scale-node','tg-arc','tg-scale-ring'];
   function element(kind){
     const classes=new Set([kind,'tg-handle']);
     return {classList:{add:x=>classes.add(x),remove:x=>classes.delete(x),contains:x=>classes.has(x)},
@@ -25,7 +25,7 @@ function hitZones(source=gizmo){
   }
   const elements=kinds.map(element),calls=[];
   vm.runInNewContext(source.slice(start,end),{root:{querySelectorAll:selector=>{
-    assert.equal(selector,'.tg-handle:not(.tg-center):not(.tg-plane)');return elements;
+    assert.equal(selector,'.tg-handle:not(.tg-center):not(.tg-plane):not(.tg-rotation-ball)');return elements;
   }},onHandleDown:function(event){calls.push({receiver:this,event});}});
   for(const [i,el] of elements.entries()){
     const hit=el.__hitProxy;
@@ -34,7 +34,7 @@ function hitZones(source=gizmo){
     assert.equal(hit.classList.contains('tg-hit'),true);assert.equal(hit.classList.contains('tg-handle'),false);
     assert.equal(hit.style.pointerEvents,'stroke');assert.equal(hit.style.fill,'none');assert.equal(hit.attrs.fill,'none');
     assert.equal(hit.style.stroke,'transparent');assert.equal(hit.attrs.filter,undefined);
-    assert.equal(hit.style.strokeWidth,String([18,22,14,15,15][i]));
+    assert.equal(hit.style.strokeWidth,String([18,22,14,15][i]));
     hit.events.pointerenter();assert.equal(el.classList.contains('hover-proxy'),true);
     hit.events.pointerleave();assert.equal(el.classList.contains('hover-proxy'),false);
     const event={pointerId:70+i,pointerType:'pen'};hit.events.pointerdown(event);
@@ -53,7 +53,7 @@ const checks=[
   }],
   ['object mode gate',gizmo.includes("currentMode()!=='object'")],
   ['free move center',gizmo.includes('data-tool="move" data-constraint="free" data-kind="free"')],
-  ['screen rotate ring',gizmo.includes('data-tool="rotate" data-constraint="free" data-kind="screen"')],
+  ['screen rotate ball',gizmo.includes('data-tool="rotate" data-constraint="free" data-kind="screen"')],
   ['uniform scale ring',gizmo.includes('data-tool="scale" data-constraint="free" data-kind="uniform"')],
   ['axis move x/y/z',['x','y','z'].every(a=>gizmo.includes(`data-tool="move" data-constraint="${a}"`))],
   ['axis scale x/y/z',['x','y','z'].every(a=>gizmo.includes(`class="tg-handle tg-scale-node tg-${a}" data-tool="scale" data-constraint="${a}"`))],

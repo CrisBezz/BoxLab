@@ -1,3 +1,18 @@
+## .1012 — grey View rotation ball / compact Split View — 29 October 2026
+
+- [x] Audit current main/live1011 and original transform/Group/gizmo/UI owners; .1010 PASS and .1009 A/B/A PASS protected. .1011 native feel remains pending.
+- [x] Grey ball uses original View-axis rotation for single/component/Multi/group, including Axis Snap ON. No 3D arcball/camera rotation/new modelling owner.
+- [x] Front-only visible AND hit arcs, full face-on limb, original bounds refusal, charcoal/faint-grey ball and subtle yellow active fill; original Move/Scale/XYZ/corners/Exact retained.
+- [x] Actual geometry/pivot/selection/camera assertions, one UndoRedo, click no-op and cancellation; original group origin rotation/cancel covered.
+- [x] Optional portrait notice choice, denied-storage fallback, session/resize/BFCache lifecycle, same late Paint/tool nodes/routing text/listeners/accessibility and no synthetic resize/model/history access.
+- [x] Compact picker fit covers320/390/450/678/760 widths; actual sync moves picker only. Icon targets44/48px, Paint292px, normal wide layout restores.
+- [x] 35 focused +22 contract/corner checks PASS; nine new tests. Dark/light projected SVG inspected (not browser/native proof).
+- [x] Full local2974 PASS/0FAIL/0skip/0cancel (104.38s); syntax/whitespace clean.
+- [ ] Publication/live byte verification follows before completion.
+- [ ] DEVICE1012 grey ball over light/dark model; front-only RGB arcs; grey drag rotates about view with faint yellow press, UndoRedo and Multi/group.
+- [ ] Move centre/XYZ/planes/orange Scale/corner controls/Exact remain usable; no accidental rear-ring grabs.
+- [ ] Split View -> Continue compact; modes/radial/Paint icons fit and launch same tools; Done/UndoRedo, pane widening restores labels. Check full-screen return/no-inertia/twofinger twist and Paint/light gestures.
+
 ## .1011 — anchored twist / no inertia;1010 user PASS — 29 October2026
 
 - [x]Published runtimef9899386,treeb72a6e24,Pages40807730838 SUCCESS,11/11 live files match.

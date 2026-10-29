@@ -167,9 +167,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1011",
+      "url": "./src/drawer-ui.js?v=0.36.18.1012",
       "target": "src/drawer-ui.js",
-      "sha256": "002beae56c470ed637c6899a6fa6e676bb43676a777e68bab6c8983f60432b00"
+      "sha256": "5f435a87837744f1010489841de994cc3ec8714c18fde507edb4c99e1ecea617"
     },
     {
       "owner": "index.html",
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.1011",
+      "url": "./src/release-bootstrap.js?v=0.36.18.1012",
       "target": "src/release-bootstrap.js",
       "sha256": "fe3e41b43e5df07fb5252936bff4e2a7c4f47fcb38f89b2cb6204fc5712e1698"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1011",
+      "url": "./src/release-version.js?v=0.36.18.1012",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -551,9 +551,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/total-gizmo.js?v=0.36.18.995",
+      "url": "./src/total-gizmo.js?v=0.36.18.1012",
       "target": "src/total-gizmo.js",
-      "sha256": "0e4cd22a9bb63789f66dee730b014975d5505440fb179319b4e4362e88b1c589"
+      "sha256": "5338a88fc48f9dd083b47889627b8c8e4745589d73e522af04c4b9beb998d534"
     },
     {
       "owner": "index.html",
@@ -563,9 +563,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/transform-upgrade.js?v=0.36.18.842",
+      "url": "./src/transform-upgrade.js?v=0.36.18.1012",
       "target": "src/transform-upgrade.js",
-      "sha256": "2cf09f40d82c9237de2049a08d5d5250987f5be137f4ed36fb4b2b9b327dda2e"
+      "sha256": "c3ca7a4253a31cbbe3c57d35f9f3019b3087f98ee5f4c1aa06d8cd566f1be542"
     },
     {
       "owner": "index.html",
@@ -876,9 +876,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1011",
+      "url": "./face-workflow-layout.js?v=0.36.18.1012",
       "target": "src/face-workflow-layout.js",
-      "sha256": "9b63e75d5eebca0939fb3cf0835282536663d17f45b37c42a65fc1bd353091e0"
+      "sha256": "c6a744a77ef248e4251a7fd50ce70982af71db548441edeab803140460760149"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -943,9 +943,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./object-origin.js?v=0.36.18.355",
+      "url": "./object-origin.js?v=0.36.18.1012",
       "target": "src/object-origin.js",
-      "sha256": "627cf692a6caf85acb5d0b624ec935ad2d542d8dbd24bb32213df84694349f59"
+      "sha256": "dee692675898126d04688a8fcfb1300a5fd6d1f994ff62ec9d26643e5a6c0de9"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1373,7 +1373,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1011",
+      "url": "./release-version.js?v=0.36.18.1012",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -3350,9 +3350,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1011",
+      "url": "./src/shell-comparison.js?v=0.36.18.1012",
       "target": "src/shell-comparison.js",
-      "sha256": "971ab4765647f6c79d5d302277cc66608f4e0810db38566d4ff7589242ecfcf9"
+      "sha256": "c31bc7cf1324f2684fb74a7f3f44c1cf48f8e794d73026e549b0d1fab87aacf1"
     },
     {
       "owner": "src/main.js",
@@ -3389,6 +3389,18 @@
       "url": "../evaluations/uv-paint/paint-core.js?v=0.36.18.1010",
       "target": "evaluations/uv-paint/paint-core.js",
       "sha256": "aef53be11a1ffaf9d5405e6d41111ceaa7b1525e13aa4c701a6a8298648d0f48"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/compact-layout.js?v=0.36.18.1012",
+      "target": "src/compact-layout.js",
+      "sha256": "8d64220a1f00c9b7ad4280d43eb63c87e7516e3df456fca130557fc32def5fcb"
+    },
+    {
+      "owner": "index.html",
+      "url": "./compact-layout.css?v=0.36.18.1012",
+      "target": "compact-layout.css",
+      "sha256": "4b95457c43e0c117ae496227072c898e29eb4680995af7e01439b81cdedbe6ed"
     }
   ]
 }

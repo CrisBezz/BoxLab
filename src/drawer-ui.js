@@ -108,7 +108,7 @@ import('./select-coplanar-region.js?v=0.36.18.1004').catch(error => console.warn
 import('./join-selected-coplanar-faces.js?v=0.36.18.342').catch(error => console.warn('BoxLab Join Selected Coplanar Faces failed to load', error));
 import('./select-face-islands.js?v=0.36.18.72').catch(error => console.warn('BoxLab Select Face Islands failed to load', error));
 import('./select-connected-shell.js?v=0.36.18.73').catch(error => console.warn('BoxLab Select Connected Shell failed to load', error));
-import('./face-workflow-layout.js?v=0.36.18.1011').catch(error => console.warn('BoxLab Face workflow layout failed to load', error));
+import('./face-workflow-layout.js?v=0.36.18.1012').catch(error => console.warn('BoxLab Face workflow layout failed to load', error));
 import('./component-inspect-repair-drawers.js?v=0.36.18.627').catch(error => console.warn('BoxLab component Inspect/Repair drawers failed to load', error));
 import('./selection-workflow-polish.js?v=0.36.18.31').catch(error => console.warn('BoxLab selection workflow polish failed to load', error));
 import('./component-align.js?v=0.36.18.705').catch(error => console.warn('BoxLab component Align failed to load', error));
@@ -122,7 +122,7 @@ import('./selection-history-safe.js?v=0.36.18.34').catch(error => console.warn('
 import('./loop-cut-added-vertex.js?v=0.36.18.746').catch(error => console.warn('BoxLab Add-vertex Loop promotion failed to load', error));
 // Closed cuts belong to multi-face-direct + through-kernel; the legacy fallback
 // defers through ownsClosedCuts and remains outside that ownership scope.
-import('./object-origin.js?v=0.36.18.355').then(() => {
+import('./object-origin.js?v=0.36.18.1012').then(() => {
   installGroupUiPolish();
   syncDrawerToMode();
 }).catch(error => console.warn('BoxLab object origin failed to load', error));

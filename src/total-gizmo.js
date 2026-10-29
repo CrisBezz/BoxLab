@@ -322,12 +322,12 @@ root.hidden=true;
 root.innerHTML=`
 <button type="button" class="tg-activator" aria-label="Activate transform gizmo" title="Activate transform gizmo"><span></span></button>
 <svg viewBox="0 0 ${SIZE} ${SIZE}" aria-label="BoxLab Total Gizmo">
+  <circle class="tg-handle tg-screen-ring tg-rotation-ball" role="button" aria-label="Rotate around view axis" data-tool="rotate" data-constraint="free" data-kind="screen" cx="${HALF}" cy="${HALF}" r="52"/>
   <g class="tg-rotate tg-axis-rotate">
     <path class="tg-handle tg-arc tg-x" data-tool="rotate" data-constraint="x" data-ring-axis="x" d=""/>
     <path class="tg-handle tg-arc tg-y" data-tool="rotate" data-constraint="y" data-ring-axis="y" d=""/>
     <path class="tg-handle tg-arc tg-z" data-tool="rotate" data-constraint="z" data-ring-axis="z" d=""/>
   </g>
-  <circle class="tg-handle tg-screen-ring" data-tool="rotate" data-constraint="free" data-kind="screen" cx="${HALF}" cy="${HALF}" r="35"/>
   <circle class="tg-handle tg-scale-ring" data-tool="scale" data-constraint="free" data-kind="uniform" cx="${HALF}" cy="${HALF}" r="78"/>
   <g class="tg-plane-handles">
     <polygon class="tg-handle tg-plane tg-plane-xy" role="button" aria-label="XY plane" data-tool="move" data-constraint="xy" data-kind="plane" points="0,0 0,0 0,0 0,0"/>
@@ -994,6 +994,8 @@ style.textContent=`
 #totalGizmo .tg-handle.muted{opacity:.16!important}
 #totalGizmo .tg-axis{stroke-linecap:round}
 #totalGizmo .tg-arc,#totalGizmo .tg-screen-ring,#totalGizmo .tg-scale-ring{pointer-events:stroke}
+#totalGizmo .tg-rotation-ball{pointer-events:all;fill:rgba(200,204,210,.025);stroke:#34373b;stroke-width:1.1;opacity:.9}
+#totalGizmo .tg-rotation-ball:hover,#totalGizmo .tg-rotation-ball.hover-proxy,#totalGizmo .tg-rotation-ball.active{fill:rgba(255,221,80,.055);stroke:#48483e;stroke-width:1.2!important;opacity:1!important}
 #totalGizmo .tg-handle{cursor:grab}
 #totalGizmo[data-dragging="true"] .tg-handle.active{cursor:grabbing}
 #totalGizmo .tg-handle{--tg-hit:14px}
@@ -1009,7 +1011,7 @@ document.head.append(style);
 
 // SVG stroke hit targets are made touch-friendly by duplicating each stroked handle
 // with an invisible fat stroke underneath while preserving the thin visible line.
-for(const el of [...root.querySelectorAll('.tg-handle:not(.tg-center):not(.tg-plane)')]){
+for(const el of [...root.querySelectorAll('.tg-handle:not(.tg-center):not(.tg-plane):not(.tg-rotation-ball)')]){
   const hit=el.cloneNode(true);
   hit.classList.add('tg-hit');
   hit.classList.remove('tg-handle');
@@ -1060,23 +1062,28 @@ function projectedRingPath(center,camera,axis){
   const [u,v]=ringBasis(axis),radius=ringWorldRadius(center,camera),centerScreen=screenPoint(center,camera);
   const gizmoRect=root.getBoundingClientRect();
   if(root.hidden||!Number.isFinite(gizmoRect.width)||!Number.isFinite(gizmoRect.height)||gizmoRect.width<=0||gizmoRect.height<=0)return '';
-  const sx=SIZE/gizmoRect.width,sy=SIZE/gizmoRect.height,segments=96;
+  const sx=SIZE/gizmoRect.width,sy=SIZE/gizmoRect.height;
+  const towardCamera=camera.position.clone().sub(center);
+  const uDepth=u.dot(towardCamera),vDepth=v.dot(towardCamera),amplitude=Math.hypot(uDepth,vDepth);
+  const full=amplitude<Math.max(1,towardCamera.length())*1e-8;
+  const start=full?0:Math.atan2(vDepth,uDepth)-Math.PI/2;
+  const sweep=full?Math.PI*2:Math.PI,segments=full?96:48;
   let d='';
   for(let i=0;i<=segments;i++){
-    const a=i/segments*Math.PI*2;
-    const world=center.clone()
-      .addScaledVector(u,Math.cos(a)*radius)
-      .addScaledVector(v,Math.sin(a)*radius);
+    const a=start+i/segments*sweep;
+    const world=center.clone().addScaledVector(u,Math.cos(a)*radius).addScaledVector(v,Math.sin(a)*radius);
     const screen=screenPoint(world,camera);
-    const x=HALF+(screen.x-centerScreen.x)*sx;
-    const y=HALF+(screen.y-centerScreen.y)*sy;
-    // Refuse a ring crossing the projection singularity or escaping its local SVG.
+    const x=HALF+(screen.x-centerScreen.x)*sx,y=HALF+(screen.y-centerScreen.y)*sy;
+    // Keep the existing singularity/local SVG bounds refusal. Rear geometry is
+    // absent in BOTH visible path and hit proxy; no opaque occluding disc.
     if(!Number.isFinite(x)||!Number.isFinite(y)||x<0||x>SIZE||y<0||y>SIZE)return '';
     d+=`${i?'L':'M'}${x.toFixed(2)} ${y.toFixed(2)} `;
   }
-  return d.trim()+' Z';
+  return d.trim()+(full?' Z':'');
 }
 function syncRotationRings(center,camera){
+  const ball=root.querySelector('.tg-rotation-ball'),rect=root.getBoundingClientRect();
+  if(ball&&rect.width>0)ball.setAttribute('r',String(52*SIZE/rect.width));
   for(const axis of ['x','y','z']){
     const path=root.querySelector(`.tg-handle.tg-arc[data-ring-axis="${axis}"]`);
     if(!path)continue;
@@ -1135,6 +1142,12 @@ function sync(){
     const roomRight=vr.width-selectionLeft;
     const side=roomRight>offset+HALF+18?1:-1;
     left=selectionLeft+(offset*side);
+  }
+  // Fit the tool picker only; transform handles stay on the selected geometry.
+  if(hubState==='tools'&&globalThis.__boxlabCompactLayout?.active){
+    const fit=globalThis.__boxlabCompactLayout.placeRadial(left,top,vr.width,vr.height);
+    left=fit.left;top=fit.top;
+    root.style.setProperty('--compact-r',`${fit.radius}px`);
   }
   root.style.left=`${left}px`;
   root.style.top=`${top}px`;

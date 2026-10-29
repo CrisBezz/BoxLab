@@ -19,6 +19,6 @@ test('358 current Object management and protected Group transform baselines rema
   const drawer=fs.readFileSync(new URL('../src/drawer-ui.js',import.meta.url),'utf8');
   assertAssetReference(index,'object-management.js');
   assertAssetReference(drawer,'object-management.js');
-  assert.match(drawer,/object-origin\.js\?v=0\.36\.18\.355/);
+  assertAssetReference(drawer,'object-origin.js');
   assert.match(index,/multi-object-transform\.js\?v=0\.36\.1\.0/);
 });
