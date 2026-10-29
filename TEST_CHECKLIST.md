@@ -1,3 +1,11 @@
+## .1018 — pivot-edit actual gizmo preview — 30 October 2026
+
+- [x] User .1017 GIZMO ALIGN PASS protected; other .1017 device gates not inferred.
+- [x] Reuse original live draft frame and actual Total Gizmo arrows/planes/front arcs; remove pivot-only visibility suppression. Existing centre/Y input gate and geometry/history/finish/cancel owners unchanged.
+- [x]55 focused pivot/direction/ring/corner/release/identity/comparison checks PASS; syntax/whitespace clean. Native visual acceptance still pending.
+- [ ] Publication verification.
+- [ ] DEVICE1018: Pivot -> face -> centre -> greenY: actual RGB gizmo visibly turns, model stays still. Finish -> aligned Local transform; Cancel/UndoRedo and World/Local sanity.
+
 ## .1017 — local pivot / gizmo controls — 30 October 2026
 
 - [x] Original per-object origin + flat quaternion/local fields; existing scene history/copy/project owners retained. Edit is transient, one scene checkpoint on finish, no model mutation; Escape/pagehide/cancel and controls restoration covered.

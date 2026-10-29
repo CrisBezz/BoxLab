@@ -1,3 +1,33 @@
+## .1018 — live gizmo preview during pivot editing — 30 October 2026
+
+User explicitly reports “GIZMO ALIGN = PASS”; protect .1017 face alignment. This is
+alignment acceptance, not a blanket PASS for every .1017 Save/Open/transform gate.
+User requests seeing the actual gizmo while turning its pivot.
+
+Audit baseline main c140e6f/runtime6053092d: original live draft frame already drives
+Total Gizmo arrows, plane pads and front rotation arcs on every render frame. Two
+pivot-edit CSS rules hid axes/heads/planes/scale/screen and non-Y rings, leaving no
+useful X/Z orientation feedback. Remove ONLY those hiding rules: the same actual
+gizmo now previews its changing draft orientation during placement and Y turning.
+Existing centre/Y-only pivot input interception, geometry isolation, finish/cancel,
+original history, per-object frame and World/Local owners are unchanged. No duplicate
+preview gizmo, pointer listener, renderer or transform kernel. Multi1.0, native NOM,
+accepted transforms/navigation/Paint and frozen betas remain unchanged.
+
+Validation:55 focused checks PASS/0FAIL/0skip; syntax and whitespace clean. Covers
+actual pivot edit/scene history, transform directions, front rings/hit proxies,
+corner controls, shell identity/cache graph and comparison migration. No native
+iPad visual acceptance inferred. Browser rendering unavailable in this environment;
+no new browser installation attempted for this CSS-only change.
+
+Status: .1018 validated; publication pending. .1017 alignment PASS
+protected; NOM material/texture retention remains separately queued. Shell release,
+comparison and canonical release-loader pins updated; unchanged pivot/transform
+implementation and child cache keys retained. Next: publish after focused checks,
+then iPad preview acceptance. DEVICE1018: Pivot -> face -> centre -> greenY turn;
+watch actual RGB gizmo turn while model stays still. Finish -> Local transform;
+Cancel/UndoRedo and World/Local sanity. No repeat A/B screen batch required.
+
 .1017 publication verified — 30 October 2026:
 Runtime6053092da3e9770e9975e8c698fbabfe2f46bb86; tested/uploaded tree
 e8ee3cb39efaa387ddede24246f5124b93fa80b5 exactly matches fetched origin/main.

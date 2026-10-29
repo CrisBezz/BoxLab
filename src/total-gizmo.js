@@ -910,8 +910,8 @@ style.textContent=`
 #totalGizmo .tg-tool-sector:active{background:rgba(238,242,247,.92);color:#111318}
 #totalGizmo .tg-tool-danger{border-color:rgba(255,110,110,.48)}
 #totalGizmo .tg-tool-center{position:absolute;left:50%;top:50%;width:30px;height:30px;min-height:30px;margin:0;padding:0;display:flex;align-items:center;justify-content:center;transform:translate(-50%,-50%);border:1px solid rgba(238,242,247,.7);border-radius:50%;background:rgba(12,14,18,.96);color:#eef2f7;font-size:18px;line-height:1;pointer-events:auto;touch-action:none}
-#totalGizmo[data-pivot-edit="true"] .tg-scale-ring,#totalGizmo[data-pivot-edit="true"] .tg-scale-node,#totalGizmo[data-pivot-edit="true"] .tg-plane,#totalGizmo[data-pivot-edit="true"] .tg-axis,#totalGizmo[data-pivot-edit="true"] .tg-head,#totalGizmo[data-pivot-edit="true"] .tg-screen-ring{visibility:hidden}
-#totalGizmo[data-pivot-edit="true"] .tg-arc:not([data-ring-axis="y"]){visibility:hidden}
+/* Pivot Edit previews the actual draft-aligned gizmo. Its existing handle owner
+   consumes input and permits only centre/Y turning, without transforming geometry. */
 #totalGizmo[data-pivot-edit="true"] .tg-center{fill:rgba(100,220,140,.25);stroke:#8fe3a5}
 #totalGizmo .tg-shortcut[aria-pressed="true"]{border-color:#8fe3a5;background:#234033}
 #totalGizmo .tg-handle{pointer-events:stroke;fill:none;stroke-width:1.15;vector-effect:non-scaling-stroke;transition:opacity .09s,stroke-width .09s,filter .09s}
