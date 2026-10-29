@@ -8,7 +8,7 @@
 - [x] Geometry-only scope before File choice and status: paint/materials/masks not imported; layers flatten, hidden faces visible note; unsupported reconstruction/repeats refuse clearly.
 - [x] 9 new native checks,30 focused PASS,19 release-focused PASS; syntax/whitespace clean.
 - [x] Full local2983 PASS/0FAIL/0skip/0cancel (105.64s); final14 review checks PASS.
-- [ ] Pages/live verification follows before completion.
+- [x] Runtime2e31ed3d/tree01d04607/Pages40821570325 SUCCESS;19/19 live byte matches; final7 release checks PASS. Hosted40821571190 still running at proof. See docs/publication-1013.md.
 - [ ] DEVICE1013 small native .nom: names/placement/quads/groups and mapped UV Editor; Reference locked.
 - [ ] Save/reopen .boxlab, export NOM and inspect native geometry/UVs in Nomad. No paint/material transfer promise; share failing file+exact error if refused.
 

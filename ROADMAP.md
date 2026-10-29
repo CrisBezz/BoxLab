@@ -1,12 +1,13 @@
 ## .1013 — native NOM polygon import — 29 October 2026
 
-Status: .1013 validated, publishing.
+Status: .1013 LIVE / READY for testing. Runtime2e31ed3d; Pages40821570325 SUCCESS;
+19/19 live byte matches. Publication:docs/publication-1013.md.
 Full local Node24.22.1:2983 PASS/0FAIL/0skip/0cancel (105.64s).
 Syntax/whitespace clean.30 focused +19 release-focused +14 final review checks PASS.
 Protected Multi1.0, native NOM exporter/donor,1012 gizmo/compact,1011 navigation and
-1010 Paint/three-finger owners remain unchanged. Publication/live proof follows.
- Baseline main4fd7510f / live1012 runtimeb6a6d9d8. Publication evidence will
-be docs/publication-1013.md; detailed scope/reference:docs/nomad-import-1013.md.
+1010 Paint/three-finger owners remain unchanged. Publication/live verification complete; proof below.
+ Baseline main4fd7510f / live1012 runtimeb6a6d9d8. Publication evidence:
+docs/publication-1013.md; detailed scope/reference:docs/nomad-import-1013.md.
 
 User reports “right side screen issue seems to be fixed!!”. Record explicit positive
 native observation/no current recurrence, not a proven permanent engine diagnosis
@@ -61,6 +62,18 @@ by this stage; File note/status makes this explicit. If rejected, send exact err
 and source NOM for targeted compatibility work. No fresh A/B testing required.
 Next: native NOM device gate, then staged paint/material/layer/repeat support as
 requested; keep positive right-side observation and historical limits honest.
+
+.1013 publication verified — 29 October 2026:
+Runtime2e31ed3d96cf1e40b37505a7c3435c6eead0b19f; tested/uploaded tree
+01d04607dce98d508d35442488db1e91a0cb8a92. All16 blobs hash-verified before atomic
+non-forced expected-main update; fetched main exactly matches local tested tree.
+Pages40821570325 completed SUCCESS.19/19 cache-busted live files match the tested
+checkout, including new decoder/importer/release loaders and protected NOM exporter/
+donor,1012 gizmo/compact,1011 navigation and1010 Paint/three-finger/Multi1.0.
+Local2983 PASS/0FAIL/0skip/0cancel (105.64s),final7 release checks PASS.
+Hosted40821571190 in_progress at proof,not claimed PASS. .1013 LIVE/READY for native
+NOM geometry/UV checks. Native1013 acceptance pending; geometry-only scope retained.
+User positive right-side observation recorded without inferring all1012 features PASS.
 
 ## .1012 — view-axis rotation ball and optional compact Split View — 29 October 2026
 
