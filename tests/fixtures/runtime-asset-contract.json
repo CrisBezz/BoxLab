@@ -167,9 +167,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1010",
+      "url": "./src/drawer-ui.js?v=0.36.18.1011",
       "target": "src/drawer-ui.js",
-      "sha256": "b16f26c7bf31095e594741aafe036e4de1eb5ccb7fa381c5c0b01653097f5e24"
+      "sha256": "002beae56c470ed637c6899a6fa6e676bb43676a777e68bab6c8983f60432b00"
     },
     {
       "owner": "index.html",
@@ -303,9 +303,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/main.js?v=0.36.18.1010",
+      "url": "./src/main.js?v=0.36.18.1011",
       "target": "src/main.js",
-      "sha256": "9baeb869ce8e407465f1f276a6951d9abe874b47ee810e59cb9486d461041d6d",
+      "sha256": "b085008a11aa7faecc386f4518f76e07e73b5417255d6140d57530d7839cd440",
       "sourceVersion": "0.35.1"
     },
     {
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.1010",
+      "url": "./src/release-bootstrap.js?v=0.36.18.1011",
       "target": "src/release-bootstrap.js",
       "sha256": "fe3e41b43e5df07fb5252936bff4e2a7c4f47fcb38f89b2cb6204fc5712e1698"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1010",
+      "url": "./src/release-version.js?v=0.36.18.1011",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -876,9 +876,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1010",
+      "url": "./face-workflow-layout.js?v=0.36.18.1011",
       "target": "src/face-workflow-layout.js",
-      "sha256": "06c59423500d200a6f9d572b99e4ff60b2703af188e5f870715ece4d71a1417f"
+      "sha256": "9b63e75d5eebca0939fb3cf0835282536663d17f45b37c42a65fc1bd353091e0"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1373,7 +1373,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1010",
+      "url": "./release-version.js?v=0.36.18.1011",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -3350,15 +3350,15 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1010",
+      "url": "./src/shell-comparison.js?v=0.36.18.1011",
       "target": "src/shell-comparison.js",
-      "sha256": "ad2272463440cd7365fdfcc9c869b32dca89d213094abdc4b746d7ed4b01feea"
+      "sha256": "971ab4765647f6c79d5d302277cc66608f4e0810db38566d4ff7589242ecfcf9"
     },
     {
       "owner": "src/main.js",
-      "url": "./free-orbit-controls.js?v=0.36.18.1010",
+      "url": "./free-orbit-controls.js?v=0.36.18.1011",
       "target": "src/free-orbit-controls.js",
-      "sha256": "e7cba651864a7b402befafaa1c54b3c7cc20e1249bf311f18d92676b8c960490"
+      "sha256": "c23d3b69dc9c4a03b43159f444b81156411ab15304d8422da8b171c53be6db3d"
     },
     {
       "owner": "src/main.js",

@@ -16610,3 +16610,47 @@ Full local2955 PASS/0FAIL/0skip/0cancel (117.01s); hosted40780100180 in_progress
 proof,not claimed PASS.1010 LIVE/READY for native orbit/light/Paint gesture checks.
 1009 comparison user ALL PASS protected;no repeat A/B required.1010 native gesture
 feel and larger-brush latency are not established by Node checks;await device feedback.
+
+## .1011 — immediate navigation and two-finger anchored twist — 29 October2026
+
+User “1010 PASS” protects unrestricted one-finger orbit,Studio3finger light,Paint
+vertical size/preview,presets/larger radius and original history/navigation behavior.
+User explicitly reverses inertia preference: remove its tail. Do not preserve1010
+inertia as a required device feature. Current1010 acceptance is explicit,not pending.
+
+Baseline main82ef8f85/runtime7afc6a61;live1010 shell/manifest verified before changes.
+Main disables native damping:orbit,pan and dolly stop on release. Existing free-orbit
+subclass remains sole rotation extension to Three0.179.1;one-finger full3D tumble
+and native pointer/Pencil gate/target/history owners retained. No new gesture listener.
+
+Interpret requested two-finger rotation as SCREEN-PLANE TWIST around held contact,
+not a new mesh-picked3D orbit centre. This interpretation was stated to user while
+working. Extend SAME _handleTouchStartDollyPan/_handleTouchMoveDollyPan owners:
+track contact pair,derive signed twist/pinch,rotate camera up and reuse original
+Three dolly and pan projection. Compensate off-centre rotation/zoom with a similarity
+mapping in CSS/page coordinates. Less-moving contact is anchor,including at zoom
+limits. On controls target-depth plane both contacts track their screen positions;
+no surface hit/raycast/scene/model/selection mutation. Empty viewport also works.
+
+Both fingers moving together PAN;separation PINCH;relative angle TWIST,simultaneously.
+Either finger can stay planted while other arcs around it. Works after inverted or
+oblique orbit and with canvas offsets/page scroll;no ground-bound reset. Contacts
+closer than12px safely rebase rather than undefined angle/zero dolly. Native cancel/
+lift returns to one-finger state;disabled controls refuse moves. Original tap threshold
+continues2fingerUndo/3fingerRedo;1010 three-finger commands untouched.
+
+Changes narrow:main default/import pin and free-orbit controller.1011 shell/recovery/
+canonical release-loader layout+drawer pins reviewed;comparison only code labels and
+log migration1010,old ratings/PASSes unchanged. Paint/presets/preview/raster,lighting,
+Multi1.0,frozen betas,modelling/UV/accepted appearance and sizing bytes/pins unchanged.
+58 focused checks PASS,including10 new actual native pointer/controller checks:
+either anchor,inverted/oblique camera,parallel pan,pinch+twist,limits,near-coincident
+refusal/cancel,disabled move and zero drift. Original1010/Paint/history checks retained.
+Full local Node24.22.1:2965 PASS/0FAIL/0skip/0cancel (111.97s).
+Syntax/whitespace clean. Publication proof:docs/publication-1011.md. Native1011 feel pending.
+
+DEVICE1011:one-finger orbit/flick→lift stops immediately;two fingers translate/pinch;
+hold either finger and arc other→view twists around held point. Combine all3;lift one
+and continue one-finger orbit. Check2tapUndo/3tapRedo and1010 light/brush gestures.
+Next:device feedback on twist interpretation/feel.1009 A/B complete,PASS protected;
+A default retained,no repeat batch or rendering-root-cause claim.

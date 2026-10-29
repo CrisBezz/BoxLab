@@ -1,3 +1,14 @@
+## .1011 — anchored twist / no inertia;1010 user PASS — 29 October2026
+
+- [x]Explicit1010 PASS protects free orbit,light/Paint gestures,presets/preview/large brush/history. Inertia is deliberately removed by subsequent user request.
+- [x]Existing Three native pointer/pan/dolly owner maps both contacts on target plane:parallel pan,pinch,twist,held finger1 or2,inverted/oblique view and page offsets.
+- [x]Zoom limit preserves held point;near-coincident contacts rebase;disabled/cancel/release transitions retain native owner. Default orbit/pan/zoom show no post-release drift.
+- [x]Full local2965 PASS/0FAIL/0skip/0cancel (111.97s),syntax/whitespace clean.
+- [x]58 focused checks PASS,including10 new native pointer/controller checks;no original Paint/history/three-finger assertions dropped.
+- [ ]DEVICE1011 orbit/flick stops on lift;twofinger parallel pan and pinch remain.
+- [ ]Hold either finger and arc other:SCREEN-PLANE twist around held point;combine pan/pinch/twist,release one and resume orbit.
+- [ ]Twofinger tapUndo/threefinger tapRedo,threefinger light and Paint size remain accepted. No repeat A/B required.
+
 ## .1010 — navigation, light and Paint gesture regression — 29 October2026
 
 - [x]Published runtime7afc6a61,tested tree0630b732,Pages40780100247 SUCCESS,18/18 live byte matches.
@@ -7,10 +18,10 @@
 - [x]Main actual touch owner retains2tapUndo/3tapRedo;3drag has axis lock/no history/drains all contacts/cancel restore. No second raw event owner.
 - [x]Original Paint UI size1–256,standard five tips,preview uses original raster and coalesces latest setting;late/hidden preview suppressed. Size changes create no paint resource/history;cancel restores.
 - [x]Large raster work window remains bounded,renews same snapshot,exact cancel;actual large Pencil stroke is ONE UndoRedo.
-- [ ]DEVICE1010 free tumble/inertia touch-stop,onefinger orbit,twofinger pan/pinch,view commands.
-- [ ]Studio3finger horizontal rotates light;tap3 still Redo,gesture release restores navigation.
-- [ ]Paint3finger vertical UP larger/DOWN smaller;stroke sample/readout,lift hides;presets/large stroke/UndoRedo/Done. Existing Fill/left dock untouched.
-- [ ]No native1010 PASS inferred from Node;no extra A/B batch required now.
+- [x]User1010 PASS:free tumble,onefinger orbit,twofinger pan/pinch,view commands;inertia deliberately superseded by1011.
+- [x]User1010 PASS:Studio3finger horizontal light,tap3 Redo,release restores navigation.
+- [x]User1010 PASS:Paint3finger vertical size/preview,presets/large stroke/UndoRedo/Done;Fill/left dock retained.
+- [x]Native1010 PASS explicitly supplied by user;no inference from Node and no extra A/B batch required.
 
 ## .1009 — protect loaded shell provenance — 28 October 2026
 

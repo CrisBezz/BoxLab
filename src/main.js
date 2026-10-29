@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import {pickScreenEdges} from './edge-screen-picking.js?v=0.36.18.954';
 import {createCageBatch,updateCageBatches,addMirrorCageBatch} from './cage-render-batches.js?v=0.36.18.930';
 import { scaffoldLoopCandidates } from './scaffold-loop-candidates.js?v=0.36.18.761';
-import { FreeOrbitControls as OrbitControls } from './free-orbit-controls.js?v=0.36.18.1010';
+import { FreeOrbitControls as OrbitControls } from './free-orbit-controls.js?v=0.36.18.1011';
 import {createThreeFingerCommands} from './three-finger-commands.js?v=0.36.18.1010';
 import { EditableMesh } from './mesh.js?v=0.12';
 import { subdivide } from './subdivision.js?v=0.12';
@@ -26,7 +26,7 @@ try{
 }finally{
   globalThis.__boxlabPencilOrbitGate?.endOrbitRegistration?.();
 }
-controls.enableDamping=true;controls.dampingFactor=.08;controls.target.set(0,0,0);controls.touches.ONE=THREE.TOUCH.ROTATE;controls.touches.TWO=THREE.TOUCH.DOLLY_PAN;controls.screenSpacePanning=true;controls.minAzimuthAngle=-Infinity;controls.maxAzimuthAngle=Infinity;controls.minPolarAngle=.001;controls.maxPolarAngle=Math.PI-.001;
+controls.enableDamping=false;controls.target.set(0,0,0);controls.touches.ONE=THREE.TOUCH.ROTATE;controls.touches.TWO=THREE.TOUCH.DOLLY_PAN;controls.screenSpacePanning=true;controls.minAzimuthAngle=-Infinity;controls.maxAzimuthAngle=Infinity;controls.minPolarAngle=.001;controls.maxPolarAngle=Math.PI-.001;
 const baseHemisphere=new THREE.HemisphereLight(0xeaf2ff,0x1d2430,1.2),key=new THREE.DirectionalLight(0xffffff,3.2);key.position.set(4,7,5);scene.add(baseHemisphere,key);Object.assign(globalThis.__boxlabBridgeState ||= {},{camera,controls,scene,renderer,baseHemisphere,key});const grid=new THREE.GridHelper(12,24,0x3c424d,0x262b33);grid.position.y=-1.55;scene.add(grid);const originAxes=new THREE.AxesHelper(.9);originAxes.material.depthTest=false;originAxes.renderOrder=20;scene.add(originAxes);
 
 let mesh=EditableMesh.cube(1),selectionMode='face',toolMode='move',selection=null,multiSelectEnabled=false;
