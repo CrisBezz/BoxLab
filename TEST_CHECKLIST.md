@@ -1,3 +1,13 @@
+## .1015 — native affine-row rounding repair — 29 October 2026
+
+- [x] Actual MAP TEST.nom reproduces pre-fix refusal at Text matrix[15]=0.9999997615814209; patched decode imports Cube496v/504f and Text7911v/7916f with UVs. Source bytes unchanged.
+- [x] Absolute1e-6 affine-row tolerance/canonicalization BEFORE hierarchy composition only; exact source upper3x3/translation preserved. Sample/mirror/UV/source/positive+negative parent+child drift covered.
+- [x] Larger perspective/non-affine, invalid/non-finite/zero-w/singular matrices remain refused; large translations do not loosen tolerance; actual dispatcher adds nothing on refusal.
+- [x] Actual uploaded geometry/UV .boxlab Save/Open and NOM export/reimport succeeds. No texture/material/paint import added; retained-map proposal stays deferred.
+- [x]23 focused parser/dispatcher/release/identity checks PASS. Full local2986 PASS/0FAIL/0skip/0cancel (113.42s); syntax/whitespace clean.
+- [x] Reviewed1015 importer->decoder and shell/canonical release/cache graph;1014 comparison ratings retained, A default; protected picker/Multi/frozen/UI/gestures unchanged.
+- [ ] DEVICE1015 original MAP TEST.nom imports; inspect Cube/Text placement and UVs, import Undo/Redo, Save/Open and NOM geometry/UV export. Native acceptance pending.
+
 ## Planned native NOM material-retention gates — 29 October 2026
 
 User direction: UV/embedded textures/PBR first; vertex paint deferred. Strategy only;

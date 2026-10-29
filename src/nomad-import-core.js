@@ -126,8 +126,13 @@ export function parseNomadMeshes(input){
       if(!node||typeof node!=='object'||Array.isArray(node)||++nodes>4096)fail('invalid or oversized scene tree');
       const name=String(node.name||'Nomad mesh'),matrix=new THREE.Matrix4();
       if(node.matrix!=null){
-        if(!Array.isArray(node.matrix)||node.matrix.length!==16||node.matrix.some(v=>!Number.isFinite(v))||node.matrix[3]!==0||node.matrix[7]!==0||node.matrix[11]!==0||node.matrix[15]!==1)fail(name+': invalid affine transform');
+        // Nomad's float32 transform composition can leave a few ULPs in the
+        // affine row (MAP TEST.nom saved w=0.9999997615814209). Bound only this
+        // row, independently of object scale/translation; never admit perspective.
+        const epsilon=1e-6;
+        if(!Array.isArray(node.matrix)||node.matrix.length!==16||node.matrix.some(v=>!Number.isFinite(v))||[3,7,11].some(i=>Math.abs(node.matrix[i])>epsilon)||Math.abs(node.matrix[15]-1)>epsilon)fail(name+': invalid affine transform');
         matrix.fromArray(node.matrix);
+        matrix.elements[3]=matrix.elements[7]=matrix.elements[11]=0;matrix.elements[15]=1;
       }
       matrix.premultiply(parent);if(Math.abs(matrix.determinant())<1e-15)fail(name+': singular transform');
       const shown=visible&&node.visible!==false;

@@ -62,6 +62,39 @@ function importRuntime(){
  const source=glbSource('import-mesh.js').replace(/await import\('\.\/nomad-import-core\.js\?v=[\d.]+'\)/,'{parseNomadMeshes:globalThis.__nomParserTest}');
  const r=glbOwnerRuntime({importSource:source});r.c.__nomParserTest=parseNomadMeshes;r.c.status={textContent:''};r.c.setStatus=text=>r.c.status.textContent=text;return r;
 }
+test('1015 native float32 affine-row drift imports with canonical affine placement, preserving source/UVs and mirrored winding',async()=>{
+ // Exact transform from the failing MAP TEST.nom Text node; geometry comes from
+ // the independent upstream fixture, without checking in the user's artwork.
+ const matrix=[0.47106683254241943,-0.7071466445922852,-0.4710310697555542,0,0.707134485244751,3.275891558018884e-8,0.7070786952972412,0,-0.471012145280838,-0.7070670127868652,0.4709761142730713,0,0.7214216589927673,1.1314771175384521,0.6523334383964539,0.9999997615814209];
+ for(const mirrored of [false,true]){
+  const canonical=[...matrix];canonical[15]=1;if(mirrored)for(let i=0;i<3;i++)canonical[i]*=-1;
+  const expected=parseNomadMeshes(editJSON(bytes('raw'),j=>j.scene[0].matrix=canonical));
+  const drift=[...canonical];drift[15]=matrix[15];
+  const input=editJSON(bytes('raw'),j=>j.scene[0].matrix=drift),before=input.slice(),actual=parseNomadMeshes(input);
+  assert.deepEqual(actual.meshes,expected.meshes);assert.deepEqual(input,before);
+  const r=importRuntime();await r.c.importFile({name:'Float32.nom',size:input.length,arrayBuffer:async()=>input.buffer});
+  assert.equal(r.added.length,2,r.c.status.textContent);assert.equal(inspectImportedUV(r.added[0].mesh,r.added[0].glbPassthrough,meshTopologySignature).state,'ready');
+ }
+ // Canonicalise each node BEFORE parent composition, so drift never introduces
+ // position-dependent perspective or compounds through the scene hierarchy.
+ const clean=parseNomadMeshes(bytes('raw'));
+ for(const sign of [-1,1]){
+  const input=editJSON(bytes('raw'),j=>{for(const n of [j.scene[0],...j.scene[0].children]){n.matrix??=new THREE.Matrix4().toArray();for(const i of [3,7,11])n.matrix[i]=sign*5e-7;n.matrix[15]=1+sign*5e-7;}});
+  assert.deepEqual(parseNomadMeshes(input).meshes,clean.meshes);
+ }
+});
+test('1015 affine tolerance still refuses perspective, invalid rows and singular transforms before any object add',async()=>{
+ for(const slot of [3,7,11,15])for(const delta of [-2e-6,2e-6]){
+  const input=editJSON(bytes('raw'),j=>j.scene[0].matrix[slot]=(slot===15?1:0)+delta);
+  assert.throws(()=>parseNomadMeshes(input),/invalid affine transform/);
+ }
+ for(const change of [m=>m[15]=0,m=>m[0]=null,m=>m.pop(),m=>m[0]=m[1]=m[2]=0]){
+  const input=editJSON(bytes('raw'),j=>change(j.scene[0].matrix));assert.throws(()=>parseNomadMeshes(input),/(invalid affine|singular) transform/);
+ }
+ const input=editJSON(bytes('raw'),j=>{j.scene[0].matrix[12]=1e12;j.scene[0].matrix[3]=1e-3;});
+ assert.throws(()=>parseNomadMeshes(input),/invalid affine transform/);
+ const r=importRuntime();await r.c.importFile({name:'Perspective.nom',size:input.length,arrayBuffer:async()=>input.buffer});assert.equal(r.added.length,0);assert.match(r.c.status.textContent,/invalid affine transform/);
+});
 test('1013 actual File import dispatcher adds named editable native objects via original fit/manager, keeps indices/UV-only codec and Save/Open/GLB/NOM UVs',async()=>{
  const r=importRuntime(),data=bytes('chunked');await r.c.importFile({name:'From Nomad.NOM',size:data.length,arrayBuffer:async()=>data.buffer});
  assert.equal(r.added.length,2,r.c.status.textContent);const [a,b]=r.added;assert.equal(a.name,'Native pair');assert.equal(b.name,'Hidden copy');assert.equal(b.visible,false);assert.equal(a.mesh.vertices.length,5);assert.deepEqual(a.mesh.faces.map(f=>[...f]),[[3,2,1,0],[2,4,1]]);

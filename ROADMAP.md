@@ -1,3 +1,44 @@
+## .1015 — native NOM affine-row rounding repair — 29 October 2026
+
+Status: validated locally; publication pending. Baseline main0ca3c2f9, live1014
+runtime8a33141c / USER PASS retained. User reports “NOM Tex: invalid affine
+transform” and supplies MAP TEST.nom. Reproduced on actual file at Text node:
+float32 matrix[15]=0.9999997615814209 (2 float32 ULPs below1); exact affine-tail
+validation incorrectly refused this saved polygon geometry. No texture-map cause.
+
+Original nomad-import-core remains sole parser/geometry owner. Accept ONLY absolute
+1e-6 deviations from [0,0,0,1] at column-major indices3/7/11/15; canonicalize copied
+Matrix4 row BEFORE parent composition. Upper3x3 and translation unchanged; source
+JSON/bytes never mutated. Bound is independent of large translation/scale. Finite
+16-element/type, singularity, limits, UV/index/hierarchy and atomic parse-before-add
+checks retained. Larger perspective/non-affine drift, zero w, invalid values and
+singular transforms still refuse. No generic transform/Array/geometry-owner change.
+
+Actual source now decodes Cube496v/504f and Text7911v/7916f, BOTH with UVs. Existing
+.boxlab Save/Open -> NOM export -> reimport retains their counts/UV presence; source
+bytes unchanged. Scene lights/cameras omitted and sculpt-layer flatten warning remain.
+Paint/materials/textures/masks remain unsupported by native import; this build does
+NOT implement the retained-map proposal. User artwork not copied into repository;
+regression uses only exact failing matrix with independent upstream geometry fixture.
+
+Two new actual parser/dispatcher tests cover sample transform/mirror/source/UV,
+positive/negative row drift at parent+child, canonical placement and refusal of
+perspective/invalid/singular rows (including huge translation). 23 focused checks
+PASS; full local Node24.22.1 regression2986 PASS/0FAIL/0skip/0cancel (113.42s).
+Syntax/whitespace clean. Native iPad device acceptance pending.
+Reviewed1015 shell/bootstrap/release/comparison, import->decoder and canonical
+release->face-layout->drawer cache closure. Existing comparison ratings migrate1014;
+A default/no repeat A/B gate. Protected Multi1.0/frozen Beta2–7,1014 unfiltered picker,
+1012 gizmo/compact,1011 navigation,1010 Paint/gestures, resource/export owners unchanged.
+
+DEVICE1015: refresh to1015; import original MAP TEST.nom, inspect Cube/Text relative
+placement and UV Editor. Undo/Redo import; Save/Open .boxlab and NOM geometry/UV export.
+User clarifies Text is a live, non-validated Nomad text object; saved polygon
+shape imports, not editable Nomad text semantics. Validation may rewrite its matrix
+but that workaround is untested and is not required by this bounded repair.
+No texture/PBR transfer promise. Next follow native import feedback, then separately
+scope native NOM retained-map resources/round-trip. See docs/publication-1015.md.
+
 ## Texture/PBR priority and retained-map proposal — 29 October 2026
 
 Current runtime remains .1014 LIVE / USER PASS. User explicitly corrects earlier

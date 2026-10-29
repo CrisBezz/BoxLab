@@ -167,9 +167,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1014",
+      "url": "./src/drawer-ui.js?v=0.36.18.1015",
       "target": "src/drawer-ui.js",
-      "sha256": "ec85f4d75e5f1677ca326a039e3d8803052c595b52501656b980f88579108de6"
+      "sha256": "046a58adcc4801b1c0b20f0f421f3c79c548873b0a8d7f7baff173381f9b905f"
     },
     {
       "owner": "index.html",
@@ -265,9 +265,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/import-mesh.js?v=0.36.18.1013",
+      "url": "./src/import-mesh.js?v=0.36.18.1015",
       "target": "src/import-mesh.js",
-      "sha256": "d064a039b8186773145b8ca7f32c158889c61efffca08fb0f399b083c64bbf20",
+      "sha256": "431c491f6aeeaa25ee3211cace854c8bd3299807181f44990d9ba1889e0b8b35",
       "sourceVersion": "0.36.18.882"
     },
     {
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.1014",
+      "url": "./src/release-bootstrap.js?v=0.36.18.1015",
       "target": "src/release-bootstrap.js",
       "sha256": "fe3e41b43e5df07fb5252936bff4e2a7c4f47fcb38f89b2cb6204fc5712e1698"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1014",
+      "url": "./src/release-version.js?v=0.36.18.1015",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -876,9 +876,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1014",
+      "url": "./face-workflow-layout.js?v=0.36.18.1015",
       "target": "src/face-workflow-layout.js",
-      "sha256": "69e97a057ffd4d469e3ee0929c78e340ce487c0ce822a21851f5c654d59ebbad"
+      "sha256": "534579c4ddfa6cab358fc79ca09039e20f17fd1301c7edad41807a4443526c52"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1373,7 +1373,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1014",
+      "url": "./release-version.js?v=0.36.18.1015",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -3350,9 +3350,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1014",
+      "url": "./src/shell-comparison.js?v=0.36.18.1015",
       "target": "src/shell-comparison.js",
-      "sha256": "dbb24385147cda7cbc21abc7a13b5601dd61eb5bfc70fb8474aa8c43503cf7ff"
+      "sha256": "fdfeccc581d53c9a2f7169556c7e9fab3e78a6ada5ba8ee98f59de0f1831bd3b"
     },
     {
       "owner": "src/main.js",
@@ -3404,9 +3404,9 @@
     },
     {
       "owner": "src/import-mesh.js",
-      "url": "./nomad-import-core.js?v=0.36.18.1013",
+      "url": "./nomad-import-core.js?v=0.36.18.1015",
       "target": "src/nomad-import-core.js",
-      "sha256": "53b61b519673fac053a56cf8738fc21f10faa2e53af53dadc99dc1624ba9d37a"
+      "sha256": "efe4b2d1489c09874a4eac867d2e750a00f011969ac7a9fd00bb837f75a1d201"
     },
     {
       "owner": "src/nomad-import-core.js",
