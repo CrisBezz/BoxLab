@@ -6,6 +6,7 @@
 - [x] Actual uploaded geometry/UV .boxlab Save/Open and NOM export/reimport succeeds. No texture/material/paint import added; retained-map proposal stays deferred.
 - [x]23 focused parser/dispatcher/release/identity checks PASS. Full local2986 PASS/0FAIL/0skip/0cancel (113.42s); syntax/whitespace clean.
 - [x] Reviewed1015 importer->decoder and shell/canonical release/cache graph;1014 comparison ratings retained, A default; protected picker/Multi/frozen/UI/gestures unchanged.
+- [x]Runtime6511ca38/treeb60c4c6a; Pages40869617898 SUCCESS;10/10 live byte matches. Hosted40869618748 in_progress at proof; no hosted PASS claim. Second cube-only MAP TEST(1).nom imports before/after repair; original live Text sample fails before and passes after.
 - [ ] DEVICE1015 original MAP TEST.nom imports; inspect Cube/Text placement and UVs, import Undo/Redo, Save/Open and NOM geometry/UV export. Native acceptance pending.
 
 ## Planned native NOM material-retention gates — 29 October 2026
