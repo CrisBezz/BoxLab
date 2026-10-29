@@ -16748,3 +16748,69 @@ Local2974 PASS/0FAIL/0skip/0cancel (104.38s), final7 release checks PASS.
 Hosted40819129612 in_progress at proof; not claimed PASS.10 protected navigation,
 Paint, Multi and icon files are byte-identical to baseline. .1012 LIVE/READY for
 native gizmo/compact checks; no native1011/1012 PASS inferred. See publication proof.
+
+## .1013 — native NOM polygon import — 29 October 2026
+
+Status: .1013 implementation validated in focused checks; full regression/publication
+pending. Baseline main4fd7510f / live1012 runtimeb6a6d9d8. Publication evidence will
+be docs/publication-1013.md; detailed scope/reference:docs/nomad-import-1013.md.
+
+User reports “right side screen issue seems to be fixed!!”. Record explicit positive
+native observation/no current recurrence, not a proven permanent engine diagnosis
+or blanket .1012 gizmo/compact PASS. .1010 PASS and .1009 completed A/B/A acceptance
+remain protected; .1011 gesture feel/.1012 gizmo+compact checks not explicitly graded.
+
+User requests native NOM import and supplies creator Stephane's nom_file.py.
+Audit confirms native EXPORT already exists; Import currently OBJ/GLB/GLTF only.
+Use current upstream08391c8e (28October), blob6dcb1eab, plus adapter for hierarchy,
+triangle/FaceMeta/UV conventions. New independent browser parser in nomad-import-core,
+not Python runtime or copied upstream module. Existing export-template header reader,
+NOM writer/donor and all Paint/geometry/export owners unchanged. No second modelling
+kernel. File chooser/dispatcher/addImported remain authoritative; new format only.
+
+Support raw/zero/legacy/current LZ4 typed geometry arrays, safe modern/legacy headers,
+thumbnail beforeJSON/afterbin, native quads and negative-fourth triangles (plus own
+export repeated-third compatibility), names, parent transforms, visibility, mirrored
+winding+UV correspondence, facegroups and per-corner UV seams. Main saved shape,
+active-level topology fallback, baked triplanar if supplied. All geometry decoded/
+validated before first manager call. Native indexed topology bypasses existing OBJ/
+GLB weld/reconstruction, retaining coincident disconnected indices. Existing common
+fit/manager/history/reference owners handle import. File info/status state geometry+
+UV only: paint/materials/textures/masks not imported; sculpt layers flatten to saved
+shape. Lights/cameras omitted with note. Repeat hints/unbaked procedural/missing
+compressed multires topology refuse whole import with actionable save/validate hint.
+Limits128MiB file/16MiB JSON/64MiB requested decoded arrays/500k vertices+faces total/
+512objects/4096nodes/depth128; not an iPad performance guarantee.
+
+Native UV-only source=boxlab envelope (existing version/schema) survives original
+UV Editor/Paint/project/GLB/NOM owners. No fake GLB provenance, new codec or image
+schema. Native noUV remains plain geometry. FaceMeta hidden faces imported visible
+with note; hidden objects retain visibility. Source file untouched, previous scene
+retained. File Import includes .nom and concise scope note before file selection.
+
+9 new checks: independent upstream-writer+nativeLZ4 fixtures verified by upstream
+reader (raw7/chunked7/legacy5), malformed lengths/signatures/limits/type/compression,
+active fallback/emptylevels/procedural/refusal, saved shape warnings, actual File
+route/fit/names/visibility/index preservation/reference, UV SaveOpen/GLB/NOM reimport.
+Genuine donor2642v/2640f compressed native geometry and preJSON thumbnail decode.
+30 focused checks PASS;19 release-focused PASS;final complete suite follows.
+
+Reviewed1013 cache closure:import-mesh/new core, release/bootstrap/comparison and
+canonical release->face-layout->drawer parents. Original import stamp882 retained.
+Old comparison ratings preserved by migration1012;A default/no new comparison ask.
+Protected Multi1.0, frozen betas, navigation1011, Paint/three-finger1010 and accepted
+1012 gizmo/compact code, NOM export and donor all unchanged. No broad UI cleanup.
+
+DEVICE1013: File Import a small low-poly .nom; inspect named objects/relative placement,
+quads/triangles/facegroups; UV Editor if source mapped. Reference locks; Save .boxlab,
+reopen and export NOM to confirm shape/UVs. Texture/paint appearance is NOT supported
+by this stage; File note/status makes this explicit. If rejected, send exact error
+and source NOM for targeted compatibility work. No fresh A/B testing required.
+Next: native NOM device gate, then staged paint/material/layer/repeat support as
+requested; keep positive right-side observation and historical limits honest.
+
+.1013 final validation complete before publication:
+Full local Node24.22.1:2983 PASS/0FAIL/0skip/0cancel (105.64s).
+Syntax/whitespace clean.30 focused +19 release-focused +14 final review checks PASS.
+Protected Multi1.0, native NOM exporter/donor,1012 gizmo/compact,1011 navigation and
+1010 Paint/three-finger owners remain unchanged. Publication/live proof follows.

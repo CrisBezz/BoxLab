@@ -1,3 +1,17 @@
+## .1013 — native Nomad geometry import — 29 October 2026
+
+- [x] User: right-side screen issue seems fixed; record positive device observation, no permanent-root-cause or full1012 PASS inference. Existing1010/1009 PASS protected.
+- [x] Audit native NOM export/template reader and authoritative OBJ/GLB import before adding format. Original export/donor unchanged; same File dispatcher/manager.
+- [x] Raw/zero/current chunked/legacy LZ4, header/thumbnail/bounds/types/counts/limits; real donor2642v/2640f and independently upstream-generated+decoded fixtures.
+- [x] Native polygons/triangle conventions, shared indices/coincident spare preserved, groups/UV seams/names/hierarchy/mirror/visibility, active multires fallback/empty levels/baked shape.
+- [x] Original File editable/reference import, fit, no partial geometry adds on parser refusal; exact source bytes unchanged. UV-only codec/SaveOpen/GLB/NOM reimport.
+- [x] Geometry-only scope before File choice and status: paint/materials/masks not imported; layers flatten, hidden faces visible note; unsupported reconstruction/repeats refuse clearly.
+- [x] 9 new native checks,30 focused PASS,19 release-focused PASS; syntax/whitespace clean.
+- [x] Full local2983 PASS/0FAIL/0skip/0cancel (105.64s); final14 review checks PASS.
+- [ ] Pages/live verification follows before completion.
+- [ ] DEVICE1013 small native .nom: names/placement/quads/groups and mapped UV Editor; Reference locked.
+- [ ] Save/reopen .boxlab, export NOM and inspect native geometry/UVs in Nomad. No paint/material transfer promise; share failing file+exact error if refused.
+
 ## .1012 — grey View rotation ball / compact Split View — 29 October 2026
 
 - [x] Audit current main/live1011 and original transform/Group/gizmo/UI owners; .1010 PASS and .1009 A/B/A PASS protected. .1011 native feel remains pending.

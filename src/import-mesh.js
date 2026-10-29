@@ -416,13 +416,13 @@ function geometrySignature(mesh){
 }
 
 
-function addImported(meshes, baseName,{reconstructQuads=false}={}) {
+function addImported(meshes, baseName,{reconstructQuads=false,format='OBJ'}={}) {
   const manager = globalThis.__boxlabObjectManager;
   if (!manager) throw new Error('The Outliner is still loading. Please try Import again.');
   const isReference = importKind === 'reference';const importFit=fitMeshesToBoxLabScale(meshes);
   let weldedTotal = 0, removedTotal = 0, reconstructedQuads = 0;
   if (!isReference) meshes = meshes.map(entry => {
-    const result=weldEditableMesh(entry.mesh,EDITABLE_WELD_TOLERANCE,entry.cornerUVs,entry.cornerTangents,entry.cornerColors,entry.morphTargets,entry.faceMaterialIndices);
+    const result=format==='NOM'?{...entry,welded:0,removedFaces:0}:weldEditableMesh(entry.mesh,EDITABLE_WELD_TOLERANCE,entry.cornerUVs,entry.cornerTangents,entry.cornerColors,entry.morphTargets,entry.faceMaterialIndices);
     weldedTotal+=result.welded;removedTotal+=result.removedFaces;
     let next=result.mesh,nextUVs=result.cornerUVs,nextTangents=result.cornerTangents,nextColors=result.cornerColors,nextMorphTargets=result.morphTargets,nextMaterials=result.faceMaterialIndices;
     if(reconstructQuads){
@@ -430,7 +430,10 @@ function addImported(meshes, baseName,{reconstructQuads=false}={}) {
       next=rebuilt.mesh;nextUVs=rebuilt.cornerUVs;nextTangents=rebuilt.cornerTangents;nextColors=rebuilt.cornerColors;nextMorphTargets=rebuilt.morphTargets;nextMaterials=rebuilt.faceMaterialIndices;reconstructedQuads+=rebuilt.merged;
     }
     const passthrough=entry.glbPassthrough||null;
-    if(passthrough){
+    if(passthrough?.source==='boxlab'){
+      passthrough.uvCorners=nextUVs;
+      passthrough.uvTopologySignature=topologySignature(next);
+    }else if(passthrough){
       passthrough.activeMorphWeights=Array.isArray(entry.morphWeights)?[...entry.morphWeights]:[];
       passthrough.boxlabImportFit={
         scale:Number(importFit?.scale||1),
@@ -455,7 +458,7 @@ function addImported(meshes, baseName,{reconstructQuads=false}={}) {
     return{...entry,mesh:next,cornerUVs:nextUVs,cornerTangents:nextTangents,cornerColors:nextColors,morphTargets:nextMorphTargets,morphWeights:entry.morphWeights||[],glbPassthrough:passthrough};
   });
   const options={kind:isReference?'reference':'editable',locked:isReference,enterObjectMode:!isReference,settings:{mirror:{x:false,y:false,z:false},subd:false,subdLevel:1,cage:true}};
-  meshes.forEach((entry,index)=>manager.addMesh(entry.mesh,meshes.length===1?baseName:`${baseName} • ${entry.name||index+1}`,{...options,glbPassthrough:entry.glbPassthrough||null}));
+  meshes.forEach((entry,index)=>manager.addMesh(entry.mesh,format==='NOM'?(entry.name||baseName):meshes.length===1?baseName:`${baseName} • ${entry.name||index+1}`,{...options,...(entry.visible!=null?{visible:entry.visible}:{}),glbPassthrough:entry.glbPassthrough||null}));
   const preserved=!isReference&&meshes.some(entry=>entry.polygonPreserved);
   const groupCount=[...new Set(meshes.flatMap(entry=>entry.mesh.faceGroups||[]).filter(Boolean))].length;
   const uvCount=meshes.filter(entry=>entry.glbPassthrough?.uvCorners?.some(Boolean)).length;
@@ -466,7 +469,7 @@ function addImported(meshes, baseName,{reconstructQuads=false}={}) {
   globalThis.__boxlabNomadRoundTrip ||= {};
   globalThis.__boxlabNomadRoundTrip.lastImport={objects:meshes.length,faceGroups:groupCount,uvObjects:uvCount,tangentObjects:tangentCount,vertexColorObjects:colorCount,morphObjects:morphCount,details:perObject};
   if(isReference)setStatus(`${meshes.length} imported ${meshes.length===1?'mesh':'meshes'} • locked reference`);
-  else setStatus(`${meshes.length} imported ${meshes.length===1?'mesh':'meshes'} • editable${preserved?' • OBJ polygons preserved':''}${groupCount?` • ${groupCount} facegroup${groupCount===1?'':'s'} preserved`:''}${uvCount?` • UVs preserved`:''}${tangentCount?` • tangents preserved`:''}${colorCount?` • vertex colours preserved`:''}${morphCount?` • layers preserved`:''}${reconstructedQuads?` • ${reconstructedQuads} quad${reconstructedQuads===1?'':'s'} reconstructed`:''} • ${weldedTotal} coincident vertices welded${removedTotal?` • ${removedTotal} collapsed faces removed`:''}`);
+  else setStatus(`${meshes.length} imported ${meshes.length===1?'mesh':'meshes'} • editable${preserved?` • ${format} polygons preserved`:''}${groupCount?` • ${groupCount} facegroup${groupCount===1?'':'s'} preserved`:''}${uvCount?` • UVs preserved`:''}${tangentCount?` • tangents preserved`:''}${colorCount?` • vertex colours preserved`:''}${morphCount?` • layers preserved`:''}${reconstructedQuads?` • ${reconstructedQuads} quad${reconstructedQuads===1?'':'s'} reconstructed`:''} • ${weldedTotal} coincident vertices welded${removedTotal?` • ${removedTotal} collapsed faces removed`:''}`);
 }
 
 
@@ -489,7 +492,17 @@ function loadGLTF(file) {
   reader.onerror=()=>setStatus('Import failed • could not read GLB/GLTF');reader.readAsArrayBuffer(file);
 }
 
-function importFile(file) { if(!file)return;const extension=file.name.split('.').pop()?.toLowerCase();setStatus(`Importing ${file.name}…`);if(extension==='obj')loadOBJ(file);else if(extension==='glb'||extension==='gltf')loadGLTF(file);else setStatus('Import failed • choose an OBJ, GLB or GLTF file'); }
+async function loadNOM(file){
+  try{
+    if(file.size>128*1024*1024)throw Error('NOM file exceeds 128 MiB; decimate in Nomad first');
+    const {parseNomadMeshes}=await import('./nomad-import-core.js?v=0.36.18.1013');
+    const result=parseNomadMeshes(await file.arrayBuffer());
+    addImported(result.meshes,fileBaseName(file),{format:'NOM'});
+    if(result.warnings.length&&status)status.textContent+=' • '+result.warnings.join(' • ');
+  }catch(error){setStatus(`Import failed • ${error.message||'NOM could not be read'}`);}
+}
+
+function importFile(file) { if(!file)return;const extension=file.name.split('.').pop()?.toLowerCase();setStatus(`Importing ${file.name}…`);if(extension==='obj')loadOBJ(file);else if(extension==='glb'||extension==='gltf')loadGLTF(file);else if(extension==='nom')return loadNOM(file);else setStatus('Import failed • choose an OBJ, GLB, GLTF or NOM file'); }
 kindButtons.forEach(item=>item.addEventListener('click',()=>{importKind=item.dataset.importKind;kindButtons.forEach(button=>button.classList.toggle('active',button===item));}));
 button?.addEventListener('click',()=>input?.click());input?.addEventListener('change',()=>{importFile(input.files?.[0]);input.value='';});
 if(!globalThis.__boxlabObjectManager)window.addEventListener('boxlab-object-manager-ready',()=>{},{once:true});
