@@ -1,4 +1,5 @@
-import { mountGizmoCornerControls } from './gizmo-corner-controls.js?v=0.36.18.734';
+import { installLocalPivot } from './gizmo-local-pivot.js?v=0.36.18.1017';
+import { mountGizmoCornerControls } from './gizmo-corner-controls.js?v=0.36.18.1017';
 import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.732';
 import * as THREE from 'three';
 
@@ -136,6 +137,7 @@ function setExpanded(next,options={}){
   return expanded;
 }
 function centerOf(mesh,mode=currentMode()){
+  const local=globalThis.__boxlabLocalPivot?.frame?.();if(local)return local.center.clone();
   // Presentation anchor only: Multi's protected transform/pivot owner is unchanged.
   const selected=globalThis.__boxlabObjectSelection,mgr=globalThis.__boxlabObjectManager;
   if(mode==='object'&&selected?.multi){
@@ -202,6 +204,7 @@ function onHandleDown(event){
   if(!selectionAvailable(mesh,mode))return;
   hideFloatInput();
   const el=event.currentTarget,spec=handleSpec(el);
+  if(globalThis.__boxlabLocalPivot?.handle?.(spec,event))return;
   if(vertexExtrudeConstraintSession()){
     event.preventDefault();event.stopImmediatePropagation();
     const owner=globalThis.__boxlabVertexExtrude;
@@ -458,6 +461,7 @@ const toolCenters=[...root.querySelectorAll('.tg-tool-center')];
 const toolSectors=[...root.querySelectorAll('.tg-tool-sector')];
 const hud=root.querySelector('.tg-hud'),hudText=root.querySelector('.tg-hud-text');
 const edgeExtrudeBadge=root.querySelector('.tg-edge-extrude-badge');
+installLocalPivot({root,canvas,status,getMode:currentMode});
 
 const edgeExtrudeStyle=document.createElement('style');
 edgeExtrudeStyle.textContent=`
@@ -787,7 +791,7 @@ function hideFloatInput(){
 function commitFloatInput(){
   const value=floatInput.value.trim();
   if(!value||!lastSpec)return;
-  const ok=globalThis.__boxlabTransformUpgrade?.applyExact?.(lastSpec.tool,lastSpec.constraint,value);
+  const ok=globalThis.__boxlabTransformUpgrade?.applyExact?.(lastSpec.tool,lastSpec.constraint,value,lastSpec);
   if(ok){
     const legacy=document.querySelector('#transformValue');
     if(legacy)legacy.value='';
@@ -906,6 +910,10 @@ style.textContent=`
 #totalGizmo .tg-tool-sector:active{background:rgba(238,242,247,.92);color:#111318}
 #totalGizmo .tg-tool-danger{border-color:rgba(255,110,110,.48)}
 #totalGizmo .tg-tool-center{position:absolute;left:50%;top:50%;width:30px;height:30px;min-height:30px;margin:0;padding:0;display:flex;align-items:center;justify-content:center;transform:translate(-50%,-50%);border:1px solid rgba(238,242,247,.7);border-radius:50%;background:rgba(12,14,18,.96);color:#eef2f7;font-size:18px;line-height:1;pointer-events:auto;touch-action:none}
+#totalGizmo[data-pivot-edit="true"] .tg-scale-ring,#totalGizmo[data-pivot-edit="true"] .tg-scale-node,#totalGizmo[data-pivot-edit="true"] .tg-plane,#totalGizmo[data-pivot-edit="true"] .tg-axis,#totalGizmo[data-pivot-edit="true"] .tg-head,#totalGizmo[data-pivot-edit="true"] .tg-screen-ring{visibility:hidden}
+#totalGizmo[data-pivot-edit="true"] .tg-arc:not([data-ring-axis="y"]){visibility:hidden}
+#totalGizmo[data-pivot-edit="true"] .tg-center{fill:rgba(100,220,140,.25);stroke:#8fe3a5}
+#totalGizmo .tg-shortcut[aria-pressed="true"]{border-color:#8fe3a5;background:#234033}
 #totalGizmo .tg-handle{pointer-events:stroke;fill:none;stroke-width:1.15;vector-effect:non-scaling-stroke;transition:opacity .09s,stroke-width .09s,filter .09s}
 #totalGizmo .tg-axis{stroke-width:1.35;pointer-events:stroke}
 #totalGizmo .tg-head{pointer-events:none;opacity:.92}
@@ -1053,7 +1061,9 @@ function ringWorldRadius(center,camera,targetPixels=52){
   const worldPerPixel=2*Math.tan(THREE.MathUtils.degToRad(camera.fov)*.5)*distance/Math.max(1,rect.height);
   return worldPerPixel*targetPixels;
 }
+function frameAxis(axis){const v=new THREE.Vector3(axis==='x'?1:0,axis==='y'?1:0,axis==='z'?1:0),frame=globalThis.__boxlabLocalPivot?.frame?.();return frame?v.applyQuaternion(frame.quaternion):v;}
 function ringBasis(axis){
+  const frame=globalThis.__boxlabLocalPivot?.frame?.();if(frame){const pair=axis==='x'?['y','z']:axis==='y'?['x','z']:['x','y'];return pair.map(frameAxis);}
   if(axis==='x')return [new THREE.Vector3(0,1,0),new THREE.Vector3(0,0,1)];
   if(axis==='y')return [new THREE.Vector3(1,0,0),new THREE.Vector3(0,0,1)];
   return [new THREE.Vector3(1,0,0),new THREE.Vector3(0,1,0)];
@@ -1095,9 +1105,9 @@ function syncRotationRings(center,camera){
 }
 function syncAxisVisuals(center,camera){
   const dirs={
-    x:axisScreen(center,camera,new THREE.Vector3(1,0,0)),
-    y:axisScreen(center,camera,new THREE.Vector3(0,1,0)),
-    z:axisScreen(center,camera,new THREE.Vector3(0,0,1))
+    x:axisScreen(center,camera,frameAxis('x')),
+    y:axisScreen(center,camera,frameAxis('y')),
+    z:axisScreen(center,camera,frameAxis('z'))
   };
   for(const [name,d] of Object.entries(dirs)){
     const angle=Math.atan2(d.y,d.x)*180/Math.PI;

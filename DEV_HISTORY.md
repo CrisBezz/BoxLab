@@ -17083,3 +17083,70 @@ No fresh automated run or mandatory hands-on test needed for documentation only.
 Next recorded candidate remains native NOM texture/PBR retention with Save/Open/NOM
 round-trip verification, separately scoped from rendering/displacement preview.
 No new feature build requested by PASS alone.
+
+## .1017 — per-object local gizmo pivot workflow — 30 October 2026
+
+Status: validated locally; publication pending. Baseline main951f445c,
+runtime25cef857 (.1016 USER PASS protected). User requests removing gizmo Undo/Redo,
+face-normal pivot placement, centre-enabled Y twist, World/Local and per-object recall.
+Interpretation stated before work: Y follows face normal; XZ lies tangent to face.
+
+Existing object-origin record is the SOLE pivot position owner. New small
+gizmo-local-pivot module (src/gizmo-local-pivot.js) edits a transient draft, then
+replaces flat origin fields x/y/z/qx/qy/qz/qw/gizmoLocal through original object-history
+checkpoint. No parallel modelling/pivot/history kernel or project resource channel.
+Existing flat origin spreads already preserve fields across scene capture/restore,
+Duplicate and .boxlab codec; no scene version bump. setOrigin now preserves optional
+flat fields, preventing original preset/move owners from erasing orientation.
+
+Bottom-right corner pair now Pivot Edit (tiny axes inside ring) and World/Local
+(globe/axes artwork); no gizmo Undo/Redo buttons. Header/history gestures unchanged.
+Pivot Edit: tap ACTIVE visible face -> exact surface point + geometric face normal;
+centre press enables Y turn, drag green Y ring (or centre horizontally); Pivot button
+finishes. Geometry/selection untouched during draft; whole edit is one original scene
+checkpoint. Escape/pagehide discard; pointer cancel rolls back current spin only.
+Canvas navigation/raw touch history is paused ONLY during explicit edit and restored
+on exit. Other gizmo shortcuts disabled during edit; Pivot/space remain available.
+Click outside gizmo/canvas commits before other UI. Selection changes safely finish.
+
+Ray pick reuses renderer's actual visible Base body/normal transform; nearer inactive
+body blocks placement. No new mesh triangulation, phantom through-object picking,
+normal painting or UV edits. Current editing gate: one independent unlocked Base
+object, no reference/linked/evaluated/procedural/Paint/active modelling session.
+Multi/group keeps original World pivot behaviour; local editing refused for Multi.
+
+Local returns stored position and orthonormal quaternion; World uses original
+selection centre/world axes. Each object remembers its frame and space choice.
+Existing Total Gizmo uses same frame for anchor/arrows/plane pads/front ring paths
+AND hit proxies. Original transform-upgrade owns local projected Move, quaternion
+Rotate, basis-space Scale and Exact; frozen start frame prevents accumulation/drift.
+Object moves/rotates carry origin/frame, including while World displayed; cancel
+restores geometry AND origin. Component transforms affect only selected vertices
+about same custom frame; object origin itself remains fixed for component edits.
+Grey screen ball remains view-axis; explicit axes/1016 direction/detents retained.
+No duplicate gesture or transform kernel; protected Multi1.0/frozen betas untouched.
+
+Seven new module/actual-owner tests + one updated corner test: face handedness,
+visible picking/occlusion, draft placement/Y twist, actual scene UndoRedo, SaveOpen,
+object recall/WorldLocal, refusals, component selection, Exact Move/Rotate/Scale,
+real projected drags/cancel/nonaccumulation and shortcut state. 36 focused PASS;
+final focused25 PASS including frame-cache/replacement checks. Final local
+Node24.22.1:3000 PASS/0FAIL/0skip/0cancel (117.43s); syntax/whitespace clean.
+Frame projection reuses the manager's stable mutable scene array (not object
+references), avoiding repeated getter-triggered mesh copies; replacement objects
+after history restore remain visible. No unmeasured speed/capacity claim.
+Standalone exact SVG icons rendered/inspected; actual browser QA unavailable because
+Chromium absent and browser download returned truncated archives. No rendered app or
+native iPad acceptance claimed. Original test712 replaces ONLY requested Undo/Redo
+shortcut assertions with Pivot/space coverage; toolbar/history behaviour retained.
+
+Reviewed1017 shell/recovery/comparison, Total Gizmo->new pivot+corner child,
+transform-upgrade and release->face-layout->drawer->object-origin graph. Icon-only
+import parents object-management/viewport-toolbar-controls/topbar repinned together;
+those parents have import-only changes. Comparison retains1016 ratings/A default.
+NOM1015 importer/resources/renderer/navigation/Paint/UV/geometry unchanged.
+DEVICE1017: inspect bottom-right icons; Pivot->face->centre->greenY->Pivot, model must
+stay still until exit and transform. Local XYZ Move/Rotate/Scale/Exact about chosen
+point; World/Local toggle, other object and back; UndoRedo and SaveOpen preserve frame.
+Local feature acceptance pending. NOM texture-map import/display remains unimplemented
+and separately queued; .1016 PASS retained. See docs/publication-1017.md.

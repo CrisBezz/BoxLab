@@ -3,6 +3,9 @@ export const gizmoIcons={
  tools:'<circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4M2 12h4m12 0h4M5 5l3 3m8 8 3 3M5 19l3-3m8-8 3-3"/><circle cx="12" cy="2" r="1"/><circle cx="22" cy="12" r="1"/><circle cx="12" cy="22" r="1"/><circle cx="2" cy="12" r="1"/>',
  focus:'<path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/><rect x="8" y="8" width="8" height="8" rx="2"/>',
  frame:'<path d="M3 8V3h5m8 0h5v5M3 16v5h5m13-5v5h-5M9 9 4 4m11 5 5-5M9 15l-5 5m11-5 5 5"/>',
+ pivot:'<circle cx="12" cy="12" r="10"/><path d="M12 18V5m0 7-7 5m7-5 7 5"/><path d="m9 8 3-3 3 3"/>',
+ localSpace:'<path d="M12 19V4m0 8-8 6m8-6 8 6M9 7l3-3 3 3M4 14v4h4m8 0h4v-4"/><circle cx="12" cy="12" r="2"/>',
+ space:'<circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18"/>',
  undo:'<path d="m9 4-6 6 6 6M3 10h10a7 7 0 0 1 7 7v3"/>',
  redo:'<path d="m15 4 6 6-6 6m6-6H11a7 7 0 0 0-7 7v3"/>',
  objects:'<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 8h9M8 12h9M8 16h9"/><circle cx="5" cy="8" r=".5"/><circle cx="5" cy="12" r=".5"/><circle cx="5" cy="16" r=".5"/>',
@@ -13,27 +16,30 @@ export const gizmoIcons={
 };
 export function mountGizmoCornerControls(root,{openTools,currentMode,isBusy=()=>false}={}){
  const doc=root.ownerDocument||document,controls=new Map(),groups=[];
- const clusters=[['tl',[['tools','Radial tools']]],['tr',[['focus','Focus view'],['frame','Frame all']]],['br',[['undo','Undo'],['redo','Redo']]],['bl',[['multi','Object multi-select'],['align','Align components']]]];
+ const clusters=[['tl',[['tools','Radial tools']]],['tr',[['focus','Focus view'],['frame','Frame all']]],['br',[['pivot','Edit local pivot'],['space','World / Local pivot']]],['bl',[['multi','Object multi-select'],['align','Align components']]]];
  for(const [corner,items] of clusters){
   const group=doc.createElement('div');group.className='tg-corner tg-corner-'+corner;group.dataset.corner=corner;
   for(const [action,label] of items){const b=doc.createElement('button');b.type='button';b.className='tg-shortcut';b.dataset.gizmoAction=action;b.title=label;b.setAttribute('aria-label',label);b.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true">'+gizmoIcons[action==='align'?'alignVertex':action]+'</svg>';group.appendChild(b);controls.set(action,b);
    b.addEventListener('pointerdown',e=>{e.stopPropagation();if(action==='tools'){e.preventDefault();if(!b.disabled&&!isBusy())openTools?.();}});
    if(action==='tools')b.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();if(e.detail===0&&!b.disabled&&!isBusy())openTools?.();});
-   if(action!=='tools')b.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();if(b.disabled||isBusy())return;if(action==='align'){globalThis.__boxlabComponentAlignViewportSession?.openFromHub?.();sync();return;}if(action==='objects'){globalThis.__boxlabObjectListViewport?.toggle?.();sync();return;}const target=resolve(action);if(target&&!target.disabled)target.click();sync();});
+   if(action!=='tools')b.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();if(b.disabled||isBusy())return;if(action==='pivot'){globalThis.__boxlabLocalPivot?.toggleEdit?.();sync();return;}if(action==='space'){globalThis.__boxlabLocalPivot?.toggleSpace?.();sync();return;}if(action==='align'){globalThis.__boxlabComponentAlignViewportSession?.openFromHub?.();sync();return;}if(action==='objects'){globalThis.__boxlabObjectListViewport?.toggle?.();sync();return;}const target=resolve(action);if(target&&!target.disabled)target.click();sync();});
   }
   root.appendChild(group);groups.push(group);
  }
  function resolve(action){
+  if(action==='pivot'||action==='space')return globalThis.__boxlabLocalPivot?.available?.()?{disabled:false}:null;
   if(action==='align')return globalThis.__boxlabComponentAlignViewportSession?.available?.()?{disabled:false}:null;
   if(action==='objects')return globalThis.__boxlabObjectListViewport?.available?.()?{disabled:false}:null;
   if(action==='multi')return [...doc.querySelectorAll('#objectManagementTools button')].find(b=>b.textContent.trim()==='Multi')||null;
   return doc.querySelector({focus:'#focusViewBtn',frame:'#frameAllBtn',undo:'#undoBtn',redo:'#redoBtn'}[action]||'');
  }
  function sync(){
-  const busy=isBusy(),mode=currentMode?.();
+  const busy=isBusy(),mode=currentMode?.(),pivotEditing=!!globalThis.__boxlabLocalPivot?.editing?.();
   for(const [action,b] of controls){
    const target=action==='tools'?null:resolve(action);
-   b.disabled=busy||(action!=='tools'&&(!target||target.disabled))||(['multi','objects'].includes(action)&&mode!=='object');
+   b.disabled=busy||(pivotEditing&&!['pivot','space'].includes(action))||(action!=='tools'&&(!target||target.disabled))||(['multi','objects'].includes(action)&&mode!=='object');
+   if(action==='pivot'){b.setAttribute('aria-pressed',String(!!globalThis.__boxlabLocalPivot?.editing?.()));}
+   if(action==='space'){const local=!!globalThis.__boxlabLocalPivot?.local?.();b.setAttribute('aria-pressed',String(local));b.title=local?'Local pivot / axes — switch to World':'World axes / selection centre — switch to Local';b.setAttribute('aria-label',b.title);if(b.dataset.space!==(local?'local':'world'))b.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true">'+gizmoIcons[local?'localSpace':'space']+'</svg>';b.dataset.space=local?'local':'world';}
    if(action==='multi'){b.hidden=mode!=='object';b.setAttribute('aria-pressed',globalThis.__boxlabObjectSelection?.multi?'true':'false');}
    if(action==='objects'){b.hidden=mode!=='object';b.setAttribute('aria-pressed',globalThis.__boxlabObjectListViewport?.visible?.()?'true':'false');}
    if(action==='align'){b.hidden=!['vertex','edge','face'].includes(mode);const label=mode==='vertex'?'Vertex to Vertex':mode==='edge'?'Edge to Edge':'Face to Face',icon=gizmoIcons['align'+(mode==='vertex'?'Vertex':mode==='edge'?'Edge':'Face')];b.title='Align '+label;b.setAttribute('aria-label','Align '+label);if(b.dataset.alignMode!==mode){b.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true">'+icon+'</svg>';b.dataset.alignMode=mode;}b.setAttribute('aria-pressed',String(!!globalThis.__boxlabComponentAlignViewportSession?.active?.()));}

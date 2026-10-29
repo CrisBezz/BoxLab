@@ -31,7 +31,9 @@ function tool(){return globalThis.__boxlabTransformArming?.tool?.()||activeToolB
 function directFaceToolActive(){return !!document.querySelector('#extrudeBtn.active,#insetBtn.active');}
 function selected(){return [...new Set(bridge()?.indices?.()||[])];}
 function render(){document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));}
-function axisVector(axis){return new THREE.Vector3(axis==='x'?1:0,axis==='y'?1:0,axis==='z'?1:0);}
+function axisVector(axis,g=null){const v=new THREE.Vector3(axis==='x'?1:0,axis==='y'?1:0,axis==='z'?1:0);return g?.localFrame?v.applyQuaternion(g.localFrame.quaternion):v;}
+function pivotFrame(){return globalThis.__boxlabLocalPivot?.frame?.()||null;}
+function scalePoint(v,c,axis,factor,frame){if(frame&&globalThis.__boxlabLocalPivot?.scale)return globalThis.__boxlabLocalPivot.scale(v,c,axis,factor,frame);v.sub(c);if(axis)v[axis]*=factor;else v.multiplyScalar(factor);return v.add(c);}
 function explicitAxis(){const gizmo=globalThis.__boxlabTotalGizmo?.activeConstraint?.();if(['x','y','z'].includes(gizmo))return gizmo;return ['x','y','z'].includes(constraint)?constraint:null;}
 function activeGizmoSpec(){return globalThis.__boxlabActiveGizmoDrag||globalThis.__boxlabTotalGizmo?.activeDragSpec?.()||null;}
 function softAngleDetent(deg){
@@ -54,7 +56,7 @@ function syncPrecision(){const armed=globalThis.__boxlabTransformArming?.active?
 function selectionVertices(mesh,m,ids){if(!mesh)return[];if(m==='object')return mesh.vertices.map((_,i)=>i);const out=new Set();if(m==='vertex')ids.forEach(i=>{if(mesh.vertices[i])out.add(i);});else if(m==='edge'){const edges=mesh.edges();ids.forEach(i=>{const e=edges[i];if(e){out.add(e.a);out.add(e.b);}});}else if(m==='face')ids.forEach(i=>(mesh.faces[i]||[]).forEach(v=>out.add(v)));return [...out];}
 function center(mesh,indices){const c=new THREE.Vector3();indices.forEach(i=>c.add(mesh.vertices[i]));return indices.length?c.multiplyScalar(1/indices.length):c;}
 function screenPoint(v,camera){const p=v.clone().project(camera),r=canvas.getBoundingClientRect();return new THREE.Vector2(r.left+(p.x*.5+.5)*r.width,r.top+(-p.y*.5+.5)*r.height);}
-function screenAxes(c,camera){const origin=screenPoint(c,camera),axes={};for(const[name,dir]of Object.entries({x:new THREE.Vector3(1,0,0),y:new THREE.Vector3(0,1,0),z:new THREE.Vector3(0,0,1)}))axes[name]=screenPoint(c.clone().add(dir),camera).sub(origin);return axes;}
+function screenAxes(c,camera,localFrame=null){const origin=screenPoint(c,camera),axes={};for(const[name,dir]of Object.entries({x:new THREE.Vector3(1,0,0),y:new THREE.Vector3(0,1,0),z:new THREE.Vector3(0,0,1)}))axes[name]=screenPoint(c.clone().add(localFrame?dir.applyQuaternion(localFrame.quaternion):dir),camera).sub(origin);return axes;}
 function chooseAxis(delta,axes){if(delta.lengthSq()<1)return null;const d=delta.clone().normalize();let best=null;for(const[axis,v]of Object.entries(axes)){if(v.lengthSq()<4)continue;const score=Math.abs(d.dot(v.clone().normalize()));if(!best||score>best.score)best={axis,score};}return best?.axis||null;}
 function hitSelectedIndex(event,m,ids){const s=state(),camera=s?.camera;if(!camera)return null;const p=new THREE.Vector2(event.clientX,event.clientY);if(m==='vertex'){let best=null;for(const i of ids){const v=s.mesh.vertices[i];if(!v)continue;const d=screenPoint(v,camera).distanceTo(p);if(d<=22&&(!best||d<best.d))best={i,d};}return best?.i??null;}if(m==='edge'){const edges=s.mesh.edges();let best=null;for(const i of ids){const e=edges[i];if(!e)continue;const a=screenPoint(s.mesh.vertices[e.a],camera),b=screenPoint(s.mesh.vertices[e.b],camera),ab=b.clone().sub(a),l=ab.lengthSq();if(l<1)continue;const q=a.clone().addScaledVector(ab,THREE.MathUtils.clamp(p.clone().sub(a).dot(ab)/l,0,1)),d=p.distanceTo(q);if(d<=18&&(!best||d<best.d))best={i,d};}return best?.i??null;}if(m==='face'){const ray=new THREE.Raycaster(),r=canvas.getBoundingClientRect(),ndc=new THREE.Vector2((event.clientX-r.left)/r.width*2-1,-((event.clientY-r.top)/r.height*2-1));ray.setFromCamera(ndc,camera);let best=null;for(const fi of ids){const f=s.mesh.faces[fi];if(!f)continue;const pos=[];for(let i=1;i<f.length-1;i++)for(const vi of[f[0],f[i],f[i+1]]){const v=s.mesh.vertices[vi];pos.push(v.x,v.y,v.z);}const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));const mat=new THREE.MeshBasicMaterial({side:THREE.DoubleSide}),obj=new THREE.Mesh(geo,mat),hit=ray.intersectObject(obj,false)[0];geo.dispose();mat.dispose();if(hit&&(!best||hit.distance<best.distance))best={i:fi,distance:hit.distance};}return best?.i??null;}return m==='object'?0:null;}
 function planePoint(event,plane,camera){const r=canvas.getBoundingClientRect(),p=new THREE.Vector2((event.clientX-r.left)/r.width*2-1,-((event.clientY-r.top)/r.height*2-1)),ray=new THREE.Raycaster(),out=new THREE.Vector3();ray.setFromCamera(p,camera);return ray.ray.intersectPlane(plane,out)?out:null;}
@@ -64,26 +66,22 @@ function numeric(){const n=Number(valueInput?.value);return Number.isFinite(n)&&
 function clearRefVisual(){refMarker?.remove();refGuide?.remove();refMarker=refGuide=null;}
 function showRefVisual(ref,inferred,camera){clearRefVisual();if(!ref)return;const p=screenPoint(ref.point,camera),q=screenPoint(inferred,camera);const mark=document.createElement('div');mark.style.cssText='position:fixed;pointer-events:none;width:12px;height:12px;border-radius:50%;border:2px solid white;background:#ffe14a;box-shadow:0 0 0 2px #0008;z-index:10000;transform:translate(-50%,-50%)';mark.style.left=`${p.x}px`;mark.style.top=`${p.y}px`;document.body.appendChild(mark);refMarker=mark;const line=document.createElement('div'),dx=q.x-p.x,dy=q.y-p.y;line.style.cssText='position:fixed;pointer-events:none;height:2px;background:#ffe14a;transform-origin:0 50%;z-index:9999;box-shadow:0 0 4px #0008';line.style.left=`${p.x}px`;line.style.top=`${p.y}px`;line.style.width=`${Math.hypot(dx,dy)}px`;line.style.transform=`rotate(${Math.atan2(dy,dx)}rad)`;document.body.appendChild(line);refGuide=line;}
 function referenceUnderPointer(g,event){if(!inferenceSnapOn())return null;const mesh=g.before,camera=g.camera,p=new THREE.Vector2(event.clientX,event.clientY),selectedSet=new Set(g.indices);let bestV=null;mesh.vertices.forEach((v,i)=>{if(selectedSet.has(i))return;const d=screenPoint(v,camera).distanceTo(p);if(d<=REF_VERTEX_PX&&(!bestV||d<bestV.d))bestV={type:'Vertex',index:i,point:v.clone(),d};});if(bestV)return bestV;let bestE=null;const edges=mesh.edges();edges.forEach((e,i)=>{if(selectedSet.has(e.a)&&selectedSet.has(e.b))return;const a=screenPoint(mesh.vertices[e.a],camera),b=screenPoint(mesh.vertices[e.b],camera),ab=b.clone().sub(a),l=ab.lengthSq();if(l<1)return;const t=THREE.MathUtils.clamp(p.clone().sub(a).dot(ab)/l,0,1),q=a.clone().addScaledVector(ab,t),d=p.distanceTo(q);if(d<=REF_EDGE_PX&&(!bestE||d<bestE.d))bestE={type:'Edge',index:i,point:mesh.vertices[e.a].clone().lerp(mesh.vertices[e.b],t),d};});if(bestE)return bestE;const r=canvas.getBoundingClientRect(),ndc=new THREE.Vector2((event.clientX-r.left)/r.width*2-1,-((event.clientY-r.top)/r.height*2-1)),ray=new THREE.Raycaster();ray.setFromCamera(ndc,camera);let bestF=null;mesh.faces.forEach((f,fi)=>{if(f.some(i=>selectedSet.has(i)))return;const pos=[];for(let i=1;i<f.length-1;i++)for(const vi of[f[0],f[i],f[i+1]]){const v=mesh.vertices[vi];pos.push(v.x,v.y,v.z);}if(!pos.length)return;const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));const mat=new THREE.MeshBasicMaterial({side:THREE.DoubleSide}),obj=new THREE.Mesh(geo,mat),hit=ray.intersectObject(obj,false)[0];geo.dispose();mat.dispose();if(hit&&(!bestF||hit.distance<bestF.distance))bestF={type:'Face',index:fi,point:hit.point.clone(),distance:hit.distance};});return bestF;}
-function applyReferenceInference(g,delta,event){const ref=referenceUnderPointer(g,event);if(!ref){clearRefVisual();return{delta,snap:null};}let dir;if(g.axis)dir=axisVector(g.axis);else{dir=delta.clone();if(dir.lengthSq()<1e-10)return{delta,snap:null};dir.normalize();}const amount=ref.point.clone().sub(g.center).dot(dir),inferred=g.center.clone().addScaledVector(dir,amount);showRefVisual(ref,inferred,g.camera);return{delta:dir.multiplyScalar(amount),snap:ref};}
-function applyExactTransform(requestedTool,requestedConstraint,value){
+function applyReferenceInference(g,delta,event){const ref=referenceUnderPointer(g,event);if(!ref){clearRefVisual();return{delta,snap:null};}let dir;if(g.axis)dir=axisVector(g.axis,g);else{dir=delta.clone();if(dir.lengthSq()<1e-10)return{delta,snap:null};dir.normalize();}const amount=ref.point.clone().sub(g.center).dot(dir),inferred=g.center.clone().addScaledVector(dir,amount);showRefVisual(ref,inferred,g.camera);return{delta:dir.multiplyScalar(amount),snap:ref};}
+function applyExactTransform(requestedTool,requestedConstraint,value,spec=null){
   const n=Number(value),s=state(),mesh=s?.mesh,m=mode(),ids=selected(),indices=selectionVertices(mesh,m,ids);
   const t=requestedTool||tool(),axis=['x','y','z'].includes(requestedConstraint)?requestedConstraint:explicitAxis();
   if(!Number.isFinite(n)||!mesh||!indices.length||!['move','scale','rotate'].includes(t)||directFaceToolActive())return false;
-  const before=mesh.clone(),c=center(mesh,indices);
+  const before=mesh.clone(),localFrame=pivotFrame(),c=localFrame?.center.clone()||center(mesh,indices),g={m,center:c,localFrame,originState:globalThis.__boxlabLocalPivot?.capture?.()};
   globalThis.__boxlabHistory?.push(before);
   if(t==='move'){
-    const d=axis?axisVector(axis).multiplyScalar(n):new THREE.Vector3(n,0,0);
-    indices.forEach(i=>mesh.vertices[i].add(d));
+    const d=axis?axisVector(axis,g).multiplyScalar(n):new THREE.Vector3(n,0,0);
+    indices.forEach(i=>mesh.vertices[i].add(d));globalThis.__boxlabLocalPivot?.update?.(g,{delta:d});
   }else if(t==='scale'){
-    indices.forEach(i=>{
-      const p=mesh.vertices[i].sub(c);
-      if(axis)p[axis]*=n;else p.multiplyScalar(n);
-      mesh.vertices[i].add(c);
-    });
+    indices.forEach(i=>scalePoint(mesh.vertices[i],c,axis,n,localFrame));globalThis.__boxlabLocalPivot?.update?.(g,{factor:n,axis});
   }else{
-    const av=axis?axisVector(axis):new THREE.Vector3(0,1,0);
+    const av=axis?axisVector(axis,g):spec?.kind==='screen'?s.camera.getWorldDirection(new THREE.Vector3()):axisVector('y',g);
     const q=new THREE.Quaternion().setFromAxisAngle(av,THREE.MathUtils.degToRad(n));
-    indices.forEach(i=>mesh.vertices[i].sub(c).applyQuaternion(q).add(c));
+    indices.forEach(i=>mesh.vertices[i].sub(c).applyQuaternion(q).add(c));globalThis.__boxlabLocalPivot?.update?.(g,{rotation:q});
   }
   render();
   if(status)status.textContent=`${t[0].toUpperCase()+t.slice(1)} exact • ${axis?axis.toUpperCase():'Free'} • ${n}${t==='rotate'?'°':t==='scale'?'×':''}`;
@@ -129,7 +127,7 @@ function startGesture(event){
   const axis=['x','y','z'].includes(gizmoConstraint)?gizmoConstraint:explicitAxis();
   const hitIndex=gizmo?(ids[0]??0):(t==='rotate'?ids[0]??0:hitSelectedIndex(event,m,ids));
   if(!gizmo&&t!=='rotate'&&m!=='object'&&!Number.isInteger(hitIndex))return;
-  const c=center(mesh,indices),normal=new THREE.Vector3();
+  const localFrame=gizmo?pivotFrame():null,c=localFrame?.center.clone()||center(mesh,indices),normal=new THREE.Vector3();
   camera.getWorldDirection(normal).normalize();
   const plane=new THREE.Plane().setFromNormalAndCoplanarPoint(normal,c),start=planePoint(event,plane,camera);
   if(!start)return;
@@ -138,7 +136,7 @@ function startGesture(event){
     id:event.pointerId,mesh,camera,m,ids,indices,hitIndex,t,
     center:c,centerScreen:cs,start,startX:event.clientX,startY:event.clientY,
     startVector:new THREE.Vector2(event.clientX,event.clientY).sub(cs),
-    plane,axes:screenAxes(c,camera),axis,
+    localFrame,originState:globalThis.__boxlabLocalPivot?.capture?.(),plane,axes:screenAxes(c,camera,localFrame),axis,
     auto:gizmoConstraint==='auto'||(!gizmo&&constraint==='auto'),
     gizmoOwned:!!gizmo,
     screenRotate:t==='rotate'&&gizmo?.kind==='screen',
@@ -161,10 +159,10 @@ function beginGizmoGesture(spec,event){
   if(!['move','scale','rotate'].includes(t)){return false;}
   const indices=selectionVertices(mesh,m,ids);
   if(!indices.length){gestureDebug('OWNER REJECT EMPTY',{mode:m});return false;}
-  const c=center(mesh,indices),planeConstraint=['xy','xz','yz'].includes(spec.constraint)?spec.constraint:null;
+  const localFrame=pivotFrame(),c=localFrame?.center.clone()||center(mesh,indices),planeConstraint=['xy','xz','yz'].includes(spec.constraint)?spec.constraint:null;
   let plane;
   if(planeConstraint){
-    const normal=axisVector(planeConstraint==='xy'?'z':planeConstraint==='xz'?'y':'x');
+    const normal=axisVector(planeConstraint==='xy'?'z':planeConstraint==='xz'?'y':'x',{localFrame});
     plane=new THREE.Plane().setFromNormalAndCoplanarPoint(normal,c);
   }else{
     const normal=new THREE.Vector3();
@@ -178,7 +176,7 @@ function beginGizmoGesture(spec,event){
     id:event.pointerId,mesh,camera,m,ids,indices,hitIndex:ids[0]??0,t,
     center:c,centerScreen:cs,start,startX:event.clientX,startY:event.clientY,
     startVector:new THREE.Vector2(event.clientX,event.clientY).sub(cs),
-    plane,axes:screenAxes(c,camera),axis,planeConstraint,
+    localFrame,originState:globalThis.__boxlabLocalPivot?.capture?.(),plane,axes:screenAxes(c,camera,localFrame),axis,planeConstraint,
     auto:spec.constraint==='auto',
     gizmoOwned:true,
     screenRotate:t==='rotate'&&spec.kind==='screen',
@@ -192,7 +190,7 @@ function beginGizmoGesture(spec,event){
 }
 document.addEventListener('pointerdown',startGesture,true);
 
-document.addEventListener('pointermove',event=>{const g=gesture;if(!g||g.id!==event.pointerId)return;event.preventDefault();event.stopImmediatePropagation();const dx=event.clientX-g.startX,dy=event.clientY-g.startY,d=new THREE.Vector2(dx,dy);if(!g.changed&&d.length()<DRAG_THRESHOLD)return;if(!g.changed){g.changed=true;globalThis.__boxlabHistory?.push(g.before);if(!g.screenRotate&&(g.auto||(!g.gizmoOwned&&axisSnapOn())))g.axis=chooseAxis(d,g.axes);}restore(g);if(g.t==='move'){let delta;if(g.axis)delta=axisVector(g.axis).multiplyScalar(axisAmount(g,d));else{const now=planePoint(event,g.plane,g.camera);if(!now)return;delta=now.sub(g.start);}const inferred=applyReferenceInference(g,delta,event);delta=inferred.delta;g.snap=inferred.snap;g.indices.forEach(i=>g.mesh.vertices[i].add(delta));if(status)status.textContent=`Move • ${g.axis?g.axis.toUpperCase():g.planeConstraint?g.planeConstraint.toUpperCase():g.auto||axisSnapOn()?'Auto':'Free'}${g.snap?` • Reference ${g.snap.type}`:''}`;}else if(g.t==='scale'){
+document.addEventListener('pointermove',event=>{const g=gesture;if(!g||g.id!==event.pointerId)return;event.preventDefault();event.stopImmediatePropagation();const dx=event.clientX-g.startX,dy=event.clientY-g.startY,d=new THREE.Vector2(dx,dy);if(!g.changed&&d.length()<DRAG_THRESHOLD)return;if(!g.changed){g.changed=true;globalThis.__boxlabHistory?.push(g.before);if(!g.screenRotate&&(g.auto||(!g.gizmoOwned&&axisSnapOn())))g.axis=chooseAxis(d,g.axes);}restore(g);if(g.t==='move'){let delta;if(g.axis)delta=axisVector(g.axis,g).multiplyScalar(axisAmount(g,d));else{const now=planePoint(event,g.plane,g.camera);if(!now)return;delta=now.sub(g.start);}const inferred=applyReferenceInference(g,delta,event);delta=inferred.delta;g.snap=inferred.snap;g.indices.forEach(i=>g.mesh.vertices[i].add(delta));globalThis.__boxlabLocalPivot?.update?.(g,{delta});if(status)status.textContent=`Move • ${g.axis?g.axis.toUpperCase():g.planeConstraint?g.planeConstraint.toUpperCase():g.auto||axisSnapOn()?'Auto':'Free'}${g.snap?` • Reference ${g.snap.type}`:''}`;}else if(g.t==='scale'){
   clearRefVisual();
   let gestureAmount;
   if(g.gizmoOwned&&g.axis){
@@ -205,14 +203,10 @@ document.addEventListener('pointermove',event=>{const g=gesture;if(!g||g.id!==ev
   let factor=THREE.MathUtils.clamp(Math.exp(gestureAmount*(g.gizmoOwned&&g.axis?0.012:0.006)),.05,20);
   const detent=g.gizmoOwned?softScaleDetent(factor):{value:factor,snapped:false};
   factor=detent.value;
-  g.indices.forEach(i=>{
-    const p=g.mesh.vertices[i].sub(g.center);
-    if(g.axis)p[g.axis]*=factor;else p.multiplyScalar(factor);
-    g.mesh.vertices[i].add(g.center);
-  });
+  g.indices.forEach(i=>scalePoint(g.mesh.vertices[i],g.center,g.axis,factor,g.localFrame));globalThis.__boxlabLocalPivot?.update?.(g,{factor,axis:g.axis});
   if(status)status.textContent=`Scale • ${g.axis?g.axis.toUpperCase():g.auto?'Auto → Uniform':'Uniform'} • ${factor.toFixed(2)}×${detent.snapped?' • detent':''}`;
-}else{clearRefVisual();const cv=new THREE.Vector2(event.clientX,event.clientY).sub(g.centerScreen);let angle;if(g.startVector.length()>18&&cv.length()>18){const a=g.startVector.clone().normalize(),b=cv.clone().normalize();angle=Math.atan2(a.x*b.y-a.y*b.x,THREE.MathUtils.clamp(a.dot(b),-1,1));}else angle=dx*.012;if(g.gizmoOwned&&g.axis&&axisVector(g.axis).dot(g.camera.getWorldDirection(new THREE.Vector3()))<0)angle=-angle;const giz=activeGizmoSpec();let deg=THREE.MathUtils.radToDeg(angle),detent={value:deg,snapped:false};if(giz?.tool==='rotate'){detent=softAngleDetent(deg);deg=detent.value;angle=THREE.MathUtils.degToRad(deg);}else if(angleSnap){deg=Math.round(deg/15)*15;angle=THREE.MathUtils.degToRad(deg);}const av=g.axis?axisVector(g.axis):(()=>{const a=new THREE.Vector3();g.camera.getWorldDirection(a);return a.normalize();})(),q=new THREE.Quaternion().setFromAxisAngle(av,angle);g.indices.forEach(i=>g.mesh.vertices[i].sub(g.center).applyQuaternion(q).add(g.center));if(status)status.textContent=`Rotate • ${g.axis?g.axis.toUpperCase():g.auto?'Auto → View':'View'} • ${deg.toFixed(1)}°${detent.snapped?' • detent':''}`;}render();},true);
-function finish(event){const g=gesture;if(!g||g.id!==event.pointerId)return;event.preventDefault();event.stopImmediatePropagation();clearRefVisual();if(event.type==='pointercancel'&&g.changed){restore(g);render();}else if(event.type==='pointerup'&&!g.changed&&!g.gizmoOwned&&g.m!=='object'&&Number.isInteger(g.hitIndex)){const current=selected();bridge()?.set?.(g.m,current.filter(i=>i!==g.hitIndex));if(status)status.textContent=`${g.m[0].toUpperCase()+g.m.slice(1)} selection toggled • ${g.t[0].toUpperCase()+g.t.slice(1)} still armed`;}if(g.gizmoOwned&&(event.type==='pointercancel'||!g.changed))globalThis.__boxlabTotalGizmo?.resetTransient?.({hideFloat:true});gesture=null;if(g.changed&&status)status.textContent=`${g.t[0].toUpperCase()+g.t.slice(1)} committed${g.snap?` • reference ${g.snap.type}`:''} • ${g.axis?g.axis.toUpperCase():g.auto||axisSnapOn()?'auto':'free'} • selection preserved`;if(g.changed&&event.type==='pointerup'){
+}else{clearRefVisual();const cv=new THREE.Vector2(event.clientX,event.clientY).sub(g.centerScreen);let angle;if(g.startVector.length()>18&&cv.length()>18){const a=g.startVector.clone().normalize(),b=cv.clone().normalize();angle=Math.atan2(a.x*b.y-a.y*b.x,THREE.MathUtils.clamp(a.dot(b),-1,1));}else angle=dx*.012;if(g.gizmoOwned&&g.axis&&axisVector(g.axis,g).dot(g.camera.getWorldDirection(new THREE.Vector3()))<0)angle=-angle;const giz=activeGizmoSpec();let deg=THREE.MathUtils.radToDeg(angle),detent={value:deg,snapped:false};if(giz?.tool==='rotate'){detent=softAngleDetent(deg);deg=detent.value;angle=THREE.MathUtils.degToRad(deg);}else if(angleSnap){deg=Math.round(deg/15)*15;angle=THREE.MathUtils.degToRad(deg);}const av=g.axis?axisVector(g.axis,g):(()=>{const a=new THREE.Vector3();g.camera.getWorldDirection(a);return a.normalize();})(),q=new THREE.Quaternion().setFromAxisAngle(av,angle);g.indices.forEach(i=>g.mesh.vertices[i].sub(g.center).applyQuaternion(q).add(g.center));globalThis.__boxlabLocalPivot?.update?.(g,{rotation:q});if(status)status.textContent=`Rotate • ${g.axis?g.axis.toUpperCase():g.auto?'Auto → View':'View'} • ${deg.toFixed(1)}°${detent.snapped?' • detent':''}`;}render();},true);
+function finish(event){const g=gesture;if(!g||g.id!==event.pointerId)return;event.preventDefault();event.stopImmediatePropagation();clearRefVisual();if(event.type==='pointercancel'&&g.changed){restore(g);globalThis.__boxlabLocalPivot?.restore?.(g);render();}else if(event.type==='pointerup'&&!g.changed&&!g.gizmoOwned&&g.m!=='object'&&Number.isInteger(g.hitIndex)){const current=selected();bridge()?.set?.(g.m,current.filter(i=>i!==g.hitIndex));if(status)status.textContent=`${g.m[0].toUpperCase()+g.m.slice(1)} selection toggled • ${g.t[0].toUpperCase()+g.t.slice(1)} still armed`;}if(g.gizmoOwned&&(event.type==='pointercancel'||!g.changed))globalThis.__boxlabTotalGizmo?.resetTransient?.({hideFloat:true});gesture=null;if(g.changed&&status)status.textContent=`${g.t[0].toUpperCase()+g.t.slice(1)} committed${g.snap?` • reference ${g.snap.type}`:''} • ${g.axis?g.axis.toUpperCase():g.auto||axisSnapOn()?'auto':'free'} • selection preserved`;if(g.changed&&event.type==='pointerup'){
   if(g.t==='rotate'&&g.m==='object'){
     globalThis.__boxlabTotalGizmo?.completeExactEntry?.({
       tool:'rotate',
@@ -254,7 +248,7 @@ function setTransformContext(toolName,constraintName='free'){
 
 globalThis.__boxlabTransformUpgrade={
   ...(globalThis.__boxlabTransformUpgrade||{}),
-  applyExact:(toolName,constraintName,value)=>applyExactTransform(toolName,constraintName,value),
+  applyExact:(toolName,constraintName,value,spec)=>applyExactTransform(toolName,constraintName,value,spec),
   setContext:(toolName,constraintName)=>setTransformContext(toolName,constraintName),
   beginGizmoGesture:(spec,event)=>beginGizmoGesture(spec,event),
   focusValue:()=>{

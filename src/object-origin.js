@@ -81,7 +81,7 @@ function ensureOrigin(object = activeObject(), mesh = state()?.mesh){
 }
 function setOrigin(v, object = activeObject()){
   if(!object) return;
-  object.origin = { x:v.x, y:v.y, z:v.z };
+  object.origin = { ...object.origin, x:v.x, y:v.y, z:v.z };
   updateMarker();
 }
 function presetOrigin(kind){

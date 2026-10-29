@@ -1,4 +1,4 @@
-import {gizmoIcons} from './gizmo-corner-controls.js?v=0.36.18.734';
+import {gizmoIcons} from './gizmo-corner-controls.js?v=0.36.18.1017';
 const svg=paths=>'<svg viewBox="0 0 24 24" aria-hidden="true">'+paths+'</svg>';
 export function installViewportToolbarControls(doc=document){
  const wrap=doc.querySelector('#viewportWrap'),modes=doc.querySelector('#selectionModes');
