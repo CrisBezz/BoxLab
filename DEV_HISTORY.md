@@ -17429,7 +17429,14 @@ viewport-toolbar->topbar,face-layout->drawer and recovery/comparison cache closu
 Other import-parent changes are pins only. Transform owners/Multi1.0/frozen betas,
 accepted floor/render/studio-polish and navigation/Paint/UV unchanged.
 
-Publication pending. DEVICE1023: grid subtly clearer; Pivot edit shows ONLY Pivot
+Published runtimeb45a3a9acd6f15b2d394e6c8f14ddd9fec1314e9; tested/uploaded tree
+bf59592796d15b1623a58be8a443ef471b38301f equals fetched origin/main exactly.
+All21 blobs hash-verified before non-forced expected-main update. Pages40996655063
+SUCCESS;18/18 fresh live files byte-match tested source: shell/manifest,ground,
+pivot/corner/TotalGizmo and parent/cache graph plus unchanged transform/Multi1.0/
+accepted render/Studio-polish owners. Hosted40996655551 in_progress at proof;
+no full-suite/native iPad PASS claimed. Build1023 LIVE / READY for testing.
+DEVICE1023: grid subtly clearer; Pivot edit shows ONLY Pivot
 and World/Local shortcuts,exit restores original icons; Face select->Pivot->drag
 across face and to real edges,X/Z aligns and Y stays selected-face normal,model
 still. Include shared-edge start and rotated face; Object/Edge quick parity; finish,
