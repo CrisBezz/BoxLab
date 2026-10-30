@@ -38,7 +38,15 @@ no private artwork; regenerate from tests/helpers/nomad-pbr-fixture.mjs. No user
 to construct backend fixtures. Reviewed1026 child/parent/cache closure incl original
 UV decoder->workspace/Lab/exports and canonical release->face-layout->drawer; most
 changes are pins only. Protected main/Multi1.0/frozen betas and actual1024 lighting
-bytes unchanged. No new A/B batch. Publication pending,proof follows.
+bytes unchanged. No new A/B batch.
+Published runtime68320e5cec753747de8ecb5697158aa536cd5428; fetched origin/main tree
+7b59ab712d2d6229c6dbf89e691e5b8a7825ce6b exactly matches tested/uploaded source.
+All44 changed blobs hash-verified before non-forced expected-main update. Pages
+41025737253 SUCCESS;9/9 fresh live files byte-match: shell/manifest,native resource,
+decoder,UV surface,import/render owners and unchanged reflection925/Multi1.0.
+Hosted41025737405 in_progress at proof; no hosted full PASS claimed. Full local3028
+PASS/0FAIL/0skip remains final validation. Build1026 LIVE / READY for native PBR test.
+No runtime edits after final full suite; no rendered-browser/iPad acceptance inferred.
 DEVICE1026 import sample Studio/Solid,left normal/roughness relief,middle metallic
 variation while orbiting,right colour control; SaveOpen.boxlab + NOMAD/Nomad sanity,
 old MAP TEST colour/5x accepted. Next native feedback then emissive preview through

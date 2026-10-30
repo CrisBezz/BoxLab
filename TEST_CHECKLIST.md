@@ -9,7 +9,7 @@
   encoded resource pool/raw bytes/settings unchanged. Other channels retained-only.
 - [x] Six new owner/math/decoder/lifecycle/round-trip checks;157 focused PASS.
 - [x] Full final local Node24.22.1:3028 PASS/0FAIL/0skip/0cancel (183.48s); syntax/diff clean.
-- [ ] Publication proof pending; no native/GPU PASS inferred.
+- [x] Runtime68320e5c/tree7b59ab71 exactly tested;44 blobs verified; Pages41025737253 SUCCESS;9/9 fresh live byte matches. Hosted41025737405 in_progress at proof; native/GPU PASS pending.
 - [ ] DEVICE1026 supplied sample,left normal+roughness,middle metal variation,right
   colour control in Studio/Solid/orbit; SaveOpen.boxlab/NOMAD; accepted MAP TEST5x.
 
