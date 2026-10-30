@@ -2,7 +2,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {nomadMapInspectionFixture} from './helpers/nomad-map-inspection-fixture.mjs';
-import {importedUVImageChoices,createUVImagePreview} from '../src/uv-image-preview.js';
+import {createUVImagePreview} from '../src/uv-image-preview.js';
+import {nativeImageChoices as importedUVImageChoices} from '../src/nomad-uv-image-choices.js';
 import {createUVWorkspace} from '../src/uv-workspace.js';
 import {encodeBoxlabScene,decodeBoxlabScene} from '../src/boxlab-project-codec.js';
 import {EditableMesh} from '../src/mesh.js';
@@ -29,7 +30,7 @@ test('1031 malformed native resources and MIME/budget failures refuse safely; un
 });
 test('1031 original preview controller keeps native slot across refresh; late switch/close and failed decode release images with no resource writes',async()=>{
  const {objects}=await fixture,p=objects[0].glbPassthrough,before=JSON.stringify(p),requests=[];
- const preview=createUVImagePreview({slots,decode:choice=>new Promise((resolve,reject)=>requests.push({choice,resolve,reject}))});preview.setPayload(p);preview.enable(true);await tick();preview.choose(6);await tick();
+ const preview=createUVImagePreview({slots,resolveChoices:importedUVImageChoices,decode:choice=>new Promise((resolve,reject)=>requests.push({choice,resolve,reject}))});preview.setPayload(p);preview.enable(true);await tick();preview.choose(6);await tick();
  const stale=bitmap();requests[0].resolve(stale);await tick();assert.equal(stale.closed,1);const displacement=bitmap();requests[1].resolve(displacement);await tick();assert.match(preview.view.status,/Raw Displacement image · inspection only/);
  preview.setPayload(p);await tick();assert.equal(requests.length,2);assert.equal(preview.view.choices[preview.view.index].slot,'displacement');assert.equal(preview.view.image,displacement);
  preview.choose(1);await tick();assert.equal(displacement.closed,1);requests[2].reject(Error('bad normal'));await tick();assert.match(preview.view.status,/Could not decode/);preview.choose(5);await tick();preview.close();const late=bitmap();requests[3].resolve(late);await tick();assert.equal(late.closed,1);assert.equal(preview.view.image,null);assert.equal(JSON.stringify(p),before);

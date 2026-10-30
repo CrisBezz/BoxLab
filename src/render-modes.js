@@ -4,7 +4,7 @@ import {createFacegroupPaintDock} from './facegroup-paint-dock.js?v=0.36.18.991'
 import {createFacegroupStroke} from './facegroup-stroke.js?v=0.36.18.995';
 import {assignSelectedFacegroup,facegroupAuthoringTarget,selectedFacegroupName} from './facegroup-authoring.js?v=0.36.18.995';
 import {createCommittedPaintSurface} from './paint-target.js?v=0.36.18.1030';
-import {createUVImageOverlay} from './uv-image-surface-preview.js?v=0.36.18.1031';
+import {createUVImageOverlay} from './uv-image-surface-preview.js?v=0.36.18.1032';
 import {createUVCheckerOverlay} from './uv-checker-preview.js?v=0.36.18.879';
 import * as THREE from 'three';
 import {applyFaceGroupColours,DEFAULT_FACEGROUP_VIEW,normaliseFacegroupView} from './facegroup-colours-core.js?v=0.36.18.992';
@@ -406,15 +406,26 @@ function installFacegroupControls(host){
 
 function installUI(){
   const host=document.querySelector('#viewportRenderLooks');
-  if(!host||host.dataset.ready==='true')return false;
+  if(!host)return false;
+  const template=document.createElement('template');
+  template.innerHTML='<button type="button" data-render="studio" class="active">Studio</button><button type="button" data-render="solid">Solid</button><button type="button" data-render="clay">Clay</button><button type="button" data-render="matcap">MatCap</button><button type="button" data-render="normals">Normals</button><button type="button" data-render="wire">Wire</button><button type="button" data-render="xray">X-Ray</button><button type="button" data-render="facegroups">Facegroups</button><button type="button" data-render="uvchecker">UV Checker</button><button type="button" data-render="uvimage">UV Image</button>';
+  // Preserve Cavity/Silhouette and existing original nodes/listeners when their
+  // owners initialize first. Restore missing controls instead of clearing host.
+  const existing=new Set([...host.querySelectorAll('button[data-render]')].map(button=>button.dataset.render));
+  let changed=false;
+  for(const button of [...template.content.children])if(!existing.has(button.dataset.render)){button.classList.toggle('active',button.dataset.render===mode);host.appendChild(button);changed=true;}
   host.dataset.ready='true';
-  host.innerHTML='<button type="button" data-render="studio" class="active">Studio</button><button type="button" data-render="solid">Solid</button><button type="button" data-render="clay">Clay</button><button type="button" data-render="matcap">MatCap</button><button type="button" data-render="normals">Normals</button><button type="button" data-render="wire">Wire</button><button type="button" data-render="xray">X-Ray</button><button type="button" data-render="facegroups">Facegroups</button><button type="button" data-render="uvchecker">UV Checker</button><button type="button" data-render="uvimage">UV Image</button>';
   installFacegroupControls(host);
-  host.addEventListener('click',event=>{const button=event.target.closest('button[data-render]');if(!button)return;event.preventDefault();event.stopPropagation();setMode(button.dataset.render);});
-  return true;
+  if(host.dataset.renderLookBound!=='true'){
+    host.addEventListener('click',event=>{const button=event.target.closest('button[data-render]');if(!button)return;event.preventDefault();event.stopPropagation();setMode(button.dataset.render);});
+    host.dataset.renderLookBound='true';
+  }
+  return changed;
 }
 
 if(!installUI())queueMicrotask(installUI);
+// Reconnect a late/replaced/cleared host on native VIEW disclosure, without polling.
+document.addEventListener('toggle',event=>{if(event.target?.id==='viewModes'&&event.target.open)installUI();},true);
 queueMicrotask(rebuild);
 
 // Visible release identity is owned by release-version.js.
