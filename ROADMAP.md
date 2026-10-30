@@ -9,7 +9,13 @@ ratings including1020. Protected Multi1.0/frozen betas unchanged.
 37 focused corner/release/identity/comparison checks PASS,0FAIL/0skip; syntax and
 whitespace clean. SVG colour order and unchanged action/other-icon bytes verified.
 Initial identity run needed the declared Three dependency; final rerun passes.
-Publication pending; native1021 icon-order check pending. Prior1017
+Published runtime d8ae5d4c4baaa67ef11a1ad89139c451adeb2299; tested tree
+26aa26a19e43db0fea9ea69d9a6a4fa4f1c2e844 matches fetched origin/main exactly.
+All16 blobs hash-verified before expected-main non-forced update. Pages40991382103
+SUCCESS;14/14 fresh live files byte-match tested checkout, including corrected icon,
+shared parent/cache graph and unchanged local-pivot/Multi1.0. Hosted40991382283
+in_progress at proof; no full-suite/native device PASS claimed. Build1021 LIVE /
+READY for testing. Native1021 icon-order check pending. Prior1017
 alignment/1018 preview PASS protected;1019 device edge-snap acceptance still pending.
 Next: verify icon colours in normal/active state, then existing Pivot toggle sanity.
 NOM texture/PBR retention remains separately queued.
