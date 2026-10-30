@@ -28,7 +28,7 @@ Five new real-owner tests cover all7 exact references/name safety/budgets/MIME,
 no-colour input, late switch/close/failed decode, actual readonly UV workspace
 buttons/canvas and exact pooled/inline SaveOpen/native NOM roundtrip/sample bytes.
 79 focused PASS/0FAIL/0skip incl accepted native1030/1025–1029, GLB image/surface/
-packed scalar/workspace/release checks. Full local Node24.22.1 suite:3051 PASS/0FAIL/0skip/0cancel (121.47s). No runtime/test edits after full-suite start. Publication verification follows; no native browser/GPU appearance acceptance inferred. Reverse cache graph and canonical
+packed scalar/workspace/release checks. Full local Node24.22.1 suite:3051 PASS/0FAIL/0skip/0cancel (121.47s). No runtime/test edits after full-suite start. Publication verified in docs/publication-1031.md; no native browser/GPU appearance acceptance inferred. Reverse cache graph and canonical
 release pins reviewed; parent changes are pin-only. Main/Multi1.0/frozen betas,
 1030 material plan and actual3D/shadow implementations unchanged.
 

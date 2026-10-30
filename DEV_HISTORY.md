@@ -17865,7 +17865,7 @@ Five new real-owner tests cover all7 exact references/name safety/budgets/MIME,
 no-colour input, late switch/close/failed decode, actual readonly UV workspace
 buttons/canvas and exact pooled/inline SaveOpen/native NOM roundtrip/sample bytes.
 79 focused PASS/0FAIL/0skip incl accepted native1030/1025–1029, GLB image/surface/
-packed scalar/workspace/release checks. Full local Node24.22.1 suite:3051 PASS/0FAIL/0skip/0cancel (121.47s). No runtime/test edits after full-suite start. Publication verification follows; no native browser/GPU appearance acceptance inferred. Reverse cache graph and canonical
+packed scalar/workspace/release checks. Full local Node24.22.1 suite:3051 PASS/0FAIL/0skip/0cancel (121.47s). No runtime/test edits after full-suite start. Publication verified in docs/publication-1031.md; no native browser/GPU appearance acceptance inferred. Reverse cache graph and canonical
 release pins reviewed; parent changes are pin-only. Main/Multi1.0/frozen betas,
 1030 material plan and actual3D/shadow implementations unchanged.
 
@@ -17877,3 +17877,23 @@ images. Pan/zoom and switch; Back to3D/Close/reopen; SaveOpen.boxlab and NOMAD k
 maps. Retest accepted1030 viewport sample if convenient. Next native viewer feedback,
 then audit supported PBR materials lacking a colour texture; subdivision/displacement
 still needs its separate bounded performance/benchmark decision.
+
+## .1031 publication verified — 30 October 2026
+
+Runtime80e2d61d505226073af7f27f3842c40ec3f8b3dd; fetched origin/main tree
+8c1f7130f0c55f6e9ef72683bef5c5fee931f4ed equals validated local6ba8ee98 tree.
+All25 changed blobs hash-verified before expected-main/non-forced update.
+Pages41058750880 completed SUCCESS.9/9 fresh live byte matches: shell/manifest,
+UV image resolver/workspace,Mesh Health,test list,drawer,unchanged native material
+plan and sample NOM (74,396bytes; retry after one transient503).
+Full local Node24.22.1:3051 PASS/0FAIL/0skip/0cancel (121.47s), focused79PASS.
+No runtime/test edits after full-suite start. Hosted topology41058751078 was
+in_progress at proof; no hosted full PASS claimed. Native appearance gate pending.
+This proof is documentation-only; runtime/contract stay exactly validated.
+
+Build .1031 LIVE / READY FOR TESTING. User .1030 PASS protected. In Object mode
+select sample cube -> radial UV -> UV Editor -> Image -> inspect7 named maps.
+Raw image references, no material transforms/factors; displacement inspection only.
+Pan/zoom/switch,Back to3D/Close/reopen; SaveOpen.boxlab and NOMAD preserve maps.
+Next native viewer feedback then audit no-colour-map material preview; bounded
+subdivision/displacement and benchmark decision remain deferred.
