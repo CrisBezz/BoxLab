@@ -7,6 +7,7 @@
   UV Image/always-unlit remain colour-only; no added lights/bloom or source mutation.
 - [x]25 focused PASS/0FAIL/0skip including4 new real-owner/round-trip tests.
 - [x]Full local Node24.22.1:3032 PASS/0FAIL/0skip/0cancel (185.63s); explicit zero-factor assertions rerun4PASS.
+- [x] Runtimef1b4405f/tree6de75a1f exact tested/uploaded match;40 blobs verified;7/7 fresh live files match. Hosted/Pages in_progress at last query; local3032PASS.
 - [ ] DEVICE1027 import docs/samples/NOM_EMISSIVE_1027.nom Studio/Solid, orbit below:
   left cube emissive brightness, middle/right controls; switch looks/back; SaveOpen
   .boxlab/NOMAD in Nomad; previous1026 sample unchanged.

@@ -17648,3 +17648,12 @@ other cubes retain normal/scalar shading; switch looks/back. Save/Open.boxlab an
 NOMAD reopen in Nomad retain it. Check accepted1026 sample still looks the same.
 Next: native emissive feedback; opacity display needs separate scoped audit, while
 subdivision/displacement remains deferred. Publication proof follows validation.
+
+Publication verified: runtime f1b4405fcdbde50384f2b07c51d535ee8e3bce8e;
+fetched origin/main tree6de75a1f9b6abab77cdc9453d11c6fc769f32a5d exactly matches
+tested/uploaded tree. All40 changed blobs hash-verified before expected-main,
+non-forced update. Seven fresh live files byte-match: shell/manifest, material
+resource/overlay/import owner/test list and downloadable sample. Pages41030968556
+and hosted topology41030969386 were in_progress at last query; no hosted PASS
+claimed. Full local3032PASS remains validation. Build1027 LIVE / READY for native
+emissive testing. No runtime edits after full suite; native visual gate pending.
