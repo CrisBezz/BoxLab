@@ -1,5 +1,5 @@
 import {installViewportSelectionPanel} from './viewport-selection-panel.js?v=0.36.18.732';
-import {installViewportToolbarControls} from './viewport-toolbar-controls.js?v=0.36.18.1017';
+import {installViewportToolbarControls} from './viewport-toolbar-controls.js?v=0.36.18.1020';
 const topbar=document.querySelector('.topbar');
 const selectionModes=document.querySelector('#selectionModes');
 const fileMenu=document.querySelector('#fileMenu');

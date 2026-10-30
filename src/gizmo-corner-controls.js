@@ -3,7 +3,7 @@ export const gizmoIcons={
  tools:'<circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4M2 12h4m12 0h4M5 5l3 3m8 8 3 3M5 19l3-3m8-8 3-3"/><circle cx="12" cy="2" r="1"/><circle cx="22" cy="12" r="1"/><circle cx="12" cy="22" r="1"/><circle cx="2" cy="12" r="1"/>',
  focus:'<path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/><rect x="8" y="8" width="8" height="8" rx="2"/>',
  frame:'<path d="M3 8V3h5m8 0h5v5M3 16v5h5m13-5v5h-5M9 9 4 4m11 5 5-5M9 15l-5 5m11-5 5 5"/>',
- pivot:'<circle cx="12" cy="12" r="10"/><path d="M12 18V5m0 7-7 5m7-5 7 5"/><path d="m9 8 3-3 3 3"/>',
+ pivot:'<path stroke="#65e67a" stroke-width="2" d="M12 12V3m-3 3 3-3 3 3"/><path stroke="#ff5d5d" stroke-width="2" d="m12 12-8 6m0-4v4h4"/><path stroke="#6f91ff" stroke-width="2" d="m12 12 8 6m-4 0h4v-4"/><circle cx="12" cy="12" r="2.6" fill="#20262f" stroke="#ffd86a" stroke-width="1.8"/>',
  localSpace:'<path d="M12 19V4m0 8-8 6m8-6 8 6M9 7l3-3 3 3M4 14v4h4m8 0h4v-4"/><circle cx="12" cy="12" r="2"/>',
  space:'<circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18"/>',
  undo:'<path d="m9 4-6 6 6 6M3 10h10a7 7 0 0 1 7 7v3"/>',

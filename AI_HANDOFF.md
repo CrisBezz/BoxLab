@@ -1,3 +1,26 @@
+## .1020 — RGB miniature gizmo Pivot icon — 30 October 2026
+
+User requests red/green/blue Pivot artwork with a small yellow circle, resembling
+a tiny gizmo. Baseline maind8be0f4/runtime380b61c (.1019). Change ONLY the original
+gizmoIcons.pivot SVG: green upward Y, red lower-left X, blue lower-right Z arrows,
+small yellow centre ring. Explicit child stroke/fill keeps colours through existing
+normal/pressed button colour inheritance; original24px SVG and40px button retained.
+No duplicate button, action/label/listener/layout/pivot/geometry/history change.
+Other shared icons remain exact. All import parents of shared gizmo-corner-controls
+repinned together (TotalGizmo,object-management,viewport-toolbar->topbar,drawer),
+plus original release/cache closure. Import-only changes outside SVG owner.
+
+35 focused corner/release/cache/identity/comparison checks PASS; syntax/whitespace
+clean. Exact SVG rendered/visually inspected at24px and enlarged in normal,pressed
+and disabled states. All other icon artwork and action-function bytes unchanged;
+no actual browser/native pixel acceptance claimed. Publication pending.
+.1018 preview PASS/.1017 alignment PASS protected;
+.1019 face-drag/edge-snap native acceptance remains pending, no PASS inferred from
+this icon request. .1019 full local3007PASS remains baseline, no duplicate full
+rerun for icon-only work. DEVICE1020: inspect RGB arrows/yellow ring at normal size,
+tap Pivot on/off and verify colours remain; existing face-drag/edge-snap sanity.
+Next native feedback; NOM texture/PBR retention separately queued.
+
 .1019 publication verified — 30 October 2026:
 Runtime380b61c927e08be121a613ae2db04e89b1390aaa; uploaded/tested tree
 4c5ceba0aa70ccadfc93b2669de54f1f1a061af3 exactly matches fetched origin/main.
