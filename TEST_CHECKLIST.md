@@ -1,3 +1,17 @@
+## .1029 — native colour-image alpha — 30 October 2026
+
+- [x]1028 PASS supersedes initial FAIL; accepted opacity/shadow/backface/PBR protected.
+- [x]Explicit native use_color_opacity true/1: original Three RGBA multiplied with
+  separate alphaMap/factor/uniform blending. false/0/absent keeps original OFF policy.
+- [x]Unpremultiplied RGB survives alpha0 without rewriting pixels; scalar decode,
+  cancellation/bounds/resources/history and both Studio shadow owners unchanged.
+- [x]35 focused PASS/0FAIL/0skip including4 new real-owner/RGBA/round-trip checks;
+  original1028 refusal now checks invalid2 while explicit1 follows new capability.
+- [x]Full final local Node24.22.1:3042 PASS/0FAIL/0skip/0cancel (222.31s); no runtime/test edits after start.
+- [ ]DEVICE1029 supplied sample: left checker alpha ON,middle combined opacity,
+  right same image alpha OFF solid; Studio/Solid/orbit,selectMoveUndoRedo,
+  looks/back,SaveOpen.boxlab,NOMAD/Nomad; accepted1028/1027 samples unchanged.
+
 ## .1028 — native opacity preview — 30 October 2026
 
 - [x] Explicit1027 user PASS protects emissive/color/normal/scalars/retention/roundtrip.
@@ -8,7 +22,7 @@
 - [x]31 final focused checks PASS including6 new actual-owner/shader/lifetime/codec tests.
 - [x]Broad local Node24.22.1:3038 PASS/0FAIL/0skip/0cancel (199.52s); final focus covers late Studio owner, serializable UUID and opaque colour-alpha compatibility.
 - [x]Runtime d781f169/treedc71f74e verified;45 blobs match;9/9 fresh live files match. Pages/hosted in_progress at last query; native opacity gate pending.
-- [ ] DEVICE1028 supplied opacity sample: checker holes,left; middle35% translucent;
+- [x] User1028 PASS (initial FAIL superseded; delayed refresh): DEVICE1028 supplied opacity sample: checker holes,left; middle35% translucent;
   solid right control. Studio/Solid orbit,no orange fill; select/Move/UndoRedo;
   looks/back,SaveOpen.boxlab,NOMAD/Nomad; previous emissive sample unchanged.
 

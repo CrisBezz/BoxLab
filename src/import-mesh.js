@@ -496,7 +496,7 @@ function loadGLTF(file) {
 async function loadNOM(file){
   try{
     if(file.size>128*1024*1024)throw Error('NOM file exceeds 128 MiB; decimate in Nomad first');
-    const {parseNomadMeshes}=await import('./nomad-import-core.js?v=0.36.18.1028');
+    const {parseNomadMeshes}=await import('./nomad-import-core.js?v=0.36.18.1029');
     const result=parseNomadMeshes(await file.arrayBuffer());
     addImported(result.meshes,fileBaseName(file),{format:'NOM'});
     if(result.warnings.length&&status)status.textContent+=' • '+result.warnings.join(' • ');

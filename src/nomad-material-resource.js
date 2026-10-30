@@ -55,17 +55,17 @@ function nomadTextureSource(payload,slot,{opacity=false}={}){
 export function nomadColourSurfaceSource(payload,{opacity=false}={}){
  const source=nomadTextureSource(payload,'color',{opacity});if(!source)return null;
  const m=payload.nomadMaterial;
- // Preserve accepted opaque colour/PBR inspection when colour-alpha display is
- // deferred. Blending with colour alpha still refuses through the original guard.
- if(opacity&&![undefined,false,0].includes(m.use_color_opacity))return nomadColourSurfaceSource(payload);
+ // Native colour alpha is explicit. Unknown flag values retain the previous
+ // opaque inspection policy rather than enabling transparency by truthiness.
+ if(opacity&&![undefined,false,0,true,1].includes(m.use_color_opacity))return nomadColourSurfaceSource(payload);
  if(opacity){
   const type=m.material_type??'opaque',value=m.opacity??1,factor=m.factorOpacity??1;
-  if(!['opaque','blending'].includes(type)||!Number.isFinite(value)||value<0||value>1||type==='opaque'&&value!==1||!Number.isFinite(factor)||factor<0||factor>1||!([undefined,false,0].includes(m.use_color_opacity)))return null;
+  if(!['opaque','blending'].includes(type)||!Number.isFinite(value)||value<0||value>1||type==='opaque'&&value!==1||!Number.isFinite(factor)||factor<0||factor>1)return null;
  }
  const factor=m.factorColor??[1,1,1];if(!Array.isArray(factor)||factor.length!==3||!factor.every(v=>Number.isFinite(v)&&v>=0&&v<=1))return null;
  const roughness=m.roughness??.25,metalness=m.metalness??0;
  if(![roughness,metalness].every(v=>Number.isFinite(v)&&v>=0&&v<=1))return null;
- return {...source,...(opacity?{opacityPreview:true,opacity:(m.material_type==='blending'?m.opacity??1:1),choice:{...source.choice,...(m.material_type==='blending'||m.textures?.opacity?{unpremultiplied:true}:{})}}:{}),factor:[...factor,1],roughness,metalness,doubleSided:m.two_sided===1,unlit:m.always_unlit===true};
+ return {...source,...(opacity?{opacityPreview:true,colourAlpha:m.use_color_opacity===true||m.use_color_opacity===1,opacity:(m.material_type==='blending'?m.opacity??1:1),choice:{...source.choice,unpremultiplied:true}}:{}),factor:[...factor,1],roughness,metalness,doubleSided:m.two_sided===1,unlit:m.always_unlit===true};
 }
 
 // Separate native data maps, never glTF G/B packed textures. Grayscale validation

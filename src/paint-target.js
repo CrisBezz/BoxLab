@@ -1,8 +1,8 @@
 import * as THREE from 'three';
 import {paintMaterialEnvironments} from './paint-material-environment.js?v=0.36.18.925';
-import {encodeBoxlabScene} from './boxlab-project-codec.js?v=0.36.18.1028';
-import {copyMetalnessResource} from './metalness-resource.js?v=0.36.18.1028';
-import {copyRoughnessResource} from './roughness-resource.js?v=0.36.18.1028';
+import {encodeBoxlabScene} from './boxlab-project-codec.js?v=0.36.18.1029';
+import {copyMetalnessResource} from './metalness-resource.js?v=0.36.18.1029';
+import {copyRoughnessResource} from './roughness-resource.js?v=0.36.18.1029';
 import {paintDigest} from './paint-resource.js?v=898';
 const encoder=new TextEncoder(),hidden=new THREE.MeshBasicMaterial({colorWrite:false,depthWrite:false});
 // Reuse original codec/UV topology validation. Positions may move/deform with unchanged UVs.

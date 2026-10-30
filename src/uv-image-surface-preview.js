@@ -1,5 +1,5 @@
 import {paintMaterialEnvironments} from './paint-material-environment.js?v=0.36.18.925';
-import {nomadColourSurfaceSource,nomadPBRSurfaceSources} from './nomad-material-resource.js?v=0.36.18.1028';
+import {nomadColourSurfaceSource,nomadPBRSurfaceSources} from './nomad-material-resource.js?v=0.36.18.1029';
 import * as THREE from 'three';
 import {importedUVImageChoices,decodeUVImage} from './uv-image-preview.js?v=0.36.18.1028';
 // Active Base inspection. Mixed materials require exact per-face import provenance.
@@ -46,10 +46,10 @@ export function createUVImageOverlay(body,mesh,payload,buildGeometry,hiddenMater
  const sourceGeometry=body.geometry,fallback=body.material;let disposed=false,environment=null;
  const images=[],textures=[],backfaces=new Map();const originalCastShadow=body.castShadow;
  function opacityMode(material,value){
-  // Native colour alpha is opt-in (deferred here). Keep RGB while the separate
-  // opacity map/scalar controls alpha; do not rewrite/re-encode the source image.
-  material.onBeforeCompile=shader=>{shader.fragmentShader=shader.fragmentShader.replace('#include <map_fragment>',THREE.ShaderChunk.map_fragment.replace('diffuseColor *= sampledDiffuseColor;','diffuseColor.rgb *= sampledDiffuseColor.rgb;'));};
-  material.customProgramCacheKey=()=> 'boxlab-native-opacity-1028';
+  // Opted-in colour alpha uses Three's original RGBA path. Otherwise keep
+  // accepted RGB-only sampling when a separate map/scalar controls opacity.
+  if(!single.colourAlpha)material.onBeforeCompile=shader=>{shader.fragmentShader=shader.fragmentShader.replace('#include <map_fragment>',THREE.ShaderChunk.map_fragment.replace('diffuseColor *= sampledDiffuseColor;','diffuseColor.rgb *= sampledDiffuseColor.rgb;'));};
+  if(!single.colourAlpha)material.customProgramCacheKey=()=> 'boxlab-native-opacity-1028';
   material.opacity=value;material.transparent=true;material.depthWrite=false;overlay.castShadow=false;body.castShadow=false;
   body.userData.boxlabNativeOpacityOwner=overlay.uuid;
   for(const child of body.children)if(child.userData?.boxlabBackfaceCue&&!backfaces.has(child)){backfaces.set(child,child.visible);child.visible=false;}
@@ -77,7 +77,7 @@ export function createUVImageOverlay(body,mesh,payload,buildGeometry,hiddenMater
    if(!image){dispose();return;}
    images.push(image);const texture=makeTexture(image,source,true);
    const material=materials[index];material.map=texture;material.color.fromArray(source.factor);material.side=source.doubleSided?THREE.DoubleSide:THREE.FrontSide;material.toneMapped=material.isMeshStandardMaterial===true;material.needsUpdate=true;
-   if(native&&lit&&material.isMeshStandardMaterial&&source.opacityPreview&&source.opacity<1)opacityMode(material,source.opacity);
+   if(native&&lit&&material.isMeshStandardMaterial&&source.opacityPreview&&(source.opacity<1||source.colourAlpha))opacityMode(material,source.opacity);
   }
   if(!disposed){overlay.visible=true;body.material=hiddenMaterial;}
   // Colour becomes visible first. Unsupported/failed auxiliaries keep it intact.

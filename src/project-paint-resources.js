@@ -1,7 +1,7 @@
 // Separate project colour pool. Opaque scenev2 stays byte-compatible; raster scenev3; image scenev4.
 // Native UV envelopev3 is still UV-only. History/duplicates share immutable resources.
-import {encodePaintResourceEntry,decodePaintResourceEntry,paintResourceEntryBytes} from './paint-layer-resource.js?v=0.36.18.1028';
-import {createPaintBytePool,expandPaintBytePool} from './project-paint-byte-pool.js?v=0.36.18.1028';
+import {encodePaintResourceEntry,decodePaintResourceEntry,paintResourceEntryBytes} from './paint-layer-resource.js?v=0.36.18.1029';
+import {createPaintBytePool,expandPaintBytePool} from './project-paint-byte-pool.js?v=0.36.18.1029';
 const LIMIT=8*1024*1024;
 export function paintOwner(o){
  if(o.sourceId||o.arrayRecipe||o.booleanRecipe||o.curveProfile||o.kind==='reference'||o.glbPassthrough?.source!=='boxlab')throw Error('Colour paint requires an independent native UV object');

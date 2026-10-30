@@ -1,4 +1,4 @@
-import {retainNomadMaterial} from './nomad-material-resource.js?v=0.36.18.1028';
+import {retainNomadMaterial} from './nomad-material-resource.js?v=0.36.18.1029';
 import * as THREE from 'three';
 import {EditableMesh} from './mesh.js?v=0.21.2';
 import {meshTopologySignature} from './mesh-topology-signature.js?v=0.36.18.939';

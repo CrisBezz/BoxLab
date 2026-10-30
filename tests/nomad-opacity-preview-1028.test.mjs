@@ -20,9 +20,9 @@ const plan=p=>nomadColourSurfaceSource(p,{opacity:true});
 test('1028 native opacity plan is lit-only, bounded grayscale with own scale/factor and explicit simple material guards; retained data untouched',async()=>{
  const {objects}=await fixture,p=objects[0].glbPassthrough,before=JSON.stringify(p),c=plan(p),m=nomadPBRSurfaceSources(p,c).opacity;
  assert.equal(c.choice.unpremultiplied,true);assert.deepEqual(m.repeat,[2,2]);assert.equal(m.factor,.8);assert.equal(m.choice.linear,true);assert.equal(m.choice.grayscale,true);assert.equal(m.choice.previewSize,512);assert.equal(JSON.stringify(p),before);
- const prior=structuredClone(objects[2].glbPassthrough);prior.nomadMaterial.use_color_opacity=1;assert.deepEqual(plan(prior),nomadColourSurfaceSource(prior));assert.equal(plan(prior).opacityPreview,undefined);
+ const prior=structuredClone(objects[2].glbPassthrough);prior.nomadMaterial.use_color_opacity=1;assert.deepEqual(plan(prior).factor,nomadColourSurfaceSource(prior).factor);assert.equal(plan(prior).colourAlpha,true);
  assert.equal(nomadColourSurfaceSource(p),null);assert.equal(plan(objects[1].glbPassthrough).opacity,.35);
- for(const edit of [q=>q.nomadMaterial.material_type='refraction',q=>q.nomadMaterial.material_type='additive',q=>q.nomadMaterial.use_color_opacity=1,q=>q.nomadMaterial.opacity=-1,q=>q.nomadMaterial.factorOpacity=2]){const q=structuredClone(p);edit(q);assert.equal(plan(q),null);}
+ for(const edit of [q=>q.nomadMaterial.material_type='refraction',q=>q.nomadMaterial.material_type='additive',q=>q.nomadMaterial.use_color_opacity=2,q=>q.nomadMaterial.opacity=-1,q=>q.nomadMaterial.factorOpacity=2]){const q=structuredClone(p);edit(q);assert.equal(plan(q),null);}
  for(const edit of [q=>q.nomadMaterial.textures.opacity.rotation=10,q=>q.nomadMaterial.textures.opacity.projection='triplanar',q=>{const a=new Uint8Array(8*1024*1024);a.set(q.images[4].data.subarray(0,33));q.images[4].data=a;}]){const q=structuredClone(p);edit(q);assert(plan(q));assert.equal(nomadPBRSurfaceSources(q,plan(q)).opacity,undefined);}
 });
 test('1028 real material uses linear alphaMap, ignores colour alpha in scoped shader, preserves RGB/PBR, disables opaque shadows/backface fill and restores once',async()=>{
