@@ -167,9 +167,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1021",
+      "url": "./src/drawer-ui.js?v=0.36.18.1022",
       "target": "src/drawer-ui.js",
-      "sha256": "ec67667f1e2e40c386ad3b744712d7602c5a01af43dfbb77a4c211600511d91c"
+      "sha256": "06025bb2fad05cab8bcfc02ae6e40ab0bd3a777a0aaa9e7408a30c4ceb2dcea1"
     },
     {
       "owner": "index.html",
@@ -378,21 +378,21 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.1021",
+      "url": "./src/release-bootstrap.js?v=0.36.18.1022",
       "target": "src/release-bootstrap.js",
       "sha256": "fe3e41b43e5df07fb5252936bff4e2a7c4f47fcb38f89b2cb6204fc5712e1698"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1021",
+      "url": "./src/release-version.js?v=0.36.18.1022",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
     {
       "owner": "index.html",
-      "url": "./src/render-modes.js?v=0.36.18.1002",
+      "url": "./src/render-modes.js?v=0.36.18.1022",
       "target": "src/render-modes.js",
-      "sha256": "4858a03d1c5eb083b35493e24bc7c50ae8ed72670b1fce0ccb1433d2744c3e0d"
+      "sha256": "3cf8c469a176f46c24da383f0a81100e2d2254cb4f2bd154727dfda8ab79950d"
     },
     {
       "owner": "index.html",
@@ -545,9 +545,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/topbar-layout.js?v=0.36.18.1021",
+      "url": "./src/topbar-layout.js?v=0.36.18.1022",
       "target": "src/topbar-layout.js",
-      "sha256": "6ff60d749ad5306d1d0c9f9259bffab354e94a6677fbfc2d0bc5af2bceacc4a3"
+      "sha256": "adb5d9f6fd7383d58451ad3b14d10cf6f7ccf5c08b783367cfe88c9ca9517d93"
     },
     {
       "owner": "index.html",
@@ -876,9 +876,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1021",
+      "url": "./face-workflow-layout.js?v=0.36.18.1022",
       "target": "src/face-workflow-layout.js",
-      "sha256": "c09f3abaceef4f8481f306352482613d5697dd5ee986c84ab704ff7511a7ecb7"
+      "sha256": "f390022e2dd16f92d91da94acc9faf22eb7ab8ce0a208a04f7784d311c610576"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1308,9 +1308,9 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./ground-polish.js?v=0.36.18.188",
+      "url": "./ground-polish.js?v=0.36.18.1022",
       "target": "src/ground-polish.js",
-      "sha256": "7f925335af8c6bd93aae7b4b7dece751b9e888a6126a47242e6976a16e119f56",
+      "sha256": "c692a36a82d4f222f2b53499fe0ae9c699cc686208455fd011849a1e7631273c",
       "sourceVersion": "0.36.18.188"
     },
     {
@@ -1373,7 +1373,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1021",
+      "url": "./release-version.js?v=0.36.18.1022",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -1460,9 +1460,9 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./studio-polish.js?v=0.36.18.199",
+      "url": "./studio-polish.js?v=0.36.18.1022",
       "target": "src/studio-polish.js",
-      "sha256": "83696f52743dcc451f66f8ffd3d5eae6af13ec5294771baa26438c53cd01f029",
+      "sha256": "6b69ee24ec75bf042bcfac0639dfae40bb25833378ad8fdc820170524c8daae7",
       "sourceVersion": "0.36.18.199"
     },
     {
@@ -2056,9 +2056,9 @@
     },
     {
       "owner": "src/topbar-layout.js",
-      "url": "./viewport-toolbar-controls.js?v=0.36.18.1021",
+      "url": "./viewport-toolbar-controls.js?v=0.36.18.1022",
       "target": "src/viewport-toolbar-controls.js",
-      "sha256": "e4ad1dceda9ca5ac609518e384acf0cf4d7a1bbbdf5cfc8b681caac74172e1a1"
+      "sha256": "c453675b543821d5ab104713b5bda83919dfede07416011b9f6a4de76417359c"
     },
     {
       "owner": "src/total-gizmo.js",
@@ -3350,9 +3350,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1021",
+      "url": "./src/shell-comparison.js?v=0.36.18.1022",
       "target": "src/shell-comparison.js",
-      "sha256": "6d80e5cee8605b86d661520007c5d16bc6135113d359a50f84b908f64a3940e1"
+      "sha256": "c6ea4b5e877bf939990f98e26aa683494af07c132527a4b67e4b6457da8b3742"
     },
     {
       "owner": "src/main.js",

@@ -16,16 +16,16 @@ function fixture(seeded=true){
   querySelector(q){return q==='.viewport-menu-panel'&&this.id==='viewModes'&&this._html.includes('viewport-menu-panel')?this.panel:null;}
  }
  const doc={querySelector:q=>q==='.top-actions'?top:nodes.get(q)||null,createElement:tag=>new Node(tag),head:{append:n=>styles.push(n)}};
- if(seeded){for(const id of ['frameAllBtn','undoBtn','redoBtn','focusViewBtn','objectBrowserBtn','viewModes']){const n=new Node(id==='viewModes'?'details':'button',id);nodes.set('#'+id,n);top.append(n);if(id==='viewModes'){n._html='<summary>VIEW</summary><div class="viewport-menu-panel"></div>';n.panel={original:true};}else {n.dataset.iconAction=id;n._html='<svg>original artwork</svg>';}}}
+ if(seeded){for(const id of ['frameAllBtn','undoBtn','redoBtn','focusViewBtn','objectBrowserBtn','floorToggleBtn','viewModes']){const n=new Node(id==='viewModes'?'details':'button',id);nodes.set('#'+id,n);top.append(n);if(id==='viewModes'){n._html='<summary>VIEW</summary><div class="viewport-menu-panel"></div>';n.panel={original:true};}else {n.dataset.iconAction=id;n._html='<svg>original artwork</svg>';}}}
  let objects=0;const ctx={document:doc,topActions:top,activateObjectListFromView:()=>objects++};vm.createContext(ctx);vm.runInContext(source.slice(source.indexOf('function ensureUI(){'),source.indexOf('function modelBounds(')),ctx);
  return {nodes,styles,top,ctx,get objects(){return objects;}};
 }
 test('983 shell contains final ordered original toolbar and artwork before any module; accepted mode dock stays out of initial header flow',()=>{
  const shell=read('index.html'),top=shell.slice(shell.indexOf('<div class="top-actions">'),shell.indexOf('</header>'));
- const ids=[...top.matchAll(/id="(frameAllBtn|undoBtn|redoBtn|focusViewBtn|objectBrowserBtn|viewModes)"/g)].map(m=>m[1]);
- assert.deepEqual(ids,['frameAllBtn','undoBtn','redoBtn','focusViewBtn','objectBrowserBtn','viewModes']);
+ const ids=[...top.matchAll(/id="(frameAllBtn|undoBtn|redoBtn|focusViewBtn|objectBrowserBtn|floorToggleBtn|viewModes)"/g)].map(m=>m[1]);
+ assert.deepEqual(ids,['frameAllBtn','undoBtn','redoBtn','focusViewBtn','objectBrowserBtn','floorToggleBtn','viewModes']);
  for(const id of ids)assert.equal([...shell.matchAll(new RegExp('id="'+id+'"','g'))].length,1);
- assert.equal([...top.matchAll(/data-icon-action=/g)].length,5);assert.match(top,/id="focusViewBtn"[^>]*aria-pressed="true"/);assert.match(top,/viewport-menu-panel/);
+ assert.equal([...top.matchAll(/data-icon-action=/g)].length,6);assert.match(top,/id="focusViewBtn"[^>]*aria-pressed="true"/);assert.match(top,/viewport-menu-panel/);
  const css=read('viewport-toolbar-shell.css');assert.match(css,/\.topbar > #selectionModes\{display:none\}/);assert.match(css,/width:40px;min-width:40px/);assert.match(css,/width:24px;height:24px/);assert.doesNotMatch(css,/filter:|contain:|will-change:|transform:|animation:|visibility:/);
 });
 test('983 VIEW hydrates same shell nodes without replacing artwork/panel or reordering header; one Objects activation',()=>{

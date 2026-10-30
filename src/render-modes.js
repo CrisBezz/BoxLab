@@ -153,6 +153,7 @@ function syncStudio(){
     scene.background.copy(new THREE.Color(Number.isFinite(backdrop)?backdrop:0x131924));
   }else scene.background.copy(originalBackground||new THREE.Color(0x111318));
   if(enabled)refreshStudio();
+  if(studioFloor)studioFloor.visible=(globalThis.__boxlabGroundPolish?.ground??'plane')==='plane';
 }
 
 function applyMode(body){

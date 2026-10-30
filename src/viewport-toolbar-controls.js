@@ -19,7 +19,7 @@ export function installViewportToolbarControls(doc=document){
    const b=doc.querySelector('#'+id);if(!b||b.dataset.iconAction)continue;b.dataset.iconAction=action;b.innerHTML=svg(gizmoIcons[action]);b.title=title;b.setAttribute('aria-label',title);
   }
   const top=doc.querySelector('.top-actions');
-  if(top){const order=['frameAllBtn','undoBtn','redoBtn','focusViewBtn','objectBrowserBtn','viewModes'];let position=0;for(const id of order){const b=doc.querySelector('#'+id);if(!b)continue;if(top.children[position]!==b)top.insertBefore(b,top.children[position]||null);b.style.order=String(position++);}}
+  if(top){const order=['frameAllBtn','undoBtn','redoBtn','focusViewBtn','objectBrowserBtn','floorToggleBtn','viewModes'];let position=0;for(const id of order){const b=doc.querySelector('#'+id);if(!b)continue;if(top.children[position]!==b)top.insertBefore(b,top.children[position]||null);b.style.order=String(position++);}}
   const lasso=doc.querySelector('#lassoSelectBtn');if(lasso&&lasso.parentElement!==bar){lasso.innerHTML=svg(paths.lasso);lasso.title='LASSO — Pencil/mouse draws, finger navigates';lasso.setAttribute('aria-label','Lasso selection');bar.append(lasso);}
  }
  decorate();const observer=new MutationObserver(decorate);observer.observe(doc.body,{childList:true,subtree:true});

@@ -45,7 +45,7 @@ function apply(){
   scene.traverse(object=>{const kind=object?.userData?.kind;if(!object?.isMesh||!object.visible||(kind!=='body'&&kind!=='boxlab-inactive-body'))return;bounds.expandByObject(object);found=true;});
   if(!found||bounds.isEmpty())return true;
   const center=bounds.getCenter(new THREE.Vector3()),size=bounds.getSize(new THREE.Vector3());
-  const shadow=ensureContact(rig);const span=Math.max(size.x,size.z,1);shadow.position.set(center.x,bounds.min.y-.012,center.z);shadow.scale.set(span*1.55,span*1.55,1);shadow.visible=true;return true;
+  const shadow=ensureContact(rig);const span=Math.max(size.x,size.z,1);shadow.position.set(center.x,bounds.min.y-.012,center.z);shadow.scale.set(span*1.55,span*1.55,1);shadow.visible=(globalThis.__boxlabGroundPolish?.ground??'plane')==='plane';return true;
 }
 function schedule(){if(queued)return;queued=true;requestAnimationFrame(()=>{if(!apply())setTimeout(()=>{queued=false;apply();},120);});}
 document.addEventListener('boxlab-render-mode-change',event=>{if(event.detail?.mode==='studio')schedule();else if(contact)contact.visible=false;});
