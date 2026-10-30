@@ -1,5 +1,5 @@
 import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';import vm from 'node:vm';import * as THREE from 'three';
-import {facePivotFrame,pivotQuaternion,localScaleVector,pickPivotFace} from '../src/gizmo-local-pivot.js';
+import {facePivotFrame,edgePivotFrame,nearestPivotEdge,pivotQuaternion,localScaleVector,pickPivotFace} from '../src/gizmo-local-pivot.js';
 import {rotateOwnerRuntime} from './helpers/rotate-owner-runtime.mjs';import {EditableMesh} from '../src/mesh.js';import {encodeBoxlabScene,decodeBoxlabScene} from '../src/boxlab-project-codec.js';
 const source=p=>fs.readFileSync(new URL('../src/'+p,import.meta.url),'utf8'),snap=m=>m.vertices.map(v=>v.toArray());
 function fixture(mode='object',ids=[0]){
@@ -29,7 +29,7 @@ test('1017 actual renderer ray picking uses visible active body and refuses an o
 });
 test('1017 place/centre/Y turn changes only draft, finishes one original scene checkpoint, UndoRedo restores frame and Save/Open retains it',()=>{
  const r=fixture(),before=snap(r.mesh),original={...r.a.origin};assert(r.api.toggleEdit());assert.equal(r.c.__boxlabBridgeState.controls.enabled,false);
- r.emit('pointerdown');assert(r.api.frame().center.distanceTo(new THREE.Vector3(0,0,1))<1e-8);assert.deepEqual(snap(r.mesh),before);assert.deepEqual(r.a.origin,original);
+ r.emit('pointerdown');r.emit('pointerup');assert(r.api.frame().center.distanceTo(new THREE.Vector3(0,0,1))<1e-8);assert.deepEqual(snap(r.mesh),before);assert.deepEqual(r.a.origin,original);
  const target={setPointerCapture(){}};r.api.handle({tool:'move',constraint:'free'},{pointerId:1,clientX:320,clientY:240,currentTarget:target,preventDefault(){},stopImmediatePropagation(){}});r.emit('pointerup');
  r.api.handle({tool:'rotate',constraint:'y'},{pointerId:1,clientX:360,clientY:240,currentTarget:target,preventDefault(){},stopImmediatePropagation(){}});r.emit('pointermove',320,280);r.emit('pointerup',320,280);
  const q=r.api.frame().quaternion;assert(new THREE.Vector3(0,1,0).applyQuaternion(q).distanceTo(new THREE.Vector3(0,0,1))<1e-9);assert(Math.abs(q.x)>0.1);assert.deepEqual(snap(r.mesh),before);
@@ -75,4 +75,78 @@ test('1017 real local drag freezes start basis, follows projected local rail, ca
   if(tool==='scale'){const old=before.map(v=>new THREE.Vector3(...v).sub(frame.center).applyQuaternion(frame.quaternion.clone().invert())),now=r.mesh.vertices.map(v=>v.clone().sub(frame.center).applyQuaternion(frame.quaternion.clone().invert()));now.forEach((v,i)=>{assert(Math.abs(v.y-old[i].y)<1e-9);assert(Math.abs(v.z-old[i].z)<1e-9);});}
   r.dispatch('pointerup',end.x,end.y);assert.equal(r.history.undoStack.length,1);
  }
+});
+
+function screenAt(r,point){const p=point.clone().project(r.camera),rect=r.canvas.getBoundingClientRect();return{x:rect.left+(p.x*.5+.5)*rect.width,y:rect.top+(-p.y*.5+.5)*rect.height};}
+function at(r,type,point,extra={}){const p=screenAt(r,point);return r.emit(type,p.x,p.y,extra);}
+test('1019 edge frame chooses nearest X or Z and sign without reversing green normal, including oblique and reversed edges',()=>{
+ for(const normal of [new THREE.Vector3(0,0,1),new THREE.Vector3(1,-2,3).normalize()]){
+  const initial=facePivotFrame(new THREE.Vector3(),normal),q=pivotQuaternion(initial),x=world('x').applyQuaternion(q),z=world('z').applyQuaternion(q);
+  for(const [axis,direction] of [['x',x.clone().addScaledVector(z,.2)],['z',z.clone().addScaledVector(x,.2)]])for(const sign of [1,-1]){
+   const edge=direction.clone().multiplyScalar(sign),result=edgePivotFrame(new THREE.Vector3(1,2,3),normal,edge,initial),out=pivotQuaternion(result.record);
+   assert.equal(result.axis,axis);assert(world('y').applyQuaternion(out).distanceTo(normal)<1e-10);assert(Math.abs(world(axis).applyQuaternion(out).dot(edge.normalize()))>1-1e-10);
+   assert(world(axis).applyQuaternion(out).dot(axis==='x'?x:z)>0);assert(world('x').applyQuaternion(out).cross(world('y').applyQuaternion(out)).distanceTo(world('z').applyQuaternion(out))<1e-10);
+  }
+ }
+ assert.equal(edgePivotFrame(new THREE.Vector3(),new THREE.Vector3(0,1,0),new THREE.Vector3(),{}),null);
+ assert.equal(edgePivotFrame(new THREE.Vector3(),new THREE.Vector3(0,1,0),new THREE.Vector3(0,1,0),{}),null);
+ function world(a){return new THREE.Vector3(a==='x'?1:0,a==='y'?1:0,a==='z'?1:0);}
+});
+test('1019 actual face-boundary drag previews before release, snaps only polygon edges, keeps geometry/selection untouched and commits one scene UndoRedo/SaveOpen',()=>{
+ for(const pointerType of ['touch','pen','mouse']){
+  const r=fixture(),before=snap(r.mesh),origin={...r.a.origin},selected=r.selected();let released=0;r.canvas.releasePointerCapture=()=>released++;
+  r.api.toggleEdit();at(r,'pointerdown',new THREE.Vector3(0,0,1),{pointerType});assert.equal(r.captured(),1);
+  const hit=pickPivotFace(r.c.__boxlabBridgeState,r.canvas,{clientX:320,clientY:240});assert.equal(hit.faceIndex,1);assert.equal(hit.boundary.length,4);assert.equal(r.root.dataset.pivotSnap,''); // Not the fan diagonal.
+  at(r,'pointermove',new THREE.Vector3(.3,.2,1),{pointerType,target:{}});assert(r.api.frame().center.distanceTo(new THREE.Vector3(.3,.2,1))<1e-8);assert.equal(r.history.undoStack.length,0);
+  at(r,'pointermove',new THREE.Vector3(.97,.25,1),{pointerType,target:{}});const frame=r.api.frame();assert(Math.abs(frame.center.x-1)<1e-10);assert.equal(r.root.dataset.pivotSnap,'z');assert(new THREE.Vector3(0,1,0).applyQuaternion(frame.quaternion).distanceTo(new THREE.Vector3(0,0,1))<1e-10);assert(Math.abs(new THREE.Vector3(0,0,1).applyQuaternion(frame.quaternion).y)>1-1e-10);
+  assert.deepEqual(snap(r.mesh),before);assert.deepEqual(r.a.origin,origin);assert.deepEqual(r.selected(),selected);
+  at(r,'pointerup',new THREE.Vector3(.97,.25,1),{pointerType});assert.equal(released,1);assert.equal(r.history.undoStack.length,0);r.api.finish(true);assert.equal(r.history.undoStack.length,1);
+  const saved={...r.manager.objects[0].origin};r.history.undo(r.c.__boxlabBridgeState.mesh);assert.deepEqual({...r.manager.objects[0].origin},origin);r.history.redo(r.c.__boxlabBridgeState.mesh);assert.deepEqual({...r.manager.objects[0].origin},saved);
+  const opened=decodeBoxlabScene(JSON.parse(JSON.stringify(encodeBoxlabScene(r.c.captureScene()))),(...a)=>new EditableMesh(...a));assert.deepEqual({...opened.objects[0].origin},JSON.parse(JSON.stringify(saved)));assert.deepEqual(snap(r.mesh),before);
+ }
+});
+test('1019 oblique silhouette snapping latches starting face normal, releases magnet away from edge and ignores secondary pointers',()=>{
+ const r=fixture();r.camera.position.set(4,3,8);r.camera.lookAt(0,0,0);r.camera.updateMatrixWorld();r.api.toggleEdit();
+ at(r,'pointerdown',new THREE.Vector3(0,0,1));at(r,'pointermove',new THREE.Vector3(1.02,.25,1));
+ let frame=r.api.frame();assert(Math.abs(frame.center.x-1)<1e-8);assert.equal(r.root.dataset.pivotSnap,'z');assert(new THREE.Vector3(0,1,0).applyQuaternion(frame.quaternion).distanceTo(new THREE.Vector3(0,0,1))<1e-9);
+ const snapped=frame.center.clone();at(r,'pointerdown',new THREE.Vector3(-.6,0,1),{pointerId:2,isPrimary:false});at(r,'pointermove',new THREE.Vector3(-.6,0,1),{pointerId:2});assert(r.api.frame().center.distanceTo(snapped)<1e-9);
+ at(r,'pointermove',new THREE.Vector3(.2,.2,1));frame=r.api.frame();assert.equal(r.root.dataset.pivotSnap,'');assert(frame.center.distanceTo(new THREE.Vector3(.2,.2,1))<1e-8);
+ at(r,'pointerup',new THREE.Vector3(.2,.2,1));r.api.finish(false);assert.equal(r.c.__boxlabBridgeState.controls.enabled,true);assert.equal(r.history.undoStack.length,0);
+});
+test('1019 cancellation restores pre-drag draft; Escape/pagehide clean capture/listeners with no geometry/history edits',()=>{
+ for(const end of ['pointercancel','lostpointercapture','Escape','pagehide']){
+  const r=fixture(),before=snap(r.mesh),origin={...r.a.origin};let released=0;r.canvas.releasePointerCapture=()=>released++;
+  r.api.toggleEdit();const draft=r.api.frame();at(r,'pointerdown',new THREE.Vector3(0,0,1));at(r,'pointermove',new THREE.Vector3(.97,.25,1));
+  if(end==='Escape')r.emit('keydown',0,0,{key:'Escape'});else if(end==='pagehide')r.emit('pagehide');else at(r,end,new THREE.Vector3(.97,.25,1));
+  if(['pointercancel','lostpointercapture'].includes(end)){assert(r.api.frame().center.distanceTo(draft.center)<1e-10);assert(r.api.frame().quaternion.angleTo(draft.quaternion)<1e-7);r.api.finish(false);}
+  assert.equal(released,1);assert.equal(r.api.editing(),false);assert.equal(r.c.__boxlabBridgeState.controls.enabled,true);assert.deepEqual(r.a.origin,origin);assert.deepEqual(snap(r.mesh),before);assert.equal(r.history.undoStack.length,0);
+  assert.equal((r.c.window.listeners.get('lostpointercapture')||[]).length,0);assert.equal((r.c.window.listeners.get('pointermove')||[]).length,0);
+ }
+});
+test('1019 hidden boundary refuses snap through inactive occluder; resumed visible face restores live preview',()=>{
+ const r=fixture(),s=r.c.__boxlabBridgeState;r.api.toggleEdit();at(r,'pointerdown',new THREE.Vector3(0,0,1));const start=r.api.frame().center.clone();
+ const block=new THREE.Mesh(r.mesh.triangulatedGeometry(),new THREE.MeshBasicMaterial());block.position.z=3;block.userData.kind='boxlab-inactive-body';s.scene.add(block);block.updateMatrixWorld();
+ at(r,'pointermove',new THREE.Vector3(.97,.25,1));assert(r.api.frame().center.distanceTo(start)<1e-10);assert.equal(r.root.dataset.pivotSnap,'');
+ block.visible=false;at(r,'pointermove',new THREE.Vector3(.97,.25,1));assert.equal(r.root.dataset.pivotSnap,'z');assert(Math.abs(r.api.frame().center.x-1)<1e-10);r.api.finish(false);
+});
+test('1019 projected edge snaps perspective-correctly under pointer, and explicit indexed renderer ownership excludes internal diagonals',()=>{
+ const r=fixture(),a=new THREE.Vector3(-1,0,2),b=new THREE.Vector3(1,0,-2),point=a.clone().lerp(b,.73),p=screenAt(r,point),surface={normal:new THREE.Vector3(0,1,0),boundary:[a,b],basis:{}};
+ const edge=nearestPivotEdge(surface,{clientX:p.x,clientY:p.y},r.camera,r.canvas);assert(edge);assert(edge.point.distanceTo(point)<1e-9);
+ const s=r.c.__boxlabBridgeState,body=s.scene.children[0],g=body.geometry;g.setIndex(Array.from({length:g.attributes.position.count},(_,i)=>i));g.userData.boxlabTriangleFaces=r.mesh.faces.flatMap((face,index)=>Array(face.length-2).fill(index));
+ const hit=pickPivotFace(s,r.canvas,{clientX:320,clientY:240});assert.equal(hit.faceIndex,1);assert.equal(hit.boundary.length,4);
+ const noDiagonal=nearestPivotEdge({...hit,basis:{}},{clientX:320,clientY:240},r.camera,r.canvas);assert.equal(noDiagonal,null);
+});
+test('1019 actual Total Gizmo projection follows draft placement and edge yaw before release, including front ring hit paths',()=>{
+ const r=fixture(),initial=facePivotFrame(new THREE.Vector3(),new THREE.Vector3(0,0,1)),q=pivotQuaternion(initial).premultiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,0,1),.25));
+ Object.assign(r.a.origin,initial,{qx:q.x,qy:q.y,qz:q.z,qw:q.w});
+ const nodes=new Map(),node=()=>({attrs:{},setAttribute(k,v){this.attrs[k]=v;}});
+ for(const a of ['x','y','z']){nodes.set(`.tg-${a}-group`,node());const p=node();p.__hitProxy=node();nodes.set(`.tg-handle.tg-arc[data-ring-axis="${a}"]`,p);}
+ for(const a of ['xy','xz','yz'])nodes.set('.tg-plane-'+a,node());
+ Object.assign(r.root,{hidden:false,getBoundingClientRect:()=>({width:196,height:196}),querySelector:s=>nodes.get(s)||null});Object.assign(r.c,{root:r.root,canvas:r.canvas,SIZE:196,HALF:98});
+ const g=source('total-gizmo.js');vm.runInContext(g.slice(g.indexOf('function centerOf('),g.indexOf('function arm('))+g.slice(g.indexOf('function planePoints('),g.indexOf('\nfunction sync(){')),r.c);
+ r.api.toggleEdit();at(r,'pointerdown',new THREE.Vector3(.1,.1,1));r.c.syncAxisVisuals(r.c.centerOf(r.mesh,'object'),r.camera);const x=nodes.get('.tg-x-group').attrs.transform,path=nodes.get('.tg-handle.tg-arc[data-ring-axis="x"]').attrs.d;
+ at(r,'pointermove',new THREE.Vector3(.97,.25,1));const anchor=r.c.centerOf(r.mesh,'object');r.c.syncAxisVisuals(anchor,r.camera);
+ assert(Math.abs(anchor.x-1)<1e-10);assert.notEqual(nodes.get('.tg-x-group').attrs.transform,x);assert.notEqual(nodes.get('.tg-handle.tg-arc[data-ring-axis="x"]').attrs.d,path);
+ for(const a of ['x','y','z']){const p=nodes.get(`.tg-handle.tg-arc[data-ring-axis="${a}"]`);assert(p.attrs.d.length>0);assert.equal(p.attrs.d,p.__hitProxy.attrs.d);}
+ assert.equal(r.history.undoStack.length,0);r.api.finish(false);
 });

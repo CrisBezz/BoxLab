@@ -17211,3 +17211,57 @@ Build1018 LIVE / READY for native preview acceptance. User .1017 alignment PASS
 protected. Device: actual RGB gizmo visible through face placement and greenY turn;
 model stays still; finish then Local transforms, Cancel/UndoRedo sanity. No native
 visual/feel acceptance inferred. NOM texture retention remains separately queued.
+
+## .1019 — surface-drag local pivot and face-edge alignment — 30 October 2026
+
+User .1018 PASS protects visible actual-gizmo pivot rotation preview; .1017 GIZMO
+ALIGN PASS retained. User now requests live pivot movement across a face and edge
+alignment of X or Z while Y remains its face normal. Baseline main7e5429d/runtime
+bd11e9c, release1018. This is the next narrow user-authorized build.
+
+Original gizmo-local-pivot owner extends its existing window-capture placement,
+move/completion listeners. Drag starts on a visible ACTIVE Base face, captures the
+pointer and updates only the transient pivot draft on each move. Same actual Total
+Gizmo projection previews its position/arrows/planes/front rings and matching hit
+paths BEFORE release. One face is latched per contact so crossing a shared edge
+cannot flip green Y onto the neighbour; release and start on another face to change
+faces. Off-surface/occluded movement holds the last valid placement. Geometry and
+selection never move during edit; original Pivot finish commits ONE scene checkpoint.
+
+Real polygon boundaries come from existing renderer triangle ownership metadata,
+or a cached read-only lookup of original Base fan ordering when geometry counts
+match. No new triangulation, render-mesh rebuild or triangle-diagonal snapping.
+Screen magnet enters14 CSSpx/releases20px, with3px corner preference; perspective
+interpolation puts pivot on the actual edge under the pointer. Visibility probes
+inside that boundary use the same actual body picker; hidden/inactive occluders
+cannot become snap targets. X or Z and its sign are chosen closest to the starting
+face-aligned frame; the right-handed frame retains exact green Y normal. Non-tangent
+warped edges safely decline alignment rather than rotate Y away from the face.
+Status names the snapped axis. Leaving the magnet restores the stroke's unsnapped
+tangent orientation. Centre->Y turning remains accepted and does not move geometry.
+
+Pointer cancellation/lost capture restores the pre-drag draft; Escape/pagehide
+abandons edit and restores controls/listeners. Secondary contacts cannot replace
+the active placement. Original per-object record/history/project codec/WorldLocal/
+transform owners remain authoritative; Multi1.0, resource/NOM/Paint/navigation,
+accepted icons and frozen betas unchanged. No second preview gizmo or pointer owner.
+
+Seven new actual-owner/math/projection tests cover touch/Pencil/mouse live surface
+drag, true boundaries versus fan diagonals, axis/sign/normal, oblique silhouette,
+visibility, perspective depth, second pointers, cancel/lost/Escape/pagehide cleanup,
+original UndoRedo/SaveOpen and actual Total Gizmo paths/hit proxies before release.
+The earlier1017 synthetic placement test now emits its real pointerup BEFORE centre
+input; all prior geometry/history/transform assertions retained. JSON SaveOpen
+compares canonical scalar records because JSON normalizes -0 to0; no codec change.
+Validation:62 focused checks PASS/0FAIL/0skip; syntax/whitespace clean. Full local
+run is incomplete (stopped producing output in unchanged paint-resource checks);
+not claimed PASS. Hosted full regression will be tracked separately. Native iPad
+tactile/visual acceptance not inferred. Publication pending.
+
+Reviewed1019 shell/recovery/comparison and TotalGizmo->pivot child cache closure;
+canonical release->face-layout->drawer pins updated. Other transform owners retain
+1017 bytes/pins. DEVICE1019: Pivot -> press/drag on face -> approach different edges,
+watch actual gizmo move/snap X or Z while greenY remains normal and model still.
+Release -> centre/Y manual turn still works -> Pivot finish -> Local transform;
+UndoRedo and SaveOpen sanity. Start on another face for a new normal. Next native
+feedback, then separately queued NOM texture/PBR retention. No new A/B test batch.
