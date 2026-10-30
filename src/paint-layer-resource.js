@@ -2,7 +2,7 @@ import {paintBudget,highResolutionPaint} from './paint-budget.js?v=0.36.18.936';
 // One colourPaint resource: opaque v1, raster layers v2, retained images v3.
 import {captureColourResource} from './paint-resource.js?v=898';
 import {upgradePaintLayerStack,flattenPaintLayerStack,paintLayerStackBytes} from './paint-layer-stack.js?v=0.36.18.938';
-import {encodeProjectBytes,decodeProjectBytes} from './project-glb-resources.js?v=0.36.18.1029';
+import {encodeProjectBytes,decodeProjectBytes} from './project-glb-resources.js?v=0.36.18.1030';
 const fields=['version','channel','width','height','colorSpace','rowOrder','binding','pixels'];
 const sourceFields=['version','mime','width','height','rowOrder','colourSpace','alpha','encoded','data'];
 function exact(v,keys){if(!v||typeof v!=='object'||Object.keys(v).some(k=>!keys.includes(k))||keys.some(k=>!Object.hasOwn(v,k)))throw Error('Unsupported layered colour fields');}

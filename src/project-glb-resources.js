@@ -1,4 +1,4 @@
-import {validateNomadResource} from './nomad-material-resource.js?v=0.36.18.1029';
+import {validateNomadResource} from './nomad-material-resource.js?v=0.36.18.1030';
 // Imported GLB resources and native UV-only envelopes; geometry/history keep their owners.
 const LIMIT=24*1024*1024;
 function json(value){return JSON.parse(JSON.stringify(value,(_key,v)=>{if(typeof v==='number'&&!Number.isFinite(v))throw Error('Invalid GLB resource number');if(ArrayBuffer.isView(v)||v instanceof ArrayBuffer)throw Error('Unsupported GLB resource binary channel');return v;}));}

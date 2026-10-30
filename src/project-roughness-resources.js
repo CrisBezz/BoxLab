@@ -1,4 +1,4 @@
-import {encodeRoughnessEntry,decodeRoughnessEntry,roughnessEntryBytes} from './roughness-resource.js?v=0.36.18.1029';
+import {encodeRoughnessEntry,decodeRoughnessEntry,roughnessEntryBytes} from './roughness-resource.js?v=0.36.18.1030';
 import {createScalarProjectPool,decodeScalarProjectPool} from './scalar-paint-pool.js?v=0.36.18.921';
 const codec={encode:encodeRoughnessEntry,decode:decodeRoughnessEntry,entryBytes:roughnessEntryBytes};
 export function createProjectRoughnessPool(){return createScalarProjectPool(codec,'Roughness');}

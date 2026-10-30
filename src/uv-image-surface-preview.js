@@ -1,5 +1,5 @@
 import {paintMaterialEnvironments} from './paint-material-environment.js?v=0.36.18.925';
-import {nomadColourSurfaceSource,nomadPBRSurfaceSources} from './nomad-material-resource.js?v=0.36.18.1029';
+import {nomadColourSurfaceSource,nomadPBRSurfaceSources} from './nomad-material-resource.js?v=0.36.18.1030';
 import * as THREE from 'three';
 import {importedUVImageChoices,decodeUVImage} from './uv-image-preview.js?v=0.36.18.1028';
 // Active Base inspection. Mixed materials require exact per-face import provenance.
@@ -57,7 +57,15 @@ export function createUVImageOverlay(body,mesh,payload,buildGeometry,hiddenMater
  function makeTexture(image,source,colour){
   const texture=new THREE.Texture(image);textures.push(texture);texture.flipY=false;texture.colorSpace=colour?THREE.SRGBColorSpace:THREE.NoColorSpace;
   texture.wrapS=wraps[source.sampler.wrapS??10497];texture.wrapT=wraps[source.sampler.wrapT??10497];
-  texture.magFilter=filters[source.sampler.magFilter??9729];texture.minFilter=filters[source.sampler.minFilter??9987];if(source.repeat)texture.repeat.fromArray(source.repeat);texture.needsUpdate=true;return texture;
+  texture.magFilter=filters[source.sampler.magFilter??9729];texture.minFilter=filters[source.sampler.minFilter??9987];if(source.repeat)texture.repeat.fromArray(source.repeat);
+  if(native){
+   // Three's automatic matrix rotates BEFORE nonuniform scaling. Native NOM
+   // rotates AFTER scaling, about UV zero; keep its exact per-map matrix.
+   const [sx,sy]=source.repeat,[ox,oy]=source.offset,c=Math.cos(source.rotation),s=Math.sin(source.rotation);
+   texture.offset.set(ox,oy);texture.rotation=source.rotation;texture.matrixAutoUpdate=false;
+   texture.matrix.set(c*sx,s*sy,ox,-s*sx,c*sy,oy,0,0,1);
+  }
+  texture.needsUpdate=true;return texture;
  }
  function dispose(){
   if(disposed)return;disposed=true;nativePreviews.delete(overlay);sourceGeometry.removeEventListener('dispose',dispose);body.remove(overlay);

@@ -38,19 +38,20 @@ export function nomadMaterialMaps(payload){
  return {nativeMaterial:payload.nomadMaterial,maps};
 }
 // Native Auto selects UV when UVs exist (Nomad manual/material#projection).
-// First preview supports repeat scaling, not uncertain offset/rotation conventions.
+// UV convention verified against stephomi/nomad-link set_mapping_transform:
+// top-left origin, radians, scale then clockwise rotation then offset.
 function nomadTextureSource(payload,slot,{opacity=false}={}){
  if(payload?.source!=='nomad')return null;
  const m=payload.nomadMaterial,t=m?.textures?.[slot],image=payload.images?.[t?.index],data=image?.data;
  if(!m||!t||!(data instanceof Uint8Array)||!data.length||data.length>8*1024*1024||!['auto','uv'].includes(t.projection??'auto')||(!opacity&&((m.material_type??'opaque')!=='opaque'||(m.opacity??1)!==1||(m.factorOpacity??1)!==1))||m.flip_culling===true)return null;
  const png=[137,80,78,71,13,10,26,10].every((v,i)=>data[i]===v),jpeg=data[0]===255&&data[1]===216&&data[2]===255;
  const mime=png?'image/png':jpeg?'image/jpeg':null;if(!mime||image.definition.type!==mime)return null;
- const scale=t.scale??[1,1],offset=t.offset??[0,0];
- if(!Array.isArray(scale)||scale.length!==2||!scale.every(v=>Number.isFinite(v)&&v!==0)||!Array.isArray(offset)||offset.length!==2||offset.some(v=>v!==0)||(t.rotation??0)!==0)return null;
+ const scale=t.scale??[1,1],offset=t.offset??[0,0],rotation=t.rotation??0;
+ if(!Array.isArray(scale)||scale.length!==2||!scale.every(v=>Number.isFinite(v)&&v!==0&&Number.isFinite(Math.fround(v)))||!Array.isArray(offset)||offset.length!==2||!offset.every(v=>Number.isFinite(v)&&Number.isFinite(Math.fround(v)))||!Number.isFinite(rotation))return null;
  const wraps={repeat:10497,mirror:33648,none:33071},filter={auto:9987,nearest:9728,linear:9729,mipmap:9987};
  const wrapS=wraps[t.wrapS??'repeat'],wrapT=wraps[t.wrapT??'repeat'],minFilter=filter[t.minFilter??'auto'];
  if(!wrapS||!wrapT||!minFilter||!['auto','nearest','linear'].includes(t.magFilter??'auto'))return null;
- return {choice:{imageIndex:t.index,data,mime},sampler:{wrapS,wrapT,minFilter,magFilter:t.magFilter==='nearest'?9728:9729},repeat:scale};
+ return {choice:{imageIndex:t.index,data,mime},sampler:{wrapS,wrapT,minFilter,magFilter:t.magFilter==='nearest'?9728:9729},repeat:[...scale],offset:[...offset],rotation};
 }
 export function nomadColourSurfaceSource(payload,{opacity=false}={}){
  const source=nomadTextureSource(payload,'color',{opacity});if(!source)return null;

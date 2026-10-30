@@ -1,3 +1,13 @@
+## .1030 — native UV texture transforms — 30 October 2026
+
+- [x] Explicit .1029 user PASS protects native colour alpha/opacity and earlier PBR/round trips.
+- [x] Existing resource/overlay owner: independent per-map offset/radians/scale; verified Blender-conjugate matrix, original UVs/bytes untouched.
+- [x] Four actual-owner tests: signed/nonuniform scale, both rotations, all six maps, colour spaces/alpha, malformed/late cleanup, unlit/UV Image, pooled+inline project/NOM round trips.
+- [x] 41 focused checks PASS/0FAIL/0skip; protected main/Multi/frozen and syntax/diff checks retained.
+- [x] Full local Node24.22.1: 3046 PASS/0FAIL/0skip/0cancel (214.23s); final canonical parent-pin checks 11 PASS after pin-only correction.
+- [ ] Publication verification pending.
+- [ ] DEVICE1030 import docs/samples/NOM_TEXTURE_TRANSFORM_1030.nom: original left, shifted middle, sideways/twice-repeated right; compare same file in Nomad. Studio/Solid/orbit, Move/UndoRedo, looks/back, SaveOpen.boxlab, NOMAD/Nomad. Accepted colour-alpha sample unchanged.
+
 ## .1029 — native colour-image alpha — 30 October 2026
 
 - [x]1028 PASS supersedes initial FAIL; accepted opacity/shadow/backface/PBR protected.
@@ -8,7 +18,7 @@
 - [x]35 focused PASS/0FAIL/0skip including4 new real-owner/RGBA/round-trip checks;
   original1028 refusal now checks invalid2 while explicit1 follows new capability.
 - [x]Full final local Node24.22.1:3042 PASS/0FAIL/0skip/0cancel (222.31s); no runtime/test edits after start.
-- [ ]DEVICE1029 supplied sample: left checker alpha ON,middle combined opacity,
+- [x]User .1029 PASS: supplied sample: left checker alpha ON,middle combined opacity,
   right same image alpha OFF solid; Studio/Solid/orbit,selectMoveUndoRedo,
   looks/back,SaveOpen.boxlab,NOMAD/Nomad; accepted1028/1027 samples unchanged.
 
