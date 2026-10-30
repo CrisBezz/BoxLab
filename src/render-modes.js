@@ -27,6 +27,7 @@ let studioKey=null;
 let studioKeyTarget=null;
 let originalBackground=null;
 let studioRefreshQueued=false;
+let undersideLight=null;
 const frontMaterialCache=new WeakMap();
 const FACEGROUP_VIEW_KEY='boxlab-facegroup-view-v1';
 function loadFacegroupView(){
@@ -104,6 +105,21 @@ function sourceMeshForBody(body){
   return body?.userData?.editableMesh||body?.userData?.sourceMesh||body?.userData?.mesh||null;
 }
 
+function syncUndersideLight(scene){
+  // Oppose the overhead key so full-orbit inspection keeps downward faces readable.
+  // Directional lights use position - target, independent of the model's location.
+  // No shadow map: the floor must not block this soft modelling fill.
+  if(!undersideLight||undersideLight.parent!==scene){
+    undersideLight=new THREE.DirectionalLight(0xdde7f2,1);
+    undersideLight.name='BoxLab Underside Fill';
+    undersideLight.position.set(-4,-7,-5);
+    undersideLight.castShadow=false;
+    scene.add(undersideLight);
+  }
+  undersideLight.visible=mode==='studio'||mode==='solid';
+  undersideLight.intensity=mode==='studio'?.95:1.6;
+}
+
 function ensureStudioRig(){
   const state=bridge(),scene=state?.scene;if(!scene||studioRig)return;
   originalBackground=scene.background?.clone?.()||new THREE.Color(0x111318);
@@ -144,6 +160,7 @@ function refreshStudio(){
 
 function syncStudio(){
   const state=bridge(),scene=state?.scene,renderer=state?.renderer;if(!scene||!renderer)return;
+  syncUndersideLight(scene);
   ensureStudioRig();const enabled=mode==='studio';if(studioRig)studioRig.visible=enabled;renderer.shadowMap.enabled=enabled;
   if(enabled){renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.shadowMap.autoUpdate=true;}
   if(state.baseHemisphere)state.baseHemisphere.intensity=enabled?.52:1.2;

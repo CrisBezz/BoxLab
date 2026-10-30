@@ -42,6 +42,6 @@ test('1022 Studio contact shadow stays hidden in grid/off through original polis
 test('1022 early button choice applies to late original floor/grid, and newly initialized render rig reuses presentation owner',()=>{
  const f=fixture(false);f.api.cycle();assert.equal(f.api.ground,'grid');f.ctx.__boxlabBridgeState={scene:f.scene};f.api.apply();assert.equal(f.floor.visible,false);assert.equal(f.grid.visible,true);
  const source=read('src/render-modes.js'),start=source.indexOf('function syncStudio(){'),end=source.indexOf('\nfunction applyMode(',start);
- Object.assign(f.ctx,{bridge:()=>({scene:f.scene,renderer:{shadowMap:{}}}),ensureStudioRig(){},studioRig:f.rig,studioFloor:f.floor,mode:'studio',refreshStudio(){},originalBackground:null});
+ Object.assign(f.ctx,{bridge:()=>({scene:f.scene,renderer:{shadowMap:{}}}),ensureStudioRig(){},syncUndersideLight(){},studioRig:f.rig,studioFloor:f.floor,mode:'studio',refreshStudio(){},originalBackground:null});
  f.floor.visible=true;vm.runInContext(source.slice(start,end)+'\nsyncStudio();',f.ctx);assert.equal(f.floor.visible,false);assert.equal(f.grid.visible,true);
 });

@@ -1,3 +1,14 @@
+## .1024 — underside inspection lighting — 30 October 2026
+
+- [x] User .1023 PASS protects grid/Pivot shortcut/selected-Face edge alignment.
+- [x] Existing render owner reuses one directional lower fill in Studio/Solid only;
+  original hemisphere/materials/KeyFillRim/floor controls unchanged; no extra shadow.
+- [x]46 focused PASS/0FAIL/0skip: actual six-normal illumination/mode/reuse/isolation,
+  original render/paint/floor/contact/release/cache/identity/comparison checks.
+- [ ] DEVICE1024 Studio underside readable with shape contrast; Solid underside
+  readable without shadows; look switches and floor/grid/off; moved model consistent.
+- [ ] Publication proof pending; no full-suite/browser/iPad PASS claimed.
+
 ## .1023 — Pivot/Face refinement and brighter grid — 30 October 2026
 
 - [x] User1022 PASS protects floor/grid/off and contact-shadow behavior; Object/Edge pivot-edge workflow reported good. Face acceptance remains pending.

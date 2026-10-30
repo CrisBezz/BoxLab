@@ -17441,3 +17441,40 @@ and World/Local shortcuts,exit restores original icons; Face select->Pivot->drag
 across face and to real edges,X/Z aligns and Y stays selected-face normal,model
 still. Include shared-edge start and rotated face; Object/Edge quick parity; finish,
 Local transform and UndoRedo. Next native Face feedback; NOM texture/PBR queued.
+
+## .1024 — readable underside lighting for Studio and Solid — 30 October 2026
+
+User explicitly PASSes .1023: protect stronger grid, Pivot-only shortcuts and
+selected-Face/shared-edge alignment. Baseline main7515be61/runtimeb45a3a9a.
+User requests readable underside under full360 orbit without excessive ambient,
+and suggests shadow-free Solid for modelling.
+
+Audit: existing Solid uses original Standard material, overhead key3.2 and
+hemisphere1.2 with dark ground colour; Studio adds three above-model directional
+lights. Original render-modes owner now adds ONE reusable shadow-free directional
+underside fill outside the Studio rig,opposing original base key (-4,-7,-5).
+Studio intensity .95; Solid1.6. Direction is independent of model position/scale.
+No increase to hemisphere intensity/ground colour or emissive material, no extra
+shadow map/renderer/frame callback/input owner. Original Studio default, floor,
+shadows, Key/Fill/Rim controls and Studio polish light-discovery remain unchanged.
+Solid retains shadowMap disabled. Fill hidden in every other look; repeated mode/
+body updates reuse it. Active/inactive/paint surfaces share existing scene lights.
+No geometry, selection, history, UV/Paint data, Pivot or navigation changes.
+
+46 focused checks PASS/0FAIL/0skip, including2 new actual-owner/real-Three tests:
+all six Solid principal normals receive directional energy, bottom/top direct
+strength ratio .5, original ambient unchanged, no added shadow, mode isolation,
+Studio original3 directional lights, reuse and model-resource preservation.
+Existing render/Facegroups/committed paint/floor-contact/release/identity/comparison
+checks pass; syntax/whitespace clean. Floor test's isolated syncStudio harness now
+stubs the new lighting helper only; all ground assertions retained. No browser/
+native iPad appearance or full-suite performance claim from these math/Node checks.
+
+Reviewed1024 direct render pin and shell markers,comparison migration retains1023
+ratings; canonical release->face-layout->drawer cache closure refreshed (import-only).
+Multi1.0 remains exact Beta6/pin1.0; frozen betas and all other runtime owners retained.
+Publication pending at this entry; exact commit/tree/Pages/live evidence to follow.
+DEVICE1024: Studio orbit below model, judge underside readability and shape contrast;
+VIEW->Solid repeat full orbit, shadow-free modelling; switch Studio/Solid/Facegroups
+and back, floor/grid/off sanity; move model/orbit and confirm consistent fill.
+Next native lighting-balance feedback; NOM texture/PBR retention separately queued.
