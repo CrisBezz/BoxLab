@@ -11,7 +11,7 @@
 - [x] Six new actual-owner checks;159 focused PASS; real two MAP TEST source files
   dispatcher->fit->SaveOpen->browser NOM->parse preserve image hash/settings/worldpositions.
 - [x] Final full local Node24.22.1:3022 PASS/0FAIL/0skip/0cancel (110.32s); syntax/diff clean.
-- [ ] Publication proof pending; no native visual/PBR PASS inferred.
+- [x] Runtimeb7507920/tree80fdac20 exactly tested;39 blobs verified; Pages41012329078 and hosted full41012329141 SUCCESS.18/27 live byte matches (9 proxy timeouts); browser shell/data/loader pins1025 verified. WebGL disabled in cloud browser; native visual/PBR PASS pending.
 - [ ] DEVICE1025 reimport original MAP TEST.nom; colour cube in Studio/Solid,5x tiling,
   orbit/select/Move; SaveOpen.boxlab texture; NOMAD open in Nomad; looks/UndoRedo/floor.
 

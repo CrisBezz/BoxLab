@@ -56,3 +56,16 @@ Native iPad/browser pixel appearance and Nomad reopening remain separate device 
 
 Final validation: full local Node24.22.1 suite3022 PASS/0FAIL/0skip/0cancel (110.32s),
 159 focused checks PASS; changed JavaScript syntax and whitespace clean.
+
+## Publication
+
+Published runtime b75079208f1b1fc3ca9546c8854c0ea8a954af6d; fetched origin/main tree
+80fdac209d1a9778c7a8650fe870b901c8fc2bf3 equals tested/uploaded tree exactly.
+All39 changed blobs verified before non-forced expected-main update. Pages
+41012329078 SUCCESS; hosted full regression41012329141 completed SUCCESS.
+18/27 fresh live file byte matches; remaining9 requests timed out at network proxy,
+not counted PASS. Live browser separately confirms title/data/visible1025 and all
+six render/import/export/codec-parent/release shell pins1025. Browser's WebGL is
+explicitly DISABLED,so no rendered startup/texture visual or native iPad PASS claim.
+Build1025 DEPLOYED / READY for native colour/round-trip testing. No runtime edits
+after final full3022PASS. Publication proof is documentation-only.

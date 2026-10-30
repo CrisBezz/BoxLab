@@ -43,7 +43,17 @@ No rendered-browser/native iPad or complete PBR/vertex-paint fidelity claim.
 Reviewed1025 resource/codec/paint/export/import/render/overlay parents and canonical
 release->face-layout->drawer/UV Lab closure; most parent diffs are import pins only.
 Accepted1024 actual light code,main/Multi1.0/frozen betas and geometry kernels remain.
-No new A/B test batch. Publication pending; exact proof follows before completion.
+No new A/B test batch.
+Published runtime b75079208f1b1fc3ca9546c8854c0ea8a954af6d; fetched origin/main tree
+80fdac209d1a9778c7a8650fe870b901c8fc2bf3 equals tested/uploaded tree exactly.
+All39 changed blobs verified before non-forced expected-main update. Pages
+41012329078 SUCCESS; hosted full regression41012329141 completed SUCCESS.
+18/27 fresh live file byte matches; remaining9 requests timed out at network proxy,
+not counted PASS. Live browser separately confirms title/data/visible1025 and all
+six render/import/export/codec-parent/release shell pins1025. Browser's WebGL is
+explicitly DISABLED,so no rendered startup/texture visual or native iPad PASS claim.
+Build1025 DEPLOYED / READY for native colour/round-trip testing. No runtime edits
+after final full3022PASS. Publication proof is documentation-only.
 DEVICE1025 reimport MAP TEST.nom in Studio/Solid; colour patterned cube visible with
 correct5x tiling,orbit/select/Move. SaveOpen.boxlab retains texture. Export NOMAD,
 open in Nomad and compare texture/tiling. Switch looks/UndoRedo;1024 underside and
