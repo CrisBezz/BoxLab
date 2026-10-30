@@ -2,7 +2,7 @@
 // Move the original canvas once; no second renderer, input owner or live profile swap.
 (() => {
  'use strict';
- const RELEASE='0.36.18.1027',KEY='boxlab.shell-comparison.v1',LIMIT=30;
+ const RELEASE='0.36.18.1028',KEY='boxlab.shell-comparison.v1',LIMIT=30;
  const url=new URL(window.location.href),choice=url.searchParams.get('shellTest');
  const active=choice==='current'||choice==='separated',mode=active?choice:'current';
  const doc=document,app=doc.querySelector('#app'),wrap=doc.querySelector('#viewportWrap'),canvas=doc.querySelector('#viewport');
@@ -24,7 +24,7 @@
   const saved=window.localStorage.getItem(KEY);
   if(saved&&saved.length<2000000){
    const data=JSON.parse(saved);
-   if(data.version===1&&[RELEASE,'0.36.18.1006','0.36.18.1007','0.36.18.1008','0.36.18.1009','0.36.18.1010','0.36.18.1011','0.36.18.1012','0.36.18.1013','0.36.18.1014','0.36.18.1015','0.36.18.1016','0.36.18.1017','0.36.18.1018','0.36.18.1019','0.36.18.1020','0.36.18.1021','0.36.18.1022','0.36.18.1023','0.36.18.1024','0.36.18.1025','0.36.18.1026'].includes(data.release)&&Array.isArray(data.runs))
+   if(data.version===1&&[RELEASE,'0.36.18.1006','0.36.18.1007','0.36.18.1008','0.36.18.1009','0.36.18.1010','0.36.18.1011','0.36.18.1012','0.36.18.1013','0.36.18.1014','0.36.18.1015','0.36.18.1016','0.36.18.1017','0.36.18.1018','0.36.18.1019','0.36.18.1020','0.36.18.1021','0.36.18.1022','0.36.18.1023','0.36.18.1024','0.36.18.1025','0.36.18.1026','0.36.18.1027'].includes(data.release)&&Array.isArray(data.runs))
     log.runs=data.runs.filter(r=>r&&['current','separated'].includes(r.mode)&&typeof r.id==='string'&&r.ratings&&typeof r.ratings==='object').slice(-LIMIT).map(r=>({...r,release:r.release||data.release}));
   }
  }catch{storageOK=false;}
@@ -57,10 +57,10 @@
  function el(tag,text){const n=doc.createElement(tag);if(text!==undefined)n.textContent=text;return n;}
  function button(text,action){const b=el('button',text);b.type='button';b.addEventListener('click',action);return b;}
  const header=el('div');header.className='shell-test-header';
- const title=el('strong',active?(mode==='current'?'A · Current · .1027':'B · Separated · .1027'):'Screen comparison · .1027');
+ const title=el('strong',active?(mode==='current'?'A · Current · .1028':'B · Separated · .1028'):'Screen comparison · .1028');
  const body=el('div');body.className='shell-test-body';
  const collapse=button('Collapse',()=>{body.hidden=!body.hidden;collapse.textContent=body.hidden?'Test list':'Collapse';});
- const launcher=button('TEST LIST · .1027',showPanel);launcher.id='shellTestReopen';launcher.hidden=true;
+ const launcher=button('TEST LIST · .1028',showPanel);launcher.id='shellTestReopen';launcher.hidden=true;
  launcher.style.cssText='display:none;position:fixed;left:8px;top:50dvh;z-index:100003;min-height:40px;';
  const hide=button('Hide list',()=>{panel.hidden=true;launcher.hidden=false;launcher.style.display='block';stopDock();});
  header.append(title,collapse,hide);panel.append(header,body);
@@ -80,7 +80,7 @@
  window.addEventListener('pageshow',()=>{if(!panel.hidden)watchDock();});
  body.append(el('p','Stay in this browser throughout each run. Save your real project first; use the default cube. A and B use the same tools, renderer and resolution setting. Keep orientation and resolution unchanged.'));
  body.append(el('p',active?'Record what you SEE. A FAIL saves a layout snapshot without refreshing the display. Collapse this list after rating startup if it covers tools.':'Start A below, then follow this list after the reload. The list opens automatically on every test load.'));
- body.append(el('p','Build .1027 checks: Import NOM_EMISSIVE_1027.nom (docs/samples). In Studio/Solid the left cube emits blue light from its surface; orbit underneath and compare the non-emissive controls. Switch looks, Save/Open .boxlab, then export NOMAD and reopen in Nomad. No new A/B run is required.'));
+ body.append(el('p','Build .1028 checks: Import NOM_OPACITY_1028.nom (docs/samples). In Studio/Solid the left cube has checker transparency, the middle cube is 35% opaque and the right cube remains solid. Orbit and compare. Switch looks, Save/Open .boxlab, then export NOMAD and reopen in Nomad. No new A/B run is required.'));
  const rows=[];
  for(const [key,label,instruction]of steps){
   const row=el('div');row.className='shell-test-step';row.append(el('strong',label),el('p',instruction));
@@ -124,7 +124,7 @@
  body.append(el('small','This is a structural comparison, not a confirmed screen repair. Results stay in this browser (last 30 loads); use Copy results after testing.'));
  function update(){
   for(const r of rows)r.button.setAttribute('aria-pressed',String(run?.ratings[r.key]===r.result));
-  const lines=['.1027 · '+(active?(mode==='current'?'A current':'B separated'):'not started')];
+  const lines=['.1028 · '+(active?(mode==='current'?'A current':'B separated'):'not started')];
   for(const profile of ['current','separated']){
    const runs=log.runs.filter(r=>r.mode===profile),complete=runs.filter(r=>steps.every(([k])=>['pass','fail'].includes(r.ratings[k]))).length;
    const failed=runs.filter(r=>r.hadFailure||steps.some(([k])=>r.ratings[k]==='fail')).length;

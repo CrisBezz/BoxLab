@@ -34,7 +34,7 @@ function updateStudioScene(){
     const kind=object?.userData?.kind;
     if(!object?.isMesh||!object.visible||(kind!=='body'&&kind!=='boxlab-inactive-body'))return;
     bounds.expandByObject(object);
-    object.castShadow=true;
+    object.castShadow=!object.userData.boxlabNativeOpacityOwner;
     object.receiveShadow=true;
     found=true;
   });

@@ -167,9 +167,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1027",
+      "url": "./src/drawer-ui.js?v=0.36.18.1028",
       "target": "src/drawer-ui.js",
-      "sha256": "a417bf2879dd114fdf4e3afaeee4c8ff7c04de52c00e95ac4085c492ff221f29"
+      "sha256": "3f8264e26f8b7580ca666fb0dec93228e1d744ce6d93db4c6f6d4f85f6acc983"
     },
     {
       "owner": "index.html",
@@ -210,9 +210,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/export-as-panel.js?v=0.36.18.1027",
+      "url": "./src/export-as-panel.js?v=0.36.18.1028",
       "target": "src/export-as-panel.js",
-      "sha256": "b1765ed745763127f0da4d1c6a2c17cc44dd4c848e01361f6854383a244693b6",
+      "sha256": "40babbf3358b0b8f4459d56846c725fab2eda616de18c8a6e5f22cc0c77bb6a8",
       "sourceVersion": "0.36.18.892"
     },
     {
@@ -265,9 +265,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/import-mesh.js?v=0.36.18.1027",
+      "url": "./src/import-mesh.js?v=0.36.18.1028",
       "target": "src/import-mesh.js",
-      "sha256": "8751a8bbd13734caa45520892f726f66f85d9acd9dcb7d52b08a99f3c9b5f129",
+      "sha256": "8e0836f25588e23192530fbac673d155e55203866dc4baae1c2e175b637da2d7",
       "sourceVersion": "0.36.18.882"
     },
     {
@@ -310,9 +310,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/mesh-health.js?v=0.36.18.1026",
+      "url": "./src/mesh-health.js?v=0.36.18.1028",
       "target": "src/mesh-health.js",
-      "sha256": "9170a0beb2e503f1a63eff213333255fa47ab51fa79f8804b4783d256c753c85",
+      "sha256": "5d4c549ac0a32de0a2fc1d1baff81fd6bac1c9b1ac004af704f4d7026621982f",
       "sourceVersion": "0.36.18.880"
     },
     {
@@ -335,9 +335,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/object-management.js?v=0.36.18.1027",
+      "url": "./src/object-management.js?v=0.36.18.1028",
       "target": "src/object-management.js",
-      "sha256": "e22d3672249d7225334ae298d329c3f228e5104739babbd392a098df615ded90"
+      "sha256": "12b27589d2ef343d1251fb4014027bc186b5a68b8d917e99c2a6a7409462dcbc"
     },
     {
       "owner": "index.html",
@@ -378,21 +378,21 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.1027",
+      "url": "./src/release-bootstrap.js?v=0.36.18.1028",
       "target": "src/release-bootstrap.js",
       "sha256": "fe3e41b43e5df07fb5252936bff4e2a7c4f47fcb38f89b2cb6204fc5712e1698"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1027",
+      "url": "./src/release-version.js?v=0.36.18.1028",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
     {
       "owner": "index.html",
-      "url": "./src/render-modes.js?v=0.36.18.1027",
+      "url": "./src/render-modes.js?v=0.36.18.1028",
       "target": "src/render-modes.js",
-      "sha256": "e71879390e621b423adb64f6d1545f99195c5d6467ee8a642ca0ca181f51e387"
+      "sha256": "44630c95543965c9ffaef7311ae813c789ce13e225f68123d49f5b1b329d8987"
     },
     {
       "owner": "index.html",
@@ -876,9 +876,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1027",
+      "url": "./face-workflow-layout.js?v=0.36.18.1028",
       "target": "src/face-workflow-layout.js",
-      "sha256": "af13a3fae23e5624c543cab051cf98b34451d44346fdd873a4040d4935ab91b3"
+      "sha256": "8ef945e6f61a90e2c8e120ef90d03ceb5ec2957d858bdb6ab49b60464529c040"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -931,9 +931,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./object-management.js?v=0.36.18.1027",
+      "url": "./object-management.js?v=0.36.18.1028",
       "target": "src/object-management.js",
-      "sha256": "e22d3672249d7225334ae298d329c3f228e5104739babbd392a098df615ded90"
+      "sha256": "12b27589d2ef343d1251fb4014027bc186b5a68b8d917e99c2a6a7409462dcbc"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1153,9 +1153,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./studio-scene-fix.js?v=0.36.18.197",
+      "url": "./studio-scene-fix.js?v=0.36.18.1028",
       "target": "src/studio-scene-fix.js",
-      "sha256": "199fa038c3d854bf50dd6bb0b09f3a2683f3b2062581c254dbff1ff689564c6f"
+      "sha256": "2fa6d7ae0f824532fccf4a78758e1f823d7c99cd6248b98889e592a317976481"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1189,9 +1189,9 @@
     },
     {
       "owner": "src/export-as-panel.js",
-      "url": "./nomad-packed-maps.js?v=0.36.18.1027",
+      "url": "./nomad-packed-maps.js?v=0.36.18.1028",
       "target": "src/nomad-packed-maps.js",
-      "sha256": "016c20d069704c7ecb1080dd2acd92d6342603eae311255011294679d5baa989"
+      "sha256": "7ec613344d6dbac662a7072cfd6611c94ade0c4f117083c5356cc1dfc52a90f1"
     },
     {
       "owner": "src/export-as-panel.js",
@@ -1373,7 +1373,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1027",
+      "url": "./release-version.js?v=0.36.18.1028",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -2306,9 +2306,9 @@
     },
     {
       "owner": "src/object-management.js",
-      "url": "./boxlab-project-codec.js?v=0.36.18.1027",
+      "url": "./boxlab-project-codec.js?v=0.36.18.1028",
       "target": "src/boxlab-project-codec.js",
-      "sha256": "17c6fe1031d6cdda7b67f142fd1b8e7660ef031e7bba2249aea1ae31054b199f"
+      "sha256": "4db79e25582e5506af396096fb518b221d2608912123b973a902b9905e9fdfa9"
     },
     {
       "owner": "src/linear-array.js",
@@ -2372,9 +2372,9 @@
     },
     {
       "owner": "src/boxlab-project-codec.js",
-      "url": "./project-glb-resources.js?v=0.36.18.1027",
+      "url": "./project-glb-resources.js?v=0.36.18.1028",
       "target": "src/project-glb-resources.js",
-      "sha256": "9fcff523895d47daa0cd168268843ed6b4dbaaa8d1dbd27fc91377a16f7cc6ef"
+      "sha256": "4f689d0bd0191780980ec2e7a82adc57c60db2bd8fb954361a85ab1a573c6936"
     },
     {
       "owner": "src/mesh-health.js",
@@ -2396,9 +2396,9 @@
     },
     {
       "owner": "src/mesh-health.js",
-      "url": "./uv-workspace.js?v=0.36.18.1026",
+      "url": "./uv-workspace.js?v=0.36.18.1028",
       "target": "src/uv-workspace.js",
-      "sha256": "c574c041b33d89c22886f4716004303131f923f51ecd71a7160033e0a8477506"
+      "sha256": "0e5155e64a399084621fea31d14fcdb54ce51df3b09ebd8718e30a91769166ab"
     },
     {
       "owner": "src/uv-workspace.js",
@@ -2420,51 +2420,51 @@
     },
     {
       "owner": "src/uv-workspace.js",
-      "url": "./uv-image-preview.js?v=0.36.18.1026",
+      "url": "./uv-image-preview.js?v=0.36.18.1028",
       "target": "src/uv-image-preview.js",
-      "sha256": "684540026d4b0a9d7cdd12864a21eb65e2bdec853f004708fa35cebb575f9546"
+      "sha256": "55442900466a64f08078b429212efca22b2838519ca8fb5707293f33daa4c149"
     },
     {
       "owner": "src/render-modes.js",
-      "url": "./uv-image-surface-preview.js?v=0.36.18.1027",
+      "url": "./uv-image-surface-preview.js?v=0.36.18.1028",
       "target": "src/uv-image-surface-preview.js",
-      "sha256": "068054551892402c925c71c54d13ffd4f5e1310eff97dfa6c2e168972f8a64c8"
+      "sha256": "164decd414faaf46a01c1d72082d3102f032dbd57e340c0c9549d898cb47c21c"
     },
     {
       "owner": "src/uv-image-surface-preview.js",
-      "url": "./uv-image-preview.js?v=0.36.18.1026",
+      "url": "./uv-image-preview.js?v=0.36.18.1028",
       "target": "src/uv-image-preview.js",
-      "sha256": "684540026d4b0a9d7cdd12864a21eb65e2bdec853f004708fa35cebb575f9546"
+      "sha256": "55442900466a64f08078b429212efca22b2838519ca8fb5707293f33daa4c149"
     },
     {
       "owner": "src/nomad-export-core.js",
-      "url": "./uv-image-surface-preview.js?v=0.36.18.1027",
+      "url": "./uv-image-surface-preview.js?v=0.36.18.1028",
       "target": "src/uv-image-surface-preview.js",
-      "sha256": "068054551892402c925c71c54d13ffd4f5e1310eff97dfa6c2e168972f8a64c8"
+      "sha256": "164decd414faaf46a01c1d72082d3102f032dbd57e340c0c9549d898cb47c21c"
     },
     {
       "owner": "src/nomad-export-core.js",
-      "url": "./uv-image-preview.js?v=0.36.18.1026",
+      "url": "./uv-image-preview.js?v=0.36.18.1028",
       "target": "src/uv-image-preview.js",
-      "sha256": "684540026d4b0a9d7cdd12864a21eb65e2bdec853f004708fa35cebb575f9546"
+      "sha256": "55442900466a64f08078b429212efca22b2838519ca8fb5707293f33daa4c149"
     },
     {
       "owner": "src/nomad-packed-maps.js",
-      "url": "./nomad-export-core.js?v=0.36.18.1027",
+      "url": "./nomad-export-core.js?v=0.36.18.1028",
       "target": "src/nomad-export-core.js",
-      "sha256": "e0c4eef4f111b7aa899e86b8b8ab285e54292f9a22e659d67a204e033ceea9e0"
+      "sha256": "47c8b98373c8269a81e1671e3ce865619509805e4f35322245569dae36dc0edf"
     },
     {
       "owner": "src/nomad-export-core.js",
-      "url": "./nomad-displacement-map.js?v=0.36.18.1026",
+      "url": "./nomad-displacement-map.js?v=0.36.18.1028",
       "target": "src/nomad-displacement-map.js",
-      "sha256": "6a63d90757871d58f27cba046830468388a212680ff8a2d92532b344f5584f39"
+      "sha256": "eed87012596573385fc13b03f026db03c98c9e9d617280f0d10da731068fdf83"
     },
     {
       "owner": "src/nomad-displacement-map.js",
-      "url": "./uv-image-preview.js?v=0.36.18.1026",
+      "url": "./uv-image-preview.js?v=0.36.18.1028",
       "target": "src/uv-image-preview.js",
-      "sha256": "684540026d4b0a9d7cdd12864a21eb65e2bdec853f004708fa35cebb575f9546"
+      "sha256": "55442900466a64f08078b429212efca22b2838519ca8fb5707293f33daa4c149"
     },
     {
       "owner": "src/nomad-packed-maps.js",
@@ -2475,20 +2475,20 @@
     {
       "owner": "src/boxlab-project-codec.js",
       "target": "src/project-paint-resources.js",
-      "url": "./project-paint-resources.js?v=0.36.18.1027",
-      "sha256": "6b3ac48fdd6e0bd78c5541fe3f0feb9eab0051d8001b11b667dd58c020117b57"
+      "url": "./project-paint-resources.js?v=0.36.18.1028",
+      "sha256": "9f644f8419be1e616b2003e89bbde804e6ca7350f15c1c3f1c6e0b91a45b6980"
     },
     {
       "owner": "index.html",
       "target": "src/viewport-paint.js",
-      "url": "./src/viewport-paint.js?v=0.36.18.1027",
-      "sha256": "9bec7ff2f9cbc3dd7748cf5d53cd96e763104619f28f2b54393eaf6a623a663b"
+      "url": "./src/viewport-paint.js?v=0.36.18.1028",
+      "sha256": "0a7e7810613ea6b32cf761c97a9ecf3073a96b9f4edeb3871d657f979fe8c8d7"
     },
     {
       "owner": "src/viewport-paint.js",
       "target": "src/viewport-paint-core.js",
-      "url": "./viewport-paint-core.js?v=0.36.18.1027",
-      "sha256": "115c448fe5a6760ea26568062ed23361e26c091bade881a662035a8c4399fb3e"
+      "url": "./viewport-paint-core.js?v=0.36.18.1028",
+      "sha256": "221f2dbd7073e99bf91c0e9df69dfab607835b8e714bff4e5d8baf571896e255"
     },
     {
       "owner": "src/viewport-paint.js",
@@ -2517,8 +2517,8 @@
     {
       "owner": "src/viewport-paint-core.js",
       "target": "src/paint-target.js",
-      "url": "./paint-target.js?v=0.36.18.1027",
-      "sha256": "55dd2371c87992b6533c8f9cc85e373eee7771602831098ad78cd3dca9ef2dff"
+      "url": "./paint-target.js?v=0.36.18.1028",
+      "sha256": "69c40c398c88bb258a8b338e10ac2ac1faf9003dd08acf8b0587f740e9caeb71"
     },
     {
       "owner": "src/paint-target.js",
@@ -2529,38 +2529,38 @@
     {
       "owner": "src/paint-target.js",
       "target": "src/boxlab-project-codec.js",
-      "url": "./boxlab-project-codec.js?v=0.36.18.1027",
-      "sha256": "17c6fe1031d6cdda7b67f142fd1b8e7660ef031e7bba2249aea1ae31054b199f"
+      "url": "./boxlab-project-codec.js?v=0.36.18.1028",
+      "sha256": "4db79e25582e5506af396096fb518b221d2608912123b973a902b9905e9fdfa9"
     },
     {
       "owner": "src/render-modes.js",
       "target": "src/paint-target.js",
-      "url": "./paint-target.js?v=0.36.18.1027",
-      "sha256": "55dd2371c87992b6533c8f9cc85e373eee7771602831098ad78cd3dca9ef2dff"
+      "url": "./paint-target.js?v=0.36.18.1028",
+      "sha256": "69c40c398c88bb258a8b338e10ac2ac1faf9003dd08acf8b0587f740e9caeb71"
     },
     {
       "owner": "src/export-as-panel.js",
       "target": "src/paint-export.js",
-      "url": "./paint-export.js?v=0.36.18.1027",
-      "sha256": "572ab294da1b9f34490cb9370dcad42fb865ba60009ffc8be8ad8ad32e18dc20"
+      "url": "./paint-export.js?v=0.36.18.1028",
+      "sha256": "f004a8b1baf33c384f6870e0587f8bbdd92c201fe8ec9d3ce1e80fdcbc52bf32"
     },
     {
       "owner": "src/nomad-packed-maps.js",
       "target": "src/paint-export.js",
-      "url": "./paint-export.js?v=0.36.18.1027",
-      "sha256": "572ab294da1b9f34490cb9370dcad42fb865ba60009ffc8be8ad8ad32e18dc20"
+      "url": "./paint-export.js?v=0.36.18.1028",
+      "sha256": "f004a8b1baf33c384f6870e0587f8bbdd92c201fe8ec9d3ce1e80fdcbc52bf32"
     },
     {
       "owner": "src/nomad-export-core.js",
       "target": "src/paint-export.js",
-      "url": "./paint-export.js?v=0.36.18.1027",
-      "sha256": "572ab294da1b9f34490cb9370dcad42fb865ba60009ffc8be8ad8ad32e18dc20"
+      "url": "./paint-export.js?v=0.36.18.1028",
+      "sha256": "f004a8b1baf33c384f6870e0587f8bbdd92c201fe8ec9d3ce1e80fdcbc52bf32"
     },
     {
       "owner": "src/paint-export.js",
       "target": "src/paint-target.js",
-      "url": "./paint-target.js?v=0.36.18.1027",
-      "sha256": "55dd2371c87992b6533c8f9cc85e373eee7771602831098ad78cd3dca9ef2dff"
+      "url": "./paint-target.js?v=0.36.18.1028",
+      "sha256": "69c40c398c88bb258a8b338e10ac2ac1faf9003dd08acf8b0587f740e9caeb71"
     },
     {
       "owner": "src/paint-export.js",
@@ -2582,15 +2582,15 @@
     },
     {
       "owner": "src/project-paint-resources.js",
-      "url": "./paint-layer-resource.js?v=0.36.18.1027",
+      "url": "./paint-layer-resource.js?v=0.36.18.1028",
       "target": "src/paint-layer-resource.js",
-      "sha256": "9ede0c551c9512fbfb6f192bd30f046aa0666f55e70fa1b10e80911e2c55caf9"
+      "sha256": "c7fb363dd7a9de8ad1ccb17f2b836e530a545cee99b13e2e6705bd1fce397677"
     },
     {
       "owner": "src/paint-export.js",
-      "url": "./paint-layer-resource.js?v=0.36.18.1027",
+      "url": "./paint-layer-resource.js?v=0.36.18.1028",
       "target": "src/paint-layer-resource.js",
-      "sha256": "9ede0c551c9512fbfb6f192bd30f046aa0666f55e70fa1b10e80911e2c55caf9"
+      "sha256": "c7fb363dd7a9de8ad1ccb17f2b836e530a545cee99b13e2e6705bd1fce397677"
     },
     {
       "owner": "src/paint-layer-resource.js",
@@ -2606,9 +2606,9 @@
     },
     {
       "owner": "src/paint-layer-resource.js",
-      "url": "./project-glb-resources.js?v=0.36.18.1027",
+      "url": "./project-glb-resources.js?v=0.36.18.1028",
       "target": "src/project-glb-resources.js",
-      "sha256": "9fcff523895d47daa0cd168268843ed6b4dbaaa8d1dbd27fc91377a16f7cc6ef"
+      "sha256": "4f689d0bd0191780980ec2e7a82adc57c60db2bd8fb954361a85ab1a573c6936"
     },
     {
       "owner": "src/viewport-paint-core.js",
@@ -2618,15 +2618,15 @@
     },
     {
       "owner": "src/viewport-paint-core.js",
-      "url": "./paint-layer-resource.js?v=0.36.18.1027",
+      "url": "./paint-layer-resource.js?v=0.36.18.1028",
       "target": "src/paint-layer-resource.js",
-      "sha256": "9ede0c551c9512fbfb6f192bd30f046aa0666f55e70fa1b10e80911e2c55caf9"
+      "sha256": "c7fb363dd7a9de8ad1ccb17f2b836e530a545cee99b13e2e6705bd1fce397677"
     },
     {
       "owner": "src/viewport-paint-core.js",
-      "url": "./project-paint-resources.js?v=0.36.18.1027",
+      "url": "./project-paint-resources.js?v=0.36.18.1028",
       "target": "src/project-paint-resources.js",
-      "sha256": "6b3ac48fdd6e0bd78c5541fe3f0feb9eab0051d8001b11b667dd58c020117b57"
+      "sha256": "9f644f8419be1e616b2003e89bbde804e6ca7350f15c1c3f1c6e0b91a45b6980"
     },
     {
       "owner": "src/viewport-paint.js",
@@ -2660,21 +2660,21 @@
     },
     {
       "owner": "src/project-paint-resources.js",
-      "url": "./project-paint-byte-pool.js?v=0.36.18.1027",
+      "url": "./project-paint-byte-pool.js?v=0.36.18.1028",
       "target": "src/project-paint-byte-pool.js",
-      "sha256": "aaea22474b9da9dceb11a9078eb38afa67c75da9c6ed4006521fa00bc402033c"
+      "sha256": "4183d2717903f8160a387b42efdf86f51a31391963cb9f6b101a847e580b28d8"
     },
     {
       "owner": "src/project-paint-byte-pool.js",
-      "url": "./project-glb-resources.js?v=0.36.18.1027",
+      "url": "./project-glb-resources.js?v=0.36.18.1028",
       "target": "src/project-glb-resources.js",
-      "sha256": "9fcff523895d47daa0cd168268843ed6b4dbaaa8d1dbd27fc91377a16f7cc6ef"
+      "sha256": "4f689d0bd0191780980ec2e7a82adc57c60db2bd8fb954361a85ab1a573c6936"
     },
     {
       "owner": "src/project-paint-byte-pool.js",
-      "url": "./paint-layer-resource.js?v=0.36.18.1027",
+      "url": "./paint-layer-resource.js?v=0.36.18.1028",
       "target": "src/paint-layer-resource.js",
-      "sha256": "9ede0c551c9512fbfb6f192bd30f046aa0666f55e70fa1b10e80911e2c55caf9"
+      "sha256": "c7fb363dd7a9de8ad1ccb17f2b836e530a545cee99b13e2e6705bd1fce397677"
     },
     {
       "owner": "src/paint-image-project.js",
@@ -2762,15 +2762,15 @@
     },
     {
       "owner": "evaluations/uv-paint/lab.js",
-      "url": "./paint-session.js?v=0.36.18.1027",
+      "url": "./paint-session.js?v=0.36.18.1028",
       "target": "evaluations/uv-paint/paint-session.js",
-      "sha256": "a6e8ef3f80bdd1660f86d2fc01136158b7fa6be3a0ac9f5a8a6c9afbbbae1b40"
+      "sha256": "d4f1de4d134d966f4651ab47752bf0242822c32dcda894fb329f4d0275a1a2ae"
     },
     {
       "owner": "evaluations/uv-paint/lab.js",
-      "url": "../../src/export-as-panel.js?v=0.36.18.1027",
+      "url": "../../src/export-as-panel.js?v=0.36.18.1028",
       "target": "src/export-as-panel.js",
-      "sha256": "b1765ed745763127f0da4d1c6a2c17cc44dd4c848e01361f6854383a244693b6"
+      "sha256": "40babbf3358b0b8f4459d56846c725fab2eda616de18c8a6e5f22cc0c77bb6a8"
     },
     {
       "owner": "src/paint-layer-stack.js",
@@ -2786,9 +2786,9 @@
     },
     {
       "owner": "evaluations/uv-paint/paint-session.js",
-      "url": "../../src/boxlab-project-codec.js?v=0.36.18.1027",
+      "url": "../../src/boxlab-project-codec.js?v=0.36.18.1028",
       "target": "src/boxlab-project-codec.js",
-      "sha256": "17c6fe1031d6cdda7b67f142fd1b8e7660ef031e7bba2249aea1ae31054b199f"
+      "sha256": "4db79e25582e5506af396096fb518b221d2608912123b973a902b9905e9fdfa9"
     },
     {
       "owner": "evaluations/uv-paint/paint-session.js",
@@ -2804,9 +2804,9 @@
     },
     {
       "owner": "evaluations/uv-paint/index.html",
-      "url": "./lab.js?v=0.36.18.1027",
+      "url": "./lab.js?v=0.36.18.1028",
       "target": "evaluations/uv-paint/lab.js",
-      "sha256": "147538f12e14160a5e6a54a045716aa336395d01461d717f6a61c61d765aa018"
+      "sha256": "b651b0452d57e0028d0ed2a70e90e48fe1bae750c3b4fd2747987b85abac464c"
     },
     {
       "owner": "index.html",
@@ -2864,57 +2864,57 @@
     },
     {
       "owner": "src/boxlab-project-codec.js",
-      "url": "./project-roughness-resources.js?v=0.36.18.1027",
+      "url": "./project-roughness-resources.js?v=0.36.18.1028",
       "target": "src/project-roughness-resources.js",
-      "sha256": "581a00410e433a3a7017194936251142b78dd27955bc28e88afa785ab9295084"
+      "sha256": "bfc62319d5ff00786eec0b00f8524a7effaf9157ec7348b264c90946f78b710c"
     },
     {
       "owner": "src/project-roughness-resources.js",
-      "url": "./roughness-resource.js?v=0.36.18.1027",
+      "url": "./roughness-resource.js?v=0.36.18.1028",
       "target": "src/roughness-resource.js",
-      "sha256": "63c8ec35f52f92490db7f1875f0c07fa56c08c948fccfe99e79d91b2bdfcf038"
+      "sha256": "f77aceeb3283a1104728b95350ca934140a10464d37cd70a68444f4f6eb0a707"
     },
     {
       "owner": "src/paint-export.js",
       "target": "src/roughness-resource.js",
-      "url": "./roughness-resource.js?v=0.36.18.1027",
-      "sha256": "63c8ec35f52f92490db7f1875f0c07fa56c08c948fccfe99e79d91b2bdfcf038"
+      "url": "./roughness-resource.js?v=0.36.18.1028",
+      "sha256": "f77aceeb3283a1104728b95350ca934140a10464d37cd70a68444f4f6eb0a707"
     },
     {
       "owner": "src/viewport-paint-core.js",
-      "url": "./roughness-resource.js?v=0.36.18.1027",
+      "url": "./roughness-resource.js?v=0.36.18.1028",
       "target": "src/roughness-resource.js",
-      "sha256": "63c8ec35f52f92490db7f1875f0c07fa56c08c948fccfe99e79d91b2bdfcf038"
+      "sha256": "f77aceeb3283a1104728b95350ca934140a10464d37cd70a68444f4f6eb0a707"
     },
     {
       "owner": "src/viewport-paint-core.js",
-      "url": "./project-roughness-resources.js?v=0.36.18.1027",
+      "url": "./project-roughness-resources.js?v=0.36.18.1028",
       "target": "src/project-roughness-resources.js",
-      "sha256": "581a00410e433a3a7017194936251142b78dd27955bc28e88afa785ab9295084"
+      "sha256": "bfc62319d5ff00786eec0b00f8524a7effaf9157ec7348b264c90946f78b710c"
     },
     {
       "owner": "src/paint-target.js",
-      "url": "./roughness-resource.js?v=0.36.18.1027",
+      "url": "./roughness-resource.js?v=0.36.18.1028",
       "target": "src/roughness-resource.js",
-      "sha256": "63c8ec35f52f92490db7f1875f0c07fa56c08c948fccfe99e79d91b2bdfcf038"
+      "sha256": "f77aceeb3283a1104728b95350ca934140a10464d37cd70a68444f4f6eb0a707"
     },
     {
       "owner": "src/roughness-resource.js",
-      "url": "./scalar-paint-resource.js?v=0.36.18.1027",
+      "url": "./scalar-paint-resource.js?v=0.36.18.1028",
       "target": "src/scalar-paint-resource.js",
-      "sha256": "6af611d61cb3a86692241bdec121eac87602ac2d256ae8ff15f7dff3d9042b5a"
+      "sha256": "6074a5bc230fb7c6ee5c24bf2656bba85a5b4cee30bbe380e1bca9d1f541253d"
     },
     {
       "owner": "src/metalness-resource.js",
-      "url": "./scalar-paint-resource.js?v=0.36.18.1027",
+      "url": "./scalar-paint-resource.js?v=0.36.18.1028",
       "target": "src/scalar-paint-resource.js",
-      "sha256": "6af611d61cb3a86692241bdec121eac87602ac2d256ae8ff15f7dff3d9042b5a"
+      "sha256": "6074a5bc230fb7c6ee5c24bf2656bba85a5b4cee30bbe380e1bca9d1f541253d"
     },
     {
       "owner": "src/scalar-paint-resource.js",
-      "url": "./project-glb-resources.js?v=0.36.18.1027",
+      "url": "./project-glb-resources.js?v=0.36.18.1028",
       "target": "src/project-glb-resources.js",
-      "sha256": "9fcff523895d47daa0cd168268843ed6b4dbaaa8d1dbd27fc91377a16f7cc6ef"
+      "sha256": "4f689d0bd0191780980ec2e7a82adc57c60db2bd8fb954361a85ab1a573c6936"
     },
     {
       "owner": "src/project-roughness-resources.js",
@@ -2930,39 +2930,39 @@
     },
     {
       "owner": "src/project-metalness-resources.js",
-      "url": "./metalness-resource.js?v=0.36.18.1027",
+      "url": "./metalness-resource.js?v=0.36.18.1028",
       "target": "src/metalness-resource.js",
-      "sha256": "947861cfa4f742b3144f4913fc51b47830470524ac78ed29d158551741468c70"
+      "sha256": "e0ddc8e9810a7f714588692ed530b8fffea7757a4e4d4bbaf9466244cc98c604"
     },
     {
       "owner": "src/boxlab-project-codec.js",
-      "url": "./project-metalness-resources.js?v=0.36.18.1027",
+      "url": "./project-metalness-resources.js?v=0.36.18.1028",
       "target": "src/project-metalness-resources.js",
-      "sha256": "e52ad0769f5d71d1dab4523f5d71233a93289206a22ee028173113414d63625e"
+      "sha256": "d0689ad5e55aa0a86a4446fbe633ac0690a921ba9f6f00c19f74612cb3570978"
     },
     {
       "owner": "src/paint-export.js",
-      "url": "./metalness-resource.js?v=0.36.18.1027",
+      "url": "./metalness-resource.js?v=0.36.18.1028",
       "target": "src/metalness-resource.js",
-      "sha256": "947861cfa4f742b3144f4913fc51b47830470524ac78ed29d158551741468c70"
+      "sha256": "e0ddc8e9810a7f714588692ed530b8fffea7757a4e4d4bbaf9466244cc98c604"
     },
     {
       "owner": "src/viewport-paint-core.js",
       "target": "src/metalness-resource.js",
-      "url": "./metalness-resource.js?v=0.36.18.1027",
-      "sha256": "947861cfa4f742b3144f4913fc51b47830470524ac78ed29d158551741468c70"
+      "url": "./metalness-resource.js?v=0.36.18.1028",
+      "sha256": "e0ddc8e9810a7f714588692ed530b8fffea7757a4e4d4bbaf9466244cc98c604"
     },
     {
       "owner": "src/viewport-paint-core.js",
       "target": "src/project-metalness-resources.js",
-      "url": "./project-metalness-resources.js?v=0.36.18.1027",
-      "sha256": "e52ad0769f5d71d1dab4523f5d71233a93289206a22ee028173113414d63625e"
+      "url": "./project-metalness-resources.js?v=0.36.18.1028",
+      "sha256": "d0689ad5e55aa0a86a4446fbe633ac0690a921ba9f6f00c19f74612cb3570978"
     },
     {
       "owner": "src/paint-target.js",
       "target": "src/metalness-resource.js",
-      "url": "./metalness-resource.js?v=0.36.18.1027",
-      "sha256": "947861cfa4f742b3144f4913fc51b47830470524ac78ed29d158551741468c70"
+      "url": "./metalness-resource.js?v=0.36.18.1028",
+      "sha256": "e0ddc8e9810a7f714588692ed530b8fffea7757a4e4d4bbaf9466244cc98c604"
     },
     {
       "owner": "src/paint-target.js",
@@ -3122,9 +3122,9 @@
     },
     {
       "owner": "src/viewport-paint.js",
-      "url": "./paint-target.js?v=0.36.18.1027",
+      "url": "./paint-target.js?v=0.36.18.1028",
       "target": "src/paint-target.js",
-      "sha256": "55dd2371c87992b6533c8f9cc85e373eee7771602831098ad78cd3dca9ef2dff"
+      "sha256": "69c40c398c88bb258a8b338e10ac2ac1faf9003dd08acf8b0587f740e9caeb71"
     },
     {
       "owner": "index.html",
@@ -3350,9 +3350,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1027",
+      "url": "./src/shell-comparison.js?v=0.36.18.1028",
       "target": "src/shell-comparison.js",
-      "sha256": "82c95846787e0fac570b3f1d7b1344012c9f2227b68a3bfbba5e6bf38f8f1522"
+      "sha256": "5107748c2feaee3a63b800445a66833cc8d944cbf79f1b080a58b19324db7436"
     },
     {
       "owner": "src/main.js",
@@ -3404,9 +3404,9 @@
     },
     {
       "owner": "src/import-mesh.js",
-      "url": "./nomad-import-core.js?v=0.36.18.1027",
+      "url": "./nomad-import-core.js?v=0.36.18.1028",
       "target": "src/nomad-import-core.js",
-      "sha256": "c63348aae8e2afda590538fc4221cc07be101b07ac678a5a40518dceafd4a471"
+      "sha256": "e2aea647d33c93caeeb5100b305c96c12f4bb36cf19a4f61d088ac60b5cdfc6f"
     },
     {
       "owner": "src/nomad-import-core.js",
@@ -3428,27 +3428,27 @@
     },
     {
       "owner": "src/nomad-import-core.js",
-      "url": "./nomad-material-resource.js?v=0.36.18.1027",
+      "url": "./nomad-material-resource.js?v=0.36.18.1028",
       "target": "src/nomad-material-resource.js",
-      "sha256": "624924b8cda6ba35b427f5abb17aa2d98de356b67c2d20f157799a1627002a31"
+      "sha256": "caf8ef5a6841df81e8a94977e807b0e2035ba6c33dc86f7f09889d0bdc6fe461"
     },
     {
       "owner": "src/project-glb-resources.js",
-      "url": "./nomad-material-resource.js?v=0.36.18.1027",
+      "url": "./nomad-material-resource.js?v=0.36.18.1028",
       "target": "src/nomad-material-resource.js",
-      "sha256": "624924b8cda6ba35b427f5abb17aa2d98de356b67c2d20f157799a1627002a31"
+      "sha256": "caf8ef5a6841df81e8a94977e807b0e2035ba6c33dc86f7f09889d0bdc6fe461"
     },
     {
       "owner": "src/uv-image-surface-preview.js",
-      "url": "./nomad-material-resource.js?v=0.36.18.1027",
+      "url": "./nomad-material-resource.js?v=0.36.18.1028",
       "target": "src/nomad-material-resource.js",
-      "sha256": "624924b8cda6ba35b427f5abb17aa2d98de356b67c2d20f157799a1627002a31"
+      "sha256": "caf8ef5a6841df81e8a94977e807b0e2035ba6c33dc86f7f09889d0bdc6fe461"
     },
     {
       "owner": "src/nomad-export-core.js",
-      "url": "./nomad-material-resource.js?v=0.36.18.1027",
+      "url": "./nomad-material-resource.js?v=0.36.18.1028",
       "target": "src/nomad-material-resource.js",
-      "sha256": "624924b8cda6ba35b427f5abb17aa2d98de356b67c2d20f157799a1627002a31"
+      "sha256": "caf8ef5a6841df81e8a94977e807b0e2035ba6c33dc86f7f09889d0bdc6fe461"
     },
     {
       "owner": "src/uv-image-surface-preview.js",

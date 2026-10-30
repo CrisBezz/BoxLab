@@ -33,7 +33,7 @@ export function importedUVImageChoices(payload,imageOptions,slots=['color']){
 export async function decodeUVImage(choice){
  if(typeof globalThis.createImageBitmap!=='function')throw Error('Image preview is unavailable');
  const scalar=choice.channel===0||choice.channel===1||choice.channel===2,previewSize=choice.previewSize===512?512:1024;
- const image=await globalThis.createImageBitmap(new Blob([choice.data],{type:choice.mime}),{resizeWidth:previewSize,resizeHeight:previewSize,resizeQuality:'high',imageOrientation:'from-image',...(scalar||choice.linear?{colorSpaceConversion:'none',premultiplyAlpha:'none'}:{})});
+ const image=await globalThis.createImageBitmap(new Blob([choice.data],{type:choice.mime}),{resizeWidth:previewSize,resizeHeight:previewSize,resizeQuality:'high',imageOrientation:'from-image',...(scalar||choice.linear?{colorSpaceConversion:'none',premultiplyAlpha:'none'}:choice.unpremultiplied?{premultiplyAlpha:'none'}:{})});
  if(!image.width||!image.height||image.width>previewSize||image.height>previewSize){image.close?.();throw Error('Image preview exceeds the display budget');}
  if(!scalar)return image;
  let canvas,ready=false;

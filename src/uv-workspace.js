@@ -1,4 +1,4 @@
-import {createUVImagePreview} from './uv-image-preview.js?v=0.36.18.1026';
+import {createUVImagePreview} from './uv-image-preview.js?v=0.36.18.1028';
 import {drawImportedUV,pickImportedUVIsland,importedUVScreenDelta,importedUVIslandCentre} from './imported-uv-inspection.js?v=0.36.18.951';
 import {createUVNavigation} from './uv-navigation.js?v=0.36.18.868';
 // Workspace preview/navigation. Existing Mesh Health owns context, edit actions,

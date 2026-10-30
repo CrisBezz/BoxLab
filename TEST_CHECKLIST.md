@@ -1,3 +1,16 @@
+## .1028 — native opacity preview — 30 October 2026
+
+- [x] Explicit1027 user PASS protects emissive/color/normal/scalars/retention/roundtrip.
+- [x] Original lit native overlay: linear grayscale alphaMap/factor and blending
+  opacity; bounded serial decode and native readonly resources preserved.
+- [x] Scoped colour-alpha exclusion with unpremultiplied RGB; no image rewrite;
+  transparent depth/shadow/backface lifetimes and Studio refresh respect same owner.
+- [x]31 final focused checks PASS including6 new actual-owner/shader/lifetime/codec tests.
+- [x]Broad local Node24.22.1:3038 PASS/0FAIL/0skip/0cancel (199.52s); final focus covers late Studio owner, serializable UUID and opaque colour-alpha compatibility.
+- [ ] DEVICE1028 supplied opacity sample: checker holes,left; middle35% translucent;
+  solid right control. Studio/Solid orbit,no orange fill; select/Move/UndoRedo;
+  looks/back,SaveOpen.boxlab,NOMAD/Nomad; previous emissive sample unchanged.
+
 ## .1027 — native emissive preview — 30 October 2026
 
 - [x] Explicit1026 PASS protects native normal/scalars/colour/retention/round trips.
@@ -8,7 +21,7 @@
 - [x]25 focused PASS/0FAIL/0skip including4 new real-owner/round-trip tests.
 - [x]Full local Node24.22.1:3032 PASS/0FAIL/0skip/0cancel (185.63s); explicit zero-factor assertions rerun4PASS.
 - [x] Runtimef1b4405f/tree6de75a1f exact tested/uploaded match;40 blobs verified;7/7 fresh live files match. Hosted/Pages in_progress at last query; local3032PASS.
-- [ ] DEVICE1027 import docs/samples/NOM_EMISSIVE_1027.nom Studio/Solid, orbit below:
+- [x] User1027 PASS: DEVICE1027 import docs/samples/NOM_EMISSIVE_1027.nom Studio/Solid, orbit below:
   left cube emissive brightness, middle/right controls; switch looks/back; SaveOpen
   .boxlab/NOMAD in Nomad; previous1026 sample unchanged.
 
