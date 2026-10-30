@@ -1,3 +1,13 @@
+## .1024 user PASS — 30 October 2026
+
+User explicitly reports “1024 PASS”. Protect accepted Studio/Solid underside
+readability: original render owner underside fill .95 Studio/1.6 Solid, unchanged
+ambient and Studio controls; Solid remains shadow-free. .1023 PASS retained.
+Hosted full regression41009577601 now completed SUCCESS (rechecked after feedback).
+Runtime remains d90b3154 / build0.36.18.1024; acceptance documentation only, no new
+runtime build or mandatory hands-on test. Next await user direction; NOM texture/
+PBR retention remains queued. Existing navigation/Pivot/floor protections retained.
+
 ## .1024 — readable underside lighting for Studio and Solid — 30 October 2026
 
 User explicitly PASSes .1023: protect stronger grid, Pivot-only shortcuts and

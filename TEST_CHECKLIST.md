@@ -1,3 +1,9 @@
+## .1024 protected acceptance — 30 October 2026
+
+- [x] Explicit .1024 user PASS protects Studio/Solid underside lighting, original ambient and shadow-free Solid.
+- [x] Hosted full regression41009577601 completed SUCCESS, rechecked after feedback.
+- [x] Documentation only; current build .1024, no new mandatory device test.
+
 ## .1024 — underside inspection lighting — 30 October 2026
 
 - [x] User .1023 PASS protects grid/Pivot shortcut/selected-Face edge alignment.
@@ -5,7 +11,7 @@
   original hemisphere/materials/KeyFillRim/floor controls unchanged; no extra shadow.
 - [x]46 focused PASS/0FAIL/0skip: actual six-normal illumination/mode/reuse/isolation,
   original render/paint/floor/contact/release/cache/identity/comparison checks.
-- [ ] DEVICE1024 Studio underside readable with shape contrast; Solid underside
+- [x] User .1024 PASS: DEVICE1024 Studio underside readable with shape contrast; Solid underside
   readable without shadows; look switches and floor/grid/off; moved model consistent.
 - [x] Published runtime d90b3154/treefd6ca02e equals tested tree; Pages41009576824 SUCCESS;12/12 live byte matches. Hosted41009577601 in_progress at proof; no full-suite/browser/iPad PASS claimed.
 
