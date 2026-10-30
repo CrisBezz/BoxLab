@@ -1,10 +1,10 @@
-import {createProjectMetalnessPool,decodeProjectMetalnessPool} from './project-metalness-resources.js?v=0.36.18.1026';
-import {createProjectRoughnessPool,decodeProjectRoughnessPool} from './project-roughness-resources.js?v=0.36.18.1026';
+import {createProjectMetalnessPool,decodeProjectMetalnessPool} from './project-metalness-resources.js?v=0.36.18.1027';
+import {createProjectRoughnessPool,decodeProjectRoughnessPool} from './project-roughness-resources.js?v=0.36.18.1027';
 // Versioned, non-destructive BoxLab scene codec foundation.
 // Explicitly refuse resources not yet representable, rather than losing them.
-import {encodeProjectGLB,decodeProjectGLB,createProjectGLBImagePool,decodeProjectGLBImagePool} from './project-glb-resources.js?v=0.36.18.1026';
+import {encodeProjectGLB,decodeProjectGLB,createProjectGLBImagePool,decodeProjectGLBImagePool} from './project-glb-resources.js?v=0.36.18.1027';
 import {evaluateArray} from './live-array-core.js?v=0.36.18.861';
-import {createProjectPaintPool,decodeProjectPaintPool,paintOwner} from './project-paint-resources.js?v=0.36.18.1026';
+import {createProjectPaintPool,decodeProjectPaintPool,paintOwner} from './project-paint-resources.js?v=0.36.18.1027';
 const plain=value=>value==null?null:JSON.parse(JSON.stringify(value));
 export function encodeBoxlabScene(snapshot,{poolImages=true}={}){
  if(!snapshot||!Array.isArray(snapshot.objects)||!snapshot.objects.length)throw Error('Scene has no objects');

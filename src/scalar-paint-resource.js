@@ -1,5 +1,5 @@
 // Shared strict R8 codec extracted from the accepted roughness resource owner.
-import {encodeProjectBytes,decodeProjectBytes} from './project-glb-resources.js?v=0.36.18.1026';
+import {encodeProjectBytes,decodeProjectBytes} from './project-glb-resources.js?v=0.36.18.1027';
 export function createScalarResourceCodec(channel){
  if(!['roughness','metalness'].includes(channel))throw Error('Unsupported scalar paint channel');
  const label=channel[0].toUpperCase()+channel.slice(1);

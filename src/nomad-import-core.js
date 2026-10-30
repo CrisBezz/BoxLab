@@ -1,4 +1,4 @@
-import {retainNomadMaterial} from './nomad-material-resource.js?v=0.36.18.1026';
+import {retainNomadMaterial} from './nomad-material-resource.js?v=0.36.18.1027';
 import * as THREE from 'three';
 import {EditableMesh} from './mesh.js?v=0.21.2';
 import {meshTopologySignature} from './mesh-topology-signature.js?v=0.36.18.939';
@@ -173,7 +173,7 @@ export function parseNomadMeshes(input){
         const mesh=new EditableMesh(vertices,faces,null,faceGroups);
         const uvPayload=g.uvs?{version:1,source:'boxlab',uvTopologySignature:meshTopologySignature(mesh),uvCorners:cornerUVs}:null;
         const payload=g.material?{version:1,source:'nomad',uvTopologySignature:meshTopologySignature(mesh),uvCorners:cornerUVs,...g.material}:uvPayload;
-        if(g.material)warnings.add('NOM maps retained; supported UV colour/normal/grayscale roughness/metalness preview up to 4 objects / 20,000 corners each; other maps/projections retained for NOM export');
+        if(g.material)warnings.add('NOM maps retained; supported UV colour/normal/emissive/grayscale roughness/metalness preview up to 4 objects / 20,000 corners each; other maps/projections retained for NOM export');
         meshes.push({mesh,name,visible:shown,polygonPreserved:true,cornerUVs,glbPassthrough:payload});
       }else if(node.light!=null||node.camera!=null)warnings.add('scene lights/cameras omitted');
       if(node.children!=null)walk(node.children,matrix,shown,depth+1);

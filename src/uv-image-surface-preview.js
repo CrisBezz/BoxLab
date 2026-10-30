@@ -1,5 +1,5 @@
 import {paintMaterialEnvironments} from './paint-material-environment.js?v=0.36.18.925';
-import {nomadColourSurfaceSource,nomadPBRSurfaceSources} from './nomad-material-resource.js?v=0.36.18.1026';
+import {nomadColourSurfaceSource,nomadPBRSurfaceSources} from './nomad-material-resource.js?v=0.36.18.1027';
 import * as THREE from 'three';
 import {importedUVImageChoices,decodeUVImage} from './uv-image-preview.js?v=0.36.18.1026';
 // Active Base inspection. Mixed materials require exact per-face import provenance.
@@ -76,8 +76,9 @@ export function createUVImageOverlay(body,mesh,payload,buildGeometry,hiddenMater
     if(disposed)return;
     try{
      const image=await decode(source.choice);if(disposed){image?.close?.();return;}if(!image)continue;
-     images.push(image);const texture=makeTexture(image,source,false);material[slot+'Map']=texture;
+     images.push(image);const texture=makeTexture(image,source,slot==='emissive');material[slot+'Map']=texture;
      if(slot==='normal')material.normalScale.set(source.factor,source.negY?-source.factor:source.factor);
+     else if(slot==='emissive'){material.emissive.fromArray(source.factor);material.emissiveIntensity=source.strength;}
      else material[slot]=source.factor;
      if(slot==='metalness'&&source.factor>0){
       let scene=body;while(scene&&!scene.isScene)scene=scene.parent;

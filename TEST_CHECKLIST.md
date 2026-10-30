@@ -1,3 +1,16 @@
+## .1027 — native emissive preview — 30 October 2026
+
+- [x] Explicit1026 PASS protects native normal/scalars/colour/retention/round trips.
+- [x] Original native overlay: sRGB emissiveMap, linear RGB factor and strength,
+  independent repeat/sampler; same total8MiB/4surfaces/20k corners and serial lifetime.
+- [x] Invalid/unsupported/failure keeps accepted colour/PBR; canceled late bitmap closes;
+  UV Image/always-unlit remain colour-only; no added lights/bloom or source mutation.
+- [x]25 focused PASS/0FAIL/0skip including4 new real-owner/round-trip tests.
+- [x]Full local Node24.22.1:3032 PASS/0FAIL/0skip/0cancel (185.63s); explicit zero-factor assertions rerun4PASS.
+- [ ] DEVICE1027 import docs/samples/NOM_EMISSIVE_1027.nom Studio/Solid, orbit below:
+  left cube emissive brightness, middle/right controls; switch looks/back; SaveOpen
+  .boxlab/NOMAD in Nomad; previous1026 sample unchanged.
+
 ## .1026 — native NOM normal and scalar preview — 30 October 2026
 
 - [x] User .1025 PASS protected: colour/tiling/retention/SaveOpen/NOM and1024 lighting.
@@ -10,7 +23,7 @@
 - [x] Six new owner/math/decoder/lifecycle/round-trip checks;157 focused PASS.
 - [x] Full final local Node24.22.1:3028 PASS/0FAIL/0skip/0cancel (183.48s); syntax/diff clean.
 - [x] Runtime68320e5c/tree7b59ab71 exactly tested;44 blobs verified; Pages41025737253 SUCCESS;9/9 fresh live byte matches. Hosted41025737405 in_progress at proof; native/GPU PASS pending.
-- [ ] DEVICE1026 supplied sample,left normal+roughness,middle metal variation,right
+- [x] User1026 PASS: DEVICE1026 supplied sample,left normal+roughness,middle metal variation,right
   colour control in Studio/Solid/orbit; SaveOpen.boxlab/NOMAD; accepted MAP TEST5x.
 
 ## .1025 — NOM maps and colour viewport — 30 October 2026

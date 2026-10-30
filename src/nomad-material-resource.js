@@ -66,8 +66,14 @@ export function nomadColourSurfaceSource(payload){
 export function nomadPBRSurfaceSources(payload,colour=nomadColourSurfaceSource(payload)){
  if(!colour||colour.unlit)return {};
  const maps={},seen=new Set([colour.choice.data]);let bytes=colour.choice.data.length;
- for(const slot of ['normal','roughness','metalness']){
+ for(const slot of ['normal','roughness','metalness','emissive']){
   const source=nomadTextureSource(payload,slot);if(!source)continue;
+  if(slot==='emissive'){
+   const factor=payload.nomadMaterial.factorEmissive??[1,1,1],strength=payload.nomadMaterial.factorEmissiveStrength??1;
+   if(!Array.isArray(factor)||factor.length!==3||!factor.every(v=>Number.isFinite(v)&&v>=0&&v<=1)||!Number.isFinite(strength)||strength<0||!Number.isFinite(Math.fround(strength))||factor.some(v=>!Number.isFinite(Math.fround(v*strength))))continue;
+   const extra=seen.has(source.choice.data)?0:source.choice.data.length;if(bytes+extra>8*1024*1024)continue;
+   bytes+=extra;seen.add(source.choice.data);maps[slot]={...source,factor:[...factor],strength};continue;
+  }
   const factor=payload.nomadMaterial[{normal:'factorNormal',roughness:'factorRoughness',metalness:'factorMetalness'}[slot]]??1;
   if(!Number.isFinite(factor)||!Number.isFinite(Math.fround(factor))||factor<0||slot!=='normal'&&factor>1)continue;
   const extra=seen.has(source.choice.data)?0:source.choice.data.length;if(bytes+extra>8*1024*1024)continue;
