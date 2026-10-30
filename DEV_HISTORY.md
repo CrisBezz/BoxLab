@@ -17473,7 +17473,13 @@ native iPad appearance or full-suite performance claim from these math/Node chec
 Reviewed1024 direct render pin and shell markers,comparison migration retains1023
 ratings; canonical release->face-layout->drawer cache closure refreshed (import-only).
 Multi1.0 remains exact Beta6/pin1.0; frozen betas and all other runtime owners retained.
-Publication pending at this entry; exact commit/tree/Pages/live evidence to follow.
+Published runtime d90b31541ad3c621c8cdd88977f036ce3ef9555f; fetched origin/main tree
+fd6ca02e4b1e8ce074016a2869ecf47544155382 exactly matches tested/uploaded tree.
+All13 changed blobs hash-verified before non-forced expected-main update.
+Pages41009576824 SUCCESS;12/12 fresh live files byte-match tested source: shell,
+manifest,render owner,canonical cache graph,comparison and unchanged Multi/Pivot/
+ground/Studio-polish. Hosted41009577601 in_progress at proof,not claimed PASS.
+Build1024 LIVE / READY for iPad lighting-balance testing. No native visual PASS.
 DEVICE1024: Studio orbit below model, judge underside readability and shape contrast;
 VIEW->Solid repeat full orbit, shadow-free modelling; switch Studio/Solid/Facegroups
 and back, floor/grid/off sanity; move model/orbit and confirm consistent fill.

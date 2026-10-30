@@ -7,7 +7,7 @@
   original render/paint/floor/contact/release/cache/identity/comparison checks.
 - [ ] DEVICE1024 Studio underside readable with shape contrast; Solid underside
   readable without shadows; look switches and floor/grid/off; moved model consistent.
-- [ ] Publication proof pending; no full-suite/browser/iPad PASS claimed.
+- [x] Published runtime d90b3154/treefd6ca02e equals tested tree; Pages41009576824 SUCCESS;12/12 live byte matches. Hosted41009577601 in_progress at proof; no full-suite/browser/iPad PASS claimed.
 
 ## .1023 — Pivot/Face refinement and brighter grid — 30 October 2026
 
