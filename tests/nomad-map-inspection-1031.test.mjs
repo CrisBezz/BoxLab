@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {nomadMapInspectionFixture} from './helpers/nomad-map-inspection-fixture.mjs';
+import {assertNomadFixtureEquivalent} from './helpers/nomad-fixture-equivalence.mjs';
 import {createUVImagePreview} from '../src/uv-image-preview.js';
 import {nativeImageChoices as importedUVImageChoices} from '../src/nomad-uv-image-choices.js';
 import {createUVWorkspace} from '../src/uv-workspace.js';
@@ -52,5 +53,5 @@ test('1031 actual read-only native UV workspace uses existing Image/dropdown/can
 test('1031 inspected source images and sixteen-bit displacement survive pooled/inline SaveOpen and real native NOM export/parse unchanged; checked sample matches',async()=>{
  const {objects,template,bytes}=await fixture;
  for(const poolImages of [false,true]){const restored=decodeBoxlabScene(JSON.parse(JSON.stringify(encodeBoxlabScene({objects,activeId:objects[0].id},{poolImages}))),(...a)=>new EditableMesh(...a)).objects;assert.deepEqual(buildNomadProject(restored,template,{topologySignature:sig,name:'BoxLab NOM map inspection'}).bytes,bytes);}
- const parsed=parseNomadMeshes(bytes);assert.equal(importedUVImageChoices(parsed.meshes[0].glbPassthrough,undefined,slots).length,7);assert.deepEqual(new Uint8Array(fs.readFileSync(new URL('../docs/samples/NOM_MAP_INSPECTION_1031.nom',import.meta.url))),bytes);
+ const checked=new Uint8Array(fs.readFileSync(new URL('../docs/samples/NOM_MAP_INSPECTION_1031.nom',import.meta.url)));assertNomadFixtureEquivalent(checked,bytes);const parsed=parseNomadMeshes(checked);assert.equal(importedUVImageChoices(parsed.meshes[0].glbPassthrough,undefined,slots).length,7);
 });

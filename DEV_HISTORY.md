@@ -17946,3 +17946,22 @@ Studio->Solid->Studio and close/reopen. Import new sample: seven named cubes;
 select a cube,Object radialUV->UV Editor->Image to see its ONE map,BackTo3D/Close,
 recheckVIEW. Orbit/UndoRedo and accepted1030 transform sample sanity.
 Next ONLY device repair feedback; defer new native material/performance features.
+
+## .1032 fixture visibility and cross-Node CI correction — 31 October 2026
+
+Final demo check found four central small cubes could sit inside the startup size1
+cube after original2-unit import fitting. Increase the two-row spacing; actual File
+import test now requires every imported cube to lie clear of startup cube in Z.
+No application import/fit/source-position policy changed. Seven-object sample stays
+91,588bytes and keeps original map bytes. New sample placement is part of .1032 retest.
+
+Hosted41146362394 failed. Log tool repeatedly closed transport. Reproduced locally
+with exact CI Node22.23.4:3053PASS/2FAIL; both failures were freshly compressed PNG
+byte comparisons against checked-in demo files. Node22 and24 CompressionStream
+produce different valid zlib bytes. New test helper independently parses both NOMs,
+checks exact names/geometry/UV/material bindings, PNG CRC/dimensions/type/chunks/
+filters and decoded RGBA; literal16-bit displacement remains byte-exact. Existing
+pooled/inline SaveOpen/NOM SOURCE-BYTE round-trip assertions are unchanged. Actual
+checked-in seven-object file now goes through real File dispatcher in the test.
+Both affected fixtures:6PASS/0FAIL on Node22 AND Node24 after correction. Full final
+Node22 and hosted rerun pending. Application JS remains byte-identical to674828d5.
