@@ -30,7 +30,7 @@ UV Image/unlit and byte-identical pooled/inline SaveOpen and native NOM parse/ex
 Older .1025–.1028 nonzero-transform refusal fixtures now use nonfinite transforms;
 the same refusal assertions stay active and new tests cover the expanded capability.
 41 focused checks PASS/0FAIL/0skip including release/cache/identity protection.
-Full local Node24.22.1 suite: 3046 PASS/0FAIL/0skip/0cancel (214.23s). Final canonical parent-loader/cache checks rerun: 11 PASS after a pin-only correction to drawer -> face-layout -> release-version. No functional runtime/test changes after full-suite start. Publication verification follows; no GPU/iPad PASS claimed.
+Full local Node24.22.1 suite: 3046 PASS/0FAIL/0skip/0cancel (214.23s). Final canonical parent-loader/cache checks rerun: 11 PASS after a pin-only correction to drawer -> face-layout -> release-version. No functional runtime/test changes after full-suite start. Publication verified: see docs/publication-1030.md; no GPU/iPad PASS claimed.
 
 Generic docs/samples/NOM_TEXTURE_TRANSFORM_1030.nom (76,188 bytes): cyan arrow on
 four coloured quadrants. Left original, middle offset[.25,.125], right scale[2,1]

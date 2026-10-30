@@ -1,3 +1,23 @@
+## .1030 publication verified — 30 October 2026
+
+Runtime commit caf0dede9640b6fffefec02b501f670ba06d12db; fetched origin/main tree
+8f0661e08a9319c8fa49b59546281d39b0993dfa matches validated local 1edf7cf4 tree.
+All44 uploaded blob hashes verified before expected-main, non-forced ref update.
+GitHub Pages41052704232 completed SUCCESS. Eight fresh public files byte-match:
+version.json,index.html,native material plan,UV image overlay,drawer/face-layout
+canonical loader chain,in-app test list and downloadable NOM transform sample.
+Full local3046 PASS/0FAIL/0skip/0cancel (214.23s); final15 transform/release/cache/
+identity checks PASS after the parent pin-only correction. Hosted topology41052704373
+was in_progress at proof time; no hosted full PASS or native GPU acceptance claimed.
+No functional runtime/test changes after the full suite started. This publication
+proof is docs-only; runtime and asset contract remain byte-identical.
+
+Build .1030 LIVE / READY FOR TESTING. User .1029 PASS protected. DEVICE1030 import
+sample,compare original/offset/sideways repeated arrow in BoxLab and Nomad;
+Studio/Solid/orbit,MoveUndoRedo,looks/back,SaveOpen.boxlab,NOMAD/Nomad. Accepted
+colour-alpha1029 sample unchanged. Next follow native texture-transform feedback;
+triplanar/displacement and their performance gates remain separately deferred.
+
 ## .1030 — native NOM texture translation and rotation — 30 October 2026
 
 User explicitly reports .1029 PASS and /nextbuild. Protect colour-image alpha,
@@ -30,7 +50,7 @@ UV Image/unlit and byte-identical pooled/inline SaveOpen and native NOM parse/ex
 Older .1025–.1028 nonzero-transform refusal fixtures now use nonfinite transforms;
 the same refusal assertions stay active and new tests cover the expanded capability.
 41 focused checks PASS/0FAIL/0skip including release/cache/identity protection.
-Full local Node24.22.1 suite: 3046 PASS/0FAIL/0skip/0cancel (214.23s). Final canonical parent-loader/cache checks rerun: 11 PASS after a pin-only correction to drawer -> face-layout -> release-version. No functional runtime/test changes after full-suite start. Publication verification follows; no GPU/iPad PASS claimed.
+Full local Node24.22.1 suite: 3046 PASS/0FAIL/0skip/0cancel (214.23s). Final canonical parent-loader/cache checks rerun: 11 PASS after a pin-only correction to drawer -> face-layout -> release-version. No functional runtime/test changes after full-suite start. Publication verified: see docs/publication-1030.md; no GPU/iPad PASS claimed.
 
 Generic docs/samples/NOM_TEXTURE_TRANSFORM_1030.nom (76,188 bytes): cyan arrow on
 four coloured quadrants. Left original, middle offset[.25,.125], right scale[2,1]
