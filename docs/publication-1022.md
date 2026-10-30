@@ -31,7 +31,14 @@ Reviewed1022 shell/recovery/comparison,toolbar->topbar,ground+studio-polish->fac
 ->drawer and render-mode pins/hashes. Icon/corner/TotalGizmo1021,local-pivot1019,
 transform owners,protected Multi1.0,frozen betas/navigation/Paint/UV unchanged.
 
-Publication pending. DEVICE1022 in Studio: inspect filled grey plane icon before
+Published runtime4c10c95fec6c71eaf0c5c4d77cbf94082962553e; tested/uploaded tree
+00f84fc40b976aa8e16be1ccb959c9d0f706bba9 equals fetched origin/main exactly.
+All18 blobs hash-verified before non-forced expected-main update. Pages40995326471
+SUCCESS;16/16 fresh live files byte-match tested source: shell/manifest,new ground/
+Studio/toolbar owners,parent/cache graph and unchanged accepted Pivot icon,Total
+Gizmo,local-pivot and protected Multi1.0. Hosted40995327653 in_progress at proof;
+no full-suite/native iPad PASS claimed. Build1022 LIVE / READY for testing.
+DEVICE1022 in Studio: inspect filled grey plane icon before
 VIEW; tap to grid (plane/contact shadow disappear), tap to off (grid disappears),
 tap to plane (original floor/shadow return). Orbit after each; check repeated cycle,
 Studio->Solid->Studio retains choice, Clean View hides/restores selected grid.
