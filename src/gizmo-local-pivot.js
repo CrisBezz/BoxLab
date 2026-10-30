@@ -76,12 +76,41 @@ export function localScaleVector(point,center,axis,factor,frame){
  else if(axis)point[axis]*=factor;else point.multiplyScalar(factor);
  return point.add(center);
 }
-export function pickPivotFace(state,canvas,event){
+export function pickPivotFace(state,canvas,event,faceIndices=null){
  const r=canvas.getBoundingClientRect();if(!r.width||!r.height||!state?.scene||!state.camera)return null;
  const ray=new THREE.Raycaster();ray.setFromCamera(new THREE.Vector2((event.clientX-r.left)/r.width*2-1,-((event.clientY-r.top)/r.height*2-1)),state.camera);
  const bodies=[];state.scene.traverseVisible(o=>{if(o.visible!==false&&['body','boxlab-inactive-body'].includes(o.userData?.kind))bodies.push(o);});
- const hit=ray.intersectObjects(bodies,false)[0];if(!hit?.face||hit.object.userData.kind!=='body')return null;
- return {point:hit.point,normal:hit.face.normal.clone().applyNormalMatrix(new THREE.Matrix3().getNormalMatrix(hit.object.matrixWorld)),object:hit.object,...faceBoundary(hit,state.mesh)};
+ const hits=ray.intersectObjects(bodies,false),first=hits[0];if(!first?.face||first.object.userData.kind!=='body')return null;
+ const selected=faceIndices===null?null:new Set(faceIndices);
+ // Shared-edge triangles can tie in depth. Retain the selected (or latched)
+ // polygon without picking through a nearer surface.
+ for(const hit of hits){
+  if(hit.distance-first.distance>Math.max(1,first.distance)*1e-7)break;
+  if(hit.object!==first.object||!hit.face)continue;
+  const boundary=faceBoundary(hit,state.mesh);if(selected&&!selected.has(boundary.faceIndex))continue;
+  return {point:hit.point,normal:hit.face.normal.clone().applyNormalMatrix(new THREE.Matrix3().getNormalMatrix(hit.object.matrixWorld)),object:hit.object,...boundary};
+ }
+ if(selected){
+  // A ray exactly on a shared edge can hit only ONE of its two triangles.
+  // Recover the selected neighbour only on that same real topological edge,
+  // using the already-visible hit. Never raycast through another polygon.
+  const mesh=state.mesh,nearest=mesh?.faces?.[faceBoundary(first,mesh).faceIndex];
+  const nearestEdges=nearest&&new Set(nearest.map((v,i)=>mesh.edgeKey(v,nearest[(i+1)%nearest.length])));
+  if(nearestEdges)for(const index of selected){
+   const face=mesh.faces[index];if(!face)continue;
+   const shared=[];for(let i=0;i<face.length;i++)if(nearestEdges.has(mesh.edgeKey(face[i],face[(i+1)%face.length])))shared.push(i);
+   if(!shared.length)continue;
+   const boundary=face.map(i=>mesh.vertices[i]?.clone().applyMatrix4(first.object.matrixWorld));if(boundary.some(p=>!p))continue;
+   const normal=mesh.faceNormal(index).applyNormalMatrix(new THREE.Matrix3().getNormalMatrix(first.object.matrixWorld));
+   if(normal.lengthSq()<1e-12||normal.dot(ray.ray.direction)>=-1e-10)continue;
+   for(const i of shared){
+    const line=new THREE.Line3(boundary[i],boundary[(i+1)%face.length]),point=line.closestPointToPoint(first.point,true,new THREE.Vector3());
+    if(point.distanceTo(first.point)>Math.max(1,line.distance(),first.distance)*1e-7)continue;
+    return {point,normal,object:first.object,faceIndex:index,boundary};
+   }
+  }
+ }
+ return null;
 }
 export function installLocalPivot({root,canvas,status,getMode=()=>globalThis.__boxlabSelectionBridge?.mode?.()||'object',pick=pickPivotFace}={}){
  let edit=null,spin=null,placement=null,objectOwner=null,objectList=[],selectionCount=1;
@@ -144,7 +173,8 @@ export function installLocalPivot({root,canvas,status,getMode=()=>globalThis.__b
  }
  function onCanvasTouch(e){if(edit&&e.target===canvas){e.preventDefault();e.stopImmediatePropagation();}}
  function releasePlacement(){const old=placement;placement=null;if(old){try{canvas.releasePointerCapture?.(old.id);}catch{}}}
- function previewPlacement(e,hit=pick(state(),canvas,e)){
+ function placementFaces(){return getMode()==='face'?[...new Set(globalThis.__boxlabSelectionBridge?.indices?.()||[])]:null;}
+ function previewPlacement(e,hit=pick(state(),canvas,e,placement?.surface?.faceIndex===undefined?placementFaces():[placement.surface.faceIndex])){
   if(!placement||!edit)return;
   const surface=placement.surface,candidate=nearestPivotEdge(surface,e,state().camera,canvas,placement.edge);
   let next=null,axis='';
@@ -155,7 +185,7 @@ export function installLocalPivot({root,canvas,status,getMode=()=>globalThis.__b
    let edgeVisible=false;
    for(const sign of [1,-1]){
     const probe=candidate.point.clone().lerp(a.clone().lerp(b,.5),1e-5).addScaledVector(inward,sign*Math.max(1e-7,a.distanceTo(b)*1e-5)),p=pivotScreen(probe,state().camera,canvas.getBoundingClientRect());
-    const visible=p&&pick(state(),canvas,{clientX:p.x,clientY:p.y});
+    const visible=p&&pick(state(),canvas,{clientX:p.x,clientY:p.y},[surface.faceIndex]);
     if(visible?.object===surface.object&&visible?.faceIndex===surface.faceIndex){edgeVisible=true;break;}
    }
    if(edgeVisible){
@@ -171,7 +201,7 @@ export function installLocalPivot({root,canvas,status,getMode=()=>globalThis.__b
   if(!edit)return;
   if(e.target!==canvas){if(!root.contains?.(e.target))finish(true);return;}
   e.preventDefault();e.stopImmediatePropagation();if(e.isPrimary===false||placement||spin)return;
-  const hit=pick(state(),canvas,e),next=hit&&facePivotFrame(hit.point,hit.normal,edit.draft);
+  const hit=pick(state(),canvas,e,placementFaces()),next=hit&&facePivotFrame(hit.point,hit.normal,edit.draft);
   if(next){
    placement={id:e.pointerId,before:{...edit.draft},basis:next,surface:{...hit,basis:next},edge:null};
    edit.draft=next;edit.stage='place';root.dataset.pivotSnap='';canvas.setPointerCapture?.(e.pointerId);

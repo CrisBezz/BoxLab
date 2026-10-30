@@ -55,7 +55,7 @@ function apply(){
   const cleanNow=globalThis.__boxlabCleanView?.enabled??clean;
   if(grid){
     grid.visible=ground==='grid'&&!cleanNow;
-    if(grid.visible)setOpacity(grid,mode==='studio'?.18:.34);
+    if(grid.visible)setOpacity(grid,mode==='studio'?.198:.374);
   }
   if(floor)floor.visible=ground==='plane';
   if(contact)contact.visible=ground==='plane'&&mode==='studio';

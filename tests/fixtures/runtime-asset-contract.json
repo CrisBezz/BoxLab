@@ -167,9 +167,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1022",
+      "url": "./src/drawer-ui.js?v=0.36.18.1023",
       "target": "src/drawer-ui.js",
-      "sha256": "06025bb2fad05cab8bcfc02ae6e40ab0bd3a777a0aaa9e7408a30c4ceb2dcea1"
+      "sha256": "126128822c6a71ff1a331d9d9989cf241f573d96ea004fa2e152a85ddeb88556"
     },
     {
       "owner": "index.html",
@@ -335,9 +335,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/object-management.js?v=0.36.18.1021",
+      "url": "./src/object-management.js?v=0.36.18.1023",
       "target": "src/object-management.js",
-      "sha256": "b14b605ea03f01a2f8912d619742a115dc01c0e13a5149dc12087f3fbd609db0"
+      "sha256": "b5e458f5ab9c67a900237e28d67a4dad8ef9c77e08ea11e157b51fceab3d5194"
     },
     {
       "owner": "index.html",
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.1022",
+      "url": "./src/release-bootstrap.js?v=0.36.18.1023",
       "target": "src/release-bootstrap.js",
       "sha256": "fe3e41b43e5df07fb5252936bff4e2a7c4f47fcb38f89b2cb6204fc5712e1698"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1022",
+      "url": "./src/release-version.js?v=0.36.18.1023",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -545,15 +545,15 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/topbar-layout.js?v=0.36.18.1022",
+      "url": "./src/topbar-layout.js?v=0.36.18.1023",
       "target": "src/topbar-layout.js",
-      "sha256": "adb5d9f6fd7383d58451ad3b14d10cf6f7ccf5c08b783367cfe88c9ca9517d93"
+      "sha256": "9f4dfe26cf24e70158ba2bcd160a870c947c0d461a394eca0d1fe7ad0284886c"
     },
     {
       "owner": "index.html",
-      "url": "./src/total-gizmo.js?v=0.36.18.1021",
+      "url": "./src/total-gizmo.js?v=0.36.18.1023",
       "target": "src/total-gizmo.js",
-      "sha256": "96c7ba1116e3d80f9b046897a2585d48f3ca955969fe2064adf3021ba4a7b6c7"
+      "sha256": "58bc1e194c67e30a602707d6ea39f70ea250bc0fa6b16917c9dfac5fc6ad8481"
     },
     {
       "owner": "index.html",
@@ -876,9 +876,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1022",
+      "url": "./face-workflow-layout.js?v=0.36.18.1023",
       "target": "src/face-workflow-layout.js",
-      "sha256": "f390022e2dd16f92d91da94acc9faf22eb7ab8ce0a208a04f7784d311c610576"
+      "sha256": "b922e89cf954d01cdc92d49c85966e7518f0a6ce61cc27dc03c945dbe5363929"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -931,9 +931,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./object-management.js?v=0.36.18.1021",
+      "url": "./object-management.js?v=0.36.18.1023",
       "target": "src/object-management.js",
-      "sha256": "b14b605ea03f01a2f8912d619742a115dc01c0e13a5149dc12087f3fbd609db0"
+      "sha256": "b5e458f5ab9c67a900237e28d67a4dad8ef9c77e08ea11e157b51fceab3d5194"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1308,9 +1308,9 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./ground-polish.js?v=0.36.18.1022",
+      "url": "./ground-polish.js?v=0.36.18.1023",
       "target": "src/ground-polish.js",
-      "sha256": "c692a36a82d4f222f2b53499fe0ae9c699cc686208455fd011849a1e7631273c",
+      "sha256": "abc001c818251f7553355dc6cd72086962f525f4b7849559cbfb9a0047e4f48c",
       "sourceVersion": "0.36.18.188"
     },
     {
@@ -1373,7 +1373,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1022",
+      "url": "./release-version.js?v=0.36.18.1023",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -2056,15 +2056,15 @@
     },
     {
       "owner": "src/topbar-layout.js",
-      "url": "./viewport-toolbar-controls.js?v=0.36.18.1022",
+      "url": "./viewport-toolbar-controls.js?v=0.36.18.1023",
       "target": "src/viewport-toolbar-controls.js",
-      "sha256": "c453675b543821d5ab104713b5bda83919dfede07416011b9f6a4de76417359c"
+      "sha256": "ff2fdb35b3096177d31ac8247fc8f4addc001bd112cd2db4261bce57e6d4ea52"
     },
     {
       "owner": "src/total-gizmo.js",
-      "url": "./gizmo-corner-controls.js?v=0.36.18.1021",
+      "url": "./gizmo-corner-controls.js?v=0.36.18.1023",
       "target": "src/gizmo-corner-controls.js",
-      "sha256": "7b4702af82fac8d71d6e173b158343e82c22f003e4e3586bdea6856829d005fb"
+      "sha256": "28584f8b8925dea9f15d5b28104cb5bf5ad36429a8d60326cd897c0259a55bc9"
     },
     {
       "owner": "src/total-gizmo.js",
@@ -2092,9 +2092,9 @@
     },
     {
       "owner": "src/viewport-toolbar-controls.js",
-      "url": "./gizmo-corner-controls.js?v=0.36.18.1021",
+      "url": "./gizmo-corner-controls.js?v=0.36.18.1023",
       "target": "src/gizmo-corner-controls.js",
-      "sha256": "7b4702af82fac8d71d6e173b158343e82c22f003e4e3586bdea6856829d005fb"
+      "sha256": "28584f8b8925dea9f15d5b28104cb5bf5ad36429a8d60326cd897c0259a55bc9"
     },
     {
       "owner": "src/bevel-topology.js",
@@ -2196,9 +2196,9 @@
     },
     {
       "owner": "src/object-management.js",
-      "url": "./gizmo-corner-controls.js?v=0.36.18.1021",
+      "url": "./gizmo-corner-controls.js?v=0.36.18.1023",
       "target": "src/gizmo-corner-controls.js",
-      "sha256": "7b4702af82fac8d71d6e173b158343e82c22f003e4e3586bdea6856829d005fb"
+      "sha256": "28584f8b8925dea9f15d5b28104cb5bf5ad36429a8d60326cd897c0259a55bc9"
     },
     {
       "owner": "src/editable-boolean.js",
@@ -3350,9 +3350,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1022",
+      "url": "./src/shell-comparison.js?v=0.36.18.1023",
       "target": "src/shell-comparison.js",
-      "sha256": "c6ea4b5e877bf939990f98e26aa683494af07c132527a4b67e4b6457da8b3742"
+      "sha256": "280e44597c2a908ceaf61f2d1a9884d56ecac81a7a3e6ffc6b31833010eddc0c"
     },
     {
       "owner": "src/main.js",
@@ -3422,9 +3422,9 @@
     },
     {
       "owner": "src/total-gizmo.js",
-      "url": "./gizmo-local-pivot.js?v=0.36.18.1019",
+      "url": "./gizmo-local-pivot.js?v=0.36.18.1023",
       "target": "src/gizmo-local-pivot.js",
-      "sha256": "2253cc803ee6ed6c923f675f9c51ee314ee8a232288f68fcf067026b79688582"
+      "sha256": "e50a68e9ff930b2a7ffa7b7f4b598b71dd6423a4b6ab01894813913174ab9341"
     }
   ]
 }

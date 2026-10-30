@@ -150,3 +150,35 @@ test('1019 actual Total Gizmo projection follows draft placement and edge yaw be
  for(const a of ['x','y','z']){const p=nodes.get(`.tg-handle.tg-arc[data-ring-axis="${a}"]`);assert(p.attrs.d.length>0);assert.equal(p.attrs.d,p.__hitProxy.attrs.d);}
  assert.equal(r.history.undoStack.length,0);r.api.finish(false);
 });
+
+// Face-mode placement must use the selected polygon at a shared-edge hit, rather
+// than whichever adjacent render triangle wins a floating-point depth tie.
+test('1023 selected Face owns shared-edge placement and tangential edge snap without moving the model',()=>{
+ const r=fixture('face',[1]);r.camera.position.set(4,3,8);r.camera.lookAt(0,0,0);r.camera.updateMatrixWorld();
+ const shared=new THREE.Vector3(1,0,1),p=screenAt(r,shared),unfiltered=pickPivotFace(r.c.__boxlabBridgeState,r.canvas,{clientX:p.x,clientY:p.y});
+ assert([1,3].includes(unfiltered.faceIndex));const selected=unfiltered.faceIndex===1?3:1;
+ r.c.__boxlabSelectionBridge.set('face',[selected]);const before=snap(r.mesh),origin={...r.a.origin};
+ assert(pickPivotFace(r.c.__boxlabBridgeState,r.canvas,{clientX:p.x,clientY:p.y},[selected]),'selected shared-edge hit exists');
+ r.api.toggleEdit();at(r,'pointerdown',shared);
+ const normal=r.mesh.faceNormal(selected);assert(new THREE.Vector3(0,1,0).applyQuaternion(r.api.frame().quaternion).distanceTo(normal)<1e-8,'green Y must use selected face at shared edge');
+ assert(r.root.dataset.pivotSnap,'shared edge snaps immediately');
+ const next=selected===1?new THREE.Vector3(.3,.97,1):new THREE.Vector3(1,.97,.3);
+ at(r,'pointermove',next);const frame=r.api.frame();assert(r.root.dataset.pivotSnap);assert(Math.abs(frame.center.y-1)<1e-8);assert(new THREE.Vector3(0,1,0).applyQuaternion(frame.quaternion).distanceTo(normal)<1e-8);
+ assert.deepEqual(snap(r.mesh),before);assert.deepEqual(r.a.origin,origin);assert.deepEqual(r.selected(),[selected]);
+ at(r,'pointerup',next);r.api.finish(true);assert.equal(r.history.undoStack.length,1);
+});
+
+test('1023 Face interior drag matches Object/Edge on tilted real polygon edges; selected-only picking refuses hidden/unselected interiors',()=>{
+ for(const [mode,pointerType] of [['object','mouse'],['edge','pen'],['face','touch']]){
+  const r=fixture(mode,[1]),s=r.c.__boxlabBridgeState;
+  for(const v of r.mesh.vertices)v.applyAxisAngle(new THREE.Vector3(0,0,1),.4);
+  const body=s.scene.children[0];body.geometry.dispose();body.geometry=r.mesh.triangulatedGeometry();body.updateMatrixWorld();
+  r.camera.position.set(4,3,8);r.camera.lookAt(0,0,0);r.camera.updateMatrixWorld();
+  const before=snap(r.mesh),center=r.mesh.faceCenter(1),a=r.mesh.vertices[5],b=r.mesh.vertices[6],edge=a.clone().lerp(b,.35),near=edge.clone().lerp(center,.02);
+  r.api.toggleEdit();at(r,'pointerdown',center,{pointerType});at(r,'pointermove',near,{pointerType});
+  const frame=r.api.frame(),axis=r.root.dataset.pivotSnap;assert(axis);const direction=b.clone().sub(a).normalize();assert(Math.abs(new THREE.Vector3(axis==='x'?1:0,0,axis==='z'?1:0).applyQuaternion(frame.quaternion).dot(direction))>1-1e-9);
+  assert(frame.center.distanceTo(new THREE.Line3(a,b).closestPointToPoint(frame.center,true,new THREE.Vector3()))<1e-7);assert(new THREE.Vector3(0,1,0).applyQuaternion(frame.quaternion).distanceTo(r.mesh.faceNormal(1))<1e-9);assert.deepEqual(snap(r.mesh),before);r.api.finish(false);
+ }
+ const r=fixture('face',[0]),p=screenAt(r,new THREE.Vector3(0,0,1));assert.equal(pickPivotFace(r.c.__boxlabBridgeState,r.canvas,{clientX:p.x,clientY:p.y},[0]),null,'back selected face cannot be picked through front');
+ r.api.toggleEdit();const before=r.api.frame().center.clone();at(r,'pointerdown',new THREE.Vector3(0,0,1));assert(r.api.frame().center.equals(before));r.api.finish(false);assert.equal(r.history.undoStack.length,0);
+});

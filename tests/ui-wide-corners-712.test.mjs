@@ -80,3 +80,14 @@ test('1017 pivot/space shortcuts delegate once, expose state and swap World/Loca
  const f=shortcuts();let editing=false,local=false,calls=0;globalThis.__boxlabLocalPivot={available:()=>true,editing:()=>editing,local:()=>local,toggleEdit(){editing=!editing;calls++;},toggleSpace(){local=!local;calls++;}};
  f.api.sync();const p=f.api.controls.get('pivot'),s=f.api.controls.get('space'),world=s.innerHTML;p.click();assert.equal(p.getAttribute('aria-pressed'),'true');s.click();assert.equal(s.getAttribute('aria-pressed'),'true');assert.notEqual(s.innerHTML,world);assert.equal(calls,2);assert.equal(f.api.controls.has('undo'),false);assert.equal(f.api.controls.has('redo'),false);delete globalThis.__boxlabLocalPivot;delete globalThis.__boxlabObjectSelection;
 });
+
+test('1023 Pivot editing shows only Pivot and World/Local shortcuts, restoring original mode-specific icons on exit',()=>{
+ const f=shortcuts();let editing=true;globalThis.__boxlabLocalPivot={available:()=>true,editing:()=>editing,local:()=>true};globalThis.__boxlabComponentAlignViewportSession={available:()=>true};
+ for(const mode of ['object','face','edge','vertex']){
+  f.mode(mode);f.api.sync();assert.deepEqual([...f.api.controls].filter(([,b])=>!b.hidden).map(([k])=>k),['pivot','space']);
+  for(const g of f.root.children)assert.equal(g.hidden,g.dataset.corner!=='br');
+ }
+ editing=false;f.api.sync();assert.equal(f.api.controls.get('tools').hidden,false);assert.equal(f.api.controls.get('focus').hidden,false);assert.equal(f.api.controls.get('frame').hidden,false);assert.equal(f.api.controls.get('align').hidden,false);assert.equal(f.api.controls.get('multi').hidden,true);
+ f.mode('object');f.api.sync();assert.equal(f.api.controls.get('multi').hidden,false);assert.equal(f.api.controls.get('align').hidden,true);
+ delete globalThis.__boxlabLocalPivot;delete globalThis.__boxlabComponentAlignViewportSession;delete globalThis.__boxlabObjectSelection;
+});

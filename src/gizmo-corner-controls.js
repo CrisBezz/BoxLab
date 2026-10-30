@@ -37,12 +37,13 @@ export function mountGizmoCornerControls(root,{openTools,currentMode,isBusy=()=>
   const busy=isBusy(),mode=currentMode?.(),pivotEditing=!!globalThis.__boxlabLocalPivot?.editing?.();
   for(const [action,b] of controls){
    const target=action==='tools'?null:resolve(action);
+   b.hidden=(pivotEditing&&!['pivot','space'].includes(action))||(['multi','objects'].includes(action)&&mode!=='object')||(action==='align'&&!['vertex','edge','face'].includes(mode));
    b.disabled=busy||(pivotEditing&&!['pivot','space'].includes(action))||(action!=='tools'&&(!target||target.disabled))||(['multi','objects'].includes(action)&&mode!=='object');
    if(action==='pivot'){b.setAttribute('aria-pressed',String(!!globalThis.__boxlabLocalPivot?.editing?.()));}
    if(action==='space'){const local=!!globalThis.__boxlabLocalPivot?.local?.();b.setAttribute('aria-pressed',String(local));b.title=local?'Local pivot / axes — switch to World':'World axes / selection centre — switch to Local';b.setAttribute('aria-label',b.title);if(b.dataset.space!==(local?'local':'world'))b.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true">'+gizmoIcons[local?'localSpace':'space']+'</svg>';b.dataset.space=local?'local':'world';}
-   if(action==='multi'){b.hidden=mode!=='object';b.setAttribute('aria-pressed',globalThis.__boxlabObjectSelection?.multi?'true':'false');}
-   if(action==='objects'){b.hidden=mode!=='object';b.setAttribute('aria-pressed',globalThis.__boxlabObjectListViewport?.visible?.()?'true':'false');}
-   if(action==='align'){b.hidden=!['vertex','edge','face'].includes(mode);const label=mode==='vertex'?'Vertex to Vertex':mode==='edge'?'Edge to Edge':'Face to Face',icon=gizmoIcons['align'+(mode==='vertex'?'Vertex':mode==='edge'?'Edge':'Face')];b.title='Align '+label;b.setAttribute('aria-label','Align '+label);if(b.dataset.alignMode!==mode){b.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true">'+icon+'</svg>';b.dataset.alignMode=mode;}b.setAttribute('aria-pressed',String(!!globalThis.__boxlabComponentAlignViewportSession?.active?.()));}
+   if(action==='multi'){b.setAttribute('aria-pressed',globalThis.__boxlabObjectSelection?.multi?'true':'false');}
+   if(action==='objects'){b.setAttribute('aria-pressed',globalThis.__boxlabObjectListViewport?.visible?.()?'true':'false');}
+   if(action==='align'){const label=mode==='vertex'?'Vertex to Vertex':mode==='edge'?'Edge to Edge':'Face to Face',icon=gizmoIcons['align'+(mode==='vertex'?'Vertex':mode==='edge'?'Edge':'Face')];b.title='Align '+label;b.setAttribute('aria-label','Align '+label);if(b.dataset.alignMode!==mode){b.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true">'+icon+'</svg>';b.dataset.alignMode=mode;}b.setAttribute('aria-pressed',String(!!globalThis.__boxlabComponentAlignViewportSession?.active?.()));}
    if(action==='focus')b.setAttribute('aria-pressed',doc.documentElement.classList.contains('boxlab-focus-view')?'true':'false');
   }
   groups.forEach(group=>group.hidden=[...group.children].every(b=>b.hidden));

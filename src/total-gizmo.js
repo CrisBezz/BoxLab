@@ -1,5 +1,5 @@
-import { installLocalPivot } from './gizmo-local-pivot.js?v=0.36.18.1019';
-import { mountGizmoCornerControls } from './gizmo-corner-controls.js?v=0.36.18.1021';
+import { installLocalPivot } from './gizmo-local-pivot.js?v=0.36.18.1023';
+import { mountGizmoCornerControls } from './gizmo-corner-controls.js?v=0.36.18.1023';
 import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.732';
 import * as THREE from 'three';
 

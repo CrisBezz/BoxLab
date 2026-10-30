@@ -22,7 +22,7 @@ test('1022 actual button cycles plane/grid/off/plane, with matching icon, no ext
  const f=fixture(),before=f.body.matrix.toArray(),originalCount=f.scene.children.length;
  f.api.apply();assert.equal(f.api.ground,'plane');assert.equal(f.floor.visible,true);assert.equal(f.grid.visible,false);assert.match(f.button.innerHTML,/fill="#cbd0d8"/);
  const click=()=>{let prevent=0,stop=0;f.button.listeners[0]({preventDefault(){prevent++;},stopPropagation(){stop++;}});assert.equal(prevent,1);assert.equal(stop,1);};
- click();assert.equal(f.api.ground,'grid');assert.equal(f.floor.visible,false);assert.equal(f.grid.visible,true);assert.match(f.button.innerHTML,/m6 10\.3/);assert.match(f.button.attributes['aria-label'],/Grid/);
+ click();assert.equal(f.api.ground,'grid');assert.equal(f.floor.visible,false);assert.equal(f.grid.visible,true);assert.equal(f.grid.material.opacity,.198);assert.match(f.button.innerHTML,/m6 10\.3/);assert.match(f.button.attributes['aria-label'],/Grid/);
  click();assert.equal(f.api.ground,'off');assert.equal(f.floor.visible,false);assert.equal(f.grid.visible,false);assert.doesNotMatch(f.button.innerHTML,/fill=|m6 10\.3/);
  click();assert.equal(f.api.ground,'plane');assert.equal(f.floor.visible,true);assert.equal(f.grid.visible,false);
  for(let i=0;i<5;i++)f.api.apply();assert.equal(f.button.listeners.length,1);assert.equal(f.scene.children.length,originalCount);assert.deepEqual(f.body.matrix.toArray(),before);
@@ -30,7 +30,7 @@ test('1022 actual button cycles plane/grid/off/plane, with matching icon, no ext
 });
 test('1022 choice survives render/bridge and Clean View updates, while axes retain original Clean visibility',()=>{
  const f=fixture();f.api.setGround('grid');f.clean(true);assert.equal(f.grid.visible,false);assert.equal(f.axes.visible,false);assert.equal(f.api.ground,'grid');f.clean(false);assert.equal(f.grid.visible,true);assert.equal(f.axes.visible,true);
- f.api.setGround('off');f.mode('solid');f.api.apply();assert.equal(f.floor.visible,false);assert.equal(f.grid.visible,false);f.mode('studio');assert.equal(f.floor.visible,false);assert.equal(f.grid.visible,false);
+ f.mode('solid');assert.equal(f.grid.material.opacity,.374);f.api.setGround('off');f.mode('solid');f.api.apply();assert.equal(f.floor.visible,false);assert.equal(f.grid.visible,false);f.mode('studio');assert.equal(f.floor.visible,false);assert.equal(f.grid.visible,false);
  f.api.setGround('plane');f.mode('solid');f.mode('studio');assert.equal(f.floor.visible,true);assert.equal(f.grid.visible,false);
 });
 test('1022 Studio contact shadow stays hidden in grid/off through original polish refresh and restores on plane',()=>{

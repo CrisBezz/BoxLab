@@ -1,4 +1,4 @@
-import {gizmoIcons} from './gizmo-corner-controls.js?v=0.36.18.1021';
+import {gizmoIcons} from './gizmo-corner-controls.js?v=0.36.18.1023';
 import {encodeBoxlabScene,decodeBoxlabScene} from './boxlab-project-codec.js?v=0.36.18.938';
 import {EditableMesh} from './mesh.js';
 const list=document.querySelector('#outlinerList');
