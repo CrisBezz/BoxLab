@@ -1,3 +1,4 @@
+import {nomadMaterialMaps} from './nomad-material-resource.js?v=0.36.18.1030';
 // Read-only references to retained embedded images; default callers stay colour-only.
 // UV workspace opts into map references, never lighting or stored image edits.
 // Shared read-only embedded UV0 image resolver; callers own material/slot policy.
@@ -14,7 +15,27 @@ export function embeddedUVImage(payload,info,{maxBytes=8*1024*1024}={}){
  return {imageIndex:texture.source,data,mime};
 }
 const mapLabels={color:'Colour',normal:'Normal',emissive:'Emissive',roughness:'Roughness (G)',metalness:'Metalness (B)'};
+const nativeLabels={color:'Colour',normal:'Normal',emissive:'Emissive',roughness:'Roughness',metalness:'Metalness',opacity:'Opacity',displacement:'Displacement'};
+function nativeImageChoices(payload,imageOptions,slots){
+ const maxBytes=imageOptions?.maxBytes??8*1024*1024;
+ if(!Number.isSafeInteger(maxBytes)||maxBytes<=0||maxBytes>24*1024*1024)return [];
+ let maps;try{maps=nomadMaterialMaps(payload)?.maps;}catch{return [];}
+ if(!maps)return [];
+ const result=[];
+ for(const slot of Array.isArray(slots)?new Set(slots):[]){
+  if(!Object.hasOwn(nativeLabels,slot))continue;
+  const map=maps[slot],data=map?.choice?.data;if(!data||data.length>maxBytes)continue;
+  const png=[137,80,78,71,13,10,26,10].every((v,i)=>data[i]===v),jpeg=data[0]===255&&data[1]===216&&data[2]===255;
+  const mime=png?'image/png':jpeg?'image/jpeg':null;if(!mime||map.choice.mime!==mime)continue;
+  // These are raw image references. Do not extract glTF G/B channels, apply
+  // native material transforms/factors or imply a retained map renders in 3D.
+  const label=nativeLabels[slot],name=typeof map.name==='string'?map.name:'';
+  result.push({...map.choice,imageIndex:map.nativeTexture.index,materialIndex:0,slot,label:`NOM · ${label}${name?' · '+name:''}`,referenceStatus:`Raw ${label} image · inspection only · tile 0–1 · material mapping not applied`});
+ }
+ return result;
+}
 export function importedUVImageChoices(payload,imageOptions,slots=['color']){
+ if(payload?.source==='nomad')return nativeImageChoices(payload,imageOptions,slots);
  if(payload?.source!=='glb'||payload.version!==1||!Array.isArray(payload.materialIndices))return [];
  const result=[],requested=Array.isArray(slots)?[...new Set(slots)].filter(slot=>Object.hasOwn(mapLabels,slot)):[];
  for(const materialIndex of new Set(payload.materialIndices)){
@@ -60,7 +81,7 @@ export function createUVImagePreview({changed=()=>{},decode=decodeUVImage,slots=
   if(!enabled||!choice)return;
   Promise.resolve().then(()=>token===generation&&enabled?decode(choice):null).then(value=>{
    if(token!==generation||!enabled){value?.close?.();return;}
-   image=value;status=(choice.slot&&choice.slot!=='color'?mapLabels[choice.slot]:'Base-colour')+' image reference · tile 0–1';changed();
+   image=value;status=choice.referenceStatus??(choice.slot&&choice.slot!=='color'?mapLabels[choice.slot]:'Base-colour')+' image reference · tile 0–1';changed();
   },()=>{if(token===generation&&enabled){status='Could not decode this image.';changed();}});
  }
  return {get view(){return {choices,index,enabled,image,status};},setPayload(payload){
@@ -68,7 +89,7 @@ export function createUVImagePreview({changed=()=>{},decode=decodeUVImage,slots=
   const found=next.findIndex(c=>c.materialIndex===previous?.materialIndex&&c.imageIndex===previous?.imageIndex&&c.slot===previous?.slot);
   choices=next;index=found>=0?found:0;
   const choice=choices[index];if(!choice)enabled=false;
-  if(previous&&choice&&previous.data===choice.data&&previous.mime===choice.mime&&previous.slot===choice.slot){changed();return;}
+  if(previous&&choice&&previous.data===choice.data&&previous.mime===choice.mime&&previous.slot===choice.slot&&previous.referenceStatus===choice.referenceStatus){changed();return;}
   load();
  },enable(value){if(enabled===!!value)return;enabled=!!value&&!!choices.length;load();},choose(value){
   if(!Number.isInteger(value)||value<0||value>=choices.length||value===index)return;index=value;load();

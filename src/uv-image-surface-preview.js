@@ -1,7 +1,7 @@
 import {paintMaterialEnvironments} from './paint-material-environment.js?v=0.36.18.925';
 import {nomadColourSurfaceSource,nomadPBRSurfaceSources} from './nomad-material-resource.js?v=0.36.18.1030';
 import * as THREE from 'three';
-import {importedUVImageChoices,decodeUVImage} from './uv-image-preview.js?v=0.36.18.1028';
+import {importedUVImageChoices,decodeUVImage} from './uv-image-preview.js?v=0.36.18.1031';
 // Active Base inspection. Mixed materials require exact per-face import provenance.
 // Names/facegroup labels are never interpreted as material assignments.
 export function uvImageMaterialSource(payload){

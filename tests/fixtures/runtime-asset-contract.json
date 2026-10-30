@@ -167,9 +167,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1030",
+      "url": "./src/drawer-ui.js?v=0.36.18.1031",
       "target": "src/drawer-ui.js",
-      "sha256": "6da9eca5c14831b2a37b95138bc036d5c790e63e781693e8429fc6057ffcf19b"
+      "sha256": "632a244d4341592efa65c3aa2e27ebd780c8c675d851b1e703763f9baddf65a7"
     },
     {
       "owner": "index.html",
@@ -210,9 +210,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/export-as-panel.js?v=0.36.18.1030",
+      "url": "./src/export-as-panel.js?v=0.36.18.1031",
       "target": "src/export-as-panel.js",
-      "sha256": "6fda0e6425ce9a224a898efc20f645fa856a25be1ed59782d56ac1d839edef73",
+      "sha256": "d5ecd3d48fd2d39c3a28cb9a3248a6b5916b7ff8bec158bc43499111eb0b5c8f",
       "sourceVersion": "0.36.18.892"
     },
     {
@@ -310,9 +310,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/mesh-health.js?v=0.36.18.1028",
+      "url": "./src/mesh-health.js?v=0.36.18.1031",
       "target": "src/mesh-health.js",
-      "sha256": "5d4c549ac0a32de0a2fc1d1baff81fd6bac1c9b1ac004af704f4d7026621982f",
+      "sha256": "a74ab9b53581aeca9ca85dde09196096088a647688916a7acc8299af22c5501e",
       "sourceVersion": "0.36.18.880"
     },
     {
@@ -378,21 +378,21 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.1030",
+      "url": "./src/release-bootstrap.js?v=0.36.18.1031",
       "target": "src/release-bootstrap.js",
       "sha256": "fe3e41b43e5df07fb5252936bff4e2a7c4f47fcb38f89b2cb6204fc5712e1698"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1030",
+      "url": "./src/release-version.js?v=0.36.18.1031",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
     {
       "owner": "index.html",
-      "url": "./src/render-modes.js?v=0.36.18.1030",
+      "url": "./src/render-modes.js?v=0.36.18.1031",
       "target": "src/render-modes.js",
-      "sha256": "171e251b242c19d1d59673a50ee064a307aa91c3fe946a044382d45607b658f1"
+      "sha256": "9ec8ea00fc4ea508764b24f2a2caa5d31eb154b8fc05e6207dc813a3ba0da54b"
     },
     {
       "owner": "index.html",
@@ -876,9 +876,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1030",
+      "url": "./face-workflow-layout.js?v=0.36.18.1031",
       "target": "src/face-workflow-layout.js",
-      "sha256": "cca41e35d19a8aa2f008d9fb7b30c35d23ba23f7201630973d626adbaee430e6"
+      "sha256": "7e00e336e9c4a6546fba022eebf5641b58d385955dc64be39686fefff0515b53"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1189,9 +1189,9 @@
     },
     {
       "owner": "src/export-as-panel.js",
-      "url": "./nomad-packed-maps.js?v=0.36.18.1030",
+      "url": "./nomad-packed-maps.js?v=0.36.18.1031",
       "target": "src/nomad-packed-maps.js",
-      "sha256": "b5c2a06f32a6f93190c0311cae336acf3e65c98eb03310510fd4b37bedecb8c1"
+      "sha256": "acf7db80544bf7e03d77f4f11b2964623e3f39f3bf66f64b1148bf3245324bb9"
     },
     {
       "owner": "src/export-as-panel.js",
@@ -1373,7 +1373,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1030",
+      "url": "./release-version.js?v=0.36.18.1031",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -2396,9 +2396,9 @@
     },
     {
       "owner": "src/mesh-health.js",
-      "url": "./uv-workspace.js?v=0.36.18.1028",
+      "url": "./uv-workspace.js?v=0.36.18.1031",
       "target": "src/uv-workspace.js",
-      "sha256": "0e5155e64a399084621fea31d14fcdb54ce51df3b09ebd8718e30a91769166ab"
+      "sha256": "39d8c267dd42b2302bf66012f05892ccb89b71bd3f5a462adcff12dc10d601cd"
     },
     {
       "owner": "src/uv-workspace.js",
@@ -2420,51 +2420,51 @@
     },
     {
       "owner": "src/uv-workspace.js",
-      "url": "./uv-image-preview.js?v=0.36.18.1028",
+      "url": "./uv-image-preview.js?v=0.36.18.1031",
       "target": "src/uv-image-preview.js",
-      "sha256": "55442900466a64f08078b429212efca22b2838519ca8fb5707293f33daa4c149"
+      "sha256": "a041ae21e5f62cc250da919d3ef252dbede4ba9d61db696be47028e33b9f21c7"
     },
     {
       "owner": "src/render-modes.js",
-      "url": "./uv-image-surface-preview.js?v=0.36.18.1030",
+      "url": "./uv-image-surface-preview.js?v=0.36.18.1031",
       "target": "src/uv-image-surface-preview.js",
-      "sha256": "2cf07cf332e68297e930456ca13b799edd519035215a1e449b66464cf84f0f15"
+      "sha256": "6e519bd0c1ff80643ce87d7b748e63835ab5615ba5c27fea03156b764257b209"
     },
     {
       "owner": "src/uv-image-surface-preview.js",
-      "url": "./uv-image-preview.js?v=0.36.18.1028",
+      "url": "./uv-image-preview.js?v=0.36.18.1031",
       "target": "src/uv-image-preview.js",
-      "sha256": "55442900466a64f08078b429212efca22b2838519ca8fb5707293f33daa4c149"
+      "sha256": "a041ae21e5f62cc250da919d3ef252dbede4ba9d61db696be47028e33b9f21c7"
     },
     {
       "owner": "src/nomad-export-core.js",
-      "url": "./uv-image-surface-preview.js?v=0.36.18.1030",
+      "url": "./uv-image-surface-preview.js?v=0.36.18.1031",
       "target": "src/uv-image-surface-preview.js",
-      "sha256": "2cf07cf332e68297e930456ca13b799edd519035215a1e449b66464cf84f0f15"
+      "sha256": "6e519bd0c1ff80643ce87d7b748e63835ab5615ba5c27fea03156b764257b209"
     },
     {
       "owner": "src/nomad-export-core.js",
-      "url": "./uv-image-preview.js?v=0.36.18.1028",
+      "url": "./uv-image-preview.js?v=0.36.18.1031",
       "target": "src/uv-image-preview.js",
-      "sha256": "55442900466a64f08078b429212efca22b2838519ca8fb5707293f33daa4c149"
+      "sha256": "a041ae21e5f62cc250da919d3ef252dbede4ba9d61db696be47028e33b9f21c7"
     },
     {
       "owner": "src/nomad-packed-maps.js",
-      "url": "./nomad-export-core.js?v=0.36.18.1030",
+      "url": "./nomad-export-core.js?v=0.36.18.1031",
       "target": "src/nomad-export-core.js",
-      "sha256": "90a803b0491041726c6a0b2e5069749ebb0f8f16094238956f638d530590ba78"
+      "sha256": "0f27306308a7dd4ca265d551c72cdeaa6a77048edfd695872696926ec676ccc9"
     },
     {
       "owner": "src/nomad-export-core.js",
-      "url": "./nomad-displacement-map.js?v=0.36.18.1028",
+      "url": "./nomad-displacement-map.js?v=0.36.18.1031",
       "target": "src/nomad-displacement-map.js",
-      "sha256": "eed87012596573385fc13b03f026db03c98c9e9d617280f0d10da731068fdf83"
+      "sha256": "2f191edd6b49d261ce9648f4b070b5636db239d1849785e12015c83f3accca4c"
     },
     {
       "owner": "src/nomad-displacement-map.js",
-      "url": "./uv-image-preview.js?v=0.36.18.1028",
+      "url": "./uv-image-preview.js?v=0.36.18.1031",
       "target": "src/uv-image-preview.js",
-      "sha256": "55442900466a64f08078b429212efca22b2838519ca8fb5707293f33daa4c149"
+      "sha256": "a041ae21e5f62cc250da919d3ef252dbede4ba9d61db696be47028e33b9f21c7"
     },
     {
       "owner": "src/nomad-packed-maps.js",
@@ -2768,9 +2768,9 @@
     },
     {
       "owner": "evaluations/uv-paint/lab.js",
-      "url": "../../src/export-as-panel.js?v=0.36.18.1030",
+      "url": "../../src/export-as-panel.js?v=0.36.18.1031",
       "target": "src/export-as-panel.js",
-      "sha256": "6fda0e6425ce9a224a898efc20f645fa856a25be1ed59782d56ac1d839edef73"
+      "sha256": "d5ecd3d48fd2d39c3a28cb9a3248a6b5916b7ff8bec158bc43499111eb0b5c8f"
     },
     {
       "owner": "src/paint-layer-stack.js",
@@ -2804,9 +2804,9 @@
     },
     {
       "owner": "evaluations/uv-paint/index.html",
-      "url": "./lab.js?v=0.36.18.1030",
+      "url": "./lab.js?v=0.36.18.1031",
       "target": "evaluations/uv-paint/lab.js",
-      "sha256": "273210a6181cde4fd1b28dc63dc66092fd5665157b3e094574ede8abdcb66cf8"
+      "sha256": "6d956250413daa4f2ed930e1d8a5ea1c549797a352aa122597414793cbbfb9a1"
     },
     {
       "owner": "index.html",
@@ -3350,9 +3350,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1030",
+      "url": "./src/shell-comparison.js?v=0.36.18.1031",
       "target": "src/shell-comparison.js",
-      "sha256": "cf95aab2dc89efd646b05ba7376f7994213f44ba27b182015a0da15c11d8fb3e"
+      "sha256": "8fb0757c275bd56d4fd463add36208597f957f099d021697ecf4b7ca5f268796"
     },
     {
       "owner": "src/main.js",
@@ -3455,6 +3455,12 @@
       "url": "./paint-material-environment.js?v=0.36.18.925",
       "target": "src/paint-material-environment.js",
       "sha256": "4c960c8621dcfc6a58355926b592c8ee961957b12048c569f133972c7b809d02"
+    },
+    {
+      "owner": "src/uv-image-preview.js",
+      "url": "./nomad-material-resource.js?v=0.36.18.1030",
+      "target": "src/nomad-material-resource.js",
+      "sha256": "fd7fab532925703efdbfaece4e851ddc5190a793e13ea880484d803c9f56b1ce"
     }
   ]
 }
