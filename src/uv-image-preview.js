@@ -32,9 +32,9 @@ export function importedUVImageChoices(payload,imageOptions,slots=['color']){
 }
 export async function decodeUVImage(choice){
  if(typeof globalThis.createImageBitmap!=='function')throw Error('Image preview is unavailable');
- const scalar=choice.channel===1||choice.channel===2;
- const image=await globalThis.createImageBitmap(new Blob([choice.data],{type:choice.mime}),{resizeWidth:1024,resizeHeight:1024,resizeQuality:'high',imageOrientation:'from-image',...(scalar?{colorSpaceConversion:'none',premultiplyAlpha:'none'}:{})});
- if(!image.width||!image.height||image.width>1024||image.height>1024){image.close?.();throw Error('Image preview exceeds the display budget');}
+ const scalar=choice.channel===0||choice.channel===1||choice.channel===2,previewSize=choice.previewSize===512?512:1024;
+ const image=await globalThis.createImageBitmap(new Blob([choice.data],{type:choice.mime}),{resizeWidth:previewSize,resizeHeight:previewSize,resizeQuality:'high',imageOrientation:'from-image',...(scalar||choice.linear?{colorSpaceConversion:'none',premultiplyAlpha:'none'}:{})});
+ if(!image.width||!image.height||image.width>previewSize||image.height>previewSize){image.close?.();throw Error('Image preview exceeds the display budget');}
  if(!scalar)return image;
  let canvas,ready=false;
  try{
@@ -43,7 +43,7 @@ export async function decodeUVImage(choice){
   canvas.width=image.width;canvas.height=image.height;
   const context=canvas.getContext('2d',{willReadFrequently:true,colorSpace:'srgb'});if(!context)throw Error('Scalar image preview canvas is unavailable');
   context.drawImage(image,0,0);const pixels=context.getImageData(0,0,image.width,image.height);
-  for(let i=0;i<pixels.data.length;i+=4){if(pixels.data[i+3]!==255)throw Error('Scalar image reference requires opaque packed pixels');const value=pixels.data[i+choice.channel];pixels.data[i]=pixels.data[i+1]=pixels.data[i+2]=value;}
+  for(let i=0;i<pixels.data.length;i+=4){if(pixels.data[i+3]!==255)throw Error('Scalar image reference requires opaque packed pixels');if(choice.grayscale&&(pixels.data[i]!==pixels.data[i+1]||pixels.data[i]!==pixels.data[i+2]))throw Error('Native scalar preview requires a grayscale image');const value=pixels.data[i+choice.channel];pixels.data[i]=pixels.data[i+1]=pixels.data[i+2]=value;}
   context.putImageData(pixels,0,0);
   // Keep one canvas image in the existing controller, rather than encode a PNG
   // or allocate a second bitmap. Late/canceled results use the same close hook.

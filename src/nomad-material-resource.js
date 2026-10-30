@@ -39,9 +39,9 @@ export function nomadMaterialMaps(payload){
 }
 // Native Auto selects UV when UVs exist (Nomad manual/material#projection).
 // First preview supports repeat scaling, not uncertain offset/rotation conventions.
-export function nomadColourSurfaceSource(payload){
+function nomadTextureSource(payload,slot){
  if(payload?.source!=='nomad')return null;
- const m=payload.nomadMaterial,t=m?.textures?.color,image=payload.images?.[t?.index],data=image?.data;
+ const m=payload.nomadMaterial,t=m?.textures?.[slot],image=payload.images?.[t?.index],data=image?.data;
  if(!m||!t||!(data instanceof Uint8Array)||!data.length||data.length>8*1024*1024||!['auto','uv'].includes(t.projection??'auto')||(m.material_type??'opaque')!=='opaque'||(m.opacity??1)!==1||(m.factorOpacity??1)!==1||m.flip_culling===true)return null;
  const png=[137,80,78,71,13,10,26,10].every((v,i)=>data[i]===v),jpeg=data[0]===255&&data[1]===216&&data[2]===255;
  const mime=png?'image/png':jpeg?'image/jpeg':null;if(!mime||image.definition.type!==mime)return null;
@@ -50,8 +50,29 @@ export function nomadColourSurfaceSource(payload){
  const wraps={repeat:10497,mirror:33648,none:33071},filter={auto:9987,nearest:9728,linear:9729,mipmap:9987};
  const wrapS=wraps[t.wrapS??'repeat'],wrapT=wraps[t.wrapT??'repeat'],minFilter=filter[t.minFilter??'auto'];
  if(!wrapS||!wrapT||!minFilter||!['auto','nearest','linear'].includes(t.magFilter??'auto'))return null;
+ return {choice:{imageIndex:t.index,data,mime},sampler:{wrapS,wrapT,minFilter,magFilter:t.magFilter==='nearest'?9728:9729},repeat:scale};
+}
+export function nomadColourSurfaceSource(payload){
+ const source=nomadTextureSource(payload,'color');if(!source)return null;
+ const m=payload.nomadMaterial;
  const factor=m.factorColor??[1,1,1];if(!Array.isArray(factor)||factor.length!==3||!factor.every(v=>Number.isFinite(v)&&v>=0&&v<=1))return null;
  const roughness=m.roughness??.25,metalness=m.metalness??0;
  if(![roughness,metalness].every(v=>Number.isFinite(v)&&v>=0&&v<=1))return null;
- return {choice:{imageIndex:t.index,data,mime},factor:[...factor,1],sampler:{wrapS,wrapT,minFilter,magFilter:t.magFilter==='nearest'?9728:9729},repeat:scale,roughness,metalness,doubleSided:m.two_sided===1,unlit:m.always_unlit===true};
+ return {...source,factor:[...factor,1],roughness,metalness,doubleSided:m.two_sided===1,unlit:m.always_unlit===true};
+}
+
+// Separate native data maps, never glTF G/B packed textures. Grayscale validation
+// makes scalar sampling unambiguous; original encoded bytes remain untouched.
+export function nomadPBRSurfaceSources(payload,colour=nomadColourSurfaceSource(payload)){
+ if(!colour||colour.unlit)return {};
+ const maps={},seen=new Set([colour.choice.data]);let bytes=colour.choice.data.length;
+ for(const slot of ['normal','roughness','metalness']){
+  const source=nomadTextureSource(payload,slot);if(!source)continue;
+  const factor=payload.nomadMaterial[{normal:'factorNormal',roughness:'factorRoughness',metalness:'factorMetalness'}[slot]]??1;
+  if(!Number.isFinite(factor)||!Number.isFinite(Math.fround(factor))||factor<0||slot!=='normal'&&factor>1)continue;
+  const extra=seen.has(source.choice.data)?0:source.choice.data.length;if(bytes+extra>8*1024*1024)continue;
+  bytes+=extra;seen.add(source.choice.data);
+  maps[slot]={...source,factor,negY:(payload.nomadMaterial.normal_neg_y??payload.nomadMaterial.flip_y)===true,choice:{...source.choice,linear:true,...(slot==='normal'?{}:{channel:0,grayscale:true,previewSize:512})}};
+ }
+ return maps;
 }

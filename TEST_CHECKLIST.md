@@ -1,3 +1,18 @@
+## .1026 — native NOM normal and scalar preview — 30 October 2026
+
+- [x] User .1025 PASS protected: colour/tiling/retention/SaveOpen/NOM and1024 lighting.
+- [x] Original native/UV overlay/decoder: linear tangent normals with native Y/strength;
+  separate opaque grayscale roughness/metalness with saved factors and own UV scales.
+- [x] Colour-first/failure fallback; serial cancel/late image release; original material-
+  only reflection pool/refcount; explicit scene environment/unlit/UV Image preserved.
+- [x] Four surfaces/20k corners,1024 colour+normal/512scalars,8MiB combined choices;
+  encoded resource pool/raw bytes/settings unchanged. Other channels retained-only.
+- [x] Six new owner/math/decoder/lifecycle/round-trip checks;157 focused PASS.
+- [x] Full final local Node24.22.1:3028 PASS/0FAIL/0skip/0cancel (183.48s); syntax/diff clean.
+- [ ] Publication proof pending; no native/GPU PASS inferred.
+- [ ] DEVICE1026 supplied sample,left normal+roughness,middle metal variation,right
+  colour control in Studio/Solid/orbit; SaveOpen.boxlab/NOMAD; accepted MAP TEST5x.
+
 ## .1025 — NOM maps and colour viewport — 30 October 2026
 
 - [x] .1024 user PASS protected; original underside lights unchanged.
@@ -12,7 +27,7 @@
   dispatcher->fit->SaveOpen->browser NOM->parse preserve image hash/settings/worldpositions.
 - [x] Final full local Node24.22.1:3022 PASS/0FAIL/0skip/0cancel (110.32s); syntax/diff clean.
 - [x] Runtimeb7507920/tree80fdac20 exactly tested;39 blobs verified; Pages41012329078 and hosted full41012329141 SUCCESS.18/27 live byte matches (9 proxy timeouts); browser shell/data/loader pins1025 verified. WebGL disabled in cloud browser; native visual/PBR PASS pending.
-- [ ] DEVICE1025 reimport original MAP TEST.nom; colour cube in Studio/Solid,5x tiling,
+- [x] User1025 PASS: DEVICE1025 reimport original MAP TEST.nom; colour cube in Studio/Solid,5x tiling,
   orbit/select/Move; SaveOpen.boxlab texture; NOMAD open in Nomad; looks/UndoRedo/floor.
 
 ## .1024 protected acceptance — 30 October 2026

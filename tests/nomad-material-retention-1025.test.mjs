@@ -79,7 +79,7 @@ test('1025 malformed image ranges/indices and native resource envelopes refuse b
  for(const fn of [p=>p.nomadMaterial.textures.color.index=-1,p=>p.uvCorners[0][0][0]=Infinity,p=>p.images[0].data=new Uint8Array(25*1024*1024),p=>p.fakeGLB=true]){const q=structuredClone(p);fn(q);assert.throws(()=>validateNomadResource(q),/native NOM/);}
 });
 test('1025 real lit texture surface uses exact source UVs/5x tiling, shared decode limits, scene lighting, original picking and exact-once disposal',async()=>{
- const entry=parseNomadMeshes(await sourcePromise).meshes[0],p=entry.glbPassthrough,ex=glbOwnerRuntime(),body=new THREE.Mesh(entry.mesh.triangulatedGeometry(),new THREE.MeshStandardMaterial()),hidden=new THREE.MeshBasicMaterial();body.castShadow=body.receiveShadow=true;
+ const entry=parseNomadMeshes(await sourcePromise).meshes[0];entry.glbPassthrough.nomadMaterial.textures={color:entry.glbPassthrough.nomadMaterial.textures.color};const p=entry.glbPassthrough,ex=glbOwnerRuntime(),body=new THREE.Mesh(entry.mesh.triangulatedGeometry(),new THREE.MeshStandardMaterial()),hidden=new THREE.MeshBasicMaterial();body.castShadow=body.receiveShadow=true;
  const original=body.material,geometry=body.geometry,image={width:1024,height:1024,closed:0,close(){this.closed++;}};
  const overlay=createUVImageOverlay(body,entry.mesh,p,ex.c.buildUVPreviewGeometry,hidden,{lit:true,decode:async()=>image});assert(overlay);await tick();
  assert.equal(body.material,hidden);assert.equal(overlay.material.isMeshStandardMaterial,true);assert.equal(overlay.material.toneMapped,true);assert.equal(overlay.receiveShadow,true);assert.deepEqual(overlay.material.color.toArray(),[.8,.7,.6]);assert.equal(overlay.material.roughness,.3);assert.equal(overlay.material.metalness,.2);
@@ -90,7 +90,7 @@ test('1025 real lit texture surface uses exact source UVs/5x tiling, shared deco
 });
 test('1025 actual Studio/Solid owners show active and inactive native Base texture and preserve modifier/other-look/lifecycle guards',async()=>{
  const p=parseNomadMeshes(await sourcePromise).meshes[0].glbPassthrough,ex=glbOwnerRuntime(),f=facegroupsRuntime(),images=[];
- function payload(mesh){return {...p,uvTopologySignature:sig(mesh),uvCorners:mesh.faces.map(face=>face.map((_,i)=>[i%2,Math.floor(i/2)]))};}
+ function payload(mesh){return {...p,nomadMaterial:{...p.nomadMaterial,textures:{color:p.nomadMaterial.textures.color}},uvTopologySignature:sig(mesh),uvCorners:mesh.faces.map(face=>face.map((_,i)=>[i%2,Math.floor(i/2)]))};}
  f.activeObject.glbPassthrough=payload(f.source);f.other.glbPassthrough=payload(f.other.mesh);
  Object.assign(f.c,{studioMaterial:new THREE.MeshStandardMaterial(),studioInactiveMaterial:new THREE.MeshStandardMaterial(),checkerHiddenMaterial:new THREE.MeshBasicMaterial(),__boxlabExportAs:{buildUVPreviewGeometry:ex.c.buildUVPreviewGeometry},createUVImageOverlay:(...args)=>{const options=args[5]||{};return createUVImageOverlay(...args.slice(0,5),{...options,decode:async()=>{const i={width:1024,height:1024,closed:0,close(){this.closed++;}};images.push(i);return i;}});}});
  for(const mode of ['studio','solid']){
@@ -103,7 +103,7 @@ test('1025 actual Studio/Solid owners show active and inactive native Base textu
  f.c.mode='solid';f.c.__boxlabRenderModes.apply(f.body);await tick();f.c.mode='clay';f.c.__boxlabRenderModes.apply(f.body);await tick();assert.equal(f.body.material,f.c.clayMaterial);assert(!f.body.children.some(o=>o.userData.boxlabUVImagePreview));assert(images.every(i=>i.closed===1));
 });
 test('1025 native display allocations are scene-bounded and cancellation frees the original encoded resources for later preview',async()=>{
- const entry=parseNomadMeshes(await sourcePromise).meshes[0],ex=glbOwnerRuntime(),hidden=new THREE.MeshBasicMaterial(),overlays=[],images=[];
+ const entry=parseNomadMeshes(await sourcePromise).meshes[0];entry.glbPassthrough.nomadMaterial.textures={color:entry.glbPassthrough.nomadMaterial.textures.color};const ex=glbOwnerRuntime(),hidden=new THREE.MeshBasicMaterial(),overlays=[],images=[];
  const make=()=>createUVImageOverlay(new THREE.Mesh(entry.mesh.triangulatedGeometry(),new THREE.MeshStandardMaterial()),entry.mesh,entry.glbPassthrough,ex.c.buildUVPreviewGeometry,hidden,{lit:true,decode:async()=>{const i={width:1024,height:1024,closed:0,close(){this.closed++;}};images.push(i);return i;}});
  for(let i=0;i<4;i++){const overlay=make();assert(overlay);overlays.push(overlay);}
  assert.equal(make(),null);await tick();assert.equal(images.length,4);

@@ -17556,3 +17556,49 @@ correct5x tiling,orbit/select/Move. SaveOpen.boxlab retains texture. Export NOMA
 open in Nomad and compare texture/tiling. Switch looks/UndoRedo;1024 underside and
 floor cycle sanity. Next native colour feedback,then normal/scalar/emissive preview
 through same retained-resource owner; opacity/displacement display remain deferred.
+
+## .1026 — native NOM normal / roughness / metalness viewport — 30 October 2026
+
+User explicitly PASSes1025 and requests /nextbuild. Protect accepted native colour/
+5x tiling,retained maps/SaveOpen/NOM/source-unit pipeline and1024 lighting. Baseline
+mainb20f630d/runtimeb7507920. Audit original resource/UV-image/decoder and existing
+paint reflection pool925; no parallel material/geometry/picking/history owner.
+
+Existing Studio/Solid NOM colour overlay adds linear tangent normalMap (factorNormal,
+normal_neg_y/legacy flip_y),separate opaque GRAYSCALE roughness/metalness maps and
+saved factorRoughness/factorMetalness. Independent supported UV/Auto/repeat sampling.
+Data decode uses no colour conversion/premultiplication; scalar canvas replicates
+validated grey into RGB for Three G/B reads. Coloured/translucent scalars stay
+retained-only rather than guessing a channel. Colour appears first; failed/unsupported
+auxiliary keeps it. Always-unlit and UV Image remain accepted colour-only inspection.
+Metallic map materials reuse exact925 shared/refcounted room PMREM if scene has no
+explicit environment; material-only,unavailable GPU gracefully uses direct lights.
+Original source bytes,bit depth,material JSON,codec/import/export behavior unchanged.
+
+Bounds4native surfaces/20k corners each; colour+normal1024square/scalars512square;
+combined unique encoded choices<=8MiB per surface. Original24MiB retained pool.
+Opacity/emissive/displacement still retained-only; colour source still required;
+translation/rotation/triplanar remain unsupported display. No new dense geometry,
+new startup default or change to1024 floor/lights/navigation/Pivot/selection/Paint.
+NOM import status now describes supported normal/grayscale scalar preview honestly.
+
+Six new actual-owner/real-Three tests cover plans/factors/Y/per-map transforms,
+linear decoder/grayscale/alpha/refusals,cancel/late/no-extra-start,reflection cleanup/
+explicit environment,unlit/UVImage,SaveOpen/NOM byte stability and actual Studio/Solid
+integration/picking/source geometry. Existing1025 colour-only baseline fixtures made
+explicitly colour-only; ALL original colour assertions/all-map retention tests kept.
+157 focused PASS/0FAIL/0skip. Final full local Node24.22.1 suite3028 PASS/0FAIL/
+0skip/0cancel (183.48s); changed JS syntax/diff clean. Cloud WebGL was disabled during1025; no new browser/GPU or
+native1026 visual acceptance claimed. Details/docs/nomad-pbr-preview-1026.md.
+
+Generic ready-to-import NOM_PBR_1026.nom (79,292bytes) supplied separately:3 cubes,
+normal+roughness / metallic+roughness / colour control. Original procedural128maps,
+no private artwork; regenerate from tests/helpers/nomad-pbr-fixture.mjs. No user asks
+to construct backend fixtures. Reviewed1026 child/parent/cache closure incl original
+UV decoder->workspace/Lab/exports and canonical release->face-layout->drawer; most
+changes are pins only. Protected main/Multi1.0/frozen betas and actual1024 lighting
+bytes unchanged. No new A/B batch. Publication pending,proof follows.
+DEVICE1026 import sample Studio/Solid,left normal/roughness relief,middle metallic
+variation while orbiting,right colour control; SaveOpen.boxlab + NOMAD/Nomad sanity,
+old MAP TEST colour/5x accepted. Next native feedback then emissive preview through
+same owner; opacity/displacement display deferred.

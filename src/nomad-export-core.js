@@ -1,9 +1,9 @@
-import {nomadMaterialMaps} from './nomad-material-resource.js?v=0.36.18.1025';
+import {nomadMaterialMaps} from './nomad-material-resource.js?v=0.36.18.1026';
 import {faceGroupPalette} from './facegroup-colours-core.js?v=0.36.18.992';
-import {preparedPaintImage,preparedRoughnessImage,preparedMetalnessImage,paintExportGeometryObject} from './paint-export.js?v=0.36.18.1025';
-import {nomadDisplacementMap} from './nomad-displacement-map.js?v=0.36.18.892';
-import {uvImageSurfaceSource,uvImageMaterialSource} from './uv-image-surface-preview.js?v=0.36.18.1025';
-import {embeddedUVImage} from './uv-image-preview.js?v=0.36.18.892';
+import {preparedPaintImage,preparedRoughnessImage,preparedMetalnessImage,paintExportGeometryObject} from './paint-export.js?v=0.36.18.1026';
+import {nomadDisplacementMap} from './nomad-displacement-map.js?v=0.36.18.1026';
+import {uvImageSurfaceSource,uvImageMaterialSource} from './uv-image-surface-preview.js?v=0.36.18.1026';
+import {embeddedUVImage} from './uv-image-preview.js?v=0.36.18.1026';
 // NOM container/header, field and scene-node conventions adapted from CrisBezz/
 // MeshUtilz-Sweep-Lab balloon-v0.6, commit 18e72a6bf964974591038345d68c2196a18f6af2:
 // src/nomadBalloonExport.js + nomadBalloonExport097.js; validated donor copied intact.
