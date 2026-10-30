@@ -1,7 +1,8 @@
+import {nomadMaterialMaps} from './nomad-material-resource.js?v=0.36.18.1025';
 import {faceGroupPalette} from './facegroup-colours-core.js?v=0.36.18.992';
-import {preparedPaintImage,preparedRoughnessImage,preparedMetalnessImage,paintExportGeometryObject} from './paint-export.js?v=0.36.18.948';
+import {preparedPaintImage,preparedRoughnessImage,preparedMetalnessImage,paintExportGeometryObject} from './paint-export.js?v=0.36.18.1025';
 import {nomadDisplacementMap} from './nomad-displacement-map.js?v=0.36.18.892';
-import {uvImageSurfaceSource,uvImageMaterialSource} from './uv-image-surface-preview.js?v=0.36.18.892';
+import {uvImageSurfaceSource,uvImageMaterialSource} from './uv-image-surface-preview.js?v=0.36.18.1025';
 import {embeddedUVImage} from './uv-image-preview.js?v=0.36.18.892';
 // NOM container/header, field and scene-node conventions adapted from CrisBezz/
 // MeshUtilz-Sweep-Lab balloon-v0.6, commit 18e72a6bf964974591038345d68c2196a18f6af2:
@@ -85,6 +86,7 @@ function nativeColourSource(payload){
  return source;
 }
 export function nativeMaterialMaps(payload){
+ if(payload?.source==='nomad')return nomadMaterialMaps(payload);
  const displacement=nomadDisplacementMap(payload),colour=nativeColourSource(payload),used=Array.isArray(payload?.materialIndices)?payload.materialIndices:[];
  const extra=used.some(id=>payload.materials?.[id]?.normalTexture||payload.materials?.[id]?.emissiveTexture||payload.materials?.[id]?.pbrMetallicRoughness?.metallicRoughnessTexture);
  if(!colour&&!extra&&!displacement)return null;
@@ -145,10 +147,10 @@ export function buildNomadProject(objects,templateBytes,{subd=false,name='BoxLab
   }
   const paint=preparedPaintImage(object),roughness=preparedRoughnessImage(object),metalness=preparedMetalnessImage(object),source=(paint||roughness||metalness)?{factor:[1,1,1,1],material:{pbrMetallicRoughness:{roughnessFactor:1,metallicFactor:metalness?1:0}},maps:{...(paint?{color:paint}:{}),...(roughness?{roughness}:{}),...(metalness?{metalness}:{})}}:nativeMaterialMaps(payload);let materialIndex=null;
   if(source){
-   if(!cornerUVs)throw Error('NOMAD image maps require a complete matching Base UV channel');
-   const material=clone(base.json.materials?.[0]||{});material.textures={};
+   if(Object.keys(source.maps).length&&!cornerUVs)throw Error('NOMAD image maps require a complete matching Base UV channel');
+   const material=clone(source.nativeMaterial||base.json.materials?.[0]||{});if(!source.nativeMaterial)material.textures={};
    const maps={...source.maps};
-   if(maps.packed){
+   if(maps.packed&&!source.nativeMaterial){
     const prepared=packedMaps.get(maps.packed.choice.data);
     if(!prepared)throw Error('NOMAD packed roughness/metalness maps need browser conversion; use File → NOMAD');
     for(const slot of ['roughness','metalness']){
@@ -166,9 +168,12 @@ export function buildNomadProject(objects,templateBytes,{subd=false,name='BoxLab
      imageIndex=images.length;imageIndices.set(image,imageIndex);
      images.push({length:choice.data.length,offset,type:choice.mime});parts.push(choice.data);offset+=choice.data.length;
     }
-    material.textures[slot]=nativeTexture(imageIndex,textureName(String(map.name||payload.images?.[choice.imageIndex]?.definition?.name||(slot+' '+(imageIndex+1)+(choice.mime==='image/png'?'.png':'.jpg'))),imageIndex));
+    material.textures[slot]=source.nativeMaterial?{...clone(map.nativeTexture),index:imageIndex}:nativeTexture(imageIndex,textureName(String(map.name||payload.images?.[choice.imageIndex]?.definition?.name||(slot+' '+(imageIndex+1)+(choice.mime==='image/png'?'.png':'.jpg'))),imageIndex));
    }
    const aligned=Math.ceil(offset/4)*4;if(aligned>offset){parts.push(new Uint8Array(aligned-offset));offset=aligned;}
+   if(source.nativeMaterial){
+    for(const [slot,increment] of [['color',()=>colourTextureObjects++],['normal',()=>normalTextureObjects++],['emissive',()=>emissiveTextureObjects++],['roughness',()=>roughnessTextureObjects++],['metalness',()=>metalnessTextureObjects++],['displacement',()=>displacementTextureObjects++]])if(maps[slot])increment();
+   }else{
    material.factorColor=[...source.factor.slice(0,3)];material.color=source.maps.color?[1,1,1]:[...source.factor.slice(0,3)];material.opacity=1;material.factorOpacity=1;material.material_type='opaque';
    const pbr=source.material.pbrMetallicRoughness||{};
    material.roughness=Number.isFinite(pbr.roughnessFactor)?pbr.roughnessFactor:1;material.metalness=Number.isFinite(pbr.metallicFactor)?pbr.metallicFactor:1;
@@ -178,7 +183,15 @@ export function buildNomadProject(objects,templateBytes,{subd=false,name='BoxLab
    if(source.maps.emissive){material.factorEmissive=[...source.emissiveFactor];material.factorEmissiveStrength=1;emissiveTextureObjects++;}
    if(maps.displacement){Object.assign(material,maps.displacement.settings);Object.assign(material.textures.displacement,{projection:maps.displacement.projection,triplanar_hardness:[...maps.displacement.hardness],triplanar_world:maps.displacement.world});displacementTextureObjects++;}
    if(source.maps.color)colourTextureObjects++;
+   }
    materialIndex=project.materials.length;project.materials.push(material);
+  }
+  // Restore native source units after the importer's uniform viewport fit.
+  // Keep displacement/world-projection settings in their original unit system.
+  // resolveExportMesh supplies the export-local clone; source/history stay intact.
+  if(payload?.source==='nomad'&&payload.nomadImportFit){
+   const fit=payload.nomadImportFit,center=new THREE.Vector3().fromArray(fit.center);
+   for(const vertex of editable.vertices)vertex.multiplyScalar(1/fit.scale).add(center);
   }
   const part=meshPart(editable,safeOBJName(object.name,index),donor,cornerUVs);if(materialIndex!==null)part.mesh.material=materialIndex;
   offsetFields(part.mesh,offset);offset+=part.bin.length;

@@ -1,3 +1,55 @@
+## .1025 — native NOM map retention and viewport colour — 30 October 2026
+
+User .1024 PASS protected; current baseline main4c45138c/runtimed90b3154.
+User requests returning to native NOM texture viewport work and /nextbuild.
+Audit confirms1015 importer ignored material/images; existing UV image overlay,
+resource pool/codec and native NOM exporter are authoritative. See
+`docs/nomad-material-retention-1025.md` for implementation and exact scope.
+
+Native source:'nomad' resource stores material JSON + encoded referenced images,
+original UVs and import fit. Resource envelopev4 uses EXISTING24MiB image pool/
+transport; strict BoxLab UVv3 and GLBv1/v2 unchanged. No fake GLB provenance.
+Original NOM writer copies every native texture slot/byte/settings (including
+opacity/emissive/16-bit displacement and separate scalar maps),remaps image indices,
+never enters GLB packed conversion. Export-local fit reversal preserves source
+world positions/units. Existing topology signature refuses stale textured export;
+resources remain saved/Undo-restorable. Native UV editing remains refused initially.
+
+Studio/Solid auto-display supported opaque PNG/JPEG UV/Auto colour maps via original
+UV overlay/buildGeometry/decode/disposal with scene-lit Standard material. Original
+UV Image is unlit inspection. Existing normals,scalar material constants and scene
+lighting retained; other texture maps NOT displayed yet. Original body picking,
+selection/history/geometry and1024 lighting unchanged. Source UVs retained; scale
+5x5 respected. Rotation/translation,triplanar,transparency are retained-only. Native
+node/procedural structure/local-triplanar fidelity after baked transforms not claimed.
+Budget4 surfaces/20,000corners each/8MiB source image/1024square decoded preview.
+Hidden/reference/linked/modifier/procedural guards retained. Textured native GLB
+export explicitly refuses rather than dropping maps; NOMAD/.boxlab retain them.
+Untextured NOM geometry/UV GLB path retained. REIMPORT original.nom; old projects
+cannot recover maps previously discarded by1015.
+
+Six new actual-owner/real-Three tests cover all slots/raw hashes/16-bit/pooled+inline
+SaveOpen/browser NOM export/source units,dispatcher/malformed/stale refusal,lit5x
+surface/picking/active+inactive guards/cancel/disposal/display budgets. Original
+synthetic paint-warning fixture now has valid empty material; original assertions
+retained,new tests explicitly reject invalid material/image refs.159 focused checks
+PASS; final full local Node24.22.1 suite3022 PASS/0FAIL/0skip/0cancel (110.32s).
+Syntax/diff clean.
+Real MAP TEST and MAP TEST(1) both File-import->fit->pooled SaveOpen->browser NOM->
+parse PASS: exact colour image hash/settings and5x5 repeat,source worldpositions
+within2e-6;496v/504f Cube and7911v/7916f Text preserved. Private files not committed.
+No rendered-browser/native iPad or complete PBR/vertex-paint fidelity claim.
+
+Reviewed1025 resource/codec/paint/export/import/render/overlay parents and canonical
+release->face-layout->drawer/UV Lab closure; most parent diffs are import pins only.
+Accepted1024 actual light code,main/Multi1.0/frozen betas and geometry kernels remain.
+No new A/B test batch. Publication pending; exact proof follows before completion.
+DEVICE1025 reimport MAP TEST.nom in Studio/Solid; colour patterned cube visible with
+correct5x tiling,orbit/select/Move. SaveOpen.boxlab retains texture. Export NOMAD,
+open in Nomad and compare texture/tiling. Switch looks/UndoRedo;1024 underside and
+floor cycle sanity. Next native colour feedback,then normal/scalar/emissive preview
+through same retained-resource owner; opacity/displacement display remain deferred.
+
 ## .1024 user PASS — 30 October 2026
 
 User explicitly reports “1024 PASS”. Protect accepted Studio/Solid underside

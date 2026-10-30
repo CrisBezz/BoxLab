@@ -55,7 +55,7 @@ test('1013 active-level topology fallback works; missing multires topology/unbak
  const baked=editJSON(input,j=>{j.meshes[0]={mesh_type:'triplanar',baked:j.meshes[0]};});assert.equal(parseNomadMeshes(baked).meshes.length,2);
 });
 test('1013 saved visible shape is imported with explicit warnings for unrepresented layer/paint data; no source mutation',()=>{
- const input=editJSON(bytes('raw'),j=>{j.meshes[0].layers=[{name:'Sculpt layer'}];j.meshes[0].colors={count:5};j.meshes[0].material=0;}),before=input.slice();
+ const input=editJSON(bytes('raw'),j=>{j.meshes[0].layers=[{name:'Sculpt layer'}];j.meshes[0].colors={count:5};j.meshes[0].material=0;j.materials=[{}];}),before=input.slice();
  const result=parseNomadMeshes(input);assert(result.warnings.includes('sculpt layers flattened to saved shape'));assert(result.warnings.some(x=>x.includes('paint, materials')));assert.deepEqual(input,before);
 });
 function importRuntime(){

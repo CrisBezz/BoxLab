@@ -1,4 +1,4 @@
-import {encodeMetalnessEntry,decodeMetalnessEntry,metalnessEntryBytes} from './metalness-resource.js?v=0.36.18.921';
+import {encodeMetalnessEntry,decodeMetalnessEntry,metalnessEntryBytes} from './metalness-resource.js?v=0.36.18.1025';
 import {createScalarProjectPool,decodeScalarProjectPool} from './scalar-paint-pool.js?v=0.36.18.921';
 const codec={encode:encodeMetalnessEntry,decode:decodeMetalnessEntry,entryBytes:metalnessEntryBytes};
 export function createProjectMetalnessPool(){return createScalarProjectPool(codec,'Metalness');}

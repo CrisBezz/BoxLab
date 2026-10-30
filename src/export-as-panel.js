@@ -1,5 +1,5 @@
 import {meshTopologySignature} from './mesh-topology-signature.js?v=0.36.18.939';
-import {capturePaintExportObjects,preparePaintExportObjects,preparedPaintImage,preparedRoughnessImage,preparedMetalnessImage,preparedMetallicRoughnessImage,paintExportGeometryObject} from './paint-export.js?v=0.36.18.948';
+import {capturePaintExportObjects,preparePaintExportObjects,preparedPaintImage,preparedRoughnessImage,preparedMetalnessImage,preparedMetallicRoughnessImage,paintExportGeometryObject} from './paint-export.js?v=0.36.18.1025';
 // BoxLab .735 — native NOMAD handoff; regular OBJ/GLB exports remain available.
 // GLB keeps BoxLab editable objects as separate named scene nodes for Nomad/3D handoff.
 import * as THREE from 'three';
@@ -7,7 +7,7 @@ import {GLTFExporter} from 'three/addons/exporters/GLTFExporter.js';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {buildSceneOBJ,resolveExportMesh,safeOBJName} from './scene-obj-export-core.js?v=0.36.18.921';
 
-import {buildNomadProjectWithMaps} from './nomad-packed-maps.js?v=0.36.18.994';
+import {buildNomadProjectWithMaps} from './nomad-packed-maps.js?v=0.36.18.1025';
 
 const VERSION='0.36.18.892';
 const panel=document.querySelector('#exportAsPanel');
@@ -163,7 +163,7 @@ function faceMaterialAssignments(mesh,payload){
 // Temporary viewport inspection reuses the same triangulation/corner mapping.
 // No import-fit restoration: preview positions stay in current BoxLab coordinates.
 function buildUVPreviewGeometry(mesh,payload,{materials=false,faceIndices=false}={}){
-  if(!Array.isArray(mesh?.vertices)||!mesh.vertices.length||!Array.isArray(mesh?.faces)||!mesh.faces.length||mesh.faces.some(f=>!Array.isArray(f))||payload?.version!==1||!['glb','boxlab'].includes(payload?.source)||payload.uvTopologySignature!==topologySignature(mesh))return null;
+  if(!Array.isArray(mesh?.vertices)||!mesh.vertices.length||!Array.isArray(mesh?.faces)||!mesh.faces.length||mesh.faces.some(f=>!Array.isArray(f))||payload?.version!==1||!['glb','boxlab','nomad'].includes(payload?.source)||payload.uvTopologySignature!==topologySignature(mesh))return null;
   const uvs=payload.uvCorners;if(!Array.isArray(uvs)||uvs.length!==mesh.faces.length)return null;
   let corners=0,triangles=0;
   for(let fi=0;fi<mesh.faces.length;fi++){
@@ -544,6 +544,7 @@ async function verifyGLB(buffer,expectedObjects,expectedGroupSlots){
   return report;
 }
 async function buildGLB(sceneObjects,subd){
+  if(sceneObjects.some(o=>o?.glbPassthrough?.source==='nomad'&&Object.keys(o.glbPassthrough.nomadMaterial?.textures||{}).length))throw Error('Native NOM materials are retained for NOMAD export and .boxlab Save; use NOMAD to keep their textures');
   if(sceneObjects.some(o=>o?.colourPaint||o?.roughnessPaint||o?.metalnessPaint)){sceneObjects=capturePaintExportObjects(sceneObjects);await preparePaintExportObjects(sceneObjects,{subd,packedScalars:true,owner:{topologySignature,buildUVPreviewGeometry}});}
   const root=new THREE.Group();
   root.name='BoxLab';
@@ -567,7 +568,7 @@ async function buildGLB(sceneObjects,subd){
       uvs:uvCompatible?passthrough.uvCorners:null,
       preserveFaceWinding:!!(paintImage||roughnessImage||metalnessImage),
       faceMaterials:materialFaces,materialFacegroups:!!materialFaces,
-      preserveUVSeams:!!materialFaces||passthrough?.source==='boxlab',
+      preserveUVSeams:!!materialFaces||['boxlab','nomad'].includes(passthrough?.source),
       tangents:tangentCompatible?passthrough.tangentCorners:null,
       colors:colorCompatible?passthrough.vertexColorCorners:null,
       morphTargets:morphCompatible?passthrough.morphTargets:null,

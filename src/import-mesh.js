@@ -430,7 +430,8 @@ function addImported(meshes, baseName,{reconstructQuads=false,format='OBJ'}={}) 
       next=rebuilt.mesh;nextUVs=rebuilt.cornerUVs;nextTangents=rebuilt.cornerTangents;nextColors=rebuilt.cornerColors;nextMorphTargets=rebuilt.morphTargets;nextMaterials=rebuilt.faceMaterialIndices;reconstructedQuads+=rebuilt.merged;
     }
     const passthrough=entry.glbPassthrough||null;
-    if(passthrough?.source==='boxlab'){
+    if(['boxlab','nomad'].includes(passthrough?.source)){
+      if(passthrough.source==='nomad')passthrough.nomadImportFit={scale:importFit.scale,center:importFit.center.toArray()};
       passthrough.uvCorners=nextUVs;
       passthrough.uvTopologySignature=topologySignature(next);
     }else if(passthrough){
@@ -495,7 +496,7 @@ function loadGLTF(file) {
 async function loadNOM(file){
   try{
     if(file.size>128*1024*1024)throw Error('NOM file exceeds 128 MiB; decimate in Nomad first');
-    const {parseNomadMeshes}=await import('./nomad-import-core.js?v=0.36.18.1015');
+    const {parseNomadMeshes}=await import('./nomad-import-core.js?v=0.36.18.1025');
     const result=parseNomadMeshes(await file.arrayBuffer());
     addImported(result.meshes,fileBaseName(file),{format:'NOM'});
     if(result.warnings.length&&status)status.textContent+=' • '+result.warnings.join(' • ');

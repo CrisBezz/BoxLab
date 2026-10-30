@@ -1,8 +1,8 @@
 import {paintBudget,highResolutionPaint} from './paint-budget.js?v=0.36.18.936';
 // Content-addressed paint transport, using the existing canonical byte codec.
 // Retained bytes and repeated decode copies have separate, bounded budgets.
-import {decodeProjectBytes} from './project-glb-resources.js?v=0.36.18.899';
-import {mapPaintResourceEntryBuffers,paintResourceEntryBytes} from './paint-layer-resource.js?v=0.36.18.938';
+import {decodeProjectBytes} from './project-glb-resources.js?v=0.36.18.1025';
+import {mapPaintResourceEntryBuffers,paintResourceEntryBytes} from './paint-layer-resource.js?v=0.36.18.1025';
 const TRANSPORT_LIMIT=8*1024*1024;
 function exact(v,keys){if(!v||typeof v!=='object'||Object.keys(v).length!==keys.length||!keys.every(k=>Object.hasOwn(v,k)))throw Error('Invalid shared paint byte pool');}
 function bytes(value){exact(value,['encoding','byteLength','data']);if(value.encoding!=='base64'||!Number.isSafeInteger(value.byteLength)||value.byteLength<0||typeof value.data!=='string')throw Error('Invalid shared paint bytes');return value.byteLength;}

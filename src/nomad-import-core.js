@@ -1,3 +1,4 @@
+import {retainNomadMaterial} from './nomad-material-resource.js?v=0.36.18.1025';
 import * as THREE from 'three';
 import {EditableMesh} from './mesh.js?v=0.21.2';
 import {meshTopologySignature} from './mesh-topology-signature.js?v=0.36.18.939';
@@ -91,7 +92,16 @@ export function readNomadImport(input){
     const values=new DataView(data.buffer,data.byteOffset,data.byteLength),result={count,components,get:(row,col=0)=>values[method]((row*components+col)*width,true)};
     cache.set(field,result);return result;
   }
-  return{json,version,array};
+  const imageCache=new Map();let imageBytes=0;
+  function image(index){
+    if(imageCache.has(index))return imageCache.get(index);
+    if(!Number.isInteger(index)||index<0||!Array.isArray(json.images)||index>=json.images.length)fail('invalid material image index');
+    const definition=json.images[index];if(!definition||typeof definition!=='object'||Array.isArray(definition)||typeof definition.type!=='string')fail('invalid embedded image descriptor');
+    range(definition.offset,definition.length,bin.length,'image');
+    imageBytes+=definition.length;if(!definition.length||imageBytes>24*MB)fail('embedded material images exceed 24 MiB');
+    const result={definition:{...definition},data:bin.slice(definition.offset,definition.offset+definition.length)};imageCache.set(index,result);return result;
+  }
+  return{json,version,array,image};
 }
 
 export function parseNomadMeshes(input){
@@ -117,8 +127,8 @@ export function parseNomadMeshes(input){
     if(!!uvs!==!!uvFaces||uvFaces&&uvFaces.count!==faces.count||groups&&groups.count!==faces.count)fail(name+': incomplete UV/facegroup channel');
     if(uvs&&source.count_uv!=null&&source.count_uv!==uvs.count)fail(name+': UV count does not match its array');
     if(source.layers?.length)warnings.add('sculpt layers flattened to saved shape');
-    if(['colors','roughness','metalness','opacity','masks'].some(k=>source[k])||original.material!=null||json.images?.length)warnings.add('paint, materials, textures and masks are not imported yet');
-    return{source,positions,faces,uvs,uvFaces,groups};
+    if(['colors','roughness','metalness','opacity','masks'].some(k=>source[k]))warnings.add('vertex paint, materials on vertices and masks are not imported');
+    return{source,positions,faces,uvs,uvFaces,groups,material:retainNomadMaterial(file,original.material??source.material)};
   }
   function walk(entries,parent,visible,depth){
     if(!Array.isArray(entries)||depth>128)fail('invalid or excessively deep scene tree');
@@ -162,7 +172,9 @@ export function parseNomadMeshes(input){
         }
         const mesh=new EditableMesh(vertices,faces,null,faceGroups);
         const uvPayload=g.uvs?{version:1,source:'boxlab',uvTopologySignature:meshTopologySignature(mesh),uvCorners:cornerUVs}:null;
-        meshes.push({mesh,name,visible:shown,polygonPreserved:true,cornerUVs,glbPassthrough:uvPayload});
+        const payload=g.material?{version:1,source:'nomad',uvTopologySignature:meshTopologySignature(mesh),uvCorners:cornerUVs,...g.material}:uvPayload;
+        if(g.material)warnings.add('NOM materials/maps retained; UV colour preview up to 4 objects / 20,000 corners each; other maps/projections retained for NOM export');
+        meshes.push({mesh,name,visible:shown,polygonPreserved:true,cornerUVs,glbPassthrough:payload});
       }else if(node.light!=null||node.camera!=null)warnings.add('scene lights/cameras omitted');
       if(node.children!=null)walk(node.children,matrix,shown,depth+1);
     }

@@ -1,8 +1,8 @@
-import {capturePaintExportObjects,preparePaintExportObjects,preparedPaintImage,preparedRoughnessImage,preparedMetalnessImage} from './paint-export.js?v=0.36.18.948';
+import {capturePaintExportObjects,preparePaintExportObjects,preparedPaintImage,preparedRoughnessImage,preparedMetalnessImage} from './paint-export.js?v=0.36.18.1025';
 import {encodeNomadScalarPNG} from './nomad-scalar-png.js?v=0.36.18.922';
 // Export-local glTF G/B unpacking. Source resources remain read-only; the original
 // native writer owns materials, UV validation, binary layout and final byte budgets.
-import {nativeMaterialMaps,buildNomadProject,createNomadImageIdentity} from './nomad-export-core.js?v=0.36.18.994';
+import {nativeMaterialMaps,buildNomadProject,createNomadImageIdentity} from './nomad-export-core.js?v=0.36.18.1025';
 const LIMIT=2048,TOTAL_LIMIT=24*1024*1024;
 function dimensions(choice){
  const a=choice.data,v=new DataView(a.buffer,a.byteOffset,a.byteLength);let width=0,height=0;
@@ -61,11 +61,11 @@ export async function buildNomadProjectWithMaps(objects,template,{subd=false,...
   const roughness=preparedRoughnessImage(object);if(roughness)addImage(roughness.choice);
   const metalness=preparedMetalnessImage(object);if(metalness)addImage(metalness.choice);
   const material=nativeMaterialMaps(object.glbPassthrough);
-  for(const [slot,map] of Object.entries(material?.maps||{}))if(slot!=='packed')addImage(map.choice);
+  for(const [slot,map] of Object.entries(material?.maps||{}))if(slot!=='packed'||material?.nativeMaterial)addImage(map.choice);
  }
  sourceBytes=bytes;checkBudget();
  for(const object of snapshot){
-  const choice=nativeMaterialMaps(object.glbPassthrough)?.maps.packed?.choice;
+  const material=nativeMaterialMaps(object.glbPassthrough),choice=material?.nativeMaterial?null:material?.maps.packed?.choice;
   if(!choice||packedMaps.has(choice.data))continue;
   if(subd)throw Error('NOMAD UV export requires matching Base geometry; disable evaluated modifiers');
   const key=packedIdentity(choice);let maps=converted.get(key);

@@ -3,8 +3,8 @@ import {createFacegroupList} from './facegroup-list.js?v=0.36.18.995';
 import {createFacegroupPaintDock} from './facegroup-paint-dock.js?v=0.36.18.991';
 import {createFacegroupStroke} from './facegroup-stroke.js?v=0.36.18.995';
 import {assignSelectedFacegroup,facegroupAuthoringTarget,selectedFacegroupName} from './facegroup-authoring.js?v=0.36.18.995';
-import {createCommittedPaintSurface} from './paint-target.js?v=0.36.18.948';
-import {createUVImageOverlay} from './uv-image-surface-preview.js?v=0.36.18.892';
+import {createCommittedPaintSurface} from './paint-target.js?v=0.36.18.1025';
+import {createUVImageOverlay} from './uv-image-surface-preview.js?v=0.36.18.1025';
 import {createUVCheckerOverlay} from './uv-checker-preview.js?v=0.36.18.879';
 import * as THREE from 'three';
 import {applyFaceGroupColours,DEFAULT_FACEGROUP_VIEW,normaliseFacegroupView} from './facegroup-colours-core.js?v=0.36.18.992';
@@ -213,6 +213,10 @@ function applyMode(body){
     }
   }
   else{body.material=frontOnly(original);addBackface(body);}
+  if(mode==='studio'||mode==='solid'){
+    const m=manager(),object=m?.objects?.find(o=>o.id===(inactive?body.userData.objectId:m.activeId)),settings=object?.settings||{};
+    if(object?.glbPassthrough?.source==='nomad'&&object.visible!==false&&body.visible!==false&&object.kind!=='reference'&&!object.sourceId&&!object.booleanRecipe&&!object.arrayRecipe&&!object.curveProfile&&!settings.subd&&!Object.values(settings.mirror||{}).some(Boolean))createUVImageOverlay(body,inactive?object.mesh:bridge()?.mesh,object.glbPassthrough,globalThis.__boxlabExportAs?.buildUVPreviewGeometry,checkerHiddenMaterial,{lit:true});
+  }
   if(['studio','solid','uvimage'].includes(mode)){const m=manager(),object=m?.objects?.find(o=>o.id===(inactive?body.userData.objectId:m.activeId));if(object?.colourPaint||object?.roughnessPaint||object?.metalnessPaint)createCommittedPaintSurface(body,object,inactive?object.mesh:bridge()?.mesh);}
 }
 

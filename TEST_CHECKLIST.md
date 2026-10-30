@@ -1,3 +1,20 @@
+## .1025 — NOM maps and colour viewport — 30 October 2026
+
+- [x] .1024 user PASS protected; original underside lights unchanged.
+- [x] Native NOM source provenance/material JSON/encoded maps and source import fit;
+  envelopev4 reuses original pooled/inline image transport; UVv3 strictness retained.
+- [x] Original browser NOM writer preserves all native slots/raw bytes/factors/names/
+  transforms;16-bit displacement retained; source units/world positions restored;
+  stale UV/topology safely refuses and textured native GLB cannot silently drop maps.
+- [x] Original UV overlay/geometry/decoder owner: Studio/Solid lit colour,5x repeat,
+  original picking/cancel/disposal; display bounds4objects/20k corners/8MiB/1024square.
+- [x] Six new actual-owner checks;159 focused PASS; real two MAP TEST source files
+  dispatcher->fit->SaveOpen->browser NOM->parse preserve image hash/settings/worldpositions.
+- [x] Final full local Node24.22.1:3022 PASS/0FAIL/0skip/0cancel (110.32s); syntax/diff clean.
+- [ ] Publication proof pending; no native visual/PBR PASS inferred.
+- [ ] DEVICE1025 reimport original MAP TEST.nom; colour cube in Studio/Solid,5x tiling,
+  orbit/select/Move; SaveOpen.boxlab texture; NOMAD open in Nomad; looks/UndoRedo/floor.
+
 ## .1024 protected acceptance — 30 October 2026
 
 - [x] Explicit .1024 user PASS protects Studio/Solid underside lighting, original ambient and shadow-free Solid.
