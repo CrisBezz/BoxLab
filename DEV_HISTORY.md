@@ -17711,3 +17711,13 @@ sampling before displacement; displacement subdivision remains separately deferr
 Sources: official Nomad material manual https://nomadsculpt.com/manual/material
 and stephomi/nomad-link blender/nomad_blender_link/__init__.py: separate non-colour
 opacity and opt-in colour alpha; implementation uses bounded grayscale only.
+
+Publication verified: runtime d781f169d8e594107147fa61081fa751a9dcb15a;
+fetched origin/main treedc71f74e7ea3d495382cd651870cf4616bdfa0e6 exactly matches
+validated/uploaded files. All45 changed blobs hash-verified before non-forced,
+expected-main update.9/9 fresh live byte matches: shell/manifest,native resource,
+UV surface/decoder,render-modes,late Studio scene fix,test list and NOM sample.
+Pages41033460133 and hosted topology41033461559 were in_progress at last query;
+no hosted full PASS claimed. Broad local3038PASS and final focused31PASS remain
+validation. Build1028 LIVE / READY for native opacity testing; native GPU/iPad
+appearance gate remains pending. This publication proof changes documentation only.

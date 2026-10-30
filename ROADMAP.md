@@ -1,5 +1,15 @@
 ## .1028 — native NOM opacity viewport — 30 October 2026
 
+Publication verified: runtime d781f169d8e594107147fa61081fa751a9dcb15a;
+fetched origin/main treedc71f74e7ea3d495382cd651870cf4616bdfa0e6 exactly matches
+validated/uploaded files. All45 changed blobs hash-verified before non-forced,
+expected-main update.9/9 fresh live byte matches: shell/manifest,native resource,
+UV surface/decoder,render-modes,late Studio scene fix,test list and NOM sample.
+Pages41033460133 and hosted topology41033461559 were in_progress at last query;
+no hosted full PASS claimed. Broad local3038PASS and final focused31PASS remain
+validation. Build1028 LIVE / READY for native opacity testing; native GPU/iPad
+appearance gate remains pending. This publication proof changes documentation only.
+
 User explicitly reports “1027 PASS /nextbuild”. Protect accepted emissive1027,
 normal/scalars1026, colour/tiling/retention1025 and underside lighting1024.
 Baseline mainfb2fc2de / runtimef1b4405f. Repo/source audit confirms original native

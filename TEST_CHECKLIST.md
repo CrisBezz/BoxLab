@@ -7,6 +7,7 @@
   transparent depth/shadow/backface lifetimes and Studio refresh respect same owner.
 - [x]31 final focused checks PASS including6 new actual-owner/shader/lifetime/codec tests.
 - [x]Broad local Node24.22.1:3038 PASS/0FAIL/0skip/0cancel (199.52s); final focus covers late Studio owner, serializable UUID and opaque colour-alpha compatibility.
+- [x]Runtime d781f169/treedc71f74e verified;45 blobs match;9/9 fresh live files match. Pages/hosted in_progress at last query; native opacity gate pending.
 - [ ] DEVICE1028 supplied opacity sample: checker holes,left; middle35% translucent;
   solid right control. Studio/Solid orbit,no orange fill; select/Move/UndoRedo;
   looks/back,SaveOpen.boxlab,NOMAD/Nomad; previous emissive sample unchanged.
