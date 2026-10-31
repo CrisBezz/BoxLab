@@ -1,3 +1,24 @@
+## .1042 — UV Paint draggable contextual palette — device test pending
+
+- [x] The tool wheel is smaller/lighter; dragging its grab handle relocates it and keeps
+  it inside the viewport. Position persists while Paint stays open.
+- [x] Choosing Brush, Fill, Eraser, Smudge or Blur opens contextual quick controls;
+  Tools returns to the wheel.
+- [x] The quick panel reuses the original channel/preview, colour, brush size/opacity,
+  fill, blur/scalar and mask-value nodes and listeners. The layer list remains in the
+  persistent left Paint panel.
+- [ ] On iPad, drag the wheel/panel to different corners and check controls remain
+  reachable in both wheel and quick-control states.
+- [ ] Adjust colour, brush size and opacity; switch to Fill and a scalar or Mask target
+  to confirm the relevant controls update and disabled options stay unavailable.
+- [ ] Paint with Pencil; verify fingers still orbit/pan/zoom, tool changes do not commit
+  strokes, and Undo/Redo plus Done retain their existing behavior.
+
+Automated .1042 coverage: 15 focused Paint/compact-layout checks and 5 release contract
+checks pass. Full suite and publication evidence are in DEV_HISTORY.md. The checks validate
+existing-node reuse, position/clamping and state routing; they do not establish iPad touch,
+visual weight or GPU rendering acceptance.
+
 ## .1041 — displacement feasibility report received (benchmark only)
 
 - [x] The .1041 page ran all nine generated-map render combinations on the iPad; no

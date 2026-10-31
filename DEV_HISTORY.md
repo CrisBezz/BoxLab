@@ -18413,3 +18413,33 @@ The test used a single mesh and synthetic 8-bit map; actual Nomad 16-bit source 
 BoxLab viewport/frame cost, full memory, shadows and factor/midpoint/world semantics are
 not established. Next audit the real retained Nomad displacement payload/settings and
 route any future preview through the existing UV surface/SubD owners within current caps.
+
+## .1042 — draggable UV Paint palette and contextual quick controls — 31 October 2026
+
+The user requested a lighter, draggable Paint radial menu and moving repetitive brush
+settings out of the panel below the layer list. Audited existing viewport-paint controls
+and kept their original DOM nodes, input handlers and state owners. The same channel/
+preview, colour, size/opacity, fill, blur/scalar and mask-value controls now sit in a
+compact floating contextual panel. Layer list remains in the persistent left panel.
+The smaller tool wheel and control panel share a drag handle; pointer movement clamps
+the panel within the viewport, and its position persists while the Paint module remains
+open. Selecting a tool switches to its quick controls; Tools or the original background
+hold reopens the wheel. Existing Pencil, finger navigation, cancellation, history and
+Done behavior remain with their original owners.
+
+Compact layout CSS scopes wheel coordinates/sizing to the wheel and gives the quick
+panel its own width/height rules. Release keys updated to .1042 for the shell, Paint
+module, compact stylesheet and release identity. Drawer/Face-workflow/release-version
+loader chain refreshed; protected `src/multi-object-transform.js?v=0.36.1.0` is unchanged.
+The runtime-asset contract records the reviewed pins and current bytes.
+
+New automated coverage verifies tool-to-controls transitions without history changes,
+reuse of original controls and persistent layer placement, colour/size/opacity updates,
+mask contextual visibility, drag/clamping in both states, compact layout and prior Paint
+interaction. The first full run found two stale tests that still expected the wheel to
+remain open after tool selection and the current release to remain .1041; those test
+expectations were updated to .1042 behavior while preserving the separate .1041 benchmark.
+Final local Node suite: 3,085 PASS / 0 FAIL / 0 skipped / 0 cancelled (106.29s). Fifteen focused Paint/compact-layout checks, five release-contract checks, and the updated workflow/displacement marker checks pass. Changed JavaScript syntax checks and `git diff --check` are clean. Publication and live-byte evidence are pending.
+The iPad checks are in the .1042 section at the top of TEST_CHECKLIST.md; DOM tests do
+not imply native tactile or visual acceptance. Next: obtain user .1042 device result, then
+resume the retained Nomad displacement source/settings audit from the existing roadmap.

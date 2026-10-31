@@ -27,7 +27,7 @@ panel.innerHTML=`
 
 </div>
 <div class="paint-context-head"><button data-paint="tools" type="button">◉ Tools</button><strong data-paint="context-title">Brush</strong><button data-paint="back-brush" type="button" hidden>Back to brush</button></div>
-<div class="paint-common-row"><label>Channel <select data-paint="channel"><option value="colour">Colour</option><option value="roughness">Roughness</option><option value="metalness">Metalness</option></select></label>
+<div data-paint="common-controls" class="paint-common-row"><label>Channel <select data-paint="channel"><option value="colour">Colour</option><option value="roughness">Roughness</option><option value="metalness">Metalness</option></select></label>
 <label>Preview <select data-paint="preview"><option value="channel">Channel</option><option value="material">Lit material</option></select></label></div>
 <div class="paint-page" data-paint-page="settings"><div class="paint-layer-controls" data-paint="resolution-controls"><label>Colour texture <output data-paint="resolution">1024 × 1024</output></label><button data-paint="increase-resolution" type="button" title="Enlarge this saved colour map; new paint and newly placed images gain detail">Increase to 1024 × 1024</button></div>
 </div>
@@ -36,17 +36,17 @@ panel.innerHTML=`
 <div data-paint="blur-controls" class="paint-scalar-controls" hidden><label class="paint-scalar-row">Blur amount <input data-paint="blur-amount" type="range" min="1" max="32" step="1" value="8"><output data-paint="blur-readout">8</output></label><small>Amount spreads the blur · Opacity mixes it · Size sets the brushed area</small></div>
 <div data-paint="roughness-controls" class="paint-scalar-controls" hidden><label class="paint-scalar-row">Value (0–255) <input data-paint="roughness-value" type="range" min="0" max="255" step="1" value="128"><output data-paint="roughness-readout">128</output></label><small data-paint="preview-hint">0 = smooth (black) · 255 = rough (white)</small></div>
 <div data-paint="metalness-controls" class="paint-scalar-controls" hidden><label class="paint-scalar-row">Value (0–255) <input data-paint="metalness-value" type="range" min="0" max="255" step="1" value="255"><output data-paint="metalness-readout">255</output></label><small>0 = non-metal (black) · 255 = metal (white)</small><small>Eraser restores 0. Lit material shows both scalar channels</small></div>
-<div class="paint-main-row"><strong>Paint</strong><label>Colour <input data-paint="colour" type="color" value="#e34b37"></label></div>
+<label class="paint-main-row" data-paint="quick-colour">Colour <input data-paint="colour" type="color" value="#e34b37"></label>
 <label data-paint="fill-controls" hidden>Fill <select data-paint="fill-scope"><option value="face">Face</option><option value="facegroup">Facegroup</option><option value="object">Whole object</option></select></label><small data-paint="fill-hint" hidden>Tap face · hold for planar region · up/down grow/shrink · right/left loop/ring · release to fill</small>
 <label>Tip <select data-paint="tip-preset"><option value="custom">Current / custom alpha</option><option value="soft">Soft round</option><option value="hard">Hard round</option><option value="flat">Flat</option><option value="chisel">Chisel</option><option value="bristle">Dry bristle</option></select></label><small>3 fingers: left/right light · up/down brush size (radius 1–256 texels)</small>
-<div class="paint-brush-row"><label>Size <input data-paint="radius" type="range" min="1" max="256" value="10"></label><label>Opacity <input data-paint="opacity" type="range" min="0" max="1" step=".01" value="1"></label></div>
+<div data-paint="quick-brush" class="paint-brush-row"><label>Size <input data-paint="radius" type="range" min="1" max="256" value="10"><output data-paint="radius-readout">10</output></label><label>Opacity <input data-paint="opacity" type="range" min="0" max="1" step=".01" value="1"><output data-paint="opacity-readout">100%</output></label></div>
 <details><summary>Brush settings</summary><div class="paint-layer-controls"><label>Brush <select data-paint="brush"><option value="boxlab">BoxLab round</option><option value="klecks">Klecks curve</option></select></label><label>Hardness <input data-paint="hardness" type="range" min="0" max="1" step=".01" value=".7"></label><label><input data-paint="pressure" type="checkbox" checked>Pressure → size</label></div><div class="paint-layer-controls"><button data-paint="choose-alpha" type="button">Load alpha PNG</button><input data-paint="alpha-file" type="file" accept="image/png,.png" hidden><button data-paint="clear-alpha" type="button">Round tip</button><label>Tip rotation <input data-paint="tip-rotation" type="range" min="0" max="360" step="1" value="0"></label><small data-paint="alpha-status" role="status">Round tip</small><small>PNG ≤256 × 256 · white paints; black/transparent skips. Alpha replaces round hardness. Brush/Eraser only; UV texel orientation.</small></div></details>
 <details><summary>Colour · RGB / HSB / Hex</summary><div class="paint-colour-controls"><label>Hex <input data-paint="hex" type="text" maxlength="7" spellcheck="false" autocomplete="off" aria-label="Hex colour"></label><label>R <input data-paint="red" type="number" min="0" max="255" step="1" inputmode="numeric" aria-label="Red, 0 to 255"></label><label>G <input data-paint="green" type="number" min="0" max="255" step="1" inputmode="numeric" aria-label="Green, 0 to 255"></label><label>B <input data-paint="blue" type="number" min="0" max="255" step="1" inputmode="numeric" aria-label="Blue, 0 to 255"></label><label>H° <input data-paint="hue" type="number" min="0" max="360" step=".1" inputmode="decimal" aria-label="Hue, 0 to 360 degrees"></label><label>S% <input data-paint="saturation" type="number" min="0" max="100" step=".1" inputmode="decimal" aria-label="Saturation, 0 to 100 percent"></label><label>B% <input data-paint="brightness" type="number" min="0" max="100" step=".1" inputmode="decimal" aria-label="Brightness, 0 to 100 percent"></label></div></details>
 </div>
 <div class="paint-page" data-paint-page="ao"><details data-paint="ao-settings" open><summary>Ambient occlusion</summary><div class="paint-layer-controls"><label>Quality <select data-paint="ao-resolution"><option value="256">High · 256 × 256 / 64 samples</option><option value="128">Medium · 128 × 128 / 64 samples</option><option value="64">Quick · 64 × 64 / 16 samples</option></select></label><label>Reach <input data-paint="ao-radius" type="range" min=".05" max="1" step=".05" value=".25"><output data-paint="ao-radius-readout">25%</output></label><label>Strength <input data-paint="ao-strength" type="range" min="0" max="1" step=".05" value=".65"><output data-paint="ao-strength-readout">65%</output></label><button data-paint="bake-ao" type="button">Bake AO preview</button><button data-paint="apply-ao" type="button" hidden>Apply AO layer</button><button data-paint="cancel-ao" type="button" hidden>Cancel AO</button><small data-paint="ao-status" role="status">Same object only · High uses 16× more pixels than Quick · small UV meshes first. Reach is a fraction of object diagonal. Convex objects may show no shadow.</small><small>Creates an editable Multiply layer at the current colour texture size; uses one free layer slot. Existing paint stays intact.</small></div></details>
 
 </div>
-<div class="paint-page" data-paint-page="mask"><details data-paint="mask-settings" open><summary>Mask</summary><div class="paint-layer-controls"><label>Paint <select data-paint="paint-target"><option value="colour">Colour</option><option value="mask">Mask</option></select></label><button data-paint="add-mask" type="button">+ Mask</button><button data-paint="remove-mask" type="button">Remove mask</button><label><input data-paint="mask-enabled" type="checkbox">Mask enabled</label><label><input data-paint="mask-inverted" type="checkbox">Invert mask</label><button data-paint="mask-hide" type="button">Hide brush</button><button data-paint="mask-reveal" type="button">Reveal brush</button><button data-paint="mask-grey" type="button">Grey brush</button><label>Mask value <input data-paint="mask-value" type="range" min="0" max="255" step="1" value="0"></label></div></details>
+<div class="paint-page" data-paint-page="mask"><details data-paint="mask-settings" open><summary>Mask</summary><div class="paint-layer-controls"><label>Paint <select data-paint="paint-target"><option value="colour">Colour</option><option value="mask">Mask</option></select></label><button data-paint="add-mask" type="button">+ Mask</button><button data-paint="remove-mask" type="button">Remove mask</button><label><input data-paint="mask-enabled" type="checkbox">Mask enabled</label><label><input data-paint="mask-inverted" type="checkbox">Invert mask</label><button data-paint="mask-hide" type="button">Hide brush</button><button data-paint="mask-reveal" type="button">Reveal brush</button><button data-paint="mask-grey" type="button">Grey brush</button><label data-paint="quick-mask-value">Mask value <input data-paint="mask-value" type="range" min="0" max="255" step="1" value="0"></label></div></details>
 </div>
 <div class="paint-page" data-paint-page="image"><div class="paint-layer-controls"><button data-paint="image-load" type="button">+ Image</button><button data-paint="image-layers" type="button">Select / edit image layer</button></div><div data-paint="image-controls" class="paint-image-controls" hidden><button data-paint="surface-image" type="button">On surface</button><button data-paint="image-mode" type="button">Move · tap to cycle</button><button data-paint="project-image" type="button">Project from View</button><button data-paint="cancel-image" type="button">Cancel image</button><span data-paint="image-status" role="status"></span></div>
 </div>
@@ -56,16 +56,39 @@ const style=document.createElement('style');style.textContent=`#boxlabViewportPa
 // A sibling of the scrollable settings host: the radial has its own bounded surface.
 const radial=document.createElement('section');radial.id='boxlabPaintRadial';radial.hidden=true;
 const paintPages=[['layers','Layers','M4 7l8-4 8 4-8 4z M4 12l8 4 8-4 M4 17l8 4 8-4'],['mask','Mask','M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z M12 3v18'],['image','Image','M3 4h18v16H3z M3 17l6-7 5 5 3-3 4 5 M15 8h2'],['ao','AO','M12 3a9 9 0 1 0 0 0 18 9 9 0 0 0 0-18z M12 6v12 M9 8v8 M6 11v2'],['settings','Map size','M4 4h16v16H4z M4 12h16 M12 4v16']];
-radial.innerHTML=`<div data-paint="tool-picker" class="paint-tool-wheel" role="group" aria-label="Paint tools">${[...paintTools,...paintPages].map(([value,label,path],i)=>{const a=i*Math.PI/5;return `<button type="button" data-paint="${i<5?'tool-':'page-'}${value}" style="left:${175+132*Math.sin(a)}px;top:${175-132*Math.cos(a)}px" aria-label="${label}" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="${path}"/></svg><span>${label}</span></button>`;}).join('')}<button type="button" data-paint="hide-tools" class="paint-radial-centre" style="left:175px;top:175px">Paint<br>↩</button></div><span data-paint="tool-summary" hidden>Brush tools · Brush</span>`;
+radial.innerHTML=`<div data-paint="tool-picker" class="paint-tool-wheel" role="group" aria-label="Paint tools">${[...paintTools,...paintPages].map(([value,label,path],i)=>{const a=i*Math.PI/5;return `<button type="button" data-paint="${i<5?'tool-':'page-'}${value}" style="left:${175+132*Math.sin(a)}px;top:${175-132*Math.cos(a)}px" aria-label="${label}" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="${path}"/></svg><span>${label}</span></button>`;}).join('')}<button type="button" data-paint="hide-tools" class="paint-radial-centre" style="left:175px;top:175px">Paint<br>↩</button></div><section data-paint="quick-panel" class="paint-quick-panel" hidden><header><strong data-paint="quick-title">Brush controls</strong><button data-paint="show-tools" type="button">Tools</button></header><div data-paint="quick-body"></div></section><button data-paint="drag-tools" type="button" class="paint-radial-handle" aria-label="Move Paint palette" title="Drag to move Paint palette">⠿</button><span data-paint="tool-summary" hidden>Brush tools · Brush</span>`;
 (document.querySelector('#viewportWrap')||document.body).appendChild(radial);
+const quickBody=radial.querySelector('[data-paint="quick-body"]');
+for(const key of ['common-controls','quick-colour','quick-brush','blur-controls','roughness-controls','metalness-controls','fill-controls','fill-hint','quick-mask-value'])quickBody.appendChild(panel.querySelector(`[data-paint="${key}"]`));
 const contextStyle=document.createElement('style');contextStyle.textContent=`
 #boxlabPaintRadial[hidden]{display:none!important}
 #boxlabPaintRadial{position:absolute;width:350px;height:350px;max-width:calc(100% - 16px);max-height:calc(100% - 16px);z-index:135;isolation:isolate;contain:layout paint;pointer-events:none}
 #boxlabPaintRadial .paint-tool-wheel{position:relative;width:350px;height:350px}
-#boxlabPaintRadial button{position:absolute;transform:translate(-50%,-50%);box-sizing:border-box;width:76px;min-height:50px;padding:5px 3px;border:1px solid #8eb0d45c;border-radius:12px;background:#161d28f5;color:#e9f3ff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:10px;pointer-events:auto;touch-action:manipulation}
+#boxlabPaintRadial .paint-tool-wheel>button{position:absolute;transform:translate(-50%,-50%);box-sizing:border-box;width:64px;min-height:48px;padding:4px 3px;border:1px solid #a8c6e92c;border-radius:10px;background:#1b2431bd;color:#e9f3ff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:10px;pointer-events:auto;touch-action:manipulation;backdrop-filter:blur(8px)}
 #boxlabPaintRadial svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 #boxlabPaintRadial [aria-pressed=true]{background:#1268b6;border-color:#70c0ff}
-#boxlabPaintRadial .paint-radial-centre{border-radius:50%;width:64px;height:64px}
+#boxlabPaintRadial .paint-radial-centre{border-radius:50%;width:56px;height:56px;background:#202c3bd9}
+#boxlabPaintRadial .paint-radial-handle{position:absolute;z-index:3;top:8px;right:8px;width:34px;height:28px;min-height:28px;padding:0;border:1px solid #a8c6e92c;border-radius:9px;background:#1b2431bd;color:#dce9f8;font-size:17px;line-height:1;pointer-events:auto;touch-action:none;user-select:none;cursor:move}
+#boxlabPaintRadial[data-state=controls]{width:min(320px,calc(100% - 16px));height:auto;max-height:calc(100% - 16px)}
+#boxlabPaintRadial .paint-quick-panel{position:relative;display:grid;gap:8px;width:100%;max-height:inherit;overflow:auto;padding:12px;border:1px solid #a8c6e94a;border-radius:16px;background:#18212de8;color:#edf4fd;backdrop-filter:blur(12px);pointer-events:auto;box-shadow:0 8px 24px #0003}
+#boxlabPaintRadial .paint-quick-panel[hidden]{display:none!important}
+#boxlabPaintRadial .paint-quick-panel>header{display:flex;align-items:center;gap:8px;min-height:30px;padding-right:34px}
+#boxlabPaintRadial .paint-quick-panel>header strong{flex:1;font-size:13px}
+#boxlabPaintRadial button{pointer-events:auto;touch-action:manipulation}
+#boxlabPaintRadial .paint-quick-panel button{position:static;transform:none;width:auto;min-height:36px;padding:6px 10px;border:1px solid #a8c6e940;border-radius:9px;background:#263344;color:#edf4fd;font-size:11px}
+#boxlabPaintRadial .paint-quick-panel [data-paint=common-controls]{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+#boxlabPaintRadial .paint-quick-panel [data-paint=quick-colour]{display:flex;justify-content:space-between;min-height:36px;padding:4px 8px;border:1px solid #a8c6e92c;border-radius:9px;background:#ffffff0a}
+#boxlabPaintRadial .paint-quick-panel [data-paint=quick-colour] input{width:44px;height:32px}
+#boxlabPaintRadial .paint-quick-panel .paint-brush-row{display:grid;gap:7px}
+#boxlabPaintRadial .paint-quick-panel .paint-brush-row label{display:grid;grid-template-columns:58px minmax(0,1fr) 4ch;gap:7px;width:100%;font-size:11px}
+#boxlabPaintRadial .paint-quick-panel .paint-brush-row input{width:100%;min-width:60px;margin:0}
+#boxlabPaintRadial .paint-quick-panel output{font-variant-numeric:tabular-nums;text-align:right}
+#boxlabPaintRadial .paint-quick-panel [data-paint=quick-mask-value]{display:grid;grid-template-columns:auto minmax(70px,1fr) 4ch;gap:7px;align-items:center}
+#boxlabPaintRadial .paint-quick-panel .paint-scalar-controls{display:grid;gap:4px}
+#boxlabPaintRadial .paint-quick-panel .paint-scalar-row{display:grid;grid-template-columns:auto minmax(60px,1fr) 4ch;gap:7px}
+#boxlabPaintRadial .paint-quick-panel [data-paint=fill-controls]{display:flex;gap:8px;align-items:center}
+#boxlabPaintRadial .paint-quick-panel [data-paint=fill-controls] select{max-width:190px}
+#boxlabPaintRadial .paint-quick-panel [data-paint=fill-hint]{font-size:10px;line-height:1.35;opacity:.8}
 #boxlabViewportPaint .paint-context-head,#boxlabViewportPaint .paint-common-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 #boxlabViewportPaint .paint-context-head strong{flex:1}
 #boxlabViewportPaint .paint-page{display:none}
@@ -80,6 +103,13 @@ const contextStyle=document.createElement('style');contextStyle.textContent=`
 #boxlabViewportPaint .paint-hold-hint{font-size:9px}
 `;document.head.appendChild(contextStyle);
 const input=k=>panel.querySelector(`[data-paint="${k}"]`)||radial.querySelector(`[data-paint="${k}"]`),say=s=>{if(status)status.textContent=s;};
+let radialPosition=null,radialDrag=null;
+function radialBounds(){const wrap=document.querySelector('#viewportWrap')||canvas,view=wrap?.getBoundingClientRect?.()||canvas.getBoundingClientRect(),box=radial.getBoundingClientRect?.()||{};return{view,width:Math.max(1,box.width||radial.offsetWidth||(radial.dataset.state==='tools'?350:320)),height:Math.max(1,box.height||radial.offsetHeight||(radial.dataset.state==='tools'?350:210))};}
+function placeRadial(left,top){const {view,width,height}=radialBounds(),maxLeft=Math.max(8,view.width-width-8),maxTop=Math.max(8,view.height-height-8);radialPosition={left:Math.max(8,Math.min(maxLeft,left)),top:Math.max(8,Math.min(maxTop,top))};radial.style.left=radialPosition.left+'px';radial.style.top=radialPosition.top+'px';}
+function showQuickControls(){if(!controller?.active)return false;radial.dataset.state='controls';input('tool-picker').hidden=true;input('tool-picker').open=false;input('quick-panel').hidden=false;const label=paintTools.find(([v])=>v===input('paint-action').value)?.[1]||'Brush';input('quick-title').textContent=label+' controls';radial.hidden=false;placeRadial(radialPosition?.left??8,radialPosition?.top??8);return true;}
+function beginRadialDrag(e){if(!controller?.active||e.button!==undefined&&e.button!==0)return;radialDrag={id:e.pointerId,x:e.clientX,y:e.clientY,left:Number.parseFloat(radial.style.left)||0,top:Number.parseFloat(radial.style.top)||0};e.preventDefault();e.stopPropagation?.();try{e.currentTarget?.setPointerCapture?.(e.pointerId);}catch{}}
+function moveRadialDrag(e){if(!radialDrag||e.pointerId!==radialDrag.id)return;e.preventDefault();e.stopImmediatePropagation?.();placeRadial(radialDrag.left+e.clientX-radialDrag.x,radialDrag.top+e.clientY-radialDrag.y);}
+function endRadialDrag(e){if(!radialDrag||e.pointerId!==radialDrag.id)return;e.preventDefault?.();e.stopImmediatePropagation?.();radialDrag=null;}
 const layerList=createPaintLayerList({root:input('layer-list'),document,thumbnail:id=>controller?.layerThumbnail(id),onSelect:id=>{input('layer').value=id;input('layer').dispatchEvent(new Event('change'));},onSettings:(id,key)=>{input('layer').value=id;input('layer').dispatchEvent(new Event('change'));input('layer-settings').open=true;input(key).focus();},onVisible:id=>{const layer=controller?.state?.layers.find(l=>l.id===id);if(!layer)return;input('layer').value=id;input('layer').dispatchEvent(new Event('change'));input('layer-visible').checked=!layer.visible;input('layer-visible').dispatchEvent(new Event('change'));}});
 const colourControls=bindPaintColourControls(input);
 function options(select,items){const nodes=items.map(({value,label})=>{const o=document.createElement('option');o.value=value;o.textContent=label;return o;});select.replaceChildren?.(...nodes);}
@@ -92,7 +122,7 @@ function syncLayers(){button?.setAttribute?.('aria-pressed',String(!!controller?
  input('layer-name').value=selected.name;input('layer-visible').checked=selected.visible;input('layer-opacity').value=String(selected.opacity);input('layer-blend').value=selected.blendMode;
  for(const key of ['layer-name','layer-visible','layer-opacity','layer-blend','remove-layer'])input(key).disabled=base;
  const hasMask=!!selected.mask;input('paint-target').value=state.paintTarget;input('paint-target').disabled=!hasMask;input('add-mask').disabled=base||hasMask;input('remove-mask').disabled=!hasMask;input('mask-enabled').checked=hasMask&&selected.mask.enabled;input('mask-inverted').checked=hasMask&&selected.mask.inverted;for(const key of ['mask-enabled','mask-inverted','mask-hide','mask-reveal','mask-grey','mask-value'])input(key).disabled=!hasMask;input('colour').disabled=['erase','blur','smudge'].includes(input('paint-action').value)||scalar||state.paintTarget==='mask'||!!selected.image;
- colourControls.setDisabled(input('colour').disabled);
+ colourControls.setDisabled(input('colour').disabled);input('quick-colour').hidden=input('colour').disabled;input('quick-brush').hidden=input('paint-action').value==='fill';input('quick-mask-value').hidden=state.paintTarget!=='mask';input('radius-readout').textContent=input('radius').value;input('opacity-readout').textContent=Math.round(Number(input('opacity').value)*100)+'%';input('quick-title').textContent=(paintTools.find(([v])=>v===input('paint-action').value)?.[1]||'Brush')+' controls';
  input('merge-base').disabled=base||scalar;input('flatten-layers').disabled=state.layers.length<=1||scalar;
  input('add-layer').disabled=state.layers.length>=4;input('choose-image').disabled=state.layers.length>=4;input('edit-image').disabled=!selected.image;input('rasterize-image').hidden=!selected.image||scalar;input('rasterize-image').disabled=scalar;input('layer-up').disabled=base||index===state.layers.length-1;input('layer-down').disabled=base||index<=1;
  for(const key of ['channel','preview','paint-action'])input(key).disabled=false;
@@ -106,11 +136,11 @@ function syncLayers(){button?.setAttribute?.('aria-pressed',String(!!controller?
 function syncPaintTools(){
  const filling=input('paint-action').value==='fill';input('fill-hint').textContent=input('fill-scope').value==='facegroup'?'Orange lines show Facegroup boundaries · tap a named group to fill all its faces':input('fill-scope').value==='object'?'Tap mesh to fill the whole selected layer/channel':'Tap face · hold for planar region · up/down grow/shrink · right/left loop/ring · release to fill';input('fill-controls').hidden=input('fill-hint').hidden=!filling;controller?.setFillScope(filling?input('fill-scope').value:null);
  const action=input('paint-action');
- for(const [value,label] of paintTools){const button=input('tool-'+value);button.disabled=action.disabled;button.setAttribute('aria-pressed',String(action.value===value));if(action.value===value)input('tool-summary').textContent='Brush tools · '+label;}
+for(const [value,label] of paintTools){const button=input('tool-'+value);button.disabled=action.disabled;button.setAttribute('aria-pressed',String(action.value===value));if(action.value===value){input('tool-summary').textContent='Brush tools · '+label;input('hide-tools').textContent=label+'\nControls';input('hide-tools').setAttribute('aria-label',label+' quick controls');}}
 }
 for(const [value] of paintTools)input('tool-'+value).addEventListener('click',()=>{
  const action=input('paint-action');if(action.disabled||!controller?.active)return;
- action.value=value;action.dispatchEvent(new Event('change',{bubbles:true}));showPage('brush');
+ action.value=value;action.dispatchEvent(new Event('change',{bubbles:true}));showPage('brush');showQuickControls();
 });
 function hideTools(){radial.hidden=true;input('tool-picker').open=false;}
 function showPage(page){
@@ -123,16 +153,16 @@ function backgroundHoldAllowed(){return !!controller?.active&&!controller.drawin
 function isBackgroundPoint(e){return backgroundHoldAllowed()&&!controller.hit(point(e))&&!manager()?.pickObject?.(e);}
 function showTools(point=null){
  if(!controller?.active||contact!==null)return false;
- const wrap=document.querySelector('#viewportWrap')||canvas,r=wrap?.getBoundingClientRect?.()||canvas.getBoundingClientRect();
- // Limit the radial's centre to this viewport; no oversized filter/shadow bounds.
- const x=point?point.clientX-r.left:r.width/2,y=point?point.clientY-r.top:r.height*.6;
- radial.style.left=Math.max(8,Math.min(r.width-358,x-175))+'px';
- radial.style.top=Math.max(8,Math.min(r.height-358,y-175))+'px';
- syncPaintTools();radial.hidden=false;input('tool-picker').open=true;return true;
+ radial.dataset.state='tools';input('tool-picker').hidden=false;input('quick-panel').hidden=true;radial.hidden=false;
+ const {view,width,height}=radialBounds();if(!radialPosition){const x=point?point.clientX-view.left:view.width/2,y=point?point.clientY-view.top:view.height*.6;placeRadial(x-width/2,y-height/2);}else placeRadial(radialPosition.left,radialPosition.top);
+ syncPaintTools();input('tool-picker').open=true;return true;
 }
 for(const [page] of paintPages)input('page-'+page).addEventListener('click',()=>{if(!controller?.active||contact!==null)return;showPage(page);});
 input('tools').addEventListener('click',()=>showTools());
-input('hide-tools').addEventListener('click',()=>showPage('brush'));
+input('hide-tools').addEventListener('click',()=>showQuickControls());
+input('show-tools').addEventListener('click',()=>showTools());
+input('drag-tools').addEventListener('pointerdown',beginRadialDrag);
+for(const name of ['pointermove','pointerup','pointercancel'])window.addEventListener(name,name==='pointermove'?moveRadialDrag:endRadialDrag,{capture:true,passive:false});
 input('back-brush').addEventListener('click',()=>showPage('brush'));
 input('image-load').addEventListener('click',()=>input('choose-image').click());
 input('image-layers').addEventListener('click',()=>showPage('layers'));
@@ -258,6 +288,7 @@ window.addEventListener('blur',()=>{cancel();touches.clear();});window.addEventL
 window.addEventListener('keydown',e=>{if(e.key==='Escape'&&controller?.active){cancel();say('UV Paint stays active · use Done to exit');}});window.addEventListener('boxlab-tool-session-change',e=>{if(e.detail?.id==='uv-paint'&&e.detail.active===false)close();});
 document.querySelectorAll('#selectionModes button').forEach(button=>button.addEventListener('click',event=>{if(!controller?.active)return;event.preventDefault();event.stopImmediatePropagation();say('Use Done to leave UV Paint before changing selection mode');},true));
 window.addEventListener('pagehide',e=>{if(e.persisted){cancel();return;}disposed=true;close();});
+input('radius').addEventListener('input',()=>{input('radius-readout').textContent=input('radius').value;});input('opacity').addEventListener('input',()=>{input('opacity-readout').textContent=Math.round(Number(input('opacity').value)*100)+'%';});
 for(const k of ['colour','radius','hardness','opacity','pressure','brush'])input(k).addEventListener('input',cancel);
 input('done').addEventListener('click',()=>{close();say('UV Paint closed · strokes kept · Save .boxlab to keep paint');});
 for(const k of ['undo','redo'])input(k).addEventListener('click',()=>{document.querySelector('#'+k+'Btn')?.click();});
@@ -269,4 +300,4 @@ const entryObserver=typeof MutationObserver==='function'?new MutationObserver(()
 // The original history owner brackets the whole scene restore, including body rebuild.
 // Close before capture so transient strokes/images cannot leak into scene history.
 function beforeHistory(){const restore=controller?.active?{...controller.state,paintPage:panel.dataset.page}:historyContext;if(!restore)return;const id=manager()?.activeId;cancel();close();const token=opening;return ()=>{if(disposed||opening!==token||manager()?.activeId!==id||tools()?.isActive?.())return;void open(restore);};}
-globalThis.__boxlabViewportPaint={open:()=>open(),beforeHistory,close,cancel:close,showTools,backgroundHoldAllowed,isBackgroundPoint,beginBrushResize,updateBrushResize,endBrushResize,get active(){return !!controller?.active;}};
+globalThis.__boxlabViewportPaint={open:()=>open(),beforeHistory,close,cancel:close,showTools,backgroundHoldAllowed,isBackgroundPoint,beginBrushResize,updateBrushResize,endBrushResize,get palettePosition(){return radialPosition?{...radialPosition}:null;},get paletteState(){return radial.dataset.state||'tools';},get active(){return !!controller?.active;}};

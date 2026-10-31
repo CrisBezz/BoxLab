@@ -1,16 +1,16 @@
-## Current build: .1041 displacement preview feasibility gate
+## Current build: .1042 draggable UV Paint palette
 
-All nine generated-map cases completed on the iPad without early stop. Largest case: UV
-subdivision 21 ms median, UV geometry expansion 5–8 ms, 3 MiB expanded arrays; 2048² map
-decode 48 ms with 16 MiB estimated base RGBA. RAF intervals stayed at 17 ms median and
-17–18 ms p95. GPU timer queries were unavailable. This is favorable feasibility data,
-not a GPU/memory or BoxLab viewport proof. The benchmark used one mesh and generated
-8-bit maps; actual retained Nomad 16-bit decode and displacement semantics remain open.
+The Paint tools wheel is reduced and draggable with viewport clamping. Selecting a tool
+opens a contextual floating panel that reuses the existing channel/preview, colour,
+brush size/opacity, fill, blur/scalar and mask-value controls. The layer list stays in its
+persistent left panel. User iPad acceptance is pending; automated owner, movement/clamp,
+compact-layout and release checks pass. See the top of AI_HANDOFF.md and the .1042 entry
+in DEV_HISTORY.md for validation and publication.
 
-Next: audit the retained Nomad displacement image and its factor/midpoint/world settings,
-then scope a viewport prototype through the original UV surface and SubD display owners.
-Preserve existing fallback behavior and the 20,000-corner viewport preview cap. Do not
-add a parallel renderer/kernel or claim product acceptance from the benchmark report.
+Next: test the .1042 wheel and controls on iPad. If accepted, continue the existing
+roadmap's actual Nomad displacement-payload/settings audit; do not infer preview safety
+from the .1041 synthetic benchmark. Keep current preview and image caps and reuse existing
+UV surface/SubD owners.
 
 ## .1035 — pre-decode native colour alpha OFF repair — 31 October 2026
 

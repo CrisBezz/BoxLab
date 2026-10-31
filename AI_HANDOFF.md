@@ -1,30 +1,28 @@
-## .1041 — displacement preview feasibility gate — 31 October 2026
+## .1042 — draggable UV Paint palette with contextual quick controls — 31 October 2026
 
-Current target: BoxLab 0.36.18.1041. .1040 is user-PASS protected: NOM textures
-remain visible on multiple SubD objects, including unselected objects. Preserve the
-existing Studio/Solid material overlay, UV-aware SubD cache, selection independence,
-Mirror fallback, seven-object material behavior and VIEW/navigation.
+Current target: BoxLab 0.36.18.1042. The user explicitly PASSed .1040: preserve
+NOM materials on multiple textured SubD objects, selected or unselected, and existing
+Studio/Solid overlay, UV-aware SubD cache, Mirror fallback, seven-object loading and
+VIEW/navigation. The .1041 generated displacement feasibility report is evidence only;
+actual retained Nomad displacement payload/settings and product preview remain open.
 
-.1041 is a temporary, generated-data benchmark linked from File → Screen comparison /
-test list. It exercises the canonical `subdivideWithCornerUVs()` kernel and a Three.js
-displacementMap without changing the open project or adding viewport displacement.
-The iPad report completed all nine render cases (16/64/256 source faces, levels 2/2/3,
-256²/1024²/2048² maps), with no early stop. At the largest case it measured 21 ms median
-UV subdivision, 5–8 ms UV geometry expansion and a 3 MiB expanded typed-array payload.
-The 2048² PNG decoded in 48 ms (16 MiB estimated base RGBA); RAF intervals were 17 ms
-median and 17–18 ms p95. GPU timer queries were unavailable.
+.1042 implements the user's UV Paint palette request. The existing Paint tools wheel is
+smaller/lighter; it can be dragged from its grab handle and is clamped to the viewport.
+Its position is held while Paint remains open. Choosing a tool opens a compact contextual
+panel, using the original channel/preview, colour, size/opacity, fill, blur/scalar and mask
+value controls and their existing event owners. The persistent layer list remains in the
+left Paint panel. The wheel remains reachable from the floating panel and the original
+background hold. The original Pencil stroke, finger navigation, cancel/Undo/Redo and
+Paint completion owners remain authoritative.
 
-This is favorable CPU/frame-scheduling feasibility evidence on the iPad, not a product
-PASS or GPU/memory safety proof: maps were generated 8-bit grayscale, the scene was one
-mesh, RAF timing is not BoxLab viewport frame time, and actual Nomad 16-bit map decode,
-full app memory, shadows and displacement scale/midpoint/world semantics were not tested.
-Next: audit actual retained Nomad displacement bytes and settings, then define the
-narrowest compatible path through the existing UV surface/SubD owners. Keep the current
-20,000-corner viewport-preview cap and existing image budgets; unsupported sources must
-retain their current fallback. Do not add a parallel renderer or subdivision kernel.
+Automated focused Paint/compact layout coverage and release-contract checks pass. Full
+suite, publication and live-byte verification are recorded in DEV_HISTORY.md. iPad
+acceptance is pending; do not infer tactile/rendered success from DOM tests.
 
-Current validation/publication status is recorded in DEV_HISTORY.md. The .1040 iPad
-PASS remains protected. `src/multi-object-transform.js?v=0.36.1.0` remains protected.
+Next: manually test .1042 dragging, contextual controls and existing Pencil/finger/history
+behavior. After PASS, return to displacement source/settings audit before any preview work.
+Keep the existing 20,000-corner cap, image budgets and fallback. Do not add another
+renderer or subdivision kernel. `src/multi-object-transform.js?v=0.36.1.0` remains protected.
 
 ## .1035 — pre-decode native colour alpha OFF repair — 31 October 2026
 

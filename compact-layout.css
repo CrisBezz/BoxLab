@@ -16,10 +16,13 @@ html.boxlab-compact-ui #totalGizmo .tg-tool-ring .tg-tool-sector{width:44px;heig
 html.boxlab-compact-ui #totalGizmo .tg-tool-ring .tg-tool-sector::before{width:30px;height:30px}
 html.boxlab-compact-ui #totalGizmo .tg-tool-ring .tg-tool-outer{transform:rotate(var(--a)) translateY(calc(-1 * var(--compact-r))) rotate(calc(-1 * var(--a)))}
 html.boxlab-compact-ui #totalGizmo .tg-tool-ring .tg-tool-mid{transform:rotate(var(--a)) translateY(calc(-.75 * var(--compact-r))) rotate(calc(-1 * var(--a)))}
-html.boxlab-compact-ui #boxlabPaintRadial,html.boxlab-compact-ui #boxlabPaintRadial .paint-tool-wheel{width:292px!important;height:292px!important}
-html.boxlab-compact-ui #boxlabPaintRadial button{left:var(--compact-x)!important;top:var(--compact-y)!important;width:48px!important;height:48px!important;min-height:48px!important;padding:4px!important;gap:0!important}
-html.boxlab-compact-ui #boxlabPaintRadial button>span{display:none}
-html.boxlab-compact-ui #boxlabPaintRadial button::before{width:30px!important;height:30px!important}
+html.boxlab-compact-ui #boxlabPaintRadial[data-state=tools],html.boxlab-compact-ui #boxlabPaintRadial[data-state=tools] .paint-tool-wheel{width:292px!important;height:292px!important}
+html.boxlab-compact-ui #boxlabPaintRadial .paint-tool-wheel>button{left:var(--compact-x)!important;top:var(--compact-y)!important;width:48px!important;height:48px!important;min-height:48px!important;padding:4px!important;gap:0!important}
+html.boxlab-compact-ui #boxlabPaintRadial .paint-tool-wheel>button>span{display:none}
+html.boxlab-compact-ui #boxlabPaintRadial .paint-tool-wheel>button::before{width:30px!important;height:30px!important}
+html.boxlab-compact-ui #boxlabPaintRadial[data-state=controls]{width:min(292px,calc(100vw - 16px))!important;height:auto!important}
+html.boxlab-compact-ui #boxlabPaintRadial[data-state=controls] .paint-quick-panel{padding:10px}
+html.boxlab-compact-ui #boxlabPaintRadial .paint-radial-handle{left:auto!important;top:8px!important;right:8px!important;width:34px!important;height:28px!important;min-height:28px!important;padding:0!important}
 html.boxlab-compact-ui #boxlabViewportPaint .paint-stack{max-height:120px}
 html.boxlab-compact-ui #boxlabViewportPaint .paint-brush-row{grid-template-columns:1fr}
 html.boxlab-compact-ui #boxlabViewportPaint select{max-width:100%}
