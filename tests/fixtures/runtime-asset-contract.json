@@ -2482,7 +2482,7 @@
       "owner": "index.html",
       "target": "src/viewport-paint.js",
       "url": "./src/viewport-paint.js?v=0.36.18.1044",
-      "sha256": "04d8446d4382eabd1c5375866baf2ee575d96b544fa5fdd5df097c811bdb0c9c"
+      "sha256": "4ef76b17d213baf156d54852cf27a64edf2833723ac8e879083a80c3d87d0ea1"
     },
     {
       "owner": "src/viewport-paint.js",
