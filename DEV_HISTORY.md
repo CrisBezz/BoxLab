@@ -18004,3 +18004,38 @@ inferred. DEVICE: VIEW all12 before import,Studio/Solid/reopen; import FINAL sam
 ONE raw map;BackTo3D/Close and recheckVIEW. Exact original iPad whole-menu failure
 cause remains unproven; repaired deterministic overwrite/ready-host defects covered.
 No new feature work until repair feedback.
+
+## .1032 user PASS — loading/VIEW accepted; material gaps observed — 31 October 2026
+
+User explicitly: “1032 PASS > all 7 cubes visible, no problems with view mode
+disappearing.” Protect seven-object visibility/spacing, VIEW startup preservation,
+all original mode actions/reopen and .1030 accepted behaviour. This is NOT native
+standalone-PBR/displacement/opaque-colour-alpha acceptance. No new build this update.
+
+User screenshots: BoxLab shows only Colour cube textured, other six plain. Nomad
+shows Normal/Emissive/scalar/Opacity/Displacement effects; Colour cube solid cyan.
+Source audit confirms native nomadColourSurfaceSource returns null without color;
+nomadPBRSurfaceSources and original UV overlay consequently cannot activate other
+maps by themselves. Seven-object fixture intentionally assigns exactly one slot
+per cube. Therefore this exposes the remaining no-colour-map viewport dependency;
+retained maps were not lost. Extend the SAME resource/material overlay owners for
+supported normal/emissive/roughness/metalness/opacity without requiring a color map.
+Displacement remains separately deferred behind subdivision/performance gates.
+
+Important fixture finding: 01Colour PNG is128x128 with EXACTLY ONE RGB value
+[55,175,220], and alpha0/255 checker. Every fixture material has use_color_opacity=0.
+Nomad's uniform cyan is expected: the checker is ALPHA, not a colour pattern. Do
+not call this missing colour texture or change Nomad bindings based on appearance.
+BoxLab's checker/black squares despite alphaOFF is a separate discrepancy. Native
+plan requests unpremultiplied bitmap but browser decode/resampling may lose RGB
+under alpha0; exact cause not verified on iPad. Do not claim it fixed from a mocked
+bitmap test. Investigate original decoder, keep source bytes unchanged, and use a
+real opaque RGB colour-checker in the next comparison fixture to avoid ambiguity.
+
+Status: current LIVE1032; explicit loading/VIEW PASS protected. Material viewport
+gap and alphaOFF colour discrepancy OPEN. No runtime/code/new build this update.
+Next scoped build: audit no-colour native base material path, preserve accepted
+1032 UI, add meaningful per-channel sample and actual owner coverage; investigate
+alphaOFF colour separately, retaining displacement as inspection/export-only.
+Possible checks now: UV Editor Image on Normal/Opacity/Displacement cubes confirms
+retained references; no repeated loading/VIEW regression test or reinstall needed.

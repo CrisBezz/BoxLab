@@ -1,3 +1,11 @@
+## .1032 explicit user acceptance — 31 October 2026
+
+- [x] User1032 PASS: all7 cubes visible; no VIEW mode disappearance. Protect sample spacing and VIEW startup/mode availability/reopen.
+- [ ] OPEN: native Normal/Emissive/Roughness/Metalness/Opacity without colour texture still falls back to plain3D shading; retained maps remain inspectable. No standalone-PBR PASS inferred.
+- [ ] OPEN: sample colour RGB is constant cyan with alpha checker OFF. Nomad solid cyan expected; BoxLab checker/black squares require alphaOFF decoder/material investigation. Use opaque RGB checker in future comparison fixture.
+- [ ] Displacement viewport remains deferred; inspection/export retention only.
+- [x] Documentation-only acceptance/source audit; runtime remains1032, no new build/manual mandatory test.
+
 ## .1032 — repair .1031 FAIL — 31 October 2026
 
 - [x] User .1031 FAIL recorded; last accepted .1030 protected. Original .1031 sample contains ONE cube/seven maps; no false seven-object claim.
