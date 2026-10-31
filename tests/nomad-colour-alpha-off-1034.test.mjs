@@ -23,7 +23,7 @@ test('1034 native colour alpha OFF always samples RGB only, even without a separ
   const shader={fragmentShader:'#include <map_fragment>'};
   material.onBeforeCompile(shader);
   assert.match(shader.fragmentShader,/diffuseColor\.rgb \*= sampledDiffuseColor\.rgb;/);
-  assert.doesNotMatch(shader.fragmentShader,/diffuseColor \\*= sampledDiffuseColor;/);
+  assert.equal(shader.fragmentShader.includes('diffuseColor *= sampledDiffuseColor;'),false);
  }finally{overlay?.userData.boxlabUVImageDispose();}
  assert.equal(body.material,original);
 });
@@ -36,7 +36,7 @@ test('1034 explicit native colour alpha ON retains Three RGBA sampling',async()=
   assert.equal(overlay.material.transparent,true);
   const shader={fragmentShader:'#include <map_fragment>'};
   overlay.material.onBeforeCompile(shader);
-  assert.match(shader.fragmentShader,/diffuseColor \\*= sampledDiffuseColor;/);
+  assert.equal(shader.fragmentShader.includes('diffuseColor *= sampledDiffuseColor;'),true);
  }finally{overlay?.userData.boxlabUVImageDispose();}
  assert.equal(body.material,original);
 });
