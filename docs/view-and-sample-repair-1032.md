@@ -39,7 +39,7 @@ Existing1031 one-cube fixture remains reproducible; do not overwrite it silently
 
 85 focused PASS/0FAIL/0skip, including4 new regressions, actual imported7 and
 workspace/VIEW/native/GLB/release protection. Reviewed reverse-loader pins1032 and
-canonical recovery chain; other runtime JS edits are pins only. Full local Node24.22.1:3055 PASS/0FAIL/0skip/0cancel (107.16s). No runtime/test edits after full-suite start. Publication proof follows; native .1032 acceptance is not inferred.
+canonical recovery chain; other runtime JS edits are pins only. Full local Node24.22.1:3055 PASS/0FAIL/0skip/0cancel (107.16s). No runtime/test edits after full-suite start. Publication and final CI evidence: docs/publication-1032.md and docs/publication-1032-ci.md; native .1032 acceptance is not inferred.
 In-app test list explicitly distinguishes seven OBJECTS from seven MAPS.
 DEVICE1032 first openVIEW before import: all12 looks including Cavity/Silhouette;
 Studio->Solid->Studio and close/reopen. Import new sample: seven named cubes;
