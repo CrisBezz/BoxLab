@@ -21,11 +21,14 @@ protected; no material, renderer, scene geometry, export, or Multi changes in .1
 Validation: focused SubD cache/displacement/benchmark16 PASS; release-contract16
 PASS; full Node22 suite3066 PASS, 0 FAIL, 0 skipped. Initial full run caught stale
 release URL/hash contract rows after the required pin refresh; reviewed references
-were updated and the final full run passed. git diff --check clean. Hosted validation
-and live publication verification are recorded below when complete. iPad timing and
-visible page acceptance remain pending hands-on testing.
+were updated and the final full run passed. git diff --check clean. Hosted topology
+regression41159958003 SUCCESS; Pages41159957610 SUCCESS. Six live release files
+(version, shell, comparison owner, drawer owner, face-workflow owner, benchmark page)
+byte-match the published source. App release commit69f76c096ed9acde8d938e390a5526b3ad0b79cd,
+treef63027d2c388ed1f2bdfb2ecf0755dcb0d8d563a. iPad timing and visible benchmark
+acceptance remain pending hands-on testing.
 
-Current status: .1036 locally validated; publication pending. .1035 user PASS is
+Current status: .1036 LIVE and ready for iPad benchmark testing; .1035 user PASS is
 protected. Next step after device report: assess the required UV-preserving preview
 path and separate image/vertex/memory/GPU limits. No displacement deformation ships.
 

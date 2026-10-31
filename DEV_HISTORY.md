@@ -18225,4 +18225,7 @@ preset/cap/stop contract and exact output face/vertex counts while source mesh s
 unchanged. Focused SubD-cache/displacement/benchmark checks16 PASS; release-contract
 checks16 PASS. Full Node22 suite3066 PASS, 0 FAIL, 0 skipped. Initial full run caught
 three stale release URL/hash contract rows after the required pin refresh; refreshed
-the reviewed import chain and reran clean. Publication and live verification pending.
+the reviewed import chain and reran clean. Runtime commit69f76c096ed9acde8d938e390a5526b3ad0b79cd/treef63027d2c388ed1f2bdfb2ecf0755dcb0d8d563a.
+Hosted topology regression41159958003 and Pages41159957610 SUCCESS. Six live app/
+benchmark files byte-match the published source. Device timing and UI acceptance
+remain pending; no displacement preview acceptance is claimed.

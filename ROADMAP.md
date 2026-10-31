@@ -14,6 +14,11 @@ UVs, so any preview needs an authoritative UV-transfer solution and separate ima
 vertex, memory and rendering limits. Displacement stays retained/exportable only
 until those gates and a real device check pass. .1035 material PASS remains protected.
 
+Publication: runtime commit69f76c096ed9acde8d938e390a5526b3ad0b79cd/tree
+f63027d2c388ed1f2bdfb2ecf0755dcb0d8d563a. Hosted topology regression41159958003
+and Pages deployment41159957610 SUCCESS. Version, shell, changed owners and benchmark
+page were fetched from Pages and byte-matched. Local Node22 suite3066 PASS/0 FAIL.
+
 ## .1035 — pre-decode native colour alpha OFF repair — 31 October 2026
 
 USER .1034 FAIL: screenshot shows right cube cyan/black checker on visible .1034.

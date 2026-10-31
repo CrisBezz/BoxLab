@@ -8,6 +8,8 @@
 
 Automated regression: `tests/subdivision-benchmark-1036.test.mjs` verifies the page uses the authoritative `subdivide()` owner, bounded preset/cap/guard and expected output face/vertex counts for all cases; it also confirms the source cage remains unchanged. Automated timings are not a device-performance substitute. This benchmark does not validate UV preservation, displacement display, GPU memory or rendered frame time.
 
+Release .1036 is live. The six published app/benchmark files byte-match the tested tree; local and hosted regression suites passed. The iPad timing run and visible page interaction are still the requested hands-on checks.
+
 ## .1035 — pre-decode native colour alpha OFF repair — 31 October 2026
 
 USER .1034 FAIL: screenshot shows right cube cyan/black checker on visible .1034.
