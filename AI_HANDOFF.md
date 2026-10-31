@@ -1,36 +1,36 @@
-## .1036 — bounded SubD benchmark; .1035 user PASS protected — 31 October 2026
+## .1036 — iPad subdivision timing report; displacement preview still deferred — 31 October 2026
 
-Build .1036 adds a standalone, read-only timing page at
-`docs/subdivision-benchmark-1036.html`. File → Screen comparison / test list opens
-it. The page imports the existing `EditableMesh` and `subdivide` Catmull–Clark
-owners. It tests 16, 64 and 256 regular quad source faces at levels 1–3, caps output
-at 16,384 faces (about 16,641 vertices), uses one warm-up and three timed samples,
-and stops escalating if a single sample exceeds 1.2s. It reports median timing,
-counts, browser/device metadata and a copyable JSON report. It does not modify the
-project scene.
+The .1036 read-only benchmark has now completed all nine CPU cases on an iPad using
+Chrome for iOS (CriOS 156, iPadOS 26.6.2, DPR2). Run time was 611ms; no early-stop
+guard fired. Median timings: 16 source faces, levels1/2/3 = 1/1/3ms; 64 faces =
+1/3/6ms; 256 faces = 1/4/13ms. The largest output was16,384 faces and16,641
+vertices, with samples12/13/17ms. Keep this as the device CPU-kernel baseline. The
+report does not include GPU upload/render, UV transfer, 16-bit image decode/sampling,
+heap, or frame time; it is not displacement-preview acceptance. The user supplied
+the report without an explicit overall PASS/FAIL, so record measured completion and
+do not label .1036 fully user-PASS. The report does not state whether the project
+scene/selection were checked afterward.
 
-This measures CPU mesh generation only. It does not measure UV-corner interpolation,
-16-bit displacement decoding/sampling, GPU upload/rendering, actual heap use or frame
-rate. It cannot by itself qualify displacement preview. Existing `subdivide()`
-returns geometry without imported per-corner UVs; do not attach displacement to this
-output until an authoritative UV-preserving topology path and iPad-specific limits
-are established. NOM displacement maps remain retained/exportable, not displayed or
-baked. .1035 right-cube colour alpha PASS and earlier seven-object/VIEW PASS remain
-protected; no material, renderer, scene geometry, export, or Multi changes in .1036.
+Source audit confirms imported UVs are stored as per-face-corner arrays
+(`glbPassthrough.uvCorners`), while the authoritative `subdivide()` currently returns
+only `EditableMesh`. Its Catmull–Clark step splits each source face into ordered
+quad corners, so UVs can be propagated alongside this same kernel without adding a
+second geometric subdivision implementation. The active SubD cache owns displayed
+geometry. Native surface preview already caps shared sources at80,000 UV corners,
+15M decoded pixels and32MiB encoded images; keep existing owners and reservations.
+Displacement remains exact retained/export data only. Before deformation work, verify
+corner/face ordering and seam-safe UV propagation through the original owner, then
+make image precision/sampling, generated-geometry, GPU/memory and transient cleanup
+limits explicit. No displacement deformation ships from the .1036 benchmark.
 
-Validation: focused SubD cache/displacement/benchmark16 PASS; release-contract16
-PASS; full Node22 suite3066 PASS, 0 FAIL, 0 skipped. Initial full run caught stale
-release URL/hash contract rows after the required pin refresh; reviewed references
-were updated and the final full run passed. git diff --check clean. Hosted topology
-regression41159958003 SUCCESS; Pages41159957610 SUCCESS. Six live release files
-(version, shell, comparison owner, drawer owner, face-workflow owner, benchmark page)
-byte-match the published source. App release commit69f76c096ed9acde8d938e390a5526b3ad0b79cd,
-treef63027d2c388ed1f2bdfb2ecf0755dcb0d8d563a. iPad timing and visible benchmark
-acceptance remain pending hands-on testing.
-
-Current status: .1036 LIVE and ready for iPad benchmark testing; .1035 user PASS is
-protected. Next step after device report: assess the required UV-preserving preview
-path and separate image/vertex/memory/GPU limits. No displacement deformation ships.
+Current release: .1036 LIVE; local Node22 suite3066 PASS, hosted topology regression
+41159958003 and Pages deployments41159957610/41160392865 SUCCESS; six live runtime/
+benchmark files byte-match. App commit69f76c096ed9acde8d938e390a5526b3ad0b79cd,
+treef63027d2c388ed1f2bdfb2ecf0755dcb0d8d563a. .1035 colour-alpha PASS remains
+protected. Next build direction: add/test corner UV propagation through the existing
+Catmull–Clark owner, with no viewport displacement yet; use the iPad report as CPU
+baseline and retain the 16,384-face/16,641-vertex scenario as a provisional ceiling
+until UV, GPU and memory measurements are available.
 
 ## .1035 — pre-decode native colour alpha OFF repair — 31 October 2026
 

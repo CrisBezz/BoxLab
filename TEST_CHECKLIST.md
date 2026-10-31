@@ -1,9 +1,9 @@
 ## .1036 — subdivision benchmark — 31 October 2026
 
-- [ ] From File → Screen comparison / test list, open “Subdivision timing benchmark · .1036”.
-- [ ] Run the benchmark in iPad Safari; keep BoxLab open in its original tab and do not switch orientation/resolution while it runs.
-- [ ] Confirm bounded cases report source faces, subdivision level, output faces/vertices and median timing; largest case is capped at 16,384 faces.
-- [ ] Copy the JSON report and send it with whether the page stayed responsive. A guarded early stop is a useful result; do not rerun repeatedly if Safari becomes unresponsive.
+- [x] From File → Screen comparison / test list, open “Subdivision timing benchmark · .1036” (confirmed by the returned report).
+- [x] Run the benchmark on iPad; all nine cases completed on Chrome for iOS (CriOS 156, iPadOS 26.6.2, DPR2), with no early stop.
+- [x] Confirm bounded cases report source faces, subdivision level, output faces/vertices and median timing; the largest generated 16,384 faces / 16,641 vertices.
+- [x] Copy and send the JSON report. It recorded 611 ms total and 12/13/17 ms for the largest-case samples. No separate scene/selection check was included.
 - [ ] Return to BoxLab and confirm the current project and its selection are unchanged.
 
 Automated regression: `tests/subdivision-benchmark-1036.test.mjs` verifies the page uses the authoritative `subdivide()` owner, bounded preset/cap/guard and expected output face/vertex counts for all cases; it also confirms the source cage remains unchanged. Automated timings are not a device-performance substitute. This benchmark does not validate UV preservation, displacement display, GPU memory or rendered frame time.

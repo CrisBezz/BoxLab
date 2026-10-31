@@ -1,23 +1,22 @@
-## .1036 — bounded SubD benchmark shipped; device measurements are the gate — 31 October 2026
+## .1036 — iPad CPU timing baseline recorded — 31 October 2026
 
-A standalone timing page now exercises the existing Catmull–Clark kernel at 16/64/
-256 source quad faces and levels 1–3, with a 16,384-output-face maximum, three
-samples, and a 1.2s per-sample escalation guard. It is linked from File → Screen
-comparison / test list. The report records median timings, generated counts, browser,
-and device-pixel ratio. This is CPU mesh-generation evidence only; it does not test
-UV transfer, displacement sampling, memory, GPU or frame time.
+User-provided iPad Chrome (CriOS156, iPadOS26.6.2, DPR2) report completed all9
+synthetic mesh cases in611ms, with no early stop. For16/64/256 source faces, level
+1/2/3 medians were respectively1/1/3ms,1/3/6ms,1/4/13ms. The largest 16,384-face
+result had16,641 vertices and12/13/17ms samples. This is a useful CPU-only baseline;
+it does not measure UV propagation, displacement decoding/sampling, GPU, heap or
+rendered frame time. Do not treat the report as displacement-preview PASS.
 
-Next: obtain an iPad Safari report and decide whether measured headroom supports a
-separate UV-preserving, transient displacement prototype. Keep Base geometry and
-exported NOM/image data unchanged. The current subdivision owner drops per-corner
-UVs, so any preview needs an authoritative UV-transfer solution and separate image,
-vertex, memory and rendering limits. Displacement stays retained/exportable only
-until those gates and a real device check pass. .1035 material PASS remains protected.
+Next narrow step: extend the existing Catmull–Clark owner to propagate existing
+per-corner UV payloads through its ordered face splits and add seam/topology tests.
+Do not create a parallel subdivision kernel or expose displacement yet. Then assess
+16-bit map sampling plus transient geometry/GPU/memory ceilings against existing
+80,000-corner,15M-pixel and32MiB resource owners. Provisional output ceiling remains
+16,384 faces/~16,641 vertices until those additional measurements exist. Keep .1035
+colour-alpha and prior seven-object/VIEW PASS protected.
 
-Publication: runtime commit69f76c096ed9acde8d938e390a5526b3ad0b79cd/tree
-f63027d2c388ed1f2bdfb2ecf0755dcb0d8d563a. Hosted topology regression41159958003
-and Pages deployment41159957610 SUCCESS. Version, shell, changed owners and benchmark
-page were fetched from Pages and byte-matched. Local Node22 suite3066 PASS/0 FAIL.
+Published .1036 app commit69f76c096ed9acde8d938e390a5526b3ad0b79cd; hosted topology
+regression41159958003, runtime Pages41159957610, docs Pages41160392865 SUCCESS.
 
 ## .1035 — pre-decode native colour alpha OFF repair — 31 October 2026
 

@@ -18229,3 +18229,21 @@ the reviewed import chain and reran clean. Runtime commit69f76c096ed9acde8d938e3
 Hosted topology regression41159958003 and Pages41159957610 SUCCESS. Six live app/
 benchmark files byte-match the published source. Device timing and UI acceptance
 remain pending; no displacement preview acceptance is claimed.
+
+
+## .1036 user timing report received — 31 October 2026
+
+The user supplied all9 .1036 benchmark results from iPad Chrome for iOS (CriOS156,
+iPadOS26.6.2, DPR2). Start/end duration611ms; no early-stop guard. Median CPU mesh
+times for source faces16/64/256 at levels1/2/3: 1/1/3ms,1/3/6ms,1/4/13ms. Largest
+result16,384 faces/16,641 vertices; samples12/13/17ms. Record as completed CPU
+benchmark data, not as displacement-preview or GPU acceptance, and not as explicit
+overall user PASS/FAIL. No report of post-run scene/selection check.
+
+Audit for next step: NOM UVs are face-corner arrays in `glbPassthrough.uvCorners`;
+existing Catmull–Clark face splitting has stable ordered corner topology but drops
+UVs in its current `EditableMesh` return. Extend the same authoritative owner to
+propagate corner UVs; retain seam-specific UVs and verify face/corner alignment. No
+second geometry kernel. Use16,384 faces/~16,641 vertices as a provisional cap only;
+UV mapping, 16-bit displacement sampling, heap, GPU and frame-time gates remain open.
+.
