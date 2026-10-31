@@ -21,8 +21,9 @@ charts at 16,384 faces / 65,536 corners (CPU generation only).
 Automated .1039 regression covers UV-aware display-cache reuse and invalidation,
 source signature/mirror/cap gates, overlay ownership/cleanup, native Studio/Solid
 preview, and mirror/no-UV fallback. Full Node 22 suite: 3,083 PASS / 0 FAIL. Release asset-contract and version-marker
-checks pass locally. Hosted topology and Pages workflows will be recorded after
-publication.
+checks pass locally. Hosted topology regression 41182612229 and Pages build/deploy 41182611920 succeeded.
+Live version.json, shell, nine runtime modules and both UV paint evaluation assets
+(13 assets total) match local Git blobs byte-for-byte. The iPad visual gate remains pending.
 
 ## .1037 user PASS protected — corner UV subdivision
 

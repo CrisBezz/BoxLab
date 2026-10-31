@@ -18319,7 +18319,10 @@ other sources and over-cap results fall back to untextured SubD. Existing overla
 cleanup is called before body rebuild; no second subdivision kernel or displacement
 preview is introduced. Focused SubD, texture overlay and display-cache tests passed;
 full Node 22 suite passed 3,083/3,083, release asset-contract checks passed and
-`git diff --check` is clean. Hosted topology/Pages checks and .1039 iPad visual
-verification remain pending; do not claim GPU, memory or frame-time safety from the
-.1038 benchmark. Preserve earlier .1035 colour-alpha
+`git diff --check` is clean. Hosted topology regression 41182612229 and Pages
+build/deploy 41182611920 succeeded for runtime commit 30f01a4; version marker, shell,
+nine runtime modules and two evaluation assets (13 files) match local Git blobs
+byte-for-byte. The
+.1039 iPad visual verification remains pending; do not claim GPU, memory or frame-time
+safety from the .1038 benchmark. Preserve earlier .1035 colour-alpha
 PASS and seven-object/VIEW acceptance.

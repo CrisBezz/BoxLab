@@ -8,9 +8,10 @@ SubD kernel through the active display cache into the existing NOM Studio/Solid
 surface overlay. Preview is limited to active editable NOM objects with matching
 UV topology, no Mirror, and the current 20,000-corner geometry preview cap. Other
 cases retain the untextured SubD fallback. This report excludes decode, memory, GPU
-and frame time; displacement preview remains a separate gate. Local validation is 3,083/3,083 Node 22 tests with release-contract checks passing.
-Await hosted topology/Pages checks and user hands-on texture-alignment and VIEW
-confirmation before expanding scope.
+and frame time; displacement preview remains a separate gate. Local validation is 3,083/3,083 Node 22 tests; release-contract checks pass. Hosted
+topology run 41182612229 and Pages deploy 41182611920 succeeded; live runtime assets
+match their local blobs. Await user hands-on texture-alignment and VIEW confirmation
+before expanding scope.
 
 
 ## .1035 — pre-decode native colour alpha OFF repair — 31 October 2026

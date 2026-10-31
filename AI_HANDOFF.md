@@ -18,7 +18,10 @@ when the render body is cleared, including when cached display geometry is reuse
 
 .1039 passed the focused SubD/texture/cache tests and the full Node 22 suite
 (3,083 PASS / 0 FAIL). Release-contract checks passed; `git diff --check` is clean.
-The new iPad hands-on visual check remains pending. User hands-on gate:
+Hosted topology regression 41182612229 and Pages build/deploy 41182611920 both
+succeeded for runtime commit 30f01a4. Live version.json, shell, nine runtime modules and two UV paint evaluation files
+(13 assets total) match local Git blobs byte-for-byte. The new iPad
+hands-on visual check remains pending. User hands-on gate:
 open an existing textured NOM object, enable SubD, inspect Studio and Solid, toggle
 SubD, and confirm Mirror disables the texture preview without disrupting view modes.
 Do not treat the .1038 timing report as GPU, memory or frame-time approval. Preserve
