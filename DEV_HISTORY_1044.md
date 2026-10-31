@@ -1,6 +1,6 @@
 # BoxLab development history addendum — .1044
 
-## .1044 — unified UV Paint material menu — 1 November 2026
+## .1044 — unified UV Paint material menu — 31 October 2026
 
 The user requested a more complete UV Paint palette based on the Nomad colour menu.
 Existing `viewport-paint.js` was confirmed as the authoritative UI owner and
@@ -21,7 +21,9 @@ opacity maps remain retained, but BoxLab does not yet author opacity textures. T
 contextual help, draggable palette, iPad/Pencil gesture ownership and model/render owners
 remain unchanged. Protected `src/multi-object-transform.js?v=0.36.1.0` is untouched.
 
-Validation: `node --check` for both changed JavaScript modules and `git diff --check`
-passed. Automated tests were not run. Native iPad interaction/visual acceptance is
+Validation: syntax checks for changed runtime modules and `git diff --check` passed.
+Hosted Topology regression 41251196062 passed: 3,086 PASS / 0 FAIL / 0 skipped. A prior
+.1044 run exposed 10 stale release/UI assertions; the targeted fixes are in `f598df1`.
+Pages deployment 41251195407 succeeded. Native iPad interaction/visual acceptance is
 pending; see `TEST_CHECKLIST.md`.
 
