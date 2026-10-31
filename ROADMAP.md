@@ -1,16 +1,16 @@
 ## Current build: .1041 displacement preview feasibility gate
 
-.1040 is user-PASS protected: imported NOM materials stay visible on multiple SubD
-objects, including when they are unselected. .1041 adds an isolated benchmark entry
-from File → Screen comparison / test list. It exercises the existing corner-UV
-subdivision kernel, generated grayscale PNG decode, UV-corner geometry expansion,
-and a Three.js displacement-map render across bounded mesh/map sizes. CPU stages stop
-after one run exceeds 1.2 seconds. The report includes known byte estimates, render
-submission and frame-interval metrics, and optional GPU timer queries.
+All nine generated-map cases completed on the iPad without early stop. Largest case: UV
+subdivision 21 ms median, UV geometry expansion 5–8 ms, 3 MiB expanded arrays; 2048² map
+decode 48 ms with 16 MiB estimated base RGBA. RAF intervals stayed at 17 ms median and
+17–18 ms p95. GPU timer queries were unavailable. This is favorable feasibility data,
+not a GPU/memory or BoxLab viewport proof. The benchmark used one mesh and generated
+8-bit maps; actual retained Nomad 16-bit decode and displacement semantics remain open.
 
-No displacement deformation is added to the project. The gate does not establish
-BoxLab viewport frame time, total process/GPU memory, native Nomad image decode, or
-device GPU safety. User iPad report is required before production preview work.
+Next: audit the retained Nomad displacement image and its factor/midpoint/world settings,
+then scope a viewport prototype through the original UV surface and SubD display owners.
+Preserve existing fallback behavior and the 20,000-corner viewport preview cap. Do not
+add a parallel renderer/kernel or claim product acceptance from the benchmark report.
 
 ## .1035 — pre-decode native colour alpha OFF repair — 31 October 2026
 

@@ -5,20 +5,23 @@ remain visible on multiple SubD objects, including unselected objects. Preserve 
 existing Studio/Solid material overlay, UV-aware SubD cache, selection independence,
 Mirror fallback, seven-object material behavior and VIEW/navigation.
 
-.1041 adds a temporary benchmark page linked from File → Screen comparison / test
-list. It uses the canonical `subdivideWithCornerUVs()` kernel, generated grayscale PNG
-height maps, UV-corner-expanded Three.js geometry and a Three.js displacementMap
-material. Cases combine 16/64/256 source faces with levels 2/2/3 and 256²/1024²/2048²
-maps, within the existing 16,384-face / 80,000-corner caps. CPU stages stop after a
-single run exceeds 1.2 seconds. The JSON records map generation/encoding/decode,
-subdivision, geometry expansion, estimated byte counts, WebGL command-submission and
-requestAnimationFrame intervals, plus GPU timer queries only when supported.
+.1041 is a temporary, generated-data benchmark linked from File → Screen comparison /
+test list. It exercises the canonical `subdivideWithCornerUVs()` kernel and a Three.js
+displacementMap without changing the open project or adding viewport displacement.
+The iPad report completed all nine render cases (16/64/256 source faces, levels 2/2/3,
+256²/1024²/2048² maps), with no early stop. At the largest case it measured 21 ms median
+UV subdivision, 5–8 ms UV geometry expansion and a 3 MiB expanded typed-array payload.
+The 2048² PNG decoded in 48 ms (16 MiB estimated base RGBA); RAF intervals were 17 ms
+median and 17–18 ms p95. GPU timer queries were unavailable.
 
-This is an isolated generated-data feasibility gate; it does not modify the current
-project or add displacement deformation to BoxLab. Reports do not establish BoxLab
-viewport frame time, total memory, native Nomad image decode or device GPU safety.
-The supplied iPad report will determine the next production decision; do not add a
-second rendering or subdivision owner.
+This is favorable CPU/frame-scheduling feasibility evidence on the iPad, not a product
+PASS or GPU/memory safety proof: maps were generated 8-bit grayscale, the scene was one
+mesh, RAF timing is not BoxLab viewport frame time, and actual Nomad 16-bit map decode,
+full app memory, shadows and displacement scale/midpoint/world semantics were not tested.
+Next: audit actual retained Nomad displacement bytes and settings, then define the
+narrowest compatible path through the existing UV surface/SubD owners. Keep the current
+20,000-corner viewport-preview cap and existing image budgets; unsupported sources must
+retain their current fallback. Do not add a parallel renderer or subdivision kernel.
 
 Current validation/publication status is recorded in DEV_HISTORY.md. The .1040 iPad
 PASS remains protected. `src/multi-object-transform.js?v=0.36.1.0` remains protected.

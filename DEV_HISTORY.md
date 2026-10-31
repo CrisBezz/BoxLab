@@ -18397,3 +18397,19 @@ Final local Node suite: 3,083 PASS / 0 FAIL / 0 skipped. The .1041 gate, release
 existing .1038 UV benchmark and .1040 inactive SubD regression checks passed; module
 syntax and `git diff --check` are clean. Live publication is pending. The user iPad
 report is required before choosing a production displacement implementation.
+
+
+## .1041 iPad feasibility report received — 31 October 2026
+
+The user supplied the .1041 report from iPadOS 27.2 / DPR 2. All nine generated-map
+render cases completed without early stop. At the largest case (256 source faces, level
+3, 16,384 output faces / 65,536 corners), median UV subdivision was 21 ms, UV-corner
+geometry expansion 5–8 ms and expanded typed arrays 3 MiB. The 2048² generated PNG
+decoded in 48 ms, with 16 MiB estimated base RGBA; RAF intervals were 17 ms median and
+17–18 ms p95. GPU timer queries were unavailable.
+
+Treat as favorable feasibility evidence only, not a user PASS for viewport displacement.
+The test used a single mesh and synthetic 8-bit map; actual Nomad 16-bit source decoding,
+BoxLab viewport/frame cost, full memory, shadows and factor/midpoint/world semantics are
+not established. Next audit the real retained Nomad displacement payload/settings and
+route any future preview through the existing UV surface/SubD owners within current caps.

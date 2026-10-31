@@ -1,20 +1,22 @@
-## .1041 — displacement preview feasibility gate
+## .1041 — displacement feasibility report received (benchmark only)
 
-- [ ] In BoxLab, open File → Screen comparison / test list and launch
-  “Displacement feasibility gate · .1041”. Confirm the benchmark opens in a new
-  tab without altering the active project.
-- [ ] Run the gate. Confirm it shows the temporary height-map mesh and reports
-  progress across the bounded mesh/map cases, or stops safely with a reason.
-- [ ] Copy the JSON report and send it. Confirm decode, UV/subdivision, render
-  submission, frame-interval and optional GPU-timer fields are present where run.
-- [ ] Return to BoxLab. Confirm the current project and VIEW/navigation remain
-  unchanged. This gate does not enable displacement in the app.
+- [x] The .1041 page ran all nine generated-map render combinations on the iPad; no
+  case stopped early. This confirms the gate and its copyable report work.
+- [x] Largest generated case: 16,384 output faces / 65,536 UV corners; UV subdivision
+  21 ms median, geometry expansion 5–8 ms, expanded arrays 3 MiB.
+- [x] 2048² generated PNG decoded in 48 ms; estimated base RGBA 16 MiB. RAF intervals
+  were 17 ms median and 17–18 ms p95. GPU timer query was unavailable.
 
-Automated coverage checks the benchmark entry point, existing corner-UV kernel,
-displacement shader usage, case caps, timeout/report contract, and release markers.
-Full Node suite: 3,083 PASS / 0 FAIL / 0 skipped; focused feasibility, release-pin,
-UV benchmark and inactive SubD checks pass. `git diff --check` is clean. The iPad
-report is still required before deciding whether a viewport preview is safe.
+Interpretation: favorable bounded CPU/frame-scheduling evidence, not a product PASS or
+GPU/memory safety proof. The benchmark used a single mesh and generated 8-bit maps; it
+did not test actual Nomad 16-bit decode, BoxLab viewport time, shadows or full memory.
+Next validation must audit the actual retained Nomad displacement image and the native
+factor/midpoint/world settings before preview implementation. Keep current viewport
+20,000-corner and aggregate-image budgets. No displacement feature is enabled in .1041.
+
+Automated .1041 coverage checks the benchmark entry point, canonical corner-UV kernel,
+displacement shader usage, case caps, timeout/report contract and release markers. The
+full Node suite passed 3,083 / 0 / 0; live .1041 Pages deployment was verified.
 
 ## .1040 — textured SubD on inactive NOM objects — user PASS protected
 
