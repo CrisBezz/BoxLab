@@ -2,7 +2,7 @@
 // Move the original canvas once; no second renderer, input owner or live profile swap.
 (() => {
  'use strict';
- const RELEASE='0.36.18.1037',KEY='boxlab.shell-comparison.v1',LIMIT=30;
+ const RELEASE='0.36.18.1038',KEY='boxlab.shell-comparison.v1',LIMIT=30;
  const url=new URL(window.location.href),choice=url.searchParams.get('shellTest');
  const active=choice==='current'||choice==='separated',mode=active?choice:'current';
  const doc=document,app=doc.querySelector('#app'),wrap=doc.querySelector('#viewportWrap'),canvas=doc.querySelector('#viewport');
@@ -24,7 +24,7 @@
   const saved=window.localStorage.getItem(KEY);
   if(saved&&saved.length<2000000){
    const data=JSON.parse(saved);
-   if(data.version===1&&[RELEASE,'0.36.18.1006','0.36.18.1007','0.36.18.1008','0.36.18.1009','0.36.18.1010','0.36.18.1011','0.36.18.1012','0.36.18.1013','0.36.18.1014','0.36.18.1015','0.36.18.1016','0.36.18.1017','0.36.18.1018','0.36.18.1019','0.36.18.1020','0.36.18.1021','0.36.18.1022','0.36.18.1023','0.36.18.1024','0.36.18.1025','0.36.18.1026','0.36.18.1027','0.36.18.1028','0.36.18.1029','0.36.18.1030','0.36.18.1031','0.36.18.1032','0.36.18.1033','0.36.18.1034','0.36.18.1035','0.36.18.1036'].includes(data.release)&&Array.isArray(data.runs))
+   if(data.version===1&&[RELEASE,'0.36.18.1006','0.36.18.1007','0.36.18.1008','0.36.18.1009','0.36.18.1010','0.36.18.1011','0.36.18.1012','0.36.18.1013','0.36.18.1014','0.36.18.1015','0.36.18.1016','0.36.18.1017','0.36.18.1018','0.36.18.1019','0.36.18.1020','0.36.18.1021','0.36.18.1022','0.36.18.1023','0.36.18.1024','0.36.18.1025','0.36.18.1026','0.36.18.1027','0.36.18.1028','0.36.18.1029','0.36.18.1030','0.36.18.1031','0.36.18.1032','0.36.18.1033','0.36.18.1034','0.36.18.1035','0.36.18.1036','0.36.18.1037'].includes(data.release)&&Array.isArray(data.runs))
     log.runs=data.runs.filter(r=>r&&['current','separated'].includes(r.mode)&&typeof r.id==='string'&&r.ratings&&typeof r.ratings==='object').slice(-LIMIT).map(r=>({...r,release:r.release||data.release}));
   }
  }catch{storageOK=false;}
@@ -57,10 +57,10 @@
  function el(tag,text){const n=doc.createElement(tag);if(text!==undefined)n.textContent=text;return n;}
  function button(text,action){const b=el('button',text);b.type='button';b.addEventListener('click',action);return b;}
  const header=el('div');header.className='shell-test-header';
- const title=el('strong',active?(mode==='current'?'A · Current · .1037':'B · Separated · .1037'):'Screen comparison · .1037');
+ const title=el('strong',active?(mode==='current'?'A · Current · .1038':'B · Separated · .1038'):'Screen comparison · .1038');
  const body=el('div');body.className='shell-test-body';
  const collapse=button('Collapse',()=>{body.hidden=!body.hidden;collapse.textContent=body.hidden?'Test list':'Collapse';});
- const launcher=button('TEST LIST · .1037',showPanel);launcher.id='shellTestReopen';launcher.hidden=true;
+ const launcher=button('TEST LIST · .1038',showPanel);launcher.id='shellTestReopen';launcher.hidden=true;
  launcher.style.cssText='display:none;position:fixed;left:8px;top:50dvh;z-index:100003;min-height:40px;';
  const hide=button('Hide list',()=>{panel.hidden=true;launcher.hidden=false;launcher.style.display='block';stopDock();});
  header.append(title,collapse,hide);panel.append(header,body);
@@ -80,8 +80,10 @@
  window.addEventListener('pageshow',()=>{if(!panel.hidden)watchDock();});
  body.append(el('p','Stay in this browser throughout each run. Save your real project first; use the default cube. A and B use the same tools, renderer and resolution setting. Keep orientation and resolution unchanged.'));
  body.append(el('p',active?'Record what you SEE. A FAIL saves a layout snapshot without refreshing the display. Collapse this list after rating startup if it covers tools.':'Start A below, then follow this list after the reload. The list opens automatically on every test load.'));
+ body.append(el('p','Build .1038 UV performance gate: open the UV subdivision timing link below and run it on iPad. It compares geometry-only subdivision with continuous-chart and per-face-seam UV propagation. Send the copied JSON report; it does not modify the current project.'));
  body.append(el('p','Build .1035 repair: Import original NOM_COLOUR_ALPHA_1029.nom. In Studio and Solid, right cube must be solid cyan WITHOUT black squares; left retains checker transparency, middle combined colour-alpha and opacity. Switch VIEW modes and reopen. Check original NOM_SEVEN_OBJECTS_1032.nom Colour cube is cyan; .1033 standalone map sample still works. Move/Undo/Redo, Save/Open and export NOM retain images. .1035 is user-PASS protected.'));
  const benchmark=el('a','Open subdivision timing benchmark · .1036');benchmark.href='./docs/subdivision-benchmark-1036.html';benchmark.target='_blank';benchmark.rel='noopener';benchmark.style.cssText='display:inline-flex;align-items:center;min-height:42px;margin:0 0 12px;padding:8px 12px;border-radius:9px;background:#d9e2f2;color:#111318;font-weight:700;text-decoration:none';body.append(benchmark);
+ const uvBenchmark=el('a','Open UV subdivision timing benchmark · .1038');uvBenchmark.href='./docs/subdivision-uv-benchmark-1038.html';uvBenchmark.target='_blank';uvBenchmark.rel='noopener';uvBenchmark.style.cssText=benchmark.style.cssText;body.append(uvBenchmark);
  const rows=[];
  for(const [key,label,instruction]of steps){
   const row=el('div');row.className='shell-test-step';row.append(el('strong',label),el('p',instruction));
@@ -125,7 +127,7 @@
  body.append(el('small','This is a structural comparison, not a confirmed screen repair. Results stay in this browser (last 30 loads); use Copy results after testing.'));
  function update(){
   for(const r of rows)r.button.setAttribute('aria-pressed',String(run?.ratings[r.key]===r.result));
-  const lines=['.1037 · '+(active?(mode==='current'?'A current':'B separated'):'not started')];
+  const lines=['.1038 · '+(active?(mode==='current'?'A current':'B separated'):'not started')];
   for(const profile of ['current','separated']){
    const runs=log.runs.filter(r=>r.mode===profile),complete=runs.filter(r=>steps.every(([k])=>['pass','fail'].includes(r.ratings[k]))).length;
    const failed=runs.filter(r=>r.hadFailure||steps.some(([k])=>r.ratings[k]==='fail')).length;
