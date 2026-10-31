@@ -1,32 +1,28 @@
-## .1038 — bounded UV subdivision timing gate — 31 October 2026
+## .1039 — bounded textured SubD display — 31 October 2026
 
-Current target: BoxLab 0.36.18.1038. User accepted .1037, protecting the canonical
-`subdivideWithCornerUVs()` contract: per-corner UV smoothing follows Catmull–Clark,
-chart seams stay separate, geometry-only results remain identical, and preview
-limits are16,384 faces /80,000 UV corners. .1037 did not change viewport behavior.
+Current target: BoxLab 0.36.18.1039. The user supplied the complete iPad .1038
+UV subdivision timing report: all nine cases completed; geometry and UV-aware output
+matched the geometry baseline, input mesh and UV arrays were unchanged, and no case
+stopped early. Largest case was 16,384 faces / 65,536 UV corners: geometry median
+12 ms, continuous UV 23 ms, per-face-chart UV 22 ms. This is CPU mesh/UV generation
+only; it says nothing about image decode, memory, GPU work or rendered frame time.
 
-The existing renderer intentionally skips native UV image overlays when SubD or
-Mirror is enabled. Main’s active SubD display cache stores geometry, while the UV
-surface owner separately builds textured geometry from source UVs. Wiring these
-owners together now could repeat subdivision work. Therefore .1038 adds an iPad
-benchmark before any preview integration: compare geometry-only subdivision with
-UV propagation for continuous grids and per-face chart seams, using the same 16/64/
-256 face cases and levels1–3 from the user’s .1036 report. Keep each run below the
-existing16,384-face/80,000-corner limits and stop any individual sample over1.2s.
-The page does not alter the open project or imply memory/GPU/frame-time safety.
+.1039 connects the existing canonical `subdivideWithCornerUVs()` kernel to the
+existing active SubD display cache and NOM Studio/Solid UV overlay. It carries the
+cached subdivided corner UVs with the exact display mesh, avoiding a second geometry
+subdivision. It only enables preview for the active editable NOM object when source
+UV topology still matches and the existing 20,000-corner geometry preview accepts it.
+Mirror, stale/invalid UV data, other sources and over-cap results retain the prior
+untextured SubD fallback. There is no displacement preview. The overlay is disposed
+when the render body is cleared, including when cached display geometry is reused.
 
-Automated .1038 coverage verifies both chart patterns, face/corner alignment, exact
-geometry parity, immutable source inputs and the bounded cases. Run the in-app UV
-subdivision timing report on iPad and use the returned JSON to decide whether an
-existing display owner can support textured SubD without duplicate geometry work.
-After that gate, measure image sampling and actual memory/GPU/frame time before any
-displacement preview. Preserve .1035 colour-alpha PASS and earlier seven-object/VIEW
-acceptance. Automated suite: 3,073 PASS / 0 FAIL (Node 22). Topology regression
-run 41177045287 passed. Pages build/deploy run 41177429851 passed after correcting
-an initial upload that had truncated large Markdown blobs; all four handoff files
-now match their local Git blob hashes. Live .1038 marker and benchmark URL verified.
-Next step: user runs the bounded benchmark on iPad and sends its JSON; do not connect
-the UV result to viewport display or enable displacement before that device gate.
+.1039 passed the focused SubD/texture/cache tests and the full Node 22 suite
+(3,083 PASS / 0 FAIL). Release-contract checks passed; `git diff --check` is clean.
+The new iPad hands-on visual check remains pending. User hands-on gate:
+open an existing textured NOM object, enable SubD, inspect Studio and Solid, toggle
+SubD, and confirm Mirror disables the texture preview without disrupting view modes.
+Do not treat the .1038 timing report as GPU, memory or frame-time approval. Preserve
+the .1035 colour-alpha PASS and earlier seven-object / VIEW acceptance.
 
 ## .1035 — pre-decode native colour alpha OFF repair — 31 October 2026
 

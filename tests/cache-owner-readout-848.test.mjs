@@ -10,6 +10,7 @@ import {applyMirror} from '../src/mirror.js';
 test('848 native active/inactive owners report distinct caches and retain aggregate contract',()=>{
  const monitor=createPerformanceMonitor();monitor.setEnabled(true);
  const c={__boxlabPerformance:monitor,mesh:EditableMesh.cube(),subdLevel:1,mirrorAxes:{},subdDisplayCache:createSubdDisplayCache(subdivide,applyMirror),createSubdDisplayCache,subdivide,applyMirror};vm.createContext(c);
+ c.modifiedSubdMesh=(readOnly=false)=>{const display=c.subdDisplayCache.get(c.mesh,c.subdLevel,c.mirrorAxes);monitor.cache(c.subdDisplayCache.hit);return readOnly?display:display.clone();};
  const main=fs.readFileSync(new URL('../src/main.js',import.meta.url),'utf8'),start=main.indexOf('function modifiedBaseMesh()');vm.runInContext(main.slice(start,main.indexOf('\n',start)),c);
  const multi=fs.readFileSync(new URL('../src/multi-object.js',import.meta.url),'utf8');vm.runInContext(multi.slice(multi.indexOf('const inactiveSubdCaches='),multi.indexOf('function queueOutliner()')),c);
  const object={mesh:EditableMesh.cube(),settings:{subd:true,subdLevel:1}};

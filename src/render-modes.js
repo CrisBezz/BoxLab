@@ -215,13 +215,16 @@ function applyMode(body){
   else{body.material=frontOnly(original);addBackface(body);}
   if(mode==='studio'||mode==='solid'){
     const m=manager(),object=m?.objects?.find(o=>o.id===(inactive?body.userData.objectId:m.activeId)),settings=object?.settings||{};
-    if(object?.glbPassthrough?.source==='nomad'&&object.visible!==false&&body.visible!==false&&object.kind!=='reference'&&!object.sourceId&&!object.booleanRecipe&&!object.arrayRecipe&&!object.curveProfile&&!settings.subd&&!Object.values(settings.mirror||{}).some(Boolean))createUVImageOverlay(body,inactive?object.mesh:bridge()?.mesh,object.glbPassthrough,globalThis.__boxlabExportAs?.buildUVPreviewGeometry,checkerHiddenMaterial,{lit:true});
+    const mirrors=Object.values(settings.mirror||{}).some(Boolean),subdPreview=settings.subd&&!mirrors?body.userData.boxlabSubdUVPreview:null;
+    const regularPreview=!settings.subd&&!mirrors;
+    if(object?.glbPassthrough?.source==='nomad'&&object.visible!==false&&body.visible!==false&&object.kind!=='reference'&&!object.sourceId&&!object.booleanRecipe&&!object.arrayRecipe&&!object.curveProfile&&(regularPreview||subdPreview?.payload?.source==='nomad'))createUVImageOverlay(body,subdPreview?.mesh||(inactive?object.mesh:bridge()?.mesh),subdPreview?.payload||object.glbPassthrough,globalThis.__boxlabExportAs?.buildUVPreviewGeometry,checkerHiddenMaterial,{lit:true});
   }
   if(['studio','solid','uvimage'].includes(mode)){const m=manager(),object=m?.objects?.find(o=>o.id===(inactive?body.userData.objectId:m.activeId));if(object?.colourPaint||object?.roughnessPaint||object?.metalnessPaint)createCommittedPaintSurface(body,object,inactive?object.mesh:bridge()?.mesh);}
 }
 
 Object.assign(globalThis.__boxlabRenderModes ||= {},{
   apply:applyMode,
+  clear:clearRenderChildren,
   paintVisible:()=>['studio','solid','uvimage'].includes(mode),
   refreshStudio,
   facegroupView:()=>({...facegroupView}),

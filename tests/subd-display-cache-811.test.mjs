@@ -29,7 +29,8 @@ test('811 source replacement, object switching and Undo/Redo geometry cannot res
 });
 test('811 actual main render path reuses SubD while export returns independent editable mesh',()=>{
  const h=harness(),m=EditableMesh.cube();let rendered;
- const c={mesh:m,mirrorAxes:{},subdLevel:2,subdDisplayCache:h.cache,applyMirror,subdEnabled:true,showCage:false,selection:null,drag:null,root:{add:()=>{}},clearGroup:()=>{},baseMaterial:{},subdMaterial:{},THREE:{Mesh:class{constructor(g){rendered=g;this.userData={};}}},activeMirrorAxes:()=>[],addCage:()=>{}};
+ const c={mesh:m,mirrorAxes:{},subdLevel:2,subdDisplayCache:h.cache,applyMirror,subdEnabled:true,showCage:false,selection:null,drag:null,root:{add:()=>{}},clearGroup:()=>{},baseMaterial:{},subdMaterial:{},THREE:{Mesh:class{constructor(g){rendered=g;this.userData={};}}},activeMirrorAxes:()=>[],modifiedSubdDisplayResult:()=>({display:h.cache.get(m,2,c.mirrorAxes),uvPayload:null}),addCage:()=>{}};
+ c.modifiedSubdMesh=(readOnly=false)=>{const result=c.subdDisplayCache.get(c.mesh,c.subdLevel,c.mirrorAxes);return readOnly?result:result.clone();};
  for(const name of ['updateStatus','updateActionAvailability','syncDirectToolControls','syncTransformButtons','syncSelectionModeButtons','syncCreaseControl','syncMirrorAlignControl'])c[name]=()=>{};
  const line=name=>{const i=source.indexOf(`function ${name}(`);return source.slice(i,source.indexOf('\n',i));};
  vm.createContext(c);vm.runInContext(line('modifiedBaseMesh')+'\n'+line('renderMesh'),c);

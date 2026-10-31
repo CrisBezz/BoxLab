@@ -8,6 +8,7 @@ import {decodeUVImage} from '../src/uv-image-preview.js';
 import {createPaintEnvironmentPool} from '../src/paint-material-environment.js';
 import {encodeBoxlabScene,decodeBoxlabScene} from '../src/boxlab-project-codec.js';
 import {EditableMesh} from '../src/mesh.js';
+import {subdivideWithCornerUVs} from '../src/subdivision.js';
 import {parseNomadMeshes} from '../src/nomad-import-core.js';
 import {buildNomadProject} from '../src/nomad-export-core.js';
 import {meshTopologySignature as sig} from '../src/mesh-topology-signature.js';
@@ -65,4 +66,20 @@ test('1026 real Studio/Solid render owner installs data maps and mode switches r
  const geometry=f.body.geometry;
  for(const mode of ['studio','solid']){f.c.mode=mode;f.c.__boxlabRenderModes.apply(f.body);await tick();const preview=f.body.children.find(n=>n.userData.boxlabUVImagePreview);assert(preview?.visible);assert(preview.material.normalMap);assert(preview.material.roughnessMap);assert(preview.material.metalnessMap);assert.equal(f.body.geometry,geometry);const hits=[];preview.raycast({},hits);assert.deepEqual(hits,[]);}
  f.c.mode='clay';f.c.__boxlabRenderModes.apply(f.body);await tick();assert.equal(f.body.material,f.c.clayMaterial);assert(images.every(i=>i.closed===1));
+});
+
+test('1039 Studio/Solid reuse cached SubD corner UVs for the existing NOM surface owner; mirror and missing cache payload keep the safe fallback',async()=>{
+ const {objects}=await fixture,f=facegroupsRuntime(),images=[];
+ const sourceUVs=f.source.faces.map(face=>face.map((_,i)=>[[0,0],[1,0],[1,1],[0,1]][i]));
+ const result=subdivideWithCornerUVs(f.source,sourceUVs,1),base=objects[1].glbPassthrough;
+ const payload={...base,uvTopologySignature:sig(result.mesh),uvCorners:result.cornerUVs};
+ f.activeObject.glbPassthrough=payload;f.activeObject.settings={subd:true,subdLevel:1,mirror:{x:false,y:false,z:false}};
+ f.body.geometry=result.mesh.triangulatedGeometry();f.body.userData.boxlabSubdUVPreview={mesh:result.mesh,payload};
+ Object.assign(f.c,{studioMaterial:new THREE.MeshStandardMaterial(),studioInactiveMaterial:new THREE.MeshStandardMaterial(),checkerHiddenMaterial:new THREE.MeshBasicMaterial(),__boxlabExportAs:{buildUVPreviewGeometry:build,topologySignature:sig},createUVImageOverlay:(...args)=>createUVImageOverlay(...args.slice(0,5),{...args[5],decode:async choice=>{const image=bitmap(choice.previewSize||1024);images.push(image);return image;}})});
+ const geometry=f.body.geometry;
+ for(const mode of ['studio','solid']){f.c.mode=mode;f.c.__boxlabRenderModes.apply(f.body);await tick();const overlay=f.body.children.find(child=>child.userData.boxlabUVImagePreview);assert(overlay?.visible);assert(overlay.material.map);assert.equal(f.body.geometry,geometry);assert.equal(overlay.geometry.index.count,result.mesh.faces.length*6);}
+ f.activeObject.settings.mirror.x=true;f.c.mode='solid';f.c.__boxlabRenderModes.apply(f.body);await tick();assert(!f.body.children.some(child=>child.userData.boxlabUVImagePreview));
+ f.activeObject.settings.mirror.x=false;delete f.body.userData.boxlabSubdUVPreview;f.c.__boxlabRenderModes.apply(f.body);await tick();assert(!f.body.children.some(child=>child.userData.boxlabUVImagePreview));
+ assert(images.every(image=>image.closed===1),'mode replacement disposes prior decoded image resources');
+ result.mesh.triangulatedGeometry().dispose();
 });

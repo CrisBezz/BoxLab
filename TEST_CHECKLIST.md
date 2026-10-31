@@ -1,15 +1,28 @@
-## .1038 — UV subdivision timing gate
+## .1039 — textured SubD display
 
-- [ ] From File → Screen comparison / test list, open “UV subdivision timing · .1038” and run it on iPad without changing orientation/resolution.
-- [ ] Confirm the benchmark reports geometry-only, continuous-chart and per-face-seam timings; it should not modify the current project.
-- [ ] Copy and send the JSON report. It includes geometry parity, output topology, UV-corner counts, browser and DPR.
-- [ ] If it stops on the1.2s per-sample guard or reports a validation mismatch, send the partial report.
+- [ ] On iPad, open a textured NOM project and select its editable textured object.
+- [ ] Enable SubD at level 1–3; in Studio and Solid, confirm its texture remains
+  aligned on the subdivided surface.
+- [ ] Toggle SubD off and on; confirm the source texture returns and the preview
+  stays aligned without black/checker squares.
+- [ ] Enable Mirror and confirm the prior untextured SubD fallback is used; disable
+  Mirror and confirm the supported texture preview returns.
+- [ ] Switch view modes and navigate the scene; confirm VIEW remains available and
+  responsive. Send a screenshot/report for any mismatch.
 
-Automated release checks: 3,073 PASS / 0 FAIL on Node 22; topology CI 41177045287
-and Pages build/deploy 41177429851 succeeded. The live .1038 marker and benchmark page
-were verified. The iPad benchmark report remains a hands-on gate.
+Scope: active editable NOM source with current UV topology, no Mirror, and no more
+than the existing 20,000-corner UV geometry preview cap. Other sources, stale UVs,
+Mirror and over-cap results intentionally fall back to the existing untextured SubD
+surface. This does not approve displacement, texture decode/memory use, GPU behavior
+or rendered frame time. The user's .1038 iPad timing report completed all nine cases
+without early stop; maximum UV-aware medians were 23 ms continuous and 22 ms per-face
+charts at 16,384 faces / 65,536 corners (CPU generation only).
 
-Automated regression: `tests/subdivision-uv-benchmark-1038.test.mjs` verifies benchmark owner/presets/caps and both UV chart patterns across every case. It checks geometry output against the existing `subdivide()` result and verifies source UVs are not changed. The report measures CPU mesh/UV generation only; it does not validate image sampling, memory, GPU or rendered frame time, and it is not displacement-preview acceptance.
+Automated .1039 regression covers UV-aware display-cache reuse and invalidation,
+source signature/mirror/cap gates, overlay ownership/cleanup, native Studio/Solid
+preview, and mirror/no-UV fallback. Full Node 22 suite: 3,083 PASS / 0 FAIL. Release asset-contract and version-marker
+checks pass locally. Hosted topology and Pages workflows will be recorded after
+publication.
 
 ## .1037 user PASS protected — corner UV subdivision
 

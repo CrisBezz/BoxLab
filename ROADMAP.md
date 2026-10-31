@@ -1,19 +1,17 @@
-## Current build: .1038 UV subdivision timing gate
+## Current build: .1039 textured SubD display
 
-User PASS .1037 protects seam-aware UV propagation through the canonical
-Catmull–Clark owner. Current SubD rendering and native texture overlays are separate:
-Studio/Solid skip the UV surface overlay when SubD or Mirror is active, and the active
-SubD display cache contains geometry only. Measure the UV-aware owner on iPad before
-connecting those paths. The .1038 report compares baseline geometry with continuous
-UV grids and per-face seam charts at the .1036 16/64/256-face workload, capped at
-16,384 output faces and80,000 UV corners. This is CPU work only; not GPU, memory or
-frame-time approval. Next decision: consume the UV payload through an existing display
-owner if the returned timings are responsive, otherwise tighten the workload first.
-Only after that should texture sampling, memory, GPU and frame-time gates be opened
-for displacement preview. .1038 local suite passed 3,073/3,073; topology run
-41177045287 and Pages build/deploy 41177429851 succeeded. Live .1038 marker and
-benchmark page were verified. Await the user’s iPad timing JSON before choosing the
-existing viewport owner to integrate.
+The user’s .1038 iPad report completed all nine CPU mesh/UV cases. At the largest
+case (16,384 faces / 65,536 corners), geometry median was 12 ms and UV-aware medians
+were 22–23 ms; all parity and input-preservation checks held. This supports a narrow
+integration with existing owners: .1039 sends cached corner UVs from the canonical
+SubD kernel through the active display cache into the existing NOM Studio/Solid
+surface overlay. Preview is limited to active editable NOM objects with matching
+UV topology, no Mirror, and the current 20,000-corner geometry preview cap. Other
+cases retain the untextured SubD fallback. This report excludes decode, memory, GPU
+and frame time; displacement preview remains a separate gate. Local validation is 3,083/3,083 Node 22 tests with release-contract checks passing.
+Await hosted topology/Pages checks and user hands-on texture-alignment and VIEW
+confirmation before expanding scope.
+
 
 ## .1035 — pre-decode native colour alpha OFF repair — 31 October 2026
 

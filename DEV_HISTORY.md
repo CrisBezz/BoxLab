@@ -18300,3 +18300,26 @@ Automated validation: 3,073 PASS / 0 FAIL on Node 22. Topology regression run
 upload truncated large Markdown files; exact local Git blobs were re-uploaded. Pages
 build/deploy run 41177429851 SUCCESS. Verified live .1038 marker and benchmark URL.
 Pending: user-run iPad timing report before display integration or displacement work.
+
+
+## .1039 — bounded textured SubD display — 31 October 2026
+
+The user supplied the .1038 iPad UV subdivision report: all nine benchmark cases
+completed without early stop; geometry matched baseline, inputs remained unchanged.
+At 16,384 faces / 65,536 UV corners, median CPU generation measured 12 ms for
+geometry, 23 ms for continuous UVs and 22 ms for per-face charts. This is not
+texture-decode, memory, GPU or frame-time evidence.
+
+.1039 connects the canonical corner-UV subdivision result to the existing active
+SubD display cache and NOM Studio/Solid surface overlay. Preview is allowed only for
+active editable NOM geometry with a current matching UV topology signature, no
+Mirror, and within the pre-existing 20,000-corner UV preview geometry limit. The
+cache stores UVs alongside the same subdivided mesh. Mirror, invalid/stale UVs,
+other sources and over-cap results fall back to untextured SubD. Existing overlay
+cleanup is called before body rebuild; no second subdivision kernel or displacement
+preview is introduced. Focused SubD, texture overlay and display-cache tests passed;
+full Node 22 suite passed 3,083/3,083, release asset-contract checks passed and
+`git diff --check` is clean. Hosted topology/Pages checks and .1039 iPad visual
+verification remain pending; do not claim GPU, memory or frame-time safety from the
+.1038 benchmark. Preserve earlier .1035 colour-alpha
+PASS and seven-object/VIEW acceptance.

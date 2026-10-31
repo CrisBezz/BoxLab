@@ -10,6 +10,7 @@ import {buildSceneOBJ,resolveExportMesh,safeOBJName} from './scene-obj-export-co
 import {buildNomadProjectWithMaps} from './nomad-packed-maps.js?v=0.36.18.1037';
 
 const VERSION='0.36.18.892';
+const MAX_UV_PREVIEW_CORNERS=20000;
 const panel=document.querySelector('#exportAsPanel');
 const nameInput=document.querySelector('#exportFileName');
 const formatButtons=[...document.querySelectorAll('#exportFormat [data-export-format]')];
@@ -165,11 +166,11 @@ function faceMaterialAssignments(mesh,payload){
 function buildUVPreviewGeometry(mesh,payload,{materials=false,faceIndices=false}={}){
   if(!Array.isArray(mesh?.vertices)||!mesh.vertices.length||!Array.isArray(mesh?.faces)||!mesh.faces.length||mesh.faces.some(f=>!Array.isArray(f))||payload?.version!==1||!['glb','boxlab','nomad'].includes(payload?.source)||payload.uvTopologySignature!==topologySignature(mesh))return null;
   const uvs=payload.uvCorners;if(!Array.isArray(uvs)||uvs.length!==mesh.faces.length)return null;
-  let corners=0,triangles=0;
+  const cornerCap=globalThis.__boxlabExportAs?.maxUVPreviewCorners??20000;let corners=0,triangles=0;
   for(let fi=0;fi<mesh.faces.length;fi++){
     const face=mesh.faces[fi],uv=uvs[fi];
     if(!Array.isArray(face)||face.length<3||new Set(face).size!==face.length||!Array.isArray(uv)||uv.length!==face.length)return null;
-    corners+=face.length;triangles+=face.length-2;if(corners>20000)return null;
+    corners+=face.length;triangles+=face.length-2;if(corners>cornerCap)return null;
     if(face.some(id=>!Number.isInteger(id)||id<0||id>=mesh.vertices.length)||uv.some(p=>!Array.isArray(p)||p.length!==2||p.some(n=>!Number.isFinite(n)||!Number.isFinite(Math.fround(n)))))return null;
     for(const id of face){const v=mesh.vertices[id];if(!v||![v.x,v.y,v.z].every(n=>Number.isFinite(n)&&Number.isFinite(Math.fround(n))))return null;}
   }
@@ -745,4 +746,4 @@ setActive(formatButtons,'exportFormat',format);
 setActive(geometryButtons,'exportGeometry',geometry);
 updateNote();
 
-globalThis.__boxlabExportAs={version:VERSION,exportAs,shareOpenIn,exportNomad,buildNOM,buildGLB,verifyGLB,patchNomadFaceGroupGLB,buildUVPreviewGeometry,topologySignature,geometrySignature,get format(){return format;},get geometry(){return geometry;}};
+globalThis.__boxlabExportAs={version:VERSION,exportAs,shareOpenIn,exportNomad,buildNOM,buildGLB,verifyGLB,patchNomadFaceGroupGLB,buildUVPreviewGeometry,topologySignature,geometrySignature,maxUVPreviewCorners:MAX_UV_PREVIEW_CORNERS,get format(){return format;},get geometry(){return geometry;}};

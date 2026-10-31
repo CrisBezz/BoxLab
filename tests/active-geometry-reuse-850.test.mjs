@@ -10,6 +10,8 @@ import {createSubdDisplayCache} from '../src/subd-display-cache.js';
 const source=fs.readFileSync(new URL('../src/main.js',import.meta.url),'utf8');
 function fixture(){
  const c={THREE,mesh:EditableMesh.cube(1),subdDisplayCache:createSubdDisplayCache(subdivide,applyMirror),applyMirror,mirrorAxes:{},subdLevel:2,subdEnabled:true,showCage:false,selectionMode:'face',selection:null,drag:null,root:new THREE.Group(),baseMaterial:new THREE.MeshBasicMaterial(),subdMaterial:new THREE.MeshBasicMaterial(),activeLoopSlides:[]};
+ c.modifiedSubdDisplayResult=()=>({display:c.subdDisplayCache.get(c.mesh,c.subdLevel,c.mirrorAxes),uvPayload:null});
+ c.activeMirrorAxes=()=>Object.keys(c.mirrorAxes).filter(axis=>c.mirrorAxes[axis]);
  for(const name of ['updateStatus','updateActionAvailability','syncDirectToolControls','syncTransformButtons','syncSelectionModeButtons','syncCreaseControl','syncMirrorAlignControl'])c[name]=()=>{};
  const line=name=>{const i=source.indexOf('function '+name+'(');return source.slice(i,source.indexOf('\n',i));};vm.createContext(c);vm.runInContext(['clearGroup','modifiedBaseMesh','renderMesh'].map(line).join('\n'),c);return c;
 }

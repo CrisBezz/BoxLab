@@ -4,7 +4,7 @@ import { editableBooleanEligibility } from './editable-boolean-core.js?v=0.36.18
 import { EditableMesh } from './mesh.js';
 import { subdivide } from './subdivision.js';
 import { applyMirror } from './mirror.js';
-import { createSubdDisplayCache } from './subd-display-cache.js?v=0.36.18.812';
+import { createSubdDisplayCache } from './subd-display-cache.js?v=0.36.18.1039';
 import { combineEditableMeshes, modifierSettingsCompatible } from './object-join-core.js?v=0.36.18.277';
 import { matrixForInstance, setInstanceMatrix, transformEditableMesh, meshesNear, deriveInstancePlacement, localMeshFromWorld } from './instance-core.js?v=0.36.18.343';
 
