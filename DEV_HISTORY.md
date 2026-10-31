@@ -18283,3 +18283,20 @@ workload. Retain the16,384-face/80,000-corner limits and1.2s per-run stop. The p
 does not alter the project and measures no texture decode/sampling, memory, GPU or
 frame time. The user’s iPad JSON report is needed before deciding whether to wire the
 existing UV surface/display owners together. No viewport displacement ships here.
+
+
+## .1038 — UV subdivision timing gate — 31 October 2026
+
+User .1037 PASS protects the canonical bounded corner-UV subdivision path and its
+seam/geometry invariants. Audited renderer owners: Studio/Solid skip native UV image
+overlays during SubD or Mirror, while main’s SubD cache stores geometry only. Avoid
+duplicating subdivision; first add an iPad timing gate comparing geometry-only,
+continuous-chart and per-face-seam UV cases at 16/64/256 source faces, levels 1–3.
+Each timed sample is guarded at 1.2s, with 16,384-face / 80,000-corner caps. Report
+excludes decode/sampling, memory, GPU and rendered frame time.
+
+Automated validation: 3,073 PASS / 0 FAIL on Node 22. Topology regression run
+41177045287 SUCCESS. Pages attempt 41177045008 failed because the first GitHub blob
+upload truncated large Markdown files; exact local Git blobs were re-uploaded. Pages
+build/deploy run 41177429851 SUCCESS. Verified live .1038 marker and benchmark URL.
+Pending: user-run iPad timing report before display integration or displacement work.

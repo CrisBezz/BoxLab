@@ -10,7 +10,10 @@ UV grids and per-face seam charts at the .1036 16/64/256-face workload, capped a
 frame-time approval. Next decision: consume the UV payload through an existing display
 owner if the returned timings are responsive, otherwise tighten the workload first.
 Only after that should texture sampling, memory, GPU and frame-time gates be opened
-for displacement preview.
+for displacement preview. .1038 local suite passed 3,073/3,073; topology run
+41177045287 and Pages build/deploy 41177429851 succeeded. Live .1038 marker and
+benchmark page were verified. Await the user’s iPad timing JSON before choosing the
+existing viewport owner to integrate.
 
 ## .1035 — pre-decode native colour alpha OFF repair — 31 October 2026
 

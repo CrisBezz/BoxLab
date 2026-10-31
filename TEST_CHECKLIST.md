@@ -5,6 +5,10 @@
 - [ ] Copy and send the JSON report. It includes geometry parity, output topology, UV-corner counts, browser and DPR.
 - [ ] If it stops on the1.2s per-sample guard or reports a validation mismatch, send the partial report.
 
+Automated release checks: 3,073 PASS / 0 FAIL on Node 22; topology CI 41177045287
+and Pages build/deploy 41177429851 succeeded. The live .1038 marker and benchmark page
+were verified. The iPad benchmark report remains a hands-on gate.
+
 Automated regression: `tests/subdivision-uv-benchmark-1038.test.mjs` verifies benchmark owner/presets/caps and both UV chart patterns across every case. It checks geometry output against the existing `subdivide()` result and verifies source UVs are not changed. The report measures CPU mesh/UV generation only; it does not validate image sampling, memory, GPU or rendered frame time, and it is not displacement-preview acceptance.
 
 ## .1037 user PASS protected — corner UV subdivision

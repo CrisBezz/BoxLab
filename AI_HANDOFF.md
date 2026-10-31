@@ -21,7 +21,12 @@ subdivision timing report on iPad and use the returned JSON to decide whether an
 existing display owner can support textured SubD without duplicate geometry work.
 After that gate, measure image sampling and actual memory/GPU/frame time before any
 displacement preview. Preserve .1035 colour-alpha PASS and earlier seven-object/VIEW
-acceptance. Runtime/test publication is pending in this working session.
+acceptance. Automated suite: 3,073 PASS / 0 FAIL (Node 22). Topology regression
+run 41177045287 passed. Pages build/deploy run 41177429851 passed after correcting
+an initial upload that had truncated large Markdown blobs; all four handoff files
+now match their local Git blob hashes. Live .1038 marker and benchmark URL verified.
+Next step: user runs the bounded benchmark on iPad and sends its JSON; do not connect
+the UV result to viewport display or enable displacement before that device gate.
 
 ## .1035 — pre-decode native colour alpha OFF repair — 31 October 2026
 
