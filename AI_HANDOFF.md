@@ -1,12 +1,12 @@
 # BoxLab current handoff — build .1044
 
-BoxLab `0.36.18.1044` is on main at `f598df16eb592ab7eac91d9d45dec862b287a384`. Pages deployment 41251195407 and Topology regression 41251196062 succeeded. The topology suite reports 3,086 PASS / 0 FAIL / 0 skipped. The immediately preceding .1044 run found stale assertions for the updated Paint menu/release labels plus a preview-texture assertion; targeted contract fixes are in `f598df1`. Native iPad acceptance is pending.
+BoxLab `0.36.18.1044` is current on main; release code commit is `f598df16eb592ab7eac91d9d45dec862b287a384`. Pages deployment 41251195407 and Topology regression 41251196062 succeeded. The topology suite reports 3,086 PASS / 0 FAIL / 0 skipped. The immediately preceding .1044 run found stale assertions for the updated Paint menu/release labels plus a preview-texture assertion; targeted contract fixes are in `f598df1`. Native iPad acceptance is pending.
 
 The UV Paint radial Material swatch shows current paint colour and brush-stroke opacity and opens the shared Material & Paint menu. Existing Paint owners are reused. New/restored sessions use Lit preview; Colour, Roughness and Metalness remain selectable paint channels. Both roughness/metalness value controls remain visible and the active one is highlighted. Map Size and AO sit at the bottom of Layers, outside the radial. Imported opacity maps are preserved; authoring opacity maps is not supported, and the swatch alpha is brush strength only.
 
 Changed owners: `src/viewport-paint.js`, `src/viewport-paint-core.js`; synchronized release loader pins through the canonical Face layout. Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched. Static syntax checks and `git diff --check` pass. The complete oversized `DEV_HISTORY.md` remains intact; the .1044 chronology is in `DEV_HISTORY_1044.md`. See the top of `TEST_CHECKLIST.md` for iPad steps.
 
-Next: finish hosted regression, then have the user check Lit preview, swatch/menu values, both scalar channels, Map Size/AO placement, drag boundaries and Pencil/finger/Undo/Redo behavior. After PASS, protect .1044 and continue the app-wide tooltip audit in a narrow slice.
+Next: have the user check Lit preview, swatch/menu values, both scalar channels, Map Size/AO placement, drag boundaries and Pencil/finger/Undo/Redo behavior. After PASS, protect .1044 and continue the app-wide tooltip audit in a narrow slice.
 
 ---
 
