@@ -17,7 +17,8 @@
   ['view','VIEW / Facegroups','Open VIEW. Choose Facegroups. Can you see the settings and colours? Close and reopen VIEW once. Mark FAIL for an empty or missing menu.'],
   ['gizmo','Gizmo across the right side','Close VIEW. In Face mode select a face and show its gizmo. Orbit/pan so the selection moves from centre to the right side. Do the gizmo and status remain visible?'],
   ['uv','UV Editor → Back to 3D','Finish tools. Object mode → radial UV → UV Editor. The checklist parks lower-left. If it covers ANY control, use Hide list, then the small TEST LIST button to reopen. Inspect the right edge, then Back to 3D at the top and Close UV tools. Recheck right status and VIEW contents.'],
-  ['paint','UV Paint → Done / navigation','On the default UV cube tap UV PAINT, then Done. Orbit, two-finger pan and pinch. Recheck right status, toolbar, VIEW and gizmo. No new Fill test is required.']
+  ['paint','UV Paint → Done / navigation','On the default UV cube tap UV PAINT, then Done. Orbit, two-finger pan and pinch. Recheck right status, toolbar, VIEW and gizmo. No new Fill test is required.'],
+  ['nom-alpha','NOM colour alpha OFF / ON','Import docs/samples/NOM_COLOUR_ALPHA_1029.nom. The right cube must be solid cyan with colour opacity OFF (no black checker squares); the left cube must show checker transparency with colour opacity ON. The middle cube combines colour alpha and a separate opacity map.']
  ];
  let log={version:1,release:RELEASE,runs:[]},storageOK=true;
  try{
