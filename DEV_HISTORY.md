@@ -18355,3 +18355,14 @@ enable SubD on multiple textured objects and confirm textures remain visible whi
 unselected in Studio and Solid. Switch selection, deselect all, toggle SubD/Mirror,
 reopen VIEW and navigate. Displacement, GPU, memory, image-decode and rendered frame
 time remain outside this validation.
+
+
+## .1040 publication verified — 31 October 2026
+
+Runtime commit `0255ada097b72b389698c676c67f971cbd433f18` with tree
+`f6740d26254f474aa7f4a703ce231d2c87d0a8fb` is on remote main. Hosted topology
+regression 41187547119 and Pages build/deploy 41187546752 both completed SUCCESS.
+Live version.json and seven changed runtime assets (index shell, main, multi-object,
+SubD display cache, shell comparison, drawer-ui and face-workflow-layout) match the
+local runtime bytes exactly. Local full Node suite: 3,081 PASS / 0 FAIL; focused new
+SubD and release-contract checks pass. Native iPad acceptance remains pending.

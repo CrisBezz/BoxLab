@@ -17,8 +17,10 @@ displacement, texture decode/memory use, GPU behavior or rendered frame time.
 Automated .1040 regression covers per-object UV-aware caches, shared eligibility,
 inactive Studio/Solid overlay handoff and cleanup. Existing active SubD and NOM
 material regressions remain covered. Full Node suite: 3,081 PASS / 0 FAIL. Release
-asset-contract and version-marker checks pass; hosted release results belong in the
-current handoff after publication.
+asset-contract and version-marker checks pass. Hosted topology regression
+41187547119 and Pages deployment 41187546752 succeeded. Live `.1040` marker and
+seven changed runtime assets match local bytes. iPad visual acceptance remains
+pending.
 
 ## .1039 — active textured SubD; base-material PASS, inactive gap reported
 

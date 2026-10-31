@@ -8,10 +8,10 @@ ownership and shared source, topology, Mirror and 20,000-corner rules. No new
 renderer/kernel or displacement preview.
 
 Focused regression covers independent per-object UV results/cache reuse, eligibility
-and fallback, inactive Studio/Solid overlay handoff and cleanup. Full-suite, hosted CI
-validation is 3,081 PASS / 0 FAIL; release asset-contract and version-marker checks
-pass. Hosted CI and publication results are recorded in the current handoff after
-verification. Next:
+and fallback, inactive Studio/Solid overlay handoff and cleanup. Full suite is
+3,081 PASS / 0 FAIL; release asset-contract and version-marker checks pass. Hosted
+topology regression 41187547119 and Pages deployment 41187546752 succeeded; live
+release marker and changed runtime assets match local bytes. Next:
 user iPad verification with multiple textured SubD objects left unselected. The .1038
 timing report measures CPU mesh/UV generation only; it does not measure image decode,
 memory, GPU work or rendered frame time.
