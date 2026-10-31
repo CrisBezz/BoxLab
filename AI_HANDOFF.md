@@ -1,3 +1,33 @@
+# BoxLab current handoff — build .1044
+
+Repository state: preparing BoxLab `0.36.18.1044` from main `be3ffe36`. The .1044
+Paint update consolidates the UV Paint values menu under a draggable radial swatch.
+It reuses the existing Paint controller and colour inputs. New sessions and restored
+sessions use Lit material preview; users choose Colour, Roughness or Metalness as
+the paint channel. Both scalar paint values remain visible in the menu. The radial
+swatch displays colour plus brush-stroke opacity; that opacity is explicitly not a
+material-opacity map editor. Existing imported opacity maps are retained.
+
+Map Size and AO are removed from radial quick actions and placed at the bottom of the
+Layers page. Do not introduce a new material kernel or opacity-map editor in this slice.
+User .1043 PASS protects the lighter contextual Paint palette/help and prior accepted
+texture/SubD/VIEW behaviours. .1044 device acceptance is pending.
+
+Changed runtime owners: `src/viewport-paint.js` (canonical Paint UI) and
+`src/viewport-paint-core.js` (Lit preview default). Direct runtime pins and release
+markers must all read .1044. Protected `src/multi-object-transform.js?v=0.36.1.0`
+remains untouched. Static syntax and whitespace checks only; no automated tests were run
+per the session instruction. Publish/Actions/live checks are pending at this handoff
+edit. The focused manual test list is at the top of `TEST_CHECKLIST.md`. The compact
+.1044 chronology will be stored in `DEV_HISTORY_1044.md`; the complete oversized
+`DEV_HISTORY.md` stays intact.
+
+Next: verify the .1044 publication and ask the user to exercise the new palette on iPad.
+After PASS, protect this behavior and continue app-wide tooltip/help migration in a
+narrow slice; resume NOM displacement payload/settings audit only after that.
+
+---
+
 ## .1043 — contextual Paint help and app-wide copy audit — 31 October 2026
 
 Current target: BoxLab 0.36.18.1043. User .1040 PASS protects textured SubD on

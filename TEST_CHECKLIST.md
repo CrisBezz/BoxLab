@@ -1,3 +1,24 @@
+## .1044 — UV Paint material & values menu — device test pending
+
+- [ ] Enter UV Paint and confirm preview remains Lit material mode. Choose Colour,
+  Roughness and Metalness as paint channels; material lighting must remain visible.
+- [ ] Open the radial wheel and confirm its Material swatch shows current colour and
+  brush-stroke opacity. Open Material & Paint from the swatch and from the quick-panel
+  header; both routes should show the same unified menu.
+- [ ] Change colour with the picker and Hex/RGB/HSB values. Confirm the swatch and
+  readout update. Adjust size and stroke opacity; the alpha preview must update.
+- [ ] Choose Roughness then Metalness. Confirm both paint-value sliders stay available
+  and the active channel is highlighted; paint a small test patch in each.
+- [ ] Confirm Map Size and AO are absent from the radial and available at the bottom
+  of the Layers page. Open/close each page and return to Layers/Brush.
+- [ ] Drag the radial wheel and expanded menu to different viewport corners. Confirm
+  the menu remains bounded and Pencil strokes, finger navigation, Undo/Redo still work.
+
+BoxLab currently retains imported material opacity maps but does not paint their
+texture channel. The swatch alpha represents brush stroke opacity only; the menu says
+so explicitly. Automated tests were not run in this session; Node syntax checks and
+`git diff --check` passed. Publication and native iPad acceptance are pending.
+
 ## .1043 — contextual Paint help and copy audit — device test pending
 
 - [ ] The floating Paint controls show a small “i” help button. Tap it on iPad to
