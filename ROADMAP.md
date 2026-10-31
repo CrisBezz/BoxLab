@@ -1,3 +1,25 @@
+## .1035 user PASS protected — 31 October 2026
+
+User confirms the right cube alpha-OFF colour repair PASS. Protect opaque cyan RGB
+in Studio/Solid, checker transparency for alpha ON, combined middle alpha/opacity,
+original .1033 standalone PBR previews, seven-object loading/spacing, VIEW stability,
+and existing Save/Open/NOM retention. .1034 screenshot FAIL remains in history as
+superseded. .1035 is accepted; no further alpha shader/decode changes planned.
+
+Next development is an investigation before implementation: audit the existing
+SubD/subdivision owners and NOM displacement retention/import flow. Benchmark a
+small bounded tessellation preview on representative low-poly objects. Establish
+caps for source faces, subdivision level, generated vertices, image dimensions,
+memory and frame time; compare against the original unmodified object. If safe,
+expose displacement preview as a transient Studio/Solid surface overlay with
+cancel/mode-switch cleanup; keep exported mesh and source map unchanged. If the
+existing topology/performance owners cannot support responsive iPad preview within
+a clear cap, keep displacement inspection-only and report the measured limit.
+Do not add displacement deformation to .1035. Next build follows this audit/gate.
+
+Current status: .1035 LIVE, CI and Pages verified, user PASS protected. Next build
+focus: bounded displacement/subdivision feasibility, no implementation assumed.
+
 Publication verified: application0cc0cef434b8a8c7d431e74c0d0ed51f58fe2834,
 reviewed tree4edaaa71114db8b2eba41464f68a02951e42dfd4. Hosted CI41154726829
 SUCCESS; Pages41154726211 SUCCESS. Live version/shell/PNG/overlay/render/checklist
