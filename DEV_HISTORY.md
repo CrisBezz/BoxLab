@@ -18076,3 +18076,18 @@ Pages41150967831 SUCCESS; live version/shell/material/overlay/render/test-list a
 91,528-byte sample all byte-identical. See docs/publication-1033.md. Hosted
 Topology regression41150968538 completed SUCCESS. .1033 LIVE and READY FOR TESTING.
 Manual iPad appearance acceptance remains pending; .1032 loading/VIEW PASS protected.
+
+## .1033 user PASS protected — 31 October 2026
+
+User replied PASS after .1033 standalone-material test build. Protect accepted
+standalone normal/emissive/roughness/metalness/opacity preview through existing
+owners, six supported mapped cubes, seven-object loading, VIEW stability and
+previous accepted behaviour. No new application build in this update.
+This PASS does not close the separately deferred displacement preview or the
+original .1032 alpha-OFF colour discrepancy (new .1033 sample uses opaque RGB).
+Next narrow build: repair original alpha-OFF colour bitmap decode/resampling,
+preserving RGB beneath transparent pixels without changing retained source bytes.
+Then audit displacement preview subdivision/performance gates before implementation.
+Current status: .1033 LIVE, user PASS; awaiting next /nextbuild for runtime work.
+Optional regression: original .1032 Colour cube should eventually be solid cyan
+with colour opacity OFF; enabling opacity should reveal its alpha checker.

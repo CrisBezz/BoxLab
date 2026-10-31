@@ -1,3 +1,18 @@
+## .1033 user PASS protected — 31 October 2026
+
+User replied PASS after .1033 standalone-material test build. Protect accepted
+standalone normal/emissive/roughness/metalness/opacity preview through existing
+owners, six supported mapped cubes, seven-object loading, VIEW stability and
+previous accepted behaviour. No new application build in this update.
+This PASS does not close the separately deferred displacement preview or the
+original .1032 alpha-OFF colour discrepancy (new .1033 sample uses opaque RGB).
+Next narrow build: repair original alpha-OFF colour bitmap decode/resampling,
+preserving RGB beneath transparent pixels without changing retained source bytes.
+Then audit displacement preview subdivision/performance gates before implementation.
+Current status: .1033 LIVE, user PASS; awaiting next /nextbuild for runtime work.
+Optional regression: original .1032 Colour cube should eventually be solid cyan
+with colour opacity OFF; enabling opacity should reveal its alpha checker.
+
 Publication: application commit bbe1896581176abdfb297404161d5023b3d9a26a,
 reviewed tree 8554d21a5068f6f38b0feb1d825bcd0c043643b0, fetched main verified.
 Pages41150967831 SUCCESS; live version/shell/material/overlay/render/test-list and
