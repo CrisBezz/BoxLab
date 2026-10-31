@@ -16,10 +16,7 @@ refusal and the benchmark-largest 256-face level-three case (16,384 faces, 16,64
 vertices, 65,536 UV corners). Existing SubD display cache, displacement retention,
 seven-object import, view modes, and .1035 colour-alpha acceptance remain protected.
 
-Local validation: 3,071 Node22 tests PASS, 0 failed; focused UV/SubD/cache/displacement
-checks19 PASS; release-contract checks5 PASS; git diff --check clean. Publication to
-main is in progress. Before closing, record main commit/tree, hosted CI and Pages
-deployment IDs, and live release marker/pin verification here. No device-side feature test is required
+Release .1037 is LIVE on main. Runtime commit `c73a865ec9c93b2b84a4279eb4bc541f7d5ebd52`, tree `aa04d0f3e4a41f8239dee3b0f6c7f0e0269b43a3`. Hosted topology regression run `41173880915` and Pages deployment run `41173880916` both SUCCESS. `version.json`, `index.html`, and all11 changed runtime modules byte-match the live Pages release. Local validation: full Node22 suite3,071 PASS/0FAIL; focused UV/SubD/cache/displacement checks19 PASS; release-contract checks5 PASS; `git diff --check` clean. The helper remains unconnected to viewport/UI, so there is no device-side action for this build. .1035 colour-alpha PASS and existing seven-object/VIEW acceptance remain protected. No device-side feature test is required
 because the new capability is a non-UI helper not connected to the app. Next: after
 release checks pass, assess how existing surface/display owners can consume the UV
 payload and define actual displacement sampling/GPU/memory limits before exposing

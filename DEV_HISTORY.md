@@ -18260,5 +18260,8 @@ displacement wiring is included.
 New regression cases cover ordering, seam preservation, multilevel geometry
 equivalence, immutable source data/metadata, malformed data and the largest .1036
 benchmark case (256 source faces at level3). Focused UV/SubD/cache/displacement checks19 PASS; release-contract checks5 PASS; full
-Node22 suite3071 PASS/0FAIL; `git diff --check` clean. Publication and live byte
-verification are pending. No manual UI test is expected for this non-UI helper.
+Node22 suite3071 PASS/0FAIL; `git diff --check` clean. Published to main as runtime commit `c73a865ec9c93b2b84a4279eb4bc541f7d5ebd52`
+(tree `aa04d0f3e4a41f8239dee3b0f6c7f0e0269b43a3`). Hosted topology regression
+41173880915 and Pages deployment 41173880916 succeeded; version.json, index.html
+and all11 changed runtime modules byte-match live Pages. No manual UI test is
+expected for this non-UI helper.

@@ -8,7 +8,7 @@
 - [x] No manual device test is required for this release: the helper is not connected to viewport/UI behavior. Existing app behaviors remain covered by regression suites and protected PASS records.
 - [x] Full Node22 suite passed: 3,071 tests, 0 failed; focused UV/SubD/cache/displacement checks19 PASS; release-contract checks5 PASS; `git diff --check` clean.
 
-Automated check: `tests/subdivision-corner-uv-1037.test.mjs`, together with existing SubD cache, inactive cache and displacement-retention tests. Release gate: local suite and import-pin contracts passed. Hosted CI, Pages, and live shell/version marker verification must pass before marking .1037 released.
+Automated check: `tests/subdivision-corner-uv-1037.test.mjs`, together with existing SubD cache, inactive cache and displacement-retention tests. Release .1037 is LIVE. Hosted topology regression `41173880915` and Pages deployment `41173880916` passed; `version.json`, `index.html`, and all11 changed runtime modules byte-match the live release.
 
 ## .1035 — pre-decode native colour alpha OFF repair — 31 October 2026
 

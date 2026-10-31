@@ -1,4 +1,4 @@
-## Current release: .1037 corner UV propagation
+## Current release: .1037 corner UV propagation — LIVE
 
 Extend the single existing Catmull–Clark owner with a bounded, seam-preserving UV
 payload API. Geometry-only callers still get identical `EditableMesh` output. This
