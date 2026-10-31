@@ -1,36 +1,29 @@
-## .1036 — iPad subdivision timing report; displacement preview still deferred — 31 October 2026
+## .1037 — Catmull–Clark corner UV propagation; viewport displacement deferred — 31 October 2026
 
-The .1036 read-only benchmark has now completed all nine CPU cases on an iPad using
-Chrome for iOS (CriOS 156, iPadOS 26.6.2, DPR2). Run time was 611ms; no early-stop
-guard fired. Median timings: 16 source faces, levels1/2/3 = 1/1/3ms; 64 faces =
-1/3/6ms; 256 faces = 1/4/13ms. The largest output was16,384 faces and16,641
-vertices, with samples12/13/17ms. Keep this as the device CPU-kernel baseline. The
-report does not include GPU upload/render, UV transfer, 16-bit image decode/sampling,
-heap, or frame time; it is not displacement-preview acceptance. The user supplied
-the report without an explicit overall PASS/FAIL, so record measured completion and
-do not label .1036 fully user-PASS. The report does not state whether the project
-scene/selection were checked afterward.
+Current target: BoxLab 0.36.18.1037. This build adds `subdivideWithCornerUVs()` to
+`src/subdivision.js`, beside the authoritative Catmull–Clark kernel. It propagates
+UVs per face corner in the exact child-face order, keeps adjacent chart seams
+independent, and returns `{mesh, cornerUVs}`. The existing `subdivide()` and
+`catmullClark()` geometry-only behavior is unchanged. Validation, level limits
+(0–4), and output preflight caps are 16,384 faces / 80,000 corners. This API is not
+wired into display, UV paint, or displacement preview yet; no viewport behavior is
+expected to change. Do not create a second geometry kernel or infer iPad GPU/frame
+performance from the .1036 CPU-only benchmark.
 
-Source audit confirms imported UVs are stored as per-face-corner arrays
-(`glbPassthrough.uvCorners`), while the authoritative `subdivide()` currently returns
-only `EditableMesh`. Its Catmull–Clark step splits each source face into ordered
-quad corners, so UVs can be propagated alongside this same kernel without adding a
-second geometric subdivision implementation. The active SubD cache owns displayed
-geometry. Native surface preview already caps shared sources at80,000 UV corners,
-15M decoded pixels and32MiB encoded images; keep existing owners and reservations.
-Displacement remains exact retained/export data only. Before deformation work, verify
-corner/face ordering and seam-safe UV propagation through the original owner, then
-make image precision/sampling, generated-geometry, GPU/memory and transient cleanup
-limits explicit. No displacement deformation ships from the .1036 benchmark.
+Automated coverage: single quad ordering, separate shared-edge UV charts, exact
+geometry equivalence across three levels, immutable input/metadata, malformed UV
+refusal and the benchmark-largest 256-face level-three case (16,384 faces, 16,641
+vertices, 65,536 UV corners). Existing SubD display cache, displacement retention,
+seven-object import, view modes, and .1035 colour-alpha acceptance remain protected.
 
-Current release: .1036 LIVE; local Node22 suite3066 PASS, hosted topology regression
-41159958003 and Pages deployments41159957610/41160392865 SUCCESS; six live runtime/
-benchmark files byte-match. App commit69f76c096ed9acde8d938e390a5526b3ad0b79cd,
-treef63027d2c388ed1f2bdfb2ecf0755dcb0d8d563a. .1035 colour-alpha PASS remains
-protected. Next build direction: add/test corner UV propagation through the existing
-Catmull–Clark owner, with no viewport displacement yet; use the iPad report as CPU
-baseline and retain the 16,384-face/16,641-vertex scenario as a provisional ceiling
-until UV, GPU and memory measurements are available.
+Local validation: 3,071 Node22 tests PASS, 0 failed; focused UV/SubD/cache/displacement
+checks19 PASS; release-contract checks5 PASS; git diff --check clean. Publication to
+main is in progress. Before closing, record main commit/tree, hosted CI and Pages
+deployment IDs, and live release marker/pin verification here. No device-side feature test is required
+because the new capability is a non-UI helper not connected to the app. Next: after
+release checks pass, assess how existing surface/display owners can consume the UV
+payload and define actual displacement sampling/GPU/memory limits before exposing
+any viewport deformation.
 
 ## .1035 — pre-decode native colour alpha OFF repair — 31 October 2026
 

@@ -1,14 +1,14 @@
-## .1036 — subdivision benchmark — 31 October 2026
+## .1037 — Catmull–Clark corner UV propagation
 
-- [x] From File → Screen comparison / test list, open “Subdivision timing benchmark · .1036” (confirmed by the returned report).
-- [x] Run the benchmark on iPad; all nine cases completed on Chrome for iOS (CriOS 156, iPadOS 26.6.2, DPR2), with no early stop.
-- [x] Confirm bounded cases report source faces, subdivision level, output faces/vertices and median timing; the largest generated 16,384 faces / 16,641 vertices.
-- [x] Copy and send the JSON report. It recorded 611 ms total and 12/13/17 ms for the largest-case samples. No separate scene/selection check was included.
-- [ ] Return to BoxLab and confirm the current project and its selection are unchanged.
+- [x] Same Catmull–Clark child-face corner order produces matching per-corner UVs.
+- [x] Adjacent faces retain distinct UV chart values on a shared geometric edge.
+- [x] Three subdivision levels preserve face/corner alignment and match the existing geometry-only output exactly.
+- [x] Invalid UV payloads, unsupported levels and projected outputs over 16,384 faces / 80,000 corners are refused before subdivision.
+- [x] Benchmark-largest 256-face level-three case produces 16,384 faces, 16,641 vertices and 65,536 corner UVs.
+- [x] No manual device test is required for this release: the helper is not connected to viewport/UI behavior. Existing app behaviors remain covered by regression suites and protected PASS records.
+- [x] Full Node22 suite passed: 3,071 tests, 0 failed; focused UV/SubD/cache/displacement checks19 PASS; release-contract checks5 PASS; `git diff --check` clean.
 
-Automated regression: `tests/subdivision-benchmark-1036.test.mjs` verifies the page uses the authoritative `subdivide()` owner, bounded preset/cap/guard and expected output face/vertex counts for all cases; it also confirms the source cage remains unchanged. Automated timings are not a device-performance substitute. This benchmark does not validate UV preservation, displacement display, GPU memory or rendered frame time.
-
-Release .1036 is live. The six published app/benchmark files byte-match the tested tree; local and hosted regression suites passed. The iPad timing run and visible page interaction are still the requested hands-on checks.
+Automated check: `tests/subdivision-corner-uv-1037.test.mjs`, together with existing SubD cache, inactive cache and displacement-retention tests. Release gate: local suite and import-pin contracts passed. Hosted CI, Pages, and live shell/version marker verification must pass before marking .1037 released.
 
 ## .1035 — pre-decode native colour alpha OFF repair — 31 October 2026
 

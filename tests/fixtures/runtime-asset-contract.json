@@ -142,9 +142,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/direct-topology-conformance-guard.js?v=0.36.18.1009",
+      "url": "./src/direct-topology-conformance-guard.js?v=0.36.18.1037",
       "target": "src/direct-topology-conformance-guard.js",
-      "sha256": "f9a071d1414db9e41abd2278368e610a021d13374ea7fe35e55188ea347c987b",
+      "sha256": "92aaf505c9d29261ca4d1fc9112d86ade07bfa0b0d6a44ca73cac794a87b327e",
       "sourceVersion": "0.36.18.242"
     },
     {
@@ -167,9 +167,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1036",
+      "url": "./src/drawer-ui.js?v=0.36.18.1037",
       "target": "src/drawer-ui.js",
-      "sha256": "f5652a685a8bb3dffce29549598c204fc219bff2a66059d559e6edbc2d8c065a"
+      "sha256": "f471c96a5ab9ce59f2b7ef6db0e96585dea4c23f84cf592aa507e8c7bba770b1"
     },
     {
       "owner": "index.html",
@@ -210,9 +210,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/export-as-panel.js?v=0.36.18.1035",
+      "url": "./src/export-as-panel.js?v=0.36.18.1037",
       "target": "src/export-as-panel.js",
-      "sha256": "e262cc204f5b2efc0dd0a10e2993a6688a3527b2622243074e65814ab8264a84",
+      "sha256": "84a588c63c45ac3fa321acb0cce91fe3d91f7f3478e2ea014a3414d69715ce05",
       "sourceVersion": "0.36.18.892"
     },
     {
@@ -303,9 +303,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/main.js?v=0.36.18.1011",
+      "url": "./src/main.js?v=0.36.18.1037",
       "target": "src/main.js",
-      "sha256": "b085008a11aa7faecc386f4518f76e07e73b5417255d6140d57530d7839cd440",
+      "sha256": "86610a32cccf5b35d9a81a4fcda2b2f8d4006a44d2ec3982d65b2538a3f85183",
       "sourceVersion": "0.35.1"
     },
     {
@@ -384,7 +384,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1036",
+      "url": "./src/release-version.js?v=0.36.18.1037",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -421,9 +421,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/scene-obj-export-238.js?v=0.36.18.1009",
+      "url": "./src/scene-obj-export-238.js?v=0.36.18.1037",
       "target": "src/scene-obj-export-238.js",
-      "sha256": "ef3a34f6ba3a0fcabaff599a2f31a242c618d521a5658ba382a68e7b9e922c11",
+      "sha256": "7d848b4d9d9212cace092da02730ccc1699268357d14e2047c9793e19fea409e",
       "sourceVersion": "0.36.18.450"
     },
     {
@@ -783,9 +783,9 @@
     },
     {
       "owner": "src/direct-topology-conformance-guard.js",
-      "url": "./scene-obj-export-238.js?v=0.36.18.1009",
+      "url": "./scene-obj-export-238.js?v=0.36.18.1037",
       "target": "src/scene-obj-export-238.js",
-      "sha256": "ef3a34f6ba3a0fcabaff599a2f31a242c618d521a5658ba382a68e7b9e922c11",
+      "sha256": "7d848b4d9d9212cace092da02730ccc1699268357d14e2047c9793e19fea409e",
       "sourceVersion": "0.36.18.450"
     },
     {
@@ -876,9 +876,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1036",
+      "url": "./face-workflow-layout.js?v=0.36.18.1037",
       "target": "src/face-workflow-layout.js",
-      "sha256": "dcb6ca5cc8fc5309cd5f6bec12fd9e89de2a51cf0e41fffc0642f6dbbea7fa7a"
+      "sha256": "a5d2dc14ee8fabdbe6ad93c331d79204611889b4d50ef859e91c497a7d203bb6"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1189,15 +1189,15 @@
     },
     {
       "owner": "src/export-as-panel.js",
-      "url": "./nomad-packed-maps.js?v=0.36.18.1035",
+      "url": "./nomad-packed-maps.js?v=0.36.18.1037",
       "target": "src/nomad-packed-maps.js",
-      "sha256": "8e62f82dc47b27f04f6df02cc5357f5efab9ff919a381bed94463a2fd992a489"
+      "sha256": "5d6e6dc4ea89a6023bf60873e24a2c8933bc7b89f42764efcd4d8dce04069dbf"
     },
     {
       "owner": "src/export-as-panel.js",
-      "url": "./scene-obj-export-core.js?v=0.36.18.921",
+      "url": "./scene-obj-export-core.js?v=0.36.18.1037",
       "target": "src/scene-obj-export-core.js",
-      "sha256": "135c4ea6dbd4c08b4e7a15e54a1d56bd091f8176a799f9d03ae5ed2a686726c5"
+      "sha256": "1ae53d975b19bb452f4ccf792b618ef15205f66cdc0c17126571cda03cbf9bb1"
     },
     {
       "owner": "src/extrude-through-viability.js",
@@ -1373,7 +1373,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1036",
+      "url": "./release-version.js?v=0.36.18.1037",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -1722,9 +1722,9 @@
     },
     {
       "owner": "src/main.js",
-      "url": "./subdivision.js?v=0.12",
+      "url": "./subdivision.js?v=0.36.18.1037",
       "target": "src/subdivision.js",
-      "sha256": "d91bfaa7a91eb451ad9711c747b9631fba4e326d712c862383c730b6163aeb94"
+      "sha256": "987488fedde8b06c155595b5e7384f171f7e50a79ca5226ea8ec87ac27c8dfd2"
     },
     {
       "owner": "src/mesh-auto-close-core.js",
@@ -1828,9 +1828,9 @@
     },
     {
       "owner": "src/nomad-export-core.js",
-      "url": "./scene-obj-export-core.js?v=0.36.18.921",
+      "url": "./scene-obj-export-core.js?v=0.36.18.1037",
       "target": "src/scene-obj-export-core.js",
-      "sha256": "135c4ea6dbd4c08b4e7a15e54a1d56bd091f8176a799f9d03ae5ed2a686726c5"
+      "sha256": "1ae53d975b19bb452f4ccf792b618ef15205f66cdc0c17126571cda03cbf9bb1"
     },
     {
       "owner": "src/obj-facegroups-core.js",
@@ -1872,9 +1872,9 @@
     },
     {
       "owner": "src/scene-obj-export-238.js",
-      "url": "./scene-obj-export-core.js?v=0.36.18.921",
+      "url": "./scene-obj-export-core.js?v=0.36.18.1037",
       "target": "src/scene-obj-export-core.js",
-      "sha256": "135c4ea6dbd4c08b4e7a15e54a1d56bd091f8176a799f9d03ae5ed2a686726c5"
+      "sha256": "1ae53d975b19bb452f4ccf792b618ef15205f66cdc0c17126571cda03cbf9bb1"
     },
     {
       "owner": "src/scene-obj-export-core.js",
@@ -1890,9 +1890,9 @@
     },
     {
       "owner": "src/scene-obj-export-core.js",
-      "url": "./subdivision.js?v=0.12",
+      "url": "./subdivision.js?v=0.36.18.1037",
       "target": "src/subdivision.js",
-      "sha256": "d91bfaa7a91eb451ad9711c747b9631fba4e326d712c862383c730b6163aeb94"
+      "sha256": "987488fedde8b06c155595b5e7384f171f7e50a79ca5226ea8ec87ac27c8dfd2"
     },
     {
       "owner": "src/select-intersecting-faces.js",
@@ -2450,9 +2450,9 @@
     },
     {
       "owner": "src/nomad-packed-maps.js",
-      "url": "./nomad-export-core.js?v=0.36.18.1035",
+      "url": "./nomad-export-core.js?v=0.36.18.1037",
       "target": "src/nomad-export-core.js",
-      "sha256": "0d4e23d0a602b7b93765a3aace0ab4e7aa0d4887c73cb1a8c3557bbf704e7010"
+      "sha256": "ed3394f438adfb08e2ad71a58f105aa4ccb257b3d3c1de0d1944772cac09e591"
     },
     {
       "owner": "src/nomad-export-core.js",
@@ -2770,7 +2770,7 @@
       "owner": "evaluations/uv-paint/lab.js",
       "url": "../../src/export-as-panel.js?v=0.36.18.1035",
       "target": "src/export-as-panel.js",
-      "sha256": "e262cc204f5b2efc0dd0a10e2993a6688a3527b2622243074e65814ab8264a84"
+      "sha256": "84a588c63c45ac3fa321acb0cce91fe3d91f7f3478e2ea014a3414d69715ce05"
     },
     {
       "owner": "src/paint-layer-stack.js",
@@ -2816,9 +2816,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/subdivision.js?v=0.12",
+      "url": "./src/subdivision.js?v=0.36.18.1037",
       "target": "src/subdivision.js",
-      "sha256": "d91bfaa7a91eb451ad9711c747b9631fba4e326d712c862383c730b6163aeb94"
+      "sha256": "987488fedde8b06c155595b5e7384f171f7e50a79ca5226ea8ec87ac27c8dfd2"
     },
     {
       "owner": "index.html",
@@ -3350,9 +3350,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1036",
+      "url": "./src/shell-comparison.js?v=0.36.18.1037",
       "target": "src/shell-comparison.js",
-      "sha256": "cf3236e15432b1e5b33770fc8b5234325f2f69554b46cb0644bb21587004a896"
+      "sha256": "9a654b5a52026b7d9814cd2605bfcdd64dfad3716b9c415a01b49dff203f0d05"
     },
     {
       "owner": "src/main.js",

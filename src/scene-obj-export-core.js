@@ -1,4 +1,4 @@
-import {subdivide} from './subdivision.js?v=0.12';
+import {subdivide} from './subdivision.js?v=0.36.18.1037';
 import {applyMirror} from './mirror.js?v=0.12';
 import {analyzeMeshHealth} from './mesh-health-core.js?v=0.36.18.444';
 

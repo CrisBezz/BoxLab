@@ -1,22 +1,16 @@
-## .1036 — iPad CPU timing baseline recorded — 31 October 2026
+## Current release: .1037 corner UV propagation
 
-User-provided iPad Chrome (CriOS156, iPadOS26.6.2, DPR2) report completed all9
-synthetic mesh cases in611ms, with no early stop. For16/64/256 source faces, level
-1/2/3 medians were respectively1/1/3ms,1/3/6ms,1/4/13ms. The largest 16,384-face
-result had16,641 vertices and12/13/17ms samples. This is a useful CPU-only baseline;
-it does not measure UV propagation, displacement decoding/sampling, GPU, heap or
-rendered frame time. Do not treat the report as displacement-preview PASS.
+Extend the single existing Catmull–Clark owner with a bounded, seam-preserving UV
+payload API. Geometry-only callers still get identical `EditableMesh` output. This
+build does not connect UV subdivision to viewport rendering and does not implement
+displacement preview. Preserve 16,384 output faces / 80,000 per-corner UVs as the
+current API limits. Keep .1035 colour-alpha PASS and existing seven-object/VIEW
+acceptance protected.
 
-Next narrow step: extend the existing Catmull–Clark owner to propagate existing
-per-corner UV payloads through its ordered face splits and add seam/topology tests.
-Do not create a parallel subdivision kernel or expose displacement yet. Then assess
-16-bit map sampling plus transient geometry/GPU/memory ceilings against existing
-80,000-corner,15M-pixel and32MiB resource owners. Provisional output ceiling remains
-16,384 faces/~16,641 vertices until those additional measurements exist. Keep .1035
-colour-alpha and prior seven-object/VIEW PASS protected.
-
-Published .1036 app commit69f76c096ed9acde8d938e390a5526b3ad0b79cd; hosted topology
-regression41159958003, runtime Pages41159957610, docs Pages41160392865 SUCCESS.
+Before displacement can be exposed, connect the UV payload through the existing
+surface/display owner, then measure texture sampling precision, topology limits,
+transient CPU/GPU memory, and actual device frame time. The .1036 iPad timings cover
+CPU mesh generation only and do not clear those gates.
 
 ## .1035 — pre-decode native colour alpha OFF repair — 31 October 2026
 

@@ -18247,3 +18247,18 @@ propagate corner UVs; retain seam-specific UVs and verify face/corner alignment.
 second geometry kernel. Use16,384 faces/~16,641 vertices as a provisional cap only;
 UV mapping, 16-bit displacement sampling, heap, GPU and frame-time gates remain open.
 .
+
+## .1037 — bounded Catmull–Clark corner UV propagation — 31 October 2026
+
+Added `subdivideWithCornerUVs()` beside the canonical Catmull–Clark kernel. Each
+child quad receives four per-corner UV values in the corresponding geometry order;
+shared geometric edges do not merge UV chart values. Existing `subdivide()` and
+`catmullClark()` continue returning geometry-only meshes. Levels are bounded to 0–4;
+preflight caps are 16,384 output faces and80,000 UV corners. No viewport or
+displacement wiring is included.
+
+New regression cases cover ordering, seam preservation, multilevel geometry
+equivalence, immutable source data/metadata, malformed data and the largest .1036
+benchmark case (256 source faces at level3). Focused UV/SubD/cache/displacement checks19 PASS; release-contract checks5 PASS; full
+Node22 suite3071 PASS/0FAIL; `git diff --check` clean. Publication and live byte
+verification are pending. No manual UI test is expected for this non-UI helper.
