@@ -167,9 +167,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1033",
+      "url": "./src/drawer-ui.js?v=0.36.18.1035",
       "target": "src/drawer-ui.js",
-      "sha256": "2e7e9eaf2d3a7385423d1d3b7fe66352189d1c6c277bd1c58bd17aa1442f24a8"
+      "sha256": "e126114a4aa6a2505e8cc848c55a29c6a620200436cc329bc79c6a3b83c9b18f"
     },
     {
       "owner": "index.html",
@@ -210,9 +210,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/export-as-panel.js?v=0.36.18.1033",
+      "url": "./src/export-as-panel.js?v=0.36.18.1035",
       "target": "src/export-as-panel.js",
-      "sha256": "89672cb122cb3cbaadad282455d45e22898f126a2e427cd42f237ee815c3c2d6",
+      "sha256": "e262cc204f5b2efc0dd0a10e2993a6688a3527b2622243074e65814ab8264a84",
       "sourceVersion": "0.36.18.892"
     },
     {
@@ -378,21 +378,21 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.1033",
+      "url": "./src/release-bootstrap.js?v=0.36.18.1035",
       "target": "src/release-bootstrap.js",
       "sha256": "fe3e41b43e5df07fb5252936bff4e2a7c4f47fcb38f89b2cb6204fc5712e1698"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1033",
+      "url": "./src/release-version.js?v=0.36.18.1035",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
     {
       "owner": "index.html",
-      "url": "./src/render-modes.js?v=0.36.18.1033",
+      "url": "./src/render-modes.js?v=0.36.18.1035",
       "target": "src/render-modes.js",
-      "sha256": "00be232646558299907d68974055f3decae6fa67091c4cfcda498ec14f8374e2"
+      "sha256": "a4ad05cbcb321f24aaa729eebef87d6d00db549dbfd655c5ea4d2fb725172396"
     },
     {
       "owner": "index.html",
@@ -876,9 +876,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1033",
+      "url": "./face-workflow-layout.js?v=0.36.18.1035",
       "target": "src/face-workflow-layout.js",
-      "sha256": "5eb2f11a0671b60565d6dc7f9f345b861caaafb826279ce47fbbc3fb7e4057e1"
+      "sha256": "2673f859194cdca3dfda843bdd1209792512788d331b31f4ba2f1dbc055efd57"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1189,9 +1189,9 @@
     },
     {
       "owner": "src/export-as-panel.js",
-      "url": "./nomad-packed-maps.js?v=0.36.18.1033",
+      "url": "./nomad-packed-maps.js?v=0.36.18.1035",
       "target": "src/nomad-packed-maps.js",
-      "sha256": "7f559aeef96aaba6eed511de07b3fdf66ac19fa9e59a83930bb72d4492f424f3"
+      "sha256": "8e62f82dc47b27f04f6df02cc5357f5efab9ff919a381bed94463a2fd992a489"
     },
     {
       "owner": "src/export-as-panel.js",
@@ -1373,7 +1373,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1033",
+      "url": "./release-version.js?v=0.36.18.1035",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -2426,9 +2426,9 @@
     },
     {
       "owner": "src/render-modes.js",
-      "url": "./uv-image-surface-preview.js?v=0.36.18.1033",
+      "url": "./uv-image-surface-preview.js?v=0.36.18.1035",
       "target": "src/uv-image-surface-preview.js",
-      "sha256": "b3e8660cdfb1ef32fbc97a16082f3941cc07be7476a52c8298cb1c734c2db7ee"
+      "sha256": "7851d7e567d09f228b7e23faeb0ca0d37b4543f7e18d046c8d0515934aa71bd9"
     },
     {
       "owner": "src/uv-image-surface-preview.js",
@@ -2438,9 +2438,9 @@
     },
     {
       "owner": "src/nomad-export-core.js",
-      "url": "./uv-image-surface-preview.js?v=0.36.18.1033",
+      "url": "./uv-image-surface-preview.js?v=0.36.18.1035",
       "target": "src/uv-image-surface-preview.js",
-      "sha256": "b3e8660cdfb1ef32fbc97a16082f3941cc07be7476a52c8298cb1c734c2db7ee"
+      "sha256": "7851d7e567d09f228b7e23faeb0ca0d37b4543f7e18d046c8d0515934aa71bd9"
     },
     {
       "owner": "src/nomad-export-core.js",
@@ -2450,9 +2450,9 @@
     },
     {
       "owner": "src/nomad-packed-maps.js",
-      "url": "./nomad-export-core.js?v=0.36.18.1033",
+      "url": "./nomad-export-core.js?v=0.36.18.1035",
       "target": "src/nomad-export-core.js",
-      "sha256": "a018796303cca675f56daf6b3c21732dc2ee8db5e4f5f3cf387c353e46f4501a"
+      "sha256": "0d4e23d0a602b7b93765a3aace0ab4e7aa0d4887c73cb1a8c3557bbf704e7010"
     },
     {
       "owner": "src/nomad-export-core.js",
@@ -2468,9 +2468,9 @@
     },
     {
       "owner": "src/nomad-packed-maps.js",
-      "url": "./nomad-scalar-png.js?v=0.36.18.922",
+      "url": "./nomad-scalar-png.js?v=0.36.18.1035",
       "target": "src/nomad-scalar-png.js",
-      "sha256": "23a0cef3822f7ee60e9a108808de366e43aaa354d1b861dcaa0d250b287867a8"
+      "sha256": "63a22a35c369fc89238d2b31e1b804e18dfe233e98cf0d65a1798f9ba2c00506"
     },
     {
       "owner": "src/boxlab-project-codec.js",
@@ -2541,20 +2541,20 @@
     {
       "owner": "src/export-as-panel.js",
       "target": "src/paint-export.js",
-      "url": "./paint-export.js?v=0.36.18.1033",
-      "sha256": "4a992b0e09f750f3c9443a82e1ca70a60e026be6166cfb0dbfbba9f9bea2dd44"
+      "url": "./paint-export.js?v=0.36.18.1035",
+      "sha256": "d7c68365c9f93e1e0810e5e0112351851249e3da93e5bee2226d6771d6a249bc"
     },
     {
       "owner": "src/nomad-packed-maps.js",
       "target": "src/paint-export.js",
-      "url": "./paint-export.js?v=0.36.18.1033",
-      "sha256": "4a992b0e09f750f3c9443a82e1ca70a60e026be6166cfb0dbfbba9f9bea2dd44"
+      "url": "./paint-export.js?v=0.36.18.1035",
+      "sha256": "d7c68365c9f93e1e0810e5e0112351851249e3da93e5bee2226d6771d6a249bc"
     },
     {
       "owner": "src/nomad-export-core.js",
       "target": "src/paint-export.js",
-      "url": "./paint-export.js?v=0.36.18.1033",
-      "sha256": "4a992b0e09f750f3c9443a82e1ca70a60e026be6166cfb0dbfbba9f9bea2dd44"
+      "url": "./paint-export.js?v=0.36.18.1035",
+      "sha256": "d7c68365c9f93e1e0810e5e0112351851249e3da93e5bee2226d6771d6a249bc"
     },
     {
       "owner": "src/paint-export.js",
@@ -2565,8 +2565,8 @@
     {
       "owner": "src/paint-export.js",
       "target": "src/nomad-scalar-png.js",
-      "url": "./nomad-scalar-png.js?v=0.36.18.922",
-      "sha256": "23a0cef3822f7ee60e9a108808de366e43aaa354d1b861dcaa0d250b287867a8"
+      "url": "./nomad-scalar-png.js?v=0.36.18.1035",
+      "sha256": "63a22a35c369fc89238d2b31e1b804e18dfe233e98cf0d65a1798f9ba2c00506"
     },
     {
       "owner": "src/paint-layer-stack.js",
@@ -2768,9 +2768,9 @@
     },
     {
       "owner": "evaluations/uv-paint/lab.js",
-      "url": "../../src/export-as-panel.js?v=0.36.18.1033",
+      "url": "../../src/export-as-panel.js?v=0.36.18.1035",
       "target": "src/export-as-panel.js",
-      "sha256": "89672cb122cb3cbaadad282455d45e22898f126a2e427cd42f237ee815c3c2d6"
+      "sha256": "e262cc204f5b2efc0dd0a10e2993a6688a3527b2622243074e65814ab8264a84"
     },
     {
       "owner": "src/paint-layer-stack.js",
@@ -2804,9 +2804,9 @@
     },
     {
       "owner": "evaluations/uv-paint/index.html",
-      "url": "./lab.js?v=0.36.18.1033",
+      "url": "./lab.js?v=0.36.18.1035",
       "target": "evaluations/uv-paint/lab.js",
-      "sha256": "3b057e0cdeadbb42d669a6569898cd666dc90e1ccf11d66c17b5ba472f781a46"
+      "sha256": "46a8838da78da7462eff1038e83049260ee56b4ed0c8a97853efe3d075155edf"
     },
     {
       "owner": "index.html",
@@ -3350,9 +3350,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1033",
+      "url": "./src/shell-comparison.js?v=0.36.18.1035",
       "target": "src/shell-comparison.js",
-      "sha256": "5084ab12281c61dda8cc6edf81aac29b95de3c22bf8be04ed242f52da70e00e6"
+      "sha256": "aa4112627fd92b29472e16e4d1a5a2ffc5f53401ab041898c3f7fd8e1c4aec93"
     },
     {
       "owner": "src/main.js",
@@ -3467,6 +3467,12 @@
       "target": "src/nomad-material-resource.js",
       "url": "./nomad-material-resource.js?v=0.36.18.1033",
       "sha256": "960a171af636e11cd58f902de0d7243e13d76b5ffb2dbd8f07bc92b2d28b7333"
+    },
+    {
+      "owner": "src/uv-image-surface-preview.js",
+      "url": "./nomad-scalar-png.js?v=0.36.18.1035",
+      "target": "src/nomad-scalar-png.js",
+      "sha256": "63a22a35c369fc89238d2b31e1b804e18dfe233e98cf0d65a1798f9ba2c00506"
     }
   ]
 }

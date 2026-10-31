@@ -3,7 +3,7 @@ import {captureFlattenedPaint} from './paint-layer-resource.js?v=0.36.18.1033';
 import {paintTargetKey,paintTargetDigest} from './paint-target.js?v=0.36.18.1033';
 import {copyMetalnessResource} from './metalness-resource.js?v=0.36.18.1033';
 import {copyRoughnessResource} from './roughness-resource.js?v=0.36.18.1033';
-import {encodeNomadScalarPNG,encodeNomadColourPNG,encodeNomadDataPNG} from './nomad-scalar-png.js?v=0.36.18.922';
+import {encodeNomadScalarPNG,encodeNomadColourPNG,encodeNomadDataPNG} from './nomad-scalar-png.js?v=0.36.18.1035';
 const prepared=new WeakMap(),roughnessPrepared=new WeakMap(),metalnessPrepared=new WeakMap(),packedPrepared=new WeakMap();
 export function capturePaintExportObjects(objects){
  const copies=new WeakMap(),roughnessCopies=new WeakMap(),metalnessCopies=new WeakMap();return (objects||[]).map(o=>{

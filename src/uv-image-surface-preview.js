@@ -1,7 +1,13 @@
+import {opaqueNomadColourPNG} from './nomad-scalar-png.js?v=0.36.18.1035';
 import {paintMaterialEnvironments} from './paint-material-environment.js?v=0.36.18.925';
 import {nomadColourSurfaceSource,nomadLitSurfaceSource,nomadPBRSurfaceSources} from './nomad-material-resource.js?v=0.36.18.1033';
 import * as THREE from 'three';
 import {importedUVImageChoices,decodeUVImage} from './uv-image-preview.js?v=0.36.18.1032';
+// Keep native alpha policy at the surface boundary, outside shared UV/GLB decoding.
+export async function decodeSurfaceImage(choice){
+ const data=choice.ignoreColourAlpha&&choice.mime==='image/png'?await opaqueNomadColourPNG(choice.data):choice.data;
+ return decodeUVImage(data===choice.data?choice:{...choice,data});
+}
 // Active Base inspection. Mixed materials require exact per-face import provenance.
 // Names/facegroup labels are never interpreted as material assignments.
 export function uvImageMaterialSource(payload){
@@ -37,7 +43,7 @@ function nativeReservation(source,payload,maps){
 }
 const wraps={33071:THREE.ClampToEdgeWrapping,33648:THREE.MirroredRepeatWrapping,10497:THREE.RepeatWrapping};
 const filters={9728:THREE.NearestFilter,9729:THREE.LinearFilter,9984:THREE.NearestMipmapNearestFilter,9985:THREE.LinearMipmapNearestFilter,9986:THREE.NearestMipmapLinearFilter,9987:THREE.LinearMipmapLinearFilter};
-export function createUVImageOverlay(body,mesh,payload,buildGeometry,hiddenMaterial,{decode=decodeUVImage,lit=false,renderer=globalThis.__boxlabBridgeState?.renderer,environmentPool=paintMaterialEnvironments}={}){
+export function createUVImageOverlay(body,mesh,payload,buildGeometry,hiddenMaterial,{decode=decodeSurfaceImage,lit=false,renderer=globalThis.__boxlabBridgeState?.renderer,environmentPool=paintMaterialEnvironments}={}){
  const native=payload?.source==='nomad';
  const single=uvImageSurfaceSource(payload,{nativeOpacity:lit}),multiple=!single;if(native&&!single)return null;
  if(!body?.geometry||typeof buildGeometry!=='function')return null;
@@ -98,7 +104,7 @@ export function createUVImageOverlay(body,mesh,payload,buildGeometry,hiddenMater
    if(disposed)return;
    const source=ordered[index],material=materials[index];
    if(source.choice){
-    const image=await decode(source.choice);
+    const image=await decode(native&&lit&&source.opacityPreview&&!source.colourAlpha?{...source.choice,ignoreColourAlpha:true}:source.choice);
     if(disposed){image?.close?.();return;}
     if(!image){dispose();return;}
     images.push(image);material.map=makeTexture(image,source,true);

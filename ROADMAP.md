@@ -1,3 +1,50 @@
+## .1035 — pre-decode native colour alpha OFF repair — 31 October 2026
+
+USER .1034 FAIL: screenshot shows right cube cyan/black checker on visible .1034.
+.1033 standalone material PASS remains protected; .1034 shader-only claim was
+insufficient. Three map_fragment multiplies RGB by sampled RGB, and alpha by
+sampled alpha componentwise; it does NOT itself multiply RGB by sampled alpha.
+Shader string tests cannot prove RGB survived browser PNG decode/resize.
+
+Existing surface owner now passes an explicit alpha-OFF flag to its default
+surface decoder. Existing nomad-scalar-png owner makes a transient opaque PNG
+BEFORE createImageBitmap: unfilters original pixels, keeps original RGB including
+alpha-zero pixels, sets preview alpha255, and recompresses. Shared GLB/UV decoder
+has no native dependency. Explicit alpha ON and auxiliary channels keep original
+decoding; source bytes, material metadata, UVs, Save/Open/NOM remain unchanged.
+No source texture rewrite, canvas RGB recovery, new renderer or modelling kernel.
+
+Supported pre-decode path: noninterlaced 8-bit RGBA/grayscale-alpha PNG; tRNS
+transparency stripped for other native PNG types. Profiles/colour chunks retained.
+Bounds: encoded source/output8MiB, dimensions2048 and4M source pixels, inflate output
+exact expected scanline length; CRC/truncation/filter/animation/16bit-alpha refusals.
+Unsupported alpha-OFF conversion keeps original body fallback, no black-map guess.
+Existing GPU preview limits/lifetimes and .1033 standalone reservation remain intact.
+
+Regression checks inspect actual browser-input PNG from original .1029 fixture:
+all alpha-OFF texels exactly [55,175,220,255]; alpha ON still [55,175,220,0/255].
+All five PNG filters tested with varied hidden RGB, tRNS and grayscale-alpha,
+malformed/oversized/inflate overflow refused. Actual surface default decoder and
+source-exact NOM roundtrip covered. Corrected .1034 alpha-ON test: default Three
+onBeforeCompile is a no-op; Three expands map_fragment after that hook. .1034 CI
+41152868866 FAILED; repair supersedes it only after passing validation/publication.
+Restore DEV_HISTORY content from3397d287, which .1034 documentation accidentally
+replaced, then retain .1034 entry and append this repair. Other old docs kept intact.
+Reviewed cache closure repinned; stale .1034 index-only keys reconciled with owners.
+Restore original five-step structural A/B checklist (1034 extra material step broke
+completion); material check stays in build instructions. Correct stale1033 titles
+and preserve1033/1034 result logs. Original13 checklist regression tests PASS.
+
+DEVICE1035: use original docs/samples/NOM_COLOUR_ALPHA_1029.nom, Studio and Solid.
+RIGHT solid cyan, no black squares; LEFT checker transparency; MIDDLE combined
+alpha plus opacity. Switch/reopen VIEW; original .1032 seven-cube Colour cyan;
+.1033 standalone sample unchanged. Move/UndoRedo and Save/Open/NOM retention.
+Native iPad/GPU appearance acceptance still pending; do not claim device success.
+Displacement remains deferred; next step is actual device validation before more work.
+Validation: Node22 full suite3064 PASS/0FAIL (216.65s); focused13 material tests
+and final13 checklist tests PASS. git diff --check clean. CI/Pages publication
+pending. .1034 iPad FAIL remains recorded; .1035 GPU/device acceptance pending.
+
 ## .1034 — native colour alpha OFF shader correction — 31 October 2026
 
 Current runtime target: 0.36.18.1034. Parent .1033 user PASS is protected,

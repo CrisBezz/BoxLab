@@ -36,7 +36,9 @@ test('1034 explicit native colour alpha ON retains Three RGBA sampling',async()=
   assert.equal(overlay.material.transparent,true);
   const shader={fragmentShader:'#include <map_fragment>'};
   overlay.material.onBeforeCompile(shader);
-  assert.equal(shader.fragmentShader.includes('diffuseColor *= sampledDiffuseColor;'),true);
+  // Three expands includes after the default (no-op) onBeforeCompile hook.
+  assert.equal(shader.fragmentShader,'#include <map_fragment>');
+  assert.match(THREE.ShaderChunk.map_fragment,/diffuseColor \*= sampledDiffuseColor;/);
  }finally{overlay?.userData.boxlabUVImageDispose();}
  assert.equal(body.material,original);
 });

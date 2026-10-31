@@ -1,8 +1,8 @@
 import {nomadMaterialMaps} from './nomad-material-resource.js?v=0.36.18.1033';
 import {faceGroupPalette} from './facegroup-colours-core.js?v=0.36.18.992';
-import {preparedPaintImage,preparedRoughnessImage,preparedMetalnessImage,paintExportGeometryObject} from './paint-export.js?v=0.36.18.1033';
+import {preparedPaintImage,preparedRoughnessImage,preparedMetalnessImage,paintExportGeometryObject} from './paint-export.js?v=0.36.18.1035';
 import {nomadDisplacementMap} from './nomad-displacement-map.js?v=0.36.18.1032';
-import {uvImageSurfaceSource,uvImageMaterialSource} from './uv-image-surface-preview.js?v=0.36.18.1033';
+import {uvImageSurfaceSource,uvImageMaterialSource} from './uv-image-surface-preview.js?v=0.36.18.1035';
 import {embeddedUVImage} from './uv-image-preview.js?v=0.36.18.1032';
 // NOM container/header, field and scene-node conventions adapted from CrisBezz/
 // MeshUtilz-Sweep-Lab balloon-v0.6, commit 18e72a6bf964974591038345d68c2196a18f6af2:
