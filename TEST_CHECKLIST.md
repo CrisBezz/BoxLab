@@ -1,13 +1,31 @@
-## .1040 — textured SubD on inactive NOM objects
+## .1041 — displacement preview feasibility gate
 
-- [ ] Open the seven-object NOM sample. Confirm all seven base materials appear;
+- [ ] In BoxLab, open File → Screen comparison / test list and launch
+  “Displacement feasibility gate · .1041”. Confirm the benchmark opens in a new
+  tab without altering the active project.
+- [ ] Run the gate. Confirm it shows the temporary height-map mesh and reports
+  progress across the bounded mesh/map cases, or stops safely with a reason.
+- [ ] Copy the JSON report and send it. Confirm decode, UV/subdivision, render
+  submission, frame-interval and optional GPU-timer fields are present where run.
+- [ ] Return to BoxLab. Confirm the current project and VIEW/navigation remain
+  unchanged. This gate does not enable displacement in the app.
+
+Automated coverage checks the benchmark entry point, existing corner-UV kernel,
+displacement shader usage, case caps, timeout/report contract, and release markers.
+Full Node suite: 3,083 PASS / 0 FAIL / 0 skipped; focused feasibility, release-pin,
+UV benchmark and inactive SubD checks pass. `git diff --check` is clean. The iPad
+report is still required before deciding whether a viewport preview is safe.
+
+## .1040 — textured SubD on inactive NOM objects — user PASS protected
+
+- [x] Open the seven-object NOM sample. Confirm all seven base materials appear;
   the user PASS for this non-SubD behavior is protected from .1039.
-- [ ] Enable SubD on at least two textured objects. Confirm both remain textured
+- [x] Enable SubD on at least two textured objects. Confirm both remain textured
   while unselected; then select each and deselect all. Check Studio and Solid.
-- [ ] Toggle SubD off/on and change the active object; confirm texture alignment.
-- [ ] Enable Mirror on a textured SubD object and confirm the established
+- [x] Toggle SubD off/on and change the active object; confirm texture alignment.
+- [x] Enable Mirror on a textured SubD object and confirm the established
   untextured fallback; disable Mirror and confirm the texture preview returns.
-- [ ] Switch/reopen VIEW and orbit/pan; confirm preview and navigation remain.
+- [x] Switch/reopen VIEW and orbit/pan; confirm preview and navigation remain.
 
 Scope: editable NOM source with current UV topology, no Mirror, and within the
 existing 20,000-corner preview cap. References, linked/recipe objects, stale UVs,
@@ -19,8 +37,8 @@ inactive Studio/Solid overlay handoff and cleanup. Existing active SubD and NOM
 material regressions remain covered. Full Node suite: 3,081 PASS / 0 FAIL. Release
 asset-contract and version-marker checks pass. Hosted topology regression
 41187547119 and Pages deployment 41187546752 succeeded. Live `.1040` marker and
-seven changed runtime assets match local bytes. iPad visual acceptance remains
-pending.
+seven changed runtime assets match local bytes. User confirms all objects retain
+their materials under SubD, including while unselected; protect this iPad behavior.
 
 ## .1039 — active textured SubD; base-material PASS, inactive gap reported
 

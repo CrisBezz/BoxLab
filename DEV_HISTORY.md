@@ -18365,4 +18365,35 @@ regression 41187547119 and Pages build/deploy 41187546752 both completed SUCCESS
 Live version.json and seven changed runtime assets (index shell, main, multi-object,
 SubD display cache, shell comparison, drawer-ui and face-workflow-layout) match the
 local runtime bytes exactly. Local full Node suite: 3,081 PASS / 0 FAIL; focused new
-SubD and release-contract checks pass. Native iPad acceptance remains pending.
+SubD and release-contract checks pass. Native iPad acceptance was pending at publication; the later user PASS is recorded below.
+
+## .1040 user PASS protected — 31 October 2026
+
+User confirms all objects retain their materials with SubD enabled, including
+unselected objects. Protect inactive-object textured SubD in Studio/Solid and the
+tested selection-independent behavior. Next candidate is a source audit of the
+existing displacement owners and a bounded end-to-end preview/performance gate;
+the .1038 CPU mesh/UV benchmark does not establish decode, memory, GPU or frame-time
+safety. No runtime change in this feedback update.
+
+
+## .1041 — displacement preview feasibility gate — 31 October 2026
+
+.1040 iPad PASS remains protected. Audited the existing native displacement
+resource owner: NOM displacement bindings are already retained/validated for UV
+inspection and export, while the current Studio/Solid material overlay does not
+consume displacement. Do not create a second renderer or subdivision kernel.
+
+.1041 adds a temporary benchmark entry to the existing File → Screen comparison /
+test list. It uses the canonical corner-UV subdivision helper, generated 8-bit
+grayscale PNGs at 256²/1024²/2048², bounded 16/64/256-face source meshes, corner-UV
+geometry expansion and a Three.js displacementMap material. It records generation,
+PNG encode/decode, subdivision, expansion, estimated byte counts, render submission,
+frame intervals and optional GPU timer query results. A single CPU stage over 1.2s
+stops the run and leaves a copyable partial report. No displacement deformation is
+added to project rendering.
+
+Final local Node suite: 3,083 PASS / 0 FAIL / 0 skipped. The .1041 gate, release-pin,
+existing .1038 UV benchmark and .1040 inactive SubD regression checks passed; module
+syntax and `git diff --check` are clean. Live publication is pending. The user iPad
+report is required before choosing a production displacement implementation.

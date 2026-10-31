@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#111318">
+  <title>BoxLab displacement preview gate .1041</title>
+  <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.179.1/build/three.module.js"}}</script>
+  <style>
+    :root{color-scheme:dark;font:16px/1.45 system-ui,-apple-system,sans-serif;background:#191c22;color:#eef1f7}
+    *{box-sizing:border-box}body{margin:0;padding:16px;max-width:900px;margin-inline:auto}
+    h1{font-size:1.35rem;margin:0 0 8px}p{color:#bdc4d1;margin:10px 0}
+    .card{background:#252a33;border:1px solid #39414e;border-radius:14px;padding:16px;margin:14px 0}
+    button{font:inherit;font-weight:650;color:#101318;background:#d9e2f2;border:0;border-radius:10px;min-height:48px;padding:10px 16px;touch-action:manipulation}
+    button:disabled{opacity:.55}#progress{min-height:1.5em;color:#c3d5ff}table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;display:block;overflow:auto}
+    th,td{text-align:right;padding:8px 5px;border-bottom:1px solid #3b424d;white-space:nowrap}th:first-child,td:first-child{text-align:left}
+    th{color:#c1c9d7;font-size:.82rem}td{font-size:.86rem}textarea{display:block;width:100%;min-height:160px;margin-top:12px;background:#111318;color:#e8edf7;border:1px solid #414957;border-radius:8px;padding:10px}
+    .muted{font-size:.9rem;color:#aeb6c4}.actions{display:flex;gap:10px;flex-wrap:wrap}canvas{display:block;width:min(100%,512px);height:300px;margin:12px auto 0;background:#141820;border-radius:10px}
+  </style>
+</head>
+<body>
+  <h1>Displacement preview feasibility · BoxLab .1041</h1>
+  <p>This isolated gate does not modify the open BoxLab project. It uses BoxLab’s existing corner-UV subdivision, decodes generated grayscale PNG height maps, expands UV corners, and renders a Three.js displacement-map scene.</p>
+  <section class="card">
+    <p><strong>Bounded cases:</strong> 16, 64 and 256 source faces; levels 2, 2 and 3; 256², 1024² and 2048² generated maps. The largest geometry is capped at 16,384 faces / 65,536 corners. Each CPU stage stops if one run exceeds 1.2 seconds.</p>
+    <p class="muted">The report includes decode time, known typed-array/source byte estimates, render-command submission and animation-frame intervals. GPU timer queries are reported only when the browser exposes them. This is a feasibility comparison, not BoxLab viewport frame-time, total memory or device-GPU proof. No displacement feature ships in .1041.</p>
+    <div class="actions"><button id="run" type="button">Run feasibility gate</button><button id="copy" type="button" disabled>Copy report</button></div>
+    <p id="progress" role="status" aria-live="polite">Ready. Keep the browser open and device orientation unchanged while it runs.</p>
+    <table aria-label="Displacement feasibility measurements">
+      <thead><tr><th>Mesh</th><th>Map</th><th>CPU geometry</th><th>Render submit</th><th>Frame interval</th><th>GPU timer</th></tr></thead>
+      <tbody id="results"><tr><td colspan="6">No measurements yet.</td></tr></tbody>
+    </table>
+    <canvas id="preview" width="512" height="300" aria-label="Current displacement benchmark mesh"></canvas>
+    <textarea id="report" readonly hidden aria-label="Displacement feasibility report"></textarea>
+  </section>
+  <p class="muted">Open from BoxLab: File → Screen comparison / test list → Displacement feasibility .1041. The scene and generated image are temporary benchmark data.</p>
+  <script type="module">
+    import * as THREE from 'three';
+    import {EditableMesh} from '../src/mesh.js';
+    import {subdivideWithCornerUVs,MAX_CORNER_UV_SUBDIVISION_FACES,MAX_CORNER_UV_SUBDIVISION_CORNERS} from '../src/subdivision.js?v=0.36.18.1037';
+
+    const meshes=[{side:4,level:2},{side:8,level:2},{side:16,level:3}],mapSizes=[256,1024,2048],stopMs=1200,samples=3;
+    const runButton=document.querySelector('#run'),copyButton=document.querySelector('#copy'),progress=document.querySelector('#progress'),body=document.querySelector('#results'),report=document.querySelector('#report'),canvas=document.querySelector('#preview');
+    const nextFrame=()=>new Promise(resolve=>requestAnimationFrame(resolve)),median=a=>[...a].sort((x,y)=>x-y)[Math.floor(a.length/2)],pct=(a,p)=>[...a].sort((x,y)=>x-y)[Math.min(a.length-1,Math.floor((a.length-1)*p))];
+    let reportData=null,renderer=null;
+    function grid(side){
+      const vertices=[],faces=[],uvs=[];
+      for(let y=0;y<=side;y++)for(let x=0;x<=side;x++)vertices.push(new THREE.Vector3(x/side-.5,y/side-.5,0));
+      for(let y=0;y<side;y++)for(let x=0;x<side;x++){
+        const a=y*(side+1)+x;faces.push([a,a+1,a+side+2,a+side+1]);
+        uvs.push([[x/side,y/side],[(x+1)/side,y/side],[(x+1)/side,(y+1)/side],[x/side,(y+1)/side]]);
+      }
+      return {mesh:new EditableMesh(vertices,faces),uvs};
+    }
+    function expandedGeometry(mesh,cornerUVs){
+      const positions=[],uv=[];
+      for(let fi=0;fi<mesh.faces.length;fi++){
+        const face=mesh.faces[fi],faceUV=cornerUVs[fi];
+        for(let i=1;i<face.length-1;i++)for(const ci of [0,i,i+1]){
+          const p=mesh.vertices[face[ci]],t=faceUV[ci];positions.push(p.x,p.y,p.z);uv.push(t[0],1-t[1]);
+        }
+      }
+      const geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));geometry.setAttribute('uv',new THREE.Float32BufferAttribute(uv,2));geometry.computeVertexNormals();
+      const typedArrayBytes=Object.values(geometry.attributes).reduce((sum,attribute)=>sum+attribute.array.byteLength,0);
+      return {geometry,typedArrayBytes};
+    }
+    async function heightPng(size){
+      const started=performance.now(),pixels=new Uint8ClampedArray(size*size*4);
+      for(let y=0;y<size;y++)for(let x=0;x<size;x++){
+        const h=Math.round(127.5+92*Math.sin(x*.045)*Math.cos(y*.037)+28*Math.sin((x+y)*.11)),i=(y*size+x)*4;
+        pixels[i]=pixels[i+1]=pixels[i+2]=h;pixels[i+3]=255;
+      }
+      const genMs=performance.now()-started;if(genMs>stopMs)throw Error(`Height-map generation exceeded ${stopMs} ms`);
+      const c=document.createElement('canvas');c.width=c.height=size;const ctx=c.getContext('2d',{willReadFrequently:false});ctx.putImageData(new ImageData(pixels,size,size),0,0);
+      const encodeStart=performance.now(),blob=await new Promise((resolve,reject)=>c.toBlob(v=>v?resolve(v):reject(Error('PNG encoding failed')),'image/png')),encodeMs=performance.now()-encodeStart;
+      c.width=c.height=1;if(encodeMs>stopMs)throw Error(`PNG encoding exceeded ${stopMs} ms`);return {blob,genMs,encodeMs,encodedBytes:blob.size};
+    }
+    async function decodeSamples(blob){
+      const times=[];let image=null;
+      for(let i=0;i<samples;i++){await nextFrame();const start=performance.now();image=await createImageBitmap(blob);times.push(performance.now()-start);if(times.at(-1)>stopMs){image.close();throw Error(`Image decode exceeded ${stopMs} ms`);}}
+      const dimensions={width:image.width,height:image.height};image.close();return {medianMs:median(times),samplesMs:times.map(v=>+v.toFixed(2)),dimensions};
+    }
+    function createRenderer(){
+      if(!renderer){renderer=new THREE.WebGLRenderer({canvas,antialias:false,powerPreference:'low-power'});renderer.setPixelRatio(1);renderer.setSize(512,300,false);renderer.setClearColor(0x141820,1);}
+      return renderer;
+    }
+    async function gpuTiming(gl,scene,camera){
+      const ext=gl.getExtension('EXT_disjoint_timer_query_webgl2');if(!ext||typeof gl.createQuery!=='function')return {available:false,samplesMs:[]};
+      const values=[];
+      for(let i=0;i<3;i++){
+        await nextFrame();const query=gl.createQuery();gl.beginQuery(ext.TIME_ELAPSED_EXT,query);renderer.render(scene,camera);gl.endQuery(ext.TIME_ELAPSED_EXT);
+        let attempts=0;while(!gl.getQueryParameter(query,gl.QUERY_RESULT_AVAILABLE)&&attempts++<120)await nextFrame();
+        const disjoint=gl.getParameter(ext.GPU_DISJOINT_EXT),available=gl.getQueryParameter(query,gl.QUERY_RESULT_AVAILABLE);
+        if(available&&!disjoint)values.push(gl.getQueryParameter(query,gl.QUERY_RESULT)/1e6);gl.deleteQuery(query);
+        if(!available||disjoint)return {available:true,disjoint:true,samplesMs:values.map(v=>+v.toFixed(2))};
+      }
+      return {available:true,disjoint:false,samplesMs:values.map(v=>+v.toFixed(2))};
+    }
+    async function renderCase(meshResult,image,size){
+      const r=createRenderer(),start=performance.now(),expanded=expandedGeometry(meshResult.mesh,meshResult.cornerUVs),geometryMs=performance.now()-start;
+      if(geometryMs>stopMs){expanded.geometry.dispose();image.close();throw Error(`UV geometry expansion exceeded ${stopMs} ms`);}
+      const texture=new THREE.Texture(image);texture.colorSpace=THREE.NoColorSpace;texture.needsUpdate=true;texture.generateMipmaps=true;texture.minFilter=THREE.LinearMipmapLinearFilter;texture.magFilter=THREE.LinearFilter;
+      const material=new THREE.MeshStandardMaterial({color:0xd7dfed,roughness:.9,displacementMap:texture,displacementScale:.12,displacementBias:-.06,side:THREE.DoubleSide});
+      const object=new THREE.Mesh(expanded.geometry,material),scene=new THREE.Scene();scene.background=new THREE.Color(0x141820);scene.add(object,new THREE.HemisphereLight(0xe5edff,0x485166,2));
+      const light=new THREE.DirectionalLight(0xffffff,2);light.position.set(-1,2,3);scene.add(light);
+      const camera=new THREE.PerspectiveCamera(38,512/300,.1,20);camera.position.set(0,0,2.25);camera.lookAt(0,0,0);
+      for(let i=0;i<8;i++)r.render(scene,camera);
+      const submit=[],frames=[];let prior=0;
+      for(let i=0;i<24;i++){
+        await nextFrame();const frame=performance.now();if(prior)frames.push(frame-prior);prior=frame;
+        const before=performance.now();r.render(scene,camera);submit.push(performance.now()-before);
+      }
+      const gpu=await gpuTiming(r.getContext(),scene,camera),info={geometries:r.info.memory.geometries,textures:r.info.memory.textures,calls:r.info.render.calls,triangles:r.info.render.triangles};
+      material.dispose();texture.dispose();expanded.geometry.dispose();image.close();
+      return {expandedGeometryMs:+geometryMs.toFixed(2),expandedArrayBytes:expanded.typedArrayBytes,renderSubmitMedianMs:+median(submit).toFixed(2),renderSubmitP95Ms:+pct(submit,.95).toFixed(2),frameIntervalMedianMs:+median(frames).toFixed(2),frameIntervalP95Ms:+pct(frames,.95).toFixed(2),gpu,rendererInfo:info,mapBaseLevelBytes:size*size*4};
+    }
+    function row(item){const tr=document.createElement('tr'),values=[`${item.sourceFaces}f L${item.level}`,`${item.mapSize}²`,`${item.subdivision.medianMs.toFixed(2)} / ${item.expandedGeometryMs.toFixed(2)} ms`,`${item.renderSubmitMedianMs} / ${item.renderSubmitP95Ms} ms`,`${item.frameIntervalMedianMs} / ${item.frameIntervalP95Ms} ms`,item.gpu.samplesMs.length?`${median(item.gpu.samplesMs).toFixed(2)} ms`:(item.gpu.available?'disjoint':'unavailable')];for(const v of values){const td=document.createElement('td');td.textContent=String(v);tr.append(td);}body.append(tr);}
+    async function run(){
+      runButton.disabled=true;copyButton.disabled=true;body.replaceChildren();report.hidden=true;reportData=null;
+      const started=new Date().toISOString(),textureResults=[],geometryResults=[],renderResults=[],mapBlobs=new Map();let stoppedEarly=false,stopReason=null;
+      try{
+        for(const size of mapSizes){progress.textContent=`Preparing ${size}² test map…`;await nextFrame();const png=await heightPng(size),decoded=await decodeSamples(png.blob);mapBlobs.set(size,png.blob);textureResults.push({size,generatedMapMs:+png.genMs.toFixed(2),pngEncodeMs:+png.encodeMs.toFixed(2),encodedBytes:png.encodedBytes,estimatedDecodedRGBABytes:size*size*4,decode:decoded});}
+        for(const spec of meshes){
+          const sourceFaces=spec.side*spec.side,projectedFaces=sourceFaces*4**spec.level,projectedCorners=projectedFaces*4;
+          if(projectedFaces>MAX_CORNER_UV_SUBDIVISION_FACES||projectedCorners>MAX_CORNER_UV_SUBDIVISION_CORNERS){stoppedEarly=true;stopReason='Existing subdivision/UV cap refused a case';break;}
+          progress.textContent=`Subdividing ${sourceFaces} faces at level ${spec.level}…`;await nextFrame();const fixture=grid(spec.side),before=JSON.stringify({vertices:fixture.mesh.vertices.map(v=>v.toArray()),faces:fixture.mesh.faces}),uvBefore=JSON.stringify(fixture.uvs);
+          subdivideWithCornerUVs(fixture.mesh,fixture.uvs,spec.level);
+          const times=[];let output=null;
+          for(let i=0;i<samples;i++){await nextFrame();const begin=performance.now();output=subdivideWithCornerUVs(fixture.mesh,fixture.uvs,spec.level);const elapsed=performance.now()-begin;if(elapsed>stopMs)throw Error(`Subdivision exceeded ${stopMs} ms at ${sourceFaces} faces, level ${spec.level}`);times.push(elapsed);}
+          if(JSON.stringify({vertices:fixture.mesh.vertices.map(v=>v.toArray()),faces:fixture.mesh.faces})!==before||JSON.stringify(fixture.uvs)!==uvBefore)throw Error('Source mesh or UV input changed');
+          const result={sourceFaces,level:spec.level,outputFaces:output.mesh.faces.length,outputCorners:output.cornerUVs.reduce((n,f)=>n+f.length,0),medianMs:+median(times).toFixed(2),samplesMs:times.map(v=>+v.toFixed(2))};geometryResults.push(result);
+          for(const texture of textureResults){
+            progress.textContent=`Rendering ${sourceFaces} faces / level ${spec.level} with ${texture.size}² map…`;await nextFrame();
+            const image=await createImageBitmap(mapBlobs.get(texture.size)),rendered=await renderCase(output,image,texture.size),item={sourceFaces,level:spec.level,mapSize:texture.size,subdivision:result,outputFaces:result.outputFaces,outputCorners:result.outputCorners,...rendered};renderResults.push(item);row(item);
+          }
+        }
+      }catch(error){stoppedEarly=true;stopReason=String(error?.message||error);}
+      reportData={benchmark:'BoxLab displacement preview feasibility .1041',started,ended:new Date().toISOString(),userAgent:navigator.userAgent,devicePixelRatio:window.devicePixelRatio,source:'src/subdivision.js · subdivideWithCornerUVs + Three.js displacementMap',cases:meshes.map(m=>({sourceFaces:m.side*m.side,level:m.level})),mapSizes,faceCap:MAX_CORNER_UV_SUBDIVISION_FACES,cornerCap:MAX_CORNER_UV_SUBDIVISION_CORNERS,stopAfterSingleCpuStageMs:stopMs,timedCpuSamples:samples,textureResults,geometryResults,renderResults,stoppedEarly,stopReason,scope:'Generated 8-bit grayscale PNG decode, CPU subdivision and UV-corner expansion, estimated typed-array/base-texture bytes, WebGL render command submission, requestAnimationFrame intervals, and optional EXT_disjoint_timer_query_webgl2. Does not measure BoxLab viewport frame time, full process/GPU memory, native scene/shadow costs, or source NOM decode.'};
+      report.value=JSON.stringify(reportData,null,2);progress.textContent=stoppedEarly?`Stopped safely: ${stopReason}. Copy the partial report.`:`Complete · ${renderResults.length} render cases. Copy the report and send it.`;copyButton.disabled=!(renderResults.length||textureResults.length||geometryResults.length);runButton.disabled=false;
+    }
+    runButton.addEventListener('click',run);
+    copyButton.addEventListener('click',async()=>{if(!reportData)return;report.value=JSON.stringify(reportData,null,2);report.hidden=false;try{await navigator.clipboard.writeText(report.value);progress.textContent='Report copied to clipboard.';}catch{report.focus();report.select();progress.textContent='Copy the selected report.';}});
+    window.addEventListener('pagehide',()=>{renderer?.dispose();renderer=null;});
+  </script>
+</body>
+</html>

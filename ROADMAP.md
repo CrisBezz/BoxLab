@@ -1,20 +1,16 @@
-## Current build: .1040 textured SubD on inactive NOM objects
+## Current build: .1041 displacement preview feasibility gate
 
-User PASSes .1039 base-material display across all seven objects, then reports a
-SubD visibility gap: only the selected object's texture remained visible. .1040
-routes inactive objects through the canonical corner-UV subdivision kernel and the
-same Studio/Solid UV overlay as the active object. It retains per-object cache
-ownership and shared source, topology, Mirror and 20,000-corner rules. No new
-renderer/kernel or displacement preview.
+.1040 is user-PASS protected: imported NOM materials stay visible on multiple SubD
+objects, including when they are unselected. .1041 adds an isolated benchmark entry
+from File → Screen comparison / test list. It exercises the existing corner-UV
+subdivision kernel, generated grayscale PNG decode, UV-corner geometry expansion,
+and a Three.js displacement-map render across bounded mesh/map sizes. CPU stages stop
+after one run exceeds 1.2 seconds. The report includes known byte estimates, render
+submission and frame-interval metrics, and optional GPU timer queries.
 
-Focused regression covers independent per-object UV results/cache reuse, eligibility
-and fallback, inactive Studio/Solid overlay handoff and cleanup. Full suite is
-3,081 PASS / 0 FAIL; release asset-contract and version-marker checks pass. Hosted
-topology regression 41187547119 and Pages deployment 41187546752 succeeded; live
-release marker and changed runtime assets match local bytes. Next:
-user iPad verification with multiple textured SubD objects left unselected. The .1038
-timing report measures CPU mesh/UV generation only; it does not measure image decode,
-memory, GPU work or rendered frame time.
+No displacement deformation is added to the project. The gate does not establish
+BoxLab viewport frame time, total process/GPU memory, native Nomad image decode, or
+device GPU safety. User iPad report is required before production preview work.
 
 ## .1035 — pre-decode native colour alpha OFF repair — 31 October 2026
 

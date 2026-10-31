@@ -1,29 +1,27 @@
-## .1040 — textured SubD on inactive NOM objects — 31 October 2026
+## .1041 — displacement preview feasibility gate — 31 October 2026
 
-Current target: BoxLab 0.36.18.1040. The user PASSes .1039 non-SubD material
-preview across all seven objects, then reports that after enabling SubD only the
-selected object displays its texture. Protect the seven-object loading and VIEW
-behavior, .1035 colour-alpha PASS, and the canonical .1037 corner-UV subdivision.
+Current target: BoxLab 0.36.18.1041. .1040 is user-PASS protected: NOM textures
+remain visible on multiple SubD objects, including unselected objects. Preserve the
+existing Studio/Solid material overlay, UV-aware SubD cache, selection independence,
+Mirror fallback, seven-object material behavior and VIEW/navigation.
 
-.1040 reconnects the existing inactive-object display owner to canonical
-`subdivideWithCornerUVs()` and its existing per-object SubD cache. Active and
-inactive NOM paths share topology/source/Mirror/corner-cap eligibility. The inactive
-render body receives the exact cached display mesh and corner-UV payload consumed by
-the existing Studio/Solid overlay owner. Inactive-body cleanup now calls the render
-owner before cached geometry reuse. No parallel renderer/kernel or displacement
-preview was added.
+.1041 adds a temporary benchmark page linked from File → Screen comparison / test
+list. It uses the canonical `subdivideWithCornerUVs()` kernel, generated grayscale PNG
+height maps, UV-corner-expanded Three.js geometry and a Three.js displacementMap
+material. Cases combine 16/64/256 source faces with levels 2/2/3 and 256²/1024²/2048²
+maps, within the existing 16,384-face / 80,000-corner caps. CPU stages stop after a
+single run exceeds 1.2 seconds. The JSON records map generation/encoding/decode,
+subdivision, geometry expansion, estimated byte counts, WebGL command-submission and
+requestAnimationFrame intervals, plus GPU timer queries only when supported.
 
-Focused tests cover per-object UV results/cache reuse, shared eligibility/fallback,
-inactive Studio/Solid overlay handoff and cleanup, plus existing active SubD/NOM
-material behavior. Full Node suite: 3,081 PASS / 0 FAIL; release-contract checks
-pass and `git diff --check` is clean. Runtime commit `0255ada097b72b389698c676c67f971cbd433f18`
-(tree `f6740d26254f474aa7f4a703ce231d2c87d0a8fb`) is on remote `main`. Hosted
-topology regression 41187547119 and Pages deployment 41187546752 succeeded. The
-live version marker and seven changed runtime assets match local bytes. DEVICE1040
-remains pending: with the seven-object NOM sample, enable SubD on multiple textured
-objects and confirm they remain textured while unselected in Studio and Solid; check
-selection, Mirror fallback and VIEW navigation. The .1038 benchmark is CPU generation
-only, not decode, memory, GPU or frame-time evidence.
+This is an isolated generated-data feasibility gate; it does not modify the current
+project or add displacement deformation to BoxLab. Reports do not establish BoxLab
+viewport frame time, total memory, native Nomad image decode or device GPU safety.
+The supplied iPad report will determine the next production decision; do not add a
+second rendering or subdivision owner.
+
+Current validation/publication status is recorded in DEV_HISTORY.md. The .1040 iPad
+PASS remains protected. `src/multi-object-transform.js?v=0.36.1.0` remains protected.
 
 ## .1035 — pre-decode native colour alpha OFF repair — 31 October 2026
 
