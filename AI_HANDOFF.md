@@ -18,12 +18,11 @@ have an explicit touch and keyboard path.
 
 Focused Paint/help, release-contract, release-owner and shell-comparison checks pass.
 Full Node suite: 3,086 PASS / 0 FAIL / 0 skipped; changed JS syntax and `git diff --check`
-pass. Application commit is `7ab54565156856c303a04e517640c3febf0db1f8`; current local
-main HEAD is `20c6d412` after the docs-only publication-block record. `origin/main` is
-still `3d413280a2d27ccf8c8f2e33a5a6c2786e961277`. Automatic review blocked the push to
-GitHub, so .1043 is not live and cannot yet be device-tested from Pages. Do not retry via
-another path. The .1042 iPad checklist remains pending and is carried into .1043; .1043
-touch/visual acceptance is also pending. See the top of TEST_CHECKLIST.md.
+pass. App changes are published on GitHub `main` at `3e3f8c95c3fd62400f0d1ccc22c514cad1977d49`;
+Pages deployment succeeded (workflow 41246780287). Topology regression 41246780922 is
+still running. Native iPad acceptance remains pending; see the top of TEST_CHECKLIST.md.
+The complete release record is in DEV_HISTORY_1043.md; the full pre-existing DEV_HISTORY.md
+was retained intact.
 
 Next: obtain combined .1042/.1043 iPad results. On PASS, continue the app-wide help
 migration in small slices, starting with UV Editor and Mesh Health UV panels; then resume

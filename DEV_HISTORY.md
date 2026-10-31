@@ -6907,9 +6907,4284 @@ creation; current launcher is always available and new construction starts editi
 Reconcile these two only, preserving all other historical assertions and core tests.
 
 Behavior audit also reproduced a real Cancel bug: profile creation checkpoints
-through actual object-history bridge and
-... 296041 bytes omitted ...
-ld903; main900/export901/lab901/brush896/protected
+through actual object-history bridge and History.push clears redo or evicts oldest
+undo at the limit. Original Cancel restored stack lengths only, yielding missing
+redo tokens/wrong undo tokens. Existing Revolve transaction now retains shallow
+copies of both stacks and restores entries in place on Cancel. Original token
+identities preserve bridge WeakMap scene metadata. Apply drops saved rollback
+entries through original completion listener. No new history owner or geometry
+kernel; no Sweep/general-session rewrite. Revolve owner stamp/cache pin788 reviewed.
+
+Reuse controlled DOM/dispatch/camera fixture with whole Revolve owner and real
+Three/core/mesh/History; execute actual object-management installHistoryBridge with
+controlled scene capture/restore, manager and shared-session boundary. Launcher
+creates/reuses/cancels/restarts. Creation starts Edit, touch yields, Pencil authors
+plane UV; Edit-off yields and reposition keeps UV; Apply selection/mesh and one
+history step plus Undo/Redo verified. Mesh.clone normalizes missing group slots to
+null for history equality; no Facegroup behavior changed. Cancel restores original
+scene and exact redo/evicted undo tokens. Real bridge tagged redo restores future
+scene after Cancel. Four mutations reject hidden launcher/Edit-off creation and
+length-only undo/redo restoration. Not whole Safari, Object manager or shared-session
+host execution; controlled adapters are explicit.
+
+88focusedPASS. FullNode24:2087tests/2058PASS/29FAIL/0skip; exactly two reviewed .389/
+.422 failures removed from787, no new identities. Remaining28source-pattern/1version-
+pin stay active. Only runtime change is Revolve Cancel stacks/stamp; geometry,
+launcher/Edit defaults, existing transforms and frozenBeta2–6 unchanged. Main/Face/
+Vertex assist786, Through779/Multi1.0/Loop715 retained. Shell/recovery788, reviewed
+Revolve URL/hash/stamp and two recovery URLs refreshed. Publication/Node22/live verified below.
+Next: audit remaining29 checks, then scoped Bevel/Knife/Loop reliability. Other
+session Cancel length-only approaches (e.g. Sweep) require separate owner audit;
+do not infer their safety from this Revolve fix.
+Manual: create an undoable edit then Undo; open Revolve Profile, Cancel, Redo must
+restore prior edit. Reopen, author simple profile, switch Edit off/on, Apply then
+Undo/Redo. Confirm existing component selection/navigation remains intact.
+
+
+### .788 publication verification — 2026-10-10
+
+Release commit `da4939dbcf70e426989f08face2ca3875cda48af`, tree
+`8b5a81cbbd6b7379fed0a07426a8e8b372f6d8b9` exactly matches tested checkout.
+Actual Node22 Topology run38028448281/job114144169023:2087tests/2058PASS/29FAIL/
+0skip; all29failure identities exactly match docs/reliability-build-788.json.
+Pages run38028447713 succeeded. Fresh live index/version/Revolve788 match repository;
+accepted main/Vertex assist/Face786, Through779, protected Multi1.0 and frozenBeta6
+version also byte-match live.88focusedPASS. .787 user PASS protected; .788 device
+Cancel/Redo and profile authoring/Apply sanity pending. Reviewed shell/recovery788
+and changed Revolve hash/stamp/pin verified; all other runtime owners untouched.
+
+
+## .789 — Sweep Cancel history tokens and editing ownership — 2026-10-10
+
+User .788 PASS recorded/protected: Revolve Cancel/Redo, authoring/Edit/Apply/history
+and selection/navigation. Parent main `4b22766cf8c760cc401f9db7f58b8a4f02bf1487`.
+Audit existing Sweep731 transaction, actual object-history checkpoint bridge,
+.469 recovery and current transform-upgrade editing getter. Whole Sweep reproduces
+wrong evicted undo token before repair; code also clears redo at creation then
+restores lengths only, as in prior Revolve incident. Existing transaction now saves
+both token arrays and restores entries in place on Cancel. Same tokens preserve
+WeakMap scene tags; Apply discards rollback entries. No new history/modelling owner.
+
+Extract existing .788 controlled construction/manager/session fixture to shared
+helper; Revolve retains all test bodies and its own whole owner wrapper. Whole
+Sweep uses real Three/core/mesh/History and actual object-management history bridge;
+scene capture/restore and shared host remain controlled adapters. Cancellation
+protects original scene, redo, evicted undo, controls and duplicate completion;
+real tagged redo restores future scene. Competing session exit restores history
+without ending new Array session. Incomplete path refusal preserves current stacks;
+valid seeded path uses original core, commits/selects result and Undo/Redo. Cancel
+after Apply does not undo committed geometry/history. No device propagation claim.
+
+One failing .400 test calls an obsolete editing method; current API is a boolean
+getter. Execute actual transform startGesture/beginGizmoGesture entrypoints against
+real whole Sweep profile/path button transitions. Editing rejects both before
+transform preflight; nonediting reaches preflight sentinel. Mutation omitting guard
+fails. Two history mutations reject length-only undo/redo restoration. Existing
+other .400 checks retained. Update .472 declaration check for repaired array names;
+its unrelated Edge precision anchor failure remains active. Two formerly passing
+.393/.394 hard731 pin checks legitimately fail on reviewed cache hop: use reviewed
+asset contract, preserving Add/runtime/source stamp and other behavior assertions.
+
+121focusedPASS. FullNode24:2094tests/2066PASS/28FAIL/0skip; exactly obsolete .400
+failure removed from788, no new identities. Remaining27source-pattern/1version-pin
+active, no skips/exclusions. Only runtime change Sweep Cancel stacks/stamp789;
+geometry/authoring/stages and transform implementation unchanged. Accepted Revolve788,
+main/Vertex/Face786, Through779, Multi1.0/Loop715/frozenBeta2–6 unchanged. Shell/recovery789
+and Sweep URL/hash/stamp reviewed; recovery hashes retained. Publication/Node22/live verified below.
+Next: remaining28 historical checks, then scoped Bevel/Knife/Loop reliability.
+Manual: edit then Undo; Add Sweep, Cancel, then Redo restores edit. Reopen Sweep,
+choose profile/draw simple path, Apply and Undo/Redo. Selection/navigation sanity.
+
+
+### .789 publication verification — 2026-10-10
+
+Release commit `3d1683dce1f6fa275124aa4aece39009e196d8e0`, tree
+`c78afd2b601e4a0d3fbffcf4a9069bf74ff93f4b` exactly matches tested checkout.
+Actual Node22 Topology run38029040477/job114145919199:2094tests/2066PASS/28FAIL/
+0skip; all28failure identities exactly match docs/reliability-build-789.json.
+Pages run38029040178 succeeded. Fresh live index/version/Sweep789 byte-match;
+accepted Revolve788/main/Vertex assist/Face786, Through779, protected Multi1.0 and
+frozenBeta6 version byte-match repository and are unchanged from accepted parent.
+121focusedPASS. .788 user PASS protected; .789 Sweep Cancel/Redo and Apply/history
+sanity pending. Reviewed Sweep hash/stamp/pin and shell/recovery789 verified.
+
+
+## .790 — Current Edge layout and Bevel precision validation — 2026-10-10
+
+User .789 PASS recorded/protected: Sweep Cancel/Redo, Apply/history and selection/
+navigation; prior Revolve788 and picking786 accepted. Parent main
+`a30f29f4ace104a6b82503fc9d65433c94d60a7d`.
+Audit .472 obsolete Slide anchor, .508 compact rows, current precision710/shared
+layout515 and accepted radial Bevel owner. Current precision places Edge Exact
+inside Bevel options after Segments; current final three-column row includes Circle.
+Replace only those two historical source expectations with actual current owners.
+No runtime/UI implementation change, broad layout restoration or modelling kernel.
+
+Ordered DOM adapter models node moves and sibling order, executes whole precision
+owner and original shared Edge layout functions/timers. Five three-column rows,
+Circle and original button identities survive repeated synchronization; contextual
+Loop/Slide/Bevel/Offset blocks retain actual order. Exact placement tested with0/1/2
+existing range rows, original input/Apply listeners survive layout passes, physical
+press captures deduplicated IDs before selection changes, Apply delegates numeric
+value/IDs to existing direct owner. Invalid value refuses delegation. Actual bevel
+controller is an explicit call adapter here; adjacent real geometry/history tests
+remain unchanged. Not a CSS/layout engine, renderer or Safari device proof. Original
+.472 Sweep declarations/pins and .508 progressive CSS/protected pin checks retained.
+Two in-memory mutations reject omitted Circle and unrepositioned Exact controls.
+
+114focusedPASS including actual Edge/Face Bevel ownership, clean chain/Knife/Loop
+combinations, accepted Sweep cancellation/picking and release contracts.
+FullNode24:2096tests/2070PASS/26FAIL/0skip; exactly reviewed .472/.508 failures removed
+from789, no new identities. Remaining25source-pattern/1version-pin active; no skips/
+exclusions. Runtime/frozenBeta2–6 unchanged. Shell/recovery790 only; exactly two
+reviewed recovery URLs updated, all hashes and modelling pins retained. Publication/
+Node22/live verified below. Next: audit remaining26 checks, then scoped Bevel/Knife/Loop reliability.
+Manual: confirm790; Edge radial Bevel Width/Segments and Apply/Cancel sanity, then
+Undo/Redo. No manual recreation of synthetic node-order fixtures requested.
+
+
+### .790 publication verification — 2026-10-10
+
+Release commit `253afa3edf83b4aa890f43a6f2a8995fb0b3b06f`, tree
+`55adf4d70903a25f0a058021116ddbc7ebeb28cd` exactly matches tested checkout.
+Actual Node22 Topology run38029874102/job114148372358:2096tests/2070PASS/26FAIL/
+0skip; all26failure identities exactly match docs/reliability-build-790.json.
+Pages run38029873759 succeeded. Fresh live index/version byte-match790. Unchanged
+precision/shared layout, Sweep789/Revolve788/main/Vertex assist/Face786, Through779,
+protected Multi1.0 and frozenBeta6 version byte-match repository. No runtime/frozen
+changes.114focusedPASS. .789 user PASS protected; .790 Edge Bevel UI/history sanity
+pending. Shell/recovery790 and exactly two reviewed recovery URLs coherent.
+
+
+## .791 — Face layout ownership and late Join ordering — 2026-10-10
+
+User .790 PASS recorded/protected: Edge Bevel settings, Apply/Cancel and history;
+prior Sweep789/Revolve788/picking786 accepted. Parent main
+`c851cf8182f2ca57f2542ef76170a17f62f14bd2`.
+Audit .503–.506 failures against shared Face layout and Join placement owners.
+Current layout is six compact rows, with Value/readout/Repeat under Extrude row
+and Inspect/Repair/Topology Gate at true drawer bottom. Historical three-row IDs,
+old diagnostics insertion and Join's former loader are retired. Join actually loads
+through drawer-ui, not face-workflow-layout; retain reviewed actual loading coverage.
+
+Ordered DOM adapter extracted from .790 Edge fixture and reused, retaining Edge
+behavior checks. Execute actual Face layout functions/startup/event callbacks and
+original Join placement function; late contextual/diagnostic/Join nodes arrive after
+initial layout. Reproduced real defect before repair: late Join appends behind Bridge
+and Sweep and parent-only synchronization leaves wrong order. Existing shared owner
+now restores only this row's declared Join/Bridge/Sweep order when needed. Original
+nodes/listeners remain intact; no new UI, modelling kernel or Join geometry changes.
+
+Seven retired historical checks replaced with current owner behavior: six rows/
+contents/widths, Extrude anchor despite earlier action row, immediate contextual
+order, true diagnostic bottom after extra late nodes, repeated Join relocation/
+listener preservation and original node identity. Four in-memory mutations reject
+missing row ordering, Repeat placement, bottom diagnostics and wrong Join row.
+Controlled DOM/function slices, not full browser/CSS/Safari or actual Join geometry.
+Other historical CSS/pin/source checks retained. Two formerly passing .406/.418
+hard732 loader assertions updated to reviewed reference/order after legitimate UI
+cache hop; Array/runtime behavior assertions retained.
+
+124focusedPASS including Edge precision, accepted Face Bevel/picking, supplied
+negative Extrude, Bevel chains, Knife/Loop and Sweep Cancel/history. FullNode24:
+2100tests/2081PASS/19FAIL/0skip; exactly seven reviewed failures removed from790,
+no new identities. Remaining18source-pattern/1version-pin checks active; no skips,
+exclusions or CI gate. Runtime change only six lines in shared Face layout;
+main/Face/Vertex786, Sweep789/Revolve788/Through779/Multi1.0/Loop715/frozenBeta2–6
+unchanged. Shared UI direct shell pin732→791/hash reviewed; Edge internal layout
+stamp515 unchanged. Shell/recovery791 and two reviewed recovery URLs refreshed.
+Publication/Node22/live verified below. Next: audit remaining19 historical
+checks, then scoped Bevel/Knife/Loop reliability. Manual: confirm791; Face Extrude/
+Inset settings and Done; ordinary selection/modelling/Undo/Redo. Optionally disable
+Focus and check Join/Bridge/Sweep order in Face drawer after reload/mode switch.
+
+
+### .791 publication verification — 2026-10-10
+
+Release commit `f1d134e077726ae88da6a9e6a19644894d8853e8`, tree
+`89ba5c3685e6e5cf9a71804e5e961df67d68a559` exactly matches tested checkout.
+Actual Node22 Topology run38032058820/job114154883205:2100tests/2081PASS/19FAIL/
+0skip; all19failure identities exactly match docs/reliability-build-791.json.
+Pages run38032058768 succeeded. Fresh live index/version/shared UI791 byte-match
+repository; accepted main/Face/Vertex786, Sweep789/Revolve788, Through779, protected
+Multi1.0 and frozenBeta6 version byte-match unchanged repository bytes.124focused
+PASS. .790 user PASS protected; .791 Face UI/history sanity pending. Shared UI
+cache pin/hash and shell/recovery791 reviewed; no kernel or frozenBeta changes.
+
+
+## .792 — Shell / Solidify Facegroup contract validation — 2026-10-10
+
+User .791 PASS recorded/protected: Face settings/Done, normal selection/modelling/
+history and late Join ordering; prior accepted owners retained. Parent main
+`175f32b50bde02723156a2ade1b1eb0b3c77ed61`.
+Audit remaining .464 recovery and .465 Shell source prohibitions against current
+whole cores and DEV_HISTORY .464→.465→.466. Historical recovery temporarily removed
+metadata; later separately accepted builds restored Solidify then Shell labels.
+Do not roll back accepted propagation to satisfy the earlier no-assignment tests.
+Replace exactly those two failed checks with actual current geometry/provenance.
+Original .465 Solidify test and .462/.466 propagation/core tests retained.
+
+Actual cores with real Three/EditableMesh: two-quad Solidify retains source cycles,
+reversed offset inner cycles, source/inner labels and crease copies, ungrouped six
+boundary walls and watertightness. One- and connected two-Face Shell openings retain
+compacted source cycles and correctly paired outer/inner labels, remove opening
+label, retain null labels and keep generated walls ungrouped. Duplicate selected
+IDs do not remove extra faces. Real mesh History snapshot Undo/Redo preserves exact
+geometry/groups/creases; this is mesh serialization, not tool-session history wiring.
+Existing session/preview tests remain separate. No browser/device/render proof.
+
+Zero/nonfinite thickness refuses without mutation. Controlled one-time edge-cache
+exception after geometry mutation exercises actual core catch/rollback; geometry,
+complete label arrays and creases restored. Three whole-core in-memory mutations
+reject dropped Shell copy labels, grouped Solidify walls and missing label rollback.
+Dependencies stay actual; source files never changed. One initial normalized snapshot
+hid extraneous post-failure labels; corrected test compares complete arrays and now
+rejects that mutation. No production behavior changed to satisfy assertions.
+
+71focusedPASS including actual cores, mirrored Solidify, original sessions, accepted
+picking/negative Extrude and Face layout mutation checks. FullNode24:2104tests/
+2087PASS/17FAIL/0skip; exactly two reviewed failures removed from791, none new.
+Remaining16source-pattern/1version-pin active; no skips/exclusions/CI gate. All runtime
+sources/hashes/modelling pins, Multi1.0/Loop715 and frozenBeta2–6 unchanged. Shell
+markers/recovery792 and exactly two reviewed recovery URLs refreshed; shared UI791,
+main/Face/Vertex786, Sweep789/Revolve788 and Through779 retained. Publication/Node22/live verified below. Next: audit remaining17 historical checks, then scoped
+Bevel/Knife/Loop reliability. Manual: confirm792; grouped Shell Apply/Cancel/Undo/Redo;
+Solidify on an open mesh, Apply/Cancel and Undo/Redo; normal navigation/selection.
+
+
+### .792 publication verification — 2026-10-10
+
+Release commit `e1372c9cc2c379eb8a4f261fca1728517b318551`, tree
+`c87dc4da613e0bb2941fec3a59ac1b50409259d6` exactly matches tested checkout.
+Actual Node22 Topology run38033318243/job114158546682:2104tests/2087PASS/17FAIL/
+0skip; all17failure identities exactly match docs/reliability-build-792.json.
+Pages run38033318385 succeeded. Fresh live index/version byte-match792. Unchanged
+Shell/Solidify cores, shared UI791/main/Face/Vertex786, Sweep789/Revolve788, Through779,
+protected Multi1.0 and frozenBeta6 version all byte-match repository.71focusedPASS.
+No runtime/frozenBeta changes. .791 user PASS protected; .792 Shell/Solidify device
+sanity pending. Shell markers/recovery792 coherent; exactly two reviewed recovery
+URLs changed with every runtime hash retained.
+
+
+## .793 — Facegroups render ownership / retry validation — 2026-10-10
+
+User .792 PASS recorded/protected: Shell/Solidify Apply/Cancel/history and navigation/
+selection; prior accepted owners retained. Parent main
+`304e370ba26d59dbf948f9eb7a6e44f1eb3aa133`.
+Audit .456/.457/.459 failures against actual render owner and accepted .458/.460
+history: bounded pending-state retry replaced fixed two-frame delay, and SubD was
+later restored before Mirror. Source lookup evaluates bridge/object mesh instead
+of returning it directly. Reconcile exactly these three earlier checks; retain
+split-import default/wiring, other material fallback assertions and existing Mirror,
+SubD, pending-state tests. Replace retired .456 hard pins with reviewed current assets.
+
+Execute original render-owner lookup/evaluation/apply/entry/retry functions with
+actual Three scene/bodies/materials, EditableMesh, SubD/Mirror and colour core.
+Active body uses bridge mesh even when manager mesh differs; inactive uses its own
+object ID, missing source returns null, metadata fallback retained. Real evaluated
+SubD2→Mirror output equals expected geometry/groups, source remains unchanged,
+actual colour application installs complete attributes/material and clears pending.
+Evaluation call instrumentation delegates to actual kernels, not substitutes.
+
+Controlled frame/DOM/Studio/UI callbacks isolate render ownership, not full module
+startup/prototype hook/WebGL/browser/device. Invalid geometry on first two frames
+keeps pending normal material; third-frame readiness applies colours and stops retry.
+Entry normalizes settings/rebuilds; queued retry yields after switching look. Three
+in-memory mutations reject stale manager source, reversed evaluation order and
+one-frame-only retry. Runtime source never written; no new rendering/modelling owner.
+
+42focusedPASS including original colour/core/SubD/Mirror, Shell/Solidify rollback,
+accepted picking/clean negative Extrude and release contracts. FullNode24:2108tests/
+2094PASS/14FAIL/0skip; exactly three reviewed failures removed from792, none new.
+Remaining13source-pattern/1version-pin active, no skips/exclusions/CI gate. All runtime
+sources/hashes/modelling pins and frozenBeta2–6 unchanged. Shell/recovery793 and
+exactly two reviewed recovery URLs refreshed. Shared UI791, main/Face/Vertex786,
+Sweep789/Revolve788/Through779/Multi1.0/Loop715 retained. Publication/Node22/live verified below. Next: audit remaining14 historical checks, then scoped Bevel/
+Knife/Loop reliability. Manual: grouped object → VIEW Facegroups, first activation/
+Studio switch; SubD and Mirror retain expected colours; selection/navigation/history.
+
+
+### .793 publication verification — 2026-10-10
+
+Release commit `f098586bf7c2cf5eeb227d82cd408be294234714`, tree
+`f8f3a85abfcc64caa9b53f57cd3e9d2d73fab958` exactly matches tested checkout.
+Actual Node22 Topology run38034916611/job114163240465:2108tests/2094PASS/14FAIL/
+0skip; all14failure identities exactly match docs/reliability-build-793.json.
+Pages run38034916795 succeeded. Fresh live index/version byte-match793. Unchanged
+render owner568/colour core547, shared UI791/main/Face/Vertex786, Sweep789/Revolve788,
+Through779, protected Multi1.0 and frozenBeta6 version all byte-match repository.
+42focusedPASS. .792 user PASS protected; .793 Facegroups device sanity pending.
+No runtime/frozenBeta changes. Shell/recovery793 coherent; exactly two reviewed
+recovery URLs changed, all runtime hashes retained.
+
+
+## .794 — Mode dock / File / VIEW layout contract validation — 2026-10-10
+
+User .793 PASS recorded/protected: Facegroups first activation/Studio switch,
+SubD/Mirror colours and selection/navigation/history. Parent main
+`4c76dbb04ccf1df548e730359aad6f39e1abef69`.
+Audit .557/.342/.467 failures against current topbar734 and VIEW owner732.
+Mode dock CSS lives in topbar owner, not retired styles557 comment/fixed dock.
+File no longer has command bar: local summary-relative top and topbar-height bound.
+VIEW scroll bound uses current topbar-height variable, not historical fixed118px.
+No broad UI restoration or layout implementation change needed.
+
+Reuse .791 ordered DOM adapter; execute whole topbar owner with imported toolbar/
+selection installers as controlled adapters. Original mode nodes/listeners retained
+through repeated docking/icon setup, command row removed, titles/aria labels intact.
+Execute actual VIEW style construction block; inspect exact emitted selector
+property blocks in source order for base/narrow media rules. Dock absolute within
+viewport, safe-area left offsets and protected status-lane clearance27/25px;
+File relative placement, height bound, internal scrolling and narrow width;
+VIEW base/narrow bounds, scroll containment/touch momentum/pan-y and widths.
+This is emitted stylesheet contract coverage, not computed cascade/layout engine,
+full VIEW UI or Safari/device evidence. Original shell/mode IDs, Face stable-row/
+Duplicate and loading/protected-pin checks retained. Four in-memory mutations reject
+lost docking/status clearance, removed File scrolling and retired VIEW bound.
+
+48focusedPASS including File interactions, Face layout, Facegroups ownership,
+accepted picking/clean negative Extrude and release contracts. FullNode24:2112tests/
+2101PASS/11FAIL/0skip; exactly three reviewed failures removed from793, none new.
+All remaining11source-pattern checks active, no skips/exclusions/CI gate. All runtime
+sources/hashes/modelling pins and frozenBeta2–6 unchanged. Shell/recovery794 and
+exactly two reviewed recovery URLs refreshed; accepted UI791/main/Face/Vertex786,
+Sweep789/Revolve788/Through779/Multi1.0/Loop715 retained. Publication/Node22/live verified below. Next: audit remaining component Rotate4 and Nomad GLB7 checks,
+then scoped Bevel/Knife/Loop reliability. Manual: confirm794; mode buttons work;
+File and VIEW open/scroll to lower controls, then return to modelling/navigation.
+
+
+### .794 publication verification — 2026-10-10
+
+Release commit `4ae051d79fc855f0ab4e8224e0d4fb83770c3322`, tree
+`4df564fce34f340b525fdcc8186825ebe6a0fd12` exactly matches tested checkout.
+Actual Node22 Topology run38036208096/job114167039767:2112tests/2101PASS/11FAIL/
+0skip; all11failure identities exactly match docs/reliability-build-794.json.
+Pages run38036207720 succeeded. Fresh live index/version byte-match794. Unchanged
+styles/topbar734/VIEW732, shared UI791/main/Face/Vertex786, Sweep789/Revolve788,
+Through779, protected Multi1.0 and frozenBeta6 version byte-match repository.
+48focusedPASS. .793 user PASS protected; .794 menus/modes device sanity pending.
+No runtime/frozenBeta changes; shell/recovery794 coherent and exactly two reviewed
+recovery URLs changed, all runtime hashes retained.
+
+
+## .795 — Add+ live object previews — 2026-10-10
+
+Requested live previews before insertion. Audited primitive-ui771/factory/Text771:
+existing candidate generation/counts are authoritative; no preview existed. Added
+presentation-only add-object-preview795 inside original top-centre settings panel.
+Canvas projects actual candidate face cycles with shaded fill and polygon boundaries;
+Pencil/finger drag rotates this isolated preview. X/Y and Low/Medium/High update it;
+Text word/thickness/detail/depth bands update after original asynchronous font load.
+No second modelling kernel, WebGL context, viewport event owner or scene insertion.
+Original Apply factory/object selection/history stay authoritative. Preview never
+adds history; Cancel/Escape/outside/Add-toggle/resize dispose resources/capture;
+invalid candidates clear preview and original Apply remains disabled. Orthographic
+painter preview is a topology inspection aid, not the Studio/WebGL renderer.
+
+27 Add/factory/Text/preview checks PASS; four new tests execute actual Add controller
+and projection against recorded Canvas calls, real factory/Text/Object history and
+controlled DOM/manager. Covers polygon counts/finite projections, density/rotation,
+Text readiness/invalid input, disposal/capture and preserved redo. No whole Safari
+or device rendering proof; iPad visual/tactile acceptance pending. Full local Node24:
+2116 tests / 2105 PASS / 11 FAIL / 0 skipped; failure identities exactly match794.
+Release markers/recovery795, Add UI parent795 and new child795 reviewed; other
+runtime hashes/pins, protected Multi1.0/Loop715 and frozenBeta2–6 unchanged.
+.794 user PASS not supplied; its manual checks remain pending. Next: user preview
+feedback, then remaining Rotate4/GLB7 audit and scoped Bevel/Knife/Loop reliability.
+
+
+## .796 — Add+ unit insertion zone — 2026-10-10
+
+User requests Add+ insertion within1×1×1 for similar Nomad scale. Audited existing
+primitive factory/Text/Add creation and preview; factory defaults remain unchanged.
+Original Add build now uniformly fits each fresh primitive/Text candidate into a
+centred unit bounding cube (longest extent1, each coordinate within±0.5). Same build
+feeds preview/counts and original Apply. Proportions/face cycles/vertex indices
+preserved; no export scaling, imported/existing scene edits or alternate kernel.
+Text thickness label becomes Relative thickness because complete word is fitted
+uniformly. Small panel note explains unit bounds/proportions. Revolve/Sweep retain
+original separate authoring owners and are outside this primitive/Text settings scope.
+No claim of measured Nomad import scale parity; device transfer check pending.
+
+Three new actual-helper/whole-Add tests cover18 density combinations, uniform pair
+distances/topology/centred bounds, all six Apply paths plus Text and original scene
+Undo/Redo; nonfinite/empty candidates refuse before mutation. Original .771 UI exact
+Text thickness assertion reviewed for intentional fitted scale; factory/Text-core
+absolute-thickness tests retained unchanged.37focusedPASS; full2119/2108PASS/11FAIL/
+0skip, identical11 failure identities to795. Protected owners/frozen betas unchanged.
+Shell/recovery796, Add UI796/new fit child796 reviewed; preview child795 and factory/
+Text/font771 retained. .795/.794 user PASS not supplied; manual acceptance pending.
+Next: unit-size/preview/Apply/Cancel/history and Nomad transfer feedback, then remaining
+Rotate4/GLB7 audit and scoped Bevel/Knife/Loop reliability.
+
+
+## .797 — Final historical failures / real GLB group import repair — 2026-10-10
+
+User .796 AWESOME PASS protected: Add+ live candidate previews/unit-zone primitives
+and Text, Apply/Cancel/history and transfer-scale feedback. User asks to push through
+as many remaining failures as possible. Audited all11 active checks: Rotate4 and GLB7.
+Read .479→.483 and accepted .635/.636 ownership; .547 shared Nomad material, .550–.556
+channel/pole/morph/scale pipeline. No modelling kernel or broad UI restoration.
+
+Four retired Rotate source requirements replaced one-for-one by whole current
+transform-upgrade/rotate-transform execution with actual Three/EditableMesh/History,
+controlled ordered DOM/dispatch/arming/redraw. Modern puck makes legacy owner yield;
+canvas component drags yield to original main selection owner. Explicit gizmo API
+rotates selected Vertex/Edge/Face/Object about shared centre with real 90° quaternion,
+preserves unselected vertices/IDs, one history push, Undo/Redo and semantic completion.
+Legacy fallback reads bridge IDs when modern gizmo absent. Competing-owner and missing
+gizmo-tool mutations rejected. This is not main integration/Safari propagation proof.
+Other historical Rotate assertions retained; no Rotate runtime change.
+
+Seven GLB source spelling checks replaced one-for-one with actual import conversion,
+fit/weld/quad reconstruction, export geometry/build/verification/metadata patch and
+Three GLTFExporter/GLTFLoader. Blob FileReader is Node transport polyfill only;
+DOM/File picker/object-manager boundary controlled. Material groups/names and world
+matrix, one logical GLB object/multiple group slots, shared material/Nomad table,
+Split groups, corner UV reconstruction/position correspondence, topology-gated Base
+UV versus SubD/changed topology, real indexed UV reload, UV/tangent/color/morph seams
+and accepted high-valence UV/tangent pole collapse covered. Colour/morph pole seams
+stay split. Import report includes all current attribute counters. Metadata patch
+retains opaque mesh/node/layer extras and two objects' binary image bytes/aligned
+bufferViews/remapped texture/material references. No image decode/texture render or
+rich native NOM passthrough claim. Other .547/.551/.552/.554/.555/.556 tests retained.
+
+Real GLB round-trip reproduced groups Front/Back becoming one BoxLab Material label
+before repair. Export already carries correct primitive extras.nomad.group and mesh
+extras.nomad.groups; GLTFLoader puts these on geometry/node respectively. Existing
+importedMeshes now reads valid integer primitive IDs and nearest named owner table,
+labels that primitive's faces before existing merge/weld/quad pipeline. Malformed IDs
+keep material fallback; ancestor tables supported. Actual binary round-trip now keeps
+both names, one object and optional two split objects. Runtime edit confined to this
+metadata hookup and importer797 stamp/pin; no geometry/export/selection rewrite.
+Four whole-source in-memory GLB mutations reject lost group hookup, UV weld seam,
+stale UV export and corrupted binary image bytes. Source files never mutated on disk.
+
+56focusedPASS. Full local Node24:2125tests/2125PASS/0FAIL/0skip. All11 reviewed historical
+failure identities removed, six new top-level regression tests added. No excluded/
+skipped tests or blanket quarantine. First release check caught an accidental unchanged
+Add UI repin; corrected to protected796, reviewed importer797 and shell/recovery797 only.
+All other runtime hashes/pins, Multi1.0/Loop715, accepted Add795/796 and frozenBeta2–6
+unchanged. Fresh chat next: .797 iPad GLB names/colours/Split and Rotate/history checks,
+then scoped Bevel/Knife/Loop reliability. Zero automated failures is coverage evidence,
+not a claim of all app behavior proven. Publication verification follows separately.
+
+## .798 — Editable Boolean sources — 2026-10-10
+
+- User .797 PASS recorded and protected; .796 Add+ preview/unit fit and all older protected owners retained.
+- Audited actual Boolean, object-manager activation/save and scene-history owners before adding recipe/session orchestration. No parallel modelling kernel.
+- New independent two-object Boolean results store A/B IDs, operation and geometry signature. Reopen result, select A/B, transform with existing gizmo, explicitly Update Preview, Apply or Cancel.
+- Apply uses same result ID and recomputes stale previews; invalid calculations keep prior preview/session. Cancel and no-op restore scene/history. Optional prior-mesh checkpoint makes result edits one scene Undo/Redo.
+- Recipe snapshots retained; shared tool-session launch routes editable results. Source/preview guides disposed on exit. Group/link/nested/modifier cases retain ordinary Boolean; historical/exported results lack recipes; edited result refuses reopening.
+- Repinned changed owners and matching drawer dynamic import, updated shell/recovery markers798 and reviewed asset contract. Three historical cache/API assertions updated to current reviewed contract; behavioral checks retained.
+- Actual-manager/geometry regression coverage includes Union, Difference, Intersection, source switching/movement, cancellation/token identity, failed/stale preview, no-op and busy/history guards.
+
+.798 local validation: **2134/2134 PASS, 0 FAIL, 0 skipped** (Node24 full suite). Whole UI module also exercised with actual manager/Boolean/Three and controlled DOM: shared session, real guide/preview geometry, Apply disposal, Escape/conflicting-action cancellation. Device rendering/touch checks pending.
+
+.798 publication verified: code commit `b48f888f591868bffb8553e14380e47e19e97e41`.
+Topology CI `38051036769` / job `114210039725`: SUCCESS; Pages `38051036202`: SUCCESS.
+Fresh live version.json, HTML shell and all seven changed/new module owners match
+main byte-for-byte. Shell/recovery798, matching direct/drawer management798 pins,
+protected Multi1.0/Loop715 and frozen Beta2–6 retained. .798 device PASS pending.
+
+## .799 — Boolean edit radial / exit repair — 2026-10-10
+
+.798 user FAIL: trapped edit window and missing contextual radial label. Existing
+Boolean Object radial slot now displays Edit Boolean for eligible results; actual
+Object adapter launches/cancels boolean-edit, preserves transform gizmo, and avoids
+premature completion when ordinary Boolean launch opens an edit. Background semantic
+exit routes to existing Cancel; failed cancellation blocks switching. No new kernel,
+viewport pointer owner or unrelated changes; .797 remains last protected PASS.
+
+- [x] Whole editor + actual radial/background adapters: contextual label, launch,
+  Cancel, background cancellation, restored scene/session/overlay and failed-preview Cancel.
+- [ ] iPad: select Boolean result → radial → Edit Boolean; move source then Cancel.
+- [ ] Reopen, move then background tap: closes and restores original result.
+- [ ] Reopen, Update Preview/Apply; one Undo/Redo; ordinary Boolean still works.
+
+.799 validation: **2136/2136 PASS, 0 FAIL, 0 skipped**. Full Node24 suite; touch/layout rendering remains device gate.
+
+## .800 — Boolean A/B visibility / Object radial actions — 2026-10-11
+
+User .799 FAIL: A/B missing. Native visibility now permits current edit sources
+through Solo without changing Solo ID; exit restores filtering. Added translucent
+amber/blue source bodies alongside edge guides and mint preview. Device reproduction
+still a manual gate; .798/.799 not accepted, .797 last protected PASS.
+
+Duplicate inner180° and Delete inner315° reuse original object actions. Boolean and
+Mesh Health outer90°/270°; radius230 retains spacing. Multi Select outer225° uses shared
+icon/original toolbar action, also available at object footer and existing gizmo corner.
+Original footer Duplicate retained. No new group/history/Multi owner.
+
+- [x] Actual visibility owner: Solo result → both A/B visible during edit → original visibility after Cancel.
+- [x] Whole editor source surfaces/preview cleanup; actual radial original action dispatch and common slots/spacing.
+- [ ] iPad: Edit Boolean visibly shows A/B; source buttons and gizmo work; Update/Apply and Cancel/background exit.
+- [ ] Object radial Duplicate at bottom / Delete at upper-left; Undo/Redo both; footer Duplicate retained.
+- [ ] Multi icons in radial, gizmo corner and footer toggle the same state; select objects/group and verify no unwanted edits.
+
+.800 validation: **2138/2138 PASS, 0 FAIL, 0 skipped**; Node24 complete suite. Device A/B display/controls remain acceptance gate.
+
+## .801 — Reproduced Boolean activation reentrancy / radial correction — 2026-10-11
+
+User .800 FAIL. Real manager clears component selection by clicking CURRENT mode;
+editor capture guard treated this internal click as exit and Cancel re-entered,
+ending session before outer restoreTokens (null.undo), leaving orphan popup and no A/B.
+Previous fixture stubbed this click; visibility-only .800 did not address root.
+Guard now only exits on different mode. Cancel closes orphan host if transaction ended.
+Whole-source old-guard mutation reproduces exception with actual manager/mode-click path.
+
+Radial Multi removed; Clean for SubD outer225°; Boolean/Edit Boolean outer180° below
+Duplicate inner180°. Existing Delete315°, footer Duplicate/Multi and corner Multi retained.
+Only editor/radial/gizmo owners changed; protected geometry, Multi1.0, Loop715 and betas untouched.
+
+- [x] Actual internal selection-clearing click/capture ordering, source A/B switching, Apply/Cancel and restored scene; old guard mutation rejected.
+- [x] Cancel closes orphaned host; normal session and existing radial lifecycle checks retained.
+- [x] Corrected radial positions / no radial Multi / footer Multi and Duplicate retained.
+- [ ] iPad: Edit Boolean → A/B visible, switch/transform → Cancel; reopen → Update/Apply → Undo/Redo.
+- [ ] Background exit and mode switch close safely; radial Boolean below Duplicate, Clean in prior Multi slot, no radial Multi.
+
+.801 validation: **2141/2141 PASS, 0 FAIL, 0 skipped** (full Node24 suite). Includes actual activation click plus old-guard mutation; iPad acceptance pending.
+
+
+## .802 — Dense Extrude walls / .801 PASS — 2026-10-11
+
+User .801 PASS recorded/protected: Editable Boolean A/B edit/exit and corrected Object
+radial. Separate attached BAD EXTRUDE.obj814v/730f and screenshot801 reveal dense
+rectangular cut walls. Audit live/main and .779 owner: no kernel rollback;256-piece
+cleanup shortcut returns unmerged cells when plane classification is denser.
+Existing coalescer now spatially welds and axis-indexes private seams, cancels interior
+edges at existing10000 generation bound, iterative component lookup. Convex/area/
+single-boundary guards and hole/concave conservative fallback retained. No new kernel,
+global dissolve, pointer/history/UI change. Face import-only parent/cache chain802,
+shell/recovery802; reviewed hashes include retained legacy242 plan/Through reference.
+
+Exact uploaded OBJ preserved (SHA256a3ebd5e09db1c46e4b0dedaa12fa60d82a9b3aadce59ced100a5336bd4f1c212).
+No original before export available: reconstructed closed146v/120f regression cage
+closes two rectangular final openings and removes only their straight seam points.
+Old256 guard produces >1000 faces. Fixed recess150v/124f and through146v/122f;
+corrected downloadable OBJ preserves all118 exterior boundaries within2e-6, volume
+within2e-7 and warped anchors exactly. Not an automatic saved-mesh repair feature.
+12new regression checks: upload, old-guard mutation, four depths,3000-cell/hole,
+labels/crease/unchanged faces, physical/Exact/replay and Undo/Redo/Cancel. Earlier
+.779 tests retained. Device new-cut/corrected-file acceptance pending; Live Boolean
+deferred until this case is accepted. Protected Boolean801/Multi1.0/Loop715/betas untouched.
+
+.802 full Node24 validation: **2153/2153 PASS, 0 FAIL, 0 skipped**. 12 new checks; all historical tests retained. Publication verified below; device acceptance pending.
+
+
+### .802 publication verification — 2026-10-11
+
+Release `bbfa37b1676bbda1c7cfe11a5fe0a81f0ef57d0d`, tree
+`09184ca39e60ceb9035385acb4efb86fd3c53ac7` exactly matches tested checkout.
+Full Node24:2153tests/2153PASS/0FAIL/0skip. GitHub Topology38097266187 SUCCESS;
+Pages38097266175 SUCCESS. Fresh live version.json/index.html/Through802/Face802
+byte-match main. Protected .801 Boolean/radial, Multi1.0/Loop715 and frozenBeta2–6
+unchanged. Corrected fixture146v/122f verified closed, same exterior boundaries and
+volume within export rounding. Device extrusion/continued-modelling acceptance pending.
+
+
+## .802 user acceptance — 2026-10-11
+
+User PASS recorded. Clean dense negative Extrude, corrected-file continued modelling,
+and Undo/Redo/navigation manual checks are accepted and protected. .801 Editable
+Boolean/radial acceptance retained. Runtime and release markers unchanged. Next
+scoped /nextbuild: automatic Live Boolean using existing recipe/session/solver owners.
+
+
+## .803 — Automatic Live Boolean preview — 2026-10-11
+
+User .802 PASS recorded/protected; /nextbuild proceeds to agreed automatic preview.
+Audited manager live save/getter, bridge render events and transform-end before changes.
+Existing editor now schedules private preview clones on150ms coalesced first deadlines:
+opening, A/B transforms and operation edits update automatically. Idle unchanged and
+unchanged failed signatures do not repeatedly solve. Failure keeps last valid result;
+changed inputs/manual Update can retry. Cancel/Apply invalidate pending callbacks.
+Existing controller permits preview-only busy solve; mutation/exit controls keep drag
+guards, same result Apply and one scene Undo/Redo retained. No new kernel/pointer/
+history owner. Synchronous solver performance remains iPad gate; not an always-on
+scene dependency graph or chains/groups/links extension. Beta7 not frozen by this build.
+
+Five new checks execute whole editor/actual manager/solver/history with controlled
+timers, verify unsaved Rotate/Scale, drag-time private previews, coalescing, operation
+switch/failure/recovery/Cancel, unchanged suppression and retired callbacks. Existing
+.801 integration and .802 dense Extrude coverage retained. UI/core/scheduler803 plus
+shell/recovery pins reviewed; other owners and protected Multi1.0/Loop715/betas unchanged.
+
+.803 complete Node24 validation: **2158/2158 PASS, 0 FAIL, 0 skipped**. All historical checks remain active; five new checks. Publication verified below; device acceptance pending.
+
+
+### .803 publication verification — 2026-10-11
+
+Release `704b76a6ceac2f3375812e2f37dbe7831013ac1e`, tree
+`d248c92e862628bc78d147230dd0a009c54424d9` exactly matches tested checkout.
+Full Node24:2158tests/2158PASS/0FAIL/0skip. GitHub Topology38098655432 SUCCESS;
+Pages38098655578 SUCCESS. Fresh live manifest/shell/editor/core/scheduler byte-match
+main. .802 Extrude, .801 radial/activation, Multi1.0/Loop715 and frozenBeta2–6 untouched.
+.803 device live-preview performance/visibility and Apply/Cancel/history pending.
+No Beta7 freeze performed; .802 remains last device-accepted release checkpoint.
+
+## .804 — Exclusive Boolean Result/Sources views
+
+User .803 FAIL: preview displayed A/B primitives and the result simultaneously.
+The previous layered composite also duplicated source surfaces in the editor overlay.
+Do not restore that presentation. Result now defaults to one opaque staged result,
+using the original result until the first automatic solve. Sources explicitly shows
+native A/B solids plus existing edge guides; no result surface or duplicate source
+surface is drawn there. Authoritative multi-object visibility suppresses active and
+inactive source bodies/cages only during Result view, without changing source scene
+visibility, Solo, selection or history. A/B buttons and original gizmo remain available;
+Sources restores viewport source picking. Cancel/Apply restore ordinary visibility.
+
+Two new behavioral checks exercise exclusive overlay views and actual native render
+observer/inactive rebuild, including Solo and Cancel restoration. Existing automatic
+refresh, busy guard, failed-preview and .801/.802 protected checks retained. Only
+editor804 and native visibility owner804 pins change; core/scheduler803 and protected
+gesture/modelling owners retain their pins. Full Node24 suite:2160/2160 PASS, 0 FAIL, 0 skips. Original semantic Move/Rotate/Scale
+gizmo runtime also changes selected object geometry with source picking unavailable.
+Device acceptance pending.
+
+## .805 — Boolean result-only object list / .804 PASS — 2026-10-11
+
+User .804 PASS: exclusive Result/Sources presentation, automatic preview and edit/exit
+accepted/protected. User requests final object-list refinement before Beta deployment.
+Audited authoritative multi-object renderOutliner, object-management hierarchy/selection,
+recipe validity and original scene history. Outliner now omits A/B rows only when the
+existing editableBooleanEligibility owner confirms a usable recipe. Locked valid
+results stay compact; deleted/damaged/missing-source/noneditable recipes expose remaining
+sources again. Ordinary hidden objects remain listed. A/B remain stored in manager,
+scene history and Edit Boolean buttons; no mesh deletion, visibility or selection
+mutation. Result row remains during editing; active source name stays in mode label.
+
+Three actual outliner/manager/solver/history checks cover normal/hidden rows, live A/B
+selection and Cancel, Apply/Undo/Redo/reopen, locked result, damaged/missing/deleted
+recipes and no list-render history mutation. Only multi-object805 and shell/recovery805
+pins change; editor804/core803/scheduler803, protected Multi1.0/Loop715/Extrude802 and
+frozen Beta2–6 unchanged. Full Node24:2163/2163 PASS, 0 FAIL, 0 skips; device acceptance pending. Beta7 freeze follows
+final candidate acceptance; no freeze in this refinement build.
+
+## .806 — Compact automatic Edit Boolean popup — 2026-10-11
+
+User requests removing Update Preview and checking compactness before Beta deployment.
+Audit confirms shared wide layout already supplies7px/8px packing,4px body gaps,5px
+button-row gaps and10px hints/status, but Edit Boolean inherited13px row controls and
+root-sized terminal controls instead of comparable popup11px buttons. Existing editor
+now scopes12px body/11px buttons with5px/7px padding and34px body controls; shared
+36px Cancel/Apply rail remains authoritative. Shorter hint; redundant Update Preview
+button/listener removed. Automatic scheduler, solver and Apply stale-preview recompute
+unchanged; programmatic update helper retained for compatibility/diagnostics.
+
+Existing whole-UI test now uses automatic tick rather than deleted button; fake DOM
+no longer fabricates that node and accommodates actual scoped style injection.
+Result/Sources804, compact object list805 and geometry/history/gesture owners unchanged.
+.804 remains latest user PASS; no .805 PASS inferred from this UI request. Only editor806
+and shell/recovery806 repinned; protected Multi1.0/Loop715/Extrude802/betas untouched.
+Full Node24:2163/2163 PASS, 0 FAIL, 0 skips; final popup/list acceptance
+precedes Beta7 freeze.
+
+## .807 — Unit startup/reset cube / .806 PASS — 2026-10-11
+
+User .806 PASS recorded/protected: automatic compact Edit Boolean and retained
+result-only list workflow. User reports startup cube still2units despite accepted
+Add+1×1×1 insertion. Audit found explicit cube(2) at main startup, main Reset fallback,
+manager Reset and legacy Add fallback. Those four call sites now use cube(1).
+General EditableMesh.cube default2 remains unchanged for geometry callers/fixtures;
+Add+796 fit, camera/navigation/geometry/export owners otherwise unchanged.
+Only main807/multi-object807 and shell/recovery807 cache keys change; reviewed source
+hashes retain original main internal VERSION (release stamp owned by release-version).
+Protected Multi1.0/Loop715/Extrude802/Boolean806 and frozenBeta2–6 unchanged.
+Full Node24:2163/2163 PASS, 0 FAIL, 0 skips. Actual startup geometry matches
+unit-fitted Add+ cube bounds. Device cube/reset comparison pending before Beta7 freeze.
+
+## Beta 7 freeze — .807 accepted — 2026-10-11
+
+User AWESOME PASS .807 and explicit freeze/Beta7 deployment request. .807 unit startup/
+Reset cube protected alongside .806 compact automatic Boolean, .805 retained list
+workflow, .804 visibility, .802 Extrude and .801 radial/edit/exit. Freeze exact runtime
+from `02d04cc72acef5415352ce4426792442cb7e99dd` into /beta-7/:303 supporting/runtime
+files copied byte-for-byte, including binary native export template. No runtime,
+release marker or pin changes; main remains .807. Beta2–6 untouched.
+
+freeze.json records accepted source/version/date; runtime-assets.json records303
+immutable SHA256 hashes. Release notes and Beta7 checklist added. Two dedicated
+freeze checks verify hashes/markers and local HTML/import/template references within
+beta namespace, relative refresh manifest resolution and PWA start URL. Every frozen
+asset also verified against accepted main before publishing. Full Node24 suite:
+2165/2165 PASS,0 FAIL,0 skips; publication pending. Beta7 immutable after deployment; continue feature development on main.
+
+Beta7 freeze commit `cfa5f2b5992558e61132e7006cec36c2c115f6e3`;
+Topology38101242200 and Pages38101242127 SUCCESS. Fresh live shell/manifest and
+frozen shell/manifest/metadata/PWA/main/manager/editor/refresh owners/native template
+match repository bytes. Existing Beta2–6 manifests byte-match unchanged files.
+Beta7 is released and immutable; continue development on main.
+
+## Project persistence and NOM import queued — 2026-10-11
+
+User requests Nomad NOM import and proprietary .BOXLAB Save/Open, considering future
+iPad app packaging. Audit: nomad-export-core.readNomadProject already reads validated
+container/header/JSON/binary sections for export donor; import-mesh supports OBJ/GLB/
+GLTF but no NOM import. object-management captures/restores scene and Boolean recipes
+for history; no durable native project serializer/File Save/Open exists. Reuse these
+owners; do not add parallel scene or modelling kernels.
+
+Recommended order before Curve/Balloon: versioned .boxlab project Save/Open, then
+staged NOM import. Project requirements: full editable polygon topology, facegroups/
+creases, object IDs/names/kinds/visibility/locks, groups/links/origins, modifiers, Boolean
+recipes AND hidden operands, current scene/view/settings and preserved import channels.
+Exact scale on project reopen; no generic mesh-import fitting. Atomic validated open,
+schema migrations and future curve/procedural parameters. Cross-session Undo persistence
+is a separate decision, not automatically promised. Same documented schema can be used
+by browser and future native wrapper; native file-type integration is separate work.
+
+NOM import must validate real files/schema versions and compressed binary fields,
+transforms/hierarchy and base versus sculpted geometry. Start with geometry/names/
+facegroups, explicitly report unsupported attributes and stage rich metadata handling;
+do not promise complete materials/textures/layers round-trip from export alone.
+No implementation or release-marker changes in this roadmap update; frozenBeta7
+remains immutable at .807.
+
+
+## 2026-10-11 — .808 shared Curve Profile foundation
+
+User chose “Nice - lets build something” after shared curve/Lasso discussion. Audit
+found temporary Lasso screen strokes and procedural Sweep/Revolve editors, but no
+reusable saved curve profile. Reuse Lasso 4px sampler, canonical EditableMesh loose
+edges, Add unit fit, instance affine derivation, manager/history and viewport session.
+New Add+ Curve and eligible Edit Curve: draw/reduce points, drag points, Open/Closed,
+Smooth/Straight, Detail, candidate Undo/Clear, Apply/Cancel. XY outline only; solid
+consumers (Balloon/extrusion/cutter) pending. Object-list selection for no-face curves.
+Curve recipe follows duplication and scene restore. Real manager regression exposed
+activation replacing global history stacks during scene Undo/Redo: existing bridge
+now preserves tokens across restore. Tests exercise real creation/edit history and
+candidate cancellation, topology, unit fit and affine reopening. FrozenBeta2–7 and
+accepted main geometry/Boolean/Extrude/Multi untouched. Acceptance pending.
+
+User additionally requested feasibility of UV/unwrap/painting and dense-mesh
+performance/external history. Audited existing UV passthrough, per-component cage
+objects, full display rebuild and mesh/history stack clones; documented staged UV
+owners and measurement-first performance work. No UV or performance implementation
+silently bundled into .808; older-history disk storage remains proposed.
+
+.808 local full regression: **2170/2170 PASS, 0 FAIL, 0 skipped**; five new Curve
+tests and reviewed changed loader/hash contract pass. Device acceptance pending.
+
+
+## .809 — Dense cage lookup / opt-in performance measurements — 2026-10-11
+
+User “Awesome!! /nextbuilf” accepts .808 Curve Profile and authorizes next build.
+Curve draw/edit/Apply/Cancel, recipe/history and existing navigation are protected.
+Audited actual main addCage/renderMesh/animate, mesh.edgeCrease/edges, history clones
+and existing VIEW Diagnostics; no performance owner/readout existed. Benchmark executes
+actual cage with Three geometry, no WebGL. It identified edgeCrease(index) rebuilding
+all edges once per ordinary cage edge. Existing cage now reads the identical canonical
+crease Map key from its already-enumerated edge; topology/picking/render order and
+materials unchanged. No mesh kernel cache or parallel modelling implementation.
+
+VIEW > Diagnostics > Performance installs one optional overlay, off on each launch.
+Bounded120-frame intervals report average FPS/frame/p95, latest marker/render-submit
+CPU time, native renderer calls/triangles/geometry/texture counts, active mesh counts,
+active Undo/Redo depths and bounded rebuild timings. Reset clears measurement window;
+Close disables capture and refresh timer. Visibility changes reset interval origin.
+Readout excludes suspended intervals >=1s, reports no GPU timing/RAM byte claim and
+never inspects/clones history meshes or enumerates topology. Main native owners supply
+read-only measurements; disabled path adds no timing calls. Original VIEW unchanged.
+
+Repeatable CPU-only benchmark: scripts/benchmark-cage.mjs and
+ docs/performance-cage-809.json. One before/after trial per fixture, not an iPad FPS
+claim; cage object counts remain per-component and batching is the next measured
+candidate. Five tests exercise bounded/off/reset metrics, actual main animation/
+rebuild owners, whole readout UI/timer cleanup and actual cage equivalence across
+Vertex/Edge/Face/Object including loose edges, creases and loop/selected materials.
+Main809/new diagnostics809/shell recovery809 pins reviewed; main internal VERSION
+remains original. Protected Multi1.0/Loop715/Curve808/Extrude802/Boolean806 and frozen
+Beta2–7 unchanged. Device acceptance pending. Next: iPad readout evidence, then
+batched cage/picking-preservation audit; no history disk/UV/project scope bundled.
+
+.809 full local Node24 regression: **2175/2175 PASS, 0 FAIL, 0 skipped**.
+
+
+### .809 publication verification — 2026-10-11
+
+Release `6aee879d791d188f2d6f8445a45d25fb13000798`, tree
+`61d745952fe3f26885c2bd8f30d256206ba81a7c` exactly matches tested checkout.
+Full local Node24 and actual Node22 CI:2175tests/2175PASS/0FAIL/0skip.
+Topology38121546217/job114417137475 and Pages38121545819 SUCCESS.
+Fresh live index/version/main809/performance UI809/core809 byte-match repository;
+frozenBeta7 manifest matches unchanged .807. Protected Curve808, Multi1.0,
+Loop715, Extrude802, Boolean806 and all frozenBeta2–7 unchanged.
+Current main source baseline is this release plus documentation verification;
+.808 user PASS recorded, .809 iPad readout/selection/navigation acceptance pending.
+
+
+## .810 — Batched active cage rendering — 2026-10-11
+
+User “Awesome - /nextbuild” accepts .809 and authorizes cage optimisation.
+Readout supplied two real .809 iPad captures: cage540v/408f,1589calls/1993geometries,
+60FPS,149.6ms mean/300ms max rebuild; SubD view11calls/7geometries,1594374triangles,
+60FPS,252.4ms mean/758ms max rebuild. These are observational samples, not reset,
+controlled A/B benchmarks; rebuild means retain latest120 samples across settings.
+No history-memory attribution or iPad speedup established by these captures.
+
+Audit found individual indexed Line/Mesh owners shared by main raycasts, Bridge
+Topology, Edge Object/Live Mesh bridges, direct Edge tools, Vertex assist/Slide,
+Lasso and native active visibility. Preserve those exact-index picking proxies with
+material.visible=false (raycasts still work), original edge endpoint buffers and
+sphere marker positions/scales. Shared sphere geometry replaces one sphere allocation
+per vertex. New cage-render-batches only groups visible edges by existing material/
+renderOrder, instances visible marker spheres by original selected/ordinary material,
+and batches mirror wires. No pointer handlers, new picking policy or modelling kernel.
+Loop/selected edge cylinder overlays remain original; Face pickers/highlights unchanged.
+
+Main screen sizing still owns proxy scale, then synchronises instance matrices each
+frame. Vertex visual batches have no raycast and disable frustum culling to avoid
+stale instance bounds after zoom; proxies remain the only component pick targets.
+Native multi-object observer adds visual batch kinds to whole-group suppression;
+existing active visibility/Solo/Boolean source decisions stay authoritative. Main
+clearGroup disposes each shared geometry once and calls InstancedMesh.dispose for
+instance GPU resources. No immutable-beta, SubD algorithm/cache, history or Curve edit
+changes. Individual proxies/edge buffers remain CPU objects intentionally; full
+picking acceleration is a later measured scope, not claimed eliminated here.
+
+Seven new regressions execute actual main cage/screen/disposal functions with real
+Three; preserve edge geometry/styles/orders, selected/loop IDs and marker matrices;
+compare real .809/.810 raycasts through three views/zoom; run actual Vertex assist
+and Lasso including loose vertices; verify shared/instance disposal, mirror endpoints,
+dense draw-object bounds, actual Bridge Topology maps/native group/visibility observer.
+.809 cage equivalence keeps exact .809 source fixture with release provenance;
+historical .354 suppression assertion now requires original four AND both new kinds,
+with runtime observer coverage. Other semantic tests remain active.
+
+CPU-only single-trial benchmark scripts/benchmark-cage.mjs now compares exact .809
+fixture to current owner. docs/performance-cage-810.json:1600-face unselected cage
+4961visible draw objects→2; CPU construction183.41ms→34.68ms in this run. Unique
+CPU edge proxy geometries remain; renderer resource/draw counts need iPad evidence.
+No comparison across desktop benchmark runs or GPU/FPS guarantee. Main810 and its
+new child810, native manager810 plus shell/recovery810 repinned; diagnostics809 and
+all other module pins/hashes retained. Protected Multi1.0/Loop715/Curve808/Extrude802/
+Boolean806/frozenBeta2–7 unchanged. .810 device acceptance pending. Next after PASS:
+controlled Reset measurements, then SubD cache audit for selection-only rebuilds.
+
+.810 full local Node24 regression: **2182/2182 PASS, 0 FAIL, 0 skipped**.
+
+
+### .810 publication verification — 2026-10-11
+
+Release `c2bd98aecb4476bff459d9931f6bb415be847ecf`, tree
+`92efbb5534ef6a1ba71e73c31cb19219e75e1df4` exactly matches tested checkout.
+Full local Node24 and actual Node22 CI:2182tests/2182PASS/0FAIL/0skip.
+Topology38123138533/job114421838235 and Pages38123138371 SUCCESS.
+Fresh main and live index/version/main810/multi-object810/cage-render-batches810
+byte-match tested files; unchanged diagnostics809 and frozenBeta7 .807 manifest
+also byte-match live. Protected Multi1.0/Loop715/Curve808/Extrude802/Boolean806 and
+frozenBeta2–7 unchanged. Current source is this release plus docs verification.
+User .809 accepted with screenshot evidence; .810 iPad visual/tactile acceptance
+pending. Next controlled cage-on Reset capture, then SubD selection-only cache audit.
+
+## .811 — Active SubD display reuse — 2026-10-11
+
+User /nextbuild authorizes the next narrow measured optimisation. .810 iPad capture
+shows57FPS/17drawcalls,44rebuilds averaging529ms/max614ms during Edge Move; prior
+idle capture13calls and0rebuilds. Observational evidence, not controlled A/B or a
+full device PASS. .810 tactile checklist remains pending; do not mark it accepted.
+
+Audit: main modifiedSubdMesh invokes native subdivision then mirror on every render,
+including selection-only rebuilds. No universal geometry revision exists: tools mutate
+coordinates/faces directly. New subd-display-cache holds one active result and exact
+input snapshot, comparing mesh identity, all coordinates/face cycles, creases, facegroups,
+loose topology, SubD level and mirror axes. No lossy hash, new kernel, interaction or
+history owner. Same unchanged cage reuses result; edits/replacement/object switch/
+history restoration/settings changes recompute via original kernels. Failed compute
+clears cache and retries next request. Cached result is read-only display data; native
+quick SubD export receives a clone. Only one result retained, including while Base
+view is active; no per-object/history cache. Inactive scene display path untouched.
+
+Triangulation, GPU geometry recreation, cage construction, native render observers and
+full history snapshots still run; this is not a total edit latency fix. CPU-only
+docs/performance-subd-811.json executes actual modifiedSubdMesh on400-face grid,
+level3:77.86ms first request,0.21ms mean twenty unchanged requests; uncached triangulation
+28.46ms. Single desktop trial, not iPad FPS or guaranteed speedup.
+
+Five new tests execute cache with real kernels and actual main render/export path;
+cover exact output, fifty reuse requests, direct tiny coordinate changes, topology/
+winding/crease/groups/loose inputs/modifiers, object replacement, Undo/Redo coordinates,
+export isolation and failure retry. Full Node24:2187/2187 PASS,0FAIL,0skips. Main811/
+new child811 and shell/recovery811 reviewed; native manager/cage810, diagnostic809 and
+all other hashes/pins unchanged. Multi1.0/Loop715/Curve808/Extrude802/Boolean806 and
+frozenBeta2–7 protected. .811 device acceptance pending. Next: controlled selection-only
+Reset sample versus a separate edit sample, then audit remaining triangulation/buffer
+rebuild cost before broadening caching or async geometry.
+
+
+### .811 publication verification — 2026-10-11
+
+Release `f68bc50f74359e4454ad28f2527d356a1115d663`, tree
+`36bc79484035b52aa79259195c307894b8f199ab` exactly matches tested checkout.
+Full local Node24 and actual Node22 CI:2187tests/2187PASS/0FAIL/0skip.
+Topology38124854307/job114426994517 and Pages38124853872 SUCCESS.
+Fresh main manifest/main owner and live index/version/main811/subd-display-cache811
+match tested files; unchanged multi-object810 and frozenBeta7 .807 manifest also
+byte-match live. Reviewed shell/recovery811 and child811 pins; protected modules and
+all frozenBeta2–7 untouched. Device acceptance pending; selection-only and edit
+measurements must use separate Reset windows. .810 screenshot is evidence, not full PASS.
+
+## .812 — Rebuild phase diagnostics / performance pause next — 2026-10-11
+
+User requests one more /nextbuild and test, then something more exciting; performance
+can be revisited. .811 screenshot:60FPS/13drawcalls,8rebuilds mean424ms/max473ms,
+540cageverts/408faces. Selection-only activity not explicitly confirmed, not a
+controlled speedup comparison or full device PASS. .810/.811 gates remain pending.
+
+Audit identifies main renderMesh as total timer, root.add(body) as synchronous scene
+observer (saveActive/history + inactive objects + render hooks), and native
+rebuildInactiveLayer as existing per-object display path. Extend original off-by-default
+Performance owner, no parallel profiler/rebuild/history/gesture/kernel. Readout adds
+mean/max CPU phases: Base/SubD (base mirror + active evaluated display), Body geometry
+(native triangulation + Mesh construction), Scene hooks (root.add including observer),
+Inactive (its nested rebuild incl clearing/materials/Studio refresh), Cage/highlights.
+Inactive is a subset of Scene hooks: do NOT add those together. Phases have independently
+bounded120sample windows; standalone inactive rebuilds can produce different sample
+counts from total active rebuilds. Timings omit disposal/UI/status/other uninstrumented
+work; do not claim exhaustive sum or GPU attribution.
+
+SubD cache hit/miss counts track active render requests only, reset with measurements.
+Existing cache exposes last lookup hit; key/evaluation/isolation behavior unchanged.
+Disabled capture performs no timing calls, phase samples/counters or refresh timer.
+Reset clears every phase/counter; Close disables all capture. Existing FPS/resources/
+history depth data retained. Parent/changed owner cache pins812 reviewed; main, native
+manager, Performance UI/core and cache812 only. Cage810 and all modelling/gesture
+modules, protected Multi1.0/Loop715/Curve808/Extrude802/Boolean806/frozenBeta2–7 unchanged.
+
+Three new tests execute phase core bounds/reset/off, actual main native SubD/cache/
+render path with controlled elapsed timings, actual inactive rebuild with hidden/
+active/error skips and nested phase accounting. Existing whole UI test additionally
+checks phase/cache output and Reset; no pointer owners. Full validation below.
+Device: separate Reset selections then edit screenshot; verify Reset/Close. After
+this test, pause performance optimisation as requested and return to shared Curve/
+Balloon modelling-owner audit. Project Save/Open and NOM import remain queued; do not
+automatically continue optimisation just because timings expose a bottleneck.
+
+.812 full local Node24 regression: **2190/2190 PASS, 0 FAIL, 0 skipped**.
+
+
+### .812 publication verification — 2026-10-11
+
+Release `c38df5f0690102f003b47557ab316c9f43697537`, tree
+`c40e7e2ab877d1e4f9e95b81b196b8062c0aafd1` exactly matches tested checkout.
+Full local Node24 and actual Node22 CI:2190tests/2190PASS/0FAIL/0skip.
+Topology38127672084/job114435320188 and Pages38127671668 SUCCESS.
+Fresh main shell and live manifest/index/main812/multi-object812/Performance UI812/
+core812/cache812 byte-match tested files; frozenBeta7 .807 manifest also matches.
+Protected modelling owners and all frozenBeta2–7 unchanged. Shell/recovery/changed
+parent-child pins reviewed; legacy Face workflow recovery210 deliberately retained.
+.812 device phase readability and reset selection/edit screenshots pending. User
+requests performance pause after this test, then shared Curve/Balloon modelling audit.
+
+## .813 — Shared Curve Outline Balloon — 2026-10-11
+
+User “Awesome /nextbuild” accepts .812 and requests returning to exciting modelling
+work. .812 diagnostics protected at812, performance optimisation paused. Real iPad
+8rebuild capture:60FPS/13calls,mean444.3ms/max577ms; Base/SubD32.9/143,Body28.5/47,
+Scene hooks304.5/352 (includes Inactive304.1/350),Cage76.5/92ms; cache6hits/2misses.
+Inactive is dominant in this sample (~68% total mean), not a controlled comparison;
+independent phase samples and incomplete gesture history prevent stronger attribution.
+Future performance target: reuse unchanged inactive displays; not part of .813.
+
+Audit: no BoxLab Balloon geometry owner, only wire Curve808 and unrelated Silhouette
+render mode. MeshUtilz-Sweep-Lab default main has docs only; existing balloon-v0.6
+source18e72a6bf964974591038345d68c2196a18f6af2 holds live v1.1.3 Outline/Tube generators.
+Outline owner src/outlineGeometry.js imported byte-for-byte as
+src/vendor/meshutilz-outline-balloon.js, SHA256
+b90694d2a27d2b652b7455a0b407d1de552e8dc5be5319fd4d78a0414897f8ee; provenance README.
+Source repo read-only; no MeshUtilz UI/gesture/history/renderer copied, no parallel
+Balloon algorithm. Small curve-balloon-core adapter validates first convex closed
+XY silhouette scope and depth0.05–0.8, converts exact indexed triangles/shared rim
+and poles to EditableMesh, disposes intermediate BufferGeometry. Original generator
+resamples/rounds outline; not an exact polygon extrusion or general concave promise.
+
+Add+ > Balloon launches existing Curve editor in Balloon mode: same Pencil sketch/
+point editing, Closed/Smooth/Detail/candidate Undo/Clear; Depth plus existing Add
+rotatable candidate preview. No scene insertion until Apply. Drawing skips candidate
+generation during pointer capture; release rebuilds preview. Open/concave/crossing/
+zero-area outlines refuse visibly without mesh/history mutation. New shapes fit
+1×1×1 proportionally, depth relative to authored outline; default detail16/depth.25.
+Result is native editable triangle solid (typical1250v/2496f), not all-quad low-poly.
+Convex-only scope explicit in panel; Tube/pressure/concave silhouette/quad conversion
+are separate later builds. Modelling topology edits remain normal BoxLab operations.
+
+Existing curveProfile version1 recipe gains optional output='balloon'/depth; wires
+retain previous behavior. Add+ Edit Balloon offered through same eligibility owner;
+whole-object affine transforms preserved on reopen. Component/topology edits, creases,
+facegroup/loose changes and modifiers invalidate Balloon recipe editing safely.
+Existing native addMesh/replaceActiveMesh, object snapshots/duplication and scene-history
+bridge remain authoritative. Apply/edit one checkpoint; Cancel/invalid candidates none;
+preview disposed on Apply/Cancel/session replacement. No manager/history/kernel edits.
+
+Seven new tests cover exact provenance, real Add launcher, donor equivalence, closed
+Euler/shared-edge winding/nondegenerate triangles/positive volume at3depths/both
+windings, unsupported outlines/wire preservation, affine/invalidation, whole editor
+preview/depth/Undo/Redo/Cancel/actual native duplication. Existing5Curve tests retained
+using extracted reusable DOM/runtime helper; original Add/preview/source tests stay.
+Changed Curve core/UI/new adapter/vendor813, Add parent813 and shell/recovery813 pins
+reviewed; Add preview795 and protected samplers808 unchanged. Main/manager/Performance
+812, protected Multi1.0/Loop715/Extrude802/Boolean806 and frozenBeta2–7 untouched.
+.813 iPad touch/layout acceptance pending. Next: Balloon device feedback then scoped
+Curve consumer refinements; .boxlab/NOM/UV scopes remain queued, not implemented.
+
+.813 full local Node24 regression: **2197/2197 PASS, 0 FAIL, 0 skipped**.
+
+
+### .813 publication verification — 2026-10-11
+
+Release `06fca10d9da01356ac82f086e86e0be0ef8c4520`, tree
+`b0b167cd960fae9018e89cc4c44c116861968857` exactly matches tested checkout.
+Full local Node24 and actual Node22 CI:2197tests/2197PASS/0FAIL/0skip.
+Topology38128611756/job114438090124 and Pages38128611350 SUCCESS.
+Fresh main shell and live manifest/index/Add813/Curve UI813/core813/adapter813/vendor813
+byte-match tested files; unchanged main812/Performance812 and frozenBeta7 .807 manifest
+also match live. Changed parent-child graph and exact donor hash verified. Protected
+Multi1.0/Loop715/Extrude802/Boolean806 and frozenBeta2–7 unchanged. User .812 Awesome
+acceptance/profiling evidence recorded; performance paused. .813 iPad draw/preview/
+layout/history/recipe editing acceptance pending. No concave or all-quad claim.
+
+
+## .814 — Balloon hand-drawn oval acceptance / preview explanation — 2026-10-11
+
+User accepts .813 outline drawing and point editing, and confirms preview works with
+"a better profile". Protect those specific passes; whole-build/history acceptance
+is not inferred. Screenshot EC30CB0A shows closed smooth oval, Detail48/Depth.55,
+disabled Apply and convex warning. Approximate transcribed controls reproduce strict
+turn rejection; strongest inward half-plane deviation ~0.45 drawing-pad pixels.
+Original check demanded mathematical convexity of Catmull samples, rejecting tiny
+Pencil/spline wobbles. Canvas rendering was not the reported root cause.
+
+Repair existing adapter only: winding from signed area, explicit crossings rejection,
+half-plane tolerance 0.5% of longest outline span. Preserve authored points and exact
+MeshUtilz generator; no convex-hull replacement, parallel kernel or broad concave
+support. Validate actual donor smoothed rim fans around its pole centre before
+accepting a shell, disposing temporary geometry on every exit. Deep dents/crossings/
+open/zero-area profiles continue refusing. Existing preview now accepts explanatory
+empty text, shown inside canvas for refusal or active drawing; successful candidates
+retain original rotatable shaded triangle projection. Apply/history owners unchanged.
+
+Four regressions: screenshot-style oval at5details/3depths/both windings, closed Euler/
+edge winding/nondegenerate/positive-volume shells; actual editor Canvas triangle calls,
+depth changes/rotation/Apply/reopen; invalid preview text and no mutation; dent/crossing
+refusal. Shared Curve UI helper now supplies recorded2D context, repairing .813
+coverage gap (it had checked canvas existence only). Original historical tests retained.
+Cloud browser cannot create WebGL context; full-app rendering cannot be checked there.
+Real iPad remains visual/tactile gate. Drawing/point editing protected, preview working
+with valid profile accepted; .814 natural oval tolerance retest pending.
+
+Changed adapter/core/UI/Add-parent/preview cache chain814 plus shell/recovery814;
+vendor813 bytes/pin unchanged. Main/manager/Performance812, protected Multi1.0/Loop715/
+Extrude802/Boolean806 and frozenBeta2–7 unchanged. Performance remains paused.
+
+.814 full local Node24 regression: **2201/2201 PASS, 0 FAIL, 0 skipped**.
+
+
+### .814 publication verification — 2026-10-11
+
+Release d2117e4873b5afa5d529554de23035ebc8e82c8e, tested tree
+deeb87e30f40d4f4def572369fdb23f055f99a11.
+Full local2201PASS/0FAIL/0skip. Topology38132805965 and Pages38132805482 SUCCESS.
+Fresh live manifest/index/Add-parent/Curve UI/core/adapter/preview/donor and frozen
+Beta7 manifest byte-match tested checkout. Subsequent Reset/drawing regression reported
+before full .814 device acceptance; .815 addresses session/authoring ownership.
+
+## .815 — Profile stroke ownership / Reset lifecycle — 2026-10-11
+
+During .814 publication user reports Reset then Pencil in the drawing box moves the
+screen instead of authoring. Audit: native Reset resets scene/direct tool/selection,
+but shared Curve editor did not cancel on Reset; pad-local bubble handlers run after
+other document capture owners. Exact originating stale consumer cannot be proven
+without on-device event evidence; do not claim desktop test fully reproduces iPad.
+
+Existing Curve/Balloon authoring handlers now register at window capture while the
+panel is open, claiming only non-touch primary strokes originating inside its pad.
+Matching moves/releases terminate before document modelling consumers; unrelated
+pointer IDs, touches and outside starts are unclaimed. Same sampler/profile/candidate
+history, no alternate gesture owner or navigation kernel. Controls suspended only
+for an owned stroke and prior enabled state restored on release/cancel/lost capture/
+editor exit. Clear drag before releasing capture to avoid rollback reentrancy.
+All four temporary listeners removed on Apply/Cancel/Escape/conflicting-session exit.
+Existing editor click-cancellation owner includes Reset, before original target Reset
+handler runs; Reset closes pending editor rather than leaving obsolete session/recipe.
+
+Three tests connect actual editor to ordered window/document boundary with a competing
+document consumer, test native main Reset click callback (scene reset adapter explicit),
+same pointer ID reopen/draw/Apply, touch/wrong ID yielding, capture/control cleanup and
+repeated launch/exit listener bounds. Existing16Curve/Balloon checks pass. Controlled
+DOM/camera/dispatch, not real Safari propagation or full WebGL QA; iPad retest required.
+No changes to main Reset, Pencil Orbit gate, transform owners, Multi1.0, Loop715,
+Extrude802, Boolean806, geometry kernels or frozenBeta2–7. Curve UI/Add-parent815 only;
+core/adapter/preview814/vendor813 retained. Shell/recovery815 reviewed. Performance paused.
+
+Next: Reset > Add+ Balloon > Pencil oval, preview/depth/Apply, Edit/Cancel/Undo/Redo,
+original wire Curve and navigation. Obtain feedback before further modelling build.
+
+.815 full local Node24 regression: **2204/2204 PASS, 0 FAIL, 0 skipped**.
+
+
+### .815 publication verification — 2026-10-11
+
+Release 7169e065ad958c5ecec553ca93fc580a17fe9344, tree 0a27156b1566f52876bfb06a532028834771ae2b
+exactly matches tested checkout. Full local Node24 and actual Node22 CI:
+2204tests/2204PASS/0FAIL/0skip. Topology38133341366/job114452034683 and
+Pages38133341007 SUCCESS. Fresh main shell/manifest/Curve UI/Add-parent byte-match;
+live manifest/index/Add815/Curve UI815/core814/preview814/main812 and frozenBeta7
+manifest match tested files. .814 live chain/donor also verified before .815.
+Protected modelling/navigation owners and all frozenBeta2–7 unchanged. Device Reset >
+Balloon Pencil drawing/navigation gate pending; no full Safari propagation proof.
+
+
+## .816 — Balloon resolution / performance gate — 2026-10-11
+
+User PASS .815 Pencil/Reset, reports severe ~minute Balloon insertion stall; screenshot active 938v/1872f and scene 161358 rendered triangles, idle60FPS. Donor mesh detail minimum independently creates >=12 section rings. Added optional tessellation controls to ORIGINAL MeshUtilz geometry owner; new Balloon Density4 default, slider4–12; legacy recipes without field preserve identical donor tessellation. Original scene/history and iPad gesture owners retained. Release pins and runtime asset hash fixture reviewed. Performance iPad acceptance pending; no measured gain claimed.
+
+
+## .817 — Star-shaped concave Balloon evaluation — 2026-10-11
+
+User reports .816 Balloon markedly more responsive. User requests concave preview to judge fit. Existing donor radial rings already support some star-shaped concavities; adapter convex-only guard removed, original crossing and generated-rim/pole fold checks retained. No new kernel/geometry or pointer/history owner. Geometry outside star-shaped safe rim rejects. Density4 and old recipes preserved. Tests revised for shallow indentation and no-crossing; iPad visual acceptance pending.
+
+
+## .818 — Optional quad-dominant Balloon — 2026-10-11
+
+User .817 concave C/star PASS, deep crescent FAIL. Existing donor concentric ring triangle pairs merged in original Balloon adapter into editable quads, with both pole fans retained as triangles. Explicit Topology toggle; default triangle mode and older recipes unchanged. Existing preview, history, scene, density and Pencil owners retained. Visual/nonplanar quad triangulation requires iPad gate. Test added for reduced faces, two pole fans and oriented closed edge incidence.
+
+
+## .819 — Paired quad poles — 2026-10-12
+
+User accepts .818 quad-dominant modelling and requests pole cleanup. Same Balloon adapter pairs adjacent fan triangles into quad faces when complete and even, with directed winding and no new vertices. New Balloon defaults Quads plus paired pole mode; legacy records unchanged. Triangle fallback remains. No vendor/history/gesture kernel modifications. CI/iPad gate pending.
+
+
+## .820 — Genuine quadball grid pole caps — 2026-10-12
+
+User says .819 kite quads still share single poles; asks for mathematical quadball. Original donor N=6*density outline divisions (divisible by4 for even density; odd densities produce N=6d not divisible by4!). Correction implemented before release: grid-enabled odd Density uses 8*density perimeter samples; even Density uses 6*density, ensuring N is divisible by four. New adapter replaces each radial fan with an N/4-per-side Coons-interpolated square quad grid using last-ring boundary. Original generator and earlier recipes untouched, new profiles flag balloonPolePatch grid. Regression tests added for all quads and Euler/orientation. Pending automated/device test.
+
+
+## .821 — Shared Curve control point drag merge — 2026-10-12
+
+User PASS .820 Quadball; protect. Existing Curve editor window capture Pencil ownership reused. Drag edit point within 12 SVG units of another highlights target red; release removes source point, retains target location, undo restores single operation. Minimum 3 closed/2 open; no new gesture owner or modelling kernel. Release/iPad validation pending.
+
+
+## .822 — Native .boxlab project preflight — 2026-10-12
+
+User PASS .821 Pencil point merge, and .820 Quadball protected. Next roadmap native .boxlab Save/Open. Existing authoritative object-management captureScene/restoreScene already supports groups, selections, recipes and linked objects but mesh runtime serialization is not yet proven. Added read-only File > Check project snapshot with counts and finite vertex audit. No file codec/Save/Open claim, no scene/history mutation. Pending tactile acceptance. Next: design versioned codec with complete topology and resources before file actions.
+
+
+## .823 — File menu compact and scrollable — 2026-10-12
+
+User reports oversized File controls and Check project snapshot hidden by Snap/Mode controls on smaller screens. CSS-only scoped File content compactness, viewport max-height and touch scrolling; shell portrait prompt changed to device-neutral Rotate device to landscape. No geometry, file logic, history or Pencil changes. iPad gate pending.
+
+
+## .824 — Balloon pad pointer ownership hotfix — 2026-10-12
+
+User reports screen moving while drawing Balloon after .823 menu work. .823 only changed File-scoped CSS and orientation shell, no pointer code. Existing Curve pen capture still disarmed camera controls for matching strokes, but rejected touch-type pointer streams. Changed beginStroke to claim primary pointer streams originating inside pad, including Safari touch-classified Pencil, before document consumers. Changes finger interaction INSIDE pad; outside pad gestures unchanged. iPad confirmation pending; no causal claim for File CSS.
+
+
+## .825 — BOXLAB v1 codec foundation — 2026-10-12
+
+User PASS .824 drawing regression. Added independent, versioned JSON-safe project codec for scene geometry and metadata with explicit refusal for unsupported resources. Existing File snapshot preflight now performs in-memory encode→JSON→decode EditableMesh→encode comparison without replacing scene. Native .boxlab save/open remains disabled pending resources, lossless integration and full tests. Protect .820/.821/.823/.824.
+
+
+## .826 — Guarded basic .boxlab file download — 2026-10-12
+
+User PASS .825 round-trip preflight. File > Save .boxlab (basic scene) now serializes supported scene geometry/group/recipe metadata via existing v1 codec, performs independent reconstruction/re-encode check, then requests iPad browser download. Known unsupported imported GLB rich channels and UV/material/texture fields refuse rather than silently discard. History stacks and resource packages not saved; Open intentionally disabled. User verification and CI pending.
+
+
+## .827 — Guarded basic .boxlab Open — 2026-10-12
+
+User PASS .826 basic project download. Added .boxlab file picker, v1 independent decode/re-encode validation, explicit replacement warning/confirmation, unsupported linked/reference/rich resource refusal and 32MB size gate. Authoritative multi-object manager now exposes guarded basic scene replacement synchronising object ID allocator and live mesh; restores group/selection metadata in existing owner. Replacement clears history and cannot be undone; Cancel leaves project unchanged. CI/iPad device validation pending.
+
+
+## .828 — iPad .boxlab Files picker recognition hotfix — 2026-10-12
+
+User says .boxlab format not recognized for Open. Corrected .827 double-escaped extension regex, removed MIME/extension filtering from Safari file input for custom extension (validate after selection), clarified UI to Open .boxlab from Files. File picker must be initiated inside browser; direct Files app Open In association requires packaged native app. Existing replacement validation preserved. iPad test pending.
+
+
+## .828 accepted — Work mode migration handoff — 2026-10-12
+
+User replied PERFECT after .828 custom extension picker/filename regex hotfix and requested move to ChatGPT Work. Recognised basic .boxlab Open workflow now user-accepted for this fix; complete scene restoration and all edge cases are not independently established by this message. Protected .820 Quadball, .821 Pencil merge, .824 no-camera-moving Balloon drawing, .825 codec, .826 download, .828 file recognition. No numbered release change for the handoff. Native file features remain basic; rich assets/history not preserved and direct iPad Files association awaits app packaging.
+
+
+## .829 — Basic project Open replacement hardening — 2026-10-12
+
+User /nextbuild after Work handoff. Existing manager stages meshes/settings, restores live
+mesh and scene bookkeeping/ID allocator/source map/history tokens on synchronous setup
+failure; history clear delayed until successful setup. Reject maximum safe object ID.
+Correct outdated Save status. Audit found drawer still dynamically imported object-management808
+alongside shell828: aligned both829 and repinned parent. Reviewed stale shell references and
+asset hashes individually; no blind fixture regeneration. Five new actual-manager/Open tests
+cover independent clones/native codec, Cancel/Confirm, settings/render/outliner rollback,
+ID bounds, malformed JSON/extensions/size refusal. Focused12/12PASS. Full local Node24
+2216/2211PASS/5FAIL/0skip; original main baseline2211/2181PASS/30FAIL. All five remaining
+Curve/Balloon failure names existed on original main, no new failures;25 dependent release
+checks resolved. Inventory docs/reliability-build-829.json. No removed/skipped tests or
+protected modelling/frozenBeta changes. iPad Cancel/Confirm/Add/edit/history gate pending.
+Next feedback and audit of remaining five checks before expanding rich resources.
+
+
+### .829 publication verification — 2026-10-12
+
+Release b4ecfacdb667b7e9ab38c3b37aa643b476a4860c, tree
+0922b4b6f8c243524fc3383f4bad1d64208159eb exactly matches tested checkout.
+Actual Node22 Topology run38234001316/job114760078286:2216tests/2211PASS/5FAIL/
+0skip; all five failure names match the recorded local baseline inventory.
+CI remains failed, not green. Pages run38234000894 SUCCESS. Fresh live manifest,
+index, manager, object-management and drawer bytes match repository .829.
+No protected modelling/frozenBeta changes. iPad manual gate pending.
+
+
+## .830 — Resolve all five remaining regression failures — 2026-10-12
+
+User prioritises returning to zero failures. Audit separated stale contracts from runtime.
+Quadball grid replaced pole fans but kept two unreferenced donor pole vertices (Euler4).
+New recipes flag balloonGridVersion2 and compact those vertices/remap faces; legacy unflagged
+grid recipes preserve exact indices and affine recipe editing. No visible surface changes.
+Existing grid test now covers every Density4–12, all quads, directed closed incidence,
+Euler2, no orphan vertices and legacy recipe eligibility. Existing UI/history tests exercise
+new default. Concave817 fixture's donor pole lies outside its visibility kernel: keep
+unsafe deep-notch refusal and add a shallow accepted notch in same active check, with
+original donor geometry/count parity; no relaxation of fold guard or broader concave claim.
+Merge821 test queried detached SVG handle replaced by draw(): requery active target, retaining
+red cue/merge count/Undo assertions. Refusal814 now accepts actual deep-concavity diagnosis
+while retaining refusal. Pointer815 reconciled with user-passed824 primary touch inside pad;
+explicit outside-pad touch yielding/control restoration retained. No tests deleted/skipped.
+Full local Node24:2216/2216PASS/0FAIL/0skip. Changed adapter/core/UI/Add parent830 and shell/
+recovery830 reviewed. Unchanged scene-manager/drawer829 URLs remain identical; protected
+Multi1.0/Loop715/Extrude802/Boolean806 and frozenBeta2–7 unchanged. iPad new/old Balloon,
+point merge/history and touch navigation gate pending. Next .boxlab resources/performance.
+
+
+### .830 publication verification — 2026-10-12
+
+Release77cbbb6989d6949398a45eb60d1c7f8765818ae3; tested tree
+5b44a811281881e48be8316723e3ccff54e262e2 matches checkout. Actual Node22 CI
+38236275255/job114767622444:2216tests/2216PASS/0FAIL/0skip SUCCESS.
+Pages38236275003 SUCCESS. Fresh live index/manifest/Add-parent/Curve UI/core/adapter
+byte-match repository. All five prior failure checks remain active and now pass.
+Protected/frozenBeta files untouched. iPad tactile gate pending.
+
+
+## .831 — Basic .boxlab reference-guide restoration — 2026-10-12
+
+User PASS .830; protect Balloon new/legacy, merge/history/navigation and zero failures.
+Audit: codec already retains guide geometry/kind/lock/visibility/groups; only Open blanket
+reference refusal blocked mixed projects. Existing Open now validates editable/reference
+kinds and locked guides, requires unlocked editable mesh. Manager enforces reference lock
+and excludes guides from active editable fallback, preserving transactional replacement.
+Reference-only, unlocked forged guide, linked/rich scenes still refuse. No new import/scene/
+reference owner or codec changes. Three new tests actual manager/Open/native codec: mixed
+acceptance, independent guide data, Cancel, malformed/reference-only/linked refusal.
+Full Node24 2219PASS/0FAIL/0skip. Manager/Object-management/Drawer831 aligned cache URL;
+Curve830, Multi1.0/Loop715/Extrude802/Boolean806 and frozenBeta2–7 untouched.
+Device guide Save/Open lock/visibility, editable Add/edit/history gate pending.
+Next linked-instance and resource preservation, plus performance; NOM/Curve cutters/UV queued.
+
+
+### .831 publication verification — 2026-10-12
+
+Releasef7ae31c4636f8161ba14987f064dc93d30c7f405; tested tree
+616a35bf09d3c01db956db443dd63cc24840c5e3 matches checkout. Node22 CI
+38237955024/job114773194656 SUCCESS:2219PASS/0FAIL/0skip. Pages38237954570
+SUCCESS. Fresh live shell/manifest/manager/object-management/drawer byte-match.
+.830 user PASS protected, .831 mixed-reference Save/Open device gate pending.
+
+
+## .832 — .boxlab linked-instance restoration — 2026-10-12
+
+User PASS .831 guide Save/Open/locks/edit/history protected. Existing codec already saved
+sourceId/matrix/world meshes. Reconstruct authoritative linkedSources via existing inverse
+placement and geometry owners; canonical source-N/finite invertible affine transforms and
+peer local geometry/topology/crease/group/loose consistency required. Validate on Save and
+before Open confirmation. Stage source pool, advance source allocator, rollback restores
+allocator/source pool. Four tests actual manager/codec/peer-sync/Open/Save cover sharing,
+independent placement, allocator collision avoidance, malformed matrices/disagreeing data,
+Cancel, rollback and download gate. No parallel geometry/history owner. Rich resources
+still unsupported. Manager/Object-management/Drawer832 aligned; codec825/Curve830,
+Multi1.0/Loop715/Extrude802/Boolean806/frozenBeta2–7 untouched. Device linked Save/Open,
+component edit sharing, independent move/Make Unique/history pending.
+
+.832 full local Node24:2223PASS/0FAIL/0skip. CI/publication verified separately.
+
+
+### .832 publication verification — 2026-10-12
+
+Releasecce8e76a25d78d40e33fe63ba4441363fda70876; tested tree
+ a508345e37ea19ad835bdccb67c777fa99aa9208 matches checkout. Node22 CI
+38239991844/job114779926952 SUCCESS:2223PASS/0FAIL/0skip. Pages38239990977
+SUCCESS. Fresh live shell/manifest/manager/object-management/drawer bytes match.
+.831 user PASS protected; .832 linked project device edit/Move/Make Unique gate pending.
+
+
+## .833 — Moved Linked Duplicate mode-transition repair — 2026-10-12
+
+User FAIL .832: moved linked copy disappears when switching to Face. Audit main mode
+click sets selectionMode before rendering; linked saveActive then sees component mode
+and may apply unsaved Object transform to shared source with old matrix. Real-owner
+fixture reproduces source corruption (not full Safari/WebGL disappearance). Existing
+manager now flushes outgoing linked Object placement at window-capture mode-button click
+before main document handler changes mode. Two tests preserve source/placements across
+Face/Edge/Vertex, then confirm genuine component editing still shares; unrelated clicks
+yield and original unsafe sequence reproduces. No new transform/gesture/kernel owner.
+Manager833/recovery/shell833 reviewed; project owners832/Curve830 and protected
+Multi1.0/Loop715/Extrude802/Boolean806/frozenBeta2–7 unchanged. iPad regression retest
+required before further expansion; .832 linked file acceptance remains pending.
+
+.833 full local Node24:2225PASS/0FAIL/0skip; iPad mode-switch retest pending.
+
+
+### .833 publication verification — 2026-10-12
+
+Releaseaf69a754f0e6005c11f577e9d834c5b8e98a7264; tested tree
+ d2bd74cd6c611263888e6b44b625888cfc51a769 matches checkout. Node22 CI
+38240986196/job114783239634 SUCCESS:2225PASS/0FAIL/0skip. Pages38240986065
+SUCCESS. Fresh live shell/manifest/manager byte-match. .832 device FAIL remains
+recorded; .833 moved linked copy > Face mode retest pending, not claimed accepted.
+
+
+## .834 — Linked disappearance diagnosis after .833 device FAIL — 2026-10-12
+
+User says .833 no good. Prior synthetic source-corruption fixture does not prove exact
+iPad disappearance cause. No further speculative placement repair. Existing manager logs
+before/saved/after mode-switch bounds of live/cached/evaluated/source meshes plus active ID,
+mode, visible/solo/body and face count through off-by-default Gesture Debug. Existing bounded
+pinned summary retains LINKED lines despite pointer traffic. Read-only trace test covers off
+state and observed mismatch with no mutation. Manager/Debug/recovery/shell834 reviewed;
+project owners832/Curve830/protected kernels/frozenBeta unchanged. Screenshot evidence
+needed before next fix; .832/.833 device failure not marked accepted.
+
+.834 full local Node24:2226PASS/0FAIL/0skip; device failure unresolved pending trace.
+
+
+### .834 publication verification — 2026-10-12
+
+Release49e6449772222413a6b8972ad005f80bd8c09f14; tested tree
+9de1b70e9417417f15f4a165dc0772da4641e172 matches checkout. Node22 CI
+38242145811/job114787121113 SUCCESS:2226PASS/0FAIL/0skip. Pages38242145077
+SUCCESS. Fresh live shell/manifest/manager and pinned Gesture Debug byte-match.
+Diagnostic build only; .833 device failure remains unresolved, awaiting LINKED trace.
+
+
+## .835 — Correct completed-event trace / original drift evidence — 2026-10-12
+
+Two .834 screenshots: live/stored/evaluated active centres agree, source0,0,0,
+visible/bodytrue; user observes original moves far away. Earlier claim of proven mode
+state mismatch was premature: queueMicrotask in window capture can run before later
+native target listeners. AFTER now uses next task; includes UI mode/all peer bounds,
+visibility/inactive count. Existing Debug pins browser errors/rejections and inactive
+render-skip error messages. No additional modelling repair, source mutation or mode
+owner. Two tests cover completed-handler timing and off/enabled error logging.
+Device failure remains unresolved. Screenshot evidence captured in docs; no need to
+read Library images (inline images visible; supplied local image files missing).
+Manager/Debug/recovery835; project owners832/Curve830 and protected/frozenBeta untouched.
+
+.835 full local Node24:2228PASS/0FAIL/0skip; linked device failure unresolved.
+
+
+### .835 publication verification — 2026-10-12
+
+Releasec46b2eff501e05989ab2de861fa2b2ff19b01362; tested tree
+fbff479119df53209e04c11359300e249096a64f matches checkout. Node22 CI
+38245284982/job114797502516 SUCCESS:2228PASS/0FAIL/0skip. Pages38245284604
+SUCCESS. Fresh pinned live shell/manifest/manager/Debug byte-match. User original-object
+drift remains unresolved; diagnostic only, completed-event screenshot required.
+
+
+## .836 — Stale transform release / mode exit repair — 2026-10-12
+
+User .835 screenshot resolves drift: AFTER face live/stored/evaluated-16.498/source-18.148
+from BEFORE copy1.65/source0; visibility retained. Existing transform-upgrade gesture
+release lived at document capture, could be swallowed, then reused Pencil ID moved live
+mesh from stale gesture plane. Component-mode save applies whole shift to linked source.
+Move authoritative finish to window capture (existing workflow rule); same owner finishes
+pending preview on mode-button window capture before manager placement save. Preserve
+committed mesh/history rather than cancelling back. No parallel kernel or protected
+Multi1.0 edit. Two actual-owner regression tests cover mode exit/reused pointer and earlier
+document consumer; rotate helper now models window/document completion. Full Node24
+2230PASS/0FAIL/0skip. Transform836 plus reviewed shell/recovery; diagnostics retained.
+Protected modelling/frozenBeta unchanged. iPad Linked Duplicate Move→Face retest pending.
+
+
+### .836 publication verification — 2026-10-12
+
+Release7b689c234474e27a5d5c042f57f2048d8f5a345e; tested tree
+33926a9397320b1f34c93726a29578e5fcc792c2 matches checkout. Node22 CI
+38246212104/job114800613228 SUCCESS:2230PASS/0FAIL/0skip. Pages38246212136
+SUCCESS. Fresh pinned live shell/manifest/transform owner byte-match. User linked
+mode-switch drift repair acceptance pending; .832/.833 failures stay recorded.
+
+
+## .837 — Complete native main Object drag before mode switch — 2026-10-12
+
+User .836 FAIL: original jump follows initial diagonal move, Array same issue. Audit
+second actual owner main: Object component drag completes on canvas only; old startMesh/
+plane/delta can survive consumed release and run with reused Pencil ID in Face context.
+Actual main pointermove+manager save regression reproduces shared-source shift without
+completion. Main window release/cancel completes only Object-selection component drag;
+mode button calls same endDrag before context mutation. Keep committed preview/one history
+step, no rewrite of geometry/instance ownership. Straight/diagonal and extra Array-style
+peer tests preserve source/placements; former incomplete path demonstrably shifts source.
+Full Node24 2232PASS/0FAIL/0skip, focused revised peer test PASS. Main837/shell/recovery
+and reviewed asset fixture; protected Multi1.0/Loop715/Extrude802/Boolean806/Curve830/
+frozenBeta unchanged. .836 not accepted, .837 actual iPad Linked/Array retest pending.
+
+
+### .837 publication verification — 2026-10-12
+
+Release8386bedcdd75b72977d85bd45f076dce9728f387; tested tree
+b07166bc85ee839e4843f4cb1b1be599062922e3 matches checkout. Node22 CI
+38247942108/job114806468896 SUCCESS:2232PASS/0FAIL/0skip. Pages38247941344
+SUCCESS. Fresh pinned live shell/manifest/main owner byte-match. .836 user FAIL
+recorded; .837 straight/diagonal Linked Duplicate and Array iPad retest pending.
+
+
+## .838 — Exact shared-source write evidence after .837 FAIL — 2026-10-13
+
+User .837 did not fix it. Prior completion regressions cover synthetic stale-drag paths;
+do not claim they establish actual device cause. Instrument BOTH actual manager source
+writes via existing off-by-default Debug: branch/mode/id, old/new source centre, live/
+stored centre, matrix translation and caller stack. Read-only, no rendering/instancing
+behavior change. New actual-manager fixture confirms source delta/branch/stack and no
+extra revision. Need device SOURCE WRITE evidence before next behavioral repair.
+Runtime manager838; repinned unchanged main/Debug/transform/recovery and reviewed asset
+hashes. Protected Multi1.0/Loop715/Extrude802/Boolean806/frozenBeta unchanged.
+
+.838 full local Node24:2233PASS/0FAIL/0skip; device issue unresolved.
+
+
+### .838 publication verification — 2026-10-13
+
+Release37cbd70cb8fc6446529003c6c3c87c5e662187ab; tested tree
+e5c28a09ba20c5a66ddb2f76bf440409ab25ef38 matches checkout. Node22 CI
+38324508602/job115059953152 SUCCESS:2233PASS/0FAIL/0skip. Pages38324508260
+SUCCESS. Fresh pinned live shell/manifest/manager byte-match. Diagnostic-only source
+write trace; .837 user FAIL remains unresolved, exact device caller evidence pending.
+
+
+## .839 — Live world mesh identity / instance-local feedback repair — 2026-10-13
+
+User .838 SOURCE WRITE screenshot identifies stack: live-mesh-bridge event→quad-clean
+update→manager objects getter→saveActive component. Repeated local inverse subtracts
+placement1.6875733 from sourceZ on each bridge notification. Actual bridge169 setter
+ignored explicit main publication after first owner, while last edges() heuristic promoted
+temporary instance-local meshes during cage add. Their promotion feeds source writes and
+further helper edges; explains directional cumulative drift and Array same shared path.
+
+New explicit core owner priority in EXISTING bridge getter/setter; body/cage notification
+tracks core identity and ignores helper edges after publication. Preserve legacy inference
+before explicit main mesh. Four nativeMesh/THREEGroup/actual manager regressions; first two
+FAIL on original bridge before fix. Twenty repeated events preserve source/world identity;
+real bridge observers/saveActive peer-sync keep originals and allow true component edits.
+Full Node242237PASS/0FAIL/0skip, revised sharing focused PASS. No modelling/transform kernel
+or Multi1.0 changes; .833/.836/.837 device failures accurately retained in history. Bridge/
+face-workflow dynamic parent/drawer839 pins reviewed; other source bytes unchanged.
+Device Linked/Array move→Face and project/history gate pending before feature expansion.
+
+
+### .839 publication verification — 2026-10-13
+
+Release73d80488d9db90cca117f15fc0281ea74a4076da; tested tree
+412ef04a5181dc7d7723efaf362f61d3d7d09b0c matches checkout. Node22 CI
+38325878624/job115064302371 SUCCESS:2237PASS/0FAIL/0skip. Pages38325878737
+SUCCESS. Fresh pinned live shell/manifest/bridge/face-workflow parent/drawer byte-match.
+Actual old bridge failed two new reproduction checks; repaired suite green. iPad
+Linked Duplicate/Array drift acceptance still pending, not inferred from automation.
+
+
+## .840 — Explicit main publication versus legacy edge writes — 2026-10-13
+
+User .839 idle SOURCE WRITE infinite loop: object-origin markerLoop→activeObject→manager
+objects getter→saveActive. .839 test omission found: bridge-topology installs edges wrapper
+state.mesh=this before calling edges. Generic setter therefore accepted temporary local
+helper as 'explicit' core, sustaining offset feedback. Expanded native tests load actual
+legacy bridge-topology FIRST; three FAIL on839. Fix dedicated publishCoreMesh API in
+existing live bridge, invoked by main before old state assignment/rebuild. Only this API
+updates core owner; generic setter merely fallback before core publication. Legacy edges
+cannot replace authoritative world. Body/cage publish bounded.20rebuilds/1000idle reads,
+actual manager/peer chain stable revision0; true component edit still shares. No new
+instance/transform maths, no debugging suppression; diagnostic logging retained. Main/
+bridge/parent face-workflow/drawer840 loader graph reviewed; protected/frozenBeta unchanged.
+Device fresh linked/Array scene idle10s and edit/history gate pending.
+
+.840 full local Node24:2237PASS/0FAIL/0skip; fresh-scene device retest pending.
+
+
+### .840 publication verification — 2026-10-13
+
+Release703f8ad78429697559c1be3b453fed812a322eae; tested tree
+b4d7b0a8f92ee05a5d7c1f364e2dd171cd6e937e matches checkout. Node22 CI
+38326579309/job115066533821 SUCCESS:2237PASS/0FAIL/0skip. Pages38326579350
+SUCCESS. Fresh pinned live shell/manifest/main/bridge/face-workflow/drawer byte-match.
+Expanded legacy bridge chain had3FAIL on839; corrected explicit API passes plus1000idle
+reads/source revision0. .839 user idle-loop FAIL remains recorded; .840 iPad pending.
+
+
+## .840 user PASS — 2026-10-13
+
+User PASS after fresh linked/Array mode switch, idle10s and shared editing/history test
+gate. Protect explicit main publication and legacy helper isolation; source drift/idle
+loop resolved by device acceptance. Earlier failed builds remain accurately recorded.
+No numbered release/runtime changes. Resume scoped project resources/performance only
+on next build request.
+
+
+## Live Array roadmap request — 2026-10-13
+
+User requests one persistent editable array object, analogous to Live Boolean, with
+last-item rotation/scale distributed gradually from original to endpoint, alongside
+existing end-copy placement. Record source/count/placement/endpoint reopening,
+history/project persistence and authoritative-owner audit in roadmap/handoff.
+Documentation only; runtime remains accepted .840. No manual test required.
+
+
+## .841 — Persistent Live Array foundation — 2026-10-13
+
+User /nextbuild after Live Array roadmap request. Audit: existing linear-array END
+preview/linked manager, Live Boolean presentation/history and v1 project codec are
+owners. Add optional Live checkbox; unchecked Array retains linked copies. Live Apply
+keeps same single scene object with arrayRecipe v1, combined disconnected geometry via
+existing instance/join helpers. Reopen source/count/END placement, hide result only
+through manager display policy, preserve whole-object affine transforms. Refuse
+non-affine edits/rich/linked/Boolean/modifier inputs rather than overwrite attributes.
+Scene snapshots and project codec preserve recipes. Explicit pre-result history token
+fix discovered by real Undo test; one Apply step restores recipe/mesh on Undo/Redo.
+Session Undo cancels preview first. Count/spacing shipped; endpoint scale/rotation and
+source editing remain queued. No new modelling kernel or protected/frozen changes.
+Four native tests plus existing suite:2241PASS/0FAIL/0skip. Three stale Array pin
+assertions updated to reviewed841 loader; semantic coverage retained. iPad gate pending.
+
+
+### .841 publication verified — 2026-10-13
+
+Release9dcb5d538acb16a470e1b2cac9bacdc089b6a244; tested tree
+1caa33d0933512872831d9c43fe5206871f8c498 matches checkout. Node22 CI
+38341669287/job115113811558 SUCCESS:2241PASS/0FAIL/0skip. Pages38341668618
+SUCCESS; pinned live shell/manifest/Array/core/manager/codec/management/drawer byte-match.
+Device acceptance pending; progressive endpoint scale/rotation remains next stage.
+
+
+## .841 user PASS / .842 progressive Live Array transforms — 2026-10-13
+
+User PASS .841 and /nextbuild. Protect single-object Live Array, reopened count/END,
+Cancel/Apply, Undo/Redo and .boxlab persistence. User reiterates always explicitly
+announce build completion; reinforce existing AI_WORKFLOW final-response requirement.
+Audit existing END owner, Rotate and gizmo/session exclusion. Extend existing Array
+owner with Live-only Move/Rotate/Scale, XYZ rotation rings and scale cubes/Free uniform
+drag; exact degrees/factors available. Shared arrayItemMatrix drives preview and Apply.
+XYZ degrees/factors interpolate from original0/1 to END around each item centre; full
+turns remain meaningful, centre path unchanged. Optional v1 rotation/scale/placement
+fields default for841; canonical frame + inferred affine whole-object placement avoids
+conjugation errors on reopen. Old native841 test now forwards reopened frame options,
+retaining identical transformed mesh assertions. Existing Array cache assertions repin842.
+No parallel gesture/history/topology implementation; protected/frozen files untouched.
+Six new real geometry/THREE raycast/END gesture/actual Apply-history tests plus complete
+suite2247PASS/0FAIL/0skip. Source component editor/conversion remain queued. Device pending.
+
+
+## .842 user PASS / .843 Live Array conversion — 2026-10-13
+
+User PASS .842 and /nextbuild. Protect progressive END rotation/scale, combined
+count/placement, single-object/reopen/Cancel/history/project gate. Audit current main,
+Array/core, manager/scene history/codec and Boolean owners; no existing conversion
+launcher found. Next narrow stage is explicit conversion, source editing follows.
+Reopened Array panel Convert to Mesh uses original Apply evaluation/replacement and
+scene checkpoint, commits CURRENT staged preview as one ordinary mesh, removes recipe
+and exits session. Normal Apply remains live. One Undo restores previous recipe/mesh;
+Redo converted state. Existing core/manager/codec and frozen/protected modules untouched.
+Three native tests cover placement/preview/real scene history/codec/component edit,
+actual button teardown and all refusal guards. Full2250PASS/0FAIL/0skip. Initial suite
+had one stale .842 Array cache assertion, reviewed/advanced alongside the other two;
+all existing semantic tests retained. Shell/recovery/Array pin843 and reviewed asset
+hash updated only where required. iPad conversion/history/project gate pending.
+
+
+## .843 publication verified — 2026-10-13
+
+Release424a973d1380dc943733435ec4af7e1c9ed206d1; tested tree
+32914e47e5f873289770bf4065dd315b055dc5aa exactly matches local validated checkout.
+Node22 CI38362603121/job115180108329 SUCCESS:2250PASS/0FAIL/0skip.
+Pages38362603155 SUCCESS. Fresh live shell/manifest/Array843, unchanged core842,
+protected Multi1.0 and frozenBeta7 version byte-match repository. Initial shell GET
+briefly returned842 during deployment; subsequent pinned verification matches843.
+Device conversion gate pending; .842 user PASS protected, source editing next.
+
+
+## .843 user PASS / .844 staged Live Array source editing — 2026-10-13
+
+User PASS .843 and /nextbuild. Audit current main/Array/core/manager/scene history,
+Boolean transactions/shared panel owners: no Array source component owner existed.
+Add recipe transaction controller and UI through existing Array import graph. Edit
+Source isolates placed original on same object (no temporary scene rows), preserves
+private original snapshot/history, uses existing component tools and local history.
+Apply Source inverse-maps edited geometry into canonical recipe frame and uses
+original evaluator to regenerate every item with saved/staged count/END transforms;
+one committed Undo restores original recipe/result. Cancel restores exact scene/tokens;
+no-op adds no history. Source bar shares top-centre position, yields to actual tool
+popups and returns on finish; files/object operations require source Apply/Cancel.
+No new raw-pointer owner, geometry kernel or history implementation; existing main/
+manager/codec and frozen/protected sources untouched. Generated array updates on
+Apply Source for this first staged source-only view; continuous preview not claimed.
+Six native regressions cover topology/affine placement/local+scene history/codec/
+invalid+busy+context guards/UI nesting and parameter handoff. Full2256PASS/0FAIL/0skip.
+One first full-run failure assumed every shared-dock client is shell-loaded; reviewed
+parent-chain assertion now verifies new indirect client via Array, retaining coverage.
+Shell/recovery/Array844 and new child844 cache graph reviewed; core stays842.
+Device source edit/history/project/navigation gate pending.
+
+
+## .844 publication verified — 2026-10-13
+
+Release22cbdef0409c023b74c5341adabc40e7a991f514; tested tree
+96d912e08b4bebc53a25be7d73f800c0953ac8e3 exactly matches local validated checkout.
+Node22 CI38375667786/job115223276580 SUCCESS:2256PASS/0FAIL/0skip.
+Pages38375667131 SUCCESS. Fresh live shell/manifest/Array844/source-editor844/
+source-core844, unchanged Array-core842, protected Multi1.0 and frozenBeta7 version
+byte-match repository. Earlier predeployment GETs returned843/404; complete
+postdeployment graph now verified. Device source-edit/exit/history/project gate pending.
+
+
+## .844 user PASS / .845 Clean View cage batching repair — 2026-10-13
+
+User PASS .844 then reports VIEW Clean does not work. Screenshot844 confirms Clean On
+with visible cage lines/markers. Audit: .810 creates cage-edge-batch/cage-vertex-batch;
+Clean179 only hides individual proxies/mirror/selection overlay kinds. Extend existing
+Clean owner to batch kinds; remember prior visibility so Off cannot reveal previously
+suppressed overlays. No geometry/render-look/selection/history/gesture changes.
+Three native tests use actual THREE cage batch/proxy builder, check visibility versus
+native raycasts, hidden-owner restoration and rebuild/event/repeated toggle handling.
+Full2259PASS/0FAIL/0skip. Reviewed loader path Clean845→face-workflow845→drawer845→
+shell845; current manifest/recovery845 coherent, protected runtime/frozen beta unchanged.
+Device Clean On/Off/rebuild sanity pending; source844 acceptance protected.
+
+
+## .845 publication verified — 2026-10-13
+
+Release2ebc4138775f6977182b1d373cbd9ca852ff69dd; tested tree
+f0049e567ae6118fda9c00900f7dc06907a5ea1a exactly matches local validated checkout.
+Node22 CI38377613150/job115229836452 SUCCESS:2259PASS/0FAIL/0skip.
+Pages38377611930 SUCCESS. Fresh live shell/manifest/drawer845/face-workflow845/
+Clean845, protected Multi1.0 and frozenBeta7 version byte-match repository.
+Initial shell/manifest reads preceded deployment; subsequent reads match845.
+.844 source-editor user PASS protected; iPad Clean On/Off/rebuild gate pending.
+
+
+## .845 user Perfect PASS / .846 Soft cage batching compatibility — 2026-10-13
+
+User Perfect PASS and /nextbuild. Protect845 Clean behavior. Current repo/roadmap audit
+finds adjacent Soft191 owner still targeting legacy individual overlays after810 batch
+migration. Finish this existing display gap before resource/performance expansion.
+Add batch kinds to existing intensity whitelist and retain original42%edge/56%vertex
+factors. Repeated application/Full restores original identity; invisible proxies stay
+invisible and original raycasts/surface/selection metadata retained. Clean845 untouched.
+Three native tests cover actual generated batches/material restore/disposal/picking,
+persisted Soft at rebuild/bridge/render and Clean+suppressed visibility coexistence.
+Full2262PASS/0FAIL/0skip. Loader cage846→face-workflow846→drawer846→shell846 and
+reviewed hashes repinned; protected kernels/frozen betas/Array source editor unchanged.
+Device Soft/Full/Clean/rebuild gate pending; next richer project resources/measured perf.
+
+
+## .846 publication verified — 2026-10-13
+
+Release3645db541a0e9ed0c35209d58ceb375e27b93300; tested tree
+101870b6eb956484928a5dbaaceed28f5079a2d7 exactly matches local validated checkout.
+Node22 CI38385836614/job115257282265 SUCCESS:2262PASS/0FAIL/0skip.
+Pages38385836609 SUCCESS. Fresh live shell/manifest/drawer846/face-workflow846/
+Cage846, unchanged Clean845, protected Multi1.0 and frozenBeta7 version byte-match.
+Initial shell/manifest GETs preceded deployment; postdeployment reads match846.
+.845 Perfect PASS protected; iPad Soft/Full/Clean/rebuild gate pending.
+
+
+## .846 user PASS / .847 inactive SubD cache reuse — 2026-10-13
+
+User PASS /nextbuild. Protect Soft/Full/Clean. Roadmap's prior812 iPad evidence identifies
+inactive display rebuild as dominant cost. Audit finds existing displayMeshFor always
+runs subdivision; active display already has exact-input cache812. Reuse that helper
+with WeakMap per independent inactive SubD object; SubD→Mirror native output unchanged.
+Linked source evaluation remains unchanged/uncached. Non-SubD clears object cache;
+exact inputs, mesh/object replacements invalidate, removed objects weakly collect.
+Existing Performance cache counters now reflect scene cache hits/misses. One CPU display
+per cached object retained, GPU geometry still rebuilt/disposed, no iPad speed claim.
+Four native tests verify50requests/1kernel evaluation, direct metadata/modifier changes,
+actual render layer/raycast/visibility/geometry disposal and linked source propagation.
+Full2266PASS/0FAIL/0skip. Only multi-object runtime extended; shell/recovery847, reviewed
+cache812 import graph/hash updated. Protected Multi1.0/main ownership/frozenBeta untouched.
+Device multi-object visual/history/modifier test and Performance capture pending.
+
+
+## .847 publication verified — 2026-10-13
+
+Releasedeaf1c931ef948c3ca882882e894a0d10764c361; tested tree
+cceb4602c684aa832518e8f2f5689f5d3285b2f3 exactly matches local validated checkout.
+Node22 CI38388216821/job115265162810 SUCCESS:2266PASS/0FAIL/0skip.
+Pages38388215312 SUCCESS. Fresh live shell/manifest/multi-object847, unchanged
+cache812, protected Multi1.0 and frozenBeta7 version byte-match repository.
+Initial shell/manifest GETs preceded deployment; later reads match847.
+.846 user PASS protected; independent inactive SubD visual/performance gate pending.
+
+
+## .848 — separate active/inactive cache measurement — 2026-10-13
+
+User847 screenshot:106rebuilds14.5ms mean42max, inactive5.8/20ms,281aggregate hits/
+41misses; idle capture lacked rebuild data. /nextbuild. Audit actual monitor core/UI,
+main active cache and manager inactive cache: totals obscure owner-level reuse. Extend
+existing opt-in counters with active/inactive owner buckets, keep total contract; label
+both in existing readout. Manager supplies inactive label, main default active unchanged.
+Two native main/manager/lifecycle checks plus existing actual UI assertions; full2268
+PASS/0FAIL/0skip. No geometry, caching algorithm, gesture/history or frozenBeta changes.
+Core+monitor+manager/shell848 reviewed; helper812/main842 remain. Capture guides next
+measured optimisation; no matched device speed improvement/full847 manual PASS claimed.
+
+
+## .848 publication verified — 2026-10-13
+
+Release1c4b1c7a2c5296ecd6577368122cafc7466a18d1; tested tree
+a007c0f4700204f564c6751c14456bdae57a1324 exactly matches local validated checkout.
+Node22 CI38390897289/job115274131163 SUCCESS:2268PASS/0FAIL/0skip.
+Pages38390897016 SUCCESS. Fresh live shell/manifest/manager848/monitor848/core848,
+protected Multi1.0 and frozenBeta7 version byte-match repository. Predeployment
+reads returned previous assets; subsequent complete graph matches848.
+Device separated-cache readout capture pending; no new geometry optimisation claimed.
+
+
+## .849 — reuse owned inactive SubD render buffers — 2026-10-13
+
+User848 capture confirms111inactive cache hits/1miss but6.4ms inactive phase, active30/
+24 and cage6.2ms; /nextbuild. Audit native inactive layer cleanup/display/render overlays.
+Cache BufferGeometry by independent inactive object + immutable native display identity;
+only currently visible inactive SubD participates. Preserve buffer through wrapper
+rebuilds, replace on display changes, prune hidden/active/deleted/replaced objects and
+free map on scene/standalone clear. Shared overlay geometry excluded from transient
+cleanup; repair misplaced overlay-material ownership check to actual node userData.
+Linked/nonSubD evaluation/geometry remains original. No duplicate rendering/kernel/
+history/gesture owner; manager849 shell/recovery849/cache812 graph reviewed.
+Three native lifecycle/output tests plus strengthened847 identity+hide-release contract;
+812 stub adds native userData (its initial failure was adapter shape, timing unchanged).
+Full2271PASS/0FAIL/0skip. Device comparable timing and visual/selection/history gates
+pending; no hardware speed claim. Existing840/Array/Clean/Soft owners protected.
+
+
+## .849 publication verified — 2026-10-13
+
+Release17c18ab495032f5e2ec527247aa341bd7325e742; tested tree
+4fb6d03909a791e69e3811b6086550185ab1207c exactly matches local validated checkout.
+Node22 CI38395647448/job115290048343 SUCCESS:2271PASS/0FAIL/0skip.
+Pages38395648071 SUCCESS. Fresh live shell/manifest/manager849, unchanged cache812,
+protected Multi1.0 and frozenBeta7 version byte-match repository. Screenshot848
+baseline recorded; comparable849 visual/resource/phase capture pending.
+
+
+## .850 — reuse active SubD render geometry — 2026-10-13
+
+User849 screenshot113rebuilds8.6ms mean25max; inactive0.1/6ms and226hits/0misses;
+active63/50; Body2.8/9ms, Base/SubD5.4/19ms, cage0.1/1ms. Different cage workload
+from848 prevents controlled benchmark claim; no explicit full849 PASS. /nextbuild.
+Audit main renderMesh: existing exact-input cache812 avoids unchanged subdivision but
+triangulatedGeometry always rebuilds GPU body. Main root now retains one BufferGeometry
+by immutable native display identity; same-result redraw keeps it, display change
+replaces/disposes, SubD Off releases it. Normal nonSubD/cage disposal preserved.
+No new renderer/kernel/gesture/history owner; core publication and linked840 protected.
+Two native main/kernel/cache tests cover20redraws, edits/native geometry parity/Undo,
+modifier/source replacement, disposal/cage independence and leavingSubD. Initial local
+run caught publication/clear adjacency interruption; declaration moved before publication.
+366 guard's700character slice then excluded root.add after the longer body code; changed
+to full function line, retaining all original ordering assertions. Full2273PASS/0FAIL/
+0skip. Main/shell/recovery850 reviewed, helper812 and other pins retained. Device timing,
+visual/picking/history/modifier/render-look gates pending; no hardware speed claim.
+
+
+## .850 publication verified — 2026-10-13
+
+Release35f5037d586d8f274f6dc51c5b822a4b4e138c14; tested tree
+5ac5d7a17c976f07e4f85a613a228c9cf2cac1d1 exactly matches local validated checkout.
+Node22 CI38400809245/job115307642524 SUCCESS:2273PASS/0FAIL/0skip.
+Pages38400808087 SUCCESS. Fresh live shell/manifest/main850, unchanged cache812,
+protected Multi1.0 and frozenBeta7 version byte-match repository. Initial shell GET
+returned849 during deployment; postdeployment verification matches850. Device active
+geometry/performance/visual/history/modifier gate pending; no full849 PASS inferred.
+
+
+## .851 — vertex dots only in Vertex mode — 2026-10-14
+
+User proposes hiding vertex visibility until Vertex mode during optimisation. Audit main
+addCage +810 visual batch + picking/bridge + Clean/Soft. Main passes showVertices based
+on selectionMode to existing builder; omitted visual marker instances outside Vertex
+avoid dot draw and per-frame instance updates. Invisible indexed proxies retained in
+all modes for picking/snapping; unchanged screen sizing/proxy cost still exists.
+Edges/face pickers/topology/history/gesture/selected dots and existing cage suppression
+unchanged. No new visibility owner. Default builder option true preserves callers.
+Three native regressions cover repeated mode switches/materials/real raycasts/disposal
+and existing Clean/Soft integration.810 parity and dense Face expectations reconcile
+intentional visual change, retain original semantic coverage. Full2276PASS/0FAIL/0skip.
+Main851→builder851 and shell/recovery851 reviewed; manager849/cache812/protected/frozen
+sources unchanged. Device gates pending, no quantified speed claim/no inferred850 PASS.
+
+
+## .851 publication verified — 2026-10-14
+
+Release6eb8bec6b0a3bb57e10993708dbfba701b8db4f7; tested tree
+bf549bdc90490de8d765a42abb1961d10c8c52a2 exactly matches local validated checkout.
+Node22 CI38481476151/job115584851726 SUCCESS:2276PASS/0FAIL/0skip.
+Pages38481476107 SUCCESS. Fresh live shell/manifest/main851/cage-render-batches851,
+protected Multi1.0 and frozenBeta7 version byte-match repository. Predeployment
+reads returned850; complete postdeployment graph matches851. Device mode/selection/
+Clean/Soft gate pending,850 geometry/performance gate not yet accepted.
+
+
+## .850 user PASS protected / .851 performance capture — 2026-10-14
+
+User explicitly reports .850 PASS on2026-10-14: protect active SubD geometry reuse,
+selection/edit/UndoRedo/modifier/render-look baseline. Attached screenshot visibly851:
+94rebuilds mean6.2/max39ms; Body1.0/9ms, Base/SubD4.1/17ms, Scene0.8/18ms,
+Inactive0.5/18ms, Cage0.1/6ms; active64hits/30misses, inactive194hits/2misses,
+59FPS displayed. Capture is851 evidence, not a controlled850 benchmark or explicit
+851 Vertex-mode visibility PASS. Keep851 hands-on gate pending; no new build.
+
+
+## .851 user PASS / .852 skip unused active base evaluation — 2026-10-14
+
+User851 PASS /nextbuild. Protect Vertex-only dots, picking/mode/history/Clean/Soft.
+Audit current main/live/pins and existing display/base owners: SubD render always
+calls modifiedBaseMesh (applyMirror, including clone with no axes), even if base is
+unused. Existing base/cage/export owners already implemented. Narrow main condition
+calls base only for nonSubD surface or shown mirror cage. SubD computation/order/cache,
+850 GPUreuse,851 dots, geometry/picking/history/linked840 untouched. No new cache/kernel.
+Two native main/kernel checks cover call counts/visible native surface+cage output,
+modifier/ShowCage/SubD transitions, direct edit/Undo and fresh independent base export.
+812 deterministic phase expected display0/20 versus2/22 and rebuild15 versus17 reflect
+removed fixture base work; original timing/counter semantics retained. Full2278PASS/
+0FAIL/0skip. Main/shell/recovery852 reviewed; builder851/cache812/manager849 and protected/
+frozen sources unchanged. Device gate pending; no iPad speed claim.
+
+
+## .852 publication verified — 2026-10-14
+
+Releasee71bf18a927d54cb1a9b6fba0224c0d88254469c; tested tree
+ae0f6921afc21c658d5e005db58d3a08d7b1c66e exactly matches local validated checkout.
+Node22 CI38485760091/job115598883328 SUCCESS:2278PASS/0FAIL/0skip.
+Pages38485759871 SUCCESS. Fresh live shell/manifest/main852, unchanged builder851,
+protected Multi1.0 and frozenBeta7 version byte-match repository. Predeployment reads
+returned851; subsequent complete release verification matches852. User851 PASS
+protected;852 SubD/Mirror/cage/history/export device gate pending, no speed claim.
+
+
+## .852 Loop device FAIL / .853 completion owner repair — 2026-10-14
+
+User Loop MultiLoop cannot finalise; single cuts retain yellow. Screenshot852 has
+28verts/26faces/5active loops in Face mode, so recorded topology exists despite visible
+staging. Audit authoritative main/715 commit/713 viewport/810 batching: completion
+reads material.color but picking proxies now use invisible shared material, actual
+visual colour cageMaterial. Repair existing commit lookup with legacy fallback. Main
+setDirectTool clears private slide groups/slider only when leaving Loop. Background/
+mode/tool exits now retire stale rails; rearm/busy/EXACT/history semantics preserved.
+Native cut/slide kernels unchanged; protected commit owner explicitly changed for user
+bug request, no speculative kernel edit. Two real batch/kernel/history/main tests cover
+single/5cuts, slide/EXACT/native output/oneUndoRedo, rearm/finish/busy/tool-switch cleanup.
+First new test compared mesh clone's faceGroup padding, unrelated to exit state; now
+asserts unchanged native vertices/faces/creases. Full2280PASS/0FAIL/0skip; original semantic
+checks retained,713 hardcoded715 pin now reviewed asset assertion. Main853/commit853/
+shell+recovery853 hashes reviewed; builder/cache/protected Multi/frozenBeta untouched.
+Device Loop completion/editable patch/history gate pending; no new852 PASS inferred.
+
+
+## .853 publication verified — 2026-10-14
+
+Release245b665ec4224efa75bb9b67bff0c892ff56a070; tested tree
+94a243ba49ee7ebba573e448493f979796822dc7 exactly matches local validated checkout.
+Node22 CI38487534483/job115604691428 SUCCESS:2280PASS/0FAIL/0skip.
+Pages38487534251 SUCCESS. Fresh live shell/manifest/main853/loop-cut-commit853,
+protected Multi1.0 and frozenBeta7 version byte-match repository. Predeployment
+reads returned852; complete postdeployment verification matches853. User852 Loop
+FAIL recorded;853 single/MultiLoop completion/editable faces/history gate pending.
+
+
+## .853 user PASS / .854 native Loop completion without history replay — 2026-10-14
+
+User Awesome853 PASS /nextbuild protects repaired single/MultiLoop completion. Audit
+commit adapter: UndoRedo UI workaround replaces mesh and rebuilds twice simply to clear
+private slides. Existing main clearLoopSlide owns cleanup. Expose guarded commitLoopCut
+(clear + redraw), adapter delegates and returnsfalse if rejected. Keep live mesh identity,
+placed cuts, undo/redo tokens and one native completion redraw; selection bridge still
+selects confirmed rail, repeat/background/session/busy owners unchanged. No kernel or
+history implementation changes. Two native main+adapter+kernel/history tests cover1/5
+cuts/slide/identity/tokens/no replay/UndoRedo and busy/no-stage refusal.632 source guard
+now asserts native/no history UI;715/746/853 fixtures model native cleanup, original semantic
+assertions retained. Full2282PASS/0FAIL/0skip. Main/commit/shell/recovery854 reviewed;
+builder851/cache812/manager849/Array/Clean/Soft/protected/frozen kernels untouched.
+Device EXACT/repeat/exit/history gate pending; no quantified speed claim.
+
+854 validation note:746 old adapter first lacked native cleanup; after update its VM
+face arrays retained foreign prototypes now that history no longer clones/replaces
+the mesh. Compare exact face cycles through Array.from (existing fixture convention),
+retaining vertex/selection/native UndoRedo assertions; no runtime topology fix implied.
+
+
+## .854 publication verified — 2026-10-14
+
+Releaseb6806ccb9b4da959e68d17d95596431d3dee1dcc; tested tree
+f62b760d0b50974cf5f2db45caee135c67a46629 exactly matches local validated checkout.
+Node22 CI38500128979/job115644854684 SUCCESS:2282PASS/0FAIL/0skip.
+Pages38500128663 SUCCESS. Fresh live shell/manifest/main854/loop-cut-commit854,
+protected Multi1.0 and frozenBeta7 version byte-match repository. Predeployment
+shell/manifest reads returned853; subsequent verification matches854. User853 PASS
+protected;854 native completion/repeat/exit/history device gate pending.
+
+
+## .854 user PASS / .855 imported GLB scene-history resource preservation — 2026-10-14
+
+User PASS /nextbuild (current854). Protect native Loop completion/repeat/history.
+Roadmap resource audit finds glbPassthrough installed by import/manager and consumed
+by export, but omitted by object-management snapshot/restore. Undoing scene operations
+could drop UV/morph/colour/tangent/material/image/Nomad metadata. Carry existing payload
+reference in snapshot + restored object. Resource writes audited preinstallation import;
+export reads only. Sharing read-only payload/image buffers avoids per-history copies;
+future resource edits must replace payload, never mutate shared data in place.
+Three actual manager/scene-history tests: delete restore with no prior object, repeated
+UndoRedo/payload replacement/shared bytes+UV+morph, rich codec refusal/plain v1, native
+GLB UV/geometry export and final metadata/material/image-byte patch. First full run
+attempted texturedGLB loader in Node without image decode; fixture now verifies native
+geometry/UV loader and native final resource patch separately (existing GLB convention).
+Full2285PASS/0FAIL/0skip. Management855 + drawer855 parents/shell/recovery855 reviewed;
+main/Loop854/manager849/cache812/protected/frozen sources unchanged. Rich .boxlab save
+still refused; resource schema/open pools not implemented. Device gate pending.
+
+
+## .855 publication verified — 2026-10-14
+
+Release5bddfe7c848adab7c451b157db4bbdd282a2d072; tested tree
+1332e93988f68c962d695b39e70832e309429956 exactly matches local validated checkout.
+Node22 CI38506338293/job115664606721 SUCCESS:2285PASS/0FAIL/0skip.
+Pages38506338178 SUCCESS. Fresh live shell/manifest/object-management855/drawer855,
+protected Multi1.0 and frozenBeta7 version byte-match repository. Initial shell GET
+returned854 during deployment; postdeployment verification matches855. User854 PASS
+protected;855 imported GLB delete/UndoRedo/export device gate pending. Rich-resource
+.boxlab saving remains refused, no file-resource codec implementation claimed.
+
+
+## .855 user PASS / .856 imported GLB .boxlab Save/Open — 2026-10-14
+
+User PASS /nextbuild (current855). Protect imported GLB scene-history restoration.
+Audit existing resource payload/codec/File UI/native replacement: no binary encoder.
+Add small transport helper for imported sourceglb/version1 payload, canonical base64
+Uint8Array image bytes + version/length/format/finite JSON/24MB pool guards. Existing
+codec optional glbResource with own version1 preserves plain v1 shape. Save/Open uses
+native snapshot + encode/decode roundtrip + confirmation + staged atomic replacement;
+success resets history, cancellation/invalid/render-error preserves it. Save checks32MB
+same as Open. Snapshot status/Save label updated to current capability; no UI cleanup.
+Only independent imported GLB payloads supported; linked rich scenes/other channel owners
+still refuse. Native UV/topology/export signature safety retained; no new exporter/kernel/
+renderer/history or resource dedup. Five native tests binary/plain/corruption/owners,
+actual SaveOpen/manager/cancel/invalid/rollback/size.855 codec assertion now imported
+support + other-owner refusal;829 status checks retain original acceptance semantics.
+Full2290PASS/0FAIL/0skip. Reviewed codec/helper/management/drawer/manager graph856 and
+shell/recovery856; main/Loop854/builder851/cache812/protected/frozen unchanged.
+Device imported-file/export/Nomad and basic-file sanity gate pending.
+
+
+## .856 publication verified — 2026-10-14
+
+Release9ec6e46725768ca46dab2521aa9df22e4ccbd329; tested tree
+b71757dad42bbab4bc007b880d3945e15289b3f8 exactly matches local validated checkout.
+Node22 CI38508953096/job115672788333 SUCCESS:2290PASS/0FAIL/0skip.
+Pages38508952135 SUCCESS. Fresh live shell/manifest/management856/codec856/resource856/
+manager856/drawer856, protected Multi1.0 and frozenBeta7 version byte-match repository.
+User855 PASS protected;856 independent importedGLB .boxlab save/open/export device gate
+pending. File32MB/pool24MB limits and linked-rich/other-resource refusals retained.
+
+
+## .856 LiveArray+SubD edit issue / .857 guard compatibility repair — 2026-10-14
+
+User existing LiveArray fails Edit with independent-geometry error after adding SubD,
+works with SubD off. Audit actual linear-array apply and source-core guard: both reject
+SubD despite base geometry/recipe independent. Allow SubD for existing recipe apply/
+conversion, source controller accepts SubD; new Live creation still rejects it, Mirror/
+linked/Boolean/locked/reference/rich guards retained. Native recipe/base/history owners
+retain SubD settings/level across Apply/Cancel and saved file. Existing preview is source
+cage guide; no new SubD preview/kernel. Three native manager/Array/source/history/codec
+checks cover count/END/native SubD parity, source Apply/Cancel/UndoRedo, modifiers/.boxlab
+reopen, conversion and new/Mirror refusal.844 modifier case now Mirror, other guards
+unchanged. Full first run three literal844 pin checks failed after repin; expected pins
+advanced857 only, behavior assertions retained. Final2293PASS/0FAIL/0skip.
+Array/source-editor/source-core857 loader chain and shell/recovery857 hashes reviewed;
+evaluator842/main854/manager+project856/protected/frozen unchanged. Device gate pending;
+856 resource-file acceptance not inferred from this scoped issue.
+
+
+## .857 publication verified — 2026-10-14
+
+Release40db2d5e49f4e8d6843ef1b06fa92867df300451; tested tree
+cb336090408074903b32901b20cd66d821990e5a exactly matches local validated checkout.
+Node22 CI38510208221/job115676736263 SUCCESS:2293PASS/0FAIL/0skip.
+Pages38510208124 SUCCESS. Fresh live shell/manifest/Array857/source-editor857/source-core857,
+unchanged evaluator842, protected Multi1.0 and frozenBeta7 version byte-match repository.
+Predeployment reads returned856; subsequent complete graph matches857. Device existing
+LiveArray + SubD count/END/source/history/project gate pending;856 resource gate not
+inferred from this bug report. New SubD creation/Mirror restrictions retained.
+
+
+## .857 Apply acceptance / refresh clarification — 2026-10-14
+
+User first reported857 unchanged, clarified failure on Apply Array, then explicitly
+reported it works now and suspected updated-file refresh. Protect existing Live Array
+Apply with SubD enabled. Initial failure is superseded for this device case; stale
+asset cause is user-reported, not independently reproduced. No additional code/build.
+Source-edit/conversion/file gates not separately confirmed;856 resource-file gate still
+pending. Keep857 published implementation and reviewed cache graph; no speculative repair.
+
+
+## .858 — deduplicate imported embedded image bytes in .boxlab — 2026-10-14
+
+User /nextbuild. Audit confirms importer shares image pools across objects but856
+project encoder writes all byte strings per-object. Extend existing resource helper/
+codec with scene image pool, canonical-byte equality keys and resource-v2 references.
+Separate definitions/materials/UV metadata retained; different bytes remain separate.
+New-file decode shares read-only pool buffers; future editors must copy touched bytes
+before replacing resources. Canonical pool/ref/24MB validations and32MB file gate remain.
+Legacy856 inline/v1 and plain scene files retain exact Open roundtrip through private
+non-enumerable decode-format flag. Fresh saves use new pool; metadata-only resources
+stayv1. No rendering/history/kernel/editor change; linked-rich/other-owner refusals stay.
+Four native codec/Open checks: shared/equal/distinct bytes, file-size reduction fixture,
+metadata/buffer identity, bad pool/ref rejection, exact legacy/plain and actual Open
+acceptance without corrupt-scene replacement. Full2297PASS/0FAIL/0skip. Resource references
+explicitly version2; projectv1 envelope unchanged. Codec/resource/management/drawer858/
+shell+recovery858 graph reviewed; manager856/main+Loop854/Array857/protected/frozen unchanged.
+Device pooled project/Nomad/older-file gate pending; no hardware speed claim.
+
+
+## .858 publication verified — 2026-10-14
+
+Releaseb5f352c0c2843536c6f46f444fb2e0c41292b8aa; tested tree
+c25a1473cbcb9608e63a6c28202dfd1f4d594ba7 exactly matches local validated checkout.
+Node22 CI38516162270/job115695323751 SUCCESS:2297PASS/0FAIL/0skip.
+Pages38516162030 SUCCESS. Fresh live shell/manifest/management858/codec858/resource858/
+drawer858, protected Multi1.0 and frozenBeta7 version byte-match repository. Initial
+reads preceded deployment; postdeployment full graph matches858.857 Apply/SubD accepted
+and protected.858 pooled/legacy resource-file device gates pending; no renderer gain claim.
+
+
+## .858 user PASS / .859 ordinary Duplicate imported resources — 2026-10-14
+
+User PASS /nextbuild accepts858 pooled resources, imported-file/export/legacy reopen and
+plain/LiveArray sanity. Audit native single duplicateActive and Multi duplicateSelection:
+resource payload omitted despite existing addObject support. Forward read-only imported
+payload through both original owners. Independent mesh clones, settings/group/selection/
+activation/Move handoffs unchanged. No new kernel/exporter/history/renderer; linked-rich
+project Save restriction retained. Three native tests: both actual duplicate paths,
+independent edits, plain+rich grouped Multi, Move, delete/UndoRedo payload retention,
+pooled project roundtrip/native replacement, actual GLB UV + final material/image bytes,
+and original stale-topology UV refusal. Browser texture decode remains hands-on gate.
+Initial new tests reproduced payload loss; fixture then included missing linked-source
+staging variables and normalized cross-realm JSON comparisons. No runtime change beyond
+payload forwarding. Full validation/publication follows below. Manager/management859,
+drawer child859 and shell/recovery859; codec/resource858/main+Loop854/Array857/protected/
+frozen owners untouched. Duplicate transaction-history activation behavior unchanged;
+new scene-history test explicitly covers deletion/restoration of a duplicate.
+
+
+## .859 local validation — 2026-10-14
+
+Full native Node regression:2300PASS/0FAIL/0skip, including three new duplicate-resource
+checks. Reviewed release/cache contract passes; protected Multi1.0 and frozen betas
+unchanged. Device859 duplicate→project→Nomad gate pending. Publication proof follows
+in AI_HANDOFF/DEV_HISTORY after main/CI/Pages/live verification.
+
+
+## .859 publication status — 2026-10-14
+
+Complete local build3db33caa;2300PASS/0FAIL/0skip. Automatic approval review rejected
+push to main despite recorded repository standing approval; direct authorization for
+publication is now required by the review. Remote/live remain858.859 CI/Pages/live
+verification and device gate pending. See AI_HANDOFF publication block; do not claim859
+published or route around rejection through another tool.
+
+
+## .859 publication verified — 2026-10-14
+
+Direct user standing authorization supersedes prior approval block. Release
+d7dae3c8147373920e9c526f0b6eb36e5482e4bc/tree4008eb4179031b70f4882bdb0f729f96b658c267
+match local validated files. CI38541026468/job115775518061 SUCCESS2300/0/0skip;
+Pages38541024866 SUCCESS. Live shell/manifest/manager859/management859/drawer859 and
+protected Multi1.0/frozenBeta7 version match.859 device gate pending.
+
+
+## .860 — ordinary Duplicate retains independent Live Array recipe — 2026-10-14
+
+User direct ongoing push/publish approval and /nextbuild.859 published first. Audit single
+Duplicate omitted arrayRecipe; Multi snapshot already captured it but addMesh dropped it.
+Forward through both existing owners; native addObject deep-JSON-copies serialized recipe.
+Original cloneLooseValue is shallow; do not use it for mutable nested source/END metadata.
+SubD/settings/group/Move/geometry unchanged,859 read-only imported payload still shared.
+Three actual owner/manager/evaluator/source/history/codec tests cover single/Multi deep
+independence, placed rotation/nonuniform scale/move, mixed group/plain objects, count+END
+Apply, source Cancel/Apply/edit UndoRedo, original unchanged and native file replacement.
+Initial tests fail on859 missing recipe; shallow initial clone also failed nested identity,
+replaced with JSON clone. No new kernel/session/history/recipe version or general refactor.
+Audit independently reproduced existing original-array affine-tail roundoff after arbitrary
+rotation/nonuniform placement + count/END edits:[15]=1.0000000000000002, strict source reopen
+fails. Separate next build, not silently treated as860 acceptance. Tests retain exact affine
+rotation/scale/translation; native staged-file test fixes fixture input/global-name collision.
+Manager/management860/drawer860/shell+recovery860, codec858/Array857/evaluator842/source857/
+main+Loop854/protected/frozen untouched. Full validation/publication follows below.
+
+
+## .860 local validation — 2026-10-14
+
+Full native Node regression:2303PASS/0FAIL/0skip, including three new Live Array
+duplicate tests and retained859 resource coverage. Reviewed shell/cache contract passes.
+Protected Multi1.0/frozen betas unchanged; device860 gate and proven prior affine-tail
+roundoff remain separate. Publication verification pending.
+
+
+## .860 publication verified — 2026-10-14
+
+Release40f638db7033dff8b79469e880531055a051cc72; tested tree
+925bfba7f07e248a7c3ac58e0527ee693e3c68b7 exactly matches local.
+Node22 CI38541986782/job115778710723 SUCCESS2303PASS/0FAIL/0skip;
+Pages38541985896 build/deploy SUCCESS. Fresh live shell/manifest/manager860/
+management860/drawer860, protected Multi1.0 and frozenBeta7 version byte-match.
+Connected Git Data publication uses expected-main SHA and verified file/tree hashes.
+Device860 duplicate/source/file gate pending;859 imported-duplicate/Nomad gate
+not yet accepted. Next proven original-array affine-tail rounding repair remains queued.
+
+
+## .861 affine Live Array reopen repair — 2026-10-14
+
+Audit current main697a9fa9/live860/pins; baseline2303PASS/0FAIL. Reproduced original
+arbitrary-angle/nonuniformly scaled array count/END Apply producing inferred affine
+[15]=1.0000000000000002. Existing reopenArray now guards finite/tail32*Number.EPSILON,
+then canonicalizes internally derived bottom row0/0/0/1. External recipe/project strict
+validation, instance343, non-affine component refusal and protected/frozen owners stay.
+Three native regressions cover repeated placed edits/shape/project, actual Array Apply
+followed by source Apply/Cancel/history with SubD, and strict external/file refusal.
+Core/source/Array/codec/management/drawer parent graph861 reviewed; three historical
+literal Array pin expectations advance861 with original semantics retained.
+Device861 source/history/project gate pending;860 duplicate/859 Nomad gates not inferred.
+Full validation/publication proof follows after verification.
+
+
+## .861 local validation — 2026-10-14
+
+Full native Node24 regression:2306PASS/0FAIL/0skip. Three new native affine reopen
+checks and all prior semantic coverage pass. Reviewed cache contract/shell markers
+coherent; protected Multi1.0/instance343/frozen beta files untouched. Publication
+CI/Pages/live verification pending; device gates not inferred.
+
+
+## .861 publication verified — 2026-10-14
+
+Releasef36b216a9c272a024e64f773279157858698cab2; tested tree
+c94fbe5d4dd85b79ca536df549c190f8931b2f3a exactly matches fetched main.
+Node22 CI38556571969/job115827100089 SUCCESS2306PASS/0FAIL/0skip.
+Pages38556564998 build/deploy SUCCESS. Fresh postdeployment live shell/manifest,
+core861/Array861/source-core861/source-editor861/codec861/management861/drawer861,
+protected Multi1.0 and frozenBeta7 version byte-match repository. Initial asset reads
+preceded completed deployment; complete postdeployment verification matches861.
+All four handoff files current; device861 gate pending,860 duplicate and859 imported
+resource/Nomad gates remain separately pending. No new user PASS inferred.
+
+
+## .861 user PASS / .862 imported UV inspection — 2026-10-15
+
+User PASS /nextbuild protects861 rotated/scaled LiveArray source/history/project tests.
+Audit main5599eea7/import797/export741/MeshHealth443: imported face-corner UV storage and
+export signature exist, layout inspector absent. Existing MeshHealth disclosure now
+shows read-only base UV outlines/coverage/tile0–1/outside corners via new helper862.
+Reuses exporter topologySignature global; no parallel signature/kernel/history/channel.
+Absent/stale/invalid/unavailable states explicit; stale preview hidden, payload retained.
+Preview capped20000corners with truncation count, stats complete; drawn only disclosure/
+Refresh. No UV editing/unwrap/painting/material display or evaluated modifier UV claim.
+Four native tests cover real GLB importer/exporter/codec, immutability/topology/facegroups,
+partial/malformed/tiled/extreme coordinates/budget and actual MeshHealth UI lifecycle.
+Full2310PASS/0FAIL/0skip. Browser visual attempt blocked by truncated Chromium download;
+iPad canvas/layout pending. MeshHealth862/child862/shell+recovery862 reviewed; all other
+runtime/protected/frozen owners unchanged.860 Duplicate/859 Nomad gates stay separate.
+Publication proof follows after main/CI/Pages/live verification.
+
+
+## .862 publication verified — 2026-10-15
+
+Release47767d31bdcb54e23493fbe4a40adc4597592c1c; tested tree
+e0fe02a94a7be968f147ff487e4c616c480aab65 exactly matches fetched main.
+Node22 CI38658512748/job116173915714 SUCCESS2310PASS/0FAIL/0skip.
+Pages38658512404 build/deploy SUCCESS. Fresh live shell/manifest, MeshHealth862/
+inspection862 and protected Multi1.0/frozenBeta7 version byte-match repository.
+861 user PASS protected;862 iPad layout/UV/stale-Undo/project checks pending. Separate
+860 Duplicate and859 Nomad/resource gates not inferred. Four handoff files current.
+
+
+## .862 user PASS / .863 UV islands and seam inspection — 2026-10-15
+
+User PASS accepts862 UV layout/coverage/stale topology→Undo/plain/project tests.
+Audit main85eb80ef/live862/existing import/export/inspector/topology helpers finds no UV
+connectivity analyser. Existing inspector now derives islands from mesh vertex-ID edges
+and exact vertex-aligned UV endpoint matches, with conservative ambiguous/missing data.
+Six cycling island colours and orange seam sides in same bounded canvas; full island/
+seam stats independent of preview truncation. Disconnected/point-touch/overlapping UVs
+do not merge merely by coordinates. No legacy mesh.edges() call or resource mutation;
+no new channel/kernel/history/gesture, unwrap/painting/overlap/evaluated modifier claim.
+Four native tests cover orientation/exact splits/ambiguity/missing/stale/limits, real
+GLB import→codec→export, readonly/legacy edges refusal, deterministic canvas colours.
+Original862 tests unchanged; full2314PASS/0FAIL/0skip. MeshHealth/inspection863 and shell/
+recovery pins/hashes reviewed; all other protected/frozen/runtime owners unchanged.
+Device863 colour/seam/project gate pending;860 Duplicate/859 Nomad remain separate.
+Publication proof follows after main/CI/Pages/live verification.
+
+
+## .863 publication verified — 2026-10-15
+
+Release406cfd1f37ca9ab3e5eccaf7a6dd0c1ad59579ce; tested tree
+3a8b20c62f2c5c86c3b3ea4d91135761ec46960b exactly matches fetched main.
+Node22 CI38662867643/job116187970520 SUCCESS2314PASS/0FAIL/0skip.
+Pages38662867413 build/deploy SUCCESS. Fresh live shell/manifest, MeshHealth863/
+inspection863 and protected Multi1.0/frozenBeta7 version byte-match repository.
+862 user PASS protected;863 iPad island/seam/coordinate-vs-topology/Undo/project gate
+pending. Separate860 Duplicate and859 resource/Nomad gates not inferred. All four
+handoff files current; no new authoring/channel/kernel/history owner.
+
+
+## .863 user PASS / .864 imported UV rotation — 2026-10-15
+
+User PASS accepts863 UV island/seam/coordinate-vs-topology/Undo/file tests. Audit main
+ca84d25e/live863 and import/export/history/codec confirms existing channel supports a
+first authoring operation via payload replacement. Add Rotate UVs90° to MeshHealth.
+New edit864 uses inspector863/native checkpointSnapshot; [u,v]→[1-v,u] about(.5,.5).
+Valid complete independent imported GLB only; unsupported/stale/partial contexts refuse.
+New UV arrays + replacement payload preserve shared originals/images/metadata; retire
+stale tangent corners/signatures. Geometry and original resource schema/export owners
+unchanged. One native Undo step; no-op adds none. No projection/unwrap/painting claim.
+Four native tests cover shared resource identity/scene history, codec/real GLB UVs with
+old tangents excluded, no-op/refusal and actual UI delegation. Fixture corrections:
+native capture clones saved mesh normally; test live identity, and mutate live mesh for
+stale-topology case. All original inspector tests retained. Validation/publication below.
+MeshHealth864→edit864→inspector863, shell/recovery864; other protected/frozen owners stay.
+
+
+## .864 local validation — 2026-10-15
+
+Full native Node24 regression2318PASS/0FAIL/0skip, including four new UV authoring
+checks and unchanged862/863 inspection coverage. Reviewed shell/cache graph coherent;
+protected/frozen files unchanged. Device864 UV rotate/history/project/export gate pending.
+Publication CI/Pages/live proof follows after verification.
+
+
+## .864 publication verified — 2026-10-15
+
+Releasec84b5c1b48034be7e597459c9c276e6d51df0dd7; tested tree
+55358c7e8530028e071d44fbb502f01735e94ad6 exactly matches fetched main.
+Node22 CI38664362797/job116192739572 SUCCESS2318PASS/0FAIL/0skip.
+Pages38664361873 SUCCESS. Postdeployment live shell/manifest/MeshHealth864/edit864,
+unchanged inspector863 and protected Multi1.0/frozenBeta7 version byte-match repository.
+Initial reads preceded deployment; final complete graph matches864.863 user PASS
+protected;864 iPad rotation/history/project/BaseGLB→Nomad gate pending. Separate860/859
+gates not inferred; all four handoff files current. No geometry/kernel/schema changes.
+
+
+## .864 native NOM roundtrip FAIL / .865 native UV repair — 2026-10-15
+
+User FAIL: UVs lost returning to Nomad. Clarification confirms File→NOMAD, not Base GLB.
+Audit main6023e71c/live864: native writer741 always writes zero UVs/faces_uv geometry
+indices, whereas GLB carries corners. Fix existing native writer, no UV rotation change.
+Uses original exporter topologySignature + stored base UV corners; separate UV pool
+keys geometry ID+UV pair to preserve seams/shared geometry and continuous UV indices.
+Original ngon/triangle conversion preserves UV corners/count_uv/field bounds. Plain
+no-UV path unchanged. Known incompatible/stale/partial/nonfinite/f32-overflow channels
+refuse, including unsupported evaluated SubD/Mirror; status counts UV-bearing objects.
+Four native tests read binary corners/seam indices, rotated/project actual File NOMAD
+bytes, triangulation/shared/mixed offsets and invalid guards. Full2322PASS/0FAIL/0skip;
+original9native tests and GLB/UV/history coverage retained. Donor schema already carries
+independent UV/vertex counts; template untouched. Core/panel/shell+recovery865 reviewed,
+other protected/frozen owners unchanged. Native Nomad device gate pending;864 not PASS.
+No materials/textures/layers extension; publishing proof follows after verification.
+
+
+## .865 publication verified — 2026-10-15
+
+Releaseb080c811a3b4e901b4a360fb314f63adc38034de; tested tree
+d548e4c2ff0bf1765933cbec32a9b511e6a06502 exactly matches fetched main.
+Node22 CI38665811583/job116197395797 SUCCESS2322PASS/0FAIL/0skip.
+Pages38665810713 build/deploy SUCCESS. Postdeployment live shell/manifest/export-panel865/
+native-core865 and protected Multi1.0/frozenBeta7 version byte-match repository.
+Initial reads preceded deployment; final complete graph matches865. Native Nomad UV
+layout/seam device gate pending;864 FAIL recorded specifically on File NOMAD.863 PASS
+retained; no native texture/material claim or new device acceptance inferred. Four
+handoff files current; frozen donor/protected geometry owners unchanged.
+
+
+## .865 user PASS / .866 imported UV flips — 2026-10-15
+
+User Perfect PASS accepts865 native UV/seam/rotation/project File NOMAD gate; protect
+native UV pool/corner/header/geometry behavior. Audit main9ad41dba/live865/current edit
+owner finds no UV flip controls. Extend same edit owner with FlipU[1-u,v]/FlipV[u,1-v];
+rotate API stays intact, all delegate one private guarded copy-on-write transaction.
+Compact MeshHealth row reuses original enable/history/context/refresh paths. Axis-invalid,
+unsupported/stale/partial/no-op guards retained; touched arrays replaced, other resources
+shared read-only, stale tangents retired. No new channel/history/kernel or UV unwrap.
+Four native regressions cover both flips/twice/scene UndoRedo/shared payload/geometry,
+project + actual native NOM UV seams/GLB attributes, guards/no-ops and actual UI actions.
+Full2326PASS/0FAIL/0skip; earlier rotate/NOM tests retained. MeshHealth/edit866 + shell/
+recovery866 reviewed; inspector863/export+native865/protected/frozen bytes unchanged.
+Device866 flip/history/project/native-export gate pending. Publication proof follows.
+
+
+## .866 publication verified — 2026-10-15
+
+Release8186bf45691bed9b173d8db1af5033c136edec34; tested tree
+cb39f28fdef41a49b0cb8bee2a05747cf3db611d exactly matches fetched main.
+Node22 CI38676132706/job116230036867 SUCCESS2326PASS/0FAIL/0skip.
+Pages38676132006 SUCCESS. Postdeployment live shell/manifest/MeshHealth866/edit866,
+unchanged inspector863/export-panel865/native-core865 and protected Multi1.0/frozen
+Beta7 version byte-match repository.865 native UV roundtrip user PASS protected;866
+flip/history/project/native-export device gate pending. All four handoff files current;
+no new device PASS inferred and no native schema/exporter/geometry changes.
+
+
+## .867 — large UV workspace, 2026-10-15
+
+User 866 PASS protects Flip U/V, twice restoration, history and native/project UV
+roundtrip. User approves dedicated large UV workspace after tiny Mesh Health preview
+feedback. Audit main5b85e244/live866: inspector/drawing/edit/history/session owners exist;
+no UV workspace/navigation owner. Reuse the same Mesh Health session, original canvas,
+Rotate/Flip nodes and native Undo/Redo buttons. Mesh Health retains summary + Open UV
+Editor; large overlay uses existing renderer with centred DPR-aware view, drag pan,
+pinch/wheel/button zoom and Fit. New uv-navigation is presentation-only CSS-pixel state;
+no modelling kernel, UV channel or history stack. Back to 3D/Escape closes original
+session; capture/resize cleanup and pen/palm guards retained. Both existing keyboard
+Delete owners yield while UV workspace is active. Root touch propagation is scoped,
+but toolbar touch default remains available for Safari synthesized clicks.
+Six native regressions cover pan/pinch continuation, tap Undo/Redo discrimination,
+read-only renderer, original DOM/control/history/session wiring, DPR/resize/capture/
+close/reopen/palm cleanup and actual Delete owners. Full Node24:2332PASS/0FAIL/0skip.
+MeshHealth/edit/inspector/workspace/navigation867, manager/delete scoped guard pins867,
+shell/recovery867; native export865, protected Multi1.0 and frozen betas unchanged.
+Device workspace/pan/pinch/toolbar/history/exit/native-export gate pending. Preview
+still capped at20,000 corners; no per-island picking/manipulation, unwrap or painting.
+Next after feedback: island selection in this workspace using existing island data,
+then narrowly scoped selected-island transforms. Do not build another UV edit owner.
+
+## .867 publication verified / user PASS — 2026-10-15
+
+Release d7b43cac5313fcf01e2b3adfc45b82fc758d9916; tree
+217eeca8a73a0d3cd3488cfc601ab6b42cb8af2f. Node22 CI38677757901 /
+job116235131037 SUCCESS2332PASS/0FAIL/0skip; Pages38677757250 SUCCESS.
+Live shell/version/workspace867/navigation867 byte-match repository before868 changes.
+User Works well PASS accepts large workspace, navigation and session exit; protect
+same canvas/controls/history and clean Back to3D. Native865 and866 protections retained.
+
+## .868 — UV island selection, 2026-10-15
+
+User Works well PASS /nextbuild accepts867 large workspace/navigation/session exit.
+Audit current main d7b43cac/live867 and inspector/workspace/navigation/edit owners:
+island IDs already exist; extend original inspector renderer and gesture owner.
+Tap Pencil/finger/mouse selects the hit island, highlights its preview faces in gold,
+and reports Island N of count. Clear Selection/empty tap clears. Shared uvProjection
+maps both renderer and picker after pan/zoom; reverse paint order selects topmost
+stacked island. Only previewed faces are pickable under existing20,000-corner budget.
+Single short stationary tap uses existing navigation owner; restores tiny tap jitter.
+Drag/long/multitouch/cancel do not pick; native two-/three-finger history unchanged.
+Selection is ephemeral view state; refresh/edit/UndoRedo report replacement and close
+clear it, Fit retains it. No UV coordinates/payload/geometry/history/project changes.
+Existing Rotate/Flip remain WHOLE LAYOUT, explicitly labelled even with selection.
+No selected-island editing yet; next narrow build extends existing edit transaction
+with selected-island transforms after device feedback. No parallel UV kernel.
+Five native tests cover continuous/stacked/concave/boundary/bounded/stale picking,
+shared pan/zoom mapping, pen/mouse/touch and history discrimination, read-only highlight,
+and actual workspace clear/reset/close/controls integration. Full Node24:2337PASS,
+0FAIL/0skip. MeshHealth/edit/imported-inspector/workspace/navigation868; shell/recovery868.
+Manager/delete867/native exporter865/protected Multi1.0/frozen betas unchanged.
+Device868 selection/navigation/history gate pending; user867 PASS is protected.
+
+## .868 publication verified — 2026-10-15
+
+Release984c33265abc3118eb978121dac91737c8ac272c; tested tree
+eebfa006c906772b0cfb8773e1dd9fe5541fbea1 exactly matches fetched main.
+Node22 CI38696478096/job116294097328 SUCCESS2337PASS/0FAIL/0skip;
+Pages38696477599 SUCCESS. Live shell/version/MeshHealth/workspace/navigation/
+inspector/edit868, unchanged native865, protected Multi1.0 and frozenBeta7 marker
+byte-match repository. User867 PASS protected;868 island selection device gate
+pending. No selected-island transforms or new UV/history/resource/export schema.
+
+## .869 — selected-island Rotate / Flip, 2026-10-15
+
+User868 PASS accepts tap selection/highlight, pan/pinch/Fit/clear and native history/
+Back to3D. Audit main04ffe1a4/live868: existing imported-uv-edit transaction owns all
+Rotate/Flip edits; inspector owns connectivity; no selected-island transform exists.
+Extend SAME edit owner with optional island+expected-payload scope. Recompute original
+inspector connectivity and validate current topology/payload/index; no stale island ID
+silently applies to a replacement resource. Inspector now exposes faceIslands for ALL
+mapped faces, retaining preview cap; whole selected island transforms beyond preview.
+Selected Rotate90°/FlipU/V pivot around that island's UV bounds centre. Unselected faces
+and resources are shared read-only; only touched UV arrays/payload replaced, prior tangent
+basis retired. Existing no-op suppression/native checkpoint/guards remain. Without a
+selection, original tile-centred WHOLE layout maths and exact APIs remain unchanged.
+Original MeshHealth buttons pass workspace selection scope, refresh same report and
+retain highlight only if full island membership still matches; merging/splitting clears.
+Selection label explicitly says this island vs whole layout. UndoRedo/close/report
+refresh still clear ephemeral selection; no new history/project schema or kernel.
+Four native regressions cover continuous full island beyond preview, exact transforms/
+twice flip, untouched peer/resources/geometry/native UndoRedo, codec + actual NOM UV
+bytes and GLB indexed attributes, stale/invalid/locked/overflow refusal and real UI scope.
+Existing868 test updated only selected scope text + membership retention/merge refusal;
+all prior whole-layout/export/navigation contracts retained. Full Node24:2341PASS/0FAIL/
+0skip. MeshHealth/edit/inspector/workspace869; nav868/manager+delete867/native865 unchanged.
+Shell/recovery869; frozen betas/protected Multi1.0/modelling kernels unchanged.
+Device869 selected edit/history/Nomad/project gate pending;868 PASS protected.
+Next: after feedback, selected-island numeric Move/Scale through this same transaction;
+no drag transform gesture takeover, unwrap, new-mesh UVs or painting in869.
+
+### .869 final scope-label correction
+
+Final source review caught a text replacement also changing the no-selection label;
+whole-layout maths stayed correct. Restore explicit whole-layout label when cleared,
+add actual workspace assertions at open/clear and refresh only MeshHealth/workspace
+cache keys to869.1 (shell/version869; internal MeshHealth stamp869). No new user PASS.
+
+## .869 publication verified — 2026-10-15
+
+Final release312e030d95bd582dcd641b1835ba13f77ef93e74; tested tree
+b72f182c44f1cfbf61d686e4dbf9ceaaf8f74970 matches fetched main. Node22 CI
+38724621405/job116387284480 SUCCESS2341PASS/0FAIL/0skip; Pages38724621331
+SUCCESS. Live shell/version869, MeshHealth/workspace869.1, edit/inspector869,
+nav868/native865/protected Multi1.0/frozenBeta7 marker byte-match repository.
+Final label correction included;868 user PASS protected.869 selected-island edit,
+UndoRedo and project/native Nomad device gate pending. Repeated /nextbuild during
+publication continued the active release; no869 PASS or later build is inferred.
+
+## .870 — selected-island numeric Move / Scale, 2026-10-16
+
+User869 PASS protects selected Rotate/Flip, pivot/other-island isolation, native history
+and project/Nomad UV roundtrip. Audit main82bed89c/live869 and original edit/workspace/
+inspector/session/history owners: no UV Move/Scale controls exist. Extend existing
+imported-uv-edit transaction with moveImportedUV(U,V,scope) and scaleImportedUV(factor,
+scope). Require selected island + expected payload; all existing complete-imported/
+context/stale/index/history guards remain. Positive uniform scale about original island
+bounds centre; Move uses UV-tile offsets. Whole island includes faces beyond preview.
+Other islands/geometry/peer payload/resources untouched; copy touched corners + payload,
+retire old tangent basis, one native checkpoint per changed click. Zero Move/Scale1
+no-op adds no history; nonfinite/nonpositive/overflow refuses before mutation.
+Existing UV workspace gets compact ΔU/ΔV→Move and Scale×→Scale row, selected-only and
+original edit eligibility. Fields default0/0/1 on reopen; retained after Apply so clicks
+repeat. Blank/nonfinite/nonpositive values show inline error without edit. Original
+MeshHealth callback supplies live context/scope, refreshes same report and retains only
+matching island membership. Original Rotate/Flip/no-selection scopes unchanged. Canvas
+drag stays pan; no new pointer owner/history/kernel/schema. Keyboard guard yields to
+input editing, so Backspace/CtrlZ in fields remain normal native input actions.
+Four native regressions: Move/Scale geometry/resource/peer/history isolation, project +
+actual NOM UV bytes and indexed GLB attributes, no-op/invalid/stale/locked/overflow guards,
+and real MeshHealth callback. Original868 workspace integration expanded for numeric
+values/invalid/no-selection/UI delegation/Backspace;867 mock gets new callback binding.
+Full Node24:2345PASS/0FAIL/0skip. MeshHealth/edit/workspace870, shell/recovery870;
+inspector869/nav868/native865/manager+delete867/protected Multi1.0/frozen betas unchanged.
+Device870 numeric/iPad keyboard/history/native-export gate pending;869 PASS protected.
+Next after feedback: remaining narrow numeric UV transform controls via same edit owner;
+projection/unwrap/new-mesh UV channels and painting remain later. No direct drag editing.
+
+## .871 — Pencil Move for selected UV islands, 2026-10-16
+
+User .870 PASS protects numeric Move/Scale, native UndoRedo and project/Nomad UV
+roundtrip. User requests Pencil movement instead of typing. Audit current main
+604bac15 and live .870; existing workspace canvas owns pointers/navigation and
+imported-uv-edit owns Move/history. Extend that canvas owner only: tap to select,
+then Pencil-drag the selected island for a read-only live preview. Lift delegates
+ONCE to the existing Move transaction (one native checkpoint for a changed stroke).
+Finger drag, background/unselected Pencil drag, pinch, wheel and touch UndoRedo
+retain navigation ownership. Palm touch while Pencil is down cannot edit UVs.
+Exact Move/Scale fields remain available inside a collapsed disclosure; Scale stays
+numeric in this narrow build. No new UV channel, edit kernel, scene history or schema.
+
+Renderer preview offsets selected outlines/highlight and their orange seam sides
+without changing payload/report arrays; seam-side island IDs avoid shared-corner
+reference ambiguity. Screen deltas reuse the renderer projection, with CSS-pixel,
+zoom and DPR parity. Workspace keeps projection bounds until Fit/reopen so moving
+outside tile 0–1 does not auto-fit/jump. Whole selected island still moves through
+existing transaction beyond the preview budget. Other islands/resources stay intact.
+Tap jitter <=4px adds no edit. Cancel/lost capture/report replacement/lock/resize/
+Fit/history/close discard previews; release guards original object/mesh/payload.
+Four native tests exercise the actual workspace plus manager/history, live read-only
+preview, repeated strokes/one checkpoint, seam sides, pointer/capture/palm/gesture
+lifecycle, view mapping, peers and stale MeshHealth callback. Existing .870 export
+regressions retain project, actual NOM corner bytes and GLB UV coverage.
+
+Changed cache graph: MeshHealth871 → workspace871 / edit871 → inspector871;
+nav868 and original Move math unchanged; shell/recovery871. Protected Multi1.0,
+modelling kernels and frozen betas unchanged. Local Node24 full suite:2349PASS/0FAIL/0skip; final four Pencil tests also rerun
+after seam assertions. Publication proof follows after verification. Device .871 Pencil feel/navigation/history/export
+gate pending. Next: feedback on Pencil Move, then Pencil Scale/Rotate through the same
+canvas/transaction owners; projection/unwrap/new-mesh UVs/painting remain later.
+
+## Protected .870 — user PASS2026-10-16
+
+Selected-island numeric Move/Scale, island isolation, UndoRedo, iPad field editing and
+project/native Nomad UV roundtrip accepted. Pencil Move supersedes numeric-first UX
+in .871; exact fields remain optional. Do not infer .871 device acceptance.
+
+## .871 publication verified — 2026-10-16
+
+Release bb0191af0c7ee0266d95662b1ec2073f9eb12224; tested tree
+7d6ea21850ddeb29b9a4189cd25c5ba2cfa5b1d0 exactly matches fetched main.
+Actual Node22 CI38818127353/job116707802378 SUCCESS2349PASS/0FAIL/0skip;
+Pages38818126928 build/deploy SUCCESS. Postdeployment live shell/manifest,
+MeshHealth871/workspace871/edit871/inspector871, unchanged navigation868,
+protected Multi1.0 and frozenBeta7 version byte-match repository. Initial live reads
+preceded deployment and returned870; final complete graph matches871. All four
+handoff files current. User870 PASS protected;871 Pencil feel/navigation/history/
+project/native-export device gate pending. Scale remains numeric under Exact;
+Pencil Scale/Rotate follow feedback, no871 user PASS inferred.
+
+## .872 — Pencil Scale for selected UV islands, 2026-10-16
+
+User .871 Perfect PASS protects Pencil Move, seam following, one Undo per stroke,
+navigation and project/Nomad UV roundtrip. Audit main7864abe9/live871: workspace
+owns the sole canvas gesture, imported-uv-edit already owns uniform Scale. Add
+selected-only Move/Scale buttons to that workspace; Move remains default on reopen.
+Scale: Pencil-drag selected island upward to enlarge/downward to shrink about its
+full UV-bounds centre. 120 CSS pixels doubles/halves; positive factor clamped .01–100
+per stroke, with live factor readout. Finger/background navigation and palm handling
+remain unchanged; horizontal-only/tiny strokes do not scale. Mode switch cancels
+preview. Exact fields remain optional under the existing collapsed disclosure.
+
+Reuse the original read-only preview and one on-release Scale transaction/native
+checkpoint. Shared importedUVIslandCentre extracts the existing bounds-centre loop
+into the inspector; preview and commit use identical full-island bounds, including
+faces beyond preview budget. Scale preview transforms only selected outlines/gold
+highlight/orange seam sides; payload and report arrays stay unchanged until lift.
+Existing stale context/locked/history/no-op/overflow guards and stable projection
+remain. No new UV schema/kernel/history or pointer owner. Four native regressions
+cover actual workspace/manager/history, preview/pivot/peer/resource isolation,
+reciprocal strokes, cancellation/no-ops/mode switch/reopen, navigation/palm/zoom/DPR,
+positive limits and bounded-preview/shared-corner seam correctness. Existing native
+project/NOM/GLB and Move/Rotate/Flip tests remain active. Local Node24 full suite:2353PASS/0FAIL/0skip; publication proof follows below. Cache graph MeshHealth/workspace/edit/inspector872; nav868 and
+protected Multi1.0/modelling kernels/frozen betas unchanged. Device872 gate pending.
+Next after feedback: Pencil Rotate through the same workspace/transaction owners;
+projection/unwrap/new-mesh UV channels/painting remain later.
+
+## Protected .871 — user PASS2026-10-16
+
+Pencil Move and orange seam following, repeated drags/one native Undo per stroke,
+finger/pinch/background navigation and project→native Nomad UV roundtrip accepted.
+Default Move remains protected when introducing Scale; .872 acceptance is separate.
+
+## .872 publication verified — 2026-10-16
+
+Release bbb8efdfa00b6ccc073400a9f36339fdb1c8808f; tested tree
+9a4a162fa38eaff472a1596fdc1204a612dc6ea8 exactly matches fetched main.
+Actual Node22 CI38823964047/job116726929368 SUCCESS2353PASS/0FAIL/0skip;
+Pages38823962841 build/deploy SUCCESS. Postdeployment live shell/manifest,
+MeshHealth872/workspace872/edit872/inspector872, unchanged navigation868,
+protected Multi1.0 and frozenBeta7 version byte-match repository. Initial live reads
+preceded deployment and returned871; final complete graph matches872. User871 PASS
+protected;872 Pencil Scale/navigation/history/project/native-export device gate
+pending. All four handoff files current; Pencil Rotate next after feedback.
+
+## .873 — Pencil Rotate for selected UV islands, 2026-10-16
+
+User872 PASS protects Pencil Scale/pivot/seams, one Undo per stroke, Move/navigation
+and project/Nomad UV roundtrip. Audit main89a17b3c/live872 and original workspace/edit
+owners: Rotate90 exists, arbitrary-angle selected rotation does not. Add Rotate to
+existing Move/Scale controls. Pencil horizontal drag right rotates counterclockwise,
+left clockwise;120 CSS pixels =90degrees, live angle readout. Full-island bounds
+centre remains shared with Scale, including unpreviewed faces. Default Move on reopen,
+finger/background navigation, pinch and palm policy unchanged. Vertical-only/tiny
+strokes add no edit. Original Rotate90/Flip buttons and exact Move/Scale remain.
+
+Extend SAME imported-uv-edit transaction with rotateImportedUVByAngle(degrees,scope),
+requiring selected island/expected payload/finite angle and all original guards.
+Renderer and transaction share rotateImportedUVPoint; exact quarter-turn branches
+retain accepted90-degree coordinates, generic angles use sine/cosine. Full turns
+are exact no-ops. Read-only preview rotates selected outlines/highlight/orange seam
+sides; original payload/other islands/resources remain untouched until lift. One
+native checkpoint per changed stroke; mode/capture/report/lock/history/resize/close
+cancel preview and original object/mesh/payload release guard remains. No new UV
+schema/kernel/history/pointer owner. Four native regressions cover real workspace/
+manager/history, reciprocal quarter turns, preview/seam/peer isolation, cancellation/
+no-op/full-turn/navigation/palm/zoom/default Move, arbitrary-angle project/actual NOM
+UV bytes/GLB attributes, actual MeshHealth callback, invalid/stale/overflow refusal
+and full-island pivot. Local Node24 full suite:2357PASS/0FAIL/0skip; publication proof follows below. Cache graph
+MeshHealth/workspace/edit/inspector873; navigation868, Multi1.0/modelling kernels and
+frozen betas unchanged. Device873 gate pending;872 PASS protected.
+Next: device feedback on Pencil Rotate, then audit the next staged UV-authoring step;
+projection/unwrap/new-mesh UV channels and painting remain unimplemented, no blanket
+UV propagation through topology edits or evaluated modifiers is claimed.
+
+## Protected .872 — user PASS2026-10-16
+
+Pencil Scale around island centre, seam preview, repeated strokes/one Undo, Move/
+navigation and Save/Open→native Nomad UV roundtrip accepted. Protect uniform Scale
+sensitivity/default Move; .873 device acceptance remains separate.
+
+## .873 publication verified — 2026-10-16
+
+Release 0087d2cbe3d8fd00d586619ebd890c0f4668e4a9; tested tree
+015ab6da6fb23c90e3a9c1924faac9fac1f39927 exactly matches fetched main.
+Actual Node22 CI38826931252/job116736445051 SUCCESS2357PASS/0FAIL/0skip;
+Pages38826931247 build/deploy SUCCESS. Postdeployment live shell/manifest,
+MeshHealth873/workspace873/edit873/inspector873, unchanged navigation868,
+protected Multi1.0 and frozenBeta7 version byte-match repository. Initial live reads
+preceded deployment and returned872; final complete graph matches873. User872 PASS
+protected;873 Pencil Rotate/navigation/history/project/native-export device gate
+pending. All four handoff files current; next UV-authoring stage needs owner audit
+and873 feedback. No new unwrap/new-mesh channels/painting or device PASS inferred.
+
+## .874 — Fit selected UV island to tile, 2026-10-16
+
+User873 Awesome PASS protects Pencil Rotate/pivot/seams, one Undo per stroke,
+Move/Scale/navigation and project/Nomad UV roundtrip. Audit main3068b720/live873:
+no UV fit-to-tile/packing operation exists; view Fit is navigation only. Add selected-
+only Fit to tile beside existing workspace tools. Centres selected island at(.5,.5),
+uniformly scales its longest UV dimension to.96, leaving2% margin; aspect ratio and
+other islands unchanged. Single original UV transaction/checkpoint; repeated fitted
+click is a no-op (8EPS centre/span tolerance only for fit-idempotence). This is selected-
+island placement, not automatic multi-island packing or overlap prevention.
+
+Extend SAME imported-uv-edit owner with fitImportedUVToTile(scope). Reuse original
+island bounds loop through shared read-only importedUVIslandBounds; existing centre
+helper delegates unchanged maths. Normalized coordinates avoid overflow/underflow,
+including extreme/tiny finite UV extents. Zero-extent islands refuse; original complete-
+imported/context/stale/history/locked guards remain. Full selected island includes
+unpreviewed faces. Copy touched corners/replace payload/retire stale tangents as before;
+resources/geometry/peers untouched. Workspace button cancels pending Pencil preview,
+keeps matching selection and current view; original Fit still only frames the view.
+Move/Scale/Rotate gesture owner and all original modelling owners unchanged.
+Four native regressions cover native history/peer/resource isolation/idempotence,
+aspect/full-island/extreme/degenerate guards, actual workspace/view-Fit distinction,
+actual MeshHealth callback/stale scope and project/NOM UV bytes/GLB attributes.
+Local Node24 full suite:2361PASS/0FAIL/0skip; publication proof follows below. Cache graph MeshHealth/workspace/edit/
+inspector874; navigation868/Multi1.0/modelling kernels/frozen betas retained. Device874
+gate pending;873 PASS protected. Next after feedback: audit a native BoxLab UV-channel/
+projection foundation, using original history/project/export owners; no fake imported
+GLB provenance, new-mesh UVs, seam unwrap, evaluated-modifier UVs or painting in874.
+
+## Protected .873 — user PASS2026-10-16
+
+Pencil Rotate centred preview/seams, repeated strokes/one native Undo, Move/Scale/
+navigation and Save/Open→native Nomad UV roundtrip accepted. Preserve quarter-turn
+parity and sole canvas gesture owner. .874 acceptance remains separate.
+
+## .874 publication verified — 2026-10-16
+
+Release 594de3e95bb49dccc8484be92030f6d80fe9ad7a; tested tree
+46c868ca785f9dc84744606f3345fd2becd14839 exactly matches fetched main.
+Actual Node22 CI38852645045/job116817062661 SUCCESS2361PASS/0FAIL/0skip;
+Pages38852644283 build/deploy SUCCESS. Postdeployment live shell/manifest,
+MeshHealth874/workspace874/edit874/inspector874, unchanged navigation868,
+protected Multi1.0 and frozenBeta7 version byte-match repository. Initial live reads
+preceded deployment and returned873; final complete graph matches874. User873 PASS
+protected;874 fit/aspect/isolation/history/navigation/project/native-export device
+gate pending. All four handoff files current; next native UV-channel/projection stage
+requires owner audit and874 feedback. Selected fit does not pack multiple islands.
+
+## .875 — native BoxLab Planar UV creation, 2026-10-16
+
+User874 PASS protects Fit-to-tile aspect/isolation/idempotence/history, Pencil tools,
+navigation and project/Nomad UV roundtrip. Audit mainaeae3081/live874: existing read-
+only resource/history/ordinary Duplicate/UV inspector/edit/export paths are sufficient;
+no native UV authoring or projection exists. Mesh Health disclosure is now UVs, with
+Planar XY/XZ/YZ for plain independent Base meshes (SubD/Mirror/linked/Boolean/Array/
+curve/reference/locked/imported-resource contexts refuse). Projects the WHOLE mesh
+onto chosen coordinate axes, uniformly fits to tile with2% margin, original geometry
+unchanged; repeat same projection no-op. Reprojection replaces only native UVs with
+one native scene checkpoint. Axis silhouettes can overlap/collapse opposite/side faces;
+this is planar projection, not a box/seam unwrap, packing or painting.
+
+Extend original imported-uv-edit owner with createPlanarUV; no parallel edit/history
+kernel. Native channel uses the existing glbPassthrough face-corner RESOURCE TRANSPORT
+with explicit source:'boxlab', version1 and only uvTopologySignature/uvCorners. This
+is honest native provenance, never source:'glb' or invented material/image metadata.
+Project resource envelope version3 encodes native UV-only records; strict keys/finite
+corner/signature validation, no images/materials. Existing GLB envelopes1/2, plain
+project format1, imported channels and pooled resources unchanged. Older apps refuse
+v3 safely. Existing .boxlab codec/SaveOpen/manager atomic replacement now accept this
+native record; read-only snapshots, single/Multi Duplicate and copy-on-write edits
+reuse original owners. Native Linked Duplicate refuses before source conversion;
+LiveArray/source guards already refuse attribute-bearing resources. No linked UV
+propagation or topology/modifier UV regeneration promised.
+
+Existing inspector874, workspace874/Pencil/navigation868 and UV Move/Scale/Rotate/
+Flip/Fit now also accept native provenance through original edit guard. Existing GLB
+and native NOM865 writers ALREADY consume this face-corner format/source-agnostically;
+unchanged writers verified with real UV attributes/NOM indices and corner bytes.
+Same topology signature owner; topology edits hide stale UVs and unsafe native export
+refuses, Undo restores original resource. Initial projection normalizes coordinates
+before subtracting, handles huge/tiny finite extents and refuses collapsed planes or
+invalid indices/vertices/history without mutation. No texture rendering/paint/OBJ UV
+expansion or evaluated UV export in875.
+
+Seven native tests: axes/proportion/one Undo/no-op/reprojection; edits/COW/duplicate/
+native scene replacement; strict v3 and legacy/plain codecs; actual NOM/GLB UVs and
+stale topology; invalid/imported/procedural/modifier/finite-extreme guards; actual
+MeshHealth callback; original single/Multi duplicate/deleted-copy Undo/linked refusal.
+VM project replacement preserves incoming/global namespace separation (860 pattern).
+Local Node24 full2368PASS/0FAIL/0skip;12 focused native/release PASS. Cache graph:
+MeshHealth/edit875; manager875; resource875→codec875→management875→drawer875;
+shell/recovery875. Inspector/workspace874/nav868/native+export865/protected kernels
+and frozen betas unchanged. Device875 planar/editor/history/file/Nomad gate pending.
+Next after feedback: inspect simple box/dominant-axis mapping and UV seams before a
+full unwrap; preserve native channel transport and imported GLB protections.
+
+## Protected .874 — user PASS2026-10-16
+
+Fit-to-tile centring/aspect/other-island isolation, repeat no-op, one Undo/Redo,
+view Fit distinction, Pencil/navigation and project/native UV roundtrip accepted.
+.875 native channel/device acceptance remains separate.
+
+## .875 publication verified — 2026-10-16
+
+Release 6272110710d0a590c701d9c587c4cee3e6d12fdd; tested tree
+66fd86f936273230409adf6bb56e1e88a80b5b55 exactly matches fetched main.
+Actual Node22 CI38857230889/job116831332240 SUCCESS2368PASS/0FAIL/0skip;
+Pages38857230399 build/deploy SUCCESS. Postdeployment live shell/manifest,
+MeshHealth/edit/manager/codec/resource/management/drawer875, unchanged workspace874,
+GLB/native exporters865, protected Multi1.0 and frozenBeta7 version byte-match
+repository. Initial live reads preceded deployment and returned874; final complete
+published graph matches875. User874 PASS protected;875 native Planar/editor/history/
+project/native Nomad device gate pending. All four handoff files current. Native
+resource v3/sourceboxlab is explicit; no seam unwrap/painting/evaluated UV claim.
+
+## .876 — native Box UV mapping, 2026-10-16
+
+User875 PASS protects native Planar/editor/history/SaveOpen→NOMAD Base and existing
+imported-UV baseline. Audit main2f29af87/live875: no box/dominant-axis mapper exists;
+native sourceboxlab/v3 channel, inspector/seam data and scene/export owners suffice.
+Add Box UVs alongside Planar XY/XZ/YZ in Mesh Health→UVs. Whole plain Base mesh maps
+by each face's dominant signed Newell normal (deterministic X/Y/Z tie order) into six
+fixed3×2 directional cells. Normalized read-only coordinates avoid huge/tiny finite
+scale overflow. One common projected-coordinate scale preserves rectangular face
+proportions/equal axis-aligned density,2% horizontal tile/cell margins; spare space is
+intentional. A normal cube yields six separate quad islands and12 seam edges, without
+side-face collapse or opposite-face overlap. Same-direction subdivisions keep shared
+UVs. General shapes can still overlap within a directional cell or distort; this is
+box projection, not seam-based unwrap/optimal packing or texture painting.
+
+Extend existing native creation owner in imported-uv-edit with createBoxUV. Extract
+original native eligibility/commit into private shared helpers used by Planar and Box;
+Planar maths/output retained. Invalid indices/nonfinite/degenerate faces/context/history
+refuse before resource/history changes. Repeated same Box mapping adds no history;
+Box can replace native Planar UVs in one checkpoint, Undo restores the previous payload.
+Imported GLB/procedural/modifier/linked/reference/locked resource refusals retained.
+Original COW transport, native envelope v3, inspector874/workspace874/navigation868,
+manager/codec/resources875 and GLB/native exporters865 unchanged. No modelling kernel,
+new schema/pointer/history/exporter or geometry mutation. UI native note now generic,
+since same native channel supports more than Planar. All Pencil edits remain original.
+
+Five native tests cover cube6islands/12seams/disjoint atlas/noncollapsed faces/native
+Undo/no-op, rectangular proportions/density/same-direction adjacency/extreme finite
+scales, Planar replacement/peer isolation/selected edit, actual MeshHealth callback/
+project/native NOM independent UV indices+corner bytes/real GLB UVs, invalid/imported/
+procedural/modifier/degenerate/history refusals. Local Node24 full2373PASS/0FAIL/0skip; publication proof follows below.
+Cache graph MeshHealth/edit876; shell/recovery876. Other owners/protected Multi1.0,
+Loop/Extrude/Boolean/main and frozen betas untouched. Device876 box/editor/history/
+project/Nomad gate pending;875 PASS protected. Next: feedback on Box mapping, then
+seam/unwrap or texture-inspection stages after owner audit; no evaluated UV guarantee.
+
+## Protected .875 — user PASS2026-10-16
+
+Native Planar XY/XZ/YZ layout, original Pencil manipulation/history, native project/
+NOMAD Base roundtrip and imported UV baseline accepted. Preserve sourceboxlab/v3
+transport and no fake GLB provenance;876 device acceptance remains separate.
+
+## .876 publication verified — 2026-10-16
+
+Release 51e05f4cdccce9765ed3c3840680b19c520deb74; tested tree
+88afe5f38e4c0f1d853752c6b927ecc54591165f exactly matches fetched main.
+Actual Node22 CI38861934472/job116845958125 SUCCESS2373PASS/0FAIL/0skip;
+Pages38861934138 build/deploy SUCCESS. Fresh live shell/manifest, MeshHealth/edit876,
+unchanged workspace874/GLB+native exporters865/protected Multi1.0/frozenBeta7 version
+byte-match repository. Manager/codec/resources875 and all protected/frozen owners
+unchanged. User875 PASS protected;876 Box panels/selected edits/history/project/
+NOMAD Base device gate pending. All four handoff files current. No general seam
+unwrap/optimal packing/painting/evaluated UV claim; directional patches may overlap.
+
+## .877 — native Cylinder UVs (world Y), 2026-10-16
+
+User876 Perfect PASS protects Box panels/seams/island edits/history/project/NOMAD
+Base. Audit main79fec447/live876: no cylindrical mapper exists. Add Cylinder UVs (Y)
+to Mesh Health→UVs for plain upright round aligned-ring cylinders/prisms. Uses the
+same native eligibility, sourceboxlab/v3 channel and original commit/history owner.
+One side strip with deterministic existing-column seam near maximum world X, plus
+two separate planar caps for the standard closed Cylinder. No geometry split/change.
+Open side-only forms can produce one strip; no general arbitrary seam-cut operation.
+Measured cross-section polygon edge lengths unfold the strip, preserving side/cap
+edge density, including odd radial counts and multiple height bands. Atlas is fitted
+with gaps between strip/caps. Round rings about Y required; nonround/elliptic, axis-
+collapsed, unaligned seam, degenerate/invalid/procedural/imported/modifier contexts
+refuse before history/payload mutation. User can still use Planar/Box as appropriate.
+
+Extend existing imported-uv-edit with createCylinderUV; read-only normalized positions
+and unique radial columns, original native commit. Repeat no-op; replaces native UVs
+with one checkpoint, Undo restores original; peers/resources untouched. Original
+UV editor, selection, Pencil tools and navigation unchanged. Manager/codec/resources875,
+inspector/workspace874/nav868/native NOM865 and protected/frozen owners unchanged.
+
+Related GLB audit found old >=3-UV-variants pole-collapse rule could merge native
+seam+cap variants at one geometry vertex. Existing exporter now sets preserveUVSeams
+ONLY for sourceboxlab, retaining native UV corner variants; imported GLB pole/weld
+path unchanged. No new exporter or triangle kernel. Prior membership-only attribute
+tests did not prove this distinction. New real GLB assertion checks all THREE UV
+variants of the seam/cap vertex against source values, in addition to NOM UV pool
+bytes/project continuity. File NOMAD writer was already seam-correct and unchanged.
+Five native regressions cover3islands/seam/no-op/Undo/geometry identity, measured edge
+density/odd rings/finite extremes, native replacement/peer/island isolation, actual
+MeshHealth/project/NOM/GLB seam variants, and invalid/unsupported refusals. Local Node24 full2378PASS/0FAIL/0skip; publication proof follows below. Cache graph MeshHealth/edit/export-panel877 plus
+shell/recovery877; all other owner pins retained. Device877 gate pending;876 PASS
+protected. Next after feedback: audit UV checker/texture inspection through existing
+render/resource owners before painting or broader curved/seam unwrap work.
+
+## Protected .876 — user PASS2026-10-16
+
+Cube Box six-panel layout/seams, selected Pencil edits, native Undo/Redo/Planar
+replacement and Save/Open→NOMAD Base accepted. Preserve Box mapper/sole gesture owner;
+.877 Cylinder and native GLB seam gate remains separate.
+
+## .877 publication verified — 2026-10-16
+
+Runtime release `e1d5ccffd03941b982df25d9463de9b0746e5e4a`; tested tree `c872ec647f8a7188f227d48c6cfc5459237a4328` matched fetched main exactly. Actual Node 22 topology CI run 38865991906 / job 116858835631 succeeded: **2378 PASS / 0 FAIL / 0 skipped**. Pages run 38865990703 build and deploy succeeded. Fresh live shell, manifest, Mesh Health/edit/GLB panel .877, unchanged UV workspace .874, native NOM core .865, protected Multi .1.0, and frozen beta-7 version all byte-matched repository files.
+
+User .876 PASS remains protected. The .877 device gate remains pending: upright round world-Y Cylinder UVs, independent Pencil edits, Undo/Redo, project persistence, NOMAD Base and native GLB seam checks. No general unwrap, elliptic mapping, painting, or evaluated-modifier UV claim. All four continuity documents are current.
+
+## .878 — UV Editor checker reference, 2026-10-16
+
+User .877 PASS protects upright Cylinder strip/caps, Pencil/history, native project/
+NOMAD Base and GLB seams; Box/Planar/imported baselines remain protected. Audit current
+main83c0b563/live877: no checker inspection exists. Existing inspector canvas owns UV
+projection; render-modes568 owns Studio/materials but has no UV-checker surface path.
+Add optional Checker toggle to the ORIGINAL large UV workspace and renderer. Fixed
+16×16 reference inside tile0–1 uses the same projection as outlines/picking, with
+numerically clipped cells and at most256 rectangles regardless of UV bounds/zoom.
+Draw under island colours/gold selection/orange seams. Default off on reopen; keep
+view and selection when toggled, cancel pending Pencil preview/capture without edit.
+Report/history refresh retains checker setting within current session. No scene/resource/
+project/history writes, image decoding, new gesture/UV/render kernel or material changes.
+This is a 2D size/alignment aid, not 3D stretch inspection or texture painting.
+
+Three actual renderer/workspace regressions cover DPR/pan/zoom/picking, extreme/tiled/
+offscreen/stale layouts, draw order/read-only arrays, pending-stroke cancellation,
+view/selection/refresh/reopen lifecycle and no edit/history callbacks. Full local Node24
+2381PASS/0FAIL/0skip. Cache graph MeshHealth/workspace/inspector878; edit878 changes ONLY
+its inspector import pin; original edit maths/guards unchanged. Shell/recovery878.
+Export panel877/native NOM865/manager+codec+resources875/nav868, protected Multi1.0,
+main854/Loop/Extrude/Boolean and frozen betas unchanged. Publication proof follows.
+Device878: Checker toggle/readability, pan/pinch/Fit, Pencil Move/Scale/Rotate + Undo,
+close/reopen default off. Next audit a temporary 3D checker through existing render
+and triangulation owners; do not add another triangulation kernel or persist a preview
+material into resource/history/export. Imported image inspection and painting follow
+separately after material/resource budget and lifecycle audit.
+
+## Protected .877 — user PASS2026-10-16
+
+Upright Cylinder UV strip/two caps, separate Pencil island edits, Undo/Redo, Save/Open,
+NOMAD Base and Base GLB seam/cap continuity accepted. Preserve native sourceboxlab/v3
+transport and imported pole-weld compatibility; .878 checker device gate remains separate.
+
+## .878 publication verified — 2026-10-16
+
+Release `7b7cf2751e371959437a6ad10601c930f727a64d`; tested tree `ef9e7b6005166f3c6e38eb93830963f11f513e36` exactly matches fetched main. Actual Node22 CI38867402179/job116863294620 SUCCESS **2381 PASS / 0 FAIL / 0 skipped**; Pages38867401881 build/deploy SUCCESS. Fresh live shell/manifest, MeshHealth/workspace/inspector/edit878, unchanged GLB panel877/protected Multi1.0/frozenBeta7 version byte-match repository. Native NOM865, manager/codec/resources875/nav868 and protected modelling owners unchanged. All four continuity documents current. User877 PASS protected;878 checker readability/navigation/Pencil/history/reopen device gate pending. This checker is a 2D reference only; 3D texture/stretch inspection remains the next audited stage.
+
+## .879 — temporary 3D UV Checker view, 2026-10-16
+
+User .878 PASS protects 2D Checker readability/alignment/navigation/Pencil/history/
+reopen. Audit main033d9950/live878: render-modes568 owns all body looks; exporter877
+already owns polygon triangulation and corner UV seam mapping. Add UV Checker as a
+ninth look under VIEW, through that same render owner. No new modelling/triangulation/
+pointer/history kernel. Studio remains startup default; switching looks restores original
+body geometry/material behavior. Plain independent Base meshes with complete valid stored
+GLB/native UVs show a repeating16×16 unlit checker over the surface; missing/stale/invalid,
+linked/procedural/reference/SubD/Mirror objects retain Solid fallback. Preview bounded to
+20,000 face corners; larger channels fall back entirely, never partial checker surfaces.
+
+Exporter exposes guarded buildUVPreviewGeometry, delegating original editableToGeometry/
+triangulateFace with seam preservation, no imported-fit restoration (live coordinates),
+finite f32/index/corner/signature/completeness guards. Actual GLB/NOM export maths unchanged.
+Small uv-checker-preview owns temporary child geometry/ShaderMaterial; no textures/images,
+paint or stored material edits. Original body geometry/raycast is untouched, preview
+raycast disabled. Existing render cleanup disposes checker exactly once; original body
+geometry dispose listener also removes/disposes it during native main/inactive redraw,
+without modifying protected main854 or manager875. Read-only payload stays untouched.
+Original Mesh Health session-end event refreshes checker after UV edits; native rebuilds
+handle scene history/object changes. Importer/editor/navigation/resource codecs unchanged.
+
+Five native regressions cover original corner mapping/live-space/concave triangulation,
+invalid/stale/partial/overbudget refusals, actual Three overlay/picking/resource lifecycle,
+actual render active bridge/inactive lookup/fallback/look restoration/session refresh,
+and cylinder THREE seam+cap variants/native NOM bytes unchanged. Full Node24 suite:
+2386PASS/0FAIL/0skip. Existing453 render-button test now requires all original8 plus new
+checker, rather than freezing total8. Reviewed render/export-panel/child cache879 and
+shell/recovery879 only; MeshHealth/workspace/edit/inspector878/nav868/NOM865 retained.
+Protected Multi1.0/Loop/Extrude/Boolean/main and frozen beta bytes unchanged.
+Device879: Cube Box UVs or upright Cylinder UVs, SubD off → VIEW→UV Checker; orbit to
+inspect seam/stretch/relative density; edit island Scale then Back to3D; Undo/Redo;
+VIEW→Studio/Solid. Native Base UVs only, no evaluated UV propagation/painting claim.
+Next: device feedback on temporary checker, then imported-image inspection through
+original resource/render owners before painting or broader seam unwrap work.
+
+## Protected .878 — user PASS2026-10-16
+
+2D Checker toggle/readability, tile-aligned pan/pinch/Fit, Pencil Move/Scale/Rotate and
+Undo/Redo, Back to3D/reopen defaults accepted. .879 surface-checker device gate separate.
+
+## .879 publication verified — 2026-10-16
+
+Release `6b20c3939a9ebe7b9847fdc0830adb565fd0a1ba`; tested tree `794865b855df33763e91136e5421b4933569507a` exactly matches fetched main. Actual Node22 CI38870113315/job116871955152 SUCCESS **2386 PASS / 0 FAIL / 0 skipped**; Pages38870112481 build/deploy SUCCESS. Final fresh live shell/manifest/render-owner/preview-child/export-panel879, unchanged workspace878/native NOM865/protected Multi1.0/frozenBeta7 version byte-match repository. Initial reads preceded deployment (old878/child404); final full graph matches879. All four continuity docs current. User878 PASS protected;879 surface checker/navigation/UV edit→session-exit/history/look-restoration device gate pending. Stored Base UVs only; unsupported/stale/over20k-corner objects use Solid; no painting/evaluated UV propagation claim.
+
+## .880 — embedded base-colour image reference in UV Editor, 2026-10-16
+
+User .879 Perfect PASS protects temporary surface checker, navigation, UV edits/session
+refresh/history and ordinary look restoration. Audit main67e01309/live879: importer797
+retains materialIndices/materials/textures/embedded image bytes; resource875, history,
+Duplicate and codec already preserve them. No image display/decoder exists. Extend the
+ORIGINAL UV workspace/renderer with optional Image reference and material-name chooser
+when multiple compatible sources exist. Whole selected image behind ALL UV outlines;
+this is reference inspection, not face-material assignment or PBR rendering.
+
+Small uv-image-preview helper resolves USED materialIndices → UV0 baseColorTexture →
+texture.source → existing embedded PNG/JPEG bytes. No URLs/network fetches or unrelated
+normal/roughness images. Texture transforms/other UV sets/texture extensions, external
+or missing/invalid/over8MB image records refuse; missing native/plain resources disable
+Image. Labels use textContent. Optional browser createImageBitmap produces a1024×1024
+reference (square tile mapping); original image bytes never resized/replaced. Browser
+unsupported/decode failures show inline status. At most one decoded image held; token
+checks discard/close late results, canceled-before-start work never decodes. Switching,
+off/close/payload replacement releases bitmap; same read-only image across UV-only payload
+replacement reuses it. No new history/resource schema or image editor/cache pool.
+
+Renderer shares original projection/picking, clips canvas+tile0–1, flips vertically so
+stored glTF V0 corresponds to image top (GLTFLoader uses flipY=false). Image drawn above
+optional checker and beneath outlines/selection/seams; Pencil transforms UVs over fixed
+image. Reference is tile-only, not sampler wrapping/material colour-factor evaluation.
+Controls cancel pending Pencil without commit, retain view/selection; off on reopen.
+No 3D image look, painting, new UV channel, kernel, gesture owner, or topology changes.
+
+Five native regressions cover actual importer container/resource shape+codec bytes,
+used-source/unsupported guards, decoder thumbnail/budget/fail/cancel/race/reuse lifecycle,
+renderer V0/projection/clip/order/read-only and actual workspace chooser/Pencil/session
+cleanup. Full local Node24:2391PASS/0FAIL/0skip; final publication proof follows.
+Cache MeshHealth/workspace/edit/inspector880 plus new image helper880 and shell/recovery;
+edit880 changes ONLY shared inspector import. Surface checker/render/export879, native
+NOM865, manager/codec/resources875/nav868, protected Multi1.0/main854/Loop/Extrude/Boolean
+and frozen betas unchanged. Device880 image orientation/readability/Pencil/chooser/file
+reopen gate pending. Next after feedback: audit temporary 3D base-colour image view with
+per-material ambiguity/sampler/colour/lifetime handling before painting; reuse original
+render/geometry/resource owners and keep imported images read-only.
+
+## Protected .879 — user PASS2026-10-16
+
+3D UV Checker surface/seams, orbit/pan/pinch, island Scale→Back to3D refresh, native
+Undo/Redo and Studio/Solid restoration accepted. Preserve ephemeral overlay and original
+body geometry/picking/export isolation; .880 image reference gate remains separate.
+
+
+## .881 — temporary active-object 3D UV Image view, 2026-10-16
+
+User .880 Perfect PASS /nextbuild protects embedded image orientation/reference,
+Pencil/navigation/history, source chooser and project persistence. Repeated PASS/
+nextbuild while .881 was still in progress continues this release; no .881 device
+acceptance inferred. Audit main6b6565c4/.880: retained importer material/sampler/image
+resources, .880 bounded decoder, .879 exporter preview geometry and render owner are
+sufficient. No second UV/triangulation/history/material-editing kernel.
+
+VIEW→UV Image now inspects the ACTIVE plain independent Base object with exactly ONE
+used opaque core material and embedded PNG/JPEG UV0 base-colour image. Unlit sRGB image
+with linear baseColorFactor, glTF V0 (flipY=false), original core clamp/repeat/mirrored
+wrap and nearest/linear/mipmap filters, material double-sided flag. Original decoder
+limits retained (≤8MB encoded source,1024² bitmap). Inactive objects remain Solid,
+bounding resident surface preview to one active image. Mixed used materials, alpha
+blend/mask/nonopaque factor, material/texture transforms/extensions, missing/external/
+invalid resources, linked/procedural/reference/SubD/Mirror/stale/incomplete/over20k-
+corner channels retain Solid; no guessed per-face material assignment. UV Editor's
+multi-image reference chooser remains accepted and unchanged.
+
+Small uv-image-surface-preview child delegates original geometry builder and decoder.
+Original body geometry/raycast untouched; overlay raycast disabled. Solid stays while
+loading/on decode failure. Native source geometry disposal or existing render cleanup
+removes overlay and disposes geometry/material/texture/bitmap once. Canceled-before-
+start requests skip decode; late results close without replacing a newer look. Existing
+Mesh Health session-end refresh applies UV changes; native rebuild handles history and
+object switches. Startup Studio retained. No persistent textures, resource writes,
+painting, PBR lighting, evaluated UV propagation or export changes.
+
+Five real Three/native tests cover source/material/sampler guards + codec continuity,
+sRGB/factor/wrap/filter/orientation/UV mapping, exact-once disposal and async cancellation/
+failure races, actual render active/inactive/base eligibility + UV session refresh/look
+restoration, original image/project/native NOM byte identity + GLB UVs. Full local suite:
+2396 PASS /0 FAIL /0 skipped. Original .879/.880 tests remain intact. Render-button
+contract now requires original9 plus UV Image. Cache graph shell/recovery881 → render881
+→ new surface child881 → unchanged decoder880; exporter879/workspace880/native NOM865/
+manager875/navigation868/protected modelling/frozen beta bytes retained.
+
+Device .881 gate pending: textured single-material GLB/SubD off → VIEW→UV Image;
+orientation/colour/orbit, Pencil island edit→Back to3D refresh + Undo/Redo, Studio/Solid
+restoration, native/plain/mixed-material fallback. Next: .881 device feedback, then audit
+per-face material assignments through the ORIGINAL exporter buckets before multi-material
+surface support. Keep resource images read-only; painting remains later.
+
+## .881 publication verified — 2026-10-16
+
+Runtime release00be7829f43feafddb262d63de6b81c6e7fea8c9; tested tree
+ccf22e986663736321186a41f38a655a8b33e303 exactly matches fetched main.
+Actual Node22 CI38886425246/job116925168650 SUCCESS2396PASS/0FAIL/0skip.
+Pages38886425248 build/deploy SUCCESS. Postdeployment live shell/manifest/render881/
+new image surface child881, unchanged image decoder880/MeshHealth880, protected
+Multi1.0 and frozenBeta7 version byte-match repository. Predeployment reads served880;
+final full graph matches881. All four continuity documents current. User880 PASS
+protected;881 active-image orientation/Pencil→surface/history/look-restoration device
+gate pending. One active opaque embedded material only; mixed materials/inactive/
+unsupported Base contexts use Solid. No painting or persistent material/export change.
+Shell git has no HTTPS credentials; connected Git Data publication used expected-main
+SHA lease and verified blob/tree hashes. Documentation-only verification follows runtime
+release without changing tested assets. No881 device PASS inferred.
+
+## .882 — exact imported face materials in UV Image, 2026-10-16
+
+User .881 PERFECT PASS /nextbuild protects active-image orientation/colour/navigation,
+Pencil UV edit→surface refresh/history and ordinary look restoration. Audit main007fdfb6
+and original importer882 predecessor797 found retained materialIndices are a used-set,
+NOT per-face assignments. Exporter buckets group by facegroup labels; duplicate names
+are not proof of material identity. Do not infer image assignment from those labels.
+
+Extend ORIGINAL importer conversion/merge/weld/quad owners with optional per-face global
+material IDs from glTF.parser.associations. Carry them alongside existing corner channels;
+drop matching entries for removed faces, retain IDs for reconstructed quads, and prevent
+quad merges across differing IDs even if facegroup labels match. Store only complete
+valid IDs in imported payload.faceMaterialIndices + materialTopologySignature. Legacy/
+missing associations never claim provenance. File GLB callback supplies parser map; OBJ
+flow unchanged. Existing generic imported resource codec/history/COW snapshots carry
+optional fields without a new envelope/version/history owner. Old mixed-material project
+files need a FRESH GLB import in882 to obtain exact assignments; no name-based migration.
+
+Original buildUVPreviewGeometry adds explicit materials:true inspection option, validates
+assignment/signature/IDs, and delegates same editableToGeometry triangulation/corner UVs.
+Only that preview option groups by exact material ID and exposes slot IDs in geometry
+userData. Ordinary GLB/NOM/OBJ writers and checker retain their original grouping/math;
+this stage does NOT repair the older multi-material GLB output patcher's first-material
+behavior. Keep that export limitation distinct from correct surface preview.
+
+Extend SAME active-image helper: up to FOUR used opaque embedded-image materials,
+aggregate≤8MB encoded source, each original1024² decode (up to16MiB decoded RGBA total
+plus GPU textures). Decode serially and show image only after ALL sources are ready.
+Any unsupported/missing/transparent/overbudget material, stale/missing map or failed
+decode leaves whole object Solid. Source cleanup/mode switch cancels further decoding;
+late results and all prior bitmaps/textures/materials/geometry release exactly once.
+Per-slot baseColorFactor/sampler/sidedness retained. Existing881 single-material files
+remain supported; inactive objects still Solid. No painting, PBR lighting, persistent
+material edits, new pointer/kernel/history owner or evaluated UV propagation.
+
+Six new native tests cover actual GLTFLoader reversed IDs/identical material names,
+conversion/merge/weld/quad boundary provenance, optional channel codec roundtrip, original
+triangulator group/position/UV slot mapping + stale refusal, real Three multi-image
+factors/samplers/serial readiness/disposal/failure/cancel/budgets, actual File GLB callback
+and independent OBJ callback. Full local2402PASS/0FAIL/0skip. One544 literal importer-call
+assertion advances to include parser associations, preserving split-toggle contract;
+all earlier tests retained. Reviewed pins shell/recovery/render/importer/export panel/
+surface child882; decoder/workspace880/native NOM865/manager875/navigation868/protected
+modelling and frozen betas unchanged. Publication proof follows.
+
+Device882: FRESH import2–4 opaque embedded-image materials, Split groups OFF/SubD OFF →
+VIEW→UV Image. Inspect correct image areas, edit UVs→Back to3D/history, Save/Open project,
+and switch to Studio/Solid. Existing single-material gate remains protected. Next after
+feedback audit original GLB patcher's per-face material export (without guessing from
+facegroup names) before painting or broader material support.
+
+## .882 publication verified — 2026-10-16
+
+Runtime releasea00022aafa3914a422e172d48f8de1e47b0c0950; tested tree
+d5b9204dae40414e860399795f0a7b0bbe9be233 matches fetched main exactly.
+Node22 CI38889866338/job116936462977 SUCCESS2402PASS/0FAIL/0skip.
+Pages38889865865 build/deploy SUCCESS. Postdeployment live shell/manifest/importer/
+export-panel/render/image-surface882, unchanged decoder880, protected Multi1.0 and
+frozenBeta7 version byte-match repository. Initial live reads preceded deployment;
+final full graph matches882. User881 PASS protected;882 fresh multi-material import/
+UV edit/history/project device gate pending. All four continuity files current.
+Connected Git Data used expected-main SHA and exact tested blob/tree hashes; final
+documentation proof changes no runtime bytes. No882 device PASS inferred.
+
+## .883 — exact material GLB handoff; native NOM textures still unresolved, 2026-10-16
+
+User .882 PASS /nextbuild after confirming active/selected-only UV Image is expected.
+Protect fresh exact multi-material preview, Pencil/history/project persistence and
+active-only memory policy. During883 user reports UVs but no textures on return to
+Nomad and explicitly confirms File→NOMAD (.nom), NOT GLB. That report is a distinct
+NATIVE image omission; do not claim this GLB repair fixes it or mark native textures PASS.
+
+Audit main15e57665: original GLB patcher assigns first retained material to every
+primitive. Original exporter now optionally buckets by BOTH facegroup and exact .882
+face-material ID, using original triangulator/attribute/fit owners. Shared exporter
+faceMaterialAssignments validates imported version/source, original topology signature,
+face count and material IDs for both preview and Base GLB. Multi-material missing/
+stale/invalid/evaluated/SubD mappings refuse with fresh-import/Base instruction rather
+than first-material substitution. Legacy single/plain GLB paths unchanged.
+
+Patch each exported primitive to the corresponding retained material with original
+per-object texture/sampler/image base remapping and byte append. Facegroup identity is
+independent of material splitting: unique original group table + per-primitive group ID;
+several material primitives may belong to ONE Nomad facegroup. Exact multi-material
+branch preserves all UV seam variants (old imported pole-collapse path unchanged for
+legacy/single exports). GLB inspection remains original Loader self-check. Temporary
+export geometry/material cleanup now runs in finally on errors too, shared materials
+retired once. No image decoding/painting/render/kernel/resource/history changes.
+
+Five native tests verify actual Three GLB triangles/material IDs/UV corners/group IDs,
+reimport names, multiple objects/global material bases with duplicate names, final image
+bytes + all five core texture slots/sampler references/alignment, selected UV edit +
+resource-codec continuity, missing/stale/invalid/evaluated refusals and failure cleanup.
+Image-bound test removes texture refs ONLY from private Node verification copy so actual
+Loader can validate geometry without browser decoding; final real exporter/patcher bytes
+checked independently. No automated browser/Nomad image rendering proof. Full local
+2407PASS/0FAIL/0skip, earlier semantic tests retained.547 source assertion follows
+separate group-ID mapping rather than freezing group=index. Reviewed shell/recovery/
+export-panel883 only; importer/render/surface882/workspace+decoder880/NOM865/protected
+modelling/frozen beta bytes unchanged. Publication proof follows.
+
+NATIVE BLOCKER: nomad-export-core865 explicitly writes geometry/UVs/groups only and
+retains donor material; no imported texture/image serialization exists. Sole validated
+native donor nomad-tube.nom has material factors but NO image/texture records. No
+textured .nom fixture or validated image-link/binary convention exists in repository.
+Do not invent native fields or rename GLB as NOM. Request a real textured .nom SAVED BY
+NOMAD (simple UV cube + one image sufficient) to inspect image payload/material links
+and build a truthful native test before implementation. Native writer/donor unchanged;
+accepted865 UVs remain protected. User texture omission remains OPEN, not fixed by883.
+
+Device883 GLB gate: File format GLB + Base→Export/Save (NOT NOMAD button) → Nomad:
+correct images/areas + facegroups; UV edit→repeat; .boxlab Save/Open→GLB. Exact maps
+require fresh882+ GLB import with Split groups off. Next priority is native .nom
+texture sample/format audit and repair once fixture available; painting later.
+
+## .884 — native File→NOMAD colour image embedding, 2026-10-16
+
+User supplied EXPORTED TEXTURED.nom from Nomad during883 publication, lifting the
+native-schema fixture blocker. SHA256ab3d9293d51d0597cdd6b17439112378e11a486c2898bc72282686a849dcfd6f.
+Read donor fully through existing reader: revision7, JSON offset65608, images table
+{length,offset,type} points to RAW JPEG/PNG bytes, material.textures.color.index links
+image table. Donor contains colour/roughness/normal/displacement records. Metadata-only
+fixture records provenance/header/image descriptors/colour texture convention; user's
+10MB file/pixels are NOT committed or used as runtime donor. Frozen tube donor remains
+byte-identical.883 GLB device acceptance is NOT inferred from native-file upload.
+
+Extend original nomad-export-core writer, not another container/UV/export kernel.
+First stage: one USED opaque core UV0 PNG/JPEG colour-image material per object, same
+original uvImageSurfaceSource eligibility through unchanged882 helper. Require matching
+complete Base UVs, default repeat wrapping + linear mipmap filters; unsupported/multi/
+missing/nonopaque/transformed/invalid/nondefault-sampler inputs refuse clearly instead
+of dropping colour. This is colour handoff only, not full PBR: normal/packed roughness-
+metalness/displacement/other image slots remain pending. Constant roughness/metallic
+factors and RGB baseColorFactor transfer with donor-proven colour slot convention.
+
+Native-local image table embeds ORIGINAL source bytes (no decode/reencode/downscale),
+4-byte aligned; image buffer identity dedup across objects within this build, ≤24MB
+aggregate, original≤8MB source guard. Existing geometry parts append after images with
+same offsetFields owner; mesh.material points to appended native material cloned from
+original donor. Temporary table/material/parts are local; shared scene/project/history
+payloads untouched. Textured output uses observed header revision7; no-image output
+retains original revision6/header and native UV/geometry bytes. Original donor thumbnail/
+other settings retained. Count now counts meshes, not binary image/padding parts.
+Image field bounds verified with existing reader. Native action reports colour images
+count while retaining real .nom MIME/name/download and original UV status.
+
+Five new native tests verify donor metadata convention/header7, exact PNG/JPEG image
+bytes/material links/factors, unchanged UV/geometry field bytes, mixed plain/coloured
+objects/alignment/shared-image dedup, selected UV/project-resource continuity, unsafe
+source/UV/sampler/budget refusals and ACTUAL File NOMAD downloaded bytes/status.881
+preview-invariance fixture now uses default sampler for its native baseline; its
+clamp/nearest preview tests remain, and new native refusal test explicitly covers them.
+Full local2412PASS/0FAIL/0skip. Additional audit exported donor's actual1,412,537-byte
+JPEG through new writer: original image hash matched, native revision7, one colour image.
+No browser/Nomad visual proof claimed; iPad opening/orientation/appearance gate pending.
+
+Cache graph shell/recovery/export-panel884→native-core884→unchanged surface882→decoder880.
+Original importer/render/surface882/UV workspace880/resource875/native donor, protected
+modelling and frozen betas unchanged. Only metadata fixture, no user image assets shipped.
+All four continuity docs updated; publication proof follows.883 GLB tests remain active.
+
+Device884: ONE-material textured GLB, SubD off → File→NOMAD → open in Nomad: colour
+image+UV alignment; Pencil island edit→NOMAD repeat; .boxlab Save/Open→NOMAD; plain mesh
+still exports. Multiple supported single-material objects may share one native file.
+Next after feedback: native colour device result first; audit additional PBR channels
+or native per-face material format using real donors before claiming support. Packed
+roughness/metalness cannot be copied as a plain roughness image without channel handling.
+
+## .883 publication verified — 2026-10-16
+
+Runtime7a601596261f3ea3c6085b6558c1fcc3f6d924c6; tree480f1d18a623d42c7cc20d75aae038ef2b45b7b2
+matches fetched main. Node22 CI38896510322/job116958154004 SUCCESS2407PASS/0FAIL/0skip.
+Pages38896509328 build/deploy SUCCESS. Final live shell/manifest/export-panel883,
+unchanged render/importer882/native-core865/protected Multi1.0/frozenBeta7 marker
+byte-match883 repository. Predeployment/time-out reads were retried after deployment.
+Native donor arrived during verification;884 continues the authorized native repair.
+No883 device PASS inferred; original native texture omission is separate from GLB fix.
+
+## .884 publication verified — 2026-10-16
+
+Runtime d3047291a9a051d9cc98df3dbf595262c41576d5; tested tree
+9cc6c9bdf8f859eb1fc7e25e3dd96dc8d1d942de matches fetched main exactly.
+Actual Node22 CI38897532603/job116961508349 SUCCESS2412PASS/0FAIL/0skip.
+Pages38897532505 build/deploy SUCCESS. Postdeployment live shell/manifest/export-panel/
+native-core884, unchanged surface882/decoder880/protected Multi1.0/frozenBeta7 version
+byte-match repository. Initial live reads preceded deployment; complete final graph
+matches884. All four continuity documents current. User donor schema/actual JPEG-byte
+audit recorded; native colour-image orientation/appearance/device gate pending. No884
+user PASS or full PBR/multi-material native support inferred. Final proof commit changes
+only documentation; tested runtime bytes retained.
+
+## .885 — native normal + emissive maps from full donor, 2026-10-16
+
+User .884 Perfect PASS protects native colour image visibility/alignment, Pencil UV
+edit repeat and project reopening. User requests other maps and supplies FULL MATERIAL
+EXPORT.nom, SHA256dc9102c6eb38ea95e4d7705b0d2fe89eb58cf0c1248c35f2cce35a2a15cf8685.
+Audit current main3cd0d5ae/native884, full material donor and retained GLB resources.
+Donor revision7 confirms slots color/normal/emissive/roughness/metalness/displacement,
+same image descriptors/texture projection/samplers; normal_neg_y=false, factorNormal,
+factorEmissive and factorEmissiveStrength observed. Only metadata/provenance fixture
+committed, not user's large file/images.885 scope: normal+emissive can transfer exact
+encoded bytes. Roughness/metalness packed G/B conversion and displacement source
+channel identification remain separate; never guess from retained image filenames.
+
+Reuse original image resolver: extract embeddedUVImage from unchanged880 choice rules,
+with importedUVImageChoices delegating same exact PNG/JPEG/UV0/mime/≤8MB checks. Same
+renderer/decoder lifecycle/math retained. Extract uvImageMaterialSource from original
+surface helper for shared single-used opaque/material factor checks; original colour
+surface API delegates it and retains original sampler/image policies. No parallel
+material/UV/signature/history/picking owner. Only parent import URLs change for UV
+workspace/MeshHealth/render, preserving old internal MeshHealth stamp880 deliberately.
+
+Extend ORIGINAL synchronous native writer's884 local image table/material links for
+normalTexture→textures.normal, emissiveTexture→textures.emissive. No decode/reencode,
+gamma conversion or resampling. Match Base UVs, source UV0/PNG/JPEG/no transforms,
+default repeat+linear mipmap sampler and one opaque material. Explicit source normal
+scale→factorNormal (finite f32/nonnegative); native normal_neg_y=false matches donor/
+glTF convention. Source emissiveFactor→factorEmissive (defaultblack), native strength1.
+HDR/material extensions remain refused. Normal/emissive-only materials do not require
+fake colour image; base RGB factor supplies constant colour. Existing colour-only/plain
+flow retained. Source images shared read-only, byte-identity dedup across slots/objects,
+existing≤8MB per image/24MB aggregate. Whole export refuses unsupported declared normal/
+emissive refs rather than dropping them. Original geometry/UV bytes/field offsets/native
+revision7/donor/header/download owners retained. Status adds normal/emissive map counts.
+
+Five native tests cover donor slot descriptors/raw PNG+JPEG bytes/normal strength/
+emissive RGB/defaults, normal-only/emissive-only input, shared-image dedup/material
+links/counts, unsupported image/UV/transform/sampler/factor/aggregate guards, selected
+UV+project continuity and ACTUAL File NOMAD downloaded bytes/status. All880–884 checks
+retained. Full local2417PASS/0FAIL/0skip. Additional real donor audit exported actual
+1,248,872-byte normal JPEG and2,754-byte emissive PNG, both original hashes matched.
+No browser/Nomad appearance proof claimed. Original .884 colour PASS protected.
+Reviewed885 cache graph: export-panel→native-core→surface/image helper; render→surface;
+MeshHealth→workspace→image helper. Inspector/edit880/nav868/importer882/native baseline
+donor/protected modelling/frozen betas untouched. Publication proof follows.
+
+Device885: one-material GLB containing normal/emissive maps, SubD off → File→NOMAD:
+Nomad Material Normal/Emissive slots populated, bump detail/emission factor correct;
+Pencil UV edit→export repeat; .boxlab Save/Open→NOMAD; accepted colour map retained.
+Next narrow stage after feedback: unpack glTF metallicRoughnessTexture GREEN→roughness,
+BLUE→metalness with bounded browser conversion; native slot layout now proven by donor.
+Reference: Khronos glTF2.0 Specification additional textures/material metallic-roughness,
+https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html . No direct copy of packed RGB
+image into scalar slots, no invented displacement reference, no native multi-material
+support or Nomad import claim. Keep885 device gate separate from883 GLB export gate.
+
+## .885 publication verified — 2026-10-16
+
+Runtime9154caaa1d4dbca3811fdec895109bcc9d29152f; tested tree
+5874f4df1c6424017612ae531d0ef9af2c0a6769 exactly matches fetched main.
+Node22 CI38900750576/job116972113908 SUCCESS2417PASS/0FAIL/0skip.
+Pages38900749158 build/deploy SUCCESS. Postdeployment live shell/manifest/export-panel/
+native-core/surface/image-helper/MeshHealth/workspace/render885, protected Multi1.0
+and frozenBeta7 version byte-match repository. Prior884 live audit also matched main.
+User884 PASS protected;885 normal/emissive Material-slot appearance/orientation/strength/
+UV/project device gate pending. Full donor metadata/actual JPEG+PNG byte audit recorded;
+private donor pixels not shipped. Roughness/metalness unpacking and displacement/native
+multi-material stages remain pending. All four continuity docs current. Final proof
+commit changes documentation only, retaining tested runtime bytes. No885 PASS inferred.
+
+
+## .886 — native roughness + metalness from packed GLB maps, 2026-10-16
+
+User .885 PASS /nextbuild protects native normal/emissive slots, strengths, alignment,
+UV edit repeat and project reopening, alongside accepted .884 colour and .865 UVs.
+Audited current main25412b5c/runtime9154caaa and live .885 markers/owners. Original GLB
+resources retain pbrMetallicRoughness.metallicRoughnessTexture; no channel conversion
+exists. Full donor885 proves separate textures.roughness/metalness and factorRoughness/
+factorMetalness. No filename inference, new modelling/material/history kernel or schema.
+
+New small nomad-packed-maps child performs export-local preparation, then delegates
+ORIGINAL native writer. Shared nativeMaterialMaps guard now recognizes the packed ref
+with the same single opaque material, embedded PNG/JPEG UV0, default repeat/linear
+sampling and finite factors. Green→roughness, blue→metalness per official glTF2 spec;
+no red/occlusion reuse, luminance conversion, factor baking, gamma maths or Y flip.
+Original dimensions retained: at most2048×2048, 8-bit source. Header inspection bounds
+BEFORE bitmap decode; 16-bit PNG, EXIF/eXIf orientation metadata and translucent decoded
+pixels refuse clearly. Browser createImageBitmap uses colorSpaceConversion:none and
+premultiplyAlpha:none, then canvas produces opaque grayscale PNGs. OffscreenCanvas or
+original DOM canvas/toBlob fallback; bitmap close and scratch canvas reset in finally,
+including encode/decode failure. No preview-thumbnail decoder changes. Original colour/
+normal/emissive images stay exact encoded bytes. Full donor's relevant JPEGs are2048²;
+its16-bit displacement is a distinct unsupported source, not treated as packed PBR.
+
+One conversion per shared encoded buffer per export. Derived PNGs exist only within
+this download, never source/project/history payload. Same native image-table alignment,
+byte-identity dedup and≤8MB/image /24MB aggregate guards. Native factorRoughness and
+factorMetalness carry source scalar factors (default1); native slot/header7/mesh/UV/
+facegroup owners retained. Synchronous core refuses unprepared declared packed maps,
+never silently omits them. Async facade captures mesh/settings and read-only payload
+BEFORE any await so ongoing scene edits cannot mix UV/geometry states. Plain/no-packed
+output remains byte-identical; existing File NOMAD download owner reports both map
+counts. Existing GLB/OBJ and surface preview/import/resource/editor math unchanged.
+
+Seven new regressions cover actual G/B pixel arrays→distinct valid PNG bytes (inflate+
+CRC), donor slots/factors/native geometry+UV byte identity, all five core maps together,
+shared source conversion once across objects, selected UV/project continuity, in-flight
+snapshot isolation, source/sampler/UV/factor/size/budget refusals, bitmap/canvas cleanup,
+JPEG header/metadata guards, DOM canvas fallback and ACTUAL File NOMAD downloaded bytes/
+status/failure recovery. Browser transport is adapted in Node; no browser/Nomad rendering
+proof claimed. Prior735/865/884/885 action fixtures now supply real async facade, retaining
+all their semantic assertions. Full local2424PASS/0FAIL/0skip; publication proof follows.
+
+Reviewed cache graph: shell/recovery/export-panel886→packed-child886→native-core886;
+core→unchanged surface/image885. Render/MeshHealth/workspace885, importer882, UV edit/
+inspector880/nav868, Multi1.0, native donor and all modelling/frozen beta bytes unchanged.
+Device886: one-material GLB with packed roughness/metalness (≤2048²), SubD off→File→NOMAD:
+separate Roughness/Metalness slots, expected glossy/matte and metallic regions; existing
+colour/normal/emissive intact; Pencil UV edit and .boxlab Save/Open→export repeat.
+Next:886 device feedback, then audit actual source binding for displacement or native
+multi-material schema before claiming either. No native NOM import or painting added.
+
+## .886 publication verified — 2026-10-16
+
+Runtimeed65c49adb9da3c109ae1c786c77b0060da5af97; tested tree
+1db0840f3b32ca6b9e9579854d92c32a177e2509 exactly matches fetched main.
+Actual Node22.23.3 CI38906707292/job116991968396 SUCCESS2424PASS/0FAIL/0skip.
+Pages38906707520 build/deploy SUCCESS. Postdeployment live shell/manifest/recovery/
+export-panel/packed-child/native-core886, unchanged surface/image-helper885, protected
+Multi1.0 and frozenBeta7 version all byte-match repository. Predeployment requests
+served885/child404; complete postdeployment graph matches886. Prior885 live audit
+also matched its repository tree. All four continuity docs current. User885 PASS
+protected;886 Roughness/Metalness slot/appearance/Pencil UV/project device gate pending.
+No real browser decode or Nomad appearance proof inferred from Node adapters; limits
+and unsupported displacement/native per-face materials documented. Final verification
+commit changes documentation only, retaining tested runtime bytes.
+
+## .887 — large native colour image / project validation repair, 2026-10-17
+
+User reports885 FAIL; screenshot explicitly shows886 and native File NOMAD refusing
+at generic colour-material guard. This supersedes earlier885 PASS for the supplied
+FULL MATERIAL case; prior smaller accepted colour/normal/emissive/UV behaviour remains
+protected. Audit main44dca980/live886/pins; original importer parses supplied
+FULL MATERIAL.glb SHA256a68dbedf6cfa49efcfd3b5a86c0a599d5502410e7235913ff482790e24b1419d.
+Exactly one OPAQUE material, alpha1, UV0, default sampler, no material extensions.
+Colour PNG11,121,601B fails shared preview's8MB encoded guard. Reproduced same error
+with ACTUAL retained importer payload before change; no alpha/material-format guess.
+
+Shared embeddedUVImage takes optional maxBytes, default8MB and capped24MB; existing
+choices/surface resolver forward caller policy. ONLY native colour/normal/emissive
+byte-copy path opts into24MB. Existing native24MB unique-image aggregate remains exact;
+packed source/derived images remain8MB and≤2048² conversion. UV Editor and active surface
+preview still enforce8MB/default1024² decode, including large-image Solid/no-image
+fallback. No new decoder/material/UV/signature/history owner, downscale/reencode or
+change to unsupported material/sampler guards. Original native layout/UV/header/slot/
+image-dedup/download owners retained. This is a byte-copy budget repair, not added RAM
+for display textures or blanket PBR/opacity/displacement support.
+
+New large-resource test also reproduces RangeError Maximum call stack size exceeded
+in ORIGINAL project-glb-resources.decodeBytes repeated-group base64 regex. Replace
+only grammar validation with expected padding from decoded byteLength and a flat
+invalid-alphabet search; original byte length, atob→btoa canonical check,24MB pool,
+resource versions1/2/3,32MB project Open and legacy compatibility retained. No new codec
+or looser malformed-padding/unused-bit acceptance. Actual Open handler + large shared
+pooled file now passes; inline large resource and selected UV→native repeat pass too.
+
+Four native tests use metadata-only reported fixture + synthetic same-length bytes:
+exact11,121,601B native colour/normal/emissive output and preview rejection;24MB boundary,
+shared-slot/object dedup/aggregate/packed-budget guards; selected UV/resource/ACTUAL File
+NOMAD downloads; pooled .boxlab ACTUAL Open and strict invalid/valid base64 cases.
+Full local2428PASS/0FAIL/0skip. Extra ACTUAL user-file audit: original importer/Three
+geometry conversion→native cube6faces/1UVobject/5images,16,310,924B file, all colour/
+normal/emissive hashes identical to source. Node geometry-loader copy strips image refs
+only; original retained resources go to writer. Packed JPEG split in this offline audit
+uses Pillow G/B, so browser conversion/Nomad appearance still needs device confirmation.
+Actual full5-image pooled resource roundtrip25,750,555B encoded /19,307,670B decoded
+retains ALL five image bytes, including unused displacement. No private pixels shipped.
+
+Latest native donor FULL MATERIAL EXPORT(1).nom SHA25689170a6ecc5427413069ad9902c1b0c128ee17ad7136e8737a28be324196e47c
+adds textures.opacity index4,417,303B PNG, factorOpacity1/use_color_opacity1; material
+stillopaque. GLB meshExtras.nomad has NAME-ONLY displacement/opacity slots and factors;
+displacement texture/image3 is unreferenced by core glTF material; opacity named image
+is absent. Metadata fixture records this; audit explicit binding/semantics in a later
+stage, never assign by image filename alone. No opacity/displacement implementation887.
+
+Reviewed887 cache graph: export-panel→packed-child→native-core→surface/image-helper;
+render→surface; MeshHealth→workspace→image-helper; drawer→management→project-codec→
+resource helper (also direct management shell entry). Existing internal stamps retained
+except export-panel887; all corresponding parent URLs/hash contracts reviewed. Importer882,
+UV maths/inspector880/nav868, manager875, protected Multi1.0/native donor/modelling and
+frozen betas unchanged. All four continuity docs updated; publication proof follows.
+Device887: supplied FULL MATERIAL.glb, SubD off→File→NOMAD must download/open; colour,
+normal/emissive/roughness/metalness slots intact; UV edit→export and .boxlab Save/Open→
+export repeat. Native visual gate remains pending; do not infer PASS from file upload.
+Next: this exact-file retest before advancing opacity/displacement/native multi-materials.
+
+## .887 publication verified — 2026-10-17
+
+Runtime3f605425529ecb4443ac73ac4ca82c1297403b2a; tested tree
+588b5515fddf512251af19f790a6fd7d6f3a2bae exactly matches fetched main.
+Actual Node22 CI38978052888/job117232125229 SUCCESS2428PASS/0FAIL/0skip;
+Pages38978052416 build/deploy SUCCESS. Fresh live shell/manifest/recovery/export-panel/
+packed-child/native-core/surface/image-helper/MeshHealth/workspace/render/drawer/
+management/project-codec/resource-helper887, unchanged importer882, protected Multi1.0
+and frozenBeta7 marker all byte-match repository. Prior886 live graph matched original
+main during audit. Exact uploadedGLB refusal and large base64 regex overflow reproduced
+before repair; actual source-byte/hash and pooled-resource audits recorded above.
+User885 FAIL screenshot886 remains the failed case;887 exact-file Nomad opening,
+map alignment/UV edits and .boxlab reopen device gates await feedback. Earlier smaller
+accepted map/UV protections remain; no new device PASS inferred. All four continuity
+documents current. Final proof commit changes docs only, preserving tested runtime.
+
+## .888 — explicit Nomad displacement-map handoff, 2026-10-17
+
+User887 PASS /nextbuild protects supplied FULL MATERIAL.glb native download, original
+large colour plus normal/emissive/roughness/metalness slots, UV-edit repeat and .boxlab
+Save/Open after validator repair. Resolves reported885 FAIL screenshot886 for this case;
+earlier smaller native/UV/Pencil/navigation baselines retained. Audit current
+main714bd5a1/runtime3f605425/live887/owners and paired user GLB/NOM donors.
+
+Original importer ALREADY retains meshExtras.nomad.version1/textures.displacement
+semantic NAME REFERENCE plus all original image definitions/core texture links. Proved
+that explicitly named GLB image3 (6,200,450B16-bit PNG) equals BOTH native donors'
+displacement image, SHA25645771544a0c7442d03136ce78fc8b79f4341a5a1541eb34f9f6e45cf3cc0b501.
+Generator nomad11 observed. Metadata-only paired provenance fixture includes saved native
+slot/strength/midpoint/world and a tiny synthetic16-bit PNG; no private pixels committed.
+No new import channel, envelope/version, filename-stem inference or duplicate kernel.
+
+Small nomad-displacement-map binding helper reads only explicit version1 Nomad slot.
+Require EXACTLY ONE image.definition.name matching that explicit reference and EXACTLY
+ONE core texture sourcing it; missing/ambiguous/no-data/unsupported refs refuse before
+download. A matching image filename WITHOUT semantic slot never enables displacement.
+Shared embeddedUVImage validates PNG/JPEG bytes/MIME≤24MB;16-bit data copied unchanged,
+no decode/reencode/downsample or precision loss. Default repeat/linear sampling; source
+Auto/UV and identity transforms only, unknown slot keys/transforms/Triplanar refuse.
+Observed native Auto encoding used with REQUIRED complete matching Base UV channel
+(Auto uses UV when UVs exist; official manual https://nomadsculpt.com/manual/material).
+Hardness/world projection metadata and finite source strength/midpoint/world fields
+validated; numeric settings preserved VERBATIM, including negative strength and source
+world boolean. This stage does not compensate displacement amplitude for import-fit
+or baked object scaling, bake displaced geometry, or add a BoxLab displacement renderer.
+
+ORIGINAL nativeMaterialMaps/writer now includes displacement-only input or displacement alongside existing
+map slots, original image-table dedup/alignment/24MB aggregate and donor material slot.
+Original one opaque material/Base UV/stale/evaluated refusal stays. .887 raw colour/
+normal/emissive24MB and display8MB/1024², packed8MB/2048² budgets unchanged. Source
+mesh/UV/resources/history stay read-only. Async facade already counts ALL nonpacked
+maps in same pool; no duplicate conversion/cache. File NOMAD status adds displacement
+count. Plain/no-explicit-slot and prior map output paths retain original behaviour.
+
+Five native regressions: explicit reference vs filename-only/array reorder, valid16-bit
+bytes/native donor slot/settings/unchanged geometry+UV fields, ambiguous/missing/sampler/
+transform/factor/stale/evaluated refusals, shared-image dedup/aggregate budgets and
+selected UV/project continuity, ACTUAL File NOMAD six slots/status/error recovery.
+Full local2433PASS/0FAIL/0skip. Actual user GLB→original importer/Three geometry conversion
+→resource Save/Open→native output22,511,792B:1object/6faces/1UVobject/6images; colour/
+normal/emissive/displacement hashes exact; native strength.17320507764816284, midpoint.5,
+worldfalse exact. Import fit scale2 retained as before. Offline packed split uses Pillow
+G/B and Node private geometry input strips image refs only; no browser/Nomad appearance
+proof inferred. .887 device PASS protected; .888 displacement device gate pending.
+
+Reviewed888 graph: shell/recovery/export-panel→packed-child→native-core→new displacement
+binding helper; core/image/surface and new helper's shared decoder remain887. All other
+UI/importer/resource/UV math/navigation/protected modelling/Multi/frozen beta/native donor
+bytes unchanged. All four continuity docs updated; publication verification follows.
+Device888: same FULL MATERIAL.glb/SubD off→File→NOMAD: Displacement slot populated with
+original image and saved settings, previous five maps intact; Pencil UV/project repeat.
+Separate opacity texture absent from GLB despite named extras, so opacity remains
+pending. Do not guess missing pixels or declare generic glTF displacement/NOM import.
+Next:888 device feedback; then audit opacity source/baked colour alpha and native material
+semantics before adding transparency or unrelated UV painting/native per-face materials.
+
+## .888 publication verified — 2026-10-17
+
+Runtime9af5dff180f3f79e48959706ab0771e060ad6af8; tested tree
+0e0183c76e95afa06a1bfeeda85980e4a39d77c7 exactly matches fetched main.
+Actual Node22 CI38979044490/job117235309930 SUCCESS2433PASS/0FAIL/0skip;
+Pages38979043395 build/deploy SUCCESS. Fresh postdeployment live shell/manifest/recovery/
+export-panel/packed-child/native-core/new displacement-helper888, unchanged source image/
+surface helpers887/importer882, protected Multi1.0 and frozenBeta7 marker all byte-match
+repository. Initial reads preceded deployment (old887/new helper404); final graph888
+fully matches. Prior887 live audit matched main before changes. User887 PASS protected;
+888 Displacement slot/image/settings/UV/project device gate pending. Paired explicit
+binding/hash proof and actual6-map output22,511,792B recorded; original16-bit data/source
+settings retained, no physical-height compensation or BoxLab geometry bake claim.
+All four continuity docs current. This local verification note was pending publication
+when the user reported888 image-budget FAIL;889 continues that repair. No888 PASS inferred.
+
+## .889 — lossless scalar PNG encoding / .888 budget FAIL, 2026-10-17
+
+User reports888 File NOMAD failed: embedded images exceed24MB. Do not mark888 PASS.
+Audit main9af5dff1/runtime888, original packed-map preparation and24MB native pool.
+Prior offline audit used Pillow scalar PNGs in place of browser output; this did NOT
+prove the real platform-encoded files would fit. Actual browser PNG byte sizes were
+not captured, and multiple independent textured imports can also exceed source budget.
+.887 exact-file five-map/Pencil/project PASS remains protected. Keep888 displacement
+binding/schema/16-bit byte tests; repair derived encoding rather than enlarge the pool.
+
+Original splitNomadPackedImage used canvas.createImageData RGBA, repeated G/B into
+three channels plus opaque alpha, then platform convertToBlob/toBlob PNG. Scalar data
+needs only ONE8-bit channel. New small nomad-scalar-png owner encodes colour type0 PNG,
+adaptive per-row None/Sub/Up/Average/Paeth filtering, real CompressionStream('deflate')
+zlib and chunk CRCs. Standard: https://www.w3.org/TR/png-3/ and
+https://compression.spec.whatwg.org/ . Original2048² bound and8MB derived-image cap
+remain; source bytes/dimensions/G/B values unchanged. No gamma/profile/alpha chunks,
+resampling, factor baking, lossy compression or quality reduction. Encoder does not
+mutate readback/source. Removes full RGBA output scratch allocation and platform PNG
+encoder dependency; browser bitmap decode/canvas readback + finally cleanup stay original.
+CompressionStream unavailable/failure refuses clearly; no oversized RGBA fallback.
+
+Native24MB aggregate guard stays ACTIVE. Async preparation now reports source-image MiB,
+converted-map MiB and visible object count in overbudget error, distinguishing derived
+size from repeated/large imports. Dedup still source-buffer identity as protected884;
+independent imports of identical bytes are NOT content-deduped. Do not silently raise
+limits or claim this permits unlimited scenes. Test one fresh import to isolate result.
+Original native writer/displacement helper888/image/surface/resource887/UV/render/kernel/
+history/importer/frozen owners unchanged; no duplicate pool, decoder or modelling owner.
+
+Existing886 tests now inspect actual production grayscale PNGs with independent Node
+zlib/CRC/inverse-filter reader; retain all exact G/B/geometry/UV/source/factor/resource/
+cleanup/DOM-readback assertions. Encoding-failure injection moves to CompressionStream;
+platform PNG encoder calls must be zero. Three new regressions cover real compressed
+PNG pixels/headers/CRC/filters/bounds/API failure, ACTUAL File NOMAD six-map export at
+reported source sizes with real compression and forbidden platform PNG encoder, and
+retained24MB source guard with diagnostic breakdown. Full local2436PASS/0FAIL/0skip.
+
+ACTUAL user packed JPEG decoded to RGBA through Pillow as Node transport fixture, then
+REAL production scalar encoder/deflate (no substitute PNG encoder): roughness2,035,568B,
+metalness1,948,291B. Independent Pillow PNG decode confirms EVERY G/B byte identical.
+Actual retained source assets + production split/native facade:6images,22,557,536B image
+payload (21.51MiB),2,608,288B pool headroom,22,629,956B native file. Colour/normal/emissive/
+displacement original hashes exact, displacement16-bit/settings untouched. Native Box
+UVs used for byte-budget audit; original imported UV/history coverage remains in suite.
+Browser decoder/readback adapted in Node; no Safari/Nomad visual acceptance inferred.
+Private images/readback not committed. This replaces the earlier Pillow-encoded size
+estimate;888 failure preserved as device evidence and889 exact-file gate remains pending.
+
+Reviewed889 graph: shell/recovery/export-panel889→packed-child889→new scalar encoder889;
+packed child still imports native-core888→displacement888 and source/image helpers887.
+All unrelated UI/import/codec/UV maths/protected modelling/Multi/frozen/native donor bytes
+unchanged. All four continuity docs updated; publication proof follows.
+Device889: reset scene, import FULL MATERIAL.glb ONCE, SubD off→File→NOMAD must download;
+check all six native slots including displacement; UV edit and .boxlab Save/Open repeat.
+If still overbudget, report FULL new source/converted/object breakdown rather than guess.
+Opacity remains pending; displacement numeric settings copied unchanged, no amplitude
+rescaling/BoxLab geometry bake/generic glTF displacement/native multi-material/NOM import.
+
+
+## .889 publication verified — 2026-10-17
+
+Runtime b7c5d1e349741906d55f510c8f5c240ed403efca; tested tree
+dda3ae2132766f5f18f674da18693424d3b74b20 matches fetched main exactly.
+Actual Node22 CI38984764493/job117253528765 SUCCESS2436PASS/0FAIL/0skip;
+Pages38984764391 build/deploy SUCCESS. Postdeployment live shell/manifest/recovery/
+export-panel/packed-child/new scalar encoder889, native core/displacement888,
+source-image helper887/importer882, protected Multi1.0 and frozenBeta7 marker
+all byte-match repository. Initial predeployment reads were stale/404; final graph
+fully matches. All four continuity docs updated. This proof changes docs only.
+User888 FAIL retained;889 iPad export/Nomad six-slot/UV/project gate PENDING.
+No device PASS inferred. Fresh scene, one FULL MATERIAL.glb import, SubD off.
+
+
+## .890 — identical native export images shared by content, 2026-10-17
+
+User .889 PASS protects exact FULL MATERIAL.glb six-slot native download/open,
+Pencil UV repeat and .boxlab Save/Open. The .888 24MB device failure is resolved for
+that accepted case; keep the failure history and .889 lossless encoding protected.
+Audit main a5e671ca/runtime b7c5d1e3, shell .889 and original native writer/preflight.
+Native pooling and packed conversion previously used buffer identity only, unlike
+existing content-pooled .boxlab files. Re-importing the same GLB independently could
+therefore exceed the native 24MB pool although a reopened pooled project fitted.
+
+Extend ORIGINAL native writer with export-local createNomadImageIdentity; no second
+binary pool/container/resource owner. MIME + byte length + FNV-1a hash selects a
+candidate bucket; full byte comparison decides equality, including subarray offsets.
+Hash collisions never merge unequal data; per-buffer/MIME memo avoids repeated scans.
+Original image table, alignment, 24MB guard, mesh/UV/material/slot owners retained.
+Async preflight uses the SAME identity helper to count unique raw and converted bytes;
+equal packed source content converts once even across independent buffers. Distinct
+encoded images remain distinct regardless of names. Original image buffers stay
+read-only and independent; no content merging in scene/history/import/project state.
+Each object keeps its own material factors, texture names, geometry and UVs. No image
+resampling/reencoding, increased limits, permanent cache or new modelling/history owner.
+
+Four regressions cover an actual same-length FNV collision, MIME/length/offset identity,
+separate materials/names/selected UVs/native field bytes, ACTUAL File NOMAD two full-size
+independent six-map payloads, conversion once, project reopen and exact unique budget
+including equal converted slots. Existing six historical budget tests now use genuinely
+DIFFERENT bytes instead of identical filler; all rejection assertions remain active.
+Full local Node24: 2440 PASS / 0 FAIL / 0 skipped. Reviewed graph shell/recovery/export
+panel890 -> packed890 -> native-core890; scalar889, displacement888 and all other
+resource/UV/render/import/protected modelling/Multi/frozen owners unchanged.
+
+Actual uploaded GLB source images + actual JPEG G/B decode transport, REAL production
+scalar encoder/native writer: two independent textured objects with different UVs,
+6 unique images, 22,557,536B payload, 2,608,288B headroom; one packed decode. Original
+colour/normal/emissive/displacement hashes exact. Browser readback adapted in Node;
+iPad/Nomad .890 multiple-import gate remains pending, no device PASS inferred.
+
+Opacity audit of actual paired files: GLB colour PNG RGBA2048x2048 already carries
+alpha0..123; native template ALREADY use_color_opacity=1/factorOpacity1, and exporter
+retains the encoded colour bytes. NOM separate opacity image is RGB1024x1024,
+417,303B, SHA256440163515a426e5017aa0695f537f48ca8d9d20a36717f040ba08161b4e0b440.
+That separate image is ABSENT from GLB, whose extras name Water_001_DISP_opacity.png;
+NOM slot names Water_001_DISP.png. Do not derive/rename alpha as a recovered separate
+map, invent missing pixels, or claim new opacity/transparency support. No opacity
+runtime change in890. Public reference: https://nomadsculpt.com/manual/material
+(texture-panel Opacity uses colour alpha; Auto uses UV when present).
+
+Device890: reset; import FULL MATERIAL.glb TWICE, SubD off; move one object aside;
+File NOMAD must download/open two objects with six maps each. Pencil UV edit one object
+then repeat; Save/Open .boxlab repeat. Genuine unique-image excess still refuses with
+source/converted/object breakdown. Next: device feedback, then source-complete opacity
+input/native material audit or staged UV/texture work; no invented opacity/NOM import.
+
+## .890 publication verified — 2026-10-17
+
+Runtime08f0256ef54901f205311b25d93b04b3250c2746; tested tree
+c7f3fd960f69b86bba150b377cc84646f18ced47 exactly matches fetched main.
+Actual Node22.23.3 CI38985850970/job117257022771 SUCCESS2440PASS/0FAIL/0skip;
+Pages38985850874 build/deploy SUCCESS. Fresh live shell/manifest/recovery/export-panel/
+packed-child/native-core890, unchanged scalar889/displacement888/protected Multi1.0
+and frozenBeta7 marker all byte-match repository. Initial reads preceded deployment;
+final graph matches890. All four continuity files current; proof changes docs only.
+User889 PASS protected;890 two-independent-import/UV/project native device gate PENDING.
+
+## .891 — UV Editor Normal / Emissive references, 2026-10-17
+
+User .890 Perfect PASS protects two independent FULL MATERIAL.glb imports/native
+six-map export, individual UV edits and .boxlab Save/Open; .889 remains protected.
+Audit current main a0a56749/runtime08f0256e and original UV chooser/resolver/decoder,
+workspace gesture owner and native/render consumers. Importer already retains exact
+normalTexture/emissiveTexture links; no UV inspection chooser for those slots existed.
+
+Extend ORIGINAL importedUVImageChoices with an optional colour/normal/emissive slot
+list. Default callers stay colour-only with identical output shape/labels/eligibility;
+only UV workspace opts into three slots. Same image-source dropdown shows Material ·
+Colour/Normal/Emissive, with explicit reference status. Resolve actual material texture
+index -> texture.source -> embedded image, never names/array position/facegroup guesses.
+Normal/emissive texture extensions, nonUV0/transformed/missing/external/oversize/invalid
+sources refuse independently; valid remaining references still available. Read-only
+image reference only: normal scale and emissive factors/lighting are not evaluated.
+No packed roughness/metalness/displacement/opacity selector, painting or new material UI.
+
+Same controller/one1024² bitmap,8MB encoded source limit, generation cancellation,
+late-result cleanup and UV-only payload reuse. Selected semantic slot survives refresh
+when still present, including two slots sharing one image; removed slots cannot leave a
+stale Normal label on Colour. Switching chooser uses EXISTING Pencil-cancel/capture
+release and retains view/island selection without a transaction or history checkpoint.
+Close/reopen starts Image off. Original V0/tile clipping/projection/pan/pinch/history
+and Pencil Move/Scale/Rotate owner unchanged. 3D UV Image remains base-colour-only;
+no additional surface/GPU bitmap residency or changed export/resource schema.
+
+Three native regressions cover exact/reordered map links/default caller parity/codec,
+unsupported refs/bytes/budgets, shared-image semantic refresh/cancel/dispose lifecycle,
+and ACTUAL workspace labels/1024² decode/Pencil cancellation/view/selection/reopen.
+Actual supplied FULL MATERIAL.glb source audit resolves normal image1/1,248,872B and
+emissive image2/2,754B. Its11,121,601B colour remains outside existing8MB preview policy;
+Normal/Emissive stay inspectable. No private pixels committed, browser visual gate pending.
+Full local Node24 2443PASS/0FAIL/0skip. Cache graph reviewed: workspace/preview891,
+MeshHealth parent891; shared preview consumers surface/render/native-displacement/
+native-core/packed/export parents891 (imports only), scalar889 retained. Internal
+MeshHealth stamp880 intentionally retained. Protected Multi1.0/modelling/frozen beta,
+actual decoder, native image/dedup maths and source/export image bytes unchanged.
+
+Device891: imported GLB -> Object Mesh Health -> UVs -> Open UV Editor -> Image;
+choose Normal, then Emissive; inspect alignment/orientation beneath UV outlines.
+Pencil edit/UndoRedo and pan/pinch still work; close/reopen starts Image off.
+Save/Open .boxlab -> chooser and native NOMAD six-map export remain intact.
+Next after feedback: audit packed-map inspection or the next staged UV-authoring
+step; separate opacity still needs source-complete input. No NOM import claim.
+
+## .891 publication verified — 2026-10-17
+
+Runtime278b0042b4a1815e1765cf69edd1a2462862e669; tested tree
+fdf44a1b86e9faa474fe1b785e104a70a0a12a34 exactly matches fetched main.
+Actual Node22.23.3 CI38987566193/job117262477050 SUCCESS2443PASS/0FAIL/0skip;
+Pages38987566624 build/deploy SUCCESS. Fresh live shell/manifest/recovery/MeshHealth/
+workspace/preview/surface/render/export/native-parent graph891, scalar889, protected
+Multi1.0 and frozenBeta7 marker all byte-match repository. Initial reads preceded
+deployment; final complete graph matches891. All four continuity files current.
+User890 PASS protected;891 UV Normal/Emissive/Pencil/project/native device gate PENDING.
+Proof is documentation-only; tested runtime bytes unchanged.
+
+## .892 — UV Editor Roughness / Metalness references, 2026-10-17
+
+User .891 PASS protects Normal/Emissive references, existing Pencil/navigation/history,
+Image-off reopen, project resources and native six-map export. Audit current main
+433c73f0/runtime278b0042 and original chooser/decoder/controller/workspace plus native
+packed-map owner. Existing native export proves glTF roughness=G and metalness=B.
+
+Extend ORIGINAL optional UV map chooser with Roughness (G) and Metalness (B), BOTH
+resolving material.pbrMetallicRoughness.metallicRoughnessTexture through the same
+embedded-image resolver. Never use red/occlusion, luminance, filenames or inferred
+images. Raw channel references: do not bake roughnessFactor/metallicFactor or simulate
+PBR shading. Only UV workspace opts into five map kinds; default base-colour consumers
+(surface/native writer) retain identical source selection/shape/behaviour.
+
+Extend SAME bounded decodeUVImage: colour/normal/emissive path unchanged. Packed
+references request existing <=1024² bitmap with colour conversion/premultiplication
+none, use one OffscreenCanvas or DOM canvas for readback, repeat G/B into RGB with
+opaque alpha, no Y flip or PNG encoding. Translucent readback refuses because Canvas
+premultiplication could lose RGB. Source bitmap closes in finally; failures reset the
+scratch canvas. Successful canvas is the single controller-held image, with close()
+resetting dimensions to1. No second output bitmap, retained conversion cache, GPU
+material change or permanent image/UV/project mutation. Bitmap + canvas + readback
+are temporary bounded allocations; inspection is a resized reference, NOT full-resolution
+lossless data analysis. Original encoded8MB guard and one held preview remain.
+
+Existing generation cancellation, slot-aware UV-refresh reuse, chooser Pencil-cancel/
+capture release/view/selection, tile/V0 projection, pan/pinch/history and Image-off
+reopen remain original. Aria label now UV image reference, matching all image choices.
+Four regressions cover exact bindings/G/B vs red/factors/default parity/guards, actual
+bounded decoder pixels and DOM fallback, context/read/write/alpha failure and late
+cleanup, ACTUAL workspace grayscale rendering/switch/Pencil/view/selection/reopen.
+Prior891 workspace test now locates its Normal/Emissive entries before the added two;
+all previous behavioural assertions retained. Full Node24 2447PASS/0FAIL/0skip.
+
+Actual supplied FULL MATERIAL.glb resolves both to image4/733,993B packed JPEG,
+SHA2563c0ec3a61999f04ee7e5e2376ebf4a4324f1c56b09caf1334523b639b3b2d9b5.
+Pillow1024² readback transport -> REAL decoder channel conversion verifies every G/B
+value in1,048,576 pixels per reference; original source hash unchanged, both source
+bitmaps closed. Browser decode/readback adapted; iPad visual gate remains separate.
+No private pixels committed or lossless/resizing-equivalence claim for browser thumbnail.
+
+Reviewed shell/recovery/MeshHealth/workspace/shared preview and surface/render/native
+parent cache graph892; native parent changes ONLY shared import pins. ScalarPNG889,
+UV maths/decoder options for existing maps, all native binary/dedup/kernel/history/
+resource/import owners, protected Multi1.0 and frozen betas retained. All four docs current.
+Device892: UV Editor -> Image -> Roughness (G), Metalness (B): separate grayscale
+references under UV outlines; Normal/Emissive still work. Pencil edits/UndoRedo/pan/
+pinch, reopen and Save/Open -> native six-map export remain intact. Next after feedback:
+audit next staged UV-authoring/packing capability; separate opacity requires source-
+complete input. No opacity/displacement/occlusion inspection, painting or NOM import.
+
+## .892 publication verified — 2026-10-17
+
+Runtime68ee2db64bf7b3bd6bb4df7433141fef48db44f7; tested tree
+ce6c0a21c0fd49925ed557d4997edbb5fa2e1b89 exactly matches fetched main.
+Actual Node22.23.3 CI38991841599/job117275721906 SUCCESS2447PASS/0FAIL/0skip;
+Pages38991841149 build/deploy SUCCESS. Fresh live shell/manifest/recovery/MeshHealth/
+workspace/preview/surface/render/export/native-parent graph892, scalar889, protected
+Multi1.0 and frozenBeta7 marker all byte-match repository. All four continuity files
+current. User891 PASS protected;892 grayscale/Pencil/project/native device gate PENDING.
+Proof is documentation-only; tested runtime bytes unchanged.
+
+## .893 — Pack all UV islands, 2026-10-17
+
+User .892 PASS protects Roughness(G)/Metalness(B) references, prior map choices,
+Pencil/navigation/history, project reopening and native six-map export. Audit main
+321674aa/runtime68ee2db6 and original UV inspection/edit/workspace/history/export owners;
+Fit-to-tile exists for ONE island, no all-island packer exists.
+
+Add Pack all to ORIGINAL UV workspace. Whole current object's complete UV layout,
+with or without an island selection; supported imported GLB and native BoxLab channels.
+Deterministic GRID packing, not optimal polygon packing, seam unwrap or texture baking.
+Try column counts for best common uniform scale; preserve every island's orientation,
+shape and RELATIVE UV sizes/density. Island IDs/order unchanged.2% tile outer margin
+and at least2% gap between island BOUNDING BOXES. At most128 islands; larger layouts
+refuse before history. Does not remove overlaps WITHIN an island. Texture images stay
+fixed: packing intentionally changes their sampling, like existing UV transforms.
+Button title explains all-island scope/fixed images. No auto-pack on import/export.
+
+Extend SAME imported-uv-edit transaction with packImportedUVIslands, using original
+inspector connectivity/full faceIslands and shared bounds. Expected payload/scope/context,
+complete matching channel, independent/unlocked/resource/history guards retained. Plan
+with normalized coordinates to handle huge/tiny finite UVs; reject zero-extent islands,
+nonfinite scale, collapsed extents or newly collapsed UV edges in double OR export-f32
+precision before mutation. Existing copy-on-write payload/tangent retirement and one
+native scene checkpoint. Source mesh, metadata/images, peers and source arrays read-only.
+Near-identical repeated packed result (32EPS absolute in0–1) adds no Undo entry. Original
+selected-island/whole-layout Rotate/Flip/Move/Scale/Fit maths unchanged.
+
+Pack click cancels pending Pencil preview through existing owner, delegates original
+MeshHealth transaction and retains matching selected-island membership. Successful pack
+frames resulting tile with EXISTING view Fit; rejection leaves view unchanged. No new
+pointer/history/resource/UV signature owner, schema or geometry changes. No packing of
+selected subsets or user-adjustable gutters in this first stage.
+
+Five native regressions: common scale/aspect/orientation/bounding gaps/COW/peer isolation/
+actual UndoRedo/repeat no-op; native Box UVs, huge/tiny/full-face-beyond-preview layouts;
+invalid/stale/locked/no-history/zero-extent/f64/f32 collapse refusals and128 allowed vs129
+refused; ACTUAL workspace+MeshHealth no-selection launch/Pencil cancel/selection/context;
+actual .boxlab codec, native NOM UV indices/f32 corners and Three GLB UV/tangent roundtrip.
+Full local Node24 2452PASS/0FAIL/0skip. Narrow cache graph shell/recovery/MeshHealth893 ->
+workspace893/edit893; inspector880/preview892/render/native export892/scalar889 retained.
+Internal MeshHealth stamp880 retained. All protected modelling/Multi/frozen bytes unchanged.
+
+Device893: cube -> MeshHealth UVs -> Box UVs -> Open UV Editor -> Pack all: separated
+islands inside tile, result framed; select/move island then Pack all with selection
+retained. Undo/Redo restores layout; repeated Pack all adds no extra Undo. Save/Open
+.boxlab and File NOMAD Base retain packed layout/seams. This is manual UV layout
+editing; do not expect imported painted texture appearance to stay fixed after packing.
+Next: device packing feedback, then audit staged seam/UV authoring or resource-backed
+painting; no new opacity recovery/native multi-material/NOM import claim.
+
+## .893 publication verified — 2026-10-17
+
+Runtimebbc0e4b20d55a47fbac9fa3daaa1b4a0c226a3e0; tested tree
+efd82dfde462eca6e53e7ed61f23d8bf4332dc8b exactly matches fetched main.
+Actual Node22.23.3 CI39003980800/job117312549657 SUCCESS2452PASS/0FAIL/0skip;
+Pages39003980205 build/deploy SUCCESS. Fresh live shell/manifest/recovery/MeshHealth/
+workspace/edit893, unchanged inspector880/preview/render/native892, protected Multi1.0
+and frozenBeta7 marker all byte-match repository. All four continuity files current.
+User892 PASS protected;893 Pack all/framing/history/project/native UV device gate PENDING.
+Proof is documentation-only; tested runtime bytes unchanged.
+
+
+## .894 — Sphere UVs (Y), 2026-10-17
+
+User .893 PASS protects Pack all, framing/selection, UndoRedo, project/native UV export
+and prior Pencil/navigation/map references. Audited main ccf5e0e4/runtime bbc0e4b2,
+current markers/pins and original primitive/projection/UV/history/export owners; no
+spherical UV authoring exists in current or frozen code (orbit spherical maths unrelated).
+
+Add Sphere UVs (Y) alongside original MeshHealth Planar/Box/Cylinder buttons. Extend
+SAME imported-uv-edit native projection owner and commitNativeUV transaction. Round
+sphere with two Y vertex poles and seam-aligned longitude rings, including BoxLab's
+Sphere primitive. Equirectangular longitude/latitude with 2% tile margin; deterministic
+seam through the first non-pole corner. Split UV poles per face wedge without splitting
+geometry. Replaces existing native UVs; refuses imported/resource-bearing, linked,
+procedural, locked, modifier, nonround/no-pole/invalid/degenerate/unsupported seam spans
+before history/mutation. Coordinates normalized before subtraction for huge/tiny input.
+One existing native checkpoint, copy-on-write/peer isolation, repeat no-op. No geometry,
+resource schema, exporter, pointer owner or native modelling kernel changes.
+
+Five new regressions: source identity, pole/seam/tile layout, real UndoRedo/no-op;
+4/5/12/32 radial and 2/3/8 latitude bands, translations/Y rotations and huge/tiny scales;
+Box replacement/shared peers/Pack all; actual MeshHealth context action, project codec,
+native NOM UV pool and Three GLB pole variants; context/invalid/history refusals.
+15 focused PASS; full Node24 **2457 PASS / 0 FAIL / 0 skipped**. Reviewed cache graph:
+shell/recovery/MeshHealth894 -> edit894; workspace893, inspector880, preview/render/
+native892, scalar889 unchanged. Internal MeshHealth stamp880 retained. Protected
+Multi1.0/modelling/frozen betas unchanged. Publication verified below.
+
+Device894 pending: add Sphere -> Object MeshHealth -> UVs -> Sphere UVs (Y) -> Open
+UV Editor; check flat latitude layout, Checker and surface seam/poles. Edit with Pencil,
+Pack all, UndoRedo, pan/pinch. Save/Open .boxlab and File NOMAD Base retain UV layout.
+Equirectangular mapping intentionally distorts near poles; not equal-density unwrapping.
+Does not promise arbitrary deformed/tilted spheres, Quadball mapping, seam cutting,
+optimal packing, painting, opacity recovery, native multi-materials or NOM import.
+Next: Sphere device feedback, then audit next narrow UV authoring or painting stage.
+
+## .894 publication verified — 2026-10-17
+
+Runtime260817ff6794ce467346ad36dd8543978cdaf4d3; tested tree
+60b9ca959af6b1c0e04bf766ea1aee8225390eda exactly matches fetched main.
+Actual Node22.23.3 CI39005188711/job117316093356 SUCCESS2457PASS/0FAIL/0skip;
+Pages39005188424 build/deploy SUCCESS. Fresh postdeployment live shell/manifest/
+recovery/MeshHealth894/edit894, unchanged workspace893/inspector880/render892,
+protected Multi1.0 and frozenBeta7 marker all byte-match repository. Initial reads
+preceded deployment; final complete graph matches894. All four continuity files
+current. User893 PASS protected;894 Sphere layout/Pencil/history/project/native UV
+device gate PENDING. Proof is documentation-only; tested runtime bytes unchanged.
+
+## .895 — Equalize UV density, 2026-10-17
+
+User .894 PASS protects Sphere UV creation/layout/seams, Pencil edits/Pack all,
+UndoRedo/navigation, project reopening and NOMAD Base UV export. Audit main39ae725e /
+runtime260817ff, live .894 markers and current loader graph, original projection /
+UV inspection/edit/workspace/history/export owners. No existing equal-density action;
+Box/Cylinder projections already use common density, Pack all preserves input ratios.
+
+Add Equalize density to ORIGINAL UV workspace for all1–128 islands, with or without
+selection. SAME editImportedUV transaction/copy-on-write/native scene checkpoint,
+expected payload/object/mesh/session guards, source images/peers/geometry read-only,
+tangent retirement and selection retention. No new pointer/history/schema/kernel.
+Each island gets one positive uniform scale about its bounding-box centre; preserve
+shape, orientation and mirroring. Target is total input UV area / total Base surface
+area; preserve total UV area, equalize each island's AVERAGE UV-area/Base-area ratio.
+Aggregate ALL faces, including beyond preview. Read-only planar polygon area vectors
+and signed UV polygon areas with normalized input; concave planar polygons supported.
+No triangulation or source face mutation. Nonplanar/degenerate/missing/nonfinite mesh
+or UV area refuses; numeric/export-f32 edge collapse, nonfinite export coordinates,
+unsupported count or changed island connectivity refuses BEFORE history/mutation.
+Already-equal/repeated result within1e-12 scale tolerance adds no history. Original
+Pack all tolerance/maths unchanged; avoid absolute tile-coordinate no-op tolerance
+for density because small off-tile coordinates must not hide meaningful rescaling.
+
+Centres stay fixed, so enlarged islands MAY overlap or leave tile; use Pack all next.
+Images stay fixed: sampling changes intentionally. This is UV-area density; equal
+pixel density assumes the same image resolution. Does not remove within-island
+stretch/distortion or bake/repaint textures. Success uses original workspace Fit;
+rejection leaves view unchanged. Existing Pencil preview is cancelled on click.
+
+Five new regressions: actual history/COW/peers/metadata/centres/aspect/area/no-op;
+unequal surface areas/mirrored UVs, native Box quads+Pack, concave polygons, multi-face
+islands/full-face metrics and huge/tiny geometry; stale/invalid/history/nonplanar/
+zero-area/export-collapse/new-seam-join/count refusals; ACTUAL workspace+MeshHealth
+no-selection action/Pencil cancellation/selection/stale guard; actual project codec,
+NOM UV indices/f32 corners and Three GLB UV/tangent retirement.15 focused PASS.
+Full Node24 **2462 PASS / 0 FAIL / 0 skipped**. Reviewed narrow graph shell/recovery/
+MeshHealth895 -> workspace895/edit895; inspector880/preview/render/native892 and
+scalar889 retained. Internal MeshHealth stamp880, Multi1.0/frozen/modelling untouched.
+
+Device895 pending: cube -> MeshHealth UVs -> Box UVs -> Open UV Editor; select island,
+Pencil Scale it larger, Equalize density makes six sides comparable again, then Pack
+all separates them. UndoRedo, repeat no-op and Pencil/pan/pinch still work. Save/Open
+.boxlab and File NOMAD Base retain layout. .894 user PASS protected; no895 device PASS
+inferred. Next: density feedback, then audit next narrow UV authoring/painting stage.
+
+## .895 publication verified — 2026-10-17
+
+Runtime6b1e003324e5e883d8a0f4625a1e69ba0336fde7; tested tree
+d972fde28ba3b85d3cda78c4f33afe5a97a727ac exactly matches fetched main.
+Actual Node22.23.3 CI39005809090/job117317939014 SUCCESS2462PASS/0FAIL/0skip;
+Pages39005808724 build/deploy SUCCESS. Fresh live shell/manifest/recovery/
+MeshHealth895/workspace895/edit895, unchanged inspector880/render892,
+protected Multi1.0 and frozenBeta7 marker all byte-match repository. All four
+continuity files current. User894 PASS protected;895 density/Pack/Pencil/history/
+project/native UV device gate PENDING. Proof changes documentation only; tested
+runtime bytes unchanged.
+
+## TexturePaint evaluation — 2026-10-17
+
+User directs evaluation of ceramicSoda/TexturePaint for direct in-viewport Pencil
+painting with instant feedback, ultimately brushes/layers/colour controls. This is
+NOT a .895 PASS or a numbered main-app build. .895 density device gate stays pending;
+.894 and earlier accepted gates remain protected. Main shell/runtime/pins unchanged895.
+
+Audit upstream master commit3af8a61e9493ff960ff29ed429fc734335c80931 (MIT, source and
+licence retained byte-exact) and BoxLab renderer/UV geometry/preview/gesture/tool-session/
+resource/history owners. Upstream is CPU DataTexture stamping, no layer engine; confirmed
+row-wrap corruption at texture edges and destructive getTexture reset/reallocation.
+Other integration gaps: linear colour bytes, aliasing private Undo/no Redo, anonymous
+mouse listeners, frame-rate stamping, no pressure/coalescing, seam masks or persistence.
+See docs/texturepaint-evaluation-2026-10-17.md for exact findings and production plan.
+
+Add SEPARATE evaluations/texturepaint/ browser trial on sample sphere/plane; no live
+BoxLab objects, no production loader imports or app-state mutation. Reuse original
+constructor/brush/DataTexture through attributed adapter with clipped stamp blending,
+sRGB quantisation, hardness/opacity/pressure, screen-space resampling and real Three
+nearest-surface raycasts. Live texture updates during movement. Pencil paints; fingers
+use trial OrbitControls orbit/pan/pinch.512² map, radius1–64,12 Undo/Redo snapshots,
+cancel/no-op/disposal; Download PNG flattens pixels with correct top-down row order.
+Reset/reload clears volatile trial. Labels explicitly say no layers/project/Nomad save.
+No claim of actual BoxLab mesh integration, seam stitching, world-radius brush or GPU
+stamping. This separate page does NOT replace protected app gesture/history owners.
+
+Five tests reproduce upstream faults and check corrected pixels/bounds/colour/pressure/
+opacity, texture invalidation, bounded history/cancel/disposal, sampled actual sphere
+raycasts, exact upstream SHA256/licence and app isolation. Full2467PASS/0FAIL/0skip
+(Node24). Headless Chromium download returned truncated archives; rendered browser and
+iPad acceptance remain distinct. Publish evaluation + report, then verify Pages/assets.
+
+Next: evaluate Pencil feel and seams on M2; production prototype should reuse existing
+buildUVPreviewGeometry/render owner and original tool/gesture/history owners. Native
+resource v3 is UV-only: design explicit paint-resource transport/COW/codec before
+promising Save/Open or native painted exports. Preserve replaceable paint backend.
+Do not add further UV utilities in place of proving the requested 3D brush experience.
+
+## TexturePaint evaluation publication verified — 2026-10-17
+
+Evaluation commit ec7d0f6666a7b7713bece07c603ea0e976eb2634; tested tree
+f12d0461396b98f883acb279cb728bbc6d512c56 exactly matches fetched main.
+Node22.23.3 CI39006748131/job117320658726 SUCCESS2467PASS/0FAIL/0skip;
+Pages39006747665 build/deploy SUCCESS. Fresh live trial index/controller/adapter,
+byte-exact upstream source/licence and evaluation report match repository. Main
+index/version remain byte-identical .895. Rendered browser verification did not
+complete; iPad Pencil/navigation/seam/PNG tests remain pending, no device PASS inferred.
+All four continuity docs current. Next is hands-on trial feedback before production
+paint resource/history/gesture integration. Proof is documentation-only.
+
+
+## UV Paint integration audit — 2026-10-17
+
+User says TexturePaint brush needs work but promising; requests audit of TexturePaint
+and Klecks and delegates reuse-versus-new decision. No blanket trial or .895 PASS.
+See docs/uv-paint-integration-audit-2026-10-17.md. Audited BoxLab main353e9881,
+TexturePaint3af8a61e and Klecks cc24e97712c199929760250881ffe2e25233ce6d.
+Decision: BoxLab-owned architecture + selective attributed brush/stroke/compositor
+reuse; no wholesale editor/history/input import, no TexturePaint runtime dependency.
+Klecks Pen/Eraser read and push KlHistory; LayerCompositor is a smaller extraction
+candidate. Screen-space smoothing BEFORE picking; no UV spline across islands.
+Three instrumented upstream probes confirm atlas-spanning Bezier marks (162),
+smoothing position/pressure and compositor call order; no rendered pixel/perf proof.
+Existing focused trial/release tests10PASS/0FAIL/0skip; not a new full-suite run.
+Native resource v3 remains UV-only; design paint resource/codec/COW/history explicitly.
+Next narrow build: isolated identical-stroke comparison on BoxLab-generated UV geometry,
+one colour layer; benchmark adapted Klecks vs simple BoxLab brush before live integration.
+No upstream source imported, no runtime/pin/version/frozen changes; .895 remains live.
+No new hands-on test required for this documentation-only audit. Existing device gates
+remain pending; user feedback is qualitative. Full report carries integration/acceptance plan.
+
+## .896 — isolated UV Paint Lab, 2026-10-17
+
+User /nextbuild after selective-reuse audit. Base main569d4e7e; build896 adds File link
+to separate evaluations/uv-paint/?build=896. Shared screen inputs compare BoxLab distance
+carry and attributed Klecks-derived BezierLine/PointLine/Vec2 (cc24e977), SAME new opaque
+colour raster, two512² buffers, one paired6-step UndoRedo. Original BoxLab primitives/
+Planar/Box/Sphere UVs and export-as-panel892 buildUVPreviewGeometry; no second triangulator.
+No production paint/scene/input/history/resource integration. Exact upstream source and
+MIT notice retained; no full Klecks brush/history/selection/editor/Parcel dependency.
+Pressure→size, hardness, per-stroke opacity cap, subpixel stamps; real raycast per screen
+dab, at most one texture-dirty mark/frame. CPU timings exclude GPU/frame time. Demo same
+inputs, switch candidates, cancel/lost capture/blur/resize/visibility/settings rollback,
+palm suppression/finger navigation, reset/disposal and top-down selected PNG.20MiB raw
+active paint buffer budget excluding browser/GPU/PNG,12k dabs/candidate cap.
+Seven tests plus full Node24 **2474PASS/0FAIL/0skip**. Real Three geometry/raycast/raster,
+adapted controller Canvas/WebGL/OrbitControls; browser/iPad separate. Plane test caught
+back-facing sample; rotate temporary display -X90 only. Distance parity allows1e-12
+floating roundoff, not altered source geometry. All prior semantic checks retained.
+Read docs/uv-paint-lab-896.md. Main shell/recovery896; original exporter892, MeshHealth895,
+main854 and all protected Multi/frozen/modelling owners unchanged. Existing TexturePaint
+trial intact. No layers/.boxlab/Nomad paint persistence, imported texture base, seam-safe
+projection/world radius/PBR claim.895 density and trial device gates remain pending;
+prior894PASS protected. Consolidated living handoff references exact prior193KB handoff
+in git; historical chronology/acceptance retained in DEV_HISTORY/TEST_CHECKLIST.
+Next: compare Pencil feel; refine chosen stroke/footprint, then explicit paint resource/
+codec/COW/global history before real scene integration. No896 device PASS inferred.
+Publication/CI/Pages/live proof follows separately.
+
+## .896 publication verified — 2026-10-17
+
+Runtime81871e11aa9890747bea1ef337694a8666ce0eac; tested tree
+011024983673d1d5d40a1cfc448f4031491ddfdb matches fetched main/local exactly.
+Node22 topology CI39017673843/job117353013439 SUCCESS2474PASS/0FAIL/0skip;
+Pages39017673462 build117353014782/deploy117353094301 SUCCESS.
+Fresh live shell/version and all9 lab source/vendor assets byte-match repository.
+Main protected modelling/Multi/frozen beta bytes and original TexturePaint trial unchanged.
+Cloud Chrome loads lab modules/UI but WebGL context creation fails; unchanged original
+TexturePaint page fails identically. Thus rendered surface/Pencil/navigation/PNG device
+acceptance remains pending, not passed by browser inspection or Node adapters. No claim
+of an iPad WebGL failure; this is the observed cloud-browser limitation. No896 user PASS.
+Documentation proof changes no tested runtime bytes. Next: user paired-brush comparison,
+then selected refinement/resource/codec/global-history work per docs/uv-paint-lab-896.md.
+
+## .897 — UV preview winding repair; .896 brush PASS, 2026-10-17
+
+User .896 PASS; only reported issue paint mesh normals not consistently outward.
+Protect accepted brush comparison/Pencil/settings/navigation/paired history/PNG workflow;
+normal orientation is the explicit exception, not a blanket896 failure or895 PASS.
+Audit main53abe68b and original primitive/projection/export preview owners. Source sphere
+and cube faces are outward, but projected Earcut triangles lose polygon winding:
+original sample sphere240/528 triangles inward; cube6/12 inward. Recomputed normals or
+DoubleSide cannot repair picking/culling orientation. Root is existing triangulateFace.
+Add preserveFaceWinding option in SAME triangulation owner, enabled ONLY by
+buildUVPreviewGeometry. Compare signed projected polygon area with each triangle and
+swap two local triangle indices when opposite. Original face winding, including deliberate
+reversed/imported surfaces, is preserved; no convex-centre heuristic/new triangulator,
+source mesh/UV mutation or general normals repair command. Normals recomputed by original
+geometry builder. Preview checker/image consumers also gain correct source winding.
+Ordinary editableToGeometry/GLB file export keeps original default false; native NOM,
+UV storage, brush raster/strokes/history/input and frozen/protected modelling unchanged.
+Known ordinary export winding behavior is NOT repaired or claimed fixed in this scope.
+After proper source winding, plane temporary display uses +X90 instead of896 -X90.
+Three regressions cover EVERY sphere/cube triangle+normal, real front-sided raycasts from
+six external directions/near hit, plane front, concave tilted/reversed polygon winding,
+exact position/UV corner correspondence/read-only source and unchanged ordinary export
+path plus triangle-corner sets. Full Node24 **2477PASS/0FAIL/0skip**.
+Reviewed shell/recovery/export-parent897 and lab index/lab-loader/sample897; shared brush/
+curve/core896 and native/export children892 retained. Main exporter internal stamp892
+intentionally distinct from loader897. No blind all-module repin. Previous browser WebGL
+limitation unchanged; device897 winding confirmation pending, no897 PASS inferred.
+Next: orbit sphere/cube, paint around all sides; plane visible; switch brushes/UndoRedo.
+Then resume paint resource/codec/COW/global-history design after chosen-brush feedback.
+Publication verification follows; no layered or persistent painting claim.
+
+## .897 publication verified — 2026-10-17
+
+Runtime1db5769b9888e6f6d1c5cbda4e968ffd27afab1d; tested tree
+49fc268524ca308bb6dffcf0ca459346b87247fc matches fetched main/local exactly.
+Node22.23.3 topology CI39018873809/job117356495970 SUCCESS2477PASS/0FAIL/0skip;
+Pages39018873340 build117356496893/deploy117356596313 SUCCESS.
+Postdeployment live shell/version/export-parent897 and lab index/controller/sample897
+byte-match repository; protected Multi1.0/frozenBeta7 marker unchanged. Initial live
+reads preceded completed deployment and served896; final postdeployment graph matches897.
+User896PASS protects brush workflow with reported winding exception;897 fixes preview
+orientation only, device retest pending. No897PASS inferred. Prior cloud WebGL limitation
+remains separate from this actual Three geometry/raycast/source-winding test evidence.
+This verification updates documentation only; tested runtime bytes retained. Next:
+user orbit/paint sphere and cube all sides, plane/paired history sanity; then paint
+resource/codec/COW/global-history design per current roadmap. Ordinary file-export
+winding remains a separate audit item; no automatic general outward-repair promise.
+
+## .898 — paint resource v1 and lab Save/Open; .897 PASS, 2026-10-17
+
+User897PASS protects corrected outward preview, paint/navigation/history/plane baseline.
+Audit current6677ce85: no editable paint-resource codec exists; native projectv3 UV-only.
+Add src/paint-resource.js: version1 opaque baseColor/sRGB/RGBA8/UV-v0-first, explicit size/
+binding, owned pixel capture/async encode/decode copies, exact SHA256 integrity. Metadata
+frozen; typed pixels are read-only by caller contract, not magically immutable. No global
+history owner or changes to native .boxlab resource envelopes.
+Lab Save/Open .boxpaint v1 embeds scene through ORIGINAL BoxLab scene/nativeUV codec,
+actual sample geometry/UVs, both512² results, settings/selected brush/camera. Binary header
+≤1MiB/file≤4MiB, two exact raw RGBA buffers with descriptors/hash, bounded plain native
+sample only. No fake GLB metadata, new mesh kernel, PNG reencoding or main paint save claim.
+Save snapshots before await; Open stages/validates before replacement, clears lab history
+on success, disposes old resources once. Invalid/corrupt/stale files keep committed work;
+revision/generation checks block late Open after a new Pencil contact/settings/history/
+reset/candidate/navigation or another Open. Unfiltered iPad picker follows existing
+.boxlab Open to avoid unknown-extension filtering. PNG and accepted brush semantics intact.
+Six new tests cover owned resource/integrity, exact three-sample pixel/UV/geometry/settings/
+view restoration, async capture and load guards, budgets/corruption, real controller Save/
+Open/continued Undo/stale-stage rollback/new contact. Extracted original lab test harness;
+all original assertions retained. Full Node24 **2483PASS/0FAIL/0skip**. Browser/iPad gate
+separate; no rendered/filepicker proof inferred from Node.
+Shell/recovery898; lab loader/sample/session/resource898. Export897/codec887/core+stroke896
+and all production UV/project/history/import/export/modelling/frozen owners unchanged.
+No layers/autosave/main .boxlab paint/global scene history/Nomad paint export claim.
+Manual: paint→Save Paint; Reset/reload→Open Paint from Downloads; compare both brushes,
+settings/view, then draw/Undo/Redo and PNG. Next original scene-resource/codec/COW/history
+integration after feedback. Publication verification follows; no898 device PASS inferred.
+
+## .898 publication verified — 2026-10-17
+
+Runtime62849d782d40767f330adf79344c17b843bf8a34; tested tree
+4047f6d1c5ca540e14e605ca5897f6ddabb1821d matches fetched main/local exactly.
+Node22.23.3 topology CI39025253753/job117374865418 SUCCESS2483PASS/0FAIL/0skip;
+Pages39025253372 build117374867123/deploy117374959488 SUCCESS.
+Postdeployment shell/version and exact lab898 index/controller/sample/session plus
+paint-resource898 byte-match repository. Initial predeployment reads served897/404;
+final complete changed graph matches898. Main codec/native resources/export/brush core/
+winding/protected modelling and frozen beta bytes retained. User897PASS protected.
+Documentation proof changes no tested runtime bytes;898 filepicker/download/reload/
+Open/Pencil continuation gate pending, no898 device PASS inferred. No new cloud WebGL
+or Safari rendering proof. .boxpaint is a lab session, not main .boxlab/Nomad paint.
+Next: Save Paint→Reset/reload→Open Paint from Downloads, compare both results/settings/
+view and continued UndoRedo; then original scene-resource/codec/COW/history integration.
+
+## .899 — project colour resource preservation; .898 user PASS — 2026-10-17
+
+User898PASS protects .boxpaint Save/Open/continued brush/history/settings/view;895
+not inferred. Audit37c77ab5 synchronous codec/actual history/manager/duplicates: no
+colour resource forwarding existed. Separate colourPaint owner, original scene
+snapshot/restore/ordinary single+Multi Duplicate share committed read-only buffers;
+replace resource for COW edits. Original .boxlab Save/Open handles explicit scenev2
+paint pool/ref envelopesv1 using existing canonical binary transport,8MiB unique raw
+budget; plain projects retain v1 exactly. Native UVv3 remains strictly UV-only.
+Owned decode/pool sharing/content+identity dedup; malformed/unknown/alpha/ref/budget/
+linked/procedural/reference owners refuse. Original exact roundtrip/atomic Open,
+render-failure rollback/history reset retained. Four tests + full2487PASS/0FAIL/0skip;
+focused4PASS includes added failed-render rollback assertions. No rendered/iPad claim.
+Binding opaque, no project SHA/current UV validity claim; .boxpaint SHA unchanged.
+Main Open says colour preserved but display/editing unavailable. No authoring/transfer
+UI/main paint/layers/UV propagation/GLB/Nomad paint export yet. Read
+ docs/project-paint-resources-899.md. Next bounded selected-object bridge through
+original preview/selection/history, explicit validity/rebinding/lifetime/refusals.
+Shell/recovery and changed owner graph899; original sample/resource898, brush896,
+preview897 and protected modelling/frozen bytes retained. Publication proof follows.
+
+## .899 publication verified — 2026-10-17
+
+Runtime47136701c9c667ecdb410d89ca6e8b751c773680; tested tree
+da7f9e98766dff998f71e60d6deb20947dc692e1 matches fetched main/local exactly.
+Node22.23.3 topology CI39028416328/job117383876628 SUCCESS2487PASS/0FAIL/0skip;
+Pages39028415912 build117383877465/deploy117383953976 SUCCESS.
+Postdeployment exact live shell/version, lab899 index/controller/session and changed
+manager/management/drawer/codec/project-GLB/new paint-codec graph899 byte-match repository;
+unchanged resource898 and recovery loader899 graph also match. Protected Multi-transform/
+frozen/modelling/brush/preview bytes retained. User898PASS protected;899 nearby lab/main
+project device sanity pending. No new rendered/Pencil proof or main paint authoring claim.
+Documentation proof changes no tested runtime bytes. Next bounded original-owner
+selected-object paint bridge requires validity/rebinding/lifetime/refusal rules before UI.
+
+## .900 — main viewport UV Paint; .899 user PASS — 2026-10-17
+
+Audit2c56d33f original native UV preview/raster/scene history/resource/render/input
+owners. File Paint selected object, actual main viewport, one plain native UV object,
+SubD/Mirror off≤20k corners. Original top-centre Tool Session/transform disarm/radial
+lifecycle. Reuse896 raster + both samplers unchanged; opaque512², Pencil paints/fingers
+navigate, occlusion/surface rays, one dirty upload/frame. Changed stroke checkpoints
+original scene then COW resource; UndoRedo original/exits Paint. Async UV-envelope binding
+uses original codec/signature; ordinary movement/deformation follows unchanged UVs,
+UV/topology changes hide/refuse stale. Preview/body/context/disposal/capture/controls/
+palm/interruption guards. Original render owner active/live + inactive/locked display
+in Studio/Solid/UV Image. Main .boxlab v2 persistence through899. Original export resolver
+now refuses painted OBJ/GLB/NOM rather than dropping paint; Quick OBJ catches; Join
+refuses pending resource propagation. No PBR/layers/imported paint base/seam-safe/export
+paint claim. Seven new tests; full2494PASS/0FAIL/0skip, no browser/Pencil proof inferred.
+Historical741 pin test uses reviewed contract and retains shell/dynamic equality.
+Read docs/viewport-paint-900.md. User899PASS protected;900 device gate pending.
+Next hands-on actual paint, then flattened colour export through original owners.
+Publication proof follows; protected Multi1.0/frozen/modelling/brush bytes retained.
+
+## .900 publication verified — 2026-10-17
+
+Runtimeeb26b99141af4a1e3a77d1f09fe559887880dd7e; tested tree
+b687f2b2f3665f389f67e02db1e67bf991b487bf matches fetched main/local exactly.
+Node22.23.3 topology CI39030804811/job117390693515 SUCCESS2494PASS/0FAIL/0skip;
+Pages39030803672 build117390693845/deploy117390798136 SUCCESS.
+Postdeployment exact shell/version, main viewport paint/target/core/render/radial/
+manager/management/drawer/export/refusal parent graph900 plus Lab900 index/controller
+and unchanged accepted raster/stroke896 byte-match repository. Recovery900 matches.
+Protected Multi-transform1.0/frozen/modelling algorithms/brush bytes retained. User899
+PASS protected;900 actual viewport/Pencil/navigation/project device gate pending.
+No rendered/iPad proof inferred from Node adapters or previous cloud WebGL limitation.
+Documentation proof changes no tested runtime. Next: device feedback, then flattened
+paint export through original GLB/NOM owners; painted export refusal remains meanwhile.
+
+## .901 — painted native Nomad / GLB export; .900 user PASS — 2026-10-17
+
+Audit50bcdb2a: original native image/material/UV/container writer and GLB patch already
+supply handoff; adapt export-local512² colour through them. New paint-export capture/
+UV binding guard/private prepared snapshot association, owned geometry/UV/pixels before
+await; no fake imported provenance/stored nativeUV material mutation. Existing PNG owner
+adds losslessRGB8/sRGB and reuses CRC/zlib; scalar remains unchanged. Rows follow native/
+glTF UV-v0-first convention, no Lab human PNG flip. Native white-factor colour image,
+original independent UV/polygon buffers/image pool24MiB/dedup/offset/header. GLB embedded
+PNG/neutral material/clamp sampler/original groups/seams/loader verification; painted
+path enables existing source-winding flag only. Nonpainted path retained. Painted OBJ/
+Join/raw unprepared sync export still refuse; .boxlab remains editable paint project.
+Six focused tests PASS: exact PNG/UV/material/geometry/dedup/winding/snapshots/refusals
+and both real File download actions. Full Node24 2500PASS/0FAIL/0skip; publication proof follows. User900PASS
+protects viewport/Pencil/history/persistence/COW; no new Nomad/device acceptance inferred.
+Read docs/paint-export-901.md. Next export feedback, then layer/compositor resource plan
+through original owners. No rendered/PBR/seam-safe/imported paint-base/NOM import claim.
+
+## .901 publication verified — 2026-10-17
+
+Runtime32cca00338fc3bcd8894fb9f0c7ed9a14171c223; tested tree
+5780a931a693f41bf4d72128d48289f014cad204 matches fetched main/local exactly.
+Node22.23.3 topology CI39036938146/job117408573676 SUCCESS2500PASS/0FAIL/0skip;
+Pages39036937708 build117408575029/deploy117408682503 SUCCESS.
+Postdeployment exact live shell/version and export-panel/native-core/packed-parent/
+PNG/new paint-export graph901 plus Lab901 index/controller byte-match repository.
+Unchanged main paint/binding900 and recovery901 match. Protected Multi1.0/frozen/
+modelling/raster/input bytes retained. User900PASS protected;901 external Nomad and
+GLB colour/orientation/placement device gate pending, no rendered proof inferred.
+Documentation proof changes no tested runtime. Next device export feedback, then layer/
+compositor design through original owners; .boxlab remains editable paint project.
+
+
+## .902 — layer/compositor foundation; .901 user PASS — 2026-10-18
+
+User901PASS protects painted NOMAD/GLB placement/orientation/colour, independent
+painted duplicates and continued painting/Undo/.boxlab. Audit main0bfb6819: raster896
+writes opaque bytes, resource898/project899/export901 have no editable layer stack.
+New isolated paint-layer-stack API: existing opaque base + up to3 straight-alpha
+512² overlays, bounded IDs/names, visible/opacity, owned capture/append/replace,
+byte-space source-over and flattened resource via ORIGINAL captureColourResource.
+No new history/input/kernel or app wiring. Strict schemas/budgets; typed buffers
+read-only by convention. Current copy-all API has no sparse/COW/performance claim.
+Five focused checks PASS: exact blending/order/visibility/opacity/rows, input/edit/
+output isolation, refusal/budgets/max stack, actual original project + native PNG
+flattened handoff; editable stack still refuses as project colourPaint.
+Read docs/paint-layer-stack-902.md. No layer UI/transparent brush/editable layer save
+claim. No new hands-on test; existing paint/export unchanged. Shell/recovery902;
+main paint900/export901/resource898/project899/lab901/protected/frozen bytes retained.
+Next separate layered scene resource/project codec + atomic Open/history/duplicate
+integration, then transparent raster/UI through current viewport owner. Publication
+and full-suite evidence follow; no902 device PASS inferred.
+
+.902 local validation: Node24.19.0 full suite **2505 PASS / 0 FAIL / 0 skipped**;
+five new focused compositor checks PASS. No new device/rendered layer proof.
+
+
+## .903 — masks/blend foundation and material direction — 2026-10-18
+
+User requests surface image placement/Project from View, Insert Move→Rotate→Scale tap
+cycle, masks/blend modes and Nomad-style material slots with displacement placeholder.
+Read docs/paint-material-direction.md for requirements, sequencing and limitations.
+Audit787cfcb9:902 compositor Normal-only;900 paint/899 project/901 export opaque.
+Extend SAME isolated stack owner to v2 with owned per-overlay8-bit coverage masks,
+enable/invert and26 colour blend modes in paint-blend-modes903. v1 Normal upgrade
+byte-identical; strict unknown fields/invalid modes/masks and sparse arrays refuse.
+Alpha×opacity×mask gates blended RGB; Normal exact902; standard W3C colour formulas,
+extra modes explicitly defined in docs/paint-layers-903.md. Not Nomad bit-parity or
+normal-vector/scalar/PBR blending. Buffers read-only by convention; max4.75MiB stack
+plus copies/flat outputs, no measured performance claim.
+Seven focused903 checks PASS; existing902 semantic checks retained (unknown-mode
+refusal supersedes its obsolete Multiply refusal). Actual opaque project/native PNG
+handoff retained. No app/lab layer UI, mask drawing, image projection or editable
+layer persistence yet. Main resource/project/export continue refusing editable stack.
+Shell/recovery903, isolated child903; main900/export901/lab901/brush896/protected
 Multi1.0/frozen/modelling owners unchanged. No new hands-on test or user903PASS.
 Next explicit layered scene/project pool through original codec/history/duplicate
 owners, then transparent brush+layer/mask UI; image projection/Insert-cycle follows.
@@ -14177,42 +18452,3 @@ appearance and touch acceptance are still pending.
 The iPad checks are in the .1042 section at the top of TEST_CHECKLIST.md; DOM tests do
 not imply native tactile or visual acceptance. Next: obtain user .1042 device result, then
 resume the retained Nomad displacement source/settings audit from the existing roadmap.
-
-## .1043 — Paint contextual help and UI copy audit — 31 October 2026
-
-User requested a lighter Paint controls panel and an app-wide audit of text better
-served by tooltips. Audited persistent helper text, session notes, long native `title`
-copy and accessibility names. The first implementation keeps the Paint owner and existing
-controls: repeated Brush/Fill/Blur/Roughness/Metalness explanations leave the floating
-quick panel and appear on demand through a small `i` button. The popover supports touch,
-keyboard focus and screen-reader description; its content follows the selected tool,
-Fill scope and paint channel. No stroke, history, selection or gesture owner changed.
-
-The File-menu NOM note was stale: native NOM import now retains supported material maps.
-It now says NOM imports meshes, facegroups, UVs and supported material maps; sculpt
-layers become geometry. The current shell-comparison checklist was updated to .1043,
-legacy .1042 checklist results remain accepted, and all direct/indirect release-version
-owners use one canonical .1043 cache key. Protected Multi remains pinned to
-`src/multi-object-transform.js?v=0.36.1.0`.
-
-App-wide follow-up candidates: UV Editor's persistent gesture footer; Mesh Health's
-UV instructions; modelling session gesture subtitles; and long hover-only `title`
-explanations. Keep dynamic statuses/errors, action labels and ARIA names, import/export
-outcomes, destructive/reset warnings and important scope/cap limits visible. Native
-title-only help does not work reliably on iPad, so future slices need an explicit
-focus/touch affordance.
-
-Focused Paint/help, release-contract, release-owner and shell-comparison checks pass.
-Full Node suite: 3,086 PASS / 0 FAIL / 0 skipped. Changed JS syntax and `git diff --check`
-pass. .1042's iPad checklist remains pending and is carried forward; .1043 touch/visual
-acceptance is pending. Next after user PASS: apply help to UV Editor and Mesh Health in
-small slices, then return to the retained NOM displacement payload/settings audit.
-
-Publication status for .1043: local main commit
-7ab54565156856c303a04e517640c3febf0db1f8 contains the tested tree; `origin/main` remains
-3d413280a2d27ccf8c8f2e33a5a6c2786e961277. Automatic review rejected the GitHub push
-because it could not verify authorization for the external destination. No alternate push
-route was used. .1043 is not live; do not ask the user to run its iPad checklist until
-publication is authorized and completed. The user's previously recorded BoxLab standing
-publication approval remains in AI_WORKFLOW.md; this review block must be resolved before
-publishing.

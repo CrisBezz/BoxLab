@@ -13,8 +13,9 @@
 Automated .1043 checks: full Node suite 3,086 PASS / 0 FAIL / 0 skipped. Focused
 Paint/context-help, release-contract and shell-comparison checks pass. This does not
 establish native touch/visual acceptance, which remains with the user.
-Publication note: local commit 7ab54565 is not on origin/main because automatic review
-blocked the push. Do not attempt the .1043 iPad checks against Pages until published.
+Publication: .1043 is live from GitHub main commit
+`3e3f8c95c3fd62400f0d1ccc22c514cad1977d49`. Pages workflow 41246780287 succeeded.
+Topology regression workflow 41246780922 is running; native iPad acceptance is pending.
 
 ## .1042 — UV Paint draggable contextual palette — device test pending
 

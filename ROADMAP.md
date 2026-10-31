@@ -1,7 +1,9 @@
 ## Current build: .1043 Paint help first slice
 
-The tested .1043 tree is committed locally as `7ab54565` but is not published; an
-automatic review blocked the push. Do not ask for the iPad test until it is live.
+The .1043 app tree is published on GitHub main at
+`3e3f8c95c3fd62400f0d1ccc22c514cad1977d49`. Pages deployment workflow 41246780287
+succeeded; Topology regression workflow 41246780922 is running. Native iPad acceptance
+remains pending, and the checklist is ready at the top of TEST_CHECKLIST.md.
 
 The draggable contextual Paint palette from .1042 remains intact. .1043 consolidates
 repeated quick-tool explanations into one touch-friendly, context-aware help popover and
