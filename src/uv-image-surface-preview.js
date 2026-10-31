@@ -56,11 +56,16 @@ export function createUVImageOverlay(body,mesh,payload,buildGeometry,hiddenMater
  overlay.userData.boxlabRenderOverlay=true;overlay.userData.boxlabUVImagePreview=true;overlay.raycast=()=>{};
  const sourceGeometry=body.geometry,fallback=body.material;let disposed=false,environment=null;
  const images=[],textures=[],backfaces=new Map();const originalCastShadow=body.castShadow;
+ function ignoreNativeColourAlpha(material){
+  // Native use_color_opacity=false means the colour image is RGB-only. Install
+  // this even without a separate opacity map; otherwise Three's default map
+  // chunk multiplies diffuse alpha and turns transparent checker texels black.
+  material.onBeforeCompile=shader=>{shader.fragmentShader=shader.fragmentShader.replace('#include <map_fragment>',THREE.ShaderChunk.map_fragment.replace('diffuseColor *= sampledDiffuseColor;','diffuseColor.rgb *= sampledDiffuseColor.rgb;'));};
+  material.customProgramCacheKey=()=> 'boxlab-native-opacity-1028';
+ }
  function opacityMode(material,value){
-  // Opted-in colour alpha uses Three's original RGBA path. Otherwise keep
-  // accepted RGB-only sampling when a separate map/scalar controls opacity.
-  if(!single.colourAlpha)material.onBeforeCompile=shader=>{shader.fragmentShader=shader.fragmentShader.replace('#include <map_fragment>',THREE.ShaderChunk.map_fragment.replace('diffuseColor *= sampledDiffuseColor;','diffuseColor.rgb *= sampledDiffuseColor.rgb;'));};
-  if(!single.colourAlpha)material.customProgramCacheKey=()=> 'boxlab-native-opacity-1028';
+  // Opted-in colour alpha keeps Three's original RGBA path.
+  if(!single.colourAlpha)ignoreNativeColourAlpha(material);
   material.opacity=value;material.transparent=true;material.depthWrite=false;overlay.castShadow=false;body.castShadow=false;
   body.userData.boxlabNativeOpacityOwner=overlay.uuid;
   for(const child of body.children)if(child.userData?.boxlabBackfaceCue&&!backfaces.has(child)){backfaces.set(child,child.visible);child.visible=false;}
@@ -98,6 +103,7 @@ export function createUVImageOverlay(body,mesh,payload,buildGeometry,hiddenMater
     if(!image){dispose();return;}
     images.push(image);material.map=makeTexture(image,source,true);
    }
+   if(native&&lit&&!source.standalone&&source.opacityPreview&&!source.colourAlpha)ignoreNativeColourAlpha(material);
    material.color.fromArray(source.factor);material.side=source.doubleSided?THREE.DoubleSide:THREE.FrontSide;material.toneMapped=material.isMeshStandardMaterial===true;material.needsUpdate=true;
    if(native&&lit&&!source.standalone&&material.isMeshStandardMaterial&&source.opacityPreview&&(source.opacity<1||source.colourAlpha))opacityMode(material,source.opacity);
   }
