@@ -9,11 +9,12 @@ test('1042 Paint wheel hands selected tools to the floating quick controls witho
  n(u,'paint-action').disabled=true;await n(u,'tool-paint').click();assert.equal(n(u,'paint-action').value,'blur');u.api.close();
 });
 test('1042 quick palette reuses the original channel, colour, size and opacity controls while keeping layer controls outside it',async()=>{
- const r=runtime(),u=uiRuntime(r);await u.api.open();const quick=n(u,'quick-body');
- for(const key of ['common-controls','quick-colour','quick-brush','blur-controls','roughness-controls','metalness-controls','fill-controls','quick-mask-value'])assert.equal(n(u,key).parentNode,quick,key+' moves into the floating quick palette');
+ const r=runtime(),u=uiRuntime(r);await u.api.open();const quick=n(u,'quick-body'),material=n(u,'material-body');
+ for(const key of ['common-controls','quick-colour','quick-brush','roughness-controls','metalness-controls','brush-settings','colour-details'])assert.equal(n(u,key).parentNode,material,key+' lives in the unified material menu');
+ for(const key of ['blur-controls','fill-controls','quick-mask-value'])assert.equal(n(u,key).parentNode,quick,key+' stays in contextual tool controls');
  assert.notEqual(n(u,'layer-list').parentNode,quick,'layer list stays in the persistent left panel');
  await n(u,'tool-paint').click();n(u,'colour').value='#1279bc';n(u,'colour').dispatchEvent({type:'input'});assert.equal(n(u,'hex').value,'#1279BC');n(u,'radius').value='24';n(u,'radius').dispatchEvent({type:'input'});assert.equal(n(u,'radius-readout').textContent,'24');n(u,'opacity').value='.45';n(u,'opacity').dispatchEvent({type:'input'});assert.equal(n(u,'opacity-readout').textContent,'45%');
- await n(u,'add-layer').click();await n(u,'add-mask').click();n(u,'paint-target').value='mask';n(u,'paint-target').dispatchEvent({type:'change'});assert.equal(n(u,'quick-mask-value').hidden,false);assert.equal(n(u,'quick-colour').hidden,true);u.api.close();
+ await n(u,'add-layer').click();await n(u,'add-mask').click();n(u,'paint-target').value='mask';n(u,'paint-target').dispatchEvent({type:'change'});assert.equal(n(u,'quick-mask-value').hidden,false);assert.equal(n(u,'colour').disabled,true);assert.equal(n(u,'roughness-controls').dataset.active,'false');assert.equal(n(u,'metalness-controls').dataset.active,'false');u.api.close();
 });
 test('1043 Paint help is a touch-toggleable contextual tooltip and does not alter paint history',async()=>{
  const r=runtime(),u=uiRuntime(r);await u.api.open();const count=r.h.undoStack.length,help=n(u,'quick-help'),popover=n(u,'quick-help-popover');
