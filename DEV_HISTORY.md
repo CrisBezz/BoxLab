@@ -18201,3 +18201,28 @@ Do not add displacement deformation to .1035. Next build follows this audit/gate
 
 Current status: .1035 LIVE, CI and Pages verified, user PASS protected. Next build
 focus: bounded displacement/subdivision feasibility, no implementation assumed.
+
+## .1036 — bounded subdivision timing page — 31 October 2026
+
+User .1035 PASS protected. Existing-owner audit confirmed NOM displacement retention
+and export support, but not viewport deformation. The authoritative Catmull–Clark
+`subdivide()` owner operates on EditableMesh topology and does not preserve imported
+per-corner UV payloads. Do not use its result for a displacement surface without a
+UV-preserving path. No displacement render/bake was added.
+
+Added `docs/subdivision-benchmark-1036.html`, linked through the existing File →
+Screen comparison / test list owner. It loads the same mesh and subdivision modules,
+measures 16/64/256 regular quad faces at levels 1–3, caps generated topology at
+16,384 faces (~16,641 vertices), uses one warm-up plus three samples, and stops
+escalating after a >1.2s sample. It emits median/count/browser/DPR JSON for iPad
+review and does not touch the project scene. CPU kernel timing is not UV transfer,
+16-bit image sampling, heap, GPU or frame time. No device timing or displacement
+acceptance inferred. Original .1035 alpha-OFF colour PASS and seven-object/VIEW PASS
+remain protected.
+
+Regression: new benchmark tests verify use of the canonical subdivision function,
+preset/cap/stop contract and exact output face/vertex counts while source mesh stays
+unchanged. Focused SubD-cache/displacement/benchmark checks16 PASS; release-contract
+checks16 PASS. Full Node22 suite3066 PASS, 0 FAIL, 0 skipped. Initial full run caught
+three stale release URL/hash contract rows after the required pin refresh; refreshed
+the reviewed import chain and reran clean. Publication and live verification pending.

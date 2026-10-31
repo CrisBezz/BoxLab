@@ -1,31 +1,12 @@
-## .1035 user PASS protected — 31 October 2026
+## .1036 — subdivision benchmark — 31 October 2026
 
-User confirms the right cube alpha-OFF colour repair PASS. Protect opaque cyan RGB
-in Studio/Solid, checker transparency for alpha ON, combined middle alpha/opacity,
-original .1033 standalone PBR previews, seven-object loading/spacing, VIEW stability,
-and existing Save/Open/NOM retention. .1034 screenshot FAIL remains in history as
-superseded. .1035 is accepted; no further alpha shader/decode changes planned.
+- [ ] From File → Screen comparison / test list, open “Subdivision timing benchmark · .1036”.
+- [ ] Run the benchmark in iPad Safari; keep BoxLab open in its original tab and do not switch orientation/resolution while it runs.
+- [ ] Confirm bounded cases report source faces, subdivision level, output faces/vertices and median timing; largest case is capped at 16,384 faces.
+- [ ] Copy the JSON report and send it with whether the page stayed responsive. A guarded early stop is a useful result; do not rerun repeatedly if Safari becomes unresponsive.
+- [ ] Return to BoxLab and confirm the current project and its selection are unchanged.
 
-Next development is an investigation before implementation: audit the existing
-SubD/subdivision owners and NOM displacement retention/import flow. Benchmark a
-small bounded tessellation preview on representative low-poly objects. Establish
-caps for source faces, subdivision level, generated vertices, image dimensions,
-memory and frame time; compare against the original unmodified object. If safe,
-expose displacement preview as a transient Studio/Solid surface overlay with
-cancel/mode-switch cleanup; keep exported mesh and source map unchanged. If the
-existing topology/performance owners cannot support responsive iPad preview within
-a clear cap, keep displacement inspection-only and report the measured limit.
-Do not add displacement deformation to .1035. Next build follows this audit/gate.
-
-Current status: .1035 LIVE, CI and Pages verified, user PASS protected. Next build
-focus: bounded displacement/subdivision feasibility, no implementation assumed.
-
-Publication verified: application0cc0cef434b8a8c7d431e74c0d0ed51f58fe2834,
-reviewed tree4edaaa71114db8b2eba41464f68a02951e42dfd4. Hosted CI41154726829
-SUCCESS; Pages41154726211 SUCCESS. Live version/shell/PNG/overlay/render/checklist
-and original80,064-byte1029 sample match source bytes. See docs/publication-1035.md.
-Status: .1035 LIVE and READY FOR RETEST; .1034 user FAIL preserved, .1033 PASS
-protected; actual iPad/GPU colour acceptance pending. No displacement work included.
+Automated regression: `tests/subdivision-benchmark-1036.test.mjs` verifies the page uses the authoritative `subdivide()` owner, bounded preset/cap/guard and expected output face/vertex counts for all cases; it also confirms the source cage remains unchanged. Automated timings are not a device-performance substitute. This benchmark does not validate UV preservation, displacement display, GPU memory or rendered frame time.
 
 ## .1035 — pre-decode native colour alpha OFF repair — 31 October 2026
 

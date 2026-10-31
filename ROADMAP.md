@@ -1,31 +1,18 @@
-## .1035 user PASS protected — 31 October 2026
+## .1036 — bounded SubD benchmark shipped; device measurements are the gate — 31 October 2026
 
-User confirms the right cube alpha-OFF colour repair PASS. Protect opaque cyan RGB
-in Studio/Solid, checker transparency for alpha ON, combined middle alpha/opacity,
-original .1033 standalone PBR previews, seven-object loading/spacing, VIEW stability,
-and existing Save/Open/NOM retention. .1034 screenshot FAIL remains in history as
-superseded. .1035 is accepted; no further alpha shader/decode changes planned.
+A standalone timing page now exercises the existing Catmull–Clark kernel at 16/64/
+256 source quad faces and levels 1–3, with a 16,384-output-face maximum, three
+samples, and a 1.2s per-sample escalation guard. It is linked from File → Screen
+comparison / test list. The report records median timings, generated counts, browser,
+and device-pixel ratio. This is CPU mesh-generation evidence only; it does not test
+UV transfer, displacement sampling, memory, GPU or frame time.
 
-Next development is an investigation before implementation: audit the existing
-SubD/subdivision owners and NOM displacement retention/import flow. Benchmark a
-small bounded tessellation preview on representative low-poly objects. Establish
-caps for source faces, subdivision level, generated vertices, image dimensions,
-memory and frame time; compare against the original unmodified object. If safe,
-expose displacement preview as a transient Studio/Solid surface overlay with
-cancel/mode-switch cleanup; keep exported mesh and source map unchanged. If the
-existing topology/performance owners cannot support responsive iPad preview within
-a clear cap, keep displacement inspection-only and report the measured limit.
-Do not add displacement deformation to .1035. Next build follows this audit/gate.
-
-Current status: .1035 LIVE, CI and Pages verified, user PASS protected. Next build
-focus: bounded displacement/subdivision feasibility, no implementation assumed.
-
-Publication verified: application0cc0cef434b8a8c7d431e74c0d0ed51f58fe2834,
-reviewed tree4edaaa71114db8b2eba41464f68a02951e42dfd4. Hosted CI41154726829
-SUCCESS; Pages41154726211 SUCCESS. Live version/shell/PNG/overlay/render/checklist
-and original80,064-byte1029 sample match source bytes. See docs/publication-1035.md.
-Status: .1035 LIVE and READY FOR RETEST; .1034 user FAIL preserved, .1033 PASS
-protected; actual iPad/GPU colour acceptance pending. No displacement work included.
+Next: obtain an iPad Safari report and decide whether measured headroom supports a
+separate UV-preserving, transient displacement prototype. Keep Base geometry and
+exported NOM/image data unchanged. The current subdivision owner drops per-corner
+UVs, so any preview needs an authoritative UV-transfer solution and separate image,
+vertex, memory and rendering limits. Displacement stays retained/exportable only
+until those gates and a real device check pass. .1035 material PASS remains protected.
 
 ## .1035 — pre-decode native colour alpha OFF repair — 31 October 2026
 

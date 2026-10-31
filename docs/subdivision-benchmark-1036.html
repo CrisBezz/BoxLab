@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#111318">
+  <title>BoxLab subdivision benchmark .1036</title>
+  <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.179.1/build/three.module.js"}}</script>
+  <style>
+    :root{color-scheme:dark;font:16px/1.45 system-ui,-apple-system,sans-serif;background:#191c22;color:#eef1f7}
+    *{box-sizing:border-box}body{margin:0;padding:18px;max-width:760px;margin-inline:auto}
+    h1{font-size:1.35rem;margin:0 0 8px}p{color:#bdc4d1;margin:10px 0}
+    .card{background:#252a33;border:1px solid #39414e;border-radius:14px;padding:16px;margin:14px 0}
+    button{font:inherit;font-weight:650;color:#101318;background:#d9e2f2;border:0;border-radius:10px;min-height:48px;padding:10px 16px;touch-action:manipulation}
+    button:disabled{opacity:.55}#progress{min-height:1.5em;color:#c3d5ff}table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+    th,td{text-align:right;padding:9px 5px;border-bottom:1px solid #3b424d}th:first-child,td:first-child{text-align:left}
+    th{color:#c1c9d7;font-size:.9rem}td{font-size:.93rem}code{overflow-wrap:anywhere}
+    textarea{display:block;width:100%;min-height:150px;margin-top:12px;background:#111318;color:#e8edf7;border:1px solid #414957;border-radius:8px;padding:10px}
+    .muted{font-size:.9rem;color:#aeb6c4}.actions{display:flex;gap:10px;flex-wrap:wrap}
+  </style>
+</head>
+<body>
+  <h1>Subdivision timing · BoxLab .1036</h1>
+  <p>This page calls BoxLab’s existing Catmull–Clark subdivision function on regular quad grids. It does not touch your open project.</p>
+  <section class="card">
+    <p><strong>Bound:</strong> 16, 64 and 256 source faces; subdivision levels 1–3; at most 16,384 generated faces (about 16,641 vertices). Each case gets one warm-up and three timed runs. If one run exceeds 1.2 seconds, larger cases stop.</p>
+    <p class="muted">This measures mesh creation only. It does not include UV interpolation, displacement image decode/sampling, GPU upload/rendering, actual device memory, or frame-time impact. A quick timing result cannot qualify displacement preview by itself.</p>
+    <div class="actions"><button id="run" type="button">Run benchmark</button><button id="copy" type="button" disabled>Copy report</button></div>
+    <p id="progress" role="status" aria-live="polite">Ready. Keep the browser open and BoxLab orientation/resolution unchanged while it runs.</p>
+    <table aria-label="Subdivision timing results">
+      <thead><tr><th>Source faces</th><th>Level</th><th>Output faces</th><th>Output vertices</th><th>Median</th></tr></thead>
+      <tbody id="results"><tr><td colspan="5">No measurements yet.</td></tr></tbody>
+    </table>
+    <textarea id="report" readonly hidden aria-label="Benchmark report"></textarea>
+  </section>
+  <p class="muted">To open from BoxLab: File → Screen comparison / test list → Subdivision timing. This is an investigation tool; no displacement deformation ships in .1036.</p>
+  <script type="module">
+    import * as THREE from 'three';
+    import { EditableMesh } from '../src/mesh.js';
+    import { subdivide } from '../src/subdivision.js';
+
+    const presets = [4, 8, 16];
+    const maxFaces = 16384;
+    const stopMs = 1200;
+    const samples = 3;
+    const runButton = document.querySelector('#run');
+    const copyButton = document.querySelector('#copy');
+    const progress = document.querySelector('#progress');
+    const body = document.querySelector('#results');
+    const report = document.querySelector('#report');
+    let reportData = null;
+
+    function gridMesh(side) {
+      const vertices = [];
+      const faces = [];
+      for (let y = 0; y <= side; y++) for (let x = 0; x <= side; x++) {
+        vertices.push(new THREE.Vector3(x / side, y / side, 0));
+      }
+      for (let y = 0; y < side; y++) for (let x = 0; x < side; x++) {
+        const a = y * (side + 1) + x;
+        faces.push([a, a + 1, a + side + 2, a + side + 1]);
+      }
+      return new EditableMesh(vertices, faces);
+    }
+
+    const nextFrame = () => new Promise(resolve => requestAnimationFrame(() => resolve()));
+    const fmt = value => `${value.toFixed(2)} ms`;
+    function addRow(source, level, mesh, median, note = '') {
+      const row = document.createElement('tr');
+      for (const value of [source, level, mesh?.faces.length ?? '—', mesh?.vertices.length ?? '—', note || fmt(median)]) {
+        const cell = document.createElement('td'); cell.textContent = String(value); row.append(cell);
+      }
+      body.append(row);
+    }
+
+    runButton.addEventListener('click', async () => {
+      runButton.disabled = true; copyButton.disabled = true; body.replaceChildren(); report.hidden = true;
+      const started = new Date().toISOString();
+      const results = [];
+      let stopped = false;
+      for (const side of presets) {
+        const sourceFaces = side * side;
+        const source = gridMesh(side);
+        for (let level = 1; level <= 3; level++) {
+          const expectedFaces = sourceFaces * (4 ** level);
+          if (expectedFaces > maxFaces || stopped) continue;
+          progress.textContent = `Measuring ${sourceFaces} faces at level ${level}…`;
+          await nextFrame();
+          let mesh = subdivide(source, level); // warm-up
+          let durations = [];
+          for (let sample = 0; sample < samples; sample++) {
+            await nextFrame();
+            const before = performance.now();
+            mesh = subdivide(source, level);
+            const elapsed = performance.now() - before;
+            if (elapsed > stopMs) { stopped = true; break; }
+            durations.push(elapsed);
+          }
+          if (durations.length === samples) {
+            durations.sort((a, b) => a - b);
+            const median = durations[1];
+            const item = { sourceFaces, level, outputFaces: mesh.faces.length, outputVertices: mesh.vertices.length, medianMs: Number(median.toFixed(2)), samplesMs: durations.map(v => Number(v.toFixed(2))) };
+            results.push(item); addRow(sourceFaces, level, mesh, median);
+          } else addRow(sourceFaces, level, mesh, 0, `Stopped after >${stopMs} ms`);
+          mesh = null;
+        }
+      }
+      const ended = new Date().toISOString();
+      reportData = { benchmark: 'BoxLab subdivision timing .1036', started, ended, userAgent: navigator.userAgent, devicePixelRatio: window.devicePixelRatio, source: 'src/subdivision.js · subdivide', sourceFaceCases: presets.map(side => side * side), levels: [1, 2, 3], outputFaceCap: maxFaces, stopAfterSingleRunMs: stopMs, timedSamplesPerCase: samples, results, stoppedEarly: stopped, scope: 'CPU mesh generation only; excludes UV interpolation, image decode/sampling, GPU work, actual memory and frame time.' };
+      progress.textContent = stopped ? 'Benchmark stopped at the 1.2-second guard. Copy the partial results if useful.' : `Done · ${results.length} cases measured. Copy the report and share it.`;
+      copyButton.disabled = results.length === 0; runButton.disabled = false;
+      report.value = JSON.stringify(reportData, null, 2);
+    });
+
+    copyButton.addEventListener('click', async () => {
+      if (!reportData) return;
+      report.value = JSON.stringify(reportData, null, 2); report.hidden = false;
+      try { await navigator.clipboard.writeText(report.value); progress.textContent = 'Report copied to clipboard.'; }
+      catch { report.focus(); report.select(); progress.textContent = 'Copy the selected report.'; }
+    });
+  </script>
+</body>
+</html>
