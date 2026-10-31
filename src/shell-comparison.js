@@ -2,7 +2,7 @@
 // Move the original canvas once; no second renderer, input owner or live profile swap.
 (() => {
  'use strict';
- const RELEASE='0.36.18.1033',KEY='boxlab.shell-comparison.v1',LIMIT=30;
+ const RELEASE='0.36.18.1034',KEY='boxlab.shell-comparison.v1',LIMIT=30;
  const url=new URL(window.location.href),choice=url.searchParams.get('shellTest');
  const active=choice==='current'||choice==='separated',mode=active?choice:'current';
  const doc=document,app=doc.querySelector('#app'),wrap=doc.querySelector('#viewportWrap'),canvas=doc.querySelector('#viewport');
