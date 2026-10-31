@@ -1,4 +1,4 @@
-import {nativeImageChoices} from './nomad-uv-image-choices.js?v=0.36.18.1032';
+import {nativeImageChoices} from './nomad-uv-image-choices.js?v=0.36.18.1033';
 import {createUVImagePreview,importedUVImageChoices} from './uv-image-preview.js?v=0.36.18.1032';
 import {drawImportedUV,pickImportedUVIsland,importedUVScreenDelta,importedUVIslandCentre} from './imported-uv-inspection.js?v=0.36.18.951';
 import {createUVNavigation} from './uv-navigation.js?v=0.36.18.868';

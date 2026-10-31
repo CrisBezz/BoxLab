@@ -10,13 +10,13 @@ import {createPaintLayerStack,appendPaintLayer,replacePaintLayer,flattenPaintLay
 import {projectPaintImage} from './paint-image-project.js?v=0.36.18.951';
 import {surfaceImageFrameFromHit} from './paint-image-surface.js?v=0.36.18.933';
 import {capturePaintImagePlacement,paintImagePlacementFromCamera} from './paint-image-placement.js?v=0.36.18.907';
-import {captureLayeredColourResource,capturePaintResource} from './paint-layer-resource.js?v=0.36.18.1030';
-import {createProjectPaintPool} from './project-paint-resources.js?v=0.36.18.1030';
-import {paintTargetKey,paintTargetDigest,paintTexture,createPaintSurface} from './paint-target.js?v=0.36.18.1030';
-import {captureRoughnessResource,copyRoughnessResource} from './roughness-resource.js?v=0.36.18.1030';
-import {createProjectRoughnessPool} from './project-roughness-resources.js?v=0.36.18.1030';
-import {captureMetalnessResource,copyMetalnessResource} from './metalness-resource.js?v=0.36.18.1030';
-import {createProjectMetalnessPool} from './project-metalness-resources.js?v=0.36.18.1030';
+import {captureLayeredColourResource,capturePaintResource} from './paint-layer-resource.js?v=0.36.18.1033';
+import {createProjectPaintPool} from './project-paint-resources.js?v=0.36.18.1033';
+import {paintTargetKey,paintTargetDigest,paintTexture,createPaintSurface} from './paint-target.js?v=0.36.18.1033';
+import {captureRoughnessResource,copyRoughnessResource} from './roughness-resource.js?v=0.36.18.1033';
+import {createProjectRoughnessPool} from './project-roughness-resources.js?v=0.36.18.1033';
+import {captureMetalnessResource,copyMetalnessResource} from './metalness-resource.js?v=0.36.18.1033';
+import {createProjectMetalnessPool} from './project-metalness-resources.js?v=0.36.18.1033';
 const scalarOwners={roughness:{field:'roughnessPaint',capture:captureRoughnessResource,copy:copyRoughnessResource,pool:createProjectRoughnessPool,initial:255,label:'Roughness'},metalness:{field:'metalnessPaint',capture:captureMetalnessResource,copy:copyMetalnessResource,pool:createProjectMetalnessPool,initial:0,label:'Metalness'}};
 // Scene history, selection, camera and body lifetime remain with the existing app.
 export function createViewportPainter({target,activeId=()=>target()?.id,body,owner,camera,controls,scene,checkpoint,onClose=()=>{},refresh=()=>{},allowed=()=>true,objects=()=>[target()],newColourSize=512,setTimer=setTimeout,clearTimer=clearTimeout}){

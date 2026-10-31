@@ -1,4 +1,4 @@
-import {nomadMaterialMaps} from './nomad-material-resource.js?v=0.36.18.1030';
+import {nomadMaterialMaps} from './nomad-material-resource.js?v=0.36.18.1033';
 // Native image inspection adapter belongs only to the UV workspace.
 const nativeLabels={color:'Colour',normal:'Normal',emissive:'Emissive',roughness:'Roughness',metalness:'Metalness',opacity:'Opacity',displacement:'Displacement'};
 export function nativeImageChoices(payload,imageOptions,slots=['color']){

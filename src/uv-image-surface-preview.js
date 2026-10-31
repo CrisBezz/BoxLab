@@ -1,5 +1,5 @@
 import {paintMaterialEnvironments} from './paint-material-environment.js?v=0.36.18.925';
-import {nomadColourSurfaceSource,nomadPBRSurfaceSources} from './nomad-material-resource.js?v=0.36.18.1030';
+import {nomadColourSurfaceSource,nomadLitSurfaceSource,nomadPBRSurfaceSources} from './nomad-material-resource.js?v=0.36.18.1033';
 import * as THREE from 'three';
 import {importedUVImageChoices,decodeUVImage} from './uv-image-preview.js?v=0.36.18.1032';
 // Active Base inspection. Mixed materials require exact per-face import provenance.
@@ -13,7 +13,7 @@ export function uvImageMaterialSource(payload){
  return {materialIndex:id,material,factor};
 }
 export function uvImageSurfaceSource(payload,imageOptions){
- if(payload?.source==='nomad')return nomadColourSurfaceSource(payload,{opacity:imageOptions?.nativeOpacity===true});
+ if(payload?.source==='nomad')return imageOptions?.nativeOpacity===true?nomadLitSurfaceSource(payload):nomadColourSurfaceSource(payload);
  const source=uvImageMaterialSource(payload);if(!source)return null;
  const {materialIndex:id,material,factor}=source;
  const choice=importedUVImageChoices(payload,imageOptions).find(c=>c.materialIndex===id);
@@ -23,25 +23,36 @@ export function uvImageSurfaceSource(payload,imageOptions){
  if(!sampler||![33071,33648,10497].includes(sampler.wrapS??10497)||![33071,33648,10497].includes(sampler.wrapT??10497)||![9728,9729].includes(sampler.magFilter??9729)||![9728,9729,9984,9985,9986,9987].includes(sampler.minFilter??9987))return null;
  return {choice,factor,sampler,doubleSided:material.doubleSided===true};
 }
-// Bound native colour display to four simultaneous 1024-square surfaces.
-// Original encoded maps remain retained when a display cannot be allocated.
-const nativePreviews=new Set();
+// Preserve four colour surfaces. Lightweight map-only surfaces share the same
+// original worst-case totals: 15M decoded pixels, 80k UV corners and 32MiB sources.
+// At most eight map-only surfaces, with no relaxation of per-surface decode limits.
+const nativePreviews=new Map();
+function nativeReservation(source,payload,maps){
+ const choices=[...(source.choice?[source.choice]:[]),...Object.values(maps).map(s=>s.choice)],unique=new Set(choices.map(c=>c.data));
+ const reservation={standalone:!!source.standalone,corners:payload.uvCorners.reduce((n,f)=>n+(f?.length||0),0),pixels:choices.reduce((n,c)=>n+(c.previewSize===512?512:1024)**2,0),bytes:[...unique].reduce((n,d)=>n+d.length,0)};
+ const held=[...nativePreviews.values()];
+ if(held.filter(r=>r.standalone===reservation.standalone).length>=(reservation.standalone?8:4))return null;
+ for(const [key,limit] of [['corners',80000],['pixels',15*1024*1024],['bytes',32*1024*1024]])if(held.reduce((n,r)=>n+r[key],reservation[key])>limit)return null;
+ return reservation;
+}
 const wraps={33071:THREE.ClampToEdgeWrapping,33648:THREE.MirroredRepeatWrapping,10497:THREE.RepeatWrapping};
 const filters={9728:THREE.NearestFilter,9729:THREE.LinearFilter,9984:THREE.NearestMipmapNearestFilter,9985:THREE.LinearMipmapNearestFilter,9986:THREE.NearestMipmapLinearFilter,9987:THREE.LinearMipmapLinearFilter};
 export function createUVImageOverlay(body,mesh,payload,buildGeometry,hiddenMaterial,{decode=decodeUVImage,lit=false,renderer=globalThis.__boxlabBridgeState?.renderer,environmentPool=paintMaterialEnvironments}={}){
  const native=payload?.source==='nomad';
- const single=uvImageSurfaceSource(payload,{nativeOpacity:lit}),multiple=!single;if(native&&(!single||nativePreviews.size>=4))return null;
+ const single=uvImageSurfaceSource(payload,{nativeOpacity:lit}),multiple=!single;if(native&&!single)return null;
  if(!body?.geometry||typeof buildGeometry!=='function')return null;
- const ids=multiple?Array.isArray(payload?.faceMaterialIndices)?[...new Set(payload.faceMaterialIndices)]:[]:[single.choice.materialIndex];
+ const ids=multiple?Array.isArray(payload?.faceMaterialIndices)?[...new Set(payload.faceMaterialIndices)]:[]:[single.choice?.materialIndex];
  if(!ids.length||ids.length>4)return null;
  const sources=multiple?ids.map(id=>uvImageSurfaceSource({...payload,materialIndices:[id]})):[single];
- if(sources.some(s=>!s)||sources.reduce((n,s)=>n+s.choice.data.byteLength,0)>8*1024*1024)return null;
+ if(sources.some(s=>!s)||sources.reduce((n,s)=>n+(s.choice?.data.byteLength||0),0)>8*1024*1024)return null;
  const geometry=buildGeometry(mesh,payload,multiple?{materials:true}:undefined);if(!geometry)return null;
+ const nativeMaps=native&&lit&&!single.unlit?nomadPBRSurfaceSources(payload,single):{};
+ const reservation=native?nativeReservation(single,payload,nativeMaps):null;if(native&&!reservation){geometry.dispose();return null;}
  const ordered=multiple?geometry.userData.boxlabFaceMaterials?.map(id=>sources[ids.indexOf(id)]):sources;
  if(!ordered?.length||ordered.some(s=>!s)){geometry.dispose();return null;}
  const materials=ordered.map(source=>lit&&!source.unlit?new THREE.MeshStandardMaterial({roughness:source.roughness??.78,metalness:source.metalness??0}):new THREE.MeshBasicMaterial());
  const overlay=new THREE.Mesh(geometry,multiple?materials:materials[0]);overlay.visible=false;if(lit){overlay.castShadow=body.castShadow;overlay.receiveShadow=body.receiveShadow;}
- if(native)nativePreviews.add(overlay);
+ if(native)nativePreviews.set(overlay,reservation);
  overlay.userData.boxlabRenderOverlay=true;overlay.userData.boxlabUVImagePreview=true;overlay.raycast=()=>{};
  const sourceGeometry=body.geometry,fallback=body.material;let disposed=false,environment=null;
  const images=[],textures=[],backfaces=new Map();const originalCastShadow=body.castShadow;
@@ -80,18 +91,21 @@ export function createUVImageOverlay(body,mesh,payload,buildGeometry,hiddenMater
  Promise.resolve().then(async()=>{
   for(let index=0;index<ordered.length;index++){
    if(disposed)return;
-   const source=ordered[index],image=await decode(source.choice);
-   if(disposed){image?.close?.();return;}
-   if(!image){dispose();return;}
-   images.push(image);const texture=makeTexture(image,source,true);
-   const material=materials[index];material.map=texture;material.color.fromArray(source.factor);material.side=source.doubleSided?THREE.DoubleSide:THREE.FrontSide;material.toneMapped=material.isMeshStandardMaterial===true;material.needsUpdate=true;
-   if(native&&lit&&material.isMeshStandardMaterial&&source.opacityPreview&&(source.opacity<1||source.colourAlpha))opacityMode(material,source.opacity);
+   const source=ordered[index],material=materials[index];
+   if(source.choice){
+    const image=await decode(source.choice);
+    if(disposed){image?.close?.();return;}
+    if(!image){dispose();return;}
+    images.push(image);material.map=makeTexture(image,source,true);
+   }
+   material.color.fromArray(source.factor);material.side=source.doubleSided?THREE.DoubleSide:THREE.FrontSide;material.toneMapped=material.isMeshStandardMaterial===true;material.needsUpdate=true;
+   if(native&&lit&&!source.standalone&&material.isMeshStandardMaterial&&source.opacityPreview&&(source.opacity<1||source.colourAlpha))opacityMode(material,source.opacity);
   }
-  if(!disposed){overlay.visible=true;body.material=hiddenMaterial;}
+  if(!disposed&&!single?.standalone){overlay.visible=true;body.material=hiddenMaterial;}
   // Colour becomes visible first. Unsupported/failed auxiliaries keep it intact.
   // One serial decode/lifetime owner; cancellation cannot start another map.
   if(native&&lit&&materials[0].isMeshStandardMaterial){
-   const material=materials[0],maps=nomadPBRSurfaceSources(payload,single);
+   const material=materials[0],maps=nativeMaps;
    for(const [slot,source] of Object.entries(maps)){
     if(disposed)return;
     try{
@@ -106,8 +120,13 @@ export function createUVImageOverlay(body,mesh,payload,buildGeometry,hiddenMater
       if(!scene?.environment){try{environment??=environmentPool.acquire(renderer);material.envMap=environment?.texture||null;}catch{/* Direct-light fallback; retained source stays intact. */}}
      }
      material.needsUpdate=true;
+     if(single.standalone&&!overlay.visible){
+      if(single.opacity<1&&slot!=='opacity')opacityMode(material,single.opacity);
+      overlay.visible=true;body.material=hiddenMaterial;
+     }
     }catch{/* Retained-only map; accepted colour remains visible. */}
    }
+   if(single.standalone&&!overlay.visible)dispose();
   }
  }).catch(()=>dispose());
  return overlay;

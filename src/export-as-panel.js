@@ -1,5 +1,5 @@
 import {meshTopologySignature} from './mesh-topology-signature.js?v=0.36.18.939';
-import {capturePaintExportObjects,preparePaintExportObjects,preparedPaintImage,preparedRoughnessImage,preparedMetalnessImage,preparedMetallicRoughnessImage,paintExportGeometryObject} from './paint-export.js?v=0.36.18.1030';
+import {capturePaintExportObjects,preparePaintExportObjects,preparedPaintImage,preparedRoughnessImage,preparedMetalnessImage,preparedMetallicRoughnessImage,paintExportGeometryObject} from './paint-export.js?v=0.36.18.1033';
 // BoxLab .735 — native NOMAD handoff; regular OBJ/GLB exports remain available.
 // GLB keeps BoxLab editable objects as separate named scene nodes for Nomad/3D handoff.
 import * as THREE from 'three';
@@ -7,7 +7,7 @@ import {GLTFExporter} from 'three/addons/exporters/GLTFExporter.js';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {buildSceneOBJ,resolveExportMesh,safeOBJName} from './scene-obj-export-core.js?v=0.36.18.921';
 
-import {buildNomadProjectWithMaps} from './nomad-packed-maps.js?v=0.36.18.1032';
+import {buildNomadProjectWithMaps} from './nomad-packed-maps.js?v=0.36.18.1033';
 
 const VERSION='0.36.18.892';
 const panel=document.querySelector('#exportAsPanel');

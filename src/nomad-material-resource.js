@@ -69,11 +69,22 @@ export function nomadColourSurfaceSource(payload,{opacity=false}={}){
  return {...source,...(opacity?{opacityPreview:true,colourAlpha:m.use_color_opacity===true||m.use_color_opacity===1,opacity:(m.material_type==='blending'?m.opacity??1:1),choice:{...source.choice,unpremultiplied:true}}:{}),factor:[...factor,1],roughness,metalness,doubleSided:m.two_sided===1,unlit:m.always_unlit===true};
 }
 
+// Lit data-map materials can use the native constant colour. Never invent a
+// fallback when an actual colour binding exists but is unsupported or invalid.
+export function nomadLitSurfaceSource(payload){
+ const colour=nomadColourSurfaceSource(payload,{opacity:true});if(colour)return colour;
+ const m=payload?.nomadMaterial;if(payload?.source!=='nomad'||!m||Object.hasOwn(m.textures||{},'color')||m.always_unlit===true||m.flip_culling===true)return null;
+ const type=m.material_type??'opaque',opacity=m.opacity??1,opacityFactor=m.factorOpacity??1,factor=m.color??[1,1,1],roughness=m.roughness??.25,metalness=m.metalness??0;
+ if(!['opaque','blending'].includes(type)||![undefined,false,0,true,1].includes(m.use_color_opacity)||!Number.isFinite(opacity)||opacity<0||opacity>1||type==='opaque'&&opacity!==1||!Number.isFinite(opacityFactor)||opacityFactor<0||opacityFactor>1||!Array.isArray(factor)||factor.length!==3||!factor.every(v=>Number.isFinite(v)&&v>=0&&v<=1)||![roughness,metalness].every(v=>Number.isFinite(v)&&v>=0&&v<=1))return null;
+ const source={standalone:true,choice:null,factor:[...factor,1],roughness,metalness,opacityPreview:true,colourAlpha:false,opacity,doubleSided:m.two_sided===1,unlit:false};
+ return Object.keys(nomadPBRSurfaceSources(payload,source)).length?source:null;
+}
+
 // Separate native data maps, never glTF G/B packed textures. Grayscale validation
 // makes scalar sampling unambiguous; original encoded bytes remain untouched.
 export function nomadPBRSurfaceSources(payload,colour=nomadColourSurfaceSource(payload)){
  if(!colour||colour.unlit)return {};
- const maps={},seen=new Set([colour.choice.data]);let bytes=colour.choice.data.length;
+ const maps={},seen=new Set(colour.choice?[colour.choice.data]:[]);let bytes=colour.choice?.data.length??0;
  for(const slot of ['normal','roughness','metalness','emissive','opacity']){
   if(slot==='opacity'&&!colour.opacityPreview)continue;
   const source=nomadTextureSource(payload,slot,{opacity:colour.opacityPreview});if(!source)continue;

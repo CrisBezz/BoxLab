@@ -1,3 +1,33 @@
+## .1033 — standalone native material maps — 31 October 2026
+
+Current build: 0.36.18.1033. Parent main: 1cd744b63ff35cafea7a56b01c0cfbd81b53645f.
+Reuses nomad-material-resource and uv-image-surface-preview: Studio/Solid now
+accept normal, emissive, roughness, metalness and opacity maps without a colour
+image, using native constant color (white default), roughness .25, metalness 0.
+No generated colour texture or parallel renderer. Invalid existing colour bindings,
+unlit, unsupported projections/materials and displacement-only keep prior fallback.
+Map-only overlay replaces body only after a successful decode; failed/late work
+releases the original owner and reservation. Source images/UVs/materials remain exact.
+
+Protect explicit .1032 user PASS: seven-cube visibility/spacing and VIEW stability.
+Four colour surfaces remain protected; up to eight map-only surfaces share original
+aggregate ceilings: 15M decoded pixels, 80k UV corners, 32MiB encoded sources.
+Per-map limits unchanged. Parent loader changes are cache-pin-only. main.js and
+multi-object-transform remain untouched; no broad UI changes.
+
+Fresh comparison: docs/samples/NOM_STANDALONE_MAPS_1033.nom. Seven independent
+named cubes, same accepted spacing; TRUE opaque RGB checker for Colour and
+Emissive. .1032 fixture remains immutable. Displacement stays retention/inspection
+only, pending subdivision/performance work. Original .1032 alpha-OFF cyan/black
+bitmap discrepancy remains OPEN and is not fixed by the new sample.
+
+Hands-on pending: import new sample, verify all seven cubes and six supported
+material channels in Studio/Solid; inspect gloss/reflections while orbiting.
+Check opacity holes and shadows, switch/reopen all VIEW modes, Move/Undo/Redo,
+Save/Open and export NOM. User PASS required for actual iPad/GPU appearance.
+Next: address alpha-OFF bitmap decoding separately after this material validation.
+Validation: Node22 full suite 3058 PASS, 0 FAIL (102.29s); final additional budget check and all four .1033 focused tests PASS on Node22. Existing 30 native material tests PASS. git diff --check clean. Hosted CI/Pages pending publication.
+
 ## .1032 explicit user acceptance — 31 October 2026
 
 - [x] User1032 PASS: all7 cubes visible; no VIEW mode disappearance. Protect sample spacing and VIEW startup/mode availability/reopen.
