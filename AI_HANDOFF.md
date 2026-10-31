@@ -1,3 +1,10 @@
+Publication verified: application0cc0cef434b8a8c7d431e74c0d0ed51f58fe2834,
+reviewed tree4edaaa71114db8b2eba41464f68a02951e42dfd4. Hosted CI41154726829
+SUCCESS; Pages41154726211 SUCCESS. Live version/shell/PNG/overlay/render/checklist
+and original80,064-byte1029 sample match source bytes. See docs/publication-1035.md.
+Status: .1035 LIVE and READY FOR RETEST; .1034 user FAIL preserved, .1033 PASS
+protected; actual iPad/GPU colour acceptance pending. No displacement work included.
+
 ## .1035 — pre-decode native colour alpha OFF repair — 31 October 2026
 
 USER .1034 FAIL: screenshot shows right cube cyan/black checker on visible .1034.
@@ -42,8 +49,7 @@ alpha plus opacity. Switch/reopen VIEW; original .1032 seven-cube Colour cyan;
 Native iPad/GPU appearance acceptance still pending; do not claim device success.
 Displacement remains deferred; next step is actual device validation before more work.
 Validation: Node22 full suite3064 PASS/0FAIL (216.65s); focused13 material tests
-and final13 checklist tests PASS. git diff --check clean. CI/Pages publication
-pending. .1034 iPad FAIL remains recorded; .1035 GPU/device acceptance pending.
+and final13 checklist tests PASS. git diff --check clean. CI41154726829 and Pages41154726211 SUCCESS; live bytes verified. .1034 iPad FAIL remains recorded; .1035 GPU/device acceptance pending.
 
 ## .1034 — native colour alpha OFF shader correction — 31 October 2026
 
