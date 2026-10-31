@@ -18068,4 +18068,11 @@ material channels in Studio/Solid; inspect gloss/reflections while orbiting.
 Check opacity holes and shadows, switch/reopen all VIEW modes, Move/Undo/Redo,
 Save/Open and export NOM. User PASS required for actual iPad/GPU appearance.
 Next: address alpha-OFF bitmap decoding separately after this material validation.
-Validation: Node22 full suite 3058 PASS, 0 FAIL (102.29s); final additional budget check and all four .1033 focused tests PASS on Node22. Existing 30 native material tests PASS. git diff --check clean. Hosted CI/Pages pending publication.
+Validation: Node22 full suite 3058 PASS, 0 FAIL (102.29s); final additional budget check and all four .1033 focused tests PASS on Node22. Existing 30 native material tests PASS. git diff --check clean. Hosted CI41150968538 and Pages41150967831 SUCCESS; live bytes verified.
+
+Publication: application commit bbe1896581176abdfb297404161d5023b3d9a26a,
+reviewed tree 8554d21a5068f6f38b0feb1d825bcd0c043643b0, fetched main verified.
+Pages41150967831 SUCCESS; live version/shell/material/overlay/render/test-list and
+91,528-byte sample all byte-identical. See docs/publication-1033.md. Hosted
+Topology regression41150968538 completed SUCCESS. .1033 LIVE and READY FOR TESTING.
+Manual iPad appearance acceptance remains pending; .1032 loading/VIEW PASS protected.
