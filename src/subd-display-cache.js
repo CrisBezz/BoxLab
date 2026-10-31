@@ -29,6 +29,22 @@ function inputs(mesh, level, axes, cornerUVs = null) {
   return values;
 }
 
+// Shared eligibility gate for the active and inactive NOM SubD display owners.
+// Keep texture preview constraints aligned while each owner keeps its own cache.
+export function subdCornerUVPreviewSource(mesh, object, level, axes, topologySignature, cornerCap = 20000) {
+  const payload = object?.glbPassthrough;
+  if (!mesh || !object || object.kind === 'reference' || object.sourceId || object.booleanRecipe ||
+      object.arrayRecipe || object.curveProfile || Object.values(axes || {}).some(Boolean) ||
+      payload?.source !== 'nomad' || typeof topologySignature !== 'function' ||
+      topologySignature(mesh) !== payload.uvTopologySignature || !Array.isArray(payload.uvCorners) ||
+      payload.uvCorners.length !== mesh.faces.length) return null;
+  const sourceCorners = mesh.faces.reduce((count, face) => count + face.length, 0);
+  const safeLevel = Math.max(1, Math.min(4, Number(level) || 1));
+  const outputCorners = sourceCorners * (4 ** safeLevel);
+  if (!Number.isFinite(outputCorners) || outputCorners > cornerCap) return null;
+  return { payload, topologySignature };
+}
+
 export function createSubdDisplayCache(subdivide, applyMirror, subdivideWithCornerUVs = null) {
   let source = null, previous = null, display = null, cornerUVs = null, hit = false;
   function matches(mesh, next) {

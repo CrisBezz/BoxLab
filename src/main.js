@@ -7,7 +7,7 @@ import { FreeOrbitControls as OrbitControls } from './free-orbit-controls.js?v=0
 import {createThreeFingerCommands} from './three-finger-commands.js?v=0.36.18.1010';
 import { EditableMesh } from './mesh.js?v=0.12';
 import { subdivide, subdivideWithCornerUVs } from './subdivision.js?v=0.36.18.1037';
-import { createSubdDisplayCache } from './subd-display-cache.js?v=0.36.18.1039';
+import { createSubdDisplayCache, subdCornerUVPreviewSource } from './subd-display-cache.js?v=0.36.18.1040';
 const subdDisplayCache=createSubdDisplayCache(subdivide,applyMirror,subdivideWithCornerUVs);
 import { applyMirror } from './mirror.js?v=0.12';
 import { downloadOBJ } from './export.js?v=0.12';
@@ -327,19 +327,16 @@ function clearGroup(group){const disposed=new Set();while(group.children.length)
 function modifiedBaseMesh(){return applyMirror(mesh,mirrorAxes);}
 function activeMirrorAxes(){return Object.keys(mirrorAxes).filter(a=>mirrorAxes[a]);}
 function activeSubdUVSource(){
- if(!subdEnabled||activeMirrorAxes().length)return null;
- const manager=globalThis.__boxlabObjectManager,object=manager?.objects?.find(item=>item.id===manager.activeId),payload=object?.glbPassthrough,signature=globalThis.__boxlabExportAs?.topologySignature;
- if(!object||object.kind==='reference'||object.sourceId||object.booleanRecipe||object.arrayRecipe||object.curveProfile||payload?.source!=='nomad'||typeof signature!=='function'||signature(mesh)!==payload.uvTopologySignature||!Array.isArray(payload.uvCorners)||payload.uvCorners.length!==mesh.faces.length)return null;
- const sourceCorners=mesh.faces.reduce((n,face)=>n+face.length,0),level=Math.max(1,Math.min(4,Number(subdLevel)||1)),faces=sourceCorners*(4**(level-1)),corners=faces*4,cap=globalThis.__boxlabExportAs?.maxUVPreviewCorners??20000;
- if(!Number.isFinite(corners)||corners>cap)return null;
- return{payload,signature};
+ if(!subdEnabled)return null;
+ const manager=globalThis.__boxlabObjectManager,object=manager?.objects?.find(item=>item.id===manager.activeId),signature=globalThis.__boxlabExportAs?.topologySignature;
+ return subdCornerUVPreviewSource(mesh,object,subdLevel,mirrorAxes,signature,globalThis.__boxlabExportAs?.maxUVPreviewCorners??20000);
 }
 function modifiedSubdDisplayResult(readOnly=false){
  const source=activeSubdUVSource();let result=null;
  if(source){try{result=subdDisplayCache.getWithCornerUVs(mesh,subdLevel,mirrorAxes,source.payload.uvCorners);}catch{result=null;}}
  const display=result?.display||subdDisplayCache.get(mesh,subdLevel,mirrorAxes);
  if(readOnly)globalThis.__boxlabPerformance?.cache?.(subdDisplayCache.hit);
- const uvPayload=result?{...source.payload,uvTopologySignature:source.signature(display),uvCorners:result.cornerUVs}:null;
+ const uvPayload=result?{...source.payload,uvTopologySignature:source.topologySignature(display),uvCorners:result.cornerUVs}:null;
  return{display,uvPayload};
 }
 function modifiedSubdMesh(readOnly=false){const display=modifiedSubdDisplayResult(readOnly).display;return readOnly?display:display.clone();}

@@ -1,31 +1,27 @@
-## .1039 — bounded textured SubD display — 31 October 2026
+## .1040 — textured SubD on inactive NOM objects — 31 October 2026
 
-Current target: BoxLab 0.36.18.1039. The user supplied the complete iPad .1038
-UV subdivision timing report: all nine cases completed; geometry and UV-aware output
-matched the geometry baseline, input mesh and UV arrays were unchanged, and no case
-stopped early. Largest case was 16,384 faces / 65,536 UV corners: geometry median
-12 ms, continuous UV 23 ms, per-face-chart UV 22 ms. This is CPU mesh/UV generation
-only; it says nothing about image decode, memory, GPU work or rendered frame time.
+Current target: BoxLab 0.36.18.1040. The user PASSes .1039 non-SubD material
+preview across all seven objects, then reports that after enabling SubD only the
+selected object displays its texture. Protect the seven-object loading and VIEW
+behavior, .1035 colour-alpha PASS, and the canonical .1037 corner-UV subdivision.
 
-.1039 connects the existing canonical `subdivideWithCornerUVs()` kernel to the
-existing active SubD display cache and NOM Studio/Solid UV overlay. It carries the
-cached subdivided corner UVs with the exact display mesh, avoiding a second geometry
-subdivision. It only enables preview for the active editable NOM object when source
-UV topology still matches and the existing 20,000-corner geometry preview accepts it.
-Mirror, stale/invalid UV data, other sources and over-cap results retain the prior
-untextured SubD fallback. There is no displacement preview. The overlay is disposed
-when the render body is cleared, including when cached display geometry is reused.
+.1040 reconnects the existing inactive-object display owner to canonical
+`subdivideWithCornerUVs()` and its existing per-object SubD cache. Active and
+inactive NOM paths share topology/source/Mirror/corner-cap eligibility. The inactive
+render body receives the exact cached display mesh and corner-UV payload consumed by
+the existing Studio/Solid overlay owner. Inactive-body cleanup now calls the render
+owner before cached geometry reuse. No parallel renderer/kernel or displacement
+preview was added.
 
-.1039 passed the focused SubD/texture/cache tests and the full Node 22 suite
-(3,083 PASS / 0 FAIL). Release-contract checks passed; `git diff --check` is clean.
-Hosted topology regression 41182612229 and Pages build/deploy 41182611920 both
-succeeded for runtime commit 30f01a4. Live version.json, shell, nine runtime modules and two UV paint evaluation files
-(13 assets total) match local Git blobs byte-for-byte. The new iPad
-hands-on visual check remains pending. User hands-on gate:
-open an existing textured NOM object, enable SubD, inspect Studio and Solid, toggle
-SubD, and confirm Mirror disables the texture preview without disrupting view modes.
-Do not treat the .1038 timing report as GPU, memory or frame-time approval. Preserve
-the .1035 colour-alpha PASS and earlier seven-object / VIEW acceptance.
+Focused tests cover per-object UV results/cache reuse, shared eligibility/fallback,
+inactive Studio/Solid overlay handoff and cleanup, plus existing active SubD/NOM
+material behavior. Full Node suite: 3,081 PASS / 0 FAIL; release-contract checks
+pass and `git diff --check` is clean. Hosted CI, Pages and live-byte results must be
+added before describing .1040 as published. DEVICE1040 remains pending: with the seven-
+object NOM sample, enable SubD on multiple textured objects and confirm they remain
+textured while unselected in Studio and Solid; check selection, Mirror fallback and
+VIEW navigation. The .1038 benchmark is CPU generation only, not decode, memory, GPU
+or frame-time evidence.
 
 ## .1035 — pre-decode native colour alpha OFF repair — 31 October 2026
 

@@ -4,15 +4,15 @@ import fs from 'node:fs';
 import vm from 'node:vm';
 import * as THREE from 'three';
 import {EditableMesh} from '../src/mesh.js';
-import {subdivide} from '../src/subdivision.js';
+import {subdivide,subdivideWithCornerUVs} from '../src/subdivision.js';
 import {applyMirror} from '../src/mirror.js';
-import {createSubdDisplayCache} from '../src/subd-display-cache.js';
+import {createSubdDisplayCache,subdCornerUVPreviewSource} from '../src/subd-display-cache.js';
 import {transformEditableMesh,matrixForInstance} from '../src/instance-core.js';
 const source=fs.readFileSync(new URL('../src/multi-object.js',import.meta.url),'utf8');
 const data=m=>JSON.stringify([m.vertices.map(v=>v.toArray()),m.faces,[...m.creases],m.faceGroups]);
 function fixture(){
  let calls=0;const counts=[],scene=new THREE.Scene(),a={id:1,mesh:EditableMesh.cube(1),visible:true,settings:{}},b={id:2,mesh:EditableMesh.cube(1),visible:true,settings:{subd:true,subdLevel:2,mirror:{x:true}}};b.mesh.vertices.forEach(v=>v.x+=3);
- const c={THREE,objects:[a,b],activeId:1,soloId:null,activeObject:()=>c.objects.find(o=>o.id===c.activeId),linkedSources:new Map(),matrixForInstance,transformEditableMesh,subdivide:(m,l)=>{calls++;return subdivide(m,l);},applyMirror,createSubdDisplayCache,state:()=>({scene}),inactiveLayer:null,inactiveBodies:[],__boxlabPerformance:{cache:value=>counts.push(value),start(){},stage(){}},console};vm.createContext(c);
+ const c={THREE,objects:[a,b],activeId:1,soloId:null,activeObject:()=>c.objects.find(o=>o.id===c.activeId),linkedSources:new Map(),matrixForInstance,transformEditableMesh,subdivide:(m,l)=>{calls++;return subdivide(m,l);},subdivideWithCornerUVs,subdCornerUVPreviewSource,applyMirror,createSubdDisplayCache,state:()=>({scene}),inactiveLayer:null,inactiveBodies:[],__boxlabExportAs:{topologySignature:()=>null},__boxlabPerformance:{cache:value=>counts.push(value),start(){},stage(){}},console};vm.createContext(c);
  vm.runInContext(source.slice(source.indexOf('function activeShouldShow()'),source.indexOf('function queueOutliner()')),c);
  vm.runInContext(source.slice(source.indexOf('function ensureInactiveLayer()'),source.indexOf('function installRenderObserver()')),c);
  return{c,a,b,scene,calls:()=>calls,counts};

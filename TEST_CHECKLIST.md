@@ -1,29 +1,30 @@
-## .1039 — textured SubD display
+## .1040 — textured SubD on inactive NOM objects
 
-- [ ] On iPad, open a textured NOM project and select its editable textured object.
-- [ ] Enable SubD at level 1–3; in Studio and Solid, confirm its texture remains
-  aligned on the subdivided surface.
-- [ ] Toggle SubD off and on; confirm the source texture returns and the preview
-  stays aligned without black/checker squares.
-- [ ] Enable Mirror and confirm the prior untextured SubD fallback is used; disable
-  Mirror and confirm the supported texture preview returns.
-- [ ] Switch view modes and navigate the scene; confirm VIEW remains available and
-  responsive. Send a screenshot/report for any mismatch.
+- [ ] Open the seven-object NOM sample. Confirm all seven base materials appear;
+  the user PASS for this non-SubD behavior is protected from .1039.
+- [ ] Enable SubD on at least two textured objects. Confirm both remain textured
+  while unselected; then select each and deselect all. Check Studio and Solid.
+- [ ] Toggle SubD off/on and change the active object; confirm texture alignment.
+- [ ] Enable Mirror on a textured SubD object and confirm the established
+  untextured fallback; disable Mirror and confirm the texture preview returns.
+- [ ] Switch/reopen VIEW and orbit/pan; confirm preview and navigation remain.
 
-Scope: active editable NOM source with current UV topology, no Mirror, and no more
-than the existing 20,000-corner UV geometry preview cap. Other sources, stale UVs,
-Mirror and over-cap results intentionally fall back to the existing untextured SubD
-surface. This does not approve displacement, texture decode/memory use, GPU behavior
-or rendered frame time. The user's .1038 iPad timing report completed all nine cases
-without early stop; maximum UV-aware medians were 23 ms continuous and 22 ms per-face
-charts at 16,384 faces / 65,536 corners (CPU generation only).
+Scope: editable NOM source with current UV topology, no Mirror, and within the
+existing 20,000-corner preview cap. References, linked/recipe objects, stale UVs,
+Mirror and over-cap results retain the untextured SubD fallback. This does not approve
+displacement, texture decode/memory use, GPU behavior or rendered frame time.
 
-Automated .1039 regression covers UV-aware display-cache reuse and invalidation,
-source signature/mirror/cap gates, overlay ownership/cleanup, native Studio/Solid
-preview, and mirror/no-UV fallback. Full Node 22 suite: 3,083 PASS / 0 FAIL. Release asset-contract and version-marker
-checks pass locally. Hosted topology regression 41182612229 and Pages build/deploy 41182611920 succeeded.
-Live version.json, shell, nine runtime modules and both UV paint evaluation assets
-(13 assets total) match local Git blobs byte-for-byte. The iPad visual gate remains pending.
+Automated .1040 regression covers per-object UV-aware caches, shared eligibility,
+inactive Studio/Solid overlay handoff and cleanup. Existing active SubD and NOM
+material regressions remain covered. Full Node suite: 3,081 PASS / 0 FAIL. Release
+asset-contract and version-marker checks pass; hosted release results belong in the
+current handoff after publication.
+
+## .1039 — active textured SubD; base-material PASS, inactive gap reported
+
+The user confirmed all seven base materials displayed correctly in .1039. The follow-
+up test found that only the selected object displayed its material after SubD was
+enabled on multiple objects. The .1040 checklist above covers this repair.
 
 ## .1037 user PASS protected — corner UV subdivision
 

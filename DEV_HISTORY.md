@@ -18326,3 +18326,32 @@ byte-for-byte. The
 .1039 iPad visual verification remains pending; do not claim GPU, memory or frame-time
 safety from the .1038 benchmark. Preserve earlier .1035 colour-alpha
 PASS and seven-object/VIEW acceptance.
+
+
+## .1040 — inactive NOM SubD textures; .1039 base-material PASS — 31 October 2026
+
+The user PASSes .1039: all seven objects display their materials without SubD. The
+follow-up iPad report isolates the gap: when SubD is enabled across multiple objects,
+only the selected object's material displays. Protect the non-SubD behavior, seven-
+object visibility, VIEW modes and earlier colour-alpha PASS.
+
+Existing inactive-object rendering already owned independent SubD caches and reused
+the canonical geometry kernel, but passed neither per-corner UVs nor a SubD UV payload
+to the existing Studio/Solid overlay. .1040 reuses that cache with the canonical
+`subdivideWithCornerUVs()` path and shared active/inactive source/topology/Mirror/cap
+eligibility. It attaches the exact display mesh and UV payload to each inactive body.
+Inactive overlay cleanup now runs through the existing render cleanup owner before
+cached geometry is reused. No parallel renderer, subdivision kernel or displacement
+preview. `multi-object-transform.js?v=0.36.1.0` remains untouched.
+
+New regression covers distinct per-object UV/cache results, cache reuse, stale/Mirror/
+cap fallback, Studio/Solid inactive overlay, and cleanup. Existing active SubD, inactive
+geometry identity/disposal, Mirror, render performance, boolean scene lifecycle, and
+NOM material tests pass. Full Node suite: 3,081 PASS / 0 FAIL. Release-contract checks
+pass; `git diff --check` clean. Hosted CI and publication evidence pending.
+
+DEVICE1040: use the seven-object NOM sample; verify all seven base materials, then
+enable SubD on multiple textured objects and confirm textures remain visible while
+unselected in Studio and Solid. Switch selection, deselect all, toggle SubD/Mirror,
+reopen VIEW and navigate. Displacement, GPU, memory, image-decode and rendered frame
+time remain outside this validation.

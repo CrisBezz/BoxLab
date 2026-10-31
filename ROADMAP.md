@@ -1,18 +1,20 @@
-## Current build: .1039 textured SubD display
+## Current build: .1040 textured SubD on inactive NOM objects
 
-The user’s .1038 iPad report completed all nine CPU mesh/UV cases. At the largest
-case (16,384 faces / 65,536 corners), geometry median was 12 ms and UV-aware medians
-were 22–23 ms; all parity and input-preservation checks held. This supports a narrow
-integration with existing owners: .1039 sends cached corner UVs from the canonical
-SubD kernel through the active display cache into the existing NOM Studio/Solid
-surface overlay. Preview is limited to active editable NOM objects with matching
-UV topology, no Mirror, and the current 20,000-corner geometry preview cap. Other
-cases retain the untextured SubD fallback. This report excludes decode, memory, GPU
-and frame time; displacement preview remains a separate gate. Local validation is 3,083/3,083 Node 22 tests; release-contract checks pass. Hosted
-topology run 41182612229 and Pages deploy 41182611920 succeeded; live runtime assets
-match their local blobs. Await user hands-on texture-alignment and VIEW confirmation
-before expanding scope.
+User PASSes .1039 base-material display across all seven objects, then reports a
+SubD visibility gap: only the selected object's texture remained visible. .1040
+routes inactive objects through the canonical corner-UV subdivision kernel and the
+same Studio/Solid UV overlay as the active object. It retains per-object cache
+ownership and shared source, topology, Mirror and 20,000-corner rules. No new
+renderer/kernel or displacement preview.
 
+Focused regression covers independent per-object UV results/cache reuse, eligibility
+and fallback, inactive Studio/Solid overlay handoff and cleanup. Full-suite, hosted CI
+validation is 3,081 PASS / 0 FAIL; release asset-contract and version-marker checks
+pass. Hosted CI and publication results are recorded in the current handoff after
+verification. Next:
+user iPad verification with multiple textured SubD objects left unselected. The .1038
+timing report measures CPU mesh/UV generation only; it does not measure image decode,
+memory, GPU work or rendered frame time.
 
 ## .1035 — pre-decode native colour alpha OFF repair — 31 October 2026
 

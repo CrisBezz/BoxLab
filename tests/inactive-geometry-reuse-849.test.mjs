@@ -4,14 +4,15 @@ import fs from 'node:fs';
 import vm from 'node:vm';
 import * as THREE from 'three';
 import {EditableMesh} from '../src/mesh.js';
-import {subdivide} from '../src/subdivision.js';
+import {subdivide,subdivideWithCornerUVs} from '../src/subdivision.js';
 import {applyMirror} from '../src/mirror.js';
-import {createSubdDisplayCache} from '../src/subd-display-cache.js';
+import {createSubdDisplayCache,subdCornerUVPreviewSource} from '../src/subd-display-cache.js';
+import {meshTopologySignature} from '../src/mesh-topology-signature.js';
 import {transformEditableMesh,matrixForInstance} from '../src/instance-core.js';
 const source=fs.readFileSync(new URL('../src/multi-object.js',import.meta.url),'utf8');
 function fixture(){
  const a={id:1,mesh:EditableMesh.cube(1),visible:true,settings:{}},b={id:2,mesh:EditableMesh.cube(1),visible:true,settings:{subd:true,subdLevel:2}};
- const c={THREE,objects:[a,b],activeId:1,soloId:null,activeObject:()=>c.objects.find(o=>o.id===c.activeId),linkedSources:new Map(),matrixForInstance,transformEditableMesh,subdivide,applyMirror,createSubdDisplayCache,scene:new THREE.Scene(),state:()=>({scene:c.scene}),inactiveLayer:null,inactiveBodies:[],console:{warn(){}},__boxlabRenderModes:{apply:body=>{const overlay=new THREE.Mesh(body.geometry,new THREE.MeshBasicMaterial({wireframe:true}));overlay.userData.boxlabRenderOverlay=true;body.add(overlay);}}};vm.createContext(c);
+ const c={THREE,objects:[a,b],activeId:1,soloId:null,activeObject:()=>c.objects.find(o=>o.id===c.activeId),linkedSources:new Map(),matrixForInstance,transformEditableMesh,subdivide,subdivideWithCornerUVs,subdCornerUVPreviewSource,__boxlabExportAs:{topologySignature:meshTopologySignature},applyMirror,createSubdDisplayCache,scene:new THREE.Scene(),state:()=>({scene:c.scene}),inactiveLayer:null,inactiveBodies:[],console:{warn(){}},__boxlabRenderModes:{apply:body=>{const overlay=new THREE.Mesh(body.geometry,new THREE.MeshBasicMaterial({wireframe:true}));overlay.userData.boxlabRenderOverlay=true;body.add(overlay);},clear:body=>{for(const child of [...body.children]){body.remove(child);child.material.dispose();}}}};vm.createContext(c);
  vm.runInContext(source.slice(source.indexOf('function activeShouldShow()'),source.indexOf('function queueOutliner()')),c);vm.runInContext(source.slice(source.indexOf('function ensureInactiveLayer()'),source.indexOf('function installRenderObserver()')),c);
  const body=new THREE.Mesh(new THREE.BoxGeometry(),new THREE.MeshStandardMaterial());
  return{c,a,b,rebuild(){c.rebuildInactiveLayer(body);return c.inactiveBodies[0]?.geometry;}};

@@ -8,6 +8,7 @@ import {meshTopologySignature} from '../src/mesh-topology-signature.js';
 import {subdivide,subdivideWithCornerUVs} from '../src/subdivision.js';
 import {applyMirror} from '../src/mirror.js';
 import {createSubdDisplayCache} from '../src/subd-display-cache.js';
+import {subdCornerUVPreviewSource} from '../src/subd-display-cache.js';
 
 const main=fs.readFileSync(new URL('../src/main.js',import.meta.url),'utf8');
 const data=mesh=>({vertices:mesh.vertices.map(v=>v.toArray()),faces:mesh.faces,creases:[...mesh.creases],groups:mesh.faceGroups});
@@ -36,7 +37,7 @@ test('.1039 active NOM source validation rejects stale UVs, Mirror and output be
  const c={subdEnabled:true,subdLevel:1,mirrorAxes:{x:false,y:false,z:false},mesh:EditableMesh.cube(),globalThis:null};c.globalThis=c;
  const payload={source:'nomad',uvTopologySignature:meshTopologySignature(c.mesh),uvCorners:c.mesh.faces.map(()=>[[0,0],[1,0],[1,1],[0,1]])};
  c.__boxlabObjectManager={activeId:1,objects:[{id:1,kind:'editable',settings:{subd:true},glbPassthrough:payload}]};
- c.__boxlabExportAs={topologySignature:meshTopologySignature,maxUVPreviewCorners:20000};c.subdivideWithCornerUVs=subdivideWithCornerUVs;c.subdDisplayCache=createSubdDisplayCache(subdivide,applyMirror,subdivideWithCornerUVs);c.subdivide=subdivide;c.applyMirror=applyMirror;vm.createContext(c);vm.runInContext(main.slice(start,end)+'\nglobalThis.check=activeSubdUVSource;globalThis.displayResult=modifiedSubdDisplayResult;',c);
+ c.__boxlabExportAs={topologySignature:meshTopologySignature,maxUVPreviewCorners:20000};c.subdCornerUVPreviewSource=subdCornerUVPreviewSource;c.subdivideWithCornerUVs=subdivideWithCornerUVs;c.subdDisplayCache=createSubdDisplayCache(subdivide,applyMirror,subdivideWithCornerUVs);c.subdivide=subdivide;c.applyMirror=applyMirror;vm.createContext(c);vm.runInContext(main.slice(start,end)+'\nglobalThis.check=activeSubdUVSource;globalThis.displayResult=modifiedSubdDisplayResult;',c);
  assert(c.check());const result=c.displayResult(true);assert.deepEqual(data(result.display),data(subdivide(c.mesh,1)));assert.equal(result.uvPayload.uvTopologySignature,meshTopologySignature(result.display));assert.deepEqual(result.uvPayload.uvCorners,subdivideWithCornerUVs(c.mesh,payload.uvCorners,1).cornerUVs);const cached=c.displayResult(true);assert.equal(cached.display,result.display);assert.equal(cached.uvPayload.uvCorners,result.uvPayload.uvCorners);
  payload.uvTopologySignature='stale';assert.equal(c.check(),null);payload.uvTopologySignature=meshTopologySignature(c.mesh);c.mirrorAxes.x=true;assert.equal(c.check(),null);c.mirrorAxes.x=false;
  const large=grid(16);c.mesh=large.mesh;c.subdLevel=4;c.__boxlabObjectManager.objects[0].glbPassthrough={source:'nomad',uvTopologySignature:meshTopologySignature(large.mesh),uvCorners:large.uvs};assert.equal(c.check(),null);

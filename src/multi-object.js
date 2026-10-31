@@ -2,9 +2,9 @@ import {createNativeUVCandidate} from './imported-uv-edit.js?v=0.36.18.957';
 import * as THREE from 'three';
 import { editableBooleanEligibility } from './editable-boolean-core.js?v=0.36.18.803';
 import { EditableMesh } from './mesh.js';
-import { subdivide } from './subdivision.js';
+import { subdivide, subdivideWithCornerUVs } from './subdivision.js?v=0.36.18.1037';
 import { applyMirror } from './mirror.js';
-import { createSubdDisplayCache } from './subd-display-cache.js?v=0.36.18.1039';
+import { createSubdDisplayCache, subdCornerUVPreviewSource } from './subd-display-cache.js?v=0.36.18.1040';
 import { combineEditableMeshes, modifierSettingsCompatible } from './object-join-core.js?v=0.36.18.277';
 import { matrixForInstance, setInstanceMatrix, transformEditableMesh, meshesNear, deriveInstancePlacement, localMeshFromWorld } from './instance-core.js?v=0.36.18.343';
 
@@ -301,6 +301,7 @@ function shouldShow(object) {
 }
 
 const inactiveSubdCaches=new WeakMap();
+const inactiveSubdUVPreviews=new WeakMap();
 function displayMeshFor(object) {
   let display = object.mesh;
   if(object?.sourceId&&linkedSources.has(object.sourceId)){
@@ -313,15 +314,27 @@ function displayMeshFor(object) {
   }
   if(object.settings?.subd&&!object.sourceId){
     let cache=inactiveSubdCaches.get(object);
-    if(!cache){cache=createSubdDisplayCache(subdivide,applyMirror);inactiveSubdCaches.set(object,cache);}
-    const result=cache.get(display,Math.max(1,Math.min(4,object.settings.subdLevel||1)),object.settings.mirror||{});
+    if(!cache){cache=createSubdDisplayCache(subdivide,applyMirror,subdivideWithCornerUVs);inactiveSubdCaches.set(object,cache);}
+    const level=Math.max(1,Math.min(4,object.settings.subdLevel||1)),axes=object.settings.mirror||{},signature=globalThis.__boxlabExportAs?.topologySignature;
+    const source=subdCornerUVPreviewSource(display,object,level,axes,signature,globalThis.__boxlabExportAs?.maxUVPreviewCorners??20000);
+    let result=null;
+    if(source){try{result=cache.getWithCornerUVs(display,level,axes,source.payload.uvCorners);}catch{result=null;}}
+    if(result){
+      inactiveSubdUVPreviews.set(result.display,{...source.payload,uvTopologySignature:signature(result.display),uvCorners:result.cornerUVs});
+      globalThis.__boxlabPerformance?.cache?.(cache.hit,'inactive');
+      return result.display;
+    }
+    const plain=cache.get(display,level,axes);
+    inactiveSubdUVPreviews.delete(plain);
     globalThis.__boxlabPerformance?.cache?.(cache.hit,'inactive');
-    return result;
+    return plain;
   }
   inactiveSubdCaches.delete(object);
-  if (object.settings?.subd) display = subdivide(display, Math.max(1, Math.min(4, object.settings.subdLevel || 1)));
-  return applyMirror(display, object.settings?.mirror || { x:false, y:false, z:false });
+  const plain=object.settings?.subd?subdivide(display,Math.max(1,Math.min(4,object.settings.subdLevel||1))):display;
+  inactiveSubdUVPreviews.delete(plain);
+  return applyMirror(plain, object.settings?.mirror || { x:false, y:false, z:false });
 }
+function displayUVPreviewFor(mesh){return inactiveSubdUVPreviews.get(mesh)||null;}
 
 function queueOutliner() {
   if (renderQueued) return;
@@ -851,9 +864,9 @@ function clearInactiveLayer(keepGeometry=false){
   if(!inactiveLayer)return;
   for(const child of [...inactiveLayer.children]){
     inactiveLayer.remove(child);
+    globalThis.__boxlabRenderModes?.clear?.(child);
     child.traverse?.(node=>{
       if(node.geometry?.dispose&&node.geometry!==child.userData.boxlabCachedGeometry)node.geometry.dispose();
-      if(node!==child&&node.userData?.boxlabRenderOverlay)node.material?.dispose?.();
     });
     if(child.material?.userData?.disposable)child.material.dispose?.();
   }
@@ -888,6 +901,8 @@ function rebuildInactiveLayer(body){
       }else geometry=display.triangulatedGeometry();
       const inactive=new THREE.Mesh(geometry,material);
       inactive.userData={kind:'boxlab-inactive-body',objectId:object.id};
+      const uvPayload=displayUVPreviewFor(display);
+      if(uvPayload)inactive.userData.boxlabSubdUVPreview={mesh:display,payload:uvPayload};
       if(cachedGeometry)inactive.userData.boxlabCachedGeometry=cachedGeometry;
       inactive.renderOrder=-1;
       inactiveBodies.push(inactive);

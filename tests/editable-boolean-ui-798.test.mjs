@@ -125,6 +125,7 @@ test('804 actual native render owner hides A/B bodies and cage only in Result; S
  const u=ui(),c=u.c,source=fs.readFileSync(new URL('../src/multi-object.js',import.meta.url),'utf8'),baseAdd=THREE.Group.prototype.add,installed=THREE.Group.prototype.__boxlabMultiObjectInstalled;
  const section=(a,b)=>source.slice(source.indexOf(a),source.indexOf(b,source.indexOf(a)));
  Object.assign(c,{inactiveLayer:null,inactiveBodies:[],activeRoot:null,activeBody:null,soloId:4,queueOutliner(){}});
+ c.displayUVPreviewFor=()=>null;
  vm.runInContext(section('function activeShouldShow()','function syncLiveLinkedFromSource(').split('function displayMeshFor(')[0],c);
  c.displayMeshFor=o=>o.mesh;
  vm.runInContext((section('function ensureInactiveLayer()','function installUI()')).replace(/\bobjects\b/g,'sceneObjects').replace(/\bactiveId\b/g,'sceneActiveId'),c);
