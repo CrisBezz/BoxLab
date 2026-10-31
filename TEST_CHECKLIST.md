@@ -14,10 +14,11 @@
 - [ ] Paint with Pencil; verify fingers still orbit/pan/zoom, tool changes do not commit
   strokes, and Undo/Redo plus Done retain their existing behavior.
 
-Automated .1042 coverage: 15 focused Paint/compact-layout checks and 5 release contract
-checks pass. Full suite and publication evidence are in DEV_HISTORY.md. The checks validate
-existing-node reuse, position/clamping and state routing; they do not establish iPad touch,
-visual weight or GPU rendering acceptance.
+Automated .1042 coverage: 3,085 Node tests pass, including focused Paint/compact-layout
+and release-contract checks. Hosted Topology regression 41201732663 and Pages deployment
+41201732616 succeeded. The live shell, manifest, Paint module, compact stylesheet and
+loader chain match the tested tree byte-for-byte. These checks do not establish iPad touch,
+visual weight or GPU rendering acceptance; device checks above remain pending.
 
 ## .1041 — displacement feasibility report received (benchmark only)
 

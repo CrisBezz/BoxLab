@@ -15,9 +15,12 @@ left Paint panel. The wheel remains reachable from the floating panel and the or
 background hold. The original Pencil stroke, finger navigation, cancel/Undo/Redo and
 Paint completion owners remain authoritative.
 
-Automated focused Paint/compact layout coverage and release-contract checks pass. Full
-suite, publication and live-byte verification are recorded in DEV_HISTORY.md. iPad
-acceptance is pending; do not infer tactile/rendered success from DOM tests.
+Automated focused Paint/compact layout coverage passes; the full Node suite passes
+3,085 / 0. Hosted Topology regression 41201732663 and Pages deployment 41201732616
+succeeded for application commit 10ca3d0b5ac7d8d613b6b62bb4702f718a2b5eb6. Live
+version.json, shell, Paint, compact CSS, shell test owner and loader-chain assets were
+byte-verified against the tested tree. iPad acceptance is pending; do not infer tactile
+or rendered success from DOM tests.
 
 Next: manually test .1042 dragging, contextual controls and existing Pencil/finger/history
 behavior. After PASS, return to displacement source/settings audit before any preview work.

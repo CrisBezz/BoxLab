@@ -3,9 +3,9 @@
 The Paint tools wheel is reduced and draggable with viewport clamping. Selecting a tool
 opens a contextual floating panel that reuses the existing channel/preview, colour,
 brush size/opacity, fill, blur/scalar and mask-value controls. The layer list stays in its
-persistent left panel. User iPad acceptance is pending; automated owner, movement/clamp,
-compact-layout and release checks pass. See the top of AI_HANDOFF.md and the .1042 entry
-in DEV_HISTORY.md for validation and publication.
+persistent left panel. The release is live on Pages; the full 3,085-test Node suite and hosted Topology/Pages
+workflows pass. User iPad acceptance is pending. See the top of AI_HANDOFF.md and the
+.1042 entry in DEV_HISTORY.md for validation and publication.
 
 Next: test the .1042 wheel and controls on iPad. If accepted, continue the existing
 roadmap's actual Nomad displacement-payload/settings audit; do not infer preview safety

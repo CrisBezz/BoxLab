@@ -18439,7 +18439,16 @@ mask contextual visibility, drag/clamping in both states, compact layout and pri
 interaction. The first full run found two stale tests that still expected the wheel to
 remain open after tool selection and the current release to remain .1041; those test
 expectations were updated to .1042 behavior while preserving the separate .1041 benchmark.
-Final local Node suite: 3,085 PASS / 0 FAIL / 0 skipped / 0 cancelled (106.29s). Fifteen focused Paint/compact-layout checks, five release-contract checks, and the updated workflow/displacement marker checks pass. Changed JavaScript syntax checks and `git diff --check` are clean. Publication and live-byte evidence are pending.
+Final local Node suite: 3,085 PASS / 0 FAIL / 0 skipped / 0 cancelled (106.29s).
+Fifteen focused Paint/compact-layout checks, five release-contract checks, and the
+updated workflow/displacement marker checks pass. Changed JavaScript syntax checks and
+`git diff --check` are clean. Application commit 10ca3d0b5ac7d8d613b6b62bb4702f718a2b5eb6
+has the exact tested tree. Hosted Topology regression 41201732663 and Pages deployment
+41201732616 both succeeded. Live `version.json`, `index.html`, `src/viewport-paint.js`,
+`compact-layout.css`, `src/shell-comparison.js`, `src/drawer-ui.js`,
+`src/face-workflow-layout.js` and `src/release-version.js` were fetched and byte-matched
+the local tested content. The protected Multi script pin remains unchanged. Native iPad
+appearance and touch acceptance are still pending.
 The iPad checks are in the .1042 section at the top of TEST_CHECKLIST.md; DOM tests do
 not imply native tactile or visual acceptance. Next: obtain user .1042 device result, then
 resume the retained Nomad displacement source/settings audit from the existing roadmap.
