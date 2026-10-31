@@ -1,31 +1,35 @@
-## .1042 — draggable UV Paint palette with contextual quick controls — 31 October 2026
+## .1043 — contextual Paint help and app-wide copy audit — 31 October 2026
 
-Current target: BoxLab 0.36.18.1042. The user explicitly PASSed .1040: preserve
-NOM materials on multiple textured SubD objects, selected or unselected, and existing
-Studio/Solid overlay, UV-aware SubD cache, Mirror fallback, seven-object loading and
-VIEW/navigation. The .1041 generated displacement feasibility report is evidence only;
-actual retained Nomad displacement payload/settings and product preview remain open.
+Current target: BoxLab 0.36.18.1043. User .1040 PASS protects textured SubD on
+multiple NOM objects, visibility in Studio/Solid and existing VIEW/navigation. .1041
+remains a synthetic displacement feasibility report only; actual NOM displacement data
+and settings still need a source audit before any preview implementation.
 
-.1042 implements the user's UV Paint palette request. The existing Paint tools wheel is
-smaller/lighter; it can be dragged from its grab handle and is clamped to the viewport.
-Its position is held while Paint remains open. Choosing a tool opens a compact contextual
-panel, using the original channel/preview, colour, size/opacity, fill, blur/scalar and mask
-value controls and their existing event owners. The persistent layer list remains in the
-left Paint panel. The wheel remains reachable from the floating panel and the original
-background hold. The original Pencil stroke, finger navigation, cancel/Undo/Redo and
-Paint completion owners remain authoritative.
+.1042's draggable contextual Paint panel is preserved. .1043 removes repeated brush,
+Fill, blur, roughness and metalness help lines from the quick panel and adds one small
+“i” button with a touch-toggleable, tool/scope/channel-aware popover. Existing controls,
+Paint state, Pencil ownership and history are reused. The File import note now accurately
+states that NOM imports supported material maps. The app-wide copy audit found further
+candidates in the UV Editor gesture footer, Mesh Health UV guidance, short modelling
+session notes, and hover-only native title explanations. Keep destructive/reset warnings,
+import/export outcomes, live validation/status, accessible control names and essential
+scope/cap warnings visible. Native `title` alone is not usable on iPad; future help must
+have an explicit touch and keyboard path.
 
-Automated focused Paint/compact layout coverage passes; the full Node suite passes
-3,085 / 0. Hosted Topology regression 41201732663 and Pages deployment 41201732616
-succeeded for application commit 10ca3d0b5ac7d8d613b6b62bb4702f718a2b5eb6. Live
-version.json, shell, Paint, compact CSS, shell test owner and loader-chain assets were
-byte-verified against the tested tree. iPad acceptance is pending; do not infer tactile
-or rendered success from DOM tests.
+Focused Paint/help, release-contract, release-owner and shell-comparison checks pass.
+Full Node suite: 3,086 PASS / 0 FAIL / 0 skipped; changed JS syntax and `git diff --check`
+pass. Application commit is `7ab54565156856c303a04e517640c3febf0db1f8`; current local
+main HEAD is `20c6d412` after the docs-only publication-block record. `origin/main` is
+still `3d413280a2d27ccf8c8f2e33a5a6c2786e961277`. Automatic review blocked the push to
+GitHub, so .1043 is not live and cannot yet be device-tested from Pages. Do not retry via
+another path. The .1042 iPad checklist remains pending and is carried into .1043; .1043
+touch/visual acceptance is also pending. See the top of TEST_CHECKLIST.md.
 
-Next: manually test .1042 dragging, contextual controls and existing Pencil/finger/history
-behavior. After PASS, return to displacement source/settings audit before any preview work.
-Keep the existing 20,000-corner cap, image budgets and fallback. Do not add another
-renderer or subdivision kernel. `src/multi-object-transform.js?v=0.36.1.0` remains protected.
+Next: obtain combined .1042/.1043 iPad results. On PASS, continue the app-wide help
+migration in small slices, starting with UV Editor and Mesh Health UV panels; then resume
+the NOM displacement payload/settings audit. Keep the existing 20,000-corner and image
+budgets. Do not add another renderer or subdivision kernel. Protected
+`src/multi-object-transform.js?v=0.36.1.0` remains unchanged.
 
 ## .1035 — pre-decode native colour alpha OFF repair — 31 October 2026
 

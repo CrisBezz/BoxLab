@@ -1,3 +1,21 @@
+## .1043 — contextual Paint help and copy audit — device test pending
+
+- [ ] The floating Paint controls show a small “i” help button. Tap it on iPad to
+  open and close the tooltip; it must not start a stroke or move the palette.
+- [ ] Switch Brush, Fill, Blur, Eraser, Roughness, Metalness and Mask contexts; check
+  the help text follows the active tool/scope/channel and remains readable on screen.
+- [ ] Confirm the help popover does not obstruct the controls needed to set colour,
+  size, opacity, Fill scope or scalar values.
+- [ ] Run the still-pending .1042 drag, Pencil, finger navigation and Undo/Redo checks
+  below; the tooltip change must preserve those behaviors.
+- [ ] Confirm the File menu now describes supported NOM material maps accurately.
+
+Automated .1043 checks: full Node suite 3,086 PASS / 0 FAIL / 0 skipped. Focused
+Paint/context-help, release-contract and shell-comparison checks pass. This does not
+establish native touch/visual acceptance, which remains with the user.
+Publication note: local commit 7ab54565 is not on origin/main because automatic review
+blocked the push. Do not attempt the .1043 iPad checks against Pages until published.
+
 ## .1042 — UV Paint draggable contextual palette — device test pending
 
 - [x] The tool wheel is smaller/lighter; dragging its grab handle relocates it and keeps

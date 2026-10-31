@@ -10,10 +10,17 @@ test('1042 Paint wheel hands selected tools to the floating quick controls witho
 });
 test('1042 quick palette reuses the original channel, colour, size and opacity controls while keeping layer controls outside it',async()=>{
  const r=runtime(),u=uiRuntime(r);await u.api.open();const quick=n(u,'quick-body');
- for(const key of ['common-controls','quick-colour','quick-brush','blur-controls','roughness-controls','metalness-controls','fill-controls','fill-hint','quick-mask-value'])assert.equal(n(u,key).parentNode,quick,key+' moves into the floating quick palette');
+ for(const key of ['common-controls','quick-colour','quick-brush','blur-controls','roughness-controls','metalness-controls','fill-controls','quick-mask-value'])assert.equal(n(u,key).parentNode,quick,key+' moves into the floating quick palette');
  assert.notEqual(n(u,'layer-list').parentNode,quick,'layer list stays in the persistent left panel');
  await n(u,'tool-paint').click();n(u,'colour').value='#1279bc';n(u,'colour').dispatchEvent({type:'input'});assert.equal(n(u,'hex').value,'#1279BC');n(u,'radius').value='24';n(u,'radius').dispatchEvent({type:'input'});assert.equal(n(u,'radius-readout').textContent,'24');n(u,'opacity').value='.45';n(u,'opacity').dispatchEvent({type:'input'});assert.equal(n(u,'opacity-readout').textContent,'45%');
  await n(u,'add-layer').click();await n(u,'add-mask').click();n(u,'paint-target').value='mask';n(u,'paint-target').dispatchEvent({type:'change'});assert.equal(n(u,'quick-mask-value').hidden,false);assert.equal(n(u,'quick-colour').hidden,true);u.api.close();
+});
+test('1043 Paint help is a touch-toggleable contextual tooltip and does not alter paint history',async()=>{
+ const r=runtime(),u=uiRuntime(r);await u.api.open();const count=r.h.undoStack.length,help=n(u,'quick-help'),popover=n(u,'quick-help-popover');
+ await n(u,'tool-blur').click();assert.equal(popover.textContent,'Amount controls spread. Opacity mixes the result; Size controls the brushed area.');
+ await help.click();assert.equal(popover.hidden,false);assert.equal(help.attributes['aria-expanded'],'true');assert.equal(help.attributes['aria-describedby'],'paintQuickHelp');
+ await help.click();assert.equal(popover.hidden,true);assert.equal(help.attributes['aria-expanded'],'false');
+ await n(u,'show-tools').click();await n(u,'tool-fill').click();assert.match(popover.textContent,/Tap a face to fill/);await help.click();assert.equal(popover.hidden,false);assert.equal(r.h.undoStack.length,count);u.api.close();
 });
 test('1042 drag handle moves the compact palette and clamps both tool and control layouts inside the viewport',async()=>{
  const r=runtime(),u=uiRuntime(r);await u.api.open();const handle=n(u,'drag-tools'),down=handle.listeners.get('pointerdown')[0];down({button:0,pointerId:77,clientX:20,clientY:20,currentTarget:handle,preventDefault(){},stopPropagation(){}});u.emit('pointermove',{pointerId:77,clientX:120,clientY:120});assert.deepEqual(position(u),{left:375,top:242});u.emit('pointermove',{pointerId:77,clientX:1120,clientY:1120});assert.deepEqual(position(u),{left:542,top:242});u.emit('pointerup',{pointerId:77});await n(u,'tool-paint').click();assert.equal(u.api.paletteState,'controls');await n(u,'show-tools').click();assert.equal(u.api.paletteState,'tools');assert.deepEqual(position(u),{left:542,top:242});u.api.close();

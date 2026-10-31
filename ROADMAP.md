@@ -1,16 +1,24 @@
-## Current build: .1042 draggable UV Paint palette
+## Current build: .1043 Paint help first slice
 
-The Paint tools wheel is reduced and draggable with viewport clamping. Selecting a tool
-opens a contextual floating panel that reuses the existing channel/preview, colour,
-brush size/opacity, fill, blur/scalar and mask-value controls. The layer list stays in its
-persistent left panel. The release is live on Pages; the full 3,085-test Node suite and hosted Topology/Pages
-workflows pass. User iPad acceptance is pending. See the top of AI_HANDOFF.md and the
-.1042 entry in DEV_HISTORY.md for validation and publication.
+The tested .1043 tree is committed locally as `7ab54565` but is not published; an
+automatic review blocked the push. Do not ask for the iPad test until it is live.
 
-Next: test the .1042 wheel and controls on iPad. If accepted, continue the existing
-roadmap's actual Nomad displacement-payload/settings audit; do not infer preview safety
-from the .1041 synthetic benchmark. Keep current preview and image caps and reuse existing
-UV surface/SubD owners.
+The draggable contextual Paint palette from .1042 remains intact. .1043 consolidates
+repeated quick-tool explanations into one touch-friendly, context-aware help popover and
+corrects stale NOM material-map import copy. The .1042 iPad checklist is still pending;
+.1043 adds the new help and concise copy checks at the top of TEST_CHECKLIST.md.
+
+The whole-app text audit found good tooltip candidates in the UV Editor gesture footer,
+Mesh Health UV instructions, modelling-session gesture subtitles, gizmo/session guidance,
+and native `title` explanations that are unavailable on touch. Keep action labels, ARIA
+names, dynamic status/errors and destructive/reset or important scope/cap warnings visible.
+Use a shared touch/focus/hover help pattern for the later app-wide slices; do not rely on
+browser `title` alone.
+
+Next after user PASS: continue help migration in small slices, starting with UV Editor
+and Mesh Health UV panels, then resume the native NOM displacement payload/settings
+audit before any displacement preview. Preserve existing renderer, surface/SubD owners,
+corner limits and `src/multi-object-transform.js?v=0.36.1.0`.
 
 ## .1035 — pre-decode native colour alpha OFF repair — 31 October 2026
 
