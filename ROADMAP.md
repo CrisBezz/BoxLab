@@ -9869,3 +9869,11 @@ selection/history and accepted VIEW owner until evidence supports a narrow repai
 - [x] Align the drawer owner and its shell cache pin with `.1056` after hosted checks exposed a remaining `.1055` cache hop.
 
 - [ ] Investigate the recorded multi-channel Done→UV Paint re-entry gizmo displacement. Colour-only Done/re-entry passes; multi-channel painting works until Done, then the gizmo is already displaced. The Pencil-orbit camera sync is not accepted as a complete fix until this sequence is verified.
+
+
+## `.1056` verification status
+
+- [x] Pages deployment succeeded; live `.1056` marker, shell and changed gizmo/drawer/face-layout assets match the repo.
+- [x] Hosted Topology `41305462939` passed 3,096 / 3,096.
+- [ ] Fix and device-check multi-channel Colour/Roughness/Metalness Done→UV Paint re-entry; the supplied recording shows the gizmo displaced before orbiting resumes.
+- [x] Preserve Colour-only Done/re-entry and prior Paint/map PASSes.

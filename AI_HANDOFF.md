@@ -7435,3 +7435,8 @@ Topology `41304456910` reported 3,093 PASS / 3 FAIL: `drawer-ui.js` retained a `
 ### Recording evidence and final `.1056` contract update
 
 The new recording confirms a narrower trigger: Colour-only Done→UV Paint re-entry works; with Colour/Roughness/Metalness active, painting works until Done, then the gizmo is already displaced from the cube. Update the reviewed nested `release-version.js` URL in the face-layout contract to `.1056`; hosted Topology `41304988636` had 3,095 PASS / 1 FAIL from that stale fixture URL. Do not mark the camera sync change as fully accepted; investigate the Done/re-entry path and device-check that exact sequence after the next hosted run.
+
+
+### `.1056` hosted status and device evidence
+
+Final Topology run `41305462939` passed 3,096 / 3,096. Pages run `41305462046` succeeded. Live release marker is `0.36.18.1056`; deployed `index.html` (SHA-256 `f45871ecb151bef7d56602e5bcbb471a12911cc10ebbec29b7223e40a52728d3`), Total Gizmo (`cddf1a3d97a0532fd3faa44b8b1956e532de1f61d8d63e257bf029e6b80f5900`), drawer UI (`51ff1069a2b8349d34373d3cd5c4adcd51365f7159822a637bc9b497477ee2fe`) and face layout (`57c5806d228bba994a8d5c43b26492965bc713ac1525923c9a5f85fac39479d8`) match the release tree. The supplied recording shows the gizmo offset immediately after Done for multi-channel paint, before another orbit; the camera matrix refresh is therefore not device-accepted as a full repair. The exact Colour/Roughness/Metalness Done→re-enter→paint flow remains open for the next narrow build. Colour-only Done/re-entry and Paint maps/tools PASSes remain protected. No local tests were run.

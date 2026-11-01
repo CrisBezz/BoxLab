@@ -12739,3 +12739,11 @@ selection/history and accepted VIEW owner until evidence supports a narrow repai
 - [ ] Rerun hosted Topology and confirm Pages/live bytes.
 
 - [ ] Regression from the new recording: with Colour, Roughness and Metalness enabled, paint, click Done, re-enter UV Paint and paint again; verify the gizmo stays anchored throughout. Colour-only Done/re-entry is a protected PASS.
+
+
+### `.1056` hosted result and remaining device failure
+
+- [x] Pages `41305462046` succeeded; live release marker and changed runtime assets match the repo.
+- [x] Topology `41305462939`: 3,096 PASS / 0 FAIL.
+- [ ] Device regression: multi-channel Colour/Roughness/Metalness → Done → re-enter UV Paint → paint again. Recording shows the gizmo already displaced after Done. Do not count `.1056` as accepted for this sequence.
+- [x] Preserve Colour-only Done/re-entry and earlier map preview/update, channel toolbar, Smudge, and shadow PASSes.
