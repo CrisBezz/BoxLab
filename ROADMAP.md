@@ -9865,3 +9865,5 @@ selection/history and accepted VIEW owner until evidence supports a narrow repai
 - [x] Refresh reviewed Total Gizmo and face-workflow asset hashes.
 - [ ] Confirm hosted Topology, Pages rollout and live asset bytes.
 - [ ] Confirm on device that Pencil orbit in Paint keeps the gizmo anchored and usable.
+
+- [x] Align the drawer owner and its shell cache pin with `.1056` after hosted checks exposed a remaining `.1055` cache hop.

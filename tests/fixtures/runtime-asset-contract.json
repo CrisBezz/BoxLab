@@ -167,9 +167,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1055",
+      "url": "./src/drawer-ui.js?v=0.36.18.1056",
       "target": "src/drawer-ui.js",
-      "sha256": "97930d65049026fe9c66a9b26fa647513cef7e5565aa2ac13ef270fe0e308352"
+      "sha256": "51ff1069a2b8349d34373d3cd5c4adcd51365f7159822a637bc9b497477ee2fe"
     },
     {
       "owner": "index.html",

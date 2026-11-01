@@ -12734,3 +12734,6 @@ selection/history and accepted VIEW owner until evidence supports a narrow repai
 - [x] Refresh reviewed runtime asset hashes for `face-workflow-layout.js` and `total-gizmo.js`.
 - [ ] Recheck hosted Topology and Pages/live bytes.
 - [ ] On iPad, switch Paint brushes, orbit with Pencil, and confirm gizmo stays at the selected object and remains fully usable after Done.
+
+- [x] Align the drawer's face-layout import and its shell cache pin to `.1056` after hosted checks exposed the remaining `.1055` hop.
+- [ ] Rerun hosted Topology and confirm Pages/live bytes.
