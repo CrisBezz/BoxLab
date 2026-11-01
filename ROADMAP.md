@@ -9867,3 +9867,5 @@ selection/history and accepted VIEW owner until evidence supports a narrow repai
 - [ ] Confirm on device that Pencil orbit in Paint keeps the gizmo anchored and usable.
 
 - [x] Align the drawer owner and its shell cache pin with `.1056` after hosted checks exposed a remaining `.1055` cache hop.
+
+- [ ] Investigate the recorded multi-channel Done→UV Paint re-entry gizmo displacement. Colour-only Done/re-entry passes; multi-channel painting works until Done, then the gizmo is already displaced. The Pencil-orbit camera sync is not accepted as a complete fix until this sequence is verified.

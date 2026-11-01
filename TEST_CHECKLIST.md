@@ -12737,3 +12737,5 @@ selection/history and accepted VIEW owner until evidence supports a narrow repai
 
 - [x] Align the drawer's face-layout import and its shell cache pin to `.1056` after hosted checks exposed the remaining `.1055` hop.
 - [ ] Rerun hosted Topology and confirm Pages/live bytes.
+
+- [ ] Regression from the new recording: with Colour, Roughness and Metalness enabled, paint, click Done, re-enter UV Paint and paint again; verify the gizmo stays anchored throughout. Colour-only Done/re-entry is a protected PASS.

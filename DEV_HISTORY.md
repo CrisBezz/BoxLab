@@ -18573,3 +18573,6 @@ First Pages deployment succeeded, but Topology `41303297247` failed 34 checks: 3
 
 
 `.1056` loader-hop follow-up: hosted Topology `41304456910` reported 3,093 PASS / 3 FAIL because `src/drawer-ui.js` still imported the face layout with `.1055`; its reviewed cache URL and its own shell pin were stale. Updated the drawer's face-layout import and index drawer cache pin to `.1056`, and refreshed the affected reviewed hashes. The prior nested release-version pin now follows the current layout module. Re-run hosted Topology and Pages after this correction; device acceptance remains pending.
+
+
+`.1056` loader contract follow-up: Topology `41304988636` completed with 3,095 PASS / 1 FAIL. The remaining failure is a stale reviewed URL for the face-layout owner's nested `release-version.js` import, now corrected to `.1056`; no runtime behavior change was indicated. A new hosted run is pending. The attached device recording shows the gizmo displaced from the cube immediately after Done, before the next Paint pass, so acceptance must specifically verify the Done→UV Paint re-entry sequence with Colour/Roughness/Metalness. The camera-orbit refresh alone is not accepted as a full fix until that sequence passes on device.

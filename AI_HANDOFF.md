@@ -7430,3 +7430,8 @@ Topology run `41303647185` reported 3,093 PASS / 3 FAIL. Failures were a stale r
 ### `.1056` second hosted correction
 
 Topology `41304456910` reported 3,093 PASS / 3 FAIL: `drawer-ui.js` retained a `.1055` import of the face workflow layout, and its index cache pin was also stale. Both now use `.1056`; the release-version import in the layout and reviewed hashes remain aligned. Re-run hosted checks and verify live Pages bytes before device acceptance. No local tests were run.
+
+
+### Recording evidence and final `.1056` contract update
+
+The new recording confirms a narrower trigger: Colour-only Done→UV Paint re-entry works; with Colour/Roughness/Metalness active, painting works until Done, then the gizmo is already displaced from the cube. Update the reviewed nested `release-version.js` URL in the face-layout contract to `.1056`; hosted Topology `41304988636` had 3,095 PASS / 1 FAIL from that stale fixture URL. Do not mark the camera sync change as fully accepted; investigate the Done/re-entry path and device-check that exact sequence after the next hosted run.
