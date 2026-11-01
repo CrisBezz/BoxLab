@@ -6,7 +6,8 @@
 - [x] Restore combined Colour+Metalness shadow contrast while retaining the Metalness-only PASS.
 - [x] Route Pencil mesh contacts through the UV Paint owner's exact surface hit test after brush changes; keep empty-background orbit available.
 - [x] On Pencil orbit takeover, cancel/reset the active Total Gizmo owner so all handles recover even after pointer retargeting.
-- [ ] Push `.1055`, verify Pages/live assets, and inspect hosted Topology regression.
+- [x] Push `.1055`; Pages succeeded and live marker/assets byte-match `main`.
+- [ ] Rerun hosted Topology after correcting one stale offline-evaluation cache reference in the runtime asset contract.
 - [ ] Obtain device confirmation for shadows, brush switching, background orbit and full gizmo recovery.
 
 Standing user authorization permits each BoxLab development-stage push to `origin/main` and GitHub Pages publication; no repeat approval is required. Protected: map previews/update PASSes, metal-only shadow PASS, separate channels/toolbars, Smudge and combined material strokes. Protected `src/multi-object-transform.js?v=0.36.1.0` unchanged.

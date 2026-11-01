@@ -13,7 +13,7 @@ Standing BoxLab authorization: the user has authorized every development-stage p
 3. In UV Paint, switch Brush → Eraser/Smudge → Brush and paint the same visible surface after each change; confirm the second stroke paints rather than orbiting. Then Pencil-drag empty background to orbit.
 4. After Pencil orbit, select the object and confirm the complete Total Gizmo handles reappear and Move/Rotate/Scale remain usable.
 
-Build `.1055` is ready for push/deploy and hosted regression. Update this handoff with commit, Pages/live asset verification and hosted regression result before device testing.
+`.1055` is on `main` as `d925e75ba47e3aed418354695d9be2af39f43885`. Pages run `41296468488` succeeded; live `.1055` version marker and cache-busted index, `paint-target`, `viewport-paint`, Pencil gate, `main`, `render-modes` and shell-comparison all byte-match `main`. Hosted Topology `41296468767` found one failure in runtime-asset-contract: the fixture update accidentally advanced the offline UV Paint evaluation’s `export-as-panel.js` pin; that evaluation still correctly uses `.1039`. The fixture entry is restored to `.1039`; rerun hosted Topology after the contract-only correction before device checks.
 ---
 
 ## .1043 — contextual Paint help and app-wide copy audit — 31 October 2026
