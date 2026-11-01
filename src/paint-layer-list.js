@@ -1,7 +1,8 @@
 // Presentation only. The existing Paint controls own every selection and edit.
 export const PAINT_BLEND_CODES=Object.freeze({normal:'N',darken:'D',multiply:'M','color-burn':'CB','linear-burn':'LB','darker-color':'DC',lighten:'L',screen:'S','color-dodge':'CD','linear-dodge':'LD','lighter-color':'LC',overlay:'O','soft-light':'SL','hard-light':'HL','vivid-light':'VL','linear-light':'LL','pin-light':'PL','hard-mix':'HM',difference:'DI',exclusion:'E',subtract:'SU',divide:'DV',hue:'H',saturation:'SA',color:'C',luminosity:'LU'});
-export function createPaintLayerList({root,document,onSelect,onVisible,onSettings,thumbnail}){
+export function createPaintLayerList({root,mapRoot,document,onSelect,onVisible,onSettings,thumbnail,mapThumbnail}){
  const rows=new Map();let layout='';
+ const maps=new Map();
  function button(label,action){const b=document.createElement('button');b.type='button';b.addEventListener('click',action);b.setAttribute('aria-label',label);return b;}
  function row(id){
   const node=document.createElement('div');node.className='paint-stack-row';node.dataset.layerId=id;
@@ -12,6 +13,13 @@ export function createPaintLayerList({root,document,onSelect,onVisible,onSetting
   for(const child of [select,blend,opacity,visible])node.appendChild(child);
   return {node,select,canvas,name,kind,blend,opacity,visible};
  }
+ function mapRow(channel,label,guide){
+  const node=document.createElement('div');node.className='paint-map-preview';node.dataset.mapChannel=channel;node.setAttribute('role','img');
+  const canvas=document.createElement('canvas');canvas.width=canvas.height=64;canvas.className='paint-map-thumbnail';canvas.setAttribute('aria-hidden','true');
+  const text=document.createElement('span'),name=document.createElement('strong'),status=document.createElement('small');text.className='paint-map-text';name.textContent=label;status.textContent='No map';text.appendChild(name);text.appendChild(status);node.appendChild(canvas);node.appendChild(text);
+  mapRoot?.appendChild(node);return {node,canvas,name,status,guide};
+ }
+ for(const [channel,label,guide] of [['roughness','Roughness','White = rough'],['metalness','Metalness','White = metal']])maps.set(channel,mapRow(channel,label,guide));
  function update(state,disabled=false){
   const layers=[...state.layers].reverse(),key=layers.map(l=>l.id).join('|');
   if(key!==layout){layout=key;const ids=new Set(layers.map(l=>l.id));for(const id of rows.keys())if(!ids.has(id))rows.delete(id);for(const l of layers)if(!rows.has(l.id))rows.set(l.id,row(l.id));root.replaceChildren(...layers.map(l=>rows.get(l.id).node));}
@@ -25,5 +33,13 @@ export function createPaintLayerList({root,document,onSelect,onVisible,onSetting
    const preview=thumbnail(l.id);if(preview){const ctx=r.canvas.getContext('2d'),data=ctx.createImageData(preview.width,preview.height);data.data.set(preview.pixels);ctx.putImageData(data,0,0);}
   }
  }
- return {update,clear(){layout='';rows.clear();root.replaceChildren();}};
+ function updateMaps(){
+  if(!mapRoot)return;
+  for(const [channel,row] of maps){
+   const preview=mapThumbnail?.(channel);row.status.textContent=preview?row.guide:'No map';row.node.dataset.available=String(!!preview);
+   row.node.setAttribute('aria-label',preview?`${channel==='roughness'?'Roughness':'Metalness'} map preview; ${row.guide.toLowerCase()}`:`${channel==='roughness'?'Roughness':'Metalness'} map preview; no map saved`);
+   const ctx=row.canvas.getContext('2d'),data=ctx.createImageData(64,64);if(preview)data.data.set(preview.pixels);ctx.putImageData(data,0,0);
+  }
+ }
+ return {update,updateMaps,clear(){layout='';rows.clear();root.replaceChildren();for(const [channel,row] of maps){row.status.textContent='No map';row.node.dataset.available='false';row.node.setAttribute('aria-label',`${channel==='roughness'?'Roughness':'Metalness'} map preview; no map saved`);const ctx=row.canvas.getContext('2d'),data=ctx.createImageData(64,64);ctx.putImageData(data,0,0);}}};
 }

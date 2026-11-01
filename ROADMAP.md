@@ -1,5 +1,19 @@
 # BoxLab roadmap — current target
 
+## .1050 — inspect scalar material maps
+
+- [x] Reuse the existing Paint layer-list presenter and scalar resource owner; keep Roughness/Metalness separate from the Colour overlay stack.
+- [x] Add read-only 64×64 grayscale previews for saved Roughness and Metalness maps with channel guidance and honest missing-map state.
+- [x] Keep map previews isolated from material values, render/shadow behavior, colour layers and history.
+- [ ] Automated and hands-on validation; tests were not run/added in this stage.
+- [ ] Publish .1050 and verify live cache-busted assets. Pages remains blocked on the stale `.1048` deployment noted below; live version is `.1048`.
+- [ ] Inspect bright-patch correlation against Colour and Metalness maps after deployment; do not treat the user's multiplication theory as established.
+- [ ] Retest `.1049` shadow strength, brush switching, Paint mesh strokes, background orbit and gizmo rotation because `.1049` is not live yet.
+
+The `.1049` code is on `main` at `79758731dc30bdc100bd1721efc92b5ccb9bc042`; user notes it has not deployed. Pages `41289594359` failed because GitHub says `.1048` SHA `55d63c1a3cdd18e8e7cd418689ca335568a9280a` is still in progress. Hosted Topology `.1049` passed (`41289594202`). Clear/cancel that Pages deployment or wait for GitHub to clear it before retrying Pages.
+
+Protected: separate channel/toolbars PASS, `.1047` metal-only shadow PASS, `.1046` Smudge PASS, `.1045` combined material painting. `src/multi-object-transform.js?v=0.36.1.0` remains unchanged.
+
 ## .1049 — stronger Studio shadows and reliable Pencil Paint/orbit recovery
 
 - [x] Preserve .1048 combined Colour+Metalness shadow visibility while tuning its reduced strength upward.
@@ -7,7 +21,8 @@
 - [x] Keep mesh Pencil contacts with the active UV Paint owner after brush changes; preserve empty-background orbit.
 - [x] Add focused material, Pencil routing and gizmo recovery regressions; refresh affected cache pins and reviewed hashes.
 - [x] Focused set 42/42 and full Node suite 3,096 PASS / 0 FAIL / 0 skipped; syntax, runtime pins/hashes, protected Multi pin and diff check pass.
-- [ ] Publish .1049 and verify hosted validation plus live cache-busted assets.
+- [x] Hosted Topology regression passed (`41289594202`).
+- [ ] Publish .1049 and verify live assets. Pages `41289594359` is blocked because GitHub reports prior `.1048` deployment `55d63c1a3cdd18e8e7cd418689ca335568a9280a` still in progress; live version remains `.1048`. Clear/cancel that deployment, rerun Pages, then verify cache-busted assets.
 - [ ] Obtain device confirmation for shadow strength, brush switching, Paint mesh strokes, background orbit and subsequent gizmo rotation.
 
 No new paint, render, orbit or gizmo implementation was added. The existing `paint-target`, Pencil gate, main semantic handoff and transform-upgrade owners remain authoritative. Separate channel/toolbars PASS, .1047 metal-only shadow PASS, .1046 Smudge PASS, and .1048 combined-map shadow presence PASS remain protected. `src/multi-object-transform.js?v=0.36.1.0` remains unchanged.

@@ -250,8 +250,28 @@ export function createViewportPainter({target,activeId=()=>target()?.id,body,own
   }
   return {width:64,height:64,pixels:pixels.slice()};
  }
+ // Roughness and Metalness are object material maps, separate from the colour
+ // layer stack. Return small read-only grayscale previews for the Layers page.
+ function materialMapThumbnail(channel){
+  if(!Object.hasOwn(scalarOwners,channel))throw Error('Unknown material map preview');
+  const s=session,resource=s?.[channel];if(!resource)return null;
+  const source=resource.pixels,{width,height}=resource;
+  s.scalarThumbnails??=new WeakMap();let pixels=s.scalarThumbnails.get(source);
+  if(!pixels){
+   pixels=new Uint8Array(64*64*4);
+   for(let y=0;y<64;y++)for(let x=0;x<64;x++){
+    const x0=Math.floor(x*width/64),x1=Math.max(x0+1,Math.floor((x+1)*width/64));
+    const y0=Math.floor(y*height/64),y1=Math.max(y0+1,Math.floor((y+1)*height/64));let sum=0,count=0;
+    for(let sy=y0;sy<y1;sy++)for(let sx=x0;sx<x1;sx++){sum+=source[sy*width+sx];count++;}
+    const value=Math.round(sum/count),out=((63-y)*64+x)*4;
+    pixels[out]=pixels[out+1]=pixels[out+2]=value;pixels[out+3]=255;
+   }
+   s.scalarThumbnails.set(source,pixels);
+  }
+  return {width:64,height:64,pixels:pixels.slice()};
+ }
  function state(){const s=session;return s?{multiPaintChannels:s.multiPaintChannels.slice(),fillPreview:stroke?.facePlan?{held:stroke.held,count:stroke.count}:null,resolution:s.size,strokeLimited:!!s.layer.limited,selected:s.selected,paintTarget:s.paintTarget,previewMode:s.previewMode,aoPreview:!!s.aoPreview,aoBusy:!!s.aoJob,aoProgress:s.aoProgress||0,layered:!!s.stack,layers:[{id:'$base',name:'Base colour',visible:true,opacity:1,blendMode:'normal',mask:null},...(s.stack?.layers||[]).map(({id,name,visible,opacity,blendMode,mask,image})=>({id,name,visible,opacity,blendMode,image:!!image,mask:mask?{enabled:mask.enabled,inverted:mask.inverted}:null}))]}:null;}
- return {open,close,cancel,begin,move,finish,hit,setFillScope,layerThumbnail,selectPreviewMode,selectLayer,addLayer,editLayer,removeLayer,moveLayer,selectPaintTarget,setMultiPaintChannels,addMask,editMask,removeMask,projectImage,imageForEdit,rasterizeImage,increaseResolution,mergeToBase:()=>mergeLayers(false),flattenLayers:()=>mergeLayers(true),previewImage,applyImagePreview,clearImagePreview,surfaceFrame,previewAO,previewAOHigh,applyAO,cancelAO,
+ return {open,close,cancel,begin,move,finish,hit,setFillScope,layerThumbnail,materialMapThumbnail,selectPreviewMode,selectLayer,addLayer,editLayer,removeLayer,moveLayer,selectPaintTarget,setMultiPaintChannels,addMask,editMask,removeMask,projectImage,imageForEdit,rasterizeImage,increaseResolution,mergeToBase:()=>mergeLayers(false),flattenLayers:()=>mergeLayers(true),previewImage,applyImagePreview,clearImagePreview,surfaceFrame,previewAO,previewAOHigh,applyAO,cancelAO,
   tick(){if(session&&!current()){close();return;}session?.boundaries?.update();if(session?.layer.consumeDirty()||Object.values(stroke?.scalarLayers||{}).some(layer=>layer.consumeDirty()))updatePreview();if(session?.dirty){updateMaterialPreview();const map=session.display.surface.material.map;if(session.previewMode==='channel'&&map)map.needsUpdate=true;session.dirty=false;}},
   get state(){return state();},get active(){return !!session;},get drawing(){return !!stroke;},get pixels(){return session?.preview;}};
 }

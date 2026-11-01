@@ -1,3 +1,15 @@
+## .1050 — Roughness and Metalness map previews
+
+- [ ] In UV Paint → Layers, confirm the Roughness and Metalness tiles show saved maps in grayscale; white means rough/metal and black means smooth/non-metal.
+- [ ] Open an object with only one scalar map. Confirm the other tile says “No map” and never shows stale data from another object.
+- [ ] Paint Roughness, then Metalness, and confirm each tile refreshes after the stroke without changing the colour layer thumbnails or Undo/Redo history beyond the paint stroke.
+- [ ] Compare the map tiles with the Lit material. Check whether apparent white patches align with white Colour pixels, white Metalness values, or both.
+- [ ] Retest the pending .1049 checks only after Pages deploys `.1050`: combined/metal-only shadow strength; switch brush then paint again; Pencil background orbit then Total Gizmo rotation.
+
+`.1050` automated tests were not run or added. Local review only; hosted and manual verification are pending. Live Pages currently remains `.1048`; the `.1049` Pages deployment was blocked by GitHub's stale in-progress `.1048` deployment and `.1050` is not yet live. Do not report device validation until the live version and cache-busted changed assets are verified.
+
+---
+
 # BoxLab manual test checklist
 
 ## .1049 — stronger painted Metalness shadows and stable Pencil Paint/orbit handoff
@@ -8,7 +20,7 @@
 - [ ] In UV Paint, Pencil-drag empty background to orbit, then rotate the object with Total Gizmo. Confirm orbit does not leave the gizmo unusable.
 - [x] Separate material-channel painting and Paint toolbars PASS; .1048 combined Colour+Metalness shadow presence PASS with reduced strength noted; .1047 metal-only shadow case PASS; .1046 Smudge PASS remain protected.
 
-Automated .1049 coverage: focused material/Pencil/gizmo/shell/release set 42 PASS / 0 FAIL; full Node suite 3,096 PASS / 0 FAIL / 0 skipped (296.37s). Changed JS syntax, reviewed runtime pin/hash contract, protected Multi pin, and `git diff --check` pass. Hosted validation and live publication proof will be recorded after deployment. Focused regressions exercise `.55` Metalness fill with both shadow flags, active-Paint mesh Pencil routing versus background orbit, matching-pointer gizmo cancellation, and preserved gizmo rotation behavior. Native iPad rendering and Pencil feel must be confirmed with the checks above.
+Automated .1049 coverage: focused material/Pencil/gizmo/shell/release set 42 PASS / 0 FAIL; full Node suite 3,096 PASS / 0 FAIL / 0 skipped (296.37s). Changed JS syntax, reviewed runtime pin/hash contract, protected Multi pin, and `git diff --check` pass. Hosted Topology regression `41289594202` passed. Pages run `41289594359` failed twice because GitHub says the prior `.1048` deployment is still in progress; live `version.json` remains `.1048`, so .1049 is not yet available for device testing. Focused regressions exercise `.55` Metalness fill with both shadow flags, active-Paint mesh Pencil routing after brush changes versus background orbit, matching-pointer gizmo cancellation, and preserved gizmo rotation behavior. Native iPad rendering and Pencil feel must be confirmed after Pages is unblocked and the checks above can be run.
 
 
 ## .1047 — separate Paint channels and metal-only shadow

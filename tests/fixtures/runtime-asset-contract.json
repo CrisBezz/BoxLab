@@ -1,5 +1,5 @@
 {
-  "baseline": "Accepted .736 runtime; includes declared module cache references, not an execution graph. Update only after reviewing code/pin changes.",
+  "baseline": "Reviewed .1050 runtime asset pins and hashes; protected Multi version remains unchanged.",
   "references": [
     {
       "owner": "index.html",
@@ -2481,14 +2481,14 @@
     {
       "owner": "index.html",
       "target": "src/viewport-paint.js",
-      "url": "./src/viewport-paint.js?v=0.36.18.1049",
-      "sha256": "3e7a5dd070990941a08e8db607a2d840e870dae951d71d410b7cf29c148fa62a"
+      "url": "./src/viewport-paint.js?v=0.36.18.1050",
+      "sha256": "b89b368375117dc370f98919d9d70fbe679669d8d49c794dea1203f4f0eb1910"
     },
     {
       "owner": "src/viewport-paint.js",
       "target": "src/viewport-paint-core.js",
-      "url": "./viewport-paint-core.js?v=0.36.18.1049",
-      "sha256": "2b1f9da1a6a15cfc61ae4a488578cd114b73e3ffd122a0e3099798e2e01cc456"
+      "url": "./viewport-paint-core.js?v=0.36.18.1050",
+      "sha256": "c11cc5b73d3a2b99eb375d9e9cd7307c254a982407d82430ca1410533ef4ae76"
     },
     {
       "owner": "src/viewport-paint.js",
@@ -3098,9 +3098,9 @@
     },
     {
       "owner": "src/viewport-paint.js",
-      "url": "./paint-layer-list.js?v=0.36.18.947",
+      "url": "./paint-layer-list.js?v=0.36.18.1050",
       "target": "src/paint-layer-list.js",
-      "sha256": "206ee32868f19e8308b21683606662365fdf9d2ce705c53ca61e906dc312c77a"
+      "sha256": "3b2861f6dbe9e132ba6f3a7312bff56a397c2dea78c9afd39d766dd91cae3410"
     },
     {
       "owner": "evaluations/uv-paint/samples.js",
@@ -3350,9 +3350,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1049",
+      "url": "./src/shell-comparison.js?v=0.36.18.1050",
       "target": "src/shell-comparison.js",
-      "sha256": "db39c373bd3002fe104db82008e5630973abebef14664c58c9471afb3041be6a"
+      "sha256": "d424b139971d472b973408966af24ca7429a7424e27f9111c8d8879e94fc78d5"
     },
     {
       "owner": "src/main.js",
