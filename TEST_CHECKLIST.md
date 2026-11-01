@@ -7,7 +7,7 @@
 - [ ] After Done, reopen UV Paint and start several Colour strokes with Pencil, including after refresh. Confirm a surface stroke does not orbit the model; background Pencil orbit and finger navigation still work.
 - [x] Separate material-channel painting and Paint toolbars PASS in user feedback. Smudge PASS remains protected.
 
-Automated .1048 regression: focused material/Paint/Pencil/Smudge/release set 30 PASS / 0 FAIL; full Node suite 3,094 PASS / 0 FAIL / 0 skipped. Changed JavaScript syntax, runtime pin/hash contract, and `git diff --check` pass. Release publication pending. Native iPad shadow appearance and Paint gesture acceptance remain pending.
+Automated .1048 regression: focused material/Paint/Pencil/Smudge/release set 30 PASS / 0 FAIL; full Node suite 3,094 PASS / 0 FAIL / 0 skipped. Changed JavaScript syntax, runtime pin/hash contract, and `git diff --check` pass. Published to `main` at `55d63c1a3cdd18e8e7cd418689ca335568a9280a`; Pages `41287945609` and hosted Topology regression `41287946108` succeeded. Live markers and all 11 changed/repinned runtime modules byte-match. Native iPad confirmation remains pending. Native iPad shadow appearance and Paint gesture acceptance remain pending.
 
 ## .1047 — separate Paint channels and metal-only shadow
 

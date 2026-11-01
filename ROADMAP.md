@@ -6,10 +6,10 @@
 - [x] Extend the existing committed Metalness environment-fill cap to Colour+Metalness surfaces.
 - [x] Add a regression proving painted Colour and Metalness maps coexist with reduced environment fill and inherited shadow flags.
 - [x] Run focused and full Node suites (30 focused; 3,094 PASS / 0 FAIL / 0 skipped), review cache pins and syntax.
-- [ ] Publish `.1048` to `main` and verify the live page.
+- [x] Publish `.1048` to `main` and verify the live page.
 - [ ] Confirm combined-map Studio shadows on iPad; retest Pencil surface strokes after Done/refresh.
 
-No new material or render owner. The `.1047` Smudge PASS, separate channel behavior, and metal-only shadow behavior remain protected. The protected Multi script pin remains unchanged.
+Published at `55d63c1a3cdd18e8e7cd418689ca335568a9280a`; Pages `41287945609` and hosted Topology regression `41287946108` succeeded, with live release markers and 11 changed/repinned modules matching. No new material or render owner. The `.1047` Smudge PASS, separate channel behavior, and metal-only shadow behavior remain protected. The protected Multi script pin remains unchanged.
 
 ## .1047 — Metalness shadow contrast and stable Colour stroke start — device report
 
