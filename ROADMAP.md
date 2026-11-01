@@ -1,5 +1,16 @@
 # BoxLab roadmap — current target
 
+## .1055 — restore combined-map shadows and stabilize Paint navigation
+
+- [x] Preserve Roughness/Metalness layer previews and live updates (user PASS).
+- [x] Restore combined Colour+Metalness shadow contrast while retaining the Metalness-only PASS.
+- [x] Route Pencil mesh contacts through the UV Paint owner's exact surface hit test after brush changes; keep empty-background orbit available.
+- [x] On Pencil orbit takeover, cancel/reset the active Total Gizmo owner so all handles recover even after pointer retargeting.
+- [ ] Push `.1055`, verify Pages/live assets, and inspect hosted Topology regression.
+- [ ] Obtain device confirmation for shadows, brush switching, background orbit and full gizmo recovery.
+
+Standing user authorization permits each BoxLab development-stage push to `origin/main` and GitHub Pages publication; no repeat approval is required. Protected: map previews/update PASSes, metal-only shadow PASS, separate channels/toolbars, Smudge and combined material strokes. Protected `src/multi-object-transform.js?v=0.36.1.0` unchanged.
+
 ## .1054 — release identity repair
 
 - [x] Align visible shell-comparison title/launcher/help text with `.1054` release identity.
@@ -7,7 +18,7 @@
 - [x] Keep current direct/nested loader pins, reviewed hashes and `.1050`–`.1053` comparison logs aligned.
 - [x] Pages `41294085210` succeeded; live `.1054` marker and cache-busted assets match `main`.
 - [x] Hosted Topology `41294085728` passed 3,096 / 3,096.
-- [ ] Inspect Roughness/Metalness previews and bright-patch correlation; device-retest `.1049` shadow strength, brush switching, Paint strokes, background orbit and gizmo rotation.
+- [x] User reports Roughness/Metalness previews and live updates PASS; protect both.
 
 `.1053` Pages succeeded; its hosted Topology had 3,094 PASS / 2 FAIL because one preserved test expectation and shell-comparison user-visible labels still named `.1052`. `.1054` corrects those release-facing references. No local tests were run or added.
 Protected: separate channel/toolbars PASS, `.1047` metal-only shadow PASS, `.1046` Smudge PASS, `.1045` combined material painting. `src/multi-object-transform.js?v=0.36.1.0` remains unchanged.

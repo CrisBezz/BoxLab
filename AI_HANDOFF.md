@@ -1,14 +1,19 @@
-# BoxLab current handoff — build .1054
+# BoxLab current handoff — build .1055
 
-`.1050` is the last intended feature build, with Roughness/Metalness previews; `.1049` never deployed separately and its fixes are included in `.1050`. `.1050` Topology had 3,093 PASS / 3 FAIL; `.1051` had 3,094 PASS / 2 FAIL; `.1052` had 3,093 PASS / 3 FAIL. Their Pages deployments succeeded. `.1053` also deployed successfully (Pages `41293655018`) and live `.1053` assets matched `main`, but Topology had 3,094 PASS / 2 FAIL: an old `.1052` expectation remained in the `.1041` preserved-release test, and shell-comparison's user-visible title/launcher still showed `.1052` while its identity was `.1053`. `.1054` updates the assertion and display strings while preserving prior comparison-log compatibility. Commit `889ab5a226245cd62a030a8baf415b881c61f716` is on `main`; Pages `41294085210` succeeded; live `version.json` reports `.1054`, and cache-busted index, shell-comparison and runtime asset manifest byte-match `main`. Hosted Topology `41294085728` is still running.
+User feedback on live `.1054`: Roughness/Metalness previews and live updates PASS and are protected. Combined Colour+Metalness shadow contrast FAIL; Metalness-only shadow behavior PASS. Pencil painting after switching brushes can still fall through to orbit, and an orbit handoff can leave the Total Gizmo with faded/incomplete handles. Build `.1055` restores the previous `.35` environment cap for combined maps while keeping `.55` for metal-only; exposes the existing UV Paint hit test to the Pencil gate; and cancels the active gizmo owner's drag on orbit takeover even when browser retargeting changes pointer IDs.
 
-The `.1050` feature adds read-only 64×64 grayscale Roughness and Metalness previews on the existing UV Paint Layers page. Colour layer rows stay intact; these maps are object-level resources, not per-colour-layer data. Missing maps say “No map”. White Metalness affects reflections; it is not multiplied directly into Colour. The previews do not alter material values, shading, history or painting behavior. `.1051`–`.1054` are release/cache/asset-contract repairs only; preview implementation is unchanged.
+`src/multi-object-transform.js?v=0.36.1.0` remains protected and unchanged. No local tests were run or added. Keep Roughness/Metalness previews and preview refresh behavior protected. The `.1054` hosted Topology run `41294085728` passed 3,096 / 3,096; Pages `41294692602` deployed repaired handoff docs, and `.1054` remains the live runtime until `.1055` is published.
 
-Protected user PASSes: separate material channels/toolbars; `.1048` combined Colour+Metalness shadow presence (strength tuning pending); `.1047` metal-only shadow restoration; `.1046` Smudge; `.1045` combined material strokes. `.1049` shadow strength, brush-switch painting, Pencil orbit and gizmo recovery still need device acceptance. `src/multi-object-transform.js?v=0.36.1.0` remains protected and unchanged.
+Standing BoxLab authorization: the user has authorized every development-stage push to `origin/main` and GitHub Pages publication. Do not ask for approval again for routine BoxLab commits, pushes or deployments; complete the build and verify the live release. This instruction also appears in `AI_WORKFLOW.md`.
 
-No local tests were run or added in these repair stages. `.1054` keeps index and nested `release-version.js` on the same cache pin, bumps `drawer-ui`/Face workflow cache closure, and updates the visible comparison checklist label and release expectation. Keep `.1050`–`.1053` comparison logs in the compatibility list. Recheck `tests/fixtures/runtime-asset-contract.json` hashes whenever these modules change.
+## .1055 hands-on checks after deployment
 
-Next: publish `.1054`, verify Pages and live assets, inspect hosted Topology, then ask the user to inspect both map previews/bright patch and retest `.1049` shadow strength, brush switching, Paint strokes, Pencil orbit and Total Gizmo rotation.
+1. Verify the release marker reads `.1055`; in UV Paint → Layers, confirm Roughness/Metalness previews and their live updates still PASS.
+2. Compare Studio shadows on Metalness-only against Colour+Metalness. Confirm combined-map shadow contrast is restored without changing metal-only appearance.
+3. In UV Paint, switch Brush → Eraser/Smudge → Brush and paint the same visible surface after each change; confirm the second stroke paints rather than orbiting. Then Pencil-drag empty background to orbit.
+4. After Pencil orbit, select the object and confirm the complete Total Gizmo handles reappear and Move/Rotate/Scale remain usable.
+
+Build `.1055` is ready for push/deploy and hosted regression. Update this handoff with commit, Pages/live asset verification and hosted regression result before device testing.
 ---
 
 ## .1043 — contextual Paint help and app-wide copy audit — 31 October 2026

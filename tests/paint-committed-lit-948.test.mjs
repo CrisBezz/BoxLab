@@ -58,7 +58,7 @@ test('1048 painted Colour and Metalness maps keep Studio shadow contrast togethe
  const d=createCommittedPaintSurface(body,o,o.mesh,r.owner);assert(d);await d.ready;
  const surfaceMaterial=surface(body).material;assert(surfaceMaterial.isMeshStandardMaterial);
  assert.equal(surfaceMaterial.map.image.data[0],colourResource.pixels[0]);assert.equal(surfaceMaterial.metalnessMap.image.data[2],210);
- assert.equal(surfaceMaterial.envMapIntensity,.55);assert(surface(body).castShadow);assert(surface(body).receiveShadow);
+ assert.equal(surfaceMaterial.envMapIntensity,.35);assert(surface(body).castShadow);assert(surface(body).receiveShadow);
  d.dispose();body.geometry.dispose();studio.dispose();
 });
 

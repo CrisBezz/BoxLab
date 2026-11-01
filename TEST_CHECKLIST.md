@@ -1,11 +1,16 @@
+## .1055 — combined-map shadows, Paint hit routing and gizmo recovery
+
+- [ ] After Pages reports `.1055`, refresh and confirm the app release marker says `.1055`.
+- [x] UV Paint → Layers Roughness/Metalness previews and live updates PASS; retain this behavior.
+- [ ] Compare Studio shadow contrast for Metalness-only and Colour+Metalness. Confirm metal-only retains its PASS and combined maps regain the stronger shadow contrast.
+- [ ] In UV Paint, switch Brush → Eraser/Smudge → Brush and paint the same visible face after each change; confirm strokes do not fall through to orbit.
+- [ ] Pencil-drag empty background to orbit; reselect the object and confirm the complete Total Gizmo and Move/Rotate/Scale handles return and work.
+
 ## .1054 — release identity repair and material map previews
 
-- [ ] After Pages reports `.1054`, refresh and confirm the app release marker says `.1054`.
-- [ ] In UV Paint → Layers, confirm Roughness and Metalness tiles show saved maps in grayscale; white means rough/metal and black means smooth/non-metal.
-- [ ] Open an object with only one scalar map. Confirm the other tile says “No map” and does not show stale data from another object.
-- [ ] Paint Roughness, then Metalness, and confirm each tile refreshes without changing Colour layer thumbnails.
-- [ ] Compare map tiles with the Lit material; check whether apparent white patches align with Colour pixels, Metalness values, or both.
-- [ ] Retest `.1049` fixes: metal-only and combined-map shadow strength; switch brush then paint again; Pencil background orbit followed by Total Gizmo rotation.
+- [x] Roughness and Metalness map previews display correctly.
+- [x] Map previews update correctly while painting.
+- [ ] Combined Colour+Metalness shadow contrast; Pencil brush switching/orbit; complete Total Gizmo after orbit (carried into .1055).
 
 `.1053` Pages (`41293655018`) succeeded and live files matched `main`. Its hosted Topology run had 3,094 PASS / 2 FAIL: the `.1041` preserved-release check still expected `.1052`, and shell-comparison headings remained `.1052`. `.1054` updates the visible labels and preserved release assertion; prior logs remain accepted. No local tests were run or added. Commit `889ab5a226245cd62a030a8baf415b881c61f716` is on `main`; Pages `41294085210` succeeded; live `.1054` index, shell-comparison and runtime asset manifest match `main`. Hosted Topology `41294085728` is still running. Verify live assets and hosted regression before hands-on checks.
 ---

@@ -360,14 +360,18 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
         const paintPending=paintState?.pending?.()||null;
         const paintActive=paintState?.active?.()||null;
         const multiEnabled=paintState?.multiEnabled?.()??null;
-        const viewportPaintActive=!!globalThis.__boxlabViewportPaint?.active;
+        const viewportPaint=globalThis.__boxlabViewportPaint;
+        const viewportPaintActive=!!viewportPaint?.active;
+        // Use Paint's exact surface hit test as well as the modelling mesh
+        // raycast; false negatives there must not send brush contacts to orbit.
+        const paintHit=viewportPaintActive&&viewportPaint?.hit?.(event)===true;
         const controlsEnabled=globalThis.__boxlabBridgeState?.controls?.enabled!==false;
         const lassoActive=!!globalThis.__boxlabLasso?.isArmed?.();
-        const blocked=!!meshHit||lassoActive;
+        const blocked=!!meshHit||paintHit||lassoActive;
         // UV Paint's window owner normally consumes a valid surface down first.
         // If its stricter hit test declines that down, keep the same mesh contact
         // out of deferred-orbit promotion; only empty-space Pencil drags navigate.
-        const modellingToolActive=faceToolActive||mainDirectActive||lassoActive||viewportPaintActive&&!!meshHit||(selectionMode==='face'&&!!globalThis.__boxlabFacegroupStroke?.armed);
+        const modellingToolActive=faceToolActive||mainDirectActive||lassoActive||viewportPaintActive&&(!!meshHit||paintHit)||(selectionMode==='face'&&!!globalThis.__boxlabFacegroupStroke?.armed);
         const deferred=blocked&&!modellingToolActive;
         // Background Pencil tap candidacy is owned by window-capture tracking,
         // independent of whether OrbitControls receives this pointerdown.
@@ -385,6 +389,7 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
           paintPending,
           paintActive,
           viewportPaintActive,
+          paintHit,
           controlsEnabled,
           route:deferred?'DEFER_MESH_INTENT':blocked&&modellingToolActive?'BLOCK_MODELLING_TOOL':blocked?'BLOCK_MESH_HIT':'FORWARD_ORBIT'
         });

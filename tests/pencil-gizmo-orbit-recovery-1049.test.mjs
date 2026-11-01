@@ -8,8 +8,8 @@ const main=read('src/main.js');
 const snapshot=mesh=>mesh.vertices.map(v=>v.toArray());
 
 test('1049 Pencil orbit claim releases only the matching gizmo transform and restores its unfinished preview',()=>{
- assert.match(main,/cancelGizmoGesture\?\.\(pointerId\)/);
- assert.match(main,/__boxlabActiveGizmoDrag\?\.pointerId===pointerId/);
+ assert.match(main,/cancelGizmoGesture\?\.\(gizmoDrag\.pointerId\)/);
+ assert.match(main,/const gizmoDrag=globalThis\.__boxlabActiveGizmoDrag/);
  const r=rotateOwnerRuntime({mode:'object'}),before=snapshot(r.mesh),p=r.centre();
  assert.equal(r.begin(p.x+50,p.y,{tool:'rotate',constraint:'free',kind:'screen'}),true);
  r.dispatch('pointermove',p.x,p.y+50);

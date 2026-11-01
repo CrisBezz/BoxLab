@@ -698,8 +698,14 @@ window.addEventListener('boxlab-pencil-orbit-claim',event=>{
   backgroundSelectionTap.reset('pencil-orbit');
   const pointerId=event.detail?.pointerId;
   if(!Number.isInteger(pointerId))return;
-  globalThis.__boxlabTransformUpgrade?.cancelGizmoGesture?.(pointerId);
-  if(globalThis.__boxlabActiveGizmoDrag?.pointerId===pointerId)globalThis.__boxlabTotalGizmo?.resetTransient?.({hideFloat:true});
+  const gizmoDrag=globalThis.__boxlabActiveGizmoDrag;
+  if(gizmoDrag){
+    // A Pencil orbit can take over after the browser retargets a contact. Use
+    // the gizmo owner's active pointer, not the newly claimed orbit id, so the
+    // original transform preview is rolled back and every handle is restored.
+    globalThis.__boxlabTransformUpgrade?.cancelGizmoGesture?.(gizmoDrag.pointerId);
+    globalThis.__boxlabTotalGizmo?.resetTransient?.({hideFloat:true});
+  }
   cancelVertexHold(pointerId);
   cancelFaceHold(pointerId);
   cancelEdgeHold(pointerId);

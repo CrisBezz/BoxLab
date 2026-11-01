@@ -1,10 +1,10 @@
 import {paintBrushPreset} from './paint-brush-presets.js?v=0.36.18.1010';
 import {createBrushSizePreview} from './paint-brush-preview.js?v=0.36.18.1049';
-import {paintTargetKey} from './paint-target.js?v=0.36.18.1049';
+import {paintTargetKey} from './paint-target.js?v=0.36.18.1055';
 import {createPaintLayerList} from './paint-layer-list.js?v=0.36.18.1050';
 import {importPaintAlpha} from './paint-alpha-source.js?v=0.36.18.929';
 import {bindPaintColourControls} from './paint-colour-controls.js?v=0.36.18.915';
-import {createViewportPainter} from './viewport-paint-core.js?v=0.36.18.1050';
+import {createViewportPainter} from './viewport-paint-core.js?v=0.36.18.1055';
 import {brushSettings} from '../evaluations/uv-paint/paint-core.js?v=0.36.18.1049';
 import {PAINT_BLEND_MODES} from './paint-blend-modes.js?v=0.36.18.903';
 import {importPaintImage} from './paint-image-source.js?v=0.36.18.907';
@@ -350,4 +350,4 @@ const entryObserver=typeof MutationObserver==='function'?new MutationObserver(()
 // The original history owner brackets the whole scene restore, including body rebuild.
 // Close before capture so transient strokes/images cannot leak into scene history.
 function beforeHistory(){const restore=controller?.active?{...controller.state,paintPage:panel.dataset.page}:historyContext;if(!restore)return;const id=manager()?.activeId;cancel();close();const token=opening;return ()=>{if(disposed||opening!==token||manager()?.activeId!==id||tools()?.isActive?.())return;void open(restore);};}
-globalThis.__boxlabViewportPaint={open:()=>open(),beforeHistory,close,cancel:close,showTools,backgroundHoldAllowed,isBackgroundPoint,beginBrushResize,updateBrushResize,endBrushResize,get palettePosition(){return radialPosition?{...radialPosition}:null;},get paletteState(){return radial.dataset.state||'tools';},get active(){return !!controller?.active;}};
+globalThis.__boxlabViewportPaint={open:()=>open(),beforeHistory,close,cancel:close,showTools,backgroundHoldAllowed,isBackgroundPoint,hit:event=>!!controller?.active&&controller.hit(point(event)),beginBrushResize,updateBrushResize,endBrushResize,get palettePosition(){return radialPosition?{...radialPosition}:null;},get paletteState(){return radial.dataset.state||'tools';},get active(){return !!controller?.active;}};
