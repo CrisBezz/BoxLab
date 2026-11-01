@@ -2,7 +2,7 @@
 // Move the original canvas once; no second renderer, input owner or live profile swap.
 (() => {
  'use strict';
- const RELEASE='0.36.18.1052',KEY='boxlab.shell-comparison.v1',LIMIT=30;
+ const RELEASE='0.36.18.1053',KEY='boxlab.shell-comparison.v1',LIMIT=30;
  const url=new URL(window.location.href),choice=url.searchParams.get('shellTest');
  const active=choice==='current'||choice==='separated',mode=active?choice:'current';
  const doc=document,app=doc.querySelector('#app'),wrap=doc.querySelector('#viewportWrap'),canvas=doc.querySelector('#viewport');
@@ -24,7 +24,7 @@
   const saved=window.localStorage.getItem(KEY);
   if(saved&&saved.length<2000000){
    const data=JSON.parse(saved);
-   if(data.version===1&&[RELEASE,'0.36.18.1006','0.36.18.1007','0.36.18.1008','0.36.18.1009','0.36.18.1010','0.36.18.1011','0.36.18.1012','0.36.18.1013','0.36.18.1014','0.36.18.1015','0.36.18.1016','0.36.18.1017','0.36.18.1018','0.36.18.1019','0.36.18.1020','0.36.18.1021','0.36.18.1022','0.36.18.1023','0.36.18.1024','0.36.18.1025','0.36.18.1026','0.36.18.1027','0.36.18.1028','0.36.18.1029','0.36.18.1030','0.36.18.1031','0.36.18.1032','0.36.18.1033','0.36.18.1034','0.36.18.1035','0.36.18.1036','0.36.18.1037','0.36.18.1038','0.36.18.1039','0.36.18.1040','0.36.18.1041','0.36.18.1042','0.36.18.1043','0.36.18.1044','0.36.18.1045','0.36.18.1046','0.36.18.1047','0.36.18.1048','0.36.18.1049','0.36.18.1050','0.36.18.1051'].includes(data.release)&&Array.isArray(data.runs))
+   if(data.version===1&&[RELEASE,'0.36.18.1006','0.36.18.1007','0.36.18.1008','0.36.18.1009','0.36.18.1010','0.36.18.1011','0.36.18.1012','0.36.18.1013','0.36.18.1014','0.36.18.1015','0.36.18.1016','0.36.18.1017','0.36.18.1018','0.36.18.1019','0.36.18.1020','0.36.18.1021','0.36.18.1022','0.36.18.1023','0.36.18.1024','0.36.18.1025','0.36.18.1026','0.36.18.1027','0.36.18.1028','0.36.18.1029','0.36.18.1030','0.36.18.1031','0.36.18.1032','0.36.18.1033','0.36.18.1034','0.36.18.1035','0.36.18.1036','0.36.18.1037','0.36.18.1038','0.36.18.1039','0.36.18.1040','0.36.18.1041','0.36.18.1042','0.36.18.1043','0.36.18.1044','0.36.18.1045','0.36.18.1046','0.36.18.1047','0.36.18.1048','0.36.18.1049','0.36.18.1050','0.36.18.1051','0.36.18.1052'].includes(data.release)&&Array.isArray(data.runs))
     log.runs=data.runs.filter(r=>r&&['current','separated'].includes(r.mode)&&typeof r.id==='string'&&r.ratings&&typeof r.ratings==='object').slice(-LIMIT).map(r=>({...r,release:r.release||data.release}));
   }
  }catch{storageOK=false;}

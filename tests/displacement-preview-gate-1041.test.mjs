@@ -24,7 +24,7 @@ test('.1041 exposes an isolated displacement feasibility gate without changing t
 });
 
 test('current release markers and preserved .1041 benchmark asset are coherent',()=>{
- assert.equal(version,'0.36.18.1052');
+ assert.equal(version,'0.36.18.1053');
  assertShellRelease(index,version);
  assert.match(index,/shell-comparison\.js\?v=0\.36\.18\.1052/);
  assert(fs.existsSync(new URL('../docs/displacement-preview-gate-1041.html',import.meta.url)));
