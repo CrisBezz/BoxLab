@@ -1,5 +1,5 @@
 {
-  "baseline": "Reviewed .1051 runtime asset pins and hashes; protected Multi version remains unchanged.",
+  "baseline": "Reviewed .1052 runtime asset pins and hashes; protected Multi version remains unchanged.",
   "references": [
     {
       "owner": "index.html",
@@ -167,7 +167,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1044",
+      "url": "./src/drawer-ui.js?v=0.36.18.1052",
       "target": "src/drawer-ui.js",
       "sha256": "85c474d24df9e65ecd0928f8586ef7c149896899bd681de54dfda3adf495bd5c"
     },
@@ -384,7 +384,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1051",
+      "url": "./src/release-version.js?v=0.36.18.1052",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -876,9 +876,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1044",
+      "url": "./face-workflow-layout.js?v=0.36.18.1052",
       "target": "src/face-workflow-layout.js",
-      "sha256": "02846cbeb9872809628f2ac14cb8d07e8f165e429ac0ed7b21b8641a7396e462"
+      "sha256": "da7cfa4ce736b70990095628951953826b56c355af2fa5455c5da891ef02d70a"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1373,7 +1373,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1049",
+      "url": "./release-version.js?v=0.36.18.1052",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -3100,7 +3100,7 @@
       "owner": "src/viewport-paint.js",
       "url": "./paint-layer-list.js?v=0.36.18.1050",
       "target": "src/paint-layer-list.js",
-      "sha256": "3b2861f6dbe9e132ba6f3a7312bff56a397c2dea78c9afd39d766dd91cae3410"
+      "sha256": "c2c7b023c9c34d8db80050daed086b6f36a0689d922850fc0be551ea06e662bb"
     },
     {
       "owner": "evaluations/uv-paint/samples.js",
@@ -3350,9 +3350,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1051",
+      "url": "./src/shell-comparison.js?v=0.36.18.1052",
       "target": "src/shell-comparison.js",
-      "sha256": "71a64bcf22b88d1135b9c5d1e724b787ab8e9a6c9de1468e209a36508f57fb02"
+      "sha256": "d59d3dc73c303295c40ae461b19489967496a82d2791e0eedb9f93043dbf6c78"
     },
     {
       "owner": "src/main.js",
