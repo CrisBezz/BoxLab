@@ -17,9 +17,11 @@
 - [ ] Open Fill, Eraser, Smudge and Blur from the wheel. Confirm each panel contains only
   its relevant controls, Tools returns to the wheel, and the floating palette remains draggable.
 
-Automated .1045 validation: full Node suite 3,091 PASS / 0 FAIL / 0 skipped. After a final
-contextual-control DOM-parent adjustment, focused Paint, Smudge, Pencil navigation, release
-identity and cache-contract checks passed 43 / 43. Syntax checks and `git diff --check` pass.
+Automated .1045 validation: full Node suite 3,091 PASS / 0 FAIL / 0 skipped before the final
+in-place Smudge reservoir allocation optimization. Final post-optimization focused material,
+Smudge, release identity and shell checks passed 34 / 34. The broader Paint, Pencil-navigation
+and cache-contract set passed 43 / 43 before that allocation-only optimization. Syntax checks
+and `git diff --check` pass.
 This does not establish native touch, appearance or shadow acceptance; those checks remain
 with the user. Do not protect .1045 until the user reports PASS.
 

@@ -9,7 +9,7 @@
 - [x] Make Smudge carry and blend local colour between dabs while preserving alpha, face ownership, seam handling and work bounds.
 - [ ] Obtain native iPad acceptance; checklist at the top of `TEST_CHECKLIST.md`.
 
-Full local Node suite: 3,091 PASS / 0 FAIL. Final focused set: 43 PASS / 0 FAIL. User-visible appearance/touch validation is pending. Preserve the protected `src/multi-object-transform.js?v=0.36.1.0` pin.
+Full local Node suite: 3,091 PASS / 0 FAIL before the final in-place Smudge reservoir allocation optimization. Final post-optimization focused material, Smudge, release and shell checks: 34 PASS / 0 FAIL. Broader Paint/navigation/cache-contract set: 43 PASS before that allocation-only optimization. User-visible appearance/touch validation is pending. Preserve the protected `src/multi-object-transform.js?v=0.36.1.0` pin.
 
 Published commit `a505c803f92da39b07747d4acb53b2aa31a7d2b3`; Pages workflow `41257090423` and hosted Topology regression `41257090347` succeeded. Version/shell and all nine changed or loader runtime modules byte-match live files.
 
