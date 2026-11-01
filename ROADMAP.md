@@ -1,15 +1,17 @@
 # BoxLab roadmap — current target
 
-## .1048 — Studio shadows with Colour and Metalness maps — device test pending
+## .1049 — stronger Studio shadows and reliable Pencil Paint/orbit recovery
 
-- [x] Record user PASS for separate Paint material channels/toolbars and the `.1047` metal-only shadow case; record FAIL for shadow loss when a Colour map is present.
-- [x] Extend the existing committed Metalness environment-fill cap to Colour+Metalness surfaces.
-- [x] Add a regression proving painted Colour and Metalness maps coexist with reduced environment fill and inherited shadow flags.
-- [x] Run focused and full Node suites (30 focused; 3,094 PASS / 0 FAIL / 0 skipped), review cache pins and syntax.
-- [x] Publish `.1048` to `main` and verify the live page.
-- [ ] Confirm combined-map Studio shadows on iPad; retest Pencil surface strokes after Done/refresh.
+- [x] Preserve .1048 combined Colour+Metalness shadow visibility while tuning its reduced strength upward.
+- [x] Keep matching Pencil orbit claims from leaving a stale Total Gizmo/transform gesture.
+- [x] Keep mesh Pencil contacts with the active UV Paint owner after brush changes; preserve empty-background orbit.
+- [x] Add focused material, Pencil routing and gizmo recovery regressions; refresh affected cache pins and reviewed hashes.
+- [x] Focused set 42/42 and full Node suite 3,096 PASS / 0 FAIL / 0 skipped; syntax, runtime pins/hashes, protected Multi pin and diff check pass.
+- [ ] Publish .1049 and verify hosted validation plus live cache-busted assets.
+- [ ] Obtain device confirmation for shadow strength, brush switching, Paint mesh strokes, background orbit and subsequent gizmo rotation.
 
-Published at `55d63c1a3cdd18e8e7cd418689ca335568a9280a`; Pages `41287945609` and hosted Topology regression `41287946108` succeeded, with live release markers and 11 changed/repinned modules matching. No new material or render owner. The `.1047` Smudge PASS, separate channel behavior, and metal-only shadow behavior remain protected. The protected Multi script pin remains unchanged.
+No new paint, render, orbit or gizmo implementation was added. The existing `paint-target`, Pencil gate, main semantic handoff and transform-upgrade owners remain authoritative. Separate channel/toolbars PASS, .1047 metal-only shadow PASS, .1046 Smudge PASS, and .1048 combined-map shadow presence PASS remain protected. `src/multi-object-transform.js?v=0.36.1.0` remains unchanged.
+
 
 ## .1047 — Metalness shadow contrast and stable Colour stroke start — device report
 

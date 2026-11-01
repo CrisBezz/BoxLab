@@ -46,7 +46,7 @@ test('1047 metalness-only committed preview keeps Studio shadows visible without
  const d=createCommittedPaintSurface(body,o,o.mesh,r.owner);assert(d);await d.ready;
  const lit=surface(body).material;assert(lit.isMeshStandardMaterial);assert.equal(lit.color.getHex(),studio.color.getHex());
  assert.equal(lit.roughness,studio.roughness);assert.equal(lit.emissive.getHex(),studio.emissive.getHex());assert.equal(lit.emissiveIntensity,studio.emissiveIntensity);
- assert.equal(lit.metalness,1);assert.equal(lit.metalnessMap.image.data[2],210);assert.equal(lit.envMapIntensity,.35);assert(surface(body).castShadow);assert(surface(body).receiveShadow);
+ assert.equal(lit.metalness,1);assert.equal(lit.metalnessMap.image.data[2],210);assert.equal(lit.envMapIntensity,.55);assert(surface(body).castShadow);assert(surface(body).receiveShadow);
  d.dispose();body.geometry.dispose();studio.dispose();
 });
 
@@ -58,7 +58,7 @@ test('1048 painted Colour and Metalness maps keep Studio shadow contrast togethe
  const d=createCommittedPaintSurface(body,o,o.mesh,r.owner);assert(d);await d.ready;
  const surfaceMaterial=surface(body).material;assert(surfaceMaterial.isMeshStandardMaterial);
  assert.equal(surfaceMaterial.map.image.data[0],colourResource.pixels[0]);assert.equal(surfaceMaterial.metalnessMap.image.data[2],210);
- assert.equal(surfaceMaterial.envMapIntensity,.35);assert(surface(body).castShadow);assert(surface(body).receiveShadow);
+ assert.equal(surfaceMaterial.envMapIntensity,.55);assert(surface(body).castShadow);assert(surface(body).receiveShadow);
  d.dispose();body.geometry.dispose();studio.dispose();
 });
 

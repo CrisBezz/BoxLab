@@ -360,10 +360,14 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
         const paintPending=paintState?.pending?.()||null;
         const paintActive=paintState?.active?.()||null;
         const multiEnabled=paintState?.multiEnabled?.()??null;
+        const viewportPaintActive=!!globalThis.__boxlabViewportPaint?.active;
         const controlsEnabled=globalThis.__boxlabBridgeState?.controls?.enabled!==false;
         const lassoActive=!!globalThis.__boxlabLasso?.isArmed?.();
         const blocked=!!meshHit||lassoActive;
-        const modellingToolActive=faceToolActive||mainDirectActive||lassoActive||(selectionMode==='face'&&!!globalThis.__boxlabFacegroupStroke?.armed);
+        // UV Paint's window owner normally consumes a valid surface down first.
+        // If its stricter hit test declines that down, keep the same mesh contact
+        // out of deferred-orbit promotion; only empty-space Pencil drags navigate.
+        const modellingToolActive=faceToolActive||mainDirectActive||lassoActive||viewportPaintActive&&!!meshHit||(selectionMode==='face'&&!!globalThis.__boxlabFacegroupStroke?.armed);
         const deferred=blocked&&!modellingToolActive;
         // Background Pencil tap candidacy is owned by window-capture tracking,
         // independent of whether OrbitControls receives this pointerdown.
@@ -380,6 +384,7 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
           multiEnabled,
           paintPending,
           paintActive,
+          viewportPaintActive,
           controlsEnabled,
           route:deferred?'DEFER_MESH_INTENT':blocked&&modellingToolActive?'BLOCK_MODELLING_TOOL':blocked?'BLOCK_MESH_HIT':'FORWARD_ORBIT'
         });

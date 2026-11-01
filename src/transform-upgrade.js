@@ -251,6 +251,11 @@ globalThis.__boxlabTransformUpgrade={
   applyExact:(toolName,constraintName,value,spec)=>applyExactTransform(toolName,constraintName,value,spec),
   setContext:(toolName,constraintName)=>setTransformContext(toolName,constraintName),
   beginGizmoGesture:(spec,event)=>beginGizmoGesture(spec,event),
+  cancelGizmoGesture:pointerId=>{
+    if(!Number.isInteger(pointerId)||gesture?.id!==pointerId||!gesture.gizmoOwned)return false;
+    finish({type:'pointercancel',pointerId,preventDefault(){},stopImmediatePropagation(){}});
+    return true;
+  },
   focusValue:()=>{
     if(!valueInput)return false;
     try{valueInput.focus({preventScroll:true});}catch{valueInput.focus();}

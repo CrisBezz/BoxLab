@@ -698,6 +698,8 @@ window.addEventListener('boxlab-pencil-orbit-claim',event=>{
   backgroundSelectionTap.reset('pencil-orbit');
   const pointerId=event.detail?.pointerId;
   if(!Number.isInteger(pointerId))return;
+  globalThis.__boxlabTransformUpgrade?.cancelGizmoGesture?.(pointerId);
+  if(globalThis.__boxlabActiveGizmoDrag?.pointerId===pointerId)globalThis.__boxlabTotalGizmo?.resetTransient?.({hideFloat:true});
   cancelVertexHold(pointerId);
   cancelFaceHold(pointerId);
   cancelEdgeHold(pointerId);

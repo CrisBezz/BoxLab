@@ -5,7 +5,7 @@ import {copyMetalnessResource} from './metalness-resource.js?v=0.36.18.1033';
 import {copyRoughnessResource} from './roughness-resource.js?v=0.36.18.1033';
 import {paintDigest} from './paint-resource.js?v=898';
 const encoder=new TextEncoder(),hidden=new THREE.MeshBasicMaterial({colorWrite:false,depthWrite:false});
-const METAL_PAINT_ENV_INTENSITY=.35;
+const METAL_PAINT_ENV_INTENSITY=.55;
 // Reuse original codec/UV topology validation. Positions may move/deform with unchanged UVs.
 export function paintTargetKey(object,mesh=object?.mesh,owner=globalThis.__boxlabExportAs){
  const s=object?.settings||{},p=object?.glbPassthrough;

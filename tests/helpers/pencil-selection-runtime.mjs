@@ -7,10 +7,11 @@ import {vertexRuntime} from './vertex-extrude-runtime.mjs';
 
 // Shared original .760/.766 whole gate/paint/Lasso fixture, real Three raycasts.
 // Orbit callbacks and canvas selection-down adapter remain controlled doubles.
-export function pencilSelectionRuntime(mesh=null){
+export function pencilSelectionRuntime(mesh=null,{paintActive=false}={}){
  const m=mesh||new EditableMesh([[-1,0,0],[1,0,0],[-1,1,0],[1,1,0]],[]);if(!mesh){m.addLooseEdge(0,1);m.addLooseEdge(2,3);}
  const f=vertexRuntime(m,[]),c=f.context,logs=[];f.setMode('edge');let orbitDown=0,orbitMove=0;
  c.appendStrokePoint=appendStrokePoint;
+ c.__boxlabViewportPaint={get active(){return paintActive;}};
  c.__boxlabGestureDebug={log:(stage,detail)=>logs.push({stage,detail})};
  c.document.createElementNS=c.document.createElement;c.document.body=f.fields.get('#viewportWrap');
  const multi=c.document.body.querySelector('multi');multi.checked=true;f.fields.set('#multiSelectToggle',multi);const depth=c.document.body.querySelector('depth');depth.dataset.paintDepth='visible';f.fields.set('#paintSelectDepth [data-paint-depth].active',depth);

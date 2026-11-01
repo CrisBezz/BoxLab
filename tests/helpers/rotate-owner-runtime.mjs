@@ -18,7 +18,7 @@ export function rotateOwnerRuntime({mode='face',ids=[0],tool='rotate',visible=tr
  const c={THREE,document:doc,window:win,Event:class{constructor(type){this.type=type;}},CustomEvent:class{constructor(type,o){this.type=type;this.detail=o?.detail;}},setTimeout:()=>{},queueMicrotask:fn=>fn(),
   __boxlabBridgeState:{mesh,camera},__boxlabHistory:history,
   __boxlabSelectionBridge:{mode:()=>mode,indices:()=>selected,set:(m,next)=>selected=[...next]},
-  __boxlabTransformArming:{tool:()=>tool,constraint:()=> 'z',active:()=>true},__boxlabTotalGizmo:{visible:()=>visible},
+  __boxlabTransformArming:{tool:()=>tool,constraint:()=> 'z',active:()=>true},__boxlabTotalGizmo:{visible:()=>visible,resetTransient(){c.gizmoReset=(c.gizmoReset||0)+1;}},
   __boxlabObjectManager:{pickObject:()=>({id:1})},__boxlabObjectSelection:{ids:new Set([1]),multi:false}};
  const nativeWindowDispatch=win.dispatchEvent.bind(win);win.dispatchEvent=e=>{events.push(e);nativeWindowDispatch(e);};vm.createContext(c);
  vm.runInContext('{'+upgradeSource.replace(/^import .*;\n/gm,'')+'}',c);

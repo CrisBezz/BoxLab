@@ -30,3 +30,11 @@ for(const [name,ok] of checks)test("pencil-deferred-orbit-651.test: "+name,()=>a
 test('pencil-deferred-orbit-651.test: idle mesh waits for deliberate movement while matching Edge paint keeps ownership',()=>{
  for(const owner of ['idle','paint']){const f=pencilSelectionRuntime();f.multi.checked=owner==='paint';f.body(new THREE.Vector3(0,0,-1));f.setIds([1]);const p=f.screen(new THREE.Vector3());f.pointer('pointerdown',{clientX:p.x,clientY:p.y});assert.equal(f.orbit().down,0);assert.equal(f.context.__boxlabPencilOrbitDebug.snapshot().pendingMeshOrbit?.pointerId,1);f.pointer('pointermove',{clientX:p.x+4,clientY:p.y});assert.equal(f.orbit().down,0);f.pointer('pointermove',{clientX:p.x+40,clientY:p.y});assert.equal(f.orbit().down,owner==='idle'?1:0);assert.equal(f.events.some(e=>e.type==='boxlab-pencil-orbit-claim'),owner==='idle');if(owner==='idle')assert.deepEqual(f.ids(),[1]);else assert.equal(f.context.__boxlabPaintSelectDebug.active()?.type,'edge');f.pointer('pointerup',{clientX:p.x+40,clientY:p.y});f.flush();assert.equal(f.context.__boxlabPencilOrbitDebug.snapshot().pendingMeshOrbit,null);assert.equal(f.context.__boxlabPaintSelectDebug.active(),null);assert.equal(f.history.undoStack.length,0);}
 });
+
+test('pencil-deferred-orbit-651.test: UV Paint keeps every mesh Pencil contact out of orbit after brush changes while background orbit remains available',()=>{
+ const painted=pencilSelectionRuntime(null,{paintActive:true});painted.body(new THREE.Vector3(0,0,-1));const p=painted.screen(new THREE.Vector3());
+ painted.pointer('pointerdown',{clientX:p.x,clientY:p.y});painted.pointer('pointermove',{clientX:p.x+40,clientY:p.y});
+ assert.equal(painted.orbit().down,0);assert.equal(painted.context.__boxlabPencilOrbitDebug.snapshot().pendingMeshOrbit,null);
+ const background=pencilSelectionRuntime(null,{paintActive:true});background.body();background.pointer('pointerdown',{clientX:40,clientY:40});background.pointer('pointermove',{clientX:80,clientY:40});
+ assert.equal(background.orbit().down,1);assert.equal(background.logs.some(x=>x.stage==='PEN ORBIT ROUTE'&&x.detail.route==='FORWARD_ORBIT'),true);
+});
