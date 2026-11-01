@@ -1,5 +1,5 @@
 {
-  "baseline": "Reviewed .1050 runtime asset pins and hashes; protected Multi version remains unchanged.",
+  "baseline": "Reviewed .1051 runtime asset pins and hashes; protected Multi version remains unchanged.",
   "references": [
     {
       "owner": "index.html",
@@ -384,7 +384,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1049",
+      "url": "./src/release-version.js?v=0.36.18.1051",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -2482,7 +2482,7 @@
       "owner": "index.html",
       "target": "src/viewport-paint.js",
       "url": "./src/viewport-paint.js?v=0.36.18.1050",
-      "sha256": "b89b368375117dc370f98919d9d70fbe679669d8d49c794dea1203f4f0eb1910"
+      "sha256": "8c926bd8d58191f194ef1a1b5bc10d7907c34d9bd056df5c9eea4622961515ad"
     },
     {
       "owner": "src/viewport-paint.js",
@@ -3350,9 +3350,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1050",
+      "url": "./src/shell-comparison.js?v=0.36.18.1051",
       "target": "src/shell-comparison.js",
-      "sha256": "d424b139971d472b973408966af24ca7429a7424e27f9111c8d8879e94fc78d5"
+      "sha256": "71a64bcf22b88d1135b9c5d1e724b787ab8e9a6c9de1468e209a36508f57fb02"
     },
     {
       "owner": "src/main.js",
