@@ -7421,3 +7421,7 @@ of possible things to test. Include current build, whether work is complete or
 ongoing, and whether a new build has shipped. Keep hands-on checks short and
 realistic; distinguish pending diagnostics from tests of newly shipped behavior.
 Apply this to progress handovers and blocked/no-code replies as well as releases.
+
+### `.1056` hosted correction update
+
+Topology run `41303647185` reported 3,093 PASS / 3 FAIL. Failures were a stale reviewed gizmo hash and the nested `face-workflow-layout.js` release-version import still at `.1055` (also caught by the canonical loader check). Updated that nested pin to `.1056` and refreshed the reviewed hashes. Camera sync remains guarded with optional `camera.updateMatrixWorld?.(true)` for real Three cameras and minimal harnesses. Rerun Topology, verify Pages/live bytes, then device-check brush switching and Pencil orbit in Paint. No local tests were run.

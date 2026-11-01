@@ -9858,3 +9858,10 @@ Quick Studio→Solid→Studio comparison may separate Studio presentation depend
 it is a diagnostic comparison, not a guaranteed recovery or engine diagnosis.
 No need for another identical dump with gizmo hidden. Preserve original navigation,
 selection/history and accepted VIEW owner until evidence supports a narrow repair.
+
+## `.1056` follow-up — loader and contract alignment
+
+- [x] Correct the stale nested `.1055` release-version import in `src/face-workflow-layout.js`.
+- [x] Refresh reviewed Total Gizmo and face-workflow asset hashes.
+- [ ] Confirm hosted Topology, Pages rollout and live asset bytes.
+- [ ] Confirm on device that Pencil orbit in Paint keeps the gizmo anchored and usable.

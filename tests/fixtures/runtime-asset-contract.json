@@ -553,7 +553,7 @@
       "owner": "index.html",
       "url": "./src/total-gizmo.js?v=0.36.18.1056",
       "target": "src/total-gizmo.js",
-      "sha256": "1424f386892e7f91ba9df51ea4ef53be21e7307dfde72976e61b7ba5a244ff8c"
+      "sha256": "cddf1a3d97a0532fd3faa44b8b1956e532de1f61d8d63e257bf029e6b80f5900"
     },
     {
       "owner": "index.html",
@@ -876,9 +876,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1055",
+      "url": "./face-workflow-layout.js?v=0.36.18.1056",
       "target": "src/face-workflow-layout.js",
-      "sha256": "278f3ca932c837061c807caf97e46c121c25ba3669a1d09ac55b85164be19251"
+      "sha256": "57c5806d228bba994a8d5c43b26492965bc713ac1525923c9a5f85fac39479d8"
     },
     {
       "owner": "src/drawer-ui.js",

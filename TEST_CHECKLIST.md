@@ -12726,3 +12726,11 @@ Quick Studio→Solid→Studio comparison may separate Studio presentation depend
 it is a diagnostic comparison, not a guaranteed recovery or engine diagnosis.
 No need for another identical dump with gizmo hidden. Preserve original navigation,
 selection/history and accepted VIEW owner until evidence supports a narrow repair.
+
+### `.1056` hosted correction follow-up
+
+- [x] Keep `camera.updateMatrixWorld?.(true)` as the camera/gizmo sync repair.
+- [x] Align nested release-version loader in `src/face-workflow-layout.js` with `.1056`.
+- [x] Refresh reviewed runtime asset hashes for `face-workflow-layout.js` and `total-gizmo.js`.
+- [ ] Recheck hosted Topology and Pages/live bytes.
+- [ ] On iPad, switch Paint brushes, orbit with Pencil, and confirm gizmo stays at the selected object and remains fully usable after Done.
