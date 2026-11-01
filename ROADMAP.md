@@ -11,6 +11,8 @@
 
 Full local Node suite: 3,091 PASS / 0 FAIL. Final focused set: 43 PASS / 0 FAIL. User-visible appearance/touch validation is pending. Preserve the protected `src/multi-object-transform.js?v=0.36.1.0` pin.
 
+Published commit `a505c803f92da39b07747d4acb53b2aa31a7d2b3`; Pages workflow `41257090423` and hosted Topology regression `41257090347` succeeded. Version/shell and all nine changed or loader runtime modules byte-match live files.
+
 ## Follow-on work
 
 After .1045 PASS, resume the app-wide help/text audit in the UV Editor gesture footer and Mesh Health UV guidance. Keep essential action names, live status, destructive/reset warnings and scope/cap warnings visible. Imported opacity-map authoring and the separate NOM displacement implementation remain unimplemented.

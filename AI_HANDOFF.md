@@ -1,10 +1,10 @@
 # BoxLab current handoff — build .1045
 
-BoxLab `0.36.18.1045` is implemented on `main`; local validation is complete and publication is in progress. The full Node suite passed 3,091 / 3,091. After the final floating-control parent fix, the focused Paint, Smudge, Pencil-navigation, release-contract and cache-pin checks passed 43 / 43. Native iPad acceptance is pending.
+BoxLab `0.36.18.1045` is published on `main` at commit `a505c803f92da39b07747d4acb53b2aa31a7d2b3` (tree `f4a0ee1ee4344b815e2ca597c8c7cb1f7765b7e5`). Pages workflow `41257090423` and Topology regression `41257090347` succeeded. The full Node suite passed 3,091 / 3,091; the final focused Paint, Smudge, Pencil-navigation, release-contract and cache-pin set passed 43 / 43. Version, shell and all changed runtime/loader files were fetched cache-busted and byte-matched the published tree. Native iPad acceptance is pending.
 
 UV Paint Colour strokes can optionally update Roughness and Metalness in the same dab. These maps use the existing scalar resource owners and one scene-history checkpoint. The Lit material preview is restored for scalar selection and Paint exit. Background Pencil contacts are left to orbit navigation; overlapping Pencil contacts during finger navigation remain swallowed. The Brush radial action opens Material & Paint directly; other radial panels expose only their contextual controls. Smudge now carries and mixes a tip-local reservoir across dabs and preserves connected-face ownership.
 
-Changed owners: `src/viewport-paint.js`, `src/viewport-paint-core.js`, `evaluations/uv-paint/paint-core.js`; parent and child pins are synchronized. Protected `src/multi-object-transform.js?v=0.36.1.0` is unchanged. The live release reference and publication result will be recorded here after the main push. Existing opacity-map authoring remains unsupported; imported maps are retained.
+Changed owners: `src/viewport-paint.js`, `src/viewport-paint-core.js`, `evaluations/uv-paint/paint-core.js`; parent and child pins are synchronized. Protected `src/multi-object-transform.js?v=0.36.1.0` is unchanged. Published version is `0.36.18.1045`; live `version.json` and `index.html` plus the nine changed/loader modules byte-match. Existing opacity-map authoring remains unsupported; imported maps are retained.
 
 Next: complete the hands-on .1045 checks at the top of `TEST_CHECKLIST.md`. Do not mark .1045 protected until the user reports PASS. Then resume the app-wide tooltip audit with the UV Editor and Mesh Health UV panels.
 

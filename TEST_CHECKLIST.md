@@ -23,7 +23,7 @@ identity and cache-contract checks passed 43 / 43. Syntax checks and `git diff -
 This does not establish native touch, appearance or shadow acceptance; those checks remain
 with the user. Do not protect .1045 until the user reports PASS.
 
-Published commit and Pages/Topology run IDs will be added after publication verification.
+Published on `main` as commit `a505c803f92da39b07747d4acb53b2aa31a7d2b3`; Pages `41257090423` and Topology regression `41257090347` succeeded. Version/shell and all nine changed or loader runtime modules byte-match cache-busted live files. Native iPad acceptance remains pending.
 
 ## .1044 — UV Paint material & values menu — device test pending
 
