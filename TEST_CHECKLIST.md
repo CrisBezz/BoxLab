@@ -1,12 +1,18 @@
-## .1046 — Metalness shading and stronger Smudge — device test pending
+# BoxLab manual test checklist
 
-- [ ] Open UV Paint on a Studio object that has no painted Colour map; choose Metalness and paint a region. Confirm the surface keeps the original Studio colour and shading while the Metalness value changes.
-- [ ] Tap Done. Confirm Studio colour, lighting, shadows and normal viewport display return. Re-enter Paint and confirm the painted Metalness values remain.
-- [ ] Paint colour, then paint Metalness on a different region. Confirm both colour and metal response remain visible in Studio after Done.
-- [ ] Smudge across two contrasting colours. Confirm the carried colour travels more strongly with the brush and blends into the target colour. Check a folded connected edge and avoid unrelated UV islands.
-- [ ] Undo and Redo one Smudge stroke; confirm one step restores and reapplies it.
+## .1047 — Metalness shadow contrast and stable Colour stroke start
 
-Automated .1046 validation: full Node suite 3,092 PASS / 0 FAIL / 0 skipped; focused Paint, Smudge, release and shell set 46 PASS / 0 FAIL. Hosted Topology regression `41282217228` and Pages deployment `41282303465` succeeded; live title/label shows `v0.36.18.1046`. JS syntax and `git diff --check` pass. Coverage includes committed scalar material shading, Studio base colour/shadow flags, connected and rotated/mirrored UV Smudge, premultiplied alpha, work limits, cancellation, UI strokes, Undo/Redo, Save/Open and NOM pixels. Native iPad appearance and touch acceptance remain pending.
+- [ ] On a Studio object with no painted Colour map, paint Metalness and tap Done. Confirm visible Studio shading and cast/receive shadows remain; confirm the Metalness response persists. Repeat with a painted Colour map and check its colour remains.
+- [ ] Enter UV Paint, tap Done, reopen it and immediately paint Colour on the model with Pencil. Repeat several times and after a refresh. Confirm the model does not orbit during surface strokes.
+- [ ] Move Pencil over empty viewport background while UV Paint is open. Confirm background orbit still works; fingers still navigate as before.
+- [x] Smudge is much better (user PASS on .1046); protect this behavior.
+- [ ] Check Undo/Redo and Done cleanup after each stroke; controls must remain usable.
+
+Automated .1047 validation: focused Paint/material/Smudge/release/shell set 46 PASS / 0 FAIL; full Node suite 3,093 PASS / 0 FAIL / 0 skipped. Syntax, runtime asset pin/hash contract and `git diff --check` pass. Native iPad appearance and touch acceptance remain pending.
+
+## .1046 — Metalness shading and stronger Smudge — user report
+
+The .1046 Metalness-only shading claim did not pass on device: the user saw no shadow following Metalness painting without a Colour map. The stronger Smudge behavior passed and is protected. The .1047 shadow contrast repair addresses the reported case.
 
 
 ## .1045 — combined material strokes and UV Paint input/menu fixes — user PASS protected

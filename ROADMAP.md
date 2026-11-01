@@ -1,16 +1,20 @@
 # BoxLab roadmap — current target
 
-## .1046 — Metalness shading restoration and stronger Smudge — device test pending
+## .1047 — Metalness shadow contrast and stable Colour stroke start — device test pending
 
-- [x] Record user PASS for .1045 and protect its accepted Paint workflow.
-- [x] Preserve source Studio base shading for scalar-only Metalness previews after Paint closes.
-- [x] Increase Smudge reservoir carry from 50% to 80%, retaining face ownership and alpha handling.
-- [x] Add regression coverage for Metalness-only committed shading and stronger connected-face Smudge.
-- [x] Run focused and full Node suites (46 focused; full 3,092 PASS / 0 FAIL / 0 skipped).
-- [x] Publish to `main` and verify Pages, hosted regression and live version marker.
-- [ ] Obtain native iPad acceptance for Metalness shading restoration and Smudge strength.
+- [x] Record `.1046 FAIL` for metal-only shadow/contrast and intermittent Paint orbit; protect user `.1046 Smudge PASS`.
+- [x] Cap environment reflection fill only for committed Metalness maps without a Colour map, retaining the source Studio material and shadow flags.
+- [x] Let Paint claim a Pencil surface-down with initial zero pressure; retain background navigation and pressure-based stroke handling.
+- [x] Add regression checks for metal-only committed preview and zero-pressure starts before and after Done/reopen.
+- [x] Run focused and full Node suites (46 focused; 3,093 PASS / 0 FAIL / 0 skipped), verify cache contracts and syntax.
+- [ ] Publish the reviewed `.1047` tree and verify live cache pins.
+- [ ] Obtain native iPad acceptance for shadow contrast and repeated Colour strokes after Done/refresh.
 
-Published to `main` at app commit `5cdfcd5257781d3707c03e8ec856923ebcc96639`, with handoff/document UTF-8 repair at `c6ccc239efe480f610b508a742984d88ca3eeb58`. Pages deployment `41282303465` and Topology regression `41282217228` succeeded. The live site displayed `v0.36.18.1046`. The first Pages run failed when oversized Markdown files were truncated during API transfer; the files were restored from the validated UTF-8 local tree before the successful deployment. Protected `src/multi-object-transform.js?v=0.36.1.0` remains unchanged.
+Smudge is protected PASS from the user's .1046 report. Existing Paint and render owners remain authoritative. Do not change the protected Multi script pin.
+
+## .1046 — Metalness shading and stronger Smudge — user report
+
+The user reported that a Studio model had no visible shadow after painting Metalness without a Colour map. Smudge was reported “much better” and is protected. See the .1047 follow-up above.
 
 ## .1045 — combined material strokes and Paint interaction — user PASS protected
 

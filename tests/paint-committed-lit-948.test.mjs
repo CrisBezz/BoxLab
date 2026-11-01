@@ -38,7 +38,7 @@ test('948 committed 512/1024 colour-only albedo uses owned lit texture, inherits
  }
 });
 
-test('1046 metalness-only committed preview keeps the original Studio base colour and shading after Paint closes',async()=>{
+test('1047 metalness-only committed preview keeps Studio shadows visible without a colour map',async()=>{
  const r=runtime(),o=r.target(),body=r.body,studio=new THREE.MeshStandardMaterial({color:0xaeb9c7,roughness:.48,metalness:.03,emissive:0x05080d,emissiveIntensity:.08,side:THREE.FrontSide});
  body.material=studio;body.castShadow=body.receiveShadow=true;
  const binding=await paintTargetDigest(paintTargetKey(o,o.mesh,r.owner));
@@ -46,7 +46,7 @@ test('1046 metalness-only committed preview keeps the original Studio base colou
  const d=createCommittedPaintSurface(body,o,o.mesh,r.owner);assert(d);await d.ready;
  const lit=surface(body).material;assert(lit.isMeshStandardMaterial);assert.equal(lit.color.getHex(),studio.color.getHex());
  assert.equal(lit.roughness,studio.roughness);assert.equal(lit.emissive.getHex(),studio.emissive.getHex());assert.equal(lit.emissiveIntensity,studio.emissiveIntensity);
- assert.equal(lit.metalness,1);assert.equal(lit.metalnessMap.image.data[2],210);assert(surface(body).castShadow);assert(surface(body).receiveShadow);
+ assert.equal(lit.metalness,1);assert.equal(lit.metalnessMap.image.data[2],210);assert.equal(lit.envMapIntensity,.35);assert(surface(body).castShadow);assert(surface(body).receiveShadow);
  d.dispose();body.geometry.dispose();studio.dispose();
 });
 

@@ -5,6 +5,7 @@ import {copyMetalnessResource} from './metalness-resource.js?v=0.36.18.1033';
 import {copyRoughnessResource} from './roughness-resource.js?v=0.36.18.1033';
 import {paintDigest} from './paint-resource.js?v=898';
 const encoder=new TextEncoder(),hidden=new THREE.MeshBasicMaterial({colorWrite:false,depthWrite:false});
+const METAL_ONLY_ENV_INTENSITY=.35;
 // Reuse original codec/UV topology validation. Positions may move/deform with unchanged UVs.
 export function paintTargetKey(object,mesh=object?.mesh,owner=globalThis.__boxlabExportAs){
  const s=object?.settings||{},p=object?.glbPassthrough;
@@ -50,7 +51,7 @@ export function createPaintSurface(body,geometry,texture,{renderer=globalThis.__
   lit.metalness=nextMetalness?1:(Number.isFinite(fallback?.metalness)?fallback.metalness:0);
   if(fallback?.emissive?.isColor)lit.emissive.copy(fallback.emissive);
   if(Number.isFinite(fallback?.emissiveIntensity))lit.emissiveIntensity=fallback.emissiveIntensity;
-  if(Number.isFinite(fallback?.envMapIntensity))lit.envMapIntensity=fallback.envMapIntensity;
+  if(Number.isFinite(fallback?.envMapIntensity))lit.envMapIntensity=nextMetalness&&!nextColour?Math.min(fallback.envMapIntensity,METAL_ONLY_ENV_INTENSITY):fallback.envMapIntensity;
   if(lit.map!==nextColour||lit.roughnessMap!==nextRoughness||lit.metalnessMap!==nextMetalness)lit.needsUpdate=true;
   lit.map=nextColour;lit.roughnessMap=nextRoughness;lit.metalnessMap=nextMetalness;surface.material=lit;surface.castShadow=body.castShadow;surface.receiveShadow=body.receiveShadow;
  }

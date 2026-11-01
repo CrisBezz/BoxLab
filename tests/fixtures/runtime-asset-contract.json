@@ -210,9 +210,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/export-as-panel.js?v=0.36.18.1046",
+      "url": "./src/export-as-panel.js?v=0.36.18.1047",
       "target": "src/export-as-panel.js",
-      "sha256": "bb42a3c06f9f837569e93212ceac489d42f9e1e672d51384f52b34a91a9abec6",
+      "sha256": "fa0b3bc3fa0b62f4c951c1e6c9c2b0cfee37f1b5312acdbc9e19406737cd3341",
       "sourceVersion": "0.36.18.892"
     },
     {
@@ -384,15 +384,15 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1046",
+      "url": "./src/release-version.js?v=0.36.18.1047",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
     {
       "owner": "index.html",
-      "url": "./src/render-modes.js?v=0.36.18.1046",
+      "url": "./src/render-modes.js?v=0.36.18.1047",
       "target": "src/render-modes.js",
-      "sha256": "20f7bdecf962b326ba7d6f39b7d44ff06cbcfe61323b5050d462612fd3c2fb5d"
+      "sha256": "4e96bd5135cd4eb46c774a181b772d5348c1f2e7d5dcd6be9799413c7bd96b44"
     },
     {
       "owner": "index.html",
@@ -878,7 +878,7 @@
       "owner": "src/drawer-ui.js",
       "url": "./face-workflow-layout.js?v=0.36.18.1044",
       "target": "src/face-workflow-layout.js",
-      "sha256": "a6b8d22910cb554f53f7c730ffb67335270965a463db7f9ff5ec3428c20045c7"
+      "sha256": "a7f554916b22f3d33914b94ac7f745697f7108ae368ffee67e78d1be52f71d68"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1189,9 +1189,9 @@
     },
     {
       "owner": "src/export-as-panel.js",
-      "url": "./nomad-packed-maps.js?v=0.36.18.1046",
+      "url": "./nomad-packed-maps.js?v=0.36.18.1047",
       "target": "src/nomad-packed-maps.js",
-      "sha256": "64d8ce38e6aeaf6b549c1375f4f483854beeeafa6d88c2dc7e626e6307d8a76a"
+      "sha256": "9ad1cfe9e37537d605704ee6929a3370bc0e558efbf1b048d4c445c11cda7e2d"
     },
     {
       "owner": "src/export-as-panel.js",
@@ -1373,7 +1373,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1046",
+      "url": "./release-version.js?v=0.36.18.1047",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -2450,9 +2450,9 @@
     },
     {
       "owner": "src/nomad-packed-maps.js",
-      "url": "./nomad-export-core.js?v=0.36.18.1046",
+      "url": "./nomad-export-core.js?v=0.36.18.1047",
       "target": "src/nomad-export-core.js",
-      "sha256": "88cf46d872ec46f1f37e233f4cf1013b25f761a05e33008282892def67f680e4"
+      "sha256": "527b407df6f003a43e305524e0d6c54ee9b72ae78c9c6e43ba0fac6d7fc9494e"
     },
     {
       "owner": "src/nomad-export-core.js",
@@ -2481,25 +2481,25 @@
     {
       "owner": "index.html",
       "target": "src/viewport-paint.js",
-      "url": "./src/viewport-paint.js?v=0.36.18.1046",
-      "sha256": "e40e924b8b9de922bdcbd5ad812257ec84ec14550af897cd1ed5f81597780529"
+      "url": "./src/viewport-paint.js?v=0.36.18.1047",
+      "sha256": "b8469f0ac950af1d493c5d1a48e821c178109c9ba0da824a94c49b1757bde366"
     },
     {
       "owner": "src/viewport-paint.js",
       "target": "src/viewport-paint-core.js",
-      "url": "./viewport-paint-core.js?v=0.36.18.1046",
-      "sha256": "bf5cdd0ad92243e95cdccabfc4806bd08cb2bd5304ad8473c4c1ef986487a11f"
+      "url": "./viewport-paint-core.js?v=0.36.18.1047",
+      "sha256": "16b0bec1fa9d0c16c4ae9b474d98b33eca6c72461aabc90af4e560ecd20b12ea"
     },
     {
       "owner": "src/viewport-paint.js",
       "target": "evaluations/uv-paint/paint-core.js",
-      "url": "../evaluations/uv-paint/paint-core.js?v=0.36.18.1046",
+      "url": "../evaluations/uv-paint/paint-core.js?v=0.36.18.1047",
       "sha256": "a958396b52a46b9833df7bda0243dbc84bd0d80983c40719a6c7853c98a2dd68"
     },
     {
       "owner": "src/viewport-paint-core.js",
       "target": "evaluations/uv-paint/paint-core.js",
-      "url": "../evaluations/uv-paint/paint-core.js?v=0.36.18.1046",
+      "url": "../evaluations/uv-paint/paint-core.js?v=0.36.18.1047",
       "sha256": "a958396b52a46b9833df7bda0243dbc84bd0d80983c40719a6c7853c98a2dd68"
     },
     {
@@ -2517,8 +2517,8 @@
     {
       "owner": "src/viewport-paint-core.js",
       "target": "src/paint-target.js",
-      "url": "./paint-target.js?v=0.36.18.1046",
-      "sha256": "61baf27a63d1b6b628f29442f0311443a3f09b9bb1495924efade2da02db15d6"
+      "url": "./paint-target.js?v=0.36.18.1047",
+      "sha256": "663c0e90ce5361704c6a54d4b951da1934fba3cc9fa692a80a600a4daeac6b9c"
     },
     {
       "owner": "src/paint-target.js",
@@ -2535,32 +2535,32 @@
     {
       "owner": "src/render-modes.js",
       "target": "src/paint-target.js",
-      "url": "./paint-target.js?v=0.36.18.1046",
-      "sha256": "61baf27a63d1b6b628f29442f0311443a3f09b9bb1495924efade2da02db15d6"
+      "url": "./paint-target.js?v=0.36.18.1047",
+      "sha256": "663c0e90ce5361704c6a54d4b951da1934fba3cc9fa692a80a600a4daeac6b9c"
     },
     {
       "owner": "src/export-as-panel.js",
       "target": "src/paint-export.js",
-      "url": "./paint-export.js?v=0.36.18.1046",
-      "sha256": "11dcfcbac80fa2cb84a337e84b6b565826a5fcf6dc6cea24c4a187da4010556e"
+      "url": "./paint-export.js?v=0.36.18.1047",
+      "sha256": "c1dbfed647ad9973925618118dbe3b4e38ad015fed9cbd0b2becf7196f41a678"
     },
     {
       "owner": "src/nomad-packed-maps.js",
       "target": "src/paint-export.js",
-      "url": "./paint-export.js?v=0.36.18.1046",
-      "sha256": "11dcfcbac80fa2cb84a337e84b6b565826a5fcf6dc6cea24c4a187da4010556e"
+      "url": "./paint-export.js?v=0.36.18.1047",
+      "sha256": "c1dbfed647ad9973925618118dbe3b4e38ad015fed9cbd0b2becf7196f41a678"
     },
     {
       "owner": "src/nomad-export-core.js",
       "target": "src/paint-export.js",
-      "url": "./paint-export.js?v=0.36.18.1046",
-      "sha256": "11dcfcbac80fa2cb84a337e84b6b565826a5fcf6dc6cea24c4a187da4010556e"
+      "url": "./paint-export.js?v=0.36.18.1047",
+      "sha256": "c1dbfed647ad9973925618118dbe3b4e38ad015fed9cbd0b2becf7196f41a678"
     },
     {
       "owner": "src/paint-export.js",
       "target": "src/paint-target.js",
-      "url": "./paint-target.js?v=0.36.18.1046",
-      "sha256": "61baf27a63d1b6b628f29442f0311443a3f09b9bb1495924efade2da02db15d6"
+      "url": "./paint-target.js?v=0.36.18.1047",
+      "sha256": "663c0e90ce5361704c6a54d4b951da1934fba3cc9fa692a80a600a4daeac6b9c"
     },
     {
       "owner": "src/paint-export.js",
@@ -2770,7 +2770,7 @@
       "owner": "evaluations/uv-paint/lab.js",
       "url": "../../src/export-as-panel.js?v=0.36.18.1039",
       "target": "src/export-as-panel.js",
-      "sha256": "bb42a3c06f9f837569e93212ceac489d42f9e1e672d51384f52b34a91a9abec6"
+      "sha256": "fa0b3bc3fa0b62f4c951c1e6c9c2b0cfee37f1b5312acdbc9e19406737cd3341"
     },
     {
       "owner": "src/paint-layer-stack.js",
@@ -3122,9 +3122,9 @@
     },
     {
       "owner": "src/viewport-paint.js",
-      "url": "./paint-target.js?v=0.36.18.1046",
+      "url": "./paint-target.js?v=0.36.18.1047",
       "target": "src/paint-target.js",
-      "sha256": "61baf27a63d1b6b628f29442f0311443a3f09b9bb1495924efade2da02db15d6"
+      "sha256": "663c0e90ce5361704c6a54d4b951da1934fba3cc9fa692a80a600a4daeac6b9c"
     },
     {
       "owner": "index.html",
@@ -3350,9 +3350,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1046",
+      "url": "./src/shell-comparison.js?v=0.36.18.1047",
       "target": "src/shell-comparison.js",
-      "sha256": "35a6c72fcc4c017d2257500511a7edda5ac618a3108c700eac29376f8ce37ecf"
+      "sha256": "a3ebc9467aebc927f27477c5d22c2182ddf85675837f5ecd3361da43a8cfba0a"
     },
     {
       "owner": "src/main.js",
@@ -3374,9 +3374,9 @@
     },
     {
       "owner": "src/viewport-paint.js",
-      "url": "./paint-brush-preview.js?v=0.36.18.1046",
+      "url": "./paint-brush-preview.js?v=0.36.18.1047",
       "target": "src/paint-brush-preview.js",
-      "sha256": "29c609bca64926722b79519146de668055b107bd32340fc3cdce81c21bba6812"
+      "sha256": "673dcc1568ded25f9616002850e4b1fbc33975b0f135c29babe1add120d98ee3"
     },
     {
       "owner": "src/paint-brush-presets.js",
@@ -3386,7 +3386,7 @@
     },
     {
       "owner": "src/paint-brush-preview.js",
-      "url": "../evaluations/uv-paint/paint-core.js?v=0.36.18.1046",
+      "url": "../evaluations/uv-paint/paint-core.js?v=0.36.18.1047",
       "target": "evaluations/uv-paint/paint-core.js",
       "sha256": "a958396b52a46b9833df7bda0243dbc84bd0d80983c40719a6c7853c98a2dd68"
     },
