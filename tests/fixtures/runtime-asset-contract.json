@@ -1,5 +1,5 @@
 {
-  "baseline": "Reviewed .1053 runtime asset pins and hashes; protected Multi version remains unchanged.",
+  "baseline": "Reviewed .1054 runtime asset pins and hashes; protected Multi version remains unchanged.",
   "references": [
     {
       "owner": "index.html",
@@ -167,9 +167,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1053",
+      "url": "./src/drawer-ui.js?v=0.36.18.1054",
       "target": "src/drawer-ui.js",
-      "sha256": "1893e487235aacb9216f873253e789430f0afe35323d93bc74f768805a4f6be3"
+      "sha256": "70f780f462ed75e967ef6f58ea950d30dee194e71bfb7588cb7b2325cba6598f"
     },
     {
       "owner": "index.html",
@@ -384,7 +384,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1053",
+      "url": "./src/release-version.js?v=0.36.18.1054",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -876,9 +876,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1053",
+      "url": "./face-workflow-layout.js?v=0.36.18.1054",
       "target": "src/face-workflow-layout.js",
-      "sha256": "749f146384487fa3a023e1159fd80c1f4390c5432867e04f1686de83bf111633"
+      "sha256": "16de6f602d6d1292f909526c0963a692adf98fe9f078f148e70ad8ed0b45fba0"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1373,7 +1373,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1053",
+      "url": "./release-version.js?v=0.36.18.1054",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -3350,9 +3350,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1053",
+      "url": "./src/shell-comparison.js?v=0.36.18.1054",
       "target": "src/shell-comparison.js",
-      "sha256": "5770e9dcc84d09a128f605b21c0e6fcd596194d0d2ec71e169c5c023f9975446"
+      "sha256": "f7219510f66e1cb504694436def0083df012d7697861f97305e4f9c218aec518"
     },
     {
       "owner": "src/main.js",
