@@ -2,13 +2,13 @@
 
 Standing user authorization: commit, push directly to `origin/main`, and publish every validated BoxLab development stage and `/nextbuild`; do not ask again for routine BoxLab release approval. This is recorded in `AI_WORKFLOW.md` and applies only to BoxLab development/publishing.
 
-Current app target: `0.36.18.1046`, based on the user-accepted .1045 build. User PASS for .1045 protects combined Colour/Roughness/Metalness strokes, Lit Paint preview, Pencil navigation, contextual Paint controls and the .1045 Smudge behavior. The .1046 change is validated locally on current main; native iPad acceptance and hosted publication checks are pending until the build is committed and deployed.
+Current app target: `0.36.18.1046`, based on the user-accepted .1045 build. User PASS for .1045 protects combined Colour/Roughness/Metalness strokes, Lit Paint preview, Pencil navigation, contextual Paint controls and the .1045 Smudge behavior. .1046 is published on `main`; GitHub Pages deployment `41282303465` and hosted Topology regression `41282217228` succeeded. The live site displayed title and label `v0.36.18.1046`. Native iPad acceptance is pending.
 
 Metalness-only committed previews now retain the original body material's base colour, roughness, emissive colour/intensity and environment intensity when there is no painted colour map. A painted colour map still supplies albedo; scalar maps retain their channel values and shadow flags. Smudge carries 80% of its tip-local reservoir between dabs (up from 50%) and continues to isolate unrelated UV faces.
 
 Changed runtime owners: `src/paint-target.js`, `evaluations/uv-paint/paint-core.js`; loader/cache closure includes `src/viewport-paint.js`, `src/viewport-paint-core.js`, `src/paint-brush-preview.js`, `src/render-modes.js`, `src/paint-export.js`, `src/export-as-panel.js`, `src/nomad-packed-maps.js`, `src/nomad-export-core.js`, `src/face-workflow-layout.js`, `src/shell-comparison.js` and `index.html`. Regression coverage is in `tests/paint-committed-lit-948.test.mjs`, `tests/paint-smudge-941.test.mjs`, and `tests/paint-smudge-seams-942.test.mjs`. The protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
 
-Validation: focused release/Paint/Smudge set 46 PASS / 0 FAIL; full Node suite 3,092 PASS / 0 FAIL / 0 skipped; JS syntax and `git diff --check` pass. Next: publish .1046, verify live shell and changed module pins, then obtain hands-on Metalness restoration and Smudge feedback. On user PASS, continue the UV Editor and Mesh Health touch-help audit. Imported opacity-map authoring and NOM displacement preview remain open roadmap items.
+Validation: focused release/Paint/Smudge set 46 PASS / 0 FAIL; full Node suite 3,092 PASS / 0 FAIL / 0 skipped; hosted Topology workflow passed; JS syntax and `git diff --check` pass. Next: obtain hands-on Metalness restoration and Smudge feedback. On user PASS, continue the UV Editor and Mesh Health touch-help audit. Imported opacity-map authoring and NOM displacement preview remain open roadmap items.
 ---
 
 ## .1043 — contextual Paint help and app-wide copy audit — 31 October 2026

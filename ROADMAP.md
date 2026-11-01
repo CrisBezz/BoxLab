@@ -1,16 +1,16 @@
 # BoxLab roadmap — current target
 
-## .1046 — Metalness shading restoration and stronger Smudge — publication pending
+## .1046 — Metalness shading restoration and stronger Smudge — device test pending
 
 - [x] Record user PASS for .1045 and protect its accepted Paint workflow.
 - [x] Preserve source Studio base shading for scalar-only Metalness previews after Paint closes.
 - [x] Increase Smudge reservoir carry from 50% to 80%, retaining face ownership and alpha handling.
 - [x] Add regression coverage for Metalness-only committed shading and stronger connected-face Smudge.
 - [x] Run focused and full Node suites (46 focused; full 3,092 PASS / 0 FAIL / 0 skipped).
-- [ ] Publish and verify live release assets.
+- [x] Publish to `main` and verify Pages, hosted regression and live version marker.
 - [ ] Obtain native iPad acceptance for Metalness shading restoration and Smudge strength.
 
-Validated changes are on top of main commit `cb71780091b16c76f888886d8bd37d6a544d4203` (published .1045). JS syntax and `git diff --check` pass. The runtime publication commit and Pages/hosted regression results will be recorded after push. Protected `src/multi-object-transform.js?v=0.36.1.0` remains unchanged.
+Published to `main` at app commit `5cdfcd5257781d3707c03e8ec856923ebcc96639`, with handoff/document UTF-8 repair at `c6ccc239efe480f610b508a742984d88ca3eeb58`. Pages deployment `41282303465` and Topology regression `41282217228` succeeded. The live site displayed `v0.36.18.1046`. The first Pages run failed when oversized Markdown files were truncated during API transfer; the files were restored from the validated UTF-8 local tree before the successful deployment. Protected `src/multi-object-transform.js?v=0.36.1.0` remains unchanged.
 
 ## .1045 — combined material strokes and Paint interaction — user PASS protected
 

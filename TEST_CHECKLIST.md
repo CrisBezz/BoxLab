@@ -6,7 +6,7 @@
 - [ ] Smudge across two contrasting colours. Confirm the carried colour travels more strongly with the brush and blends into the target colour. Check a folded connected edge and avoid unrelated UV islands.
 - [ ] Undo and Redo one Smudge stroke; confirm one step restores and reapplies it.
 
-Automated .1046 validation: full Node suite 3,092 PASS / 0 FAIL / 0 skipped; focused Paint, Smudge, release and shell set 46 PASS / 0 FAIL. JS syntax and `git diff --check` pass. Coverage includes committed scalar material shading, Studio base colour/shadow flags, connected and rotated/mirrored UV Smudge, premultiplied alpha, work limits, cancellation, UI strokes, Undo/Redo, Save/Open and NOM pixels. Native iPad appearance and touch acceptance remain pending.
+Automated .1046 validation: full Node suite 3,092 PASS / 0 FAIL / 0 skipped; focused Paint, Smudge, release and shell set 46 PASS / 0 FAIL. Hosted Topology regression `41282217228` and Pages deployment `41282303465` succeeded; live title/label shows `v0.36.18.1046`. JS syntax and `git diff --check` pass. Coverage includes committed scalar material shading, Studio base colour/shadow flags, connected and rotated/mirrored UV Smudge, premultiplied alpha, work limits, cancellation, UI strokes, Undo/Redo, Save/Open and NOM pixels. Native iPad appearance and touch acceptance remain pending.
 
 
 ## .1045 — combined material strokes and UV Paint input/menu fixes — user PASS protected
