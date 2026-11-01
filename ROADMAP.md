@@ -7,10 +7,10 @@
 - [x] Let Paint claim a Pencil surface-down with initial zero pressure; retain background navigation and pressure-based stroke handling.
 - [x] Add regression checks for metal-only committed preview and zero-pressure starts before and after Done/reopen.
 - [x] Run focused and full Node suites (46 focused; 3,093 PASS / 0 FAIL / 0 skipped), verify cache contracts and syntax.
-- [ ] Publish the reviewed `.1047` tree and verify live cache pins.
+- [x] Publish the reviewed `.1047` tree and verify live cache pins.
 - [ ] Obtain native iPad acceptance for shadow contrast and repeated Colour strokes after Done/refresh.
 
-Smudge is protected PASS from the user's .1046 report. Existing Paint and render owners remain authoritative. Do not change the protected Multi script pin.
+Published at `0cd560452ae3984834f18a26a2cca30e649822bb`; Pages `41285607867` and hosted Topology regression `41285608117` succeeded. Live `/BoxLab/` markers and 11 changed/repinned runtime modules byte-match. Smudge is protected PASS from the user’s .1046 report. Existing Paint and render owners remain authoritative. Do not change the protected Multi script pin.
 
 ## .1046 — Metalness shading and stronger Smudge — user report
 

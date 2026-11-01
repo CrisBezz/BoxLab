@@ -8,7 +8,7 @@
 - [x] Smudge is much better (user PASS on .1046); protect this behavior.
 - [ ] Check Undo/Redo and Done cleanup after each stroke; controls must remain usable.
 
-Automated .1047 validation: focused Paint/material/Smudge/release/shell set 46 PASS / 0 FAIL; full Node suite 3,093 PASS / 0 FAIL / 0 skipped. Syntax, runtime asset pin/hash contract and `git diff --check` pass. Native iPad appearance and touch acceptance remain pending.
+Automated .1047 validation: focused Paint/material/Smudge/release/shell set 46 PASS / 0 FAIL; full Node suite 3,093 PASS / 0 FAIL / 0 skipped. Syntax, runtime asset pin/hash contract and `git diff --check` pass. Published to `main` at `0cd560452ae3984834f18a26a2cca30e649822bb`; Pages `41285607867` and hosted Topology regression `41285608117` succeeded. Live release markers and 11 changed/repinned runtime modules byte-match. Native iPad appearance and touch acceptance remain pending.
 
 ## .1046 — Metalness shading and stronger Smudge — user report
 
