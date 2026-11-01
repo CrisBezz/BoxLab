@@ -1,7 +1,7 @@
 ## .1055 — combined-map shadows, Paint hit routing and gizmo recovery
 
 - [x] Pages reports `.1055`; live release marker and cache-busted runtime assets match `main`.
-- [ ] Confirm hosted Topology passes after the `.1055` runtime-contract correction.
+- [x] Hosted Topology `41296990402` passed 3,096 / 3,096 after restoring the offline evaluation fixture reference.
 - [x] UV Paint → Layers Roughness/Metalness previews and live updates PASS; retain this behavior.
 - [ ] Compare Studio shadow contrast for Metalness-only and Colour+Metalness. Confirm metal-only retains its PASS and combined maps regain the stronger shadow contrast.
 - [ ] In UV Paint, switch Brush → Eraser/Smudge → Brush and paint the same visible face after each change; confirm strokes do not fall through to orbit.
