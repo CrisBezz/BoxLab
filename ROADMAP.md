@@ -5,12 +5,12 @@
 - [x] Reuse the existing Paint layer-list presenter and scalar resource owner; keep Roughness/Metalness separate from the Colour overlay stack.
 - [x] Add read-only 64×64 grayscale previews for saved Roughness and Metalness maps with channel guidance and honest missing-map state.
 - [x] Keep map previews isolated from material values, render/shadow behavior, colour layers and history.
-- [ ] Automated and hands-on validation; tests were not run/added in this stage.
-- [ ] Publish .1050 and verify live cache-busted assets. Pages remains blocked on the stale `.1048` deployment noted below; live version is `.1048`.
+- [x] Publish `.1050`; Pages `41292138569` succeeded, live version reports `.1050`, and the changed shell/Paint/map-preview assets match the committed tree.
+- [ ] Hosted Topology regression `41292138718` is still in progress; local automated tests were not run or added in this stage.
 - [ ] Inspect bright-patch correlation against Colour and Metalness maps after deployment; do not treat the user's multiplication theory as established.
 - [ ] Retest `.1049` shadow strength, brush switching, Paint mesh strokes, background orbit and gizmo rotation because `.1049` is not live yet.
 
-The `.1049` code is on `main` at `79758731dc30bdc100bd1721efc92b5ccb9bc042`; user notes it has not deployed. Pages `41289594359` failed because GitHub says `.1048` SHA `55d63c1a3cdd18e8e7cd418689ca335568a9280a` is still in progress. Hosted Topology `.1049` passed (`41289594202`). Clear/cancel that Pages deployment or wait for GitHub to clear it before retrying Pages.
+`.1049` at `79758731dc30bdc100bd1721efc92b5ccb9bc042` did not deploy separately; the following `.1050` release is live. Its Pages run succeeded after the earlier stale `.1048` lock cleared. Hosted Topology `.1049` passed (`41289594202`).
 
 Protected: separate channel/toolbars PASS, `.1047` metal-only shadow PASS, `.1046` Smudge PASS, `.1045` combined material painting. `src/multi-object-transform.js?v=0.36.1.0` remains unchanged.
 

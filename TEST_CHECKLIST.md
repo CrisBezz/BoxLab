@@ -6,7 +6,7 @@
 - [ ] Compare the map tiles with the Lit material. Check whether apparent white patches align with white Colour pixels, white Metalness values, or both.
 - [ ] Retest the pending .1049 checks only after Pages deploys `.1050`: combined/metal-only shadow strength; switch brush then paint again; Pencil background orbit then Total Gizmo rotation.
 
-`.1050` automated tests were not run or added. Local review only; hosted and manual verification are pending. Live Pages currently remains `.1048`; the `.1049` Pages deployment was blocked by GitHub's stale in-progress `.1048` deployment and `.1050` is not yet live. Do not report device validation until the live version and cache-busted changed assets are verified.
+`.1050` tests were not run or added locally. Pages run `41292138569` succeeded; live version is `.1050`, and cache-busted shell, Paint UI/core, layer-list, shell-comparison and asset-manifest files byte-match the committed tree. Hosted Topology regression `41292138718` is still in progress. Manual map-preview and pending `.1049` device checks remain unconfirmed.
 
 ---
 
