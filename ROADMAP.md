@@ -1,3 +1,13 @@
+## .1056 — gizmo camera synchronization during Paint orbit
+
+- [x] Audit existing Paint, Pencil orbit and Total Gizmo owners; keep them authoritative.
+- [x] Refresh the current camera world matrix in the Total Gizmo frame before projecting its anchor.
+- [x] Update direct asset pins, release markers, reviewed hashes and retained release assertion.
+- [ ] Publish and verify Pages/live assets; hosted Topology is pending.
+- [ ] Device-check brush switching, Pencil orbit while painting, gizmo anchoring and post-Done transforms.
+
+The user reports this recurring during Pencil orbit in UV Paint. No Paint tool, mesh, pivot, or transform behavior is intentionally changed. Previous Paint and material PASSes remain protected. `src/multi-object-transform.js?v=0.36.1.0` is unchanged.
+
 # BoxLab roadmap — current target
 
 ## .1055 — restore combined-map shadows and stabilize Paint navigation

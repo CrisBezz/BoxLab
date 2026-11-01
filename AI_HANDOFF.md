@@ -1,19 +1,18 @@
-# BoxLab current handoff — build .1055
+# BoxLab current handoff — build .1056
 
-User feedback on live `.1054`: Roughness/Metalness previews and live updates PASS and are protected. Combined Colour+Metalness shadow contrast FAIL; Metalness-only shadow behavior PASS. Pencil painting after switching brushes can still fall through to orbit, and an orbit handoff can leave the Total Gizmo with faded/incomplete handles. Build `.1055` restores the previous `.35` environment cap for combined maps while keeping `.55` for metal-only; exposes the existing UV Paint hit test to the Pencil gate; and cancels the active gizmo owner's drag on orbit takeover even when browser retargeting changes pointer IDs.
+User reports that during UV Paint testing, changing brushes and orbiting with Pencil can leave the Total Gizmo displaced far from the selected object. The issue has recurred while orbiting, so the failure is treated as a camera/gizmo synchronization problem, not a brush action moving the object. Existing owners were audited: `viewport-paint` changes tool state and ends strokes; `pencil-orbit-gate` owns Pencil routing; `total-gizmo` continuously projects the active selection. `.1056` refreshes the Three.js camera world matrix inside the gizmo frame owner immediately before projecting the anchor, so a separate orbit frame cannot leave it using the prior view matrix.
 
-`src/multi-object-transform.js?v=0.36.1.0` remains protected and unchanged. No local tests were run or added. Keep Roughness/Metalness previews and preview refresh behavior protected. The `.1054` hosted Topology run `41294085728` passed 3,096 / 3,096; Pages `41294692602` deployed repaired handoff docs, and `.1054` remains the live runtime until `.1055` is published.
+`.1056` updates the release markers and direct cache pins. Publication and device acceptance are pending. No local tests were added or run. The hosted Topology check will run after the direct-to-main update. Do not claim the issue fixed until the iPad orbit check passes. Protect map preview/update PASSes, separate paint channels/toolbars, Smudge improvement and all earlier accepted Paint behavior. `src/multi-object-transform.js?v=0.36.1.0` remains protected and unchanged.
 
-Standing BoxLab authorization: the user has authorized every development-stage push to `origin/main` and GitHub Pages publication. Do not ask for approval again for routine BoxLab commits, pushes or deployments; complete the build and verify the live release. This instruction also appears in `AI_WORKFLOW.md`.
+Standing BoxLab authorization: the user has authorized every development-stage push to `origin/main` and GitHub Pages publication. Do not ask again for routine BoxLab release publication; complete the required checks and verify the live release.
 
-## .1055 hands-on device checks
+## .1056 hands-on device checks
 
-1. Verify the release marker reads `.1055`; in UV Paint → Layers, confirm Roughness/Metalness previews and their live updates still PASS.
-2. Compare Studio shadows on Metalness-only against Colour+Metalness. Confirm combined-map shadow contrast is restored without changing metal-only appearance.
-3. In UV Paint, switch Brush → Eraser/Smudge → Brush and paint the same visible surface after each change; confirm the second stroke paints rather than orbiting. Then Pencil-drag empty background to orbit.
-4. After Pencil orbit, select the object and confirm the complete Total Gizmo handles reappear and Move/Rotate/Scale remain usable.
+1. Enter UV Paint, switch Brush → Eraser/Smudge → Brush, and paint after each change.
+2. While Paint is active, orbit around the model with Pencil and confirm the gizmo stays anchored to the selected object throughout and after orbiting.
+3. Press Done; confirm the complete Total Gizmo remains over the object and Move/Rotate/Scale work.
+4. Recheck Roughness/Metalness previews and live updates; compare shadows on Metalness-only and Colour+Metalness surfaces.
 
-`.1055` runtime commit `d925e75ba47e3aed418354695d9be2af39f43885` and runtime-contract correction `3d372a9d24f5b8da9d5800a5ce910762dca528d3` are on `main`. Pages `41296468488` and correction redeploy `41296990334` succeeded. Live `.1055` version marker and cache-busted index, `paint-target`, `viewport-paint`, Pencil gate, `main`, `render-modes` and shell-comparison byte-match `main`. Hosted Topology first found one stale offline evaluation pin in the fixture; after restoring that fixture to `.1039`, `41296990402` passed all 3,096 checks (0 failed). No local tests were run or added. Device feedback is still pending.
 ---
 
 ## .1043 — contextual Paint help and app-wide copy audit — 31 October 2026

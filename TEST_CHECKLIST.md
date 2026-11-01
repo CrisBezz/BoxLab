@@ -1,3 +1,12 @@
+## .1056 — Total Gizmo follows Pencil orbit in UV Paint
+
+- [ ] In UV Paint, change among Brush, Eraser and Smudge; paint after each change.
+- [ ] Orbit the model with Pencil while Paint is active. Confirm the Total Gizmo remains aligned with the selected object during the orbit and after Pencil lifts.
+- [ ] Press Done. Confirm the full gizmo is still over the object; Move, Rotate and Scale remain usable.
+- [x] Preserve Roughness/Metalness preview and live-update PASS, separate Paint channel/toolbars PASS, Smudge improvement PASS, and prior Metalness-only shadow PASS.
+
+Automated coverage is pending hosted CI. No local tests were added or run. Device orbit acceptance is pending.
+
 ## .1055 — combined-map shadows, Paint hit routing and gizmo recovery
 
 - [x] Pages reports `.1055`; live release marker and cache-busted runtime assets match `main`.

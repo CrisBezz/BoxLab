@@ -1144,6 +1144,10 @@ function sync(){
     setHubState('transform',{reason:'object-mode'});
   }
   if(vertexExtrudeConstraintSession()&&hubState!=='transform')setHubState('transform',{reason:'vertex-extrude-constraint',resumeSuspended:false});
+  // Pencil orbit is owned by OrbitControls, while this overlay has its own
+  // animation-frame owner. Refresh the camera matrices before projecting the
+  // gizmo anchor so an orbit frame cannot use the previous view transform.
+  camera.updateMatrixWorld(true);
   const c=centerOf(mesh,mode),p=screenPoint(c,camera),cr=canvas.getBoundingClientRect(),vr=viewportWrap.getBoundingClientRect();
   const selectionLeft=cr.left-vr.left+p.x,selectionTop=cr.top-vr.top+p.y;
   let left=selectionLeft,top=selectionTop;
