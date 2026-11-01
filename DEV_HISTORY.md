@@ -18563,3 +18563,8 @@ User clarifies the gizmo displacement occurs while orbiting during Paint testing
 Narrow repair: `src/total-gizmo.js` calls `camera.updateMatrixWorld(true)` before projecting the gizmo anchor and its axis/ring visuals. No new gesture, modelling, paint, pivot or transform owner. Direct cache pins for Total Gizmo and the release comparison shell are refreshed; reviewed asset hashes and the preserved `.1041` release assertion follow `.1056`. Protected `src/multi-object-transform.js?v=0.36.1.0` remains unchanged.
 
 No local tests were added or run. Hosted Topology and Pages/live verification are pending. Device acceptance is pending; do not claim a fix until Pencil orbit while Paint is active leaves the gizmo anchored during and after orbit, and the full gizmo remains usable after Done. Map previews/live updates, separate material channels/toolbars, Smudge, and previous Paint behavior remain protected.
+
+
+### .1056 hosted CI correction
+
+First Pages deployment succeeded, but Topology `41303297247` failed 34 checks: 33 existing selection-hub test harnesses model only the camera fields they consume, so the unconditional update call threw when that optional Three.js method was absent; one preserved release-owner assertion found the direct `release-version.js` URL still pinned to `.1055`. Made the matrix refresh optional (`camera.updateMatrixWorld?.(true)`): real Three.js cameras still refresh, and minimal harnesses retain prior behavior. Updated the direct release-version pin and reviewed fixture reference to `.1056`. This catches two issues that would have been missed by a source-only review. Rerun hosted regression and Pages before marking `.1056` test-ready.

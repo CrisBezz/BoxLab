@@ -1147,7 +1147,7 @@ function sync(){
   // Pencil orbit is owned by OrbitControls, while this overlay has its own
   // animation-frame owner. Refresh the camera matrices before projecting the
   // gizmo anchor so an orbit frame cannot use the previous view transform.
-  camera.updateMatrixWorld(true);
+  camera.updateMatrixWorld?.(true);
   const c=centerOf(mesh,mode),p=screenPoint(c,camera),cr=canvas.getBoundingClientRect(),vr=viewportWrap.getBoundingClientRect();
   const selectionLeft=cr.left-vr.left+p.x,selectionTop=cr.top-vr.top+p.y;
   let left=selectionLeft,top=selectionTop;

@@ -5,7 +5,7 @@
 - [ ] Press Done. Confirm the full gizmo is still over the object; Move, Rotate and Scale remain usable.
 - [x] Preserve Roughness/Metalness preview and live-update PASS, separate Paint channel/toolbars PASS, Smudge improvement PASS, and prior Metalness-only shadow PASS.
 
-Automated coverage is pending hosted CI. No local tests were added or run. Device orbit acceptance is pending.
+First hosted `.1056` CI run failed on 33 legacy fake-camera calls and one stale release-version pin. The compatibility guard and pin are corrected; record the rerun before device acceptance. No local tests were added or run.
 
 ## .1055 — combined-map shadows, Paint hit routing and gizmo recovery
 
