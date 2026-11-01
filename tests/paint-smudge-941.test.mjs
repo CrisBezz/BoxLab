@@ -13,14 +13,14 @@ const labels=new Int32Array(32*32);
 function split(alpha=false){const data=new Uint8Array(32*32*4);for(let y=0;y<32;y++)for(let x=0;x<32;x++)data.set(x<16?[255,0,0,255]:alpha?[0,0,255,0]:[0,0,255,255],(x+y*32)*4);return data;}
 function drag(l,opacity=1,domain=labels){l.begin({...brush,opacity},{filter:{domains:domain},smudge:true});assert(!l.stamp(14/31,16/31,1,0));assert(l.stamp(18/31,16/31,1,0));}
 test('941 Smudge carries a tip-local patch with exact opacity and premultiplied alpha; tap/repeated position is no-op and cancel restores owned source',()=>{
- for(const opacity of [1,.5]){const l=createPaintLayer(32),source=split();l.restore(source);drag(l,opacity);const at=(18+16*32)*4;assert.deepEqual([...l.pixels.slice(at,at+4)],opacity===1?[191,0,64,255]:[96,0,159,255]);const moved=l.pixels.slice();assert(!l.stamp(18/31,16/31,1,0));assert.deepEqual(l.pixels,moved);l.finish(true);assert.deepEqual(l.pixels,source);assert.deepEqual(source,split());l.begin(brush,{filter:{domains:labels},smudge:true});l.stamp(.5,.5,1,0);assert(!l.finish());l.dispose();}
- const l=createPaintLayer(32,{transparent:true});l.restore(split(true));drag(l);const at=(18+16*32)*4;assert.deepEqual([...l.pixels.slice(at,at+4)],[255,0,0,191]);assert(l.finish());l.dispose();
+ for(const opacity of [1,.5]){const l=createPaintLayer(32),source=split();l.restore(source);drag(l,opacity);const at=(18+16*32)*4;assert.deepEqual([...l.pixels.slice(at,at+4)],opacity===1?[128,0,128,255]:[64,0,191,255]);const moved=l.pixels.slice();assert(!l.stamp(18/31,16/31,1,0));assert.deepEqual(l.pixels,moved);l.finish(true);assert.deepEqual(l.pixels,source);assert.deepEqual(source,split());l.begin(brush,{filter:{domains:labels},smudge:true});l.stamp(.5,.5,1,0);assert(!l.finish());l.dispose();}
+ const l=createPaintLayer(32,{transparent:true});l.restore(split(true));drag(l);const at=(18+16*32)*4;assert.deepEqual([...l.pixels.slice(at,at+4)],[255,0,0,128]);assert(l.finish());l.dispose();
 });
 test('941 adjacent UV faces cannot supply colour, pickup resets on a new face or miss, and alpha tips/raw grayscale retain their original semantics',()=>{
  const domain=labels.slice();for(let y=0;y<32;y++)for(let x=16;x<32;x++)domain[x+y*32]=1;
  const l=createPaintLayer(32),source=split();l.restore(source);l.begin(brush,{filter:{domains:domain},smudge:true});domain.fill(0);assert(!l.stamp(14/31,16/31,1,0));assert(!l.stamp(18/31,16/31,1,1));assert(!l.stamp(19/31,16/31,1,1));assert(!l.finish());assert.deepEqual(l.pixels,source);
  l.begin(brush,{filter:{domains:labels},smudge:true});l.stamp(14/31,16/31,1,0);l.resetPickup();assert(!l.stamp(18/31,16/31,1,0));assert(!l.finish());
- const grey=source.slice();for(let i=0;i<grey.length;i+=4)grey[i]=grey[i+1]=grey[i+2]=source[i];l.restore(grey);drag(l);const at=(18+16*32)*4;assert.deepEqual([...l.pixels.slice(at,at+4)],[191,191,191,255]);l.finish(true);
+ const grey=source.slice();for(let i=0;i<grey.length;i+=4)grey[i]=grey[i+1]=grey[i+2]=source[i];l.restore(grey);drag(l);const at=(18+16*32)*4;assert.deepEqual([...l.pixels.slice(at,at+4)],[128,128,128,255]);l.finish(true);
  l.begin({...brush,alphaTip:{version:1,width:1,height:1,pixels:new Uint8Array([0])}},{filter:{domains:labels},smudge:true});l.stamp(14/31,16/31,1,0);assert(!l.stamp(18/31,16/31,1,0));assert(!l.finish());assert.deepEqual(l.pixels,grey);l.dispose();
  assert.throws(()=>createPaintLayer(32).begin(brush,{smudge:true}),/ownership/);
 });

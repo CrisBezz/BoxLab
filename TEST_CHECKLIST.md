@@ -1,3 +1,30 @@
+## .1045 — combined material strokes and UV Paint input/menu fixes — device test pending
+
+- [ ] Open the Brush radial action. It should go straight to **Material & Paint**; the
+  previous Brush controls screen should not appear first. Confirm Colour, Roughness,
+  Metalness, brush size, stroke opacity and tip controls are present.
+- [ ] Enable “Also paint in this stroke” for Roughness and Metalness. Paint one Colour
+  stroke, then deselect the object and confirm the three maps remain visible together.
+  Undo once should remove all changes; Redo should restore all three.
+- [ ] Select Roughness and Metalness as the primary paint channel. Confirm preview stays
+  Lit. Exit Paint with Done and confirm the normal Studio/Solid appearance and shadows return.
+- [ ] In Paint, move Pencil over empty viewport background and orbit; then paint a surface.
+  Confirm a finger still orbits/pans/zooms and a finger already navigating blocks a new Pencil
+  contact until it lifts.
+- [ ] Paint across two colours with Smudge. Drag from one into the other and confirm the
+  mixed colour travels with the brush; test a connected folded edge and confirm it does not
+  sample unrelated UV islands.
+- [ ] Open Fill, Eraser, Smudge and Blur from the wheel. Confirm each panel contains only
+  its relevant controls, Tools returns to the wheel, and the floating palette remains draggable.
+
+Automated .1045 validation: full Node suite 3,091 PASS / 0 FAIL / 0 skipped. After a final
+contextual-control DOM-parent adjustment, focused Paint, Smudge, Pencil navigation, release
+identity and cache-contract checks passed 43 / 43. Syntax checks and `git diff --check` pass.
+This does not establish native touch, appearance or shadow acceptance; those checks remain
+with the user. Do not protect .1045 until the user reports PASS.
+
+Published commit and Pages/Topology run IDs will be added after publication verification.
+
 ## .1044 — UV Paint material & values menu — device test pending
 
 - [ ] Enter UV Paint and confirm preview remains Lit material mode. Choose Colour,

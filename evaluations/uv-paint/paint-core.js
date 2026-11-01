@@ -33,8 +33,9 @@ export function createPaintLayer(size=RESOLUTION,{transparent=false}={}){
  const pixels=new Uint8Array(size*size*4).fill(transparent?0:255);let before=null,coverage=null,settings=null,changed=false,disposed=false,dirty=true,erasing=false,blur=null,blurTarget=null,smudging=false,pickup=null,smudgeWork=0,limited=false,connections=null;
  // A small tip-local reservoir, never an atlas-to-atlas line. Pick up only the
  // current original polygon; an unproven face change/miss starts fresh without ink.
- // Mix in 25% stroke-start paint per spaced dab. Premultiplied colour and alpha
- // travel together; raw grayscale masks/scalars use this same equal-RGB operation.
+ // Move the reservoir with the cursor and blend it with the new surface sample.
+ // Premultiplied colour and alpha travel together; grayscale masks/scalars keep
+ // their equal-RGB semantics.
  function carry(cx,cy,face,radius,cos,sin){
   const extent=Math.ceil(settings.radius*(settings.alphaTip?Math.SQRT2:1)+1),width=extent*2+1,x=Math.round(cx),y=Math.round(cy);
   if(pickup&&pickup.face===face&&pickup.x===x&&pickup.y===y)return false;
@@ -53,14 +54,16 @@ export function createPaintLayer(size=RESOLUTION,{transparent=false}={}){
   }if(weight)mean=sum.map(v=>v/weight);}
   if(!pickup)pickup={face,x,y,extent,width,values:new Float32Array(width*width*4),valid:new Uint8Array(width*width)};
   else if(first){pickup.valid.fill(0);pickup.face=face;}
-  const s=pickup;s.x=x;s.y=y;s.radius=radius;
+  const s=pickup,values=s.values,valid=s.valid;
   for(let dy=-extent;dy<=extent;dy++)for(let dx=-extent;dx<=extent;dx++){
    const px=x+dx,py=y+dy,i=dx+extent+(dy+extent)*width,k=i*4,at=px+py*size;
-   if(px<0||px>=size||py<0||py>=size||blur[at]!==face){s.valid[i]=0;continue;}
-   const a=before[at*4+3]/255,retain=mean||s.valid[i] ? .75 : 0;
-   for(let c=0;c<3;c++)s.values[k+c]=(mean?mean[c]:s.values[k+c])*retain+before[at*4+c]*a*(1-retain);
-   s.values[k+3]=(mean?mean[3]:s.values[k+3])*retain+a*(1-retain);s.valid[i]=1;
+   if(px<0||px>=size||py<0||py>=size||blur[at]!==face){valid[i]=0;continue;}
+   const hasCarry=!!mean||!!valid[i];
+   const a=before[at*4+3]/255,retain=hasCarry?0.5:0;
+   for(let c=0;c<3;c++)values[k+c]=(mean?mean[c]:hasCarry?values[k+c]:0)*retain+before[at*4+c]*a*(1-retain);
+   values[k+3]=(mean?mean[3]:hasCarry?values[k+3]:0)*retain+a*(1-retain);valid[i]=1;
   }
+  s.x=x;s.y=y;s.radius=radius;
   return !first||!!mean;
  }
  function resetPickup(){if(pickup)pickup.face=null;}

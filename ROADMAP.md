@@ -1,20 +1,19 @@
 # BoxLab roadmap — current target
 
-## .1044 — unified UV Paint material menu
+## .1045 — combined material strokes and Paint interaction — device test pending
 
-- [x] Reuse the current UV Paint controller and inputs for the radial Material swatch and single Material & Paint menu.
-- [x] Start and restore Paint in Lit material preview; keep channel selection independent.
-- [x] Keep both Roughness and Metalness paint-value controls visible, highlight the active one, and expose colour, brush size/stroke opacity and brush-tip settings together.
-- [x] Keep Map Size and AO at the bottom of Layers rather than on the radial.
+- [x] Add optional Roughness and Metalness outputs to Colour Brush strokes using the original scalar owners and one scene-history checkpoint.
+- [x] Keep the preview Lit for Colour/Roughness/Metalness selection and restore the normal render owner on Paint exit.
+- [x] Let background Pencil contacts reach the existing orbit controls while swallowing new Pencil contacts during active finger navigation.
+- [x] Route Brush directly to Material & Paint and scope other radial panels to their relevant controls.
+- [x] Make Smudge carry and blend local colour between dabs while preserving alpha, face ownership, seam handling and work bounds.
 - [ ] Obtain native iPad acceptance; checklist at the top of `TEST_CHECKLIST.md`.
 
-Hosted Topology regression 41251196062 passed: 3,086 PASS / 0 FAIL / 0 skipped. Pages deployment 41251195407 succeeded. Native visual/touch acceptance is still user-owned.
+Full local Node suite: 3,091 PASS / 0 FAIL. Final focused set: 43 PASS / 0 FAIL. User-visible appearance/touch validation is pending. Preserve the protected `src/multi-object-transform.js?v=0.36.1.0` pin.
 
 ## Follow-on work
 
-After .1044 PASS, continue the app-wide help/text audit with the UV Editor gesture footer and Mesh Health UV guidance. Prefer a small shared help pattern with touch, focus and hover support; retain action names, live status/errors, destructive/reset warnings and important scope/cap warnings.
-
-Resume the NOM displacement payload/settings audit only after those Paint/help checks. Do not implement another subdivision or material kernel. Imported opacity maps are retained, but opacity texture authoring remains a distinct future decision. Protected `src/multi-object-transform.js?v=0.36.1.0` remains unchanged.
+After .1045 PASS, resume the app-wide help/text audit in the UV Editor gesture footer and Mesh Health UV guidance. Keep essential action names, live status, destructive/reset warnings and scope/cap warnings visible. Imported opacity-map authoring and the separate NOM displacement implementation remain unimplemented.
 
 ---
 

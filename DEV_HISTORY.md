@@ -18452,3 +18452,12 @@ appearance and touch acceptance are still pending.
 The iPad checks are in the .1042 section at the top of TEST_CHECKLIST.md; DOM tests do
 not imply native tactile or visual acceptance. Next: obtain user .1042 device result, then
 resume the retained Nomad displacement source/settings audit from the existing roadmap.
+
+
+## .1045 — combined UV Paint material strokes and interaction — 1 November 2026
+
+User requested Colour/Roughness/Metalness painting in one stroke, Lit preview/shadow restoration, Pencil orbit in Paint, Brush-to-Material-menu routing with contextual radial controls, and improved Smudge blending. Reused `viewport-paint-core.js` for multi-resource staging and one scene-history checkpoint; existing Roughness/Metalness resource owners remain authoritative. One Brush contact now stamps selected colour plus optional scalar maps and publishes atomically. Scalar channel changes force Lit preview and Paint exit refreshes through the existing render-mode owner.
+
+Brush opens Material & Paint directly. Fill/Eraser/Smudge/Blur menus use the existing controls and show only tool-relevant settings. Pencil background hits are no longer consumed before a successful Paint/image hit, while overlapping Pencil contacts during finger navigation remain swallowed. Smudge updates its local reservoir between dabs with a stronger 50/50 carried/surface mix, preserving premultiplied alpha, connected seam averaging, UV-face isolation, cancellation and bounded work.
+
+Validation: full Node suite 3,091 PASS / 0 FAIL / 0 skipped. Final focused Paint, connected Smudge, Pencil navigation, release identity and cache-pin set 43 PASS / 0 FAIL. JS syntax and `git diff --check` pass. Native iPad visual/touch acceptance is pending. Protected `src/multi-object-transform.js?v=0.36.1.0` is unchanged.

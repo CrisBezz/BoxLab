@@ -1,4 +1,4 @@
-import {createPaintLayer} from '../evaluations/uv-paint/paint-core.js?v=0.36.18.1010';
+import {createPaintLayer} from '../evaluations/uv-paint/paint-core.js?v=0.36.18.1045';
 
 export function brushPreviewPixels(settings){
  const layer=createPaintLayer(256,{transparent:true});
