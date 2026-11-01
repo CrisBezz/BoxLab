@@ -34,6 +34,6 @@ test('1045 Smudge drags a mixed reservoir forward and blends again on the next s
  const size=32,pixels=new Uint8Array(size*size*4),faces=new Int32Array(size*size);for(let y=0;y<size;y++)for(let x=0;x<size;x++)pixels.set(x<16?[255,0,0,255]:[0,0,255,255],(x+y*size)*4);
  const layer=createPaintLayer(size);layer.restore(pixels);layer.begin(brushSettings({colour:'#00ff00',radius:3,hardness:1,pressure:false}),{filter:{domains:faces},smudge:true});
  for(const x of [14,18,22])layer.stamp(x/(size-1),16/(size-1),1,0);
- assert.deepEqual([...layer.pixels.slice((18+16*size)*4,(18+16*size)*4+4)],[128,0,128,255]);
- assert.deepEqual([...layer.pixels.slice((22+16*size)*4,(22+16*size)*4+4)],[64,0,191,255]);layer.finish(true);layer.dispose();
+ assert.deepEqual([...layer.pixels.slice((18+16*size)*4,(18+16*size)*4+4)],[204,0,51,255]);
+ assert.deepEqual([...layer.pixels.slice((22+16*size)*4,(22+16*size)*4+4)],[163,0,92,255]);layer.finish(true);layer.dispose();
 });

@@ -1,22 +1,26 @@
 # BoxLab roadmap — current target
 
-## .1045 — combined material strokes and Paint interaction — device test pending
+## .1046 — Metalness shading restoration and stronger Smudge — publication pending
 
-- [x] Add optional Roughness and Metalness outputs to Colour Brush strokes using the original scalar owners and one scene-history checkpoint.
-- [x] Keep the preview Lit for Colour/Roughness/Metalness selection and restore the normal render owner on Paint exit.
-- [x] Let background Pencil contacts reach the existing orbit controls while swallowing new Pencil contacts during active finger navigation.
-- [x] Route Brush directly to Material & Paint and scope other radial panels to their relevant controls.
-- [x] Make Smudge carry and blend local colour between dabs while preserving alpha, face ownership, seam handling and work bounds.
-- [ ] Obtain native iPad acceptance; checklist at the top of `TEST_CHECKLIST.md`.
+- [x] Record user PASS for .1045 and protect its accepted Paint workflow.
+- [x] Preserve source Studio base shading for scalar-only Metalness previews after Paint closes.
+- [x] Increase Smudge reservoir carry from 50% to 80%, retaining face ownership and alpha handling.
+- [x] Add regression coverage for Metalness-only committed shading and stronger connected-face Smudge.
+- [x] Run focused and full Node suites (46 focused; full 3,092 PASS / 0 FAIL / 0 skipped).
+- [ ] Publish and verify live release assets.
+- [ ] Obtain native iPad acceptance for Metalness shading restoration and Smudge strength.
 
-Full local Node suite: 3,091 PASS / 0 FAIL before the final in-place Smudge reservoir allocation optimization. Final post-optimization focused material, Smudge, release and shell checks: 34 PASS / 0 FAIL. Broader Paint/navigation/cache-contract set: 43 PASS before that allocation-only optimization. User-visible appearance/touch validation is pending. Preserve the protected `src/multi-object-transform.js?v=0.36.1.0` pin.
+Validated changes are on top of main commit `cb71780091b16c76f888886d8bd37d6a544d4203` (published .1045). JS syntax and `git diff --check` pass. The runtime publication commit and Pages/hosted regression results will be recorded after push. Protected `src/multi-object-transform.js?v=0.36.1.0` remains unchanged.
 
-Published commit `a505c803f92da39b07747d4acb53b2aa31a7d2b3`; Pages workflow `41257090423` and hosted Topology regression `41257090347` succeeded. Version/shell and all nine changed or loader runtime modules byte-match live files.
+## .1045 — combined material strokes and Paint interaction — user PASS protected
+
+The user passed .1045 on 1 November 2026. Preserve combined Colour/Roughness/Metalness strokes, Lit material preview and shadow restoration, Pencil background orbit, direct Brush-to-Material & Paint access, contextual Paint controls and .1045 Smudge behavior. The current .1046 follow-up addresses Metalness-only Studio shading and stronger Smudge.
+
+Full local Node suite was 3,091 PASS / 0 FAIL before the final .1045 Smudge allocation optimization. Post-optimization focused material, Smudge, release and shell checks were 34 PASS; the broader 43-check set passed before that allocation-only optimization. Native .1045 acceptance was received in this turn.
 
 ## Follow-on work
 
-After .1045 PASS, resume the app-wide help/text audit in the UV Editor gesture footer and Mesh Health UV guidance. Keep essential action names, live status, destructive/reset warnings and scope/cap warnings visible. Imported opacity-map authoring and the separate NOM displacement implementation remain unimplemented.
-
+After .1046 PASS, resume the app-wide help/text audit in the UV Editor gesture footer and Mesh Health UV guidance. Keep essential action names, live status, destructive/reset warnings and scope/cap warnings visible. Imported opacity-map authoring and the separate NOM displacement implementation remain unimplemented.
 ---
 
 ## Current build: .1043 Paint help first slice

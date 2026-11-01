@@ -54,12 +54,12 @@ export function createPaintLayer(size=RESOLUTION,{transparent=false}={}){
   }if(weight)mean=sum.map(v=>v/weight);}
   if(!pickup)pickup={face,x,y,extent,width,values:new Float32Array(width*width*4),valid:new Uint8Array(width*width)};
   else if(first){pickup.valid.fill(0);pickup.face=face;}
-  const s=pickup,values=s.values,valid=s.valid;
+   const s=pickup,values=s.values,valid=s.valid;
   for(let dy=-extent;dy<=extent;dy++)for(let dx=-extent;dx<=extent;dx++){
    const px=x+dx,py=y+dy,i=dx+extent+(dy+extent)*width,k=i*4,at=px+py*size;
    if(px<0||px>=size||py<0||py>=size||blur[at]!==face){valid[i]=0;continue;}
    const hasCarry=!!mean||!!valid[i];
-   const a=before[at*4+3]/255,retain=hasCarry?0.5:0;
+   const a=before[at*4+3]/255,retain=hasCarry?0.8:0;
    for(let c=0;c<3;c++)values[k+c]=(mean?mean[c]:hasCarry?values[k+c]:0)*retain+before[at*4+c]*a*(1-retain);
    values[k+3]=(mean?mean[3]:hasCarry?values[k+3]:0)*retain+a*(1-retain);valid[i]=1;
   }

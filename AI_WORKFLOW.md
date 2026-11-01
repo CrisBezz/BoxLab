@@ -77,6 +77,10 @@ For each change:
 4. Add a new checklist item whenever a newly stable behaviour becomes worth protecting.
 
 
+## Standing BoxLab push and publish authorization
+
+The user has explicitly authorized committing, pushing directly to `origin/main`, and publishing/deploying every validated BoxLab development stage, including numbered `/nextbuild` releases. This authorization is ongoing; do not ask for confirmation again for routine BoxLab release pushes or Pages publication. Complete the required validation and handoff updates, then push and verify the release. This standing authorization applies only to BoxLab development and release actions.
+
 ## Release publication / cache refresh protocol
 
 User reaffirmed explicitly in the 27 October 2026 development chat:

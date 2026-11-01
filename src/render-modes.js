@@ -3,7 +3,7 @@ import {createFacegroupList} from './facegroup-list.js?v=0.36.18.995';
 import {createFacegroupPaintDock} from './facegroup-paint-dock.js?v=0.36.18.991';
 import {createFacegroupStroke} from './facegroup-stroke.js?v=0.36.18.995';
 import {assignSelectedFacegroup,facegroupAuthoringTarget,selectedFacegroupName} from './facegroup-authoring.js?v=0.36.18.995';
-import {createCommittedPaintSurface} from './paint-target.js?v=0.36.18.1033';
+import {createCommittedPaintSurface} from './paint-target.js?v=0.36.18.1046';
 import {createUVImageOverlay} from './uv-image-surface-preview.js?v=0.36.18.1035';
 import {createUVCheckerOverlay} from './uv-checker-preview.js?v=0.36.18.879';
 import * as THREE from 'three';

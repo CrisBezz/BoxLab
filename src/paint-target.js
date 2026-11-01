@@ -41,8 +41,18 @@ export function createPaintSurface(body,geometry,texture,{renderer=globalThis.__
   const nextEnvironment=environment?.texture||null;
   if(lit.envMap!==nextEnvironment){lit.envMap=nextEnvironment;lit.needsUpdate=true;}
   const nextColour=colour?colourMap:null,nextRoughness=roughness?roughnessMap:null,nextMetalness=metalness?metalnessMap:null;
+  // Scalar-only paint must sit on the original Studio albedo. White is only the
+  // base when the painted colour map replaces that albedo; otherwise restoring
+  // a Metalness map on white makes the surface appear brighter/darker than the
+  // same unpainted Studio material after Paint closes.
+  if(nextColour)lit.color.set(0xffffff);else if(fallback?.color?.isColor)lit.color.copy(fallback.color);
+  lit.roughness=nextRoughness?1:(Number.isFinite(fallback?.roughness)?fallback.roughness:1);
+  lit.metalness=nextMetalness?1:(Number.isFinite(fallback?.metalness)?fallback.metalness:0);
+  if(fallback?.emissive?.isColor)lit.emissive.copy(fallback.emissive);
+  if(Number.isFinite(fallback?.emissiveIntensity))lit.emissiveIntensity=fallback.emissiveIntensity;
+  if(Number.isFinite(fallback?.envMapIntensity))lit.envMapIntensity=fallback.envMapIntensity;
   if(lit.map!==nextColour||lit.roughnessMap!==nextRoughness||lit.metalnessMap!==nextMetalness)lit.needsUpdate=true;
-  lit.map=nextColour;lit.roughnessMap=nextRoughness;lit.metalnessMap=nextMetalness;lit.metalness=metalness?1:0;surface.material=lit;surface.castShadow=body.castShadow;surface.receiveShadow=body.receiveShadow;
+  lit.map=nextColour;lit.roughnessMap=nextRoughness;lit.metalnessMap=nextMetalness;surface.material=lit;surface.castShadow=body.castShadow;surface.receiveShadow=body.receiveShadow;
  }
  function dispose(){if(disposed)return;disposed=true;source.removeEventListener('dispose',dispose);body.remove(surface);if(body.material===hidden)body.material=fallback;geometry.dispose();material.dispose();texture.dispose();lit?.dispose();colourMap?.dispose();roughnessMap?.dispose();metalnessMap?.dispose();environment?.release();environment=null;}
  surface.userData.boxlabColourPaintDispose=dispose;source.addEventListener('dispose',dispose);body.add(surface);

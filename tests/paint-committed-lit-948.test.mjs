@@ -6,6 +6,7 @@ import {facegroupsRuntime} from './helpers/facegroups-render-runtime.mjs';
 import {glbOwnerRuntime} from './helpers/glb-owner-runtime.mjs';
 import {createCommittedPaintSurface,paintTargetDigest,paintTargetKey} from '../src/paint-target.js';
 import {captureColourResource} from '../src/paint-resource.js';
+import {captureMetalnessResource} from '../src/metalness-resource.js';
 import {createBoxUV} from '../src/imported-uv-edit.js';
 import {encodeBoxlabScene,decodeBoxlabScene} from '../src/boxlab-project-codec.js';
 import {EditableMesh} from '../src/mesh.js';
@@ -35,6 +36,18 @@ test('948 committed 512/1024 colour-only albedo uses owned lit texture, inherits
   d.dispose();d.dispose();assert.equal(freed,3);assert.equal(r.body.material,original);assert.equal(surface(r.body),undefined);
   assert.equal(JSON.stringify(encodeBoxlabScene({objects:[o]})),before);
  }
+});
+
+test('1046 metalness-only committed preview keeps the original Studio base colour and shading after Paint closes',async()=>{
+ const r=runtime(),o=r.target(),body=r.body,studio=new THREE.MeshStandardMaterial({color:0xaeb9c7,roughness:.48,metalness:.03,emissive:0x05080d,emissiveIntensity:.08,side:THREE.FrontSide});
+ body.material=studio;body.castShadow=body.receiveShadow=true;
+ const binding=await paintTargetDigest(paintTargetKey(o,o.mesh,r.owner));
+ o.metalnessPaint=captureMetalnessResource({width:512,height:512,pixels:new Uint8Array(512*512).fill(210),binding});
+ const d=createCommittedPaintSurface(body,o,o.mesh,r.owner);assert(d);await d.ready;
+ const lit=surface(body).material;assert(lit.isMeshStandardMaterial);assert.equal(lit.color.getHex(),studio.color.getHex());
+ assert.equal(lit.roughness,studio.roughness);assert.equal(lit.emissive.getHex(),studio.emissive.getHex());assert.equal(lit.emissiveIntensity,studio.emissiveIntensity);
+ assert.equal(lit.metalness,1);assert.equal(lit.metalnessMap.image.data[2],210);assert(surface(body).castShadow);assert(surface(body).receiveShadow);
+ d.dispose();body.geometry.dispose();studio.dispose();
 });
 
 test('948 original Studio owner sets active and inactive/locked painted shadow flags before async digest; diagnostic exit and rebuild release old surfaces',async()=>{
