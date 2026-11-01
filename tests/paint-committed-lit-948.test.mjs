@@ -50,6 +50,18 @@ test('1047 metalness-only committed preview keeps Studio shadows visible without
  d.dispose();body.geometry.dispose();studio.dispose();
 });
 
+test('1048 painted Colour and Metalness maps keep Studio shadow contrast together',async()=>{
+ const r=runtime(),o=r.target(),body=r.body,studio=new THREE.MeshStandardMaterial({color:0xaeb9c7,roughness:.48,metalness:.03,emissive:0x05080d,emissiveIntensity:.08,side:THREE.FrontSide});
+ body.material=studio;body.castShadow=body.receiveShadow=true;
+ const colourResource=await colour(o,o.mesh,r.owner),binding=await paintTargetDigest(paintTargetKey(o,o.mesh,r.owner));
+ o.metalnessPaint=captureMetalnessResource({width:512,height:512,pixels:new Uint8Array(512*512).fill(210),binding});
+ const d=createCommittedPaintSurface(body,o,o.mesh,r.owner);assert(d);await d.ready;
+ const surfaceMaterial=surface(body).material;assert(surfaceMaterial.isMeshStandardMaterial);
+ assert.equal(surfaceMaterial.map.image.data[0],colourResource.pixels[0]);assert.equal(surfaceMaterial.metalnessMap.image.data[2],210);
+ assert.equal(surfaceMaterial.envMapIntensity,.35);assert(surface(body).castShadow);assert(surface(body).receiveShadow);
+ d.dispose();body.geometry.dispose();studio.dispose();
+});
+
 test('948 original Studio owner sets active and inactive/locked painted shadow flags before async digest; diagnostic exit and rebuild release old surfaces',async()=>{
  const f=facegroupsRuntime(),owner=glbOwnerRuntime().c,displays=[],history={capture:()=>({}),checkpointSnapshot:()=>true};
  for(const [o,mesh] of [[f.activeObject,f.source],[f.other,f.other.mesh]]){assert(createBoxUV(o,mesh,owner.topologySignature,history).ok);await colour(o,mesh,owner);}

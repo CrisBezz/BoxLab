@@ -1,20 +1,19 @@
 # BoxLab roadmap — current target
 
-## .1047 — Metalness shadow contrast and stable Colour stroke start — device test pending
+## .1048 — Studio shadows with Colour and Metalness maps — device test pending
 
-- [x] Record `.1046 FAIL` for metal-only shadow/contrast and intermittent Paint orbit; protect user `.1046 Smudge PASS`.
-- [x] Cap environment reflection fill only for committed Metalness maps without a Colour map, retaining the source Studio material and shadow flags.
-- [x] Let Paint claim a Pencil surface-down with initial zero pressure; retain background navigation and pressure-based stroke handling.
-- [x] Add regression checks for metal-only committed preview and zero-pressure starts before and after Done/reopen.
-- [x] Run focused and full Node suites (46 focused; 3,093 PASS / 0 FAIL / 0 skipped), verify cache contracts and syntax.
-- [x] Publish the reviewed `.1047` tree and verify live cache pins.
-- [ ] Obtain native iPad acceptance for shadow contrast and repeated Colour strokes after Done/refresh.
+- [x] Record user PASS for separate Paint material channels/toolbars and the `.1047` metal-only shadow case; record FAIL for shadow loss when a Colour map is present.
+- [x] Extend the existing committed Metalness environment-fill cap to Colour+Metalness surfaces.
+- [x] Add a regression proving painted Colour and Metalness maps coexist with reduced environment fill and inherited shadow flags.
+- [x] Run focused and full Node suites (30 focused; 3,094 PASS / 0 FAIL / 0 skipped), review cache pins and syntax.
+- [ ] Publish `.1048` to `main` and verify the live page.
+- [ ] Confirm combined-map Studio shadows on iPad; retest Pencil surface strokes after Done/refresh.
 
-Published at `0cd560452ae3984834f18a26a2cca30e649822bb`; Pages `41285607867` and hosted Topology regression `41285608117` succeeded. Live `/BoxLab/` markers and 11 changed/repinned runtime modules byte-match. Smudge is protected PASS from the user’s .1046 report. Existing Paint and render owners remain authoritative. Do not change the protected Multi script pin.
+No new material or render owner. The `.1047` Smudge PASS, separate channel behavior, and metal-only shadow behavior remain protected. The protected Multi script pin remains unchanged.
 
-## .1046 — Metalness shading and stronger Smudge — user report
+## .1047 — Metalness shadow contrast and stable Colour stroke start — device report
 
-The user reported that a Studio model had no visible shadow after painting Metalness without a Colour map. Smudge was reported “much better” and is protected. See the .1047 follow-up above.
+Separate material channels/toolbars PASS; metal-only shadows pass by user report. When a Colour map is used with Metalness, the shadow is lost. `.1048` addresses this remaining combined-map case. Pencil-orbit hands-on acceptance is not yet confirmed.
 
 ## .1045 — combined material strokes and Paint interaction — user PASS protected
 

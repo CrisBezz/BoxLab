@@ -1,14 +1,17 @@
 # BoxLab manual test checklist
 
-## .1047 — Metalness shadow contrast and stable Colour stroke start
+## .1048 — preserve shadows with Colour and Metalness maps
 
-- [ ] On a Studio object with no painted Colour map, paint Metalness and tap Done. Confirm visible Studio shading and cast/receive shadows remain; confirm the Metalness response persists. Repeat with a painted Colour map and check its colour remains.
-- [ ] Enter UV Paint, tap Done, reopen it and immediately paint Colour on the model with Pencil. Repeat several times and after a refresh. Confirm the model does not orbit during surface strokes.
-- [ ] Move Pencil over empty viewport background while UV Paint is open. Confirm background orbit still works; fingers still navigate as before.
-- [x] Smudge is much better (user PASS on .1046); protect this behavior.
-- [ ] Check Undo/Redo and Done cleanup after each stroke; controls must remain usable.
+- [ ] On a Studio object, paint Metalness and Colour in separate channels/regions, then tap Done. Confirm painted colour and Metalness response both remain and the Studio shadow is visible.
+- [ ] Repeat Metalness-only without a Colour map to confirm the existing .1047 shadow fix remains.
+- [ ] After Done, reopen UV Paint and start several Colour strokes with Pencil, including after refresh. Confirm a surface stroke does not orbit the model; background Pencil orbit and finger navigation still work.
+- [x] Separate material-channel painting and Paint toolbars PASS in user feedback. Smudge PASS remains protected.
 
-Automated .1047 validation: focused Paint/material/Smudge/release/shell set 46 PASS / 0 FAIL; full Node suite 3,093 PASS / 0 FAIL / 0 skipped. Syntax, runtime asset pin/hash contract and `git diff --check` pass. Published to `main` at `0cd560452ae3984834f18a26a2cca30e649822bb`; Pages `41285607867` and hosted Topology regression `41285608117` succeeded. Live release markers and 11 changed/repinned runtime modules byte-match. Native iPad appearance and touch acceptance remain pending.
+Automated .1048 regression: focused material/Paint/Pencil/Smudge/release set 30 PASS / 0 FAIL; full Node suite 3,094 PASS / 0 FAIL / 0 skipped. Changed JavaScript syntax, runtime pin/hash contract, and `git diff --check` pass. Release publication pending. Native iPad shadow appearance and Paint gesture acceptance remain pending.
+
+## .1047 — separate Paint channels and metal-only shadow
+
+User confirms painting Metalness and Colour through their separate channels/toolbar flow PASS. The Colour-map case with Metalness loses the shadow; `.1048` fixes that combined-material path. The orbit test was not reported again and remains a hands-on check.
 
 ## .1046 — Metalness shading and stronger Smudge — user report
 
