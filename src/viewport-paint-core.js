@@ -50,18 +50,44 @@ export function createViewportPainter({target,activeId=()=>target()?.id,body,own
   return true;
  }
  function scalar(){return !!session&&Object.hasOwn(scalarOwners,session.paintTarget);}
- function scalarStrokeLayer(channel,value,settings){
+ function scalarStrokeLayer(channel,value,settings,action,filter){
   const cfg=scalarOwners[channel],resource=session[channel];
   if(resource&&(resource.width!==512||resource.height!==512))throw Error(cfg.label+' painting requires a 512 × 512 map; existing map kept unchanged');
   const pixels=new Uint8Array(512*512*4);
   for(let i=0;i<512*512;i++){const n=resource?.pixels[i]??cfg.initial,at=i*4;pixels[at]=pixels[at+1]=pixels[at+2]=n;pixels[at+3]=255;}
-  const layer=createPaintLayer(512);layer.restore(pixels);const hex=value.toString(16).padStart(2,'0');layer.begin({...settings,colour:'#'+hex.repeat(3)});return layer;
+  const layer=createPaintLayer(512);layer.restore(pixels);const hex=(action==='erase'?cfg.initial:value).toString(16).padStart(2,'0');layer.begin({...settings,radius:Math.max(1,settings.radius*512/session.size),colour:'#'+hex.repeat(3)},{filter,smudge:action==='smudge'});return layer;
+ }
+ function strokeFilter(size,action,settings){
+  if(!['blur','smudge'].includes(action))return null;
+  session.filterDomains??=new Map();let domain=session.filterDomains.get(size);
+  if(!domain){domain=createPaintFilterDomain(session.display.surface.geometry,size,{mesh:session.object.mesh,payload:session.uv,topologySignature:owner.topologySignature});session.filterDomains.set(size,domain);}
+  return {domains:domain.labels,neighbours:domain.neighbours,connectedFaces:action==='smudge'?domain.connectedFaces:undefined,amount:action==='blur'?(settings.blurAmount??1):1};
+ }
+ function renderFill(active){
+  const scalarLayers=Object.values(active.scalarLayers||{});
+  if(!active.facePlan){session.layer.fill();for(const layer of scalarLayers)layer.fill();return;}
+  active.count=active.facePlan.render(session.layer,active);
+  active.scalarFacePlan?.render({fill:(...args)=>{for(const layer of scalarLayers)layer.fill(...args);}},active);
+ }
+ // Reuse the selected colour-layer mask as a stencil for NEW scalar edits.
+ // It does not retroactively change committed scalar maps. Colour retains its
+ // original non-destructive layer-mask compositor. No resource/schema fork.
+ function scalarStrokePixels(channel,layer){
+  const cfg=scalarOwners[channel],base=session[channel]?.pixels,mask=session.stack?.layers.find(l=>l.id===session.selected)?.mask,pixels=new Uint8Array(512*512);let changed=false;
+  if(!mask?.enabled){for(let i=0;i<pixels.length;i++){pixels[i]=layer.pixels[i*4];if(pixels[i]!== (base?.[i]??cfg.initial))changed=true;}return {pixels,changed};}
+  const step=session.size/512;
+  for(let y=0;y<512;y++)for(let x=0;x<512;x++){
+   const i=y*512+x,before=base?.[i]??cfg.initial;let coverage=1;
+   if(mask?.enabled){let value=0;for(let dy=0;dy<step;dy++)for(let dx=0;dx<step;dx++)value+=mask.pixels[(y*step+dy)*session.size+x*step+dx];coverage=value/(255*step*step);if(mask.inverted)coverage=1-coverage;}
+   const value=Math.round(before+(layer.pixels[i*4]-before)*coverage);pixels[i]=value;if(value!==before)changed=true;
+  }
+  return {pixels,changed};
  }
  function begin(p,settings,kind='boxlab',maskValue=0,roughnessValue=128,metalnessValue=255,action='paint'){
   if(session?.aoPreview||session?.aoJob)throw Error('Apply or cancel AO preview first');
   if(!['paint','fill','fill-face','fill-facegroup','erase','blur','smudge'].includes(action))throw Error('Unknown paint action');
   if(!session||stroke)return false;clearImagePreview();
-  const selected=session.stack?.layers.find(l=>l.id===session.selected),multiChannels=session.paintTarget==='colour'&&action==='paint'?session.multiPaintChannels:[];
+  const selected=session.stack?.layers.find(l=>l.id===session.selected),multiChannels=session.paintTarget==='colour'?session.multiPaintChannels:[];
   if(!scalar()&&selected&&(!selected.visible||!selected.opacity))throw Error('Show the selected layer and increase its opacity before painting');
   if(scalar()){const value=session.paintTarget==='roughness'?roughnessValue:metalnessValue;if(!Number.isInteger(value)||value<0||value>255)throw Error(scalarOwners[session.paintTarget].label+' value must be 0 to 255');const hex=value.toString(16).padStart(2,'0');settings={...settings,colour:'#'+hex.repeat(3)};}
   if(session.paintTarget==='mask'){if(!selected?.mask?.enabled)throw Error('Enable the selected layer mask before painting it');if(!Number.isInteger(maskValue)||maskValue<0||maskValue>255)throw Error('Mask value must be 0 to 255');const hex=maskValue.toString(16).padStart(2,'0');settings={...settings,colour:'#'+hex.repeat(3)};}
@@ -70,20 +96,22 @@ export function createViewportPainter({target,activeId=()=>target()?.id,body,own
   if(!current()||paintTargetKey(target(),target()?.mesh,owner)!==session.key){close();return false;}
   if(['fill','fill-face','fill-facegroup','blur','smudge'].includes(action)&&!hit(p))return false;
   let facePlan=null;if(action.startsWith('fill-')){const h=hit(p),seed=session.display.surface.geometry.userData.boxlabTriangleFaces?.[h.faceIndex];facePlan=createFaceFillPlan({mesh:session.object.mesh,geometry:session.display.surface.geometry,size:scalar()?512:session.size,seed,group:action==='fill-facegroup'});}
-  let filter=null;if(['blur','smudge'].includes(action)){const filterSize=scalar()?512:session.size;if(session.filterDomain?.labels.length!==filterSize*filterSize)session.filterDomain=null;session.filterDomain??=createPaintFilterDomain(session.display.surface.geometry,scalar()?512:session.size,{mesh:session.object.mesh,payload:session.uv,topologySignature:owner.topologySignature});filter={domains:session.filterDomain.labels,neighbours:session.filterDomain.neighbours,connectedFaces:action==='smudge'?session.filterDomain.connectedFaces:undefined,amount:action==='blur'?(settings.blurAmount??1):1};}
-  const scalarLayers={};try{for(const channel of multiChannels){const value=channel==='roughness'?roughnessValue:metalnessValue;if(!Number.isInteger(value)||value<0||value>255)throw Error(scalarOwners[channel].label+' value must be 0 to 255');scalarLayers[channel]=scalarStrokeLayer(channel,value,settings);}session.layer.begin(settings,{erase:action==='erase'&&session.paintTarget==='colour'&&!!selected,filter,smudge:action==='smudge'});}catch(error){for(const layer of Object.values(scalarLayers))layer.dispose();throw error;}
+  const filterSize=scalar()?512:session.size,filter=strokeFilter(filterSize,action,settings);if(filter)session.filterDomain=session.filterDomains.get(filterSize);
+  const scalarFilter=multiChannels.length?strokeFilter(512,action,settings):null;
+  const scalarFacePlan=facePlan&&multiChannels.length?createFaceFillPlan({mesh:session.object.mesh,geometry:session.display.surface.geometry,size:512,seed:session.display.surface.geometry.userData.boxlabTriangleFaces?.[hit(p).faceIndex],group:action==='fill-facegroup'}):null;
+  const scalarLayers={};try{for(const channel of multiChannels){const value=channel==='roughness'?roughnessValue:metalnessValue;if(!Number.isInteger(value)||value<0||value>255)throw Error(scalarOwners[channel].label+' value must be 0 to 255');scalarLayers[channel]=scalarStrokeLayer(channel,value,settings,action,scalarFilter);}session.layer.begin(settings,{erase:action==='erase'&&session.paintTarget==='colour'&&!!selected,filter,smudge:action==='smudge'});}catch(error){for(const layer of Object.values(scalarLayers))layer.dispose();throw error;}
   const enabled=controls.enabled;controls.enabled=false;
-  if(action==='fill'||facePlan){stroke={fill:true,facePlan,start:{x:p.x,y:p.y},controls:enabled,held:false,count:0,dx:0,dy:0};if(!facePlan)session.layer.fill();else{stroke.count=facePlan.render(session.layer,stroke);if(action==='fill-face'){const active=stroke;stroke.timer=setTimer(()=>{if(stroke!==active||!current())return;try{active.held=true;active.count=facePlan.render(session.layer,active);updatePreview();}catch(error){cancel();throw error;}},420);}}return true;}
-  const makePath=()=>createStroke(kind,q=>{const h=hit({...q,width:p.width,height:p.height});if(h){const face=['blur','smudge'].includes(action)?session.filterDomain.faceAt(h.faceIndex):null;session.layer.stamp(h.uv.x,h.uv.y,q.pressure,face);for(const layer of Object.values(stroke?.scalarLayers||{}))layer.stamp(h.uv.x,h.uv.y,q.pressure);}else if(action==='smudge')session.layer.resetPickup();});
+  if(action==='fill'||facePlan){stroke={fill:true,facePlan,scalarFacePlan,scalarLayers,start:{x:p.x,y:p.y},controls:enabled,held:false,count:0,dx:0,dy:0};renderFill(stroke);if(action==='fill-face'){const active=stroke;stroke.timer=setTimer(()=>{if(stroke!==active||!current())return;try{active.held=true;renderFill(active);updatePreview();}catch(error){cancel();throw error;}},420);}return true;}
+  const makePath=()=>createStroke(kind,q=>{const h=hit({...q,width:p.width,height:p.height});if(h){const face=['blur','smudge'].includes(action)?session.filterDomain.faceAt(h.faceIndex):null;session.layer.stamp(h.uv.x,h.uv.y,q.pressure,face);for(const layer of Object.values(stroke?.scalarLayers||{}))layer.stamp(h.uv.x,h.uv.y,q.pressure,face);}else if(action==='smudge'){session.layer.resetPickup();for(const layer of Object.values(stroke?.scalarLayers||{}))layer.resetPickup();}});
   const path=makePath();stroke={path,controls:enabled,smudge:action==='smudge',large:settings.radius>48,makePath,lastInput:{...p},scalarLayers};path.start(p);return true;
  }
- function move(p){if(!stroke)return;if(!current()){close();return;}if(stroke.fill){const dx=p.x-stroke.start.x,dy=p.y-stroke.start.y;if(!stroke.held){if(Math.hypot(dx,dy)>8)cancel();return;}stroke.dx=dx;stroke.dy=dy;stroke.count=stroke.facePlan.render(session.layer,stroke);return;}try{if(stroke.smudge||stroke.large){session.layer.resetWorkBudget();if(stroke.path.stats.limited){stroke.path.cancel();stroke.path=stroke.makePath();stroke.path.start(stroke.lastInput);}}stroke.path.move(p);stroke.lastInput={...p};}catch(error){cancel();throw error;}}
+ function move(p){if(!stroke)return;if(!current()){close();return;}if(stroke.fill){const dx=p.x-stroke.start.x,dy=p.y-stroke.start.y;if(!stroke.held){if(Math.hypot(dx,dy)>8)cancel();return;}stroke.dx=dx;stroke.dy=dy;renderFill(stroke);return;}try{if(stroke.smudge||stroke.large){session.layer.resetWorkBudget();for(const layer of Object.values(stroke.scalarLayers||{}))layer.resetWorkBudget();if(stroke.path.stats.limited){stroke.path.cancel();stroke.path=stroke.makePath();stroke.path.start(stroke.lastInput);}}stroke.path.move(p);stroke.lastInput={...p};}catch(error){cancel();throw error;}}
  function finish(p){
   if(!stroke)return false;if(p)move(p);if(!stroke)return false;const active=stroke;
-  try{if(active.smudge||active.large)session.layer.resetWorkBudget();active.path?.end();}catch(error){cancel();throw error;}
+  try{if(active.smudge||active.large){session.layer.resetWorkBudget();for(const layer of Object.values(active.scalarLayers||{}))layer.resetWorkBudget();}active.path?.end();}catch(error){cancel();throw error;}
   const enabled=active.controls;clearTimer(active.timer);stroke=null;controls.enabled=enabled;
   if(!current()||paintTargetKey(target(),target()?.mesh,owner)!==session.key){session.layer.finish(true);for(const layer of Object.values(active.scalarLayers||{})){layer.finish(true);layer.dispose();}close();return false;}
-  const colourChanged=session.layer.finish(),scalarPixels={};for(const [channel,layer] of Object.entries(active.scalarLayers||{})){const changed=layer.finish();if(changed){const pixels=new Uint8Array(512*512);for(let i=0;i<pixels.length;i++)pixels[i]=layer.pixels[i*4];scalarPixels[channel]=pixels;}layer.dispose();}
+  const colourChanged=session.layer.finish(),scalarPixels={};for(const [channel,layer] of Object.entries(active.scalarLayers||{})){const changed=layer.finish();if(changed){const result=scalarStrokePixels(channel,layer);if(result.changed)scalarPixels[channel]=result.pixels;}layer.dispose();}
   if(!colourChanged&&!Object.keys(scalarPixels).length)return false;
   try{
    if(Object.keys(scalarPixels).length){const colour=colourChanged?(session.stack?captureLayeredColourResource(workingStack()):captureColourResource({width:session.size,height:session.size,pixels:session.layer.pixels,binding:session.binding})):null;return commitMulti(colour,scalarPixels);}
@@ -95,14 +123,18 @@ export function createViewportPainter({target,activeId=()=>target()?.id,body,own
   const maskPixels=s.paintTarget==='mask'?new Uint8Array(s.size*s.size):null;if(maskPixels)for(let i=0;i<maskPixels.length;i++)maskPixels[i]=s.layer.pixels[i*4];
   return {...s.stack,layers:s.stack.layers.map(l=>l.id===s.selected?(maskPixels?{...l,mask:{...l.mask,pixels:maskPixels}}:{...l,pixels:s.layer.pixels}):l)};
  }
- function scalarPreview(){const s=session;if(s.size===512)return s.layer.pixels;const out=s.preview;for(let y=0;y<s.size;y++)for(let x=0;x<s.size;x++){const at=(y*s.size+x)*4,from=((y>>1)*512+(x>>1))*4;out.set(s.layer.pixels.subarray(from,from+4),at);}return out;}
+ function scalarPreview(){const s=session,masked=s.stack?.layers.find(l=>l.id===s.selected)?.mask?.enabled;if(s.size===512&&!masked)return s.layer.pixels;const values=masked?scalarStrokePixels(s.paintTarget,s.layer).pixels:null,out=s.preview,step=s.size/512;for(let y=0;y<s.size;y++)for(let x=0;x<s.size;x++){const at=(y*s.size+x)*4,from=Math.floor(y/step)*512+Math.floor(x/step);if(values){out[at]=out[at+1]=out[at+2]=values[from];out[at+3]=255;}else out.set(s.layer.pixels.subarray(from*4,from*4+4),at);}return out;}
  function updatePreview(){if(!session)return;session.preview.set(scalar()?scalarPreview():session.aoPreview?.resource.pixels||session.imagePreview?.resource.pixels||(session.stack?flattenPaintLayerStack(workingStack()).pixels:session.layer.pixels));session.dirty=true;}
  function updateMaterialPreview(){const s=session;if(!s)return;
   if(s.previewMode!=='material'){s.display.showChannel();return;}
   const colour=scalar()?(s.resource?.pixels||null):s.preview,roughScratch=stroke?.scalarLayers?.roughness,metalScratch=stroke?.scalarLayers?.metalness;
-  const roughness=roughScratch?{width:512,height:512,pixels:roughScratch.pixels}:s.paintTarget==='roughness'?{width:512,height:512,pixels:s.layer.pixels}:s.roughness;
-  const metalness=metalScratch?{width:512,height:512,pixels:metalScratch.pixels}:s.paintTarget==='metalness'?{width:512,height:512,pixels:s.layer.pixels}:s.metalness;
-  s.display.showMaterial(colour,roughness,!!roughScratch||s.paintTarget==='roughness',metalness,!!metalScratch||s.paintTarget==='metalness');
+  const roughness=scalarMaterialPreview('roughness',roughScratch||(s.paintTarget==='roughness'?s.layer:null)),metalness=scalarMaterialPreview('metalness',metalScratch||(s.paintTarget==='metalness'?s.layer:null));
+  s.display.showMaterial(colour,roughness.resource,roughness.rgba,metalness.resource,metalness.rgba);
+ }
+ function scalarMaterialPreview(channel,layer){
+  if(!layer)return {resource:session[channel],rgba:false};
+  const masked=session.stack?.layers.find(l=>l.id===session.selected)?.mask?.enabled;
+  return {resource:{width:512,height:512,pixels:masked?scalarStrokePixels(channel,layer).pixels:layer.pixels},rgba:!masked};
  }
  function selectPreviewMode(value){if(!ready())return false;if(!['channel','material'].includes(value))throw Error('Unknown paint preview');if(session.previewMode===value)return false;session.previewMode=value;session.dirty=true;return true;}
  function loadLayer(){const s=session;if(!s)return;const selected=s.stack?.layers.find(l=>l.id===s.selected);if(s.paintTarget==='mask'&&!selected?.mask)s.paintTarget='colour';
@@ -115,8 +147,8 @@ export function createViewportPainter({target,activeId=()=>target()?.id,body,own
  // values without gamma conversion or colour blend modes. Publish only R8 copies.
  function commitScalar(){
   if(!current()||paintTargetKey(target(),target()?.mesh,owner)!==session.key){close();throw Error('Object changed during paint');}
-  const pixels=new Uint8Array(512*512);for(let i=0;i<pixels.length;i++)pixels[i]=session.layer.pixels[i*4];
-  const channel=session.paintTarget,cfg=scalarOwners[channel],resource=cfg.capture({width:512,height:512,pixels,binding:session.binding}),pool=cfg.pool();
+  const channel=session.paintTarget,result=scalarStrokePixels(channel,session.layer);if(!result.changed){loadLayer();updatePreview();return false;}const pixels=result.pixels;
+  const cfg=scalarOwners[channel],resource=cfg.capture({width:512,height:512,pixels,binding:session.binding}),pool=cfg.pool();
   for(const o of objects()){const r=o===target()?resource:o?.[cfg.field];if(r)pool.add(r);}
   if(!checkpoint())throw Error('Scene history checkpoint unavailable');
   target()[cfg.field]=resource;session[channel]=resource;loadLayer();updatePreview();return true;
@@ -130,7 +162,7 @@ export function createViewportPainter({target,activeId=()=>target()?.id,body,own
   for(const [channel,resource] of Object.entries(resources)){const cfg=scalarOwners[channel];target()[cfg.field]=resource;session[channel]=resource;}
   session.imagePreview=null;session.aoPreview=null;loadLayer();updatePreview();return true;
  }
- function setMultiPaintChannels(channels){if(!ready())return false;if(!Array.isArray(channels)||channels.some(c=>!['roughness','metalness'].includes(c))||new Set(channels).size!==channels.length)throw Error('Choose Roughness and/or Metalness for combined Colour strokes');if(session.paintTarget!=='colour'&&channels.length)throw Error('Choose Colour as the primary paint channel before combining material values');for(const channel of channels){const r=session[channel];if(r&&(r.width!==512||r.height!==512))throw Error(scalarOwners[channel].label+' painting requires a 512 × 512 map; existing map kept unchanged');}session.multiPaintChannels=channels.slice();session.previewMode='material';session.dirty=true;return true;}
+ function setMultiPaintChannels(channels){if(!ready())return false;if(!Array.isArray(channels)||channels.some(c=>!['roughness','metalness'].includes(c))||new Set(channels).size!==channels.length)throw Error('Choose Roughness and/or Metalness for combined Colour strokes');if(!['colour','mask'].includes(session.paintTarget)&&channels.length)throw Error('Choose Colour as the primary paint channel before combining material values');for(const channel of channels){const r=session[channel];if(r&&(r.width!==512||r.height!==512))throw Error(scalarOwners[channel].label+' painting requires a 512 × 512 map; existing map kept unchanged');}session.multiPaintChannels=channels.slice();session.previewMode='material';session.dirty=true;return true;}
  function colourOnly(){if(scalar())throw Error('Switch to Colour to edit layers, masks or images');}
  function preflight(resource){const pool=createProjectPaintPool();for(const o of objects()){const r=o===target()?resource:o?.colourPaint;if(r)pool.add(r);}}
  function clearImagePreview(){if(session?.imagePreview){session.imagePreview=null;updatePreview();}}
@@ -211,7 +243,7 @@ export function createViewportPainter({target,activeId=()=>target()?.id,body,own
    const preview=resource.pixels.slice();texture=paintTexture(preview,1024);
    if(!current()||paintTargetKey(target(),target()?.mesh,owner)!==s.key)throw Error('Object changed during paint');
    if(!checkpoint())throw Error('Scene history checkpoint unavailable');
-   target().colourPaint=resource;s.resource=resource;s.stack=resource.version>=2?resource.layers:null;s.size=1024;s.preview=preview;s.layer.dispose();s.layer=layer;s.filterDomain=null;s.display.replaceChannelTexture(texture);s.dirty=true;return true;
+   target().colourPaint=resource;s.resource=resource;s.stack=resource.version>=2?resource.layers:null;s.size=1024;s.preview=preview;s.layer.dispose();s.layer=layer;s.filterDomain=null;s.filterDomains=null;s.display.replaceChannelTexture(texture);s.dirty=true;return true;
   }catch(error){layer?.dispose();texture?.dispose();throw error;}
  }
  function mergeLayers(all=false){colourOnly();if(session?.imagePreview)throw Error('Apply or cancel image placement before merging');if(!ready())return false;
@@ -223,12 +255,12 @@ export function createViewportPainter({target,activeId=()=>target()?.id,body,own
  function editLayer(patch){colourOnly();if(!ready()||session.selected==='$base')return false;const layer=session.stack.layers.find(l=>l.id===session.selected);if(Object.keys(patch).every(k=>layer[k]===patch[k]))return false;return commit(captureLayeredColourResource(replacePaintLayer(session.stack,session.selected,patch)));}
  function removeLayer(){colourOnly();if(!ready()||session.selected==='$base')return false;const s=session,layers=s.stack.layers.filter(l=>l.id!==s.selected);if(commit(captureLayeredColourResource({...s.stack,layers}))){session.selected=layers.at(-1)?.id||'$base';loadLayer();return true;}return false;}
  function moveLayer(direction){colourOnly();if(!ready()||session.selected==='$base'||![-1,1].includes(direction))return false;const layers=[...session.stack.layers],i=layers.findIndex(l=>l.id===session.selected),j=i+direction;if(j<0||j>=layers.length)return false;[layers[i],layers[j]]=[layers[j],layers[i]];return commit(captureLayeredColourResource({...session.stack,layers}));}
- function selectPaintTarget(value){if(!ready())return false;if(!['colour','mask','roughness','metalness'].includes(value))throw Error('Unknown paint target');if(value==='mask'&&!session.stack?.layers.find(l=>l.id===session.selected)?.mask)throw Error('Add a mask to the selected paint layer first');if(session.paintTarget===value){session.previewMode='material';session.dirty=true;return false;}if(Object.hasOwn(scalarOwners,value)&&session[value]&&(session[value].width!==512||session[value].height!==512))throw Error(scalarOwners[value].label+' painting requires a 512 × 512 map; existing map kept unchanged');session.paintTarget=value;if(value!=='colour')session.multiPaintChannels=[];session.previewMode='material';loadLayer();updatePreview();return true;}
- function addMask(){colourOnly();if(!ready())return false;const layer=session.stack?.layers.find(l=>l.id===session.selected);if(!layer)throw Error('Select a paint layer above Base colour for a mask');if(layer.mask)return false;
+ function selectPaintTarget(value){if(!ready())return false;if(!['colour','mask','roughness','metalness'].includes(value))throw Error('Unknown paint target');if(value==='mask'&&!session.stack?.layers.find(l=>l.id===session.selected)?.mask)throw Error('Add a mask to the selected paint layer first');if(session.paintTarget===value){session.previewMode='material';session.dirty=true;return false;}if(Object.hasOwn(scalarOwners,value)&&session[value]&&(session[value].width!==512||session[value].height!==512))throw Error(scalarOwners[value].label+' painting requires a 512 × 512 map; existing map kept unchanged');session.paintTarget=value;if(Object.hasOwn(scalarOwners,value))session.multiPaintChannels=[];session.previewMode='material';loadLayer();updatePreview();return true;}
+ function addMask(){if(!ready())return false;const layer=session.stack?.layers.find(l=>l.id===session.selected);if(!layer)throw Error('Select a paint layer above Base colour for a mask');if(layer.mask)return false;
   if(commit(captureLayeredColourResource(replacePaintLayer(session.stack,session.selected,{mask:{enabled:true,inverted:false,pixels:new Uint8Array(session.size*session.size).fill(255)}})))){session.paintTarget='mask';loadLayer();return true;}return false;
  }
- function editMask(patch){colourOnly();if(!ready())return false;const layer=session.stack?.layers.find(l=>l.id===session.selected);if(!layer?.mask)throw Error('Add a mask to the selected paint layer first');if(!patch||Object.keys(patch).some(k=>!['enabled','inverted'].includes(k)))throw Error('Unsupported mask edit');if(Object.keys(patch).every(k=>layer.mask[k]===patch[k]))return false;return commit(captureLayeredColourResource(replacePaintLayer(session.stack,session.selected,{mask:{...layer.mask,...patch}})));}
- function removeMask(){colourOnly();if(!ready())return false;const layer=session.stack?.layers.find(l=>l.id===session.selected);if(!layer?.mask)return false;return commit(captureLayeredColourResource(replacePaintLayer(session.stack,session.selected,{mask:null})));}
+ function editMask(patch){if(!ready())return false;const layer=session.stack?.layers.find(l=>l.id===session.selected);if(!layer?.mask)throw Error('Add a mask to the selected paint layer first');if(!patch||Object.keys(patch).some(k=>!['enabled','inverted'].includes(k)))throw Error('Unsupported mask edit');if(Object.keys(patch).every(k=>layer.mask[k]===patch[k]))return false;return commit(captureLayeredColourResource(replacePaintLayer(session.stack,session.selected,{mask:{...layer.mask,...patch}})));}
+ function removeMask(){if(!ready())return false;const layer=session.stack?.layers.find(l=>l.id===session.selected);if(!layer?.mask)return false;return commit(captureLayeredColourResource(replacePaintLayer(session.stack,session.selected,{mask:null})));}
  // Read-only UI thumbnails use committed raw layer colour/coverage, independent
  // of opacity/blend/mask. Area averaging preserves thin marks; UV v=1 is at top.
  function layerThumbnail(id){
