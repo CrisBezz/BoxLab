@@ -1,7 +1,7 @@
 import { EditableMesh } from './mesh.js';
 import { EditableMesh as LiveEditableMesh } from './mesh.js?v=0.12';
 import { installLooseTopology } from './loose-topology.js';
-import { installBridgeTopology } from './bridge-topology.js?v=0.36.11.1';
+import { installBridgeTopology } from './bridge-topology.js?v=0.36.18.1057';
 import { installUnequalBridge } from './bridge-unequal.js?v=0.36.18.244';
 import { installUnequalBridgeQuality } from './bridge-unequal-quality.js?v=0.36.18.245';
 import { installUnequalBridgeAlignment } from './bridge-unequal-alignment.js?v=0.36.18.246';

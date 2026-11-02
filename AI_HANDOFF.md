@@ -1,3 +1,11 @@
+# BoxLab current handoff — build .1057
+
+## .1057 — keep the editor camera authoritative — 2 November 2026
+
+Repeated user FAIL: multi-channel Colour/Roughness/Metalness Paint → Done → re-enter displaces gizmo and turns paint contacts into orbit. Colour-only re-entry is protected PASS. Root cause found in `bridge-topology.js`: global PerspectiveCamera.updateProjectionMatrix observer overwrote bridge.camera for every perspective camera. Metallic PMREM generation constructs its own PerspectiveCamera, stealing the editor camera reference used by gizmo projection and painting raycasts. Main already publishes camera and OrbitControls together. Observer now accepts projection updates only from controls.object once controls exist; startup fallback remains. Existing modelling, Paint, PMREM and transform owners retained. The .1056 matrix refresh alone did not repair this camera identity fault.
+
+Regression uses real Three.js perspective cameras across three reflection/clone cycles and confirms the bridge retains editor identity. Focused camera/release/bootstrap checks: 37 PASS; material painting/reflections/orbit checks: 15 PASS. Full local suite ended without a final summary after reporting one bootstrap cache-pin assertion; that pin was corrected and its focused tests rerun successfully. No full-suite PASS claimed; hosted regression and deployment pending. Protected Multi1.0 unchanged. Device acceptance pending: multi-channel paint → Done → reopen → paint; switch brushes and Pencil orbit; repeat three times; check Colour-only, previews and shadows.
+
 # BoxLab current handoff — build .1056
 
 User reports that during UV Paint testing, changing brushes and orbiting with Pencil can leave the Total Gizmo displaced far from the selected object. The issue has recurred while orbiting, so the failure is treated as a camera/gizmo synchronization problem, not a brush action moving the object. Existing owners were audited: `viewport-paint` changes tool state and ends strokes; `pencil-orbit-gate` owns Pencil routing; `total-gizmo` continuously projects the active selection. `.1056` refreshes the Three.js camera world matrix inside the gizmo frame owner immediately before projecting the anchor, so a separate orbit frame cannot leave it using the prior view matrix.

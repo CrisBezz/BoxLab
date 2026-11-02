@@ -1,5 +1,5 @@
 {
-  "baseline": "Reviewed .1056 runtime asset pins and hashes; protected Multi version remains unchanged.",
+  "baseline": "Reviewed .1057 camera ownership repair; protected Multi unchanged.",
   "references": [
     {
       "owner": "index.html",
@@ -167,9 +167,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1056",
+      "url": "./src/drawer-ui.js?v=0.36.18.1057",
       "target": "src/drawer-ui.js",
-      "sha256": "51ff1069a2b8349d34373d3cd5c4adcd51365f7159822a637bc9b497477ee2fe"
+      "sha256": "b7dbc34ab6ee6b8fa70caa53810426b53073bbc53a10d19b94721651fca62496"
     },
     {
       "owner": "index.html",
@@ -297,9 +297,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/loose-bootstrap.js?v=0.36.18.753",
+      "url": "./src/loose-bootstrap.js?v=0.36.18.1057",
       "target": "src/loose-bootstrap.js",
-      "sha256": "b674aaedd053e1fe81543361e7b095073230de34402d3e2d5bd7e21ea9ad0daa"
+      "sha256": "850f697ca783686d7faeb6d125a235be7260d9f2f05cdc21a33a208ea0b22ee1"
     },
     {
       "owner": "index.html",
@@ -317,9 +317,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/multi-face-direct.js?v=0.36.18.993",
+      "url": "./src/multi-face-direct.js?v=0.36.18.1057",
       "target": "src/multi-face-direct.js",
-      "sha256": "9af3f9f04c5188058e178bcf64263ad4ea46c6b4736499146109555706c92d37"
+      "sha256": "47d7be6d5dcb034e6c84a905a1df598aa32048ab9cc5877fd738d132dad4fbf4"
     },
     {
       "owner": "index.html",
@@ -384,7 +384,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1056",
+      "url": "./src/release-version.js?v=0.36.18.1057",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -551,7 +551,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/total-gizmo.js?v=0.36.18.1056",
+      "url": "./src/total-gizmo.js?v=0.36.18.1057",
       "target": "src/total-gizmo.js",
       "sha256": "cddf1a3d97a0532fd3faa44b8b1956e532de1f61d8d63e257bf029e6b80f5900"
     },
@@ -876,9 +876,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1056",
+      "url": "./face-workflow-layout.js?v=0.36.18.1057",
       "target": "src/face-workflow-layout.js",
-      "sha256": "57c5806d228bba994a8d5c43b26492965bc713ac1525923c9a5f85fac39479d8"
+      "sha256": "234ddde666b00477917e0c6adb188e4c54627502f23e04e68798af61ad0f43c7"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1373,7 +1373,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1056",
+      "url": "./release-version.js?v=0.36.18.1057",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -1567,9 +1567,9 @@
     },
     {
       "owner": "src/loose-bootstrap.js",
-      "url": "./bridge-topology.js?v=0.36.11.1",
+      "url": "./bridge-topology.js?v=0.36.18.1057",
       "target": "src/bridge-topology.js",
-      "sha256": "af346b3eb3477821f20bc4417ec8bfb08ebbc23ef7ed6d6ce7bea5b9ceb8e7cf"
+      "sha256": "5a9c0052639eb62abd7c3620c52ea42891f27901aa0e7c669d7ce645570c17f3"
     },
     {
       "owner": "src/loose-bootstrap.js",
@@ -1810,9 +1810,9 @@
     },
     {
       "owner": "src/multi-face-direct.js",
-      "url": "./uniform-inset.js?v=0.36.18.753",
+      "url": "./uniform-inset.js?v=0.36.18.1057",
       "target": "src/uniform-inset.js",
-      "sha256": "71b8936e5cc5eae8c2a1a9ce793a48d2732159dc9e13f1cf739487fdec396c1a"
+      "sha256": "406a410d1b21f4528b4f33e2f63c0ce35858cefba8786f8f2055f99190c4b249"
     },
     {
       "owner": "src/multi-object.js",
@@ -2074,9 +2074,9 @@
     },
     {
       "owner": "src/uniform-inset.js",
-      "url": "./loose-bootstrap.js?v=0.36.18.753",
+      "url": "./loose-bootstrap.js?v=0.36.18.1057",
       "target": "src/loose-bootstrap.js",
-      "sha256": "b674aaedd053e1fe81543361e7b095073230de34402d3e2d5bd7e21ea9ad0daa"
+      "sha256": "850f697ca783686d7faeb6d125a235be7260d9f2f05cdc21a33a208ea0b22ee1"
     },
     {
       "owner": "src/vertex-tool-viewport-session.js",
@@ -2846,9 +2846,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/bridge-topology.js?v=0.12",
+      "url": "./src/bridge-topology.js?v=0.36.18.1057",
       "target": "src/bridge-topology.js",
-      "sha256": "af346b3eb3477821f20bc4417ec8bfb08ebbc23ef7ed6d6ce7bea5b9ceb8e7cf"
+      "sha256": "5a9c0052639eb62abd7c3620c52ea42891f27901aa0e7c669d7ce645570c17f3"
     },
     {
       "owner": "src/project-paint-byte-pool.js",
@@ -3350,9 +3350,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1056",
+      "url": "./src/shell-comparison.js?v=0.36.18.1057",
       "target": "src/shell-comparison.js",
-      "sha256": "780995d21a195049bf47a7a860b98fb9d359b29cab09f0b91acceb7974dc443c"
+      "sha256": "c8709d767e58c1df9e29d1b7087ff7fb7820e97b202bf90db2948cc95b961cd0"
     },
     {
       "owner": "src/main.js",

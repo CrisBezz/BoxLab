@@ -13,7 +13,10 @@ export function installBridgeTopology(EditableMesh) {
   if (!THREE.PerspectiveCamera.prototype.__boxlabCameraObserverInstalled) {
     const baseUpdateProjectionMatrix = THREE.PerspectiveCamera.prototype.updateProjectionMatrix;
     THREE.PerspectiveCamera.prototype.updateProjectionMatrix = function (...args) {
-      state.camera = this;
+      // Main publishes the editor camera and OrbitControls together. PMREM and
+      // Path Trace also construct perspective cameras; their projection updates
+      // must never replace the camera used by picking and the Total Gizmo.
+      if (!state.controls || this === state.controls.object) state.camera = this;
       return baseUpdateProjectionMatrix.apply(this, args);
     };
     THREE.PerspectiveCamera.prototype.__boxlabCameraObserverInstalled = true;
