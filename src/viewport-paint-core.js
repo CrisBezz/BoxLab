@@ -246,6 +246,18 @@ export function createViewportPainter({target,activeId=()=>target()?.id,body,own
    target().colourPaint=resource;s.resource=resource;s.stack=resource.version>=2?resource.layers:null;s.size=1024;s.preview=preview;s.layer.dispose();s.layer=layer;s.filterDomain=null;s.filterDomains=null;s.display.replaceChannelTexture(texture);s.dirty=true;return true;
   }catch(error){layer?.dispose();texture?.dispose();throw error;}
  }
+ function baseToLayer(){
+  colourOnly();if(session?.imagePreview)throw Error('Apply or cancel image placement before lifting Base');
+  if(!ready()||session.selected!=='$base')return false;
+  const s=session,stack=s.stack||createPaintLayerStack(captureColourResource({width:s.size,height:s.size,pixels:s.preview,binding:s.binding}));
+  if(stack.layers.length>=3)throw Error('Merge or remove a layer first; three overlays maximum');
+  let n=1;while(stack.layers.some(l=>l.id==='basePaint'+n))n++;const id='basePaint'+n;
+  const appended=appendPaintLayer(stack,{id,name:'Base paint',pixels:stack.base.pixels}),lifted=appended.layers.at(-1),base=captureColourResource({...stack.base,pixels:new Uint8Array(stack.base.pixels.length).fill(255)});
+  // Insert UNDER every existing overlay. Its full opaque pixels exactly replace
+  // the former backing before the original blend/mask/image stack is composited.
+  const resource=captureLayeredColourResource({...appended,base,layers:[lifted,...appended.layers.slice(0,-1)]});
+  if(commit(resource)){session.selected=id;session.paintTarget='colour';loadLayer();updatePreview();return true;}return false;
+ }
  function mergeLayers(all=false){colourOnly();if(session?.imagePreview)throw Error('Apply or cancel image placement before merging');if(!ready())return false;
   const s=session;if(!s.stack?.layers.length||!all&&s.selected==='$base')return false;
   const resource=captureLayeredColourResource(mergePaintLayersToBase(s.stack,all?null:s.selected));
@@ -303,7 +315,7 @@ export function createViewportPainter({target,activeId=()=>target()?.id,body,own
   return {width:64,height:64,pixels:pixels.slice()};
  }
  function state(){const s=session;return s?{multiPaintChannels:s.multiPaintChannels.slice(),fillPreview:stroke?.facePlan?{held:stroke.held,count:stroke.count}:null,resolution:s.size,strokeLimited:!!s.layer.limited,selected:s.selected,paintTarget:s.paintTarget,previewMode:s.previewMode,aoPreview:!!s.aoPreview,aoBusy:!!s.aoJob,aoProgress:s.aoProgress||0,layered:!!s.stack,layers:[{id:'$base',name:'Base colour',visible:true,opacity:1,blendMode:'normal',mask:null},...(s.stack?.layers||[]).map(({id,name,visible,opacity,blendMode,mask,image})=>({id,name,visible,opacity,blendMode,image:!!image,mask:mask?{enabled:mask.enabled,inverted:mask.inverted}:null}))]}:null;}
- return {open,close,cancel,begin,move,finish,hit,setFillScope,layerThumbnail,materialMapThumbnail,selectPreviewMode,selectLayer,addLayer,editLayer,removeLayer,moveLayer,selectPaintTarget,setMultiPaintChannels,addMask,editMask,removeMask,projectImage,imageForEdit,rasterizeImage,increaseResolution,mergeToBase:()=>mergeLayers(false),flattenLayers:()=>mergeLayers(true),previewImage,applyImagePreview,clearImagePreview,surfaceFrame,previewAO,previewAOHigh,applyAO,cancelAO,
+ return {open,close,cancel,begin,move,finish,hit,setFillScope,layerThumbnail,materialMapThumbnail,selectPreviewMode,selectLayer,addLayer,editLayer,removeLayer,moveLayer,selectPaintTarget,setMultiPaintChannels,addMask,editMask,removeMask,projectImage,imageForEdit,rasterizeImage,increaseResolution,baseToLayer,mergeToBase:()=>mergeLayers(false),flattenLayers:()=>mergeLayers(true),previewImage,applyImagePreview,clearImagePreview,surfaceFrame,previewAO,previewAOHigh,applyAO,cancelAO,
   tick(){if(session&&!current()){close();return;}session?.boundaries?.update();if(session?.layer.consumeDirty()||Object.values(stroke?.scalarLayers||{}).some(layer=>layer.consumeDirty()))updatePreview();if(session?.dirty){updateMaterialPreview();const map=session.display.surface.material.map;if(session.previewMode==='channel'&&map)map.needsUpdate=true;session.dirty=false;}},
   get state(){return state();},get active(){return !!session;},get drawing(){return !!stroke;},get pixels(){return session?.preview;}};
 }
