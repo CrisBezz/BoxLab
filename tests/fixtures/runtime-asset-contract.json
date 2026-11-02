@@ -1,5 +1,5 @@
 {
-  "baseline": "Reviewed .1063 native NOM displacement inspection metadata; protected edge picking, Multi and Paint unchanged.",
+  "baseline": "Reviewed .1064 isolated lossless native height decode benchmark; existing PNG exports, Paint, UV and native edge owners protected.",
   "references": [
     {
       "owner": "index.html",
@@ -167,9 +167,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1063",
+      "url": "./src/drawer-ui.js?v=0.36.18.1064",
       "target": "src/drawer-ui.js",
-      "sha256": "44fdd7c8e9e859ac04582b3d0b7d5c038624c43afbda8383e151f407ad07985e"
+      "sha256": "6efb36cddccad298a0f66db308cc60caf21a35f0d40f297cb105dd685a194e6a"
     },
     {
       "owner": "index.html",
@@ -384,7 +384,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1063",
+      "url": "./src/release-version.js?v=0.36.18.1064",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -876,9 +876,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1063",
+      "url": "./face-workflow-layout.js?v=0.36.18.1064",
       "target": "src/face-workflow-layout.js",
-      "sha256": "79c226657cc3fbb163f750f7bc75ae763f4f955193c800d2dbac7b78c914baa3"
+      "sha256": "f647cc55127c346b080a544b3a0baf5c3771be687bf99d8741105818f710d3b2"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1373,7 +1373,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1063",
+      "url": "./release-version.js?v=0.36.18.1064",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -2470,7 +2470,7 @@
       "owner": "src/nomad-packed-maps.js",
       "url": "./nomad-scalar-png.js?v=0.36.18.1035",
       "target": "src/nomad-scalar-png.js",
-      "sha256": "63a22a35c369fc89238d2b31e1b804e18dfe233e98cf0d65a1798f9ba2c00506"
+      "sha256": "8b91b97d117ae6feb05fa6d1e1e1a47623f8c2ba4988ed79fb2bd0b1fb82f910"
     },
     {
       "owner": "src/boxlab-project-codec.js",
@@ -2566,7 +2566,7 @@
       "owner": "src/paint-export.js",
       "target": "src/nomad-scalar-png.js",
       "url": "./nomad-scalar-png.js?v=0.36.18.1035",
-      "sha256": "63a22a35c369fc89238d2b31e1b804e18dfe233e98cf0d65a1798f9ba2c00506"
+      "sha256": "8b91b97d117ae6feb05fa6d1e1e1a47623f8c2ba4988ed79fb2bd0b1fb82f910"
     },
     {
       "owner": "src/paint-layer-stack.js",
@@ -3350,9 +3350,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1063",
+      "url": "./src/shell-comparison.js?v=0.36.18.1064",
       "target": "src/shell-comparison.js",
-      "sha256": "769f01b0042101ffc197b396b398b3c59dce02fe7badedc27de3c32b17af9ac0"
+      "sha256": "75deb7c7b0ca7a336d5e0597626ad07a8f1c64903247139e8f964cbe9c9f94e3"
     },
     {
       "owner": "src/main.js",
@@ -3472,13 +3472,37 @@
       "owner": "src/uv-image-surface-preview.js",
       "url": "./nomad-scalar-png.js?v=0.36.18.1035",
       "target": "src/nomad-scalar-png.js",
-      "sha256": "63a22a35c369fc89238d2b31e1b804e18dfe233e98cf0d65a1798f9ba2c00506"
+      "sha256": "8b91b97d117ae6feb05fa6d1e1e1a47623f8c2ba4988ed79fb2bd0b1fb82f910"
     },
     {
       "owner": "src/viewport-paint.js",
       "url": "./paint-palette-layout.js?v=0.36.18.1061",
       "target": "src/paint-palette-layout.js",
       "sha256": "e94fa66150f489701e5187e609daf095805242ff6505de385d7e89cf0811d59f"
+    },
+    {
+      "owner": "docs/native-height-benchmark-1064.html",
+      "url": "../src/native-height-benchmark-ui.js?v=0.36.18.1064",
+      "target": "src/native-height-benchmark-ui.js",
+      "sha256": "522bfed08fa79446aee15e25548f3360351a552ac03011c3f058382c749f1d03"
+    },
+    {
+      "owner": "src/native-height-benchmark-ui.js",
+      "url": "./nomad-height-benchmark.js?v=0.36.18.1064",
+      "target": "src/nomad-height-benchmark.js",
+      "sha256": "9c04744f98ab872e4c1091f4ee662d8f02a39b8c33356424da6a85bea9a3faed"
+    },
+    {
+      "owner": "src/nomad-height-benchmark.js",
+      "url": "./nomad-scalar-png.js?v=0.36.18.1064",
+      "target": "src/nomad-scalar-png.js",
+      "sha256": "8b91b97d117ae6feb05fa6d1e1e1a47623f8c2ba4988ed79fb2bd0b1fb82f910"
+    },
+    {
+      "owner": "src/nomad-height-benchmark.js",
+      "url": "./nomad-import-core.js?v=0.36.18.1033",
+      "target": "src/nomad-import-core.js",
+      "sha256": "3749ff21a88b08c5b37cc3bab0bdb138c188ec716bdcfada9c1dd67756e976b8"
     }
   ]
 }

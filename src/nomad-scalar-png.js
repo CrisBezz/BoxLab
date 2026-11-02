@@ -89,3 +89,52 @@ function joinPNG(parts){
  const size=8+parts.reduce((n,p)=>n+p.length,0);if(size>8*1024*1024)throw Error('Native colour preview exceeds 8 MB');
  const out=new Uint8Array(size);out.set([137,80,78,71,13,10,26,10]);let at=8;for(const p of parts){out.set(p,at);at+=p.length;}return out;
 }
+
+// Raw height samples, not browser colour pixels. PNG filters operate on bytes;
+// 16-bit samples are big-endian (https://www.w3.org/TR/png-3/). No gamma, alpha,
+// resampling, strength or midpoint is applied. Kept out of the viewport graph.
+export async function decodeNomadHeightPNG(data){
+ const fail=detail=>{throw Error('Native height PNG: '+detail);};
+ if(!(data instanceof Uint8Array)||data.length<45||data.length>8*1024*1024||![137,80,78,71,13,10,26,10].every((v,i)=>data[i]===v))fail('requires a PNG within 8 MiB');
+ const view=new DataView(data.buffer,data.byteOffset,data.byteLength),idats=[];let width,height,bitDepth,ended=false,idatEnded=false;
+ for(let at=8;at<data.length;){
+  if(at+12>data.length)fail('truncated chunk');const n=view.getUint32(at);if(n>data.length-at-12)fail('truncated chunk');
+  const name=String.fromCharCode(...data.subarray(at+4,at+8)),body=data.subarray(at+8,at+8+n);
+  if(!/^[A-Za-z]{2}[A-Z][A-Za-z]$/.test(name))fail('invalid chunk type');
+  let crc=0xffffffff;for(let i=at+4;i<at+8+n;i++)crc=(crc>>>8)^crcTable[(crc^data[i])&255];if(((crc^0xffffffff)>>>0)!==view.getUint32(at+8+n))fail('chunk CRC mismatch');
+  if(at===8&&name!=='IHDR')fail('missing header');
+  if(name==='IHDR'){
+   if(width!==undefined||n!==13)fail('invalid header');width=view.getUint32(at+8);height=view.getUint32(at+12);bitDepth=body[8];
+   if(!width||!height||width>2048||height>2048)fail('dimensions exceed 2048 × 2048');
+   if(![8,16].includes(bitDepth)||body[9]!==0||body[10]||body[11]||body[12])fail('requires non-interlaced 8/16-bit grayscale');
+  }else if(name==='IDAT'){
+   if(idatEnded)fail('non-contiguous image data');idats.push(body);
+  }else if(name==='IEND'){
+   if(n||at+n+12!==data.length)fail('invalid end chunk');ended=true;break;
+  }else{
+   if(idats.length)idatEnded=true;
+   if(['acTL','fcTL','fdAT','tRNS'].includes(name)||!(name.charCodeAt(0)&32))fail('unsupported chunk '+name);
+  }
+  at+=n+12;
+ }
+ if(!ended||!idats.length)fail('missing image data/end');
+ if(typeof DecompressionStream!=='function')fail('decompression unavailable in this browser');
+ const bpp=bitDepth/8,stride=width*bpp,expected=(stride+1)*height,raw=new Uint8Array(expected);
+ const reader=new Blob(idats).stream().pipeThrough(new DecompressionStream('deflate')).getReader();let filled=0;
+ try{
+  while(true){const {done,value}=await reader.read();if(done)break;if(value.length>expected-filled)fail('inflated data exceeds dimensions');raw.set(value,filled);filled+=value.length;}
+ }catch(error){try{await reader.cancel();}catch{}throw error;}finally{reader.releaseLock();}
+ if(filled!==expected)fail('inflated data length mismatch');
+ const samples=bitDepth===16?new Uint16Array(width*height):new Uint8Array(width*height);let min=2**bitDepth-1,max=0,nonZeroLowBytes=0;
+ for(let y=0;y<height;y++){
+  const at=y*(stride+1),filter=raw[at];if(filter>4)fail('invalid row filter');
+  for(let x=0;x<stride;x++){
+   const a=x>=bpp?raw[at+1+x-bpp]:0,b=y?raw[at-stride+x]:0,c=y&&x>=bpp?raw[at-stride+x-bpp]:0;
+   const predictor=filter===0?0:filter===1?a:filter===2?b:filter===3?(a+b)>>>1:paeth(a,b,c);raw[at+1+x]=(raw[at+1+x]+predictor)&255;
+  }
+  for(let x=0;x<width;x++){
+   const i=at+1+x*bpp,value=bpp===2?raw[i]*256+raw[i+1]:raw[i];samples[y*width+x]=value;min=Math.min(min,value);max=Math.max(max,value);if(bpp===2&&(value&255))nonZeroLowBytes++;
+  }
+ }
+ return {width,height,bitDepth,samples,min,max,nonZeroLowBytes,knownArrayBytes:raw.byteLength+samples.byteLength};
+}
