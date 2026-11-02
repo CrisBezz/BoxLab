@@ -1,5 +1,5 @@
 {
-  "baseline": "Reviewed .1058 radial Material Brush-session repair; protected Multi unchanged.",
+  "baseline": "Reviewed .1059 Paint pointer recovery; protected Multi unchanged.",
   "references": [
     {
       "owner": "index.html",
@@ -167,9 +167,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1058",
+      "url": "./src/drawer-ui.js?v=0.36.18.1059",
       "target": "src/drawer-ui.js",
-      "sha256": "084d8c07dd13312874943d6508a65c457d7c93c260a6c319a0998b222effade8"
+      "sha256": "a9a1d0c93202601408e5b3354c6b0899a31373494305071fd86d8320fa2461b8"
     },
     {
       "owner": "index.html",
@@ -384,7 +384,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1058",
+      "url": "./src/release-version.js?v=0.36.18.1059",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -876,9 +876,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1058",
+      "url": "./face-workflow-layout.js?v=0.36.18.1059",
       "target": "src/face-workflow-layout.js",
-      "sha256": "a53418b24e7903c7429d024ff42e20c24ac9c5338631abc3822d96c7da9ce9ae"
+      "sha256": "b649bb718db15a2a3ab3311f9804f988b6796e94a3a66cb3814807860cc476e6"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1373,7 +1373,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1058",
+      "url": "./release-version.js?v=0.36.18.1059",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -2481,8 +2481,8 @@
     {
       "owner": "index.html",
       "target": "src/viewport-paint.js",
-      "url": "./src/viewport-paint.js?v=0.36.18.1058",
-      "sha256": "507ccd1e34b2d4d6ce0c20ec13c6e34eabb5196b45fb98d757a8f7749db97696"
+      "url": "./src/viewport-paint.js?v=0.36.18.1059",
+      "sha256": "035c875a70252824de879d997cd0f8d55bd23e1d2389f08d858e14017e3c7bc2"
     },
     {
       "owner": "src/viewport-paint.js",
@@ -3350,9 +3350,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1058",
+      "url": "./src/shell-comparison.js?v=0.36.18.1059",
       "target": "src/shell-comparison.js",
-      "sha256": "2d3d668bab571ae390dc97eb9654dec082ab8c5f92c8ccd1a718a0bdc18a0442"
+      "sha256": "cbc741d38a0ff71eee4c6583294eb0d479d9b6079b041add1fe3d27a4d96e306"
     },
     {
       "owner": "src/main.js",
