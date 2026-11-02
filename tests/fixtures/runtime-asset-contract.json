@@ -1,5 +1,5 @@
 {
-  "baseline": "Reviewed .1059 Paint pointer recovery; protected Multi unchanged.",
+  "baseline": "Reviewed .1060 UV help; Paint .1059 and protected Multi unchanged.",
   "references": [
     {
       "owner": "index.html",
@@ -167,9 +167,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1059",
+      "url": "./src/drawer-ui.js?v=0.36.18.1060",
       "target": "src/drawer-ui.js",
-      "sha256": "a9a1d0c93202601408e5b3354c6b0899a31373494305071fd86d8320fa2461b8"
+      "sha256": "129b8ed84678bef813140d796bd9495fe374b74186a93c398646709c3d615d29"
     },
     {
       "owner": "index.html",
@@ -310,9 +310,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/mesh-health.js?v=0.36.18.1033",
+      "url": "./src/mesh-health.js?v=0.36.18.1060",
       "target": "src/mesh-health.js",
-      "sha256": "394cf94baa25c1fdb486d0c41d730a3e4fff517b19aca671ec7a7bbcb3571692",
+      "sha256": "80ad6bda9754835a80f511eded9cdd940a9bd02af84359d5a9d09ab7ebdbbc71",
       "sourceVersion": "0.36.18.880"
     },
     {
@@ -384,7 +384,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1059",
+      "url": "./src/release-version.js?v=0.36.18.1060",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -876,9 +876,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1059",
+      "url": "./face-workflow-layout.js?v=0.36.18.1060",
       "target": "src/face-workflow-layout.js",
-      "sha256": "b649bb718db15a2a3ab3311f9804f988b6796e94a3a66cb3814807860cc476e6"
+      "sha256": "facb2a53ba53df4cf928ab0c6da809542233dbf50420445bfdae144ca14b06a9"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1373,7 +1373,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1059",
+      "url": "./release-version.js?v=0.36.18.1060",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -2396,9 +2396,9 @@
     },
     {
       "owner": "src/mesh-health.js",
-      "url": "./uv-workspace.js?v=0.36.18.1033",
+      "url": "./uv-workspace.js?v=0.36.18.1060",
       "target": "src/uv-workspace.js",
-      "sha256": "e7dff65162447005939611fe615e88ed11c2706ab9a82f0ddc7284d368fe260e"
+      "sha256": "85a9a75ebff6930c4460179fdf4572233f2e503222b4c908da9b474a479a7aea"
     },
     {
       "owner": "src/uv-workspace.js",
@@ -3350,9 +3350,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1059",
+      "url": "./src/shell-comparison.js?v=0.36.18.1060",
       "target": "src/shell-comparison.js",
-      "sha256": "cbc741d38a0ff71eee4c6583294eb0d479d9b6079b041add1fe3d27a4d96e306"
+      "sha256": "39817820bc15a8e83fd0aa6d8bf81845771633a9dc1c36c36ef1653e63d36148"
     },
     {
       "owner": "src/main.js",

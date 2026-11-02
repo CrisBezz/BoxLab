@@ -59,3 +59,14 @@ test('867 both actual Delete keyboard owners yield to active UV workspace and re
  const c={__boxlabUVWorkspace:{active:true},__boxlabSelectionBridge:{mode:()=> 'object'},window:{addEventListener:(_type,fn)=>handlers.push(fn)},document:{querySelector:()=>({disabled:false,click:()=>deletes++})},currentMode:()=> 'object',deleteButton:{disabled:false,click:()=>deletes++}};vm.createContext(c);vm.runInContext(router,c);vm.runInContext(manager.slice(manager.indexOf("  window.addEventListener('keydown', event => {"),manager.indexOf('  globalThis.__boxlabObjectManager =')),c);
  const event=()=>({key:'Delete',target:{matches:()=>false,closest:()=>null},preventDefault(){},stopPropagation(){},stopImmediatePropagation(){}});handlers.forEach(fn=>fn(event()));assert.equal(deletes,0);c.__boxlabUVWorkspace.active=false;handlers.forEach(fn=>fn(event()));assert.equal(deletes,2);
 });
+
+test('1060 UV help closes before Escape exits and resets on reopen without changing history or view',()=>{
+ const f=browserFixture();try{
+  const history=[];let done=0;const api=createUVWorkspace({canvas:f.canvas,note:f.note,controls:f.controls,onDone:()=>done++,onHistory:x=>history.push(x)}),root=f.viewport.children[0];
+  api.setReport(report(),'UVs');api.open();const help=root.querySelector('[data-uv="help"]');assert.equal(help.open,false);
+  const before={...api.view};help.open=true;root.querySelector('[data-uv="drag-rotate"]').fire('click');assert.match(root.querySelector('.uv-drag-hint').textContent,/counterclockwise/);
+  const key=()=>{for(const fn of f.winEvents.get('keydown'))fn({key:'Escape',preventDefault(){},stopImmediatePropagation(){}});};
+  key();assert.equal(help.open,false);assert.equal(done,0);assert(api.active);assert.deepEqual(api.view,before);assert.deepEqual(history,[]);
+  key();assert.equal(done,1);help.open=true;api.close();assert.equal(help.open,false);api.open();assert.equal(help.open,false);api.close();
+ }finally{f.restore();}
+});
