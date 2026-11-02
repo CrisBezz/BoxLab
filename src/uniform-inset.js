@@ -1,4 +1,4 @@
-import './loose-bootstrap.js?v=0.36.18.1057';
+import './loose-bootstrap.js?v=0.36.18.1062';
 import { EditableMesh } from './mesh.js';
 import * as THREE from 'three';
 

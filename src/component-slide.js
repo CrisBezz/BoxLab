@@ -145,6 +145,8 @@ function pointerHitsEdge(event, index) {
   return raycaster.intersectObject(object, false).length > 0;
 }
 function hitSelectedEdge(event, ids) {
+  const picker=globalThis.__boxlabSelectionBridge;
+  if(typeof picker?.pick==='function'){const hit=picker.pick('edge',event);return ids.includes(hit?.index)?hit.index:null;}
   for (const id of ids) if (pointerHitsEdge(event, id)) return id;
   return null;
 }

@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -20,5 +21,5 @@ test('335 canonical additive paint selection yields while Face Split is armed',(
 test('335 runtime cache-hops both Split and Edge paint selection',()=>{
   const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
   assert.match(index,/edge-paint-select\.js\?v=/);
-  assert.match(index,/face-split\.js\?v=0\.36\.18\.335/);
+  assertAssetReference(index,'face-split.js');
 });

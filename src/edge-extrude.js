@@ -139,6 +139,7 @@ function setPointer(event){
   pointer.y=-((event.clientY-r.top)/r.height)*2+1;
 }
 function hitSelectedEdge(event,ids){
+  const picker=bridge();if(typeof picker?.pick==='function'){const hit=picker.pick('edge',event);return ids.includes(hit?.index)?hit.index:null;}
   const s=state(),objects=s?.edgeObjects,cam=camera();
   if(!objects||!cam)return null;
   setPointer(event);raycaster.setFromCamera(pointer,cam);
@@ -147,6 +148,7 @@ function hitSelectedEdge(event,ids){
   return Number.isInteger(hit?.object?.userData?.index)?hit.object.userData.index:null;
 }
 function hitAnyEdge(event){
+  const picker=bridge();if(typeof picker?.pick==='function'){const hit=picker.pick('edge',event);return Number.isInteger(hit?.index)?hit.index:null;}
   const s=state(),objects=s?.edgeObjects,cam=camera();
   if(!objects||!cam)return null;
   setPointer(event);raycaster.setFromCamera(pointer,cam);

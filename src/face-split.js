@@ -14,7 +14,7 @@ function state(){return globalThis.__boxlabBridgeState;}
 function bridge(){return globalThis.__boxlabSelectionBridge;}
 function render(){document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));}
 function edgeKey(mesh,edge){return mesh.edgeKey(edge.a,edge.b);}
-function hitEdge(event){const s=state(),rect=canvas?.getBoundingClientRect();if(!s?.camera||!rect)return null;pointer.set((event.clientX-rect.left)/rect.width*2-1,-((event.clientY-rect.top)/rect.height*2-1));ray.setFromCamera(pointer,s.camera);const hit=ray.intersectObjects([...(s.edgeObjects?.values()||[])],false)[0];return Number.isInteger(hit?.object?.userData?.index)?hit.object.userData.index:null;}
+function hitEdge(event){const picker=bridge();if(typeof picker?.pick==='function'){const hit=picker.pick('edge',event);return Number.isInteger(hit?.index)?hit.index:null;}const s=state(),rect=canvas?.getBoundingClientRect();if(!s?.camera||!rect)return null;pointer.set((event.clientX-rect.left)/rect.width*2-1,-((event.clientY-rect.top)/rect.height*2-1));ray.setFromCamera(pointer,s.camera);const hit=ray.intersectObjects([...(s.edgeObjects?.values()||[])],false)[0];return Number.isInteger(hit?.object?.userData?.index)?hit.object.userData.index:null;}
 function faceHasNonAdjacentEdges(face,a,b){const n=face?.length||0;const locate=edge=>{for(let i=0;i<n;i++)if((face[i]===edge.a&&face[(i+1)%n]===edge.b)||(face[i]===edge.b&&face[(i+1)%n]===edge.a))return i;return-1;};const ia=locate(a),ib=locate(b);return ia>=0&&ib>=0&&ia!==ib&&(ia-ib+n)%n!==1&&(ib-ia+n)%n!==1;}
 function indexForKey(mesh,key){return mesh.edges().findIndex(edge=>edgeKey(mesh,edge)===key);}
 
