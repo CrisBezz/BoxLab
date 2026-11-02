@@ -1,5 +1,5 @@
 {
-  "baseline": "Reviewed .1060 UV help; Paint .1059 and protected Multi unchanged.",
+  "baseline": "Reviewed .1061 right Paint dock and object-following palette; protected Multi and UV help unchanged.",
   "references": [
     {
       "owner": "index.html",
@@ -167,9 +167,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1060",
+      "url": "./src/drawer-ui.js?v=0.36.18.1061",
       "target": "src/drawer-ui.js",
-      "sha256": "129b8ed84678bef813140d796bd9495fe374b74186a93c398646709c3d615d29"
+      "sha256": "a190e3407e1ae0c071f65b63af686c5509f3b0460d52334535e2656f27434d7f"
     },
     {
       "owner": "index.html",
@@ -384,7 +384,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1060",
+      "url": "./src/release-version.js?v=0.36.18.1061",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -539,9 +539,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/tool-session-ui.js?v=0.36.18.981",
+      "url": "./src/tool-session-ui.js?v=0.36.18.1061",
       "target": "src/tool-session-ui.js",
-      "sha256": "0bacb11535356fec590166779e6f517d582533ab7d2f692b60f809fdd9df75a4"
+      "sha256": "1718ff6c3bc185010bafdbd7f37a85d5012f401fa6cd473843bdf75b75f027d1"
     },
     {
       "owner": "index.html",
@@ -876,9 +876,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1060",
+      "url": "./face-workflow-layout.js?v=0.36.18.1061",
       "target": "src/face-workflow-layout.js",
-      "sha256": "facb2a53ba53df4cf928ab0c6da809542233dbf50420445bfdae144ca14b06a9"
+      "sha256": "e3edc6f58ba9acdeb9c3c128817496718c1c25284c82c3d290be001d7fc844a2"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1373,7 +1373,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1060",
+      "url": "./release-version.js?v=0.36.18.1061",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -2481,8 +2481,8 @@
     {
       "owner": "index.html",
       "target": "src/viewport-paint.js",
-      "url": "./src/viewport-paint.js?v=0.36.18.1059",
-      "sha256": "035c875a70252824de879d997cd0f8d55bd23e1d2389f08d858e14017e3c7bc2"
+      "url": "./src/viewport-paint.js?v=0.36.18.1061",
+      "sha256": "b94c721c229fa3ac46b9cc7cfb5ea165a9831b6d0e52498b8272d6358530cc71"
     },
     {
       "owner": "src/viewport-paint.js",
@@ -3350,9 +3350,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1060",
+      "url": "./src/shell-comparison.js?v=0.36.18.1061",
       "target": "src/shell-comparison.js",
-      "sha256": "39817820bc15a8e83fd0aa6d8bf81845771633a9dc1c36c36ef1653e63d36148"
+      "sha256": "f2b71c57fe66637054dd0b540edef9af53c29ada969937a5591d28554ee53621"
     },
     {
       "owner": "src/main.js",
@@ -3473,6 +3473,12 @@
       "url": "./nomad-scalar-png.js?v=0.36.18.1035",
       "target": "src/nomad-scalar-png.js",
       "sha256": "63a22a35c369fc89238d2b31e1b804e18dfe233e98cf0d65a1798f9ba2c00506"
+    },
+    {
+      "owner": "src/viewport-paint.js",
+      "url": "./paint-palette-layout.js?v=0.36.18.1061",
+      "target": "src/paint-palette-layout.js",
+      "sha256": "e94fa66150f489701e5187e609daf095805242ff6505de385d7e89cf0811d59f"
     }
   ]
 }

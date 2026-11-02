@@ -334,14 +334,14 @@ function begin({id,title,node,subtitle=''}={}){
   releaseUVSurface();
   host.replaceChildren(node);
   if(dock){
-    // Paint keeps contextual settings at the left edge; other sessions retain their layout.
+    // Paint keeps its original layers/settings at the right edge; other sessions retain their layout.
     // Keep its original footer/actions in place; every other session uses the
     // protected top-centre positioner and wide-layout owner unchanged.
     host.style.right='';host.style.margin='';host.style.isolation='';host.style.contain='';
     if(id==='uv-paint'){
       delete host.dataset.wideToolPanel;
       placeToolSessionPanel(host,{compact:true});
-      Object.assign(host.style,{left:'8px',right:'',margin:'',transform:'none',width:'min(320px, calc(100% - 16px))',maxHeight:'calc(100% - 24px)',padding:'8px'});
+      Object.assign(host.style,{left:'auto',right:'8px',margin:'',transform:'none',width:'min(320px, calc(100% - 16px))',maxHeight:'calc(100% - 24px)',padding:'8px'});
     }else{host.style.width='';placeToolSessionPanel(host);
       // Keep the UV popup's scrolling clip local on iPad/WebKit. Avoid the
       // transformed scroll container used by the ordinary centred dock.
