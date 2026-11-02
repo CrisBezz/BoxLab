@@ -184,10 +184,11 @@ function syncPaintTools(){
 for(const [value,label] of paintTools){const button=input('tool-'+value);button.disabled=action.disabled;button.setAttribute('aria-pressed',String(action.value===value));if(action.value===value){input('tool-summary').textContent='Brush tools · '+label;input('hide-tools').textContent=label+'\nControls';input('hide-tools').setAttribute('aria-label',label+' quick controls');}}
 }
 input('quick-help').addEventListener('click',()=>{const expanded=input('quick-help').dataset.helpOpen==='true';input('quick-help').dataset.helpOpen=String(!expanded);input('quick-help').setAttribute('aria-expanded',String(!expanded));input('quick-help-popover').hidden=expanded;if(expanded)input('quick-help').removeAttribute('aria-describedby');else input('quick-help').setAttribute('aria-describedby','paintQuickHelp');});
-for(const [value] of paintTools)input('tool-'+value).addEventListener('click',()=>{
+function selectPaintTool(value){
  const action=input('paint-action');if(action.disabled||!controller?.active)return;
  action.value=value;action.dispatchEvent(new Event('change',{bubbles:true}));showPage('brush');showQuickControls();
-});
+}
+for(const [value] of paintTools)input('tool-'+value).addEventListener('click',()=>selectPaintTool(value));
 function hideTools(){radial.hidden=true;input('tool-picker').open=false;}
 function showPage(page){
  if(page==='settings'||page==='ao'){radial.hidden=true;input('quick-panel').hidden=true;materialBody.hidden=true;quickBody.hidden=true;}
@@ -207,7 +208,9 @@ function showTools(point=null){
 for(const [page] of paintPages)input('page-'+page).addEventListener('click',()=>{if(!controller?.active||contact!==null)return;showPage(page);});
 input('tools').addEventListener('click',()=>showTools());
 input('hide-tools').addEventListener('click',()=>showQuickControls());
-input('open-material').addEventListener('click',showMaterialMenu);
+// The radial Material entry prepares the same Brush session as the Brush entry.
+// Its action change owns cancellation, capture release and image-stage cleanup.
+input('open-material').addEventListener('click',()=>selectPaintTool('paint'));
 input('header-material').addEventListener('click',showMaterialMenu);
 input('show-tools').addEventListener('click',()=>showTools());
 input('drag-tools').addEventListener('pointerdown',beginRadialDrag);
