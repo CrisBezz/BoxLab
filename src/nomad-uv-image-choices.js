@@ -4,7 +4,7 @@ const nativeLabels={color:'Colour',normal:'Normal',emissive:'Emissive',roughness
 export function nativeImageChoices(payload,imageOptions,slots=['color']){
  const maxBytes=imageOptions?.maxBytes??8*1024*1024;
  if(!Number.isSafeInteger(maxBytes)||maxBytes<=0||maxBytes>24*1024*1024)return [];
- let maps;try{maps=nomadMaterialMaps(payload)?.maps;}catch{return [];}
+ let resource,maps;try{resource=nomadMaterialMaps(payload);maps=resource?.maps;}catch{return [];}
  if(!maps)return [];
  const result=[];
  for(const slot of Array.isArray(slots)?new Set(slots):[]){
@@ -15,7 +15,9 @@ export function nativeImageChoices(payload,imageOptions,slots=['color']){
   // These are raw image references. Do not extract glTF G/B channels, apply
   // native material transforms/factors or imply a retained map renders in 3D.
   const label=nativeLabels[slot],name=typeof map.name==='string'?map.name:'';
-  result.push({...map.choice,imageIndex:map.nativeTexture.index,materialIndex:0,slot,label:`NOM · ${label}${name?' · '+name:''}`,referenceStatus:`Raw ${label} image · inspection only · tile 0–1 · material mapping not applied`});
+  const settings=resource.nativeMaterial,recorded=value=>typeof value==='number'&&Number.isFinite(value)?String(value):'not recorded';
+  const details=slot==='displacement'?` · source strength ${recorded(settings.factorDisplacement)} · midpoint ${recorded(settings.displacementMid)} · world space ${typeof settings.displacementWorld==='boolean'?(settings.displacementWorld?'yes':'no'):'not recorded'} · projection ${typeof map.nativeTexture.projection==='string'?map.nativeTexture.projection:'not recorded'} · source image ${data.length} bytes`:'';
+  result.push({...map.choice,imageIndex:map.nativeTexture.index,materialIndex:0,slot,label:`NOM · ${label}${name?' · '+name:''}`,referenceStatus:`Raw ${label} image · inspection only · tile 0–1 · material mapping not applied${details}`});
  }
  return result;
 }

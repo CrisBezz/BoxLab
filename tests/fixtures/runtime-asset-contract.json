@@ -1,5 +1,5 @@
 {
-  "baseline": "Reviewed .1062 native tool-edge picking and canonical Offset loader; protected Multi, Paint and UV help unchanged.",
+  "baseline": "Reviewed .1063 native NOM displacement inspection metadata; protected edge picking, Multi and Paint unchanged.",
   "references": [
     {
       "owner": "index.html",
@@ -167,9 +167,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1062",
+      "url": "./src/drawer-ui.js?v=0.36.18.1063",
       "target": "src/drawer-ui.js",
-      "sha256": "548625b960291be144e3bcad65c74bfeae65ca958bb128a7def99fd83ff19f05"
+      "sha256": "44fdd7c8e9e859ac04582b3d0b7d5c038624c43afbda8383e151f407ad07985e"
     },
     {
       "owner": "index.html",
@@ -310,9 +310,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/mesh-health.js?v=0.36.18.1060.1",
+      "url": "./src/mesh-health.js?v=0.36.18.1063",
       "target": "src/mesh-health.js",
-      "sha256": "4d9a434a43737551e1b2f57aa3bfcf8976268ef0ba3e67978a38e4fcb5a9a429",
+      "sha256": "32a0c031e4dc96e234a768a14c030fd1244d7a345e316ed2a9d82763282d8160",
       "sourceVersion": "0.36.18.880"
     },
     {
@@ -384,7 +384,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1062",
+      "url": "./src/release-version.js?v=0.36.18.1063",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -876,9 +876,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1062",
+      "url": "./face-workflow-layout.js?v=0.36.18.1063",
       "target": "src/face-workflow-layout.js",
-      "sha256": "3fe02c4d08e27bcd9afbb6fb21709ff8b281110a31790f89550c3f67984c23e5"
+      "sha256": "79c226657cc3fbb163f750f7bc75ae763f4f955193c800d2dbac7b78c914baa3"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1373,7 +1373,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1062",
+      "url": "./release-version.js?v=0.36.18.1063",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -2396,9 +2396,9 @@
     },
     {
       "owner": "src/mesh-health.js",
-      "url": "./uv-workspace.js?v=0.36.18.1060",
+      "url": "./uv-workspace.js?v=0.36.18.1063",
       "target": "src/uv-workspace.js",
-      "sha256": "85a9a75ebff6930c4460179fdf4572233f2e503222b4c908da9b474a479a7aea"
+      "sha256": "1946bdde2391f073658715851c421106e9ad2f7aa10468cdf8d7a8a85c7d9d55"
     },
     {
       "owner": "src/uv-workspace.js",
@@ -3350,9 +3350,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1062",
+      "url": "./src/shell-comparison.js?v=0.36.18.1063",
       "target": "src/shell-comparison.js",
-      "sha256": "70ef3d23770a645e1a1ea447847c0c0867e2195715300b4b25d38cba0c50982f"
+      "sha256": "769f01b0042101ffc197b396b398b3c59dce02fe7badedc27de3c32b17af9ac0"
     },
     {
       "owner": "src/main.js",
@@ -3459,8 +3459,8 @@
     {
       "owner": "src/uv-workspace.js",
       "target": "src/nomad-uv-image-choices.js",
-      "url": "./nomad-uv-image-choices.js?v=0.36.18.1033",
-      "sha256": "aa7c6825fbb08094e90169fede6d84a6d5cf491edf44c94b500e3345be506306"
+      "url": "./nomad-uv-image-choices.js?v=0.36.18.1063",
+      "sha256": "5e5e80944ab1c728a6ac7fb333b6b680f31fd1e1e9bab48662a4d57bc055ad2f"
     },
     {
       "owner": "src/nomad-uv-image-choices.js",
