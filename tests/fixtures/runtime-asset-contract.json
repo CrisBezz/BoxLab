@@ -1,5 +1,5 @@
 {
-  "baseline": "Reviewed .1066 maskable Base to Layer via original layer/compositor/history owners; .1065 combined tools/stencil and .1064 benchmark retained.",
+  "baseline": "Reviewed .1067 non-collapsible selected layer settings; protected .1066 Base/masks/channel tools and painter-core pin unchanged.",
   "references": [
     {
       "owner": "index.html",
@@ -167,9 +167,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1066",
+      "url": "./src/drawer-ui.js?v=0.36.18.1067",
       "target": "src/drawer-ui.js",
-      "sha256": "382dff949eb00033d409b1919aba0b65a99cc2cddfe6f77588d73026c05ddcc0"
+      "sha256": "5a45137885512b0393c7303661690e2e822dcbfb794d49e55a22ba568dcf2c11"
     },
     {
       "owner": "index.html",
@@ -384,7 +384,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1066",
+      "url": "./src/release-version.js?v=0.36.18.1067",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -876,9 +876,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1066",
+      "url": "./face-workflow-layout.js?v=0.36.18.1067",
       "target": "src/face-workflow-layout.js",
-      "sha256": "7361df22bbf0f9f4358384e46f463662d9cc9663bd580e4bca5b59c7f741afc0"
+      "sha256": "3c5995ef0fe893e21759db8978bd293c57acf05ce3bfc756174a7c81f8d5ffc2"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1373,7 +1373,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1066",
+      "url": "./release-version.js?v=0.36.18.1067",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -2481,8 +2481,8 @@
     {
       "owner": "index.html",
       "target": "src/viewport-paint.js",
-      "url": "./src/viewport-paint.js?v=0.36.18.1066",
-      "sha256": "57bf66ba73cb8b0209b56505176ec394fd3a6cb23e91be668cca69facdd83bab"
+      "url": "./src/viewport-paint.js?v=0.36.18.1067",
+      "sha256": "ffedb324e5fc90f366661137d8756ceabde7230945b49bb0bc59d52e6f1a60bf"
     },
     {
       "owner": "src/viewport-paint.js",
@@ -3350,9 +3350,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1066",
+      "url": "./src/shell-comparison.js?v=0.36.18.1067",
       "target": "src/shell-comparison.js",
-      "sha256": "117678db0dd30a38e328ab318bfa369aa3220f4d1d5c876926956c0add2a2c0b"
+      "sha256": "09fcad67efe52837c177e037f3c87d22b25d78221aea61c6a37cacc886071adb"
     },
     {
       "owner": "src/main.js",
