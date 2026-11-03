@@ -1,0 +1,21 @@
+import {PAINT_ADJUSTMENTS,createPaintAdjustments} from './paint-adjustments.js?v=0.36.18.1071';
+
+export function createPaintAdjustmentUI({document,button,painter,before=()=>{},changed=()=>{},say=()=>{}}){
+ let dialog=null,source=null,engine=null,timer=null,inputs=null,report=null,apply=null,beforeInput=null;
+ function cancel(){clearTimeout(timer);timer=null;source?.cancel();source=engine=null;if(dialog?.open)dialog.close();dialog?.remove();dialog=null;}
+ function render(){clearTimeout(timer);timer=null;if(!source)return false;try{const values=Object.fromEntries(PAINT_ADJUSTMENTS.map(([k])=>[k,Number(inputs[k].value)]));const result=beforeInput.checked?source.pixels:engine.render(values);const did=source.preview(result);report.textContent=beforeInput.checked?'Before · original layer':'Preview · '+source.name;apply.disabled=beforeInput.checked||!did;return did;}catch(error){apply.disabled=true;report.textContent=error.message;return false;}}
+ function open(){try{
+  before();cancel();source=painter()?.beginAdjustment();if(!source)return;engine=createPaintAdjustments(source);inputs={};
+  dialog=document.createElement('dialog');dialog.setAttribute('aria-label','Selected layer adjustments');dialog.style.cssText='position:fixed;left:auto;right:12px;top:80px;margin:0;width:min(380px,calc(100vw - 48px));max-height:calc(100dvh - 120px);padding:14px;border:1px solid #708090;border-radius:14px;background:#171c24;color:#edf4fd;box-sizing:border-box;overflow:auto;font:14px system-ui;';
+  const title=document.createElement('strong');title.textContent='Adjust · '+source.name;dialog.append(title);
+  const note=document.createElement('p');note.textContent=source.image?'Selected layer only. Apply converts this image to paint; one Undo restores the editable image.':'Selected layer only. Preview starts from the original; Apply is one Undo step.';dialog.append(note);
+  const controls=document.createElement('div');controls.style.cssText='display:grid;grid-auto-rows:max-content;gap:9px';dialog.append(controls);
+  for(const [key,label,min,max,step]of PAINT_ADJUSTMENTS){const row=document.createElement('label');row.style.cssText='display:grid;grid-template-columns:95px minmax(0,1fr) 42px;gap:8px;align-items:center;min-height:30px';const name=document.createElement('span');name.textContent=label;const input=document.createElement('input');input.type='range';input.style.cssText='width:100%;min-width:0;min-height:30px';input.min=min;input.max=max;input.step=step;input.value=0;input.setAttribute('aria-label',label);const output=document.createElement('output');output.textContent='0';row.append(name,input,output);inputs[key]=input;input.addEventListener('input',()=>{output.textContent=input.value;apply.disabled=true;report.textContent='Updating preview…';clearTimeout(timer);timer=setTimeout(render,160);});controls.append(row);}
+  const compare=document.createElement('label');beforeInput=document.createElement('input');beforeInput.type='checkbox';compare.append(beforeInput,document.createTextNode(' Before'));beforeInput.addEventListener('change',render);dialog.append(compare);
+  report=document.createElement('p');report.setAttribute('role','status');report.textContent='Preview · '+source.name;dialog.append(report);
+  const footer=document.createElement('div');footer.style.cssText='display:flex;gap:8px;position:sticky;bottom:-14px;padding:12px 0;background:#171c24';
+  for(const [label,fn]of [['Reset',()=>{for(const [key]of PAINT_ADJUSTMENTS){inputs[key].value=0;inputs[key].nextElementSibling.textContent='0';}beforeInput.checked=false;render();}],['Cancel',cancel],['Apply',()=>{if(!render())return;try{if(source.apply()){cancel();changed();say('Layer adjustments applied · Undo restores original');}}catch(error){report.textContent=error.message;}}]]){const b=document.createElement('button');b.type='button';b.textContent=label;b.style.cssText='padding:10px;min-height:44px;flex:1';b.addEventListener('click',fn);footer.append(b);if(label==='Apply')apply=b;}
+  dialog.append(footer);apply.disabled=true;dialog.addEventListener('cancel',e=>{e.preventDefault();cancel();});document.body.append(dialog);dialog.showModal();
+ }catch(error){cancel();say('Adjustments: '+error.message);}}
+ button?.addEventListener('click',open);return {open,cancel};
+}

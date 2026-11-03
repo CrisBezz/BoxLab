@@ -1,5 +1,5 @@
 {
-  "baseline": "Reviewed .1070 Paint incoming image normalization export and viewport file-input owner; strict stored/alpha capture, .1066 painter core and accepted .1069 icon retained.",
+  "baseline": "Reviewed .1071 shared-kernel Sharpen and selected-colour-layer adjustments with native modal preview/apply/cancel. Original masks, project/history and .1070 importer retained.",
   "references": [
     {
       "owner": "index.html",
@@ -167,9 +167,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1070",
+      "url": "./src/drawer-ui.js?v=0.36.18.1071",
       "target": "src/drawer-ui.js",
-      "sha256": "1f78f53c05537dc2c7d0ce5e5300d873677cabc26b24acb9e850acd29d1f198f"
+      "sha256": "8b023b5e8402706d1a9d34a04ea040a8f62c37622b10a82895dce421832559f8"
     },
     {
       "owner": "index.html",
@@ -384,7 +384,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1070",
+      "url": "./src/release-version.js?v=0.36.18.1071",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -876,9 +876,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1070",
+      "url": "./face-workflow-layout.js?v=0.36.18.1071",
       "target": "src/face-workflow-layout.js",
-      "sha256": "a771c2b5285b5cfa2aa2139c21db01251362b8cbd6b56fe0bc639937cd419e42"
+      "sha256": "6967b0051e5f508b6ff24bdfb4438498ffa390ff9032ff0e49cf0156874de541"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1373,7 +1373,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1070",
+      "url": "./release-version.js?v=0.36.18.1071",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -2481,26 +2481,26 @@
     {
       "owner": "index.html",
       "target": "src/viewport-paint.js",
-      "url": "./src/viewport-paint.js?v=0.36.18.1070",
-      "sha256": "5ca6c3a81a64e1aca544cc5b44f72794bcebd4bfa9a2d5fe9865bbbd8fe49fc2"
+      "url": "./src/viewport-paint.js?v=0.36.18.1071",
+      "sha256": "cb2c181bb0c8370ff7a030b39ee4a8cedba8192880ef3a8273da594f60e235c0"
     },
     {
       "owner": "src/viewport-paint.js",
       "target": "src/viewport-paint-core.js",
-      "url": "./viewport-paint-core.js?v=0.36.18.1066",
-      "sha256": "10c66271e0dcc3c6ebcd45910796b0e3494eb0bb5b6aa6121ed86cd094b5d613"
+      "url": "./viewport-paint-core.js?v=0.36.18.1071",
+      "sha256": "cec41d4d8cab3d769e11eabc698e25a7a7aa2ead9175773c60dcfc8fde3b725d"
     },
     {
       "owner": "src/viewport-paint.js",
       "target": "evaluations/uv-paint/paint-core.js",
-      "url": "../evaluations/uv-paint/paint-core.js?v=0.36.18.1049",
-      "sha256": "a958396b52a46b9833df7bda0243dbc84bd0d80983c40719a6c7853c98a2dd68"
+      "url": "../evaluations/uv-paint/paint-core.js?v=0.36.18.1071",
+      "sha256": "0ba17f97c09801f9bd12786b813810beefe0449818e38149321496bf8ee729f4"
     },
     {
       "owner": "src/viewport-paint-core.js",
       "target": "evaluations/uv-paint/paint-core.js",
-      "url": "../evaluations/uv-paint/paint-core.js?v=0.36.18.1049",
-      "sha256": "a958396b52a46b9833df7bda0243dbc84bd0d80983c40719a6c7853c98a2dd68"
+      "url": "../evaluations/uv-paint/paint-core.js?v=0.36.18.1071",
+      "sha256": "0ba17f97c09801f9bd12786b813810beefe0449818e38149321496bf8ee729f4"
     },
     {
       "owner": "src/viewport-paint-core.js",
@@ -2746,7 +2746,7 @@
       "owner": "evaluations/uv-paint/lab.js",
       "url": "./paint-core.js?v=0.36.18.1045",
       "target": "evaluations/uv-paint/paint-core.js",
-      "sha256": "a958396b52a46b9833df7bda0243dbc84bd0d80983c40719a6c7853c98a2dd68"
+      "sha256": "0ba17f97c09801f9bd12786b813810beefe0449818e38149321496bf8ee729f4"
     },
     {
       "owner": "evaluations/uv-paint/lab.js",
@@ -2800,7 +2800,7 @@
       "owner": "evaluations/uv-paint/paint-session.js",
       "url": "./paint-core.js?v=0.36.18.1045",
       "target": "evaluations/uv-paint/paint-core.js",
-      "sha256": "a958396b52a46b9833df7bda0243dbc84bd0d80983c40719a6c7853c98a2dd68"
+      "sha256": "0ba17f97c09801f9bd12786b813810beefe0449818e38149321496bf8ee729f4"
     },
     {
       "owner": "evaluations/uv-paint/index.html",
@@ -3350,9 +3350,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1070",
+      "url": "./src/shell-comparison.js?v=0.36.18.1071",
       "target": "src/shell-comparison.js",
-      "sha256": "11500b3f15f9f0b41058171e1acf9d881caf7daf25bc7665736a21c7f2b32817"
+      "sha256": "8c6d1d5ccd87a72ae3d0bfcaa689e767b4e4854e3f89fdca4dbaa7754eee9355"
     },
     {
       "owner": "src/main.js",
@@ -3388,7 +3388,7 @@
       "owner": "src/paint-brush-preview.js",
       "url": "../evaluations/uv-paint/paint-core.js?v=0.36.18.1049",
       "target": "evaluations/uv-paint/paint-core.js",
-      "sha256": "a958396b52a46b9833df7bda0243dbc84bd0d80983c40719a6c7853c98a2dd68"
+      "sha256": "0ba17f97c09801f9bd12786b813810beefe0449818e38149321496bf8ee729f4"
     },
     {
       "owner": "index.html",
@@ -3527,6 +3527,30 @@
       "url": "./icons/boxlab-1069-512.png",
       "target": "icons/boxlab-1069-512.png",
       "sha256": "d367879898adfb7f90ef54aa2a02f39e5ce2bd07bbf762604a87843faf85a5c7"
+    },
+    {
+      "owner": "src/viewport-paint.js",
+      "url": "./paint-adjustments-ui.js?v=0.36.18.1071",
+      "target": "src/paint-adjustments-ui.js",
+      "sha256": "4f4d84bdbd55f7efef456305c82524b68d5524e1b1b77575a3728e39934e6f9b"
+    },
+    {
+      "owner": "src/paint-adjustments-ui.js",
+      "url": "./paint-adjustments.js?v=0.36.18.1071",
+      "target": "src/paint-adjustments.js",
+      "sha256": "64e3a26d0b31dac8d136cc5a34e5754658d46288563ab5848638a0a1ea4e05df"
+    },
+    {
+      "owner": "src/paint-adjustments.js",
+      "url": "../evaluations/uv-paint/paint-core.js?v=0.36.18.1071",
+      "target": "evaluations/uv-paint/paint-core.js",
+      "sha256": "0ba17f97c09801f9bd12786b813810beefe0449818e38149321496bf8ee729f4"
+    },
+    {
+      "owner": "docs/paint-adjustments-1071.html",
+      "url": "../src/paint-adjustments-ui.js?v=0.36.18.1071",
+      "target": "src/paint-adjustments-ui.js",
+      "sha256": "4f4d84bdbd55f7efef456305c82524b68d5524e1b1b77575a3728e39934e6f9b"
     }
   ]
 }

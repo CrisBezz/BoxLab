@@ -3,7 +3,7 @@ import {createFacegroupBoundaryPreview,facegroupBoundaryEdges} from './facegroup
 import {createPaintFilterDomain} from './paint-filter-domain.js?v=0.36.18.951';
 import {createPaintAOPixels,createPaintAOPixelsAsync} from './paint-ao-layer.js?v=0.36.18.951';
 import * as THREE from 'three';
-import {createPaintLayer} from '../evaluations/uv-paint/paint-core.js?v=0.36.18.1049';
+import {createPaintLayer} from '../evaluations/uv-paint/paint-core.js?v=0.36.18.1071';
 import {createStroke} from '../evaluations/uv-paint/stroke.js?v=896';
 import {captureColourResource} from './paint-resource.js?v=898';
 import {createPaintLayerStack,appendPaintLayer,replacePaintLayer,flattenPaintLayerStack,appendImagePaintLayer,replaceImagePaintLayer,rasterizeImagePaintLayer,enlargePaintLayerStack,mergePaintLayersToBase} from './paint-layer-stack.js?v=0.36.18.938';
@@ -58,10 +58,10 @@ export function createViewportPainter({target,activeId=()=>target()?.id,body,own
   const layer=createPaintLayer(512);layer.restore(pixels);const hex=(action==='erase'?cfg.initial:value).toString(16).padStart(2,'0');layer.begin({...settings,radius:Math.max(1,settings.radius*512/session.size),colour:'#'+hex.repeat(3)},{filter,smudge:action==='smudge'});return layer;
  }
  function strokeFilter(size,action,settings){
-  if(!['blur','smudge'].includes(action))return null;
+  if(!['blur','smudge','sharpen'].includes(action))return null;
   session.filterDomains??=new Map();let domain=session.filterDomains.get(size);
   if(!domain){domain=createPaintFilterDomain(session.display.surface.geometry,size,{mesh:session.object.mesh,payload:session.uv,topologySignature:owner.topologySignature});session.filterDomains.set(size,domain);}
-  return {domains:domain.labels,neighbours:domain.neighbours,connectedFaces:action==='smudge'?domain.connectedFaces:undefined,amount:action==='blur'?(settings.blurAmount??1):1};
+  return {domains:domain.labels,neighbours:domain.neighbours,connectedFaces:action==='smudge'?domain.connectedFaces:undefined,amount:['blur','sharpen'].includes(action)?(settings.blurAmount??1):1,sharpen:action==='sharpen'};
  }
  function renderFill(active){
   const scalarLayers=Object.values(active.scalarLayers||{});
@@ -85,7 +85,7 @@ export function createViewportPainter({target,activeId=()=>target()?.id,body,own
  }
  function begin(p,settings,kind='boxlab',maskValue=0,roughnessValue=128,metalnessValue=255,action='paint'){
   if(session?.aoPreview||session?.aoJob)throw Error('Apply or cancel AO preview first');
-  if(!['paint','fill','fill-face','fill-facegroup','erase','blur','smudge'].includes(action))throw Error('Unknown paint action');
+  if(!['paint','fill','fill-face','fill-facegroup','erase','blur','smudge','sharpen'].includes(action))throw Error('Unknown paint action');
   if(!session||stroke)return false;clearImagePreview();
   const selected=session.stack?.layers.find(l=>l.id===session.selected),multiChannels=session.paintTarget==='colour'?session.multiPaintChannels:[];
   if(!scalar()&&selected&&(!selected.visible||!selected.opacity))throw Error('Show the selected layer and increase its opacity before painting');
@@ -94,7 +94,7 @@ export function createViewportPainter({target,activeId=()=>target()?.id,body,own
   if(action==='erase'){const value=scalar()?scalarOwners[session.paintTarget].initial:session.paintTarget==='mask'?(selected?.mask?.inverted?0:255):255;const hex=value.toString(16).padStart(2,'0');settings={...settings,colour:'#'+hex.repeat(3)};}
   if(selected?.image&&session.paintTarget==='colour')throw Error('Image colour is retained; use Convert to paint for Brush/Blur, or edit its mask');
   if(!current()||paintTargetKey(target(),target()?.mesh,owner)!==session.key){close();return false;}
-  if(['fill','fill-face','fill-facegroup','blur','smudge'].includes(action)&&!hit(p))return false;
+  if(['fill','fill-face','fill-facegroup','blur','smudge','sharpen'].includes(action)&&!hit(p))return false;
   let facePlan=null;if(action.startsWith('fill-')){const h=hit(p),seed=session.display.surface.geometry.userData.boxlabTriangleFaces?.[h.faceIndex];facePlan=createFaceFillPlan({mesh:session.object.mesh,geometry:session.display.surface.geometry,size:scalar()?512:session.size,seed,group:action==='fill-facegroup'});}
   const filterSize=scalar()?512:session.size,filter=strokeFilter(filterSize,action,settings);if(filter)session.filterDomain=session.filterDomains.get(filterSize);
   const scalarFilter=multiChannels.length?strokeFilter(512,action,settings):null;
@@ -102,7 +102,7 @@ export function createViewportPainter({target,activeId=()=>target()?.id,body,own
   const scalarLayers={};try{for(const channel of multiChannels){const value=channel==='roughness'?roughnessValue:metalnessValue;if(!Number.isInteger(value)||value<0||value>255)throw Error(scalarOwners[channel].label+' value must be 0 to 255');scalarLayers[channel]=scalarStrokeLayer(channel,value,settings,action,scalarFilter);}session.layer.begin(settings,{erase:action==='erase'&&session.paintTarget==='colour'&&!!selected,filter,smudge:action==='smudge'});}catch(error){for(const layer of Object.values(scalarLayers))layer.dispose();throw error;}
   const enabled=controls.enabled;controls.enabled=false;
   if(action==='fill'||facePlan){stroke={fill:true,facePlan,scalarFacePlan,scalarLayers,start:{x:p.x,y:p.y},controls:enabled,held:false,count:0,dx:0,dy:0};renderFill(stroke);if(action==='fill-face'){const active=stroke;stroke.timer=setTimer(()=>{if(stroke!==active||!current())return;try{active.held=true;renderFill(active);updatePreview();}catch(error){cancel();throw error;}},420);}return true;}
-  const makePath=()=>createStroke(kind,q=>{const h=hit({...q,width:p.width,height:p.height});if(h){const face=['blur','smudge'].includes(action)?session.filterDomain.faceAt(h.faceIndex):null;session.layer.stamp(h.uv.x,h.uv.y,q.pressure,face);for(const layer of Object.values(stroke?.scalarLayers||{}))layer.stamp(h.uv.x,h.uv.y,q.pressure,face);}else if(action==='smudge'){session.layer.resetPickup();for(const layer of Object.values(stroke?.scalarLayers||{}))layer.resetPickup();}});
+  const makePath=()=>createStroke(kind,q=>{const h=hit({...q,width:p.width,height:p.height});if(h){const face=['blur','smudge','sharpen'].includes(action)?session.filterDomain.faceAt(h.faceIndex):null;session.layer.stamp(h.uv.x,h.uv.y,q.pressure,face);for(const layer of Object.values(stroke?.scalarLayers||{}))layer.stamp(h.uv.x,h.uv.y,q.pressure,face);}else if(action==='smudge'){session.layer.resetPickup();for(const layer of Object.values(stroke?.scalarLayers||{}))layer.resetPickup();}});
   const path=makePath();stroke={path,controls:enabled,smudge:action==='smudge',large:settings.radius>48,makePath,lastInput:{...p},scalarLayers};path.start(p);return true;
  }
  function move(p){if(!stroke)return;if(!current()){close();return;}if(stroke.fill){const dx=p.x-stroke.start.x,dy=p.y-stroke.start.y;if(!stroke.held){if(Math.hypot(dx,dy)>8)cancel();return;}stroke.dx=dx;stroke.dy=dy;renderFill(stroke);return;}try{if(stroke.smudge||stroke.large){session.layer.resetWorkBudget();for(const layer of Object.values(stroke.scalarLayers||{}))layer.resetWorkBudget();if(stroke.path.stats.limited){stroke.path.cancel();stroke.path=stroke.makePath();stroke.path.start(stroke.lastInput);}}stroke.path.move(p);stroke.lastInput={...p};}catch(error){cancel();throw error;}}
@@ -264,6 +264,21 @@ export function createViewportPainter({target,activeId=()=>target()?.id,body,own
   if(commit(resource)){session.selected='$base';session.paintTarget='colour';loadLayer();updatePreview();return true;}return false;
  }
  function imageForEdit(){if(!ready())return null;const image=session.stack?.layers.find(l=>l.id===session.selected)?.image;return image?{source:image.source,placement:{centre:[...image.placement.centre],size:[...image.placement.size],rotation:image.placement.rotation}}:null;}
+ function beginAdjustment(){
+  if(!ready())return null;const s=session;if(s.paintTarget!=='colour')throw Error('Choose Colour for layer adjustments');
+  const selected=s.stack?.layers.find(l=>l.id===s.selected),original=(selected?.pixels||s.stack?.base.pixels||s.layer.pixels).slice(),resource=s.resource,id=s.selected;let candidate=null;
+  const valid=()=>session===s&&current()&&s.resource===resource&&s.selected===id&&s.paintTarget==='colour'&&paintTargetKey(target(),target()?.mesh,owner)===s.key;
+  function cancelPreview(){if(session===s&&s.imagePreview===candidate){s.imagePreview=null;updatePreview();}candidate=null;}
+  return {pixels:original.slice(),size:s.size,name:selected?.name||'Base colour',image:!!selected?.image,
+   filter(){if(!valid())throw Error('Layer changed during adjustments');return strokeFilter(s.size,'blur',{});},
+   preview(pixels){if(!valid())throw Error('Layer changed during adjustments');if(!(pixels instanceof Uint8Array)||pixels.length!==original.length)throw Error('Invalid adjusted pixels');let changed=false;for(let i=0;i<pixels.length;i++){if(i%4===3&&pixels[i]!==original[i])throw Error('Adjustments must preserve layer coverage');if(pixels[i]!==original[i])changed=true;}
+    cancelPreview();if(!changed)return false;let next;
+    if(s.stack){let stack=selected?.image?rasterizeImagePaintLayer(s.stack,id):s.stack;stack=id==='$base'?{...stack,base:captureColourResource({...stack.base,pixels})}:replacePaintLayer(stack,id,{pixels});next=captureLayeredColourResource(stack);}
+    else next=captureColourResource({width:s.size,height:s.size,pixels,binding:s.binding});
+    preflight(next);candidate={resource:next,id};s.imagePreview=candidate;updatePreview();return true;
+   },
+   apply(){if(!valid())throw Error('Layer changed during adjustments');if(!candidate)return false;const next=candidate.resource;const result=commit(next);candidate=null;return result;},cancel:cancelPreview};
+ }
  function editLayer(patch){colourOnly();if(!ready()||session.selected==='$base')return false;const layer=session.stack.layers.find(l=>l.id===session.selected);if(Object.keys(patch).every(k=>layer[k]===patch[k]))return false;return commit(captureLayeredColourResource(replacePaintLayer(session.stack,session.selected,patch)));}
  function removeLayer(){colourOnly();if(!ready()||session.selected==='$base')return false;const s=session,layers=s.stack.layers.filter(l=>l.id!==s.selected);if(commit(captureLayeredColourResource({...s.stack,layers}))){session.selected=layers.at(-1)?.id||'$base';loadLayer();return true;}return false;}
  function moveLayer(direction){colourOnly();if(!ready()||session.selected==='$base'||![-1,1].includes(direction))return false;const layers=[...session.stack.layers],i=layers.findIndex(l=>l.id===session.selected),j=i+direction;if(j<0||j>=layers.length)return false;[layers[i],layers[j]]=[layers[j],layers[i]];return commit(captureLayeredColourResource({...session.stack,layers}));}
@@ -315,7 +330,7 @@ export function createViewportPainter({target,activeId=()=>target()?.id,body,own
   return {width:64,height:64,pixels:pixels.slice()};
  }
  function state(){const s=session;return s?{multiPaintChannels:s.multiPaintChannels.slice(),fillPreview:stroke?.facePlan?{held:stroke.held,count:stroke.count}:null,resolution:s.size,strokeLimited:!!s.layer.limited,selected:s.selected,paintTarget:s.paintTarget,previewMode:s.previewMode,aoPreview:!!s.aoPreview,aoBusy:!!s.aoJob,aoProgress:s.aoProgress||0,layered:!!s.stack,layers:[{id:'$base',name:'Base colour',visible:true,opacity:1,blendMode:'normal',mask:null},...(s.stack?.layers||[]).map(({id,name,visible,opacity,blendMode,mask,image})=>({id,name,visible,opacity,blendMode,image:!!image,mask:mask?{enabled:mask.enabled,inverted:mask.inverted}:null}))]}:null;}
- return {open,close,cancel,begin,move,finish,hit,setFillScope,layerThumbnail,materialMapThumbnail,selectPreviewMode,selectLayer,addLayer,editLayer,removeLayer,moveLayer,selectPaintTarget,setMultiPaintChannels,addMask,editMask,removeMask,projectImage,imageForEdit,rasterizeImage,increaseResolution,baseToLayer,mergeToBase:()=>mergeLayers(false),flattenLayers:()=>mergeLayers(true),previewImage,applyImagePreview,clearImagePreview,surfaceFrame,previewAO,previewAOHigh,applyAO,cancelAO,
+ return {beginAdjustment,open,close,cancel,begin,move,finish,hit,setFillScope,layerThumbnail,materialMapThumbnail,selectPreviewMode,selectLayer,addLayer,editLayer,removeLayer,moveLayer,selectPaintTarget,setMultiPaintChannels,addMask,editMask,removeMask,projectImage,imageForEdit,rasterizeImage,increaseResolution,baseToLayer,mergeToBase:()=>mergeLayers(false),flattenLayers:()=>mergeLayers(true),previewImage,applyImagePreview,clearImagePreview,surfaceFrame,previewAO,previewAOHigh,applyAO,cancelAO,
   tick(){if(session&&!current()){close();return;}session?.boundaries?.update();if(session?.layer.consumeDirty()||Object.values(stroke?.scalarLayers||{}).some(layer=>layer.consumeDirty()))updatePreview();if(session?.dirty){updateMaterialPreview();const map=session.display.surface.material.map;if(session.previewMode==='channel'&&map)map.needsUpdate=true;session.dirty=false;}},
   get state(){return state();},get active(){return !!session;},get drawing(){return !!stroke;},get pixels(){return session?.preview;}};
 }

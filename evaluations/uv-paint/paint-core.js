@@ -27,6 +27,13 @@ function blurSnapshot(bytes,size,domains,links,amount){
  }
  return source;
 }
+export function filterPaintPixels(bytes,size,filter,{amount=8,sharpen=0}={}){
+ if(!Number.isInteger(size)||size<16||size>1024||!(bytes instanceof Uint8Array)||bytes.length!==size*size*4||!(filter?.domains instanceof Int32Array)||filter.domains.length!==size*size||!Number.isInteger(amount)||amount<1||amount>32||!Number.isFinite(sharpen)||sharpen<0||sharpen>4)throw Error('Invalid paint filter');
+ if(filter.neighbours!=null&&(!(filter.neighbours instanceof Int32Array)||filter.neighbours.length!==size*size*4||filter.neighbours.some(n=>n< -1||n>=size*size)))throw Error('Invalid paint filter neighbours');
+ const target=blurSnapshot(bytes,size,filter.domains,filter.neighbours,amount),out=bytes.slice();
+ for(let i=0;i<bytes.length;i+=4){if(filter.domains[i/4]<0||!bytes[i+3])continue;const a=target[i+3];for(let c=0;c<3;c++){const soft=a?target[i+c]/a:bytes[i+c];out[i+c]=Math.round(Math.max(0,Math.min(255,sharpen?bytes[i+c]+sharpen*(bytes[i+c]-soft):soft)));}}
+ return out;
+}
 export function createPaintLayer(size=RESOLUTION,{transparent=false}={}){
  if(typeof transparent!=='boolean')throw Error('Invalid paint layer alpha mode');
  if(!Number.isInteger(size)||size<16||size>1024)throw Error('Comparison map budget exceeded');
@@ -99,7 +106,8 @@ export function createPaintLayer(size=RESOLUTION,{transparent=false}={}){
    if(filter?.neighbours!=null&&(!(filter.neighbours instanceof Int32Array)||filter.neighbours.length!==size*size*4||filter.neighbours.some(n=>n< -1||n>=size*size)))throw Error('Invalid Blur neighbours');
    const amount=filter?.amount===undefined?1:filter.amount;if(filter&&(!Number.isInteger(amount)||amount<1||amount>32))throw Error('Blur amount must be 1 to 32');
    let valid=brushSettings(value);if(valid.alphaTip)valid={...valid,alphaTip:captureAlphaTip(valid.alphaTip)};
-   const domains=filter?filter.domains.slice():null,links=!smudge&&filter?.neighbours?.slice()||null,start=pixels.slice(),target=filter&&!smudge&&valid.opacity?blurSnapshot(start,size,domains,links,amount):null;
+   const domains=filter?filter.domains.slice():null,links=!smudge&&filter?.neighbours?.slice()||null,start=pixels.slice(),target=filter&&!smudge&&valid.opacity?blurSnapshot(start,size,domains,links,filter.sharpen?1:amount):null;
+   if(target&&filter.sharpen)for(let i=0;i<start.length;i+=4){const a=start[i+3]/255,b=target[i+3];for(let c=0;c<3;c++){const soft=b?target[i+c]/b:start[i+c];target[i+c]=Math.max(0,Math.min(255,start[i+c]+amount/8*(start[i+c]-soft)))*a;}target[i+3]=a;}
    settings=valid;blur=domains;blurTarget=target;erasing=erase;before=start;coverage=new Float32Array(size*size);changed=false;smudging=smudge;pickup=null;smudgeWork=0;limited=false;connections=smudge?new Set((edges||[]).map(p=>p[0]+':'+p[1])):null;
   },
   stamp(u,v,pressure=1,face=null){
