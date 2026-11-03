@@ -1,5 +1,5 @@
 {
-  "baseline": "Reviewed .1072 per-contact Pencil pressure and zero-pressure stroke-start repair; Auto adjustment removed, other 14 and .1071 kernel/selected-layer pipeline retained.",
+  "baseline": "Reviewed .1073 deferred positive Pencil-down stamp and motion-pressure seeded onset; native .1072 FAIL recorded. Auto removal/14 sliders and original kernel retained.",
   "references": [
     {
       "owner": "index.html",
@@ -167,9 +167,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1072",
+      "url": "./src/drawer-ui.js?v=0.36.18.1073",
       "target": "src/drawer-ui.js",
-      "sha256": "23b2359c46a4f0e79976b33c83fd5a353480519839b27cba3edf591e2b9c3209"
+      "sha256": "e12759900d1f74a48c9cf3fde4e2a535be365fb86b20847915b10704e527543a"
     },
     {
       "owner": "index.html",
@@ -384,7 +384,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1072",
+      "url": "./src/release-version.js?v=0.36.18.1073",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -876,9 +876,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1072",
+      "url": "./face-workflow-layout.js?v=0.36.18.1073",
       "target": "src/face-workflow-layout.js",
-      "sha256": "21670652564eba5c468cf8eabd48af1c9e8fb79aef6ebe9986620b0467e861eb"
+      "sha256": "af102ccd54bfdbde84c23f422d6b51f0245e763857d24b98d6af9778f2558070"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1373,7 +1373,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1072",
+      "url": "./release-version.js?v=0.36.18.1073",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -2481,14 +2481,14 @@
     {
       "owner": "index.html",
       "target": "src/viewport-paint.js",
-      "url": "./src/viewport-paint.js?v=0.36.18.1072",
-      "sha256": "a034f74e4314d9640de465efcb68901015f1226e4ccb733ab6402d2004948b05"
+      "url": "./src/viewport-paint.js?v=0.36.18.1073",
+      "sha256": "c5436c44b18508f4790e003da024b6a677162cbbabda92de69c5dc0c82c4d94e"
     },
     {
       "owner": "src/viewport-paint.js",
       "target": "src/viewport-paint-core.js",
-      "url": "./viewport-paint-core.js?v=0.36.18.1072",
-      "sha256": "c22a539e60c31243a91a14c2d3aa297975217acf92deb3a29b68450cce3e9d1f"
+      "url": "./viewport-paint-core.js?v=0.36.18.1073",
+      "sha256": "54179b3a07057fa6ec5e6c931ca9b19029f53f8fea9863708dcdee125607b8fb"
     },
     {
       "owner": "src/viewport-paint.js",
@@ -3350,9 +3350,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1072",
+      "url": "./src/shell-comparison.js?v=0.36.18.1073",
       "target": "src/shell-comparison.js",
-      "sha256": "958ea0f3ad906c861bafed51002de6967605d25a99e179dd28577c8a89df102d"
+      "sha256": "076f6a2e84a77259fbcfa3cbf9a4daabb95a19adbae1587090bf7fe42a2b7d8b"
     },
     {
       "owner": "src/main.js",
