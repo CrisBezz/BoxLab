@@ -1,5 +1,5 @@
 {
-  "baseline": "Reviewed .1068 Paint grid row sizing repair with expanded settings; protected .1066 painter core and actions retained.",
+  "baseline": "Reviewed .1069 approved three-box PNG install icons, manifest and shell cache chain; protected Paint and modelling owners retained.",
   "references": [
     {
       "owner": "index.html",
@@ -9,15 +9,15 @@
     },
     {
       "owner": "index.html",
-      "url": "./icon.svg?v=0.28.3",
-      "target": "icon.svg",
-      "sha256": "e2a286547c5d4d00377608c2843cb05a03e07097b84264a93cb541aacb9dbaa3"
+      "url": "./icons/boxlab-1069-32.png",
+      "target": "icons/boxlab-1069-32.png",
+      "sha256": "8a85c57315f08a29eab4b7636aa1f9d8f35ebe438841d4725893be2b71819818"
     },
     {
       "owner": "index.html",
-      "url": "./manifest.webmanifest?v=0.28.3",
+      "url": "./manifest.webmanifest?v=0.36.18.1069",
       "target": "manifest.webmanifest",
-      "sha256": "a0939110e3aaceb3533504015c62f02e785b7bb2465bcc32c6f0b9b99f22b4d9"
+      "sha256": "c9019d39d3bc49a4dd319d5c0cc9e8206d128abf10f123c5fd5240f4512760f3"
     },
     {
       "owner": "index.html",
@@ -167,9 +167,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1068",
+      "url": "./src/drawer-ui.js?v=0.36.18.1069",
       "target": "src/drawer-ui.js",
-      "sha256": "7562c88d920ab48d6a18fa713e917f5d86dd8a25be9ad9796f4625e986b0a796"
+      "sha256": "42569bac3e40cacea81b1a0496424c8e7e413e09d53a75c248ab00c508ae4ccc"
     },
     {
       "owner": "index.html",
@@ -384,7 +384,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1068",
+      "url": "./src/release-version.js?v=0.36.18.1069",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -876,9 +876,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1068",
+      "url": "./face-workflow-layout.js?v=0.36.18.1069",
       "target": "src/face-workflow-layout.js",
-      "sha256": "e5e9450d4dd1a82bd2606c8d4bebd5f1691de21effd51141bec212d151fdafcf"
+      "sha256": "7da082057c6d932be38ce980bd011d30ae06ecfdff337df3b03dc81b38fc1f2f"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1373,7 +1373,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1068",
+      "url": "./release-version.js?v=0.36.18.1069",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -3350,9 +3350,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1068",
+      "url": "./src/shell-comparison.js?v=0.36.18.1069",
       "target": "src/shell-comparison.js",
-      "sha256": "fcfa75288ea1b7b657d26c0a9020c860b15ecd2482b790cdf8f077343e69c11d"
+      "sha256": "e850a1dba5030ea5809f2badea03651dfc402a8b06bd0ff2add45990b98c603e"
     },
     {
       "owner": "src/main.js",
@@ -3509,6 +3509,24 @@
       "url": "../src/paint-layer-list.js?v=0.36.18.1050",
       "target": "src/paint-layer-list.js",
       "sha256": "c2c7b023c9c34d8db80050daed086b6f36a0689d922850fc0be551ea06e662bb"
+    },
+    {
+      "owner": "index.html",
+      "url": "./icons/boxlab-1069-180.png",
+      "target": "icons/boxlab-1069-180.png",
+      "sha256": "62b99c9da9362e2741111cac95d2802bac7224de3dbffec87a1d327daaa46a70"
+    },
+    {
+      "owner": "manifest.webmanifest",
+      "url": "./icons/boxlab-1069-192.png",
+      "target": "icons/boxlab-1069-192.png",
+      "sha256": "75e3b0cf4d53ca7d0c180735460159d75a7296c800935054376a5d5e759d2169"
+    },
+    {
+      "owner": "manifest.webmanifest",
+      "url": "./icons/boxlab-1069-512.png",
+      "target": "icons/boxlab-1069-512.png",
+      "sha256": "d367879898adfb7f90ef54aa2a02f39e5ce2bd07bbf762604a87843faf85a5c7"
     }
   ]
 }
