@@ -122,8 +122,9 @@ const contextStyle=document.createElement('style');contextStyle.textContent=`
 #boxlabViewportPaint .paint-context-head,#boxlabViewportPaint .paint-common-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 #boxlabViewportPaint .paint-context-head strong{flex:1}
 #boxlabViewportPaint .paint-page{display:none}
-#boxlabViewportPaint [data-paint-page=layers]{display:grid;gap:5px;position:sticky;top:0;z-index:2;background:#16191f;max-height:42vh;overflow-y:auto;padding-bottom:5px;border-bottom:1px solid #ffffff20}
-#boxlabViewportPaint .paint-stack{max-height:200px;overflow-y:auto}
+#boxlabViewportPaint [data-paint-page=layers]{display:grid;grid-auto-rows:max-content;align-content:start;gap:5px;position:sticky;top:0;z-index:2;background:#16191f;max-height:42vh;overflow-y:auto;padding-bottom:5px;border-bottom:1px solid #ffffff20}
+#boxlabViewportPaint .paint-stack{grid-auto-rows:max-content;min-height:52px;max-height:200px;overflow-y:auto}
+#boxlabViewportPaint .paint-stack-row{min-height:52px}
 #viewportSelectionControls #viewportPaintBtn{order:5;width:auto;min-width:76px;font-size:11px;padding:5px 8px}
 #viewportSelectionControls #viewportPaintBtn[aria-pressed=true]{background:#1268b6;border-color:#60b5ff}
 #boxlabViewportPaint .paint-footer{position:sticky;bottom:0;z-index:1}

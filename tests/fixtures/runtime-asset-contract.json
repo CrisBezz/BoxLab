@@ -1,5 +1,5 @@
 {
-  "baseline": "Reviewed .1067 non-collapsible selected layer settings; protected .1066 Base/masks/channel tools and painter-core pin unchanged.",
+  "baseline": "Reviewed .1068 Paint grid row sizing repair with expanded settings; protected .1066 painter core and actions retained.",
   "references": [
     {
       "owner": "index.html",
@@ -167,9 +167,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1067",
+      "url": "./src/drawer-ui.js?v=0.36.18.1068",
       "target": "src/drawer-ui.js",
-      "sha256": "5a45137885512b0393c7303661690e2e822dcbfb794d49e55a22ba568dcf2c11"
+      "sha256": "7562c88d920ab48d6a18fa713e917f5d86dd8a25be9ad9796f4625e986b0a796"
     },
     {
       "owner": "index.html",
@@ -384,7 +384,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1067",
+      "url": "./src/release-version.js?v=0.36.18.1068",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -876,9 +876,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1067",
+      "url": "./face-workflow-layout.js?v=0.36.18.1068",
       "target": "src/face-workflow-layout.js",
-      "sha256": "3c5995ef0fe893e21759db8978bd293c57acf05ce3bfc756174a7c81f8d5ffc2"
+      "sha256": "e5e9450d4dd1a82bd2606c8d4bebd5f1691de21effd51141bec212d151fdafcf"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1373,7 +1373,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1067",
+      "url": "./release-version.js?v=0.36.18.1068",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -2481,8 +2481,8 @@
     {
       "owner": "index.html",
       "target": "src/viewport-paint.js",
-      "url": "./src/viewport-paint.js?v=0.36.18.1067",
-      "sha256": "ffedb324e5fc90f366661137d8756ceabde7230945b49bb0bc59d52e6f1a60bf"
+      "url": "./src/viewport-paint.js?v=0.36.18.1068",
+      "sha256": "3cd6baf08f8457b5de7a7071cbed01e7e59afa4bcf4eb3eab04b80432c410d2b"
     },
     {
       "owner": "src/viewport-paint.js",
@@ -3350,9 +3350,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1067",
+      "url": "./src/shell-comparison.js?v=0.36.18.1068",
       "target": "src/shell-comparison.js",
-      "sha256": "09fcad67efe52837c177e037f3c87d22b25d78221aea61c6a37cacc886071adb"
+      "sha256": "fcfa75288ea1b7b657d26c0a9020c860b15ecd2482b790cdf8f077343e69c11d"
     },
     {
       "owner": "src/main.js",
@@ -3503,6 +3503,12 @@
       "url": "./nomad-import-core.js?v=0.36.18.1033",
       "target": "src/nomad-import-core.js",
       "sha256": "3749ff21a88b08c5b37cc3bab0bdb138c188ec716bdcfada9c1dd67756e976b8"
+    },
+    {
+      "owner": "docs/paint-panel-layout-1068.html",
+      "url": "../src/paint-layer-list.js?v=0.36.18.1050",
+      "target": "src/paint-layer-list.js",
+      "sha256": "c2c7b023c9c34d8db80050daed086b6f36a0689d922850fc0be551ea06e662bb"
     }
   ]
 }
