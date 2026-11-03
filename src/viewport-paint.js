@@ -1,4 +1,4 @@
-import {createPaintAdjustmentUI} from './paint-adjustments-ui.js?v=0.36.18.1071';
+import {createPaintAdjustmentUI} from './paint-adjustments-ui.js?v=0.36.18.1072';
 import {createPaintPaletteAnchor,placePaintPalette} from './paint-palette-layout.js?v=0.36.18.1061';
 import {paintBrushPreset} from './paint-brush-presets.js?v=0.36.18.1010';
 import {createBrushSizePreview} from './paint-brush-preview.js?v=0.36.18.1049';
@@ -6,7 +6,7 @@ import {paintTargetKey} from './paint-target.js?v=0.36.18.1055';
 import {createPaintLayerList} from './paint-layer-list.js?v=0.36.18.1050';
 import {importPaintAlpha} from './paint-alpha-source.js?v=0.36.18.929';
 import {bindPaintColourControls} from './paint-colour-controls.js?v=0.36.18.915';
-import {createViewportPainter} from './viewport-paint-core.js?v=0.36.18.1071';
+import {createViewportPainter} from './viewport-paint-core.js?v=0.36.18.1072';
 import {brushSettings} from '../evaluations/uv-paint/paint-core.js?v=0.36.18.1071';
 import {PAINT_BLEND_MODES} from './paint-blend-modes.js?v=0.36.18.903';
 import {importResizedPaintImage as importPaintImage,PAINT_IMAGE_INPUT_MAX_BYTES} from './paint-image-source.js?v=0.36.18.1070';
@@ -17,7 +17,7 @@ const canvas=document.querySelector('#viewport'),menu=document.querySelector('#f
 const manager=()=>globalThis.__boxlabObjectManager,bridge=()=>globalThis.__boxlabBridgeState,tools=()=>globalThis.__boxlabToolSession;
 const target=()=>{const m=manager();return m?.objects?.find(o=>o.id===m.activeId);};
 let historyContext=null,alphaTip=null,alphaRequest=0;
-let contact=null,opening=0,controller=null,disposed=false,lastPressure=1;const touches=new Set(),palms=new Set();
+let contact=null,opening=0,controller=null,disposed=false,lastPressure=0;const touches=new Set(),palms=new Set();
 let imageStage=null,imageGesture=null,imageRequest=0;
 const paintTools=[['paint','Brush','M5 19l3-1 12-12-3-3L5 15z M5 15l3 3'],['fill','Fill','M4 12l8-8 8 8-8 8z M3 12h18'],['erase','Eraser','M4 14L14 4l7 7-10 10H8z M9 9l7 7'],['smudge','Smudge','M5 18c10 0-2-12 8-12 M10 20c10 0-2-12 8-12'],['blur','Blur','M12 3v2 M12 19v2 M3 12h2 M19 12h2 M6 6l1 1 M17 17l1 1 M6 18l1-1 M17 7l1-1 M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8'],['sharpen','Sharpen','M5 19l7-15 7 15-7-4z M12 4v11']];
 const panel=document.createElement('section');panel.id='boxlabViewportPaint';panel.hidden=true;
@@ -298,12 +298,13 @@ async function open(restore=null){let instance;try{
  globalThis.__boxlabTotalGizmo?.resetTransient?.({hideFloat:true});const token=++opening;await instance.open();if(token!==opening){instance.close();return;}historyContext=null;if(restore){const state=instance.state;if(state.layers.some(l=>l.id===restore.selected))instance.selectLayer(restore.selected);const selected=instance.state.layers.find(l=>l.id===instance.state.selected);if(restore.paintTarget!=='mask'||selected?.mask)instance.selectPaintTarget(restore.paintTarget);}radialAnchor=createPaintPaletteAnchor(target()?.mesh?.vertices);radialOffset={x:0,y:0};radialBase=null;radialSide='left';radialPosition=null;instance.selectPreviewMode('material');syncLayers();showPage(restore?.paintPage||'brush');if(!restore)showTools();document.querySelector('#fileMenu')?.removeAttribute('open');say('UV Paint · Lit material preview · colour texture '+instance.state.resolution+' × '+instance.state.resolution+' · Pencil paints; fingers navigate · Undo/Redo keeps Paint open');requestAnimationFrame(()=>frame(instance));
  }catch(e){if(instance&&instance!==controller)return;close();say('UV Paint: '+e.message);}}
 function frame(instance){if(disposed||controller!==instance||!instance.active)return;instance.tick();if(!radial.hidden&&contact===null&&!imageGesture)positionPaintPalette();if(instance.state?.fillPreview){const f=instance.state.fillPreview;say(`Fill ${f.count} face${f.count===1?'':'s'} · ${f.held?'slide up/down grow/shrink · right/left loop/ring':'hold for planar expansion'} · release to commit`);}if(instance.state?.aoBusy){syncLayers();input('ao-status').textContent='Baking AO · '+Math.round(instance.state.aoProgress*100)+'% · Cancel AO stops baking';}if(imageStage)drawImageStage();if(instance.active)requestAnimationFrame(()=>frame(instance));}
-function point(e,up=false){const r=canvas.getBoundingClientRect();if(e.pointerType==='pen'&&!up&&Number.isFinite(e.pressure)&&e.pressure>0)lastPressure=e.pressure;return {x:e.clientX-r.left,y:e.clientY-r.top,width:r.width,height:r.height,pressure:e.pointerType==='pen'?(lastPressure>0?lastPressure:1):1};}
+function point(e,up=false){const r=canvas.getBoundingClientRect();if(e.pointerType==='pen'&&!up&&Number.isFinite(e.pressure))lastPressure=Math.max(0,Math.min(1,e.pressure));return {x:e.clientX-r.left,y:e.clientY-r.top,width:r.width,height:r.height,pressure:e.pointerType==='pen'?lastPressure:1};}
 function consume(e){e.preventDefault();e.stopImmediatePropagation();}
 function down(e){if(e.target!==canvas)return;imageRequest++;alphaRequest++;if(e.pointerType==='touch'){if(controller?.drawing||imageGesture){palms.add(e.pointerId);canvas.setPointerCapture(e.pointerId);consume(e);}else touches.add(e.pointerId);return;}
  if(!controller?.active||e.button!==0)return;
  // A fresh Pencil down cannot continue an older contact whose release was lost.
  if(e.pointerType==='pen'&&contact!==null)cancel();
+ if(e.pointerType==='pen')lastPressure=0;
  if(touches.size||contact!==null){consume(e);return;}
  try{if(!imageStage&&!controller.hit(point(e)))return;
  // Leave native colour/number editing before starting the captured stroke.

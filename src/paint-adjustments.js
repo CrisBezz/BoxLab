@@ -1,7 +1,7 @@
 import {filterPaintPixels} from '../evaluations/uv-paint/paint-core.js?v=0.36.18.1071';
 
 export const PAINT_ADJUSTMENTS=Object.freeze([
- ['auto','Auto',0,100,1],['exposure','Exposure',-3,3,.05],['brilliance','Brilliance',-100,100,1],['highlights','Highlights',-100,100,1],['shadows','Shadows',-100,100,1],['contrast','Contrast',-100,100,1],['brightness','Brightness',-100,100,1],['blackPoint','Black point',-100,100,1],['saturation','Saturation',-100,100,1],['vibrance','Vibrance',-100,100,1],['warmth','Warmth',-100,100,1],['tint','Tint',-100,100,1],['blur','Blur',0,100,1],['sharpness','Sharpness',0,100,1],['definition','Definition',0,100,1]
+ ['exposure','Exposure',-3,3,.05],['brilliance','Brilliance',-100,100,1],['highlights','Highlights',-100,100,1],['shadows','Shadows',-100,100,1],['contrast','Contrast',-100,100,1],['brightness','Brightness',-100,100,1],['blackPoint','Black point',-100,100,1],['saturation','Saturation',-100,100,1],['vibrance','Vibrance',-100,100,1],['warmth','Warmth',-100,100,1],['tint','Tint',-100,100,1],['blur','Blur',0,100,1],['sharpness','Sharpness',0,100,1],['definition','Definition',0,100,1]
 ].map(row=>Object.freeze(row)));
 const clamp=v=>Math.max(0,Math.min(1,v));
 export function paintAdjustmentSettings(value={}){
@@ -12,10 +12,7 @@ export function paintAdjustmentSettings(value={}){
 // painter's face/seam-aware kernel; never blur adjacent but unrelated UV islands.
 export function createPaintAdjustments({pixels,size,filter}){
  if(!Number.isInteger(size)||size<16||size>1024||!(pixels instanceof Uint8Array)||pixels.length!==size*size*4)throw Error('Invalid adjustment source');
- const original=pixels.slice(),hist=new Float64Array(256);let total=0,soft=null,fine=null;
- for(let i=0;i<original.length;i+=4){const a=original[i+3]/255;if(!a)continue;hist[Math.round(.2126*original[i]+.7152*original[i+1]+.0722*original[i+2])]+=a;total+=a;}
- const percentile=p=>{let count=0;for(let i=0;i<256;i++){count+=hist[i];if(count>=total*p)return i/255;}return 1;};
- const low=total?percentile(.01):0,high=total?percentile(.99):1;
+ const original=pixels.slice();let soft=null,fine=null;
  function spatial(amount){if(typeof filter!=='function')throw Error('Surface filter unavailable');return filterPaintPixels(original,size,filter(),{amount});}
  return {render(value={}){
   const s=paintAdjustmentSettings(value);if(Object.values(s).every(v=>v===0))return original.slice();
@@ -31,7 +28,6 @@ export function createPaintAdjustments({pixels,size,filter}){
     if(s.definition)byte+=(original[i+c]-soft[i+c])*s.definition/100;
     if(!colourActive){out[i+c]=Math.round(Math.max(0,Math.min(255,byte)));continue;}
     let v=lut[Math.round(Math.max(0,Math.min(255,byte)))];
-    if(high-low>.02)v+=(clamp((v-low)/(high-low))-v)*s.auto/100;
     rgb[c]=v;
    }
    if(!colourActive)continue;

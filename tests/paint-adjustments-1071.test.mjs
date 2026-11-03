@@ -9,7 +9,7 @@ const size=16,p={x:450,y:300,width:900,height:600,pressure:1},brush={colour:'#a0
 function sample(){const pixels=new Uint8Array(size*size*4);for(let i=0;i<pixels.length;i+=4)pixels.set([30+(i/4%16)*12,50+(i/64|0)*8,80+(i/4%7)*12,i%28?160:0],i);return pixels;}
 const filter=()=>({domains:new Int32Array(size*size)});
 test('1071 every requested slider has bounded defaults and a measurable independent effect; neutral/reset is exact and non-cumulative',()=>{
- const pixels=sample(),original=pixels.slice(),engine=createPaintAdjustments({pixels,size,filter});assert.equal(PAINT_ADJUSTMENTS.length,15);assert.deepEqual(engine.render(),original);
+ const pixels=sample(),original=pixels.slice(),engine=createPaintAdjustments({pixels,size,filter});assert.equal(PAINT_ADJUSTMENTS.length,14);assert.deepEqual(engine.render(),original);assert(!PAINT_ADJUSTMENTS.some(([key])=>key==='auto'));assert.throws(()=>paintAdjustmentSettings({auto:50}));
  for(const [key,,min,max]of PAINT_ADJUSTMENTS){const result=engine.render({[key]:key==='exposure'?1:70});assert.notDeepEqual(result,original,key);for(let i=3;i<result.length;i+=4)assert.equal(result[i],original[i],key+' alpha');assert.deepEqual(engine.render({[key]:key==='exposure'?1:70}),result);assert.throws(()=>paintAdjustmentSettings({[key]:max+1}));assert.throws(()=>paintAdjustmentSettings({[key]:min-1}));}
  assert.deepEqual(engine.render(),original);assert.deepEqual(pixels,original);assert.throws(()=>paintAdjustmentSettings({unknown:1}));assert.throws(()=>paintAdjustmentSettings({exposure:NaN}));
  const grey=engine.render({saturation:-100});for(let i=0;i<grey.length;i+=4)if(grey[i+3])assert.equal(grey[i],grey[i+1]),assert.equal(grey[i+1],grey[i+2]);
