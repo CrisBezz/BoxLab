@@ -23,3 +23,7 @@ release. Future artwork replacements should use new filenames to refresh caches.
 
 Approved original raster SHA-256:
 `33df05036c61aa3c1af8efa0a97e41e99bbb5638527c2e56d945d11a0e4be7d9`.
+
+Platform references:
+- https://developer.apple.com/library/archive/documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html
+- https://webkit.org/blog/13878/ (HTML apple-touch-icon takes precedence over manifest icons.)
