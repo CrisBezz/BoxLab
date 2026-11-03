@@ -1,5 +1,5 @@
 {
-  "baseline": "Reviewed .1069 approved three-box PNG install icons, manifest and shell cache chain; protected Paint and modelling owners retained.",
+  "baseline": "Reviewed .1070 Paint incoming image normalization export and viewport file-input owner; strict stored/alpha capture, .1066 painter core and accepted .1069 icon retained.",
   "references": [
     {
       "owner": "index.html",
@@ -167,9 +167,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1069",
+      "url": "./src/drawer-ui.js?v=0.36.18.1070",
       "target": "src/drawer-ui.js",
-      "sha256": "42569bac3e40cacea81b1a0496424c8e7e413e09d53a75c248ab00c508ae4ccc"
+      "sha256": "1f78f53c05537dc2c7d0ce5e5300d873677cabc26b24acb9e850acd29d1f198f"
     },
     {
       "owner": "index.html",
@@ -384,7 +384,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1069",
+      "url": "./src/release-version.js?v=0.36.18.1070",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -876,9 +876,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1069",
+      "url": "./face-workflow-layout.js?v=0.36.18.1070",
       "target": "src/face-workflow-layout.js",
-      "sha256": "7da082057c6d932be38ce980bd011d30ae06ecfdff337df3b03dc81b38fc1f2f"
+      "sha256": "a771c2b5285b5cfa2aa2139c21db01251362b8cbd6b56fe0bc639937cd419e42"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1373,7 +1373,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1069",
+      "url": "./release-version.js?v=0.36.18.1070",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -2481,8 +2481,8 @@
     {
       "owner": "index.html",
       "target": "src/viewport-paint.js",
-      "url": "./src/viewport-paint.js?v=0.36.18.1068",
-      "sha256": "3cd6baf08f8457b5de7a7071cbed01e7e59afa4bcf4eb3eab04b80432c410d2b"
+      "url": "./src/viewport-paint.js?v=0.36.18.1070",
+      "sha256": "5ca6c3a81a64e1aca544cc5b44f72794bcebd4bfa9a2d5fe9865bbbd8fe49fc2"
     },
     {
       "owner": "src/viewport-paint.js",
@@ -2644,7 +2644,7 @@
       "owner": "src/paint-image-layer.js",
       "url": "./paint-image-source.js?v=0.36.18.907",
       "target": "src/paint-image-source.js",
-      "sha256": "8fcf2807594c23821bfbd49f4439232bd6d82662eabd8759fb9406d52ebc9254"
+      "sha256": "e51cac57ac8558c428093d001a199df60d9c3bfc84d98e07d4f01648c4b0159c"
     },
     {
       "owner": "src/paint-image-layer.js",
@@ -2702,9 +2702,9 @@
     },
     {
       "owner": "src/viewport-paint.js",
-      "url": "./paint-image-source.js?v=0.36.18.907",
+      "url": "./paint-image-source.js?v=0.36.18.1070",
       "target": "src/paint-image-source.js",
-      "sha256": "8fcf2807594c23821bfbd49f4439232bd6d82662eabd8759fb9406d52ebc9254"
+      "sha256": "e51cac57ac8558c428093d001a199df60d9c3bfc84d98e07d4f01648c4b0159c"
     },
     {
       "owner": "src/viewport-paint.js",
@@ -2986,7 +2986,7 @@
       "owner": "src/paint-alpha-source.js",
       "url": "./paint-image-source.js?v=0.36.18.907",
       "target": "src/paint-image-source.js",
-      "sha256": "8fcf2807594c23821bfbd49f4439232bd6d82662eabd8759fb9406d52ebc9254"
+      "sha256": "e51cac57ac8558c428093d001a199df60d9c3bfc84d98e07d4f01648c4b0159c"
     },
     {
       "owner": "src/viewport-paint.js",
@@ -3350,9 +3350,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1069",
+      "url": "./src/shell-comparison.js?v=0.36.18.1070",
       "target": "src/shell-comparison.js",
-      "sha256": "e850a1dba5030ea5809f2badea03651dfc402a8b06bd0ff2add45990b98c603e"
+      "sha256": "11500b3f15f9f0b41058171e1acf9d881caf7daf25bc7665736a21c7f2b32817"
     },
     {
       "owner": "src/main.js",

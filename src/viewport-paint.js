@@ -8,7 +8,7 @@ import {bindPaintColourControls} from './paint-colour-controls.js?v=0.36.18.915'
 import {createViewportPainter} from './viewport-paint-core.js?v=0.36.18.1066';
 import {brushSettings} from '../evaluations/uv-paint/paint-core.js?v=0.36.18.1049';
 import {PAINT_BLEND_MODES} from './paint-blend-modes.js?v=0.36.18.903';
-import {importPaintImage} from './paint-image-source.js?v=0.36.18.907';
+import {importResizedPaintImage as importPaintImage,PAINT_IMAGE_INPUT_MAX_BYTES} from './paint-image-source.js?v=0.36.18.1070';
 import {cyclePaintImageMode} from './paint-image-placement.js?v=0.36.18.907';
 import {createPaintImageOverlay} from './paint-image-overlay.js?v=0.36.18.911';
 import {createSurfaceImageGuide,surfaceImagePlacement} from './paint-image-surface.js?v=0.36.18.933';
@@ -334,7 +334,7 @@ input('clear-alpha').addEventListener('click',()=>{cancel();alphaTip=null;input(
 input('tip-rotation').addEventListener('input',cancel);
 input('choose-image').addEventListener('click',()=>{cancel();input('image-file').value='';input('image-file').click();});
 input('image-file').addEventListener('change',async()=>{cancel();const file=input('image-file').files?.[0];if(!file)return;const instance=controller,token=++imageRequest,selected=instance?.state?.selected;try{
- if(file.size>2*1024*1024)throw Error('Image exceeds the 2 MiB encoded budget');say('Image · loading PNG / JPEG…');const source=await importPaintImage(new Uint8Array(await file.arrayBuffer()));
+ if(file.size>PAINT_IMAGE_INPUT_MAX_BYTES)throw Error('Incoming image exceeds 16 MiB');say('Image · loading PNG / JPEG…');const source=await importPaintImage(new Uint8Array(await file.arrayBuffer()));
  if(token!==imageRequest||controller!==instance||!instance?.active||instance.state.selected!==selected)return;
  const r=canvas.getBoundingClientRect(),h=.9,w=h*source.width/source.height*r.height/r.width,fit=Math.min(1,1.4/w);stageImage(source,{centre:[0,0],size:[w*fit,h*fit],rotation:0},{name:file.name.replace(/\.[^.]+$/,'')});
  }catch(error){if(token===imageRequest)say('Image: '+error.message);}});
