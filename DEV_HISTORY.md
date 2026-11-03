@@ -18724,3 +18724,7 @@ Audit found one native details/summary in viewport-paint.js, plus two callbacks 
 Validation and deployment pending. Device: enter Paint and see Selected layer settings without expanding; select Base then an overlay and use Base → Layer/+ Mask or opacity/blend; Done/reopen leaves settings expanded and footer reachable by scrolling. Next: device feedback; collect real .1064 height decode timings before displacement preview work. Standing push/publish authorization remains active.
 
 .1067 focused checks: 38 PASS / 0 FAIL across layer/mask/Base UI, contacts, palette and release/cache contracts. Hosted regression and deployment pending.
+
+## .1067 final release validation — 3 November 2026
+
+Hosted Topology 41588914712 passed 3,133 / 3,133, zero failures; focused checks 38 PASS / 0 FAIL. Pages 41588914085 succeeded. Runtime 7cae3dc4a1dda76912e68444cdccd16f852d6b74: live version.json, index.html, viewport-paint.js and shell-comparison.js byte-match the release tree. User .1066 PASS remains protected; device confirmation of the non-collapsible settings presentation is pending.
