@@ -2,8 +2,8 @@ import {captureAlphaTip,alphaTipCoverage} from './alpha-tip.js?v=0.36.18.929';
 // Isolated comparison document. One opaque colour layer per candidate, not scene history.
 export const RESOLUTION=512;
 export function brushSettings(value={}){
- const s={colour:'#e34b37',radius:10,hardness:.7,opacity:1,pressure:true,...value};
- if(!/^#[\da-f]{6}$/i.test(s.colour)||![s.radius,s.hardness,s.opacity].every(Number.isFinite)||s.radius<1||s.radius>256||s.hardness<0||s.hardness>1||s.opacity<0||s.opacity>1||typeof s.pressure!=='boolean'||!Number.isFinite(s.tipRotation??0)||Math.abs(s.tipRotation??0)>360)throw Error('Invalid brush settings');
+ const s={colour:'#e34b37',radius:10,hardness:.7,opacity:1,pressure:true,pressureOpacity:false,...value};
+ if(!/^#[\da-f]{6}$/i.test(s.colour)||![s.radius,s.hardness,s.opacity].every(Number.isFinite)||s.radius<1||s.radius>256||s.hardness<0||s.hardness>1||s.opacity<0||s.opacity>1||typeof s.pressure!=='boolean'||typeof s.pressureOpacity!=='boolean'||!Number.isFinite(s.tipRotation??0)||Math.abs(s.tipRotation??0)>360)throw Error('Invalid brush settings');
  return Object.freeze(s);
 }
 // Repeat the existing centre4/cardinal1 kernel over the stroke-start snapshot.
@@ -113,8 +113,10 @@ export function createPaintLayer(size=RESOLUTION,{transparent=false}={}){
   stamp(u,v,pressure=1,face=null){
    if(blur&&(!Number.isInteger(face)||face<0)){resetPickup();return false;}
    if(disposed||!before||![u,v,pressure].every(Number.isFinite)||u<0||u>1||v<0||v>1)return false;
-   const p=settings.pressure?Math.min(1,Math.max(0,pressure)):1;if(!p||!settings.opacity){resetPickup();return false;}
-   const radius=Math.max(.35,settings.radius*p),cx=u*(size-1),cy=v*(size-1),rgb=[1,3,5].map(i=>parseInt(settings.colour.slice(i,i+2),16)),extent=settings.alphaTip?radius*Math.SQRT2:radius,angle=(settings.tipRotation??0)*Math.PI/180,cos=Math.cos(angle),sin=Math.sin(angle);let touched=false;
+   const p=Math.min(1,Math.max(0,pressure));
+   const opacity=settings.opacity*(settings.pressureOpacity?p:1);
+   if((settings.pressure&&!p)||!opacity){resetPickup();return false;}
+   const radius=Math.max(.35,settings.radius*(settings.pressure?p:1)),cx=u*(size-1),cy=v*(size-1),rgb=[1,3,5].map(i=>parseInt(settings.colour.slice(i,i+2),16)),extent=settings.alphaTip?radius*Math.SQRT2:radius,angle=(settings.tipRotation??0)*Math.PI/180,cos=Math.cos(angle),sin=Math.sin(angle);let touched=false;
    if(smudging&&!carry(cx,cy,face,radius,cos,sin))return false;
    if(!smudging&&settings.radius>48){
     const work=(Math.min(size-1,Math.ceil(cy+extent+1))-Math.max(0,Math.floor(cy-extent-1))+1)*(Math.min(size-1,Math.ceil(cx+extent+1))-Math.max(0,Math.floor(cx-extent-1))+1);
@@ -125,10 +127,10 @@ export function createPaintLayer(size=RESOLUTION,{transparent=false}={}){
     if(smudging&&(Math.abs(x-pickup.x)>pickup.extent||Math.abs(y-pickup.y)>pickup.extent))continue;
     const sample=smudging?(x-pickup.x+pickup.extent+(y-pickup.y+pickup.extent)*pickup.width):-1;
     if(smudging&&!pickup.valid[sample])continue;
-    if(settings.alphaTip){const a=settings.opacity*alphaTipCoverage(settings.alphaTip,(x-cx)/radius,(y-cy)/radius,cos,sin);if(applyCoverage(x+y*size,a,rgb,sample*4))touched=true;continue;}
+    if(settings.alphaTip){const a=opacity*alphaTipCoverage(settings.alphaTip,(x-cx)/radius,(y-cy)/radius,cos,sin);if(applyCoverage(x+y*size,a,rgb,sample*4))touched=true;continue;}
     const d=Math.hypot(x-cx,y-cy),edge=Math.min(1,Math.max(0,radius+.5-d));if(!edge)continue;
     const t=Math.min(1,Math.max(0,(1-d/radius)/Math.max(.00001,1-settings.hardness))),falloff=t*t*(3-2*t);
-    const a=settings.opacity*edge*(d/radius<=settings.hardness?1:falloff),at=x+y*size;if(!smudging&&a<=coverage[at])continue;
+    const a=opacity*edge*(d/radius<=settings.hardness?1:falloff),at=x+y*size;if(!smudging&&a<=coverage[at])continue;
     if(applyCoverage(at,a,rgb,sample*4))touched=true;
    }
    if(touched){dirty=true;changed=true;}return touched;

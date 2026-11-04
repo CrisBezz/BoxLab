@@ -3,7 +3,7 @@ import {createFacegroupBoundaryPreview,facegroupBoundaryEdges} from './facegroup
 import {createPaintFilterDomain} from './paint-filter-domain.js?v=0.36.18.951';
 import {createPaintAOPixels,createPaintAOPixelsAsync} from './paint-ao-layer.js?v=0.36.18.951';
 import * as THREE from 'three';
-import {createPaintLayer} from '../evaluations/uv-paint/paint-core.js?v=0.36.18.1071';
+import {createPaintLayer} from '../evaluations/uv-paint/paint-core.js?v=0.36.18.1074';
 import {createStroke} from '../evaluations/uv-paint/stroke.js?v=896';
 import {captureColourResource} from './paint-resource.js?v=898';
 import {createPaintLayerStack,appendPaintLayer,replacePaintLayer,flattenPaintLayerStack,appendImagePaintLayer,replaceImagePaintLayer,rasterizeImagePaintLayer,enlargePaintLayerStack,mergePaintLayersToBase} from './paint-layer-stack.js?v=0.36.18.938';
@@ -105,10 +105,39 @@ export function createViewportPainter({target,activeId=()=>target()?.id,body,own
   const makePath=()=>createStroke(kind,q=>{if(!(q.pressure>0))return;const h=hit({...q,width:p.width,height:p.height});if(h){const face=['blur','smudge','sharpen'].includes(action)?session.filterDomain.faceAt(h.faceIndex):null;session.layer.stamp(h.uv.x,h.uv.y,q.pressure,face);for(const layer of Object.values(stroke?.scalarLayers||{}))layer.stamp(h.uv.x,h.uv.y,q.pressure,face);}else if(action==='smudge'){session.layer.resetPickup();for(const layer of Object.values(stroke?.scalarLayers||{}))layer.resetPickup();}});
   const path=makePath(),penStart=settings.deferPenStart?{origin:{...p},pressured:p.pressure>0}:null;stroke={path,penStart,waitingPressure:!(p.pressure>0),controls:enabled,smudge:action==='smudge',large:settings.radius>48,makePath,lastInput:{...p},scalarLayers};if(!penStart)path.start(p);return true;
  }
- function move(p){if(!stroke)return;if(!current()){close();return;}if(stroke.fill){const dx=p.x-stroke.start.x,dy=p.y-stroke.start.y;if(!stroke.held){if(Math.hypot(dx,dy)>8)cancel();return;}stroke.dx=dx;stroke.dy=dy;renderFill(stroke);return;}try{if(stroke.penStart){const pending=stroke.penStart;stroke.lastInput={...p};if(!(p.pressure>0)){pending.origin={...p};pending.pressured=false;return;}if(p.x===pending.origin.x&&p.y===pending.origin.y){pending.pressured=true;return;}stroke.penStart=null;stroke.waitingPressure=false;if(pending.pressured){stroke.path.start({...pending.origin,pressure:p.pressure});stroke.path.move(p);}else stroke.path.start(p);return;}if(stroke.waitingPressure){stroke.lastInput={...p};if(!(p.pressure>0))return;stroke.waitingPressure=false;stroke.path.cancel();stroke.path=stroke.makePath();stroke.path.start(p);return;}if(stroke.smudge||stroke.large){session.layer.resetWorkBudget();for(const layer of Object.values(stroke.scalarLayers||{}))layer.resetWorkBudget();if(stroke.path.stats.limited){stroke.path.cancel();stroke.path=stroke.makePath();stroke.path.start(stroke.lastInput);}}stroke.path.move(p);stroke.lastInput={...p};}catch(error){cancel();throw error;}}
+ // Confirm onset pressure with a second moving sample before emitting an irreversible dab.
+ function startPenPath(active,next){
+  const {first,origin,pressured}=active.penStart;
+  const pressure=Math.min(first.pressure,next.pressure);
+  active.penStart=null;
+  active.waitingPressure=false;
+  active.path.start({...pressured?origin:first,pressure});
+  if(pressured)active.path.move({...first,pressure});
+  if(next!==first)active.path.move(next);
+ }
+ function move(p){if(!stroke)return;if(!current()){close();return;}if(stroke.fill){const dx=p.x-stroke.start.x,dy=p.y-stroke.start.y;if(!stroke.held){if(Math.hypot(dx,dy)>8)cancel();return;}stroke.dx=dx;stroke.dy=dy;renderFill(stroke);return;}try{if(stroke.penStart){
+   const pending=stroke.penStart;
+   stroke.lastInput={...p};
+   if(!(p.pressure>0)){
+    if(pending.first) startPenPath(stroke,pending.first);
+    else {pending.origin={...p};pending.pressured=false;}
+    return;
+   }
+   if(!pending.first){
+    if(p.x===pending.origin.x&&p.y===pending.origin.y){pending.pressured=true;return;}
+    pending.first={...p};
+    return;
+   }
+   if(p.x===pending.first.x&&p.y===pending.first.y){
+    pending.first.pressure=Math.min(pending.first.pressure,p.pressure);
+    return;
+   }
+   startPenPath(stroke,p);
+   return;
+  }if(stroke.waitingPressure){stroke.lastInput={...p};if(!(p.pressure>0))return;stroke.waitingPressure=false;stroke.path.cancel();stroke.path=stroke.makePath();stroke.path.start(p);return;}if(stroke.smudge||stroke.large){session.layer.resetWorkBudget();for(const layer of Object.values(stroke.scalarLayers||{}))layer.resetWorkBudget();if(stroke.path.stats.limited){stroke.path.cancel();stroke.path=stroke.makePath();stroke.path.start(stroke.lastInput);}}stroke.path.move(p);stroke.lastInput={...p};}catch(error){cancel();throw error;}}
  function finish(p){
   if(!stroke)return false;if(p)move(p);if(!stroke)return false;const active=stroke;
-  try{if(active.penStart){active.penStart=null;if(active.lastInput.pressure>0){active.waitingPressure=false;active.path.start(active.lastInput);}}if(active.smudge||active.large){session.layer.resetWorkBudget();for(const layer of Object.values(active.scalarLayers||{}))layer.resetWorkBudget();}active.path?.end();}catch(error){cancel();throw error;}
+  try{if(active.penStart?.first)startPenPath(active,active.penStart.first);if(active.penStart){active.penStart=null;if(active.lastInput.pressure>0){active.waitingPressure=false;active.path.start(active.lastInput);}}if(active.smudge||active.large){session.layer.resetWorkBudget();for(const layer of Object.values(active.scalarLayers||{}))layer.resetWorkBudget();}active.path?.end();}catch(error){cancel();throw error;}
   const enabled=active.controls;clearTimer(active.timer);stroke=null;controls.enabled=enabled;
   if(!current()||paintTargetKey(target(),target()?.mesh,owner)!==session.key){session.layer.finish(true);for(const layer of Object.values(active.scalarLayers||{})){layer.finish(true);layer.dispose();}close();return false;}
   const colourChanged=session.layer.finish(),scalarPixels={};for(const [channel,layer] of Object.entries(active.scalarLayers||{})){const changed=layer.finish();if(changed){const result=scalarStrokePixels(channel,layer);if(result.changed)scalarPixels[channel]=result.pixels;}layer.dispose();}

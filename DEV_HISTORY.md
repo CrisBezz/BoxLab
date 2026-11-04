@@ -18847,3 +18847,12 @@ Hosted regression and Pages/live verification pending. Device: repeat the long l
 Validation complete: 37 focused checks PASS; hosted full regression 3156 PASS / 0 FAIL (run 41635394374, job 125915185206, runtime commit bb9ea4fb34d965a51b00619c844a4bd21d1c28fe). Pages run 41635392457 succeeded. Live version.json, index.html, viewport-paint.js, viewport-paint-core.js and shell-comparison.js bytes match the .1073 runtime sources. Native Pencil acceptance remains PENDING; no device PASS inferred.
 
 User .1072 FAIL remains recorded. .1073 native Pencil onset/taps, combined channels and contact recovery await user testing. No runtime changes in this proof update; current release remains 0.36.18.1073. Standing main/Pages push authorization remains in force.
+
+
+## .1074 — brush controls and Pencil onset — 4 November 2026
+
+.1073 native FAIL: strokes started at the upper right with Size 256 and a large head. The first moving pressure sample could still stamp an oversized head. .1074 confirms it against the next distinct moving sample and uses the lower reading for the initial segment. Later samples retain normal dynamics. Taps retain release behaviour.
+
+Brush tip settings are visible in Brush controls. Independent Pencil Size and Opacity toggles use the sliders as ceilings. Size 256 gives the full size range. Defaults remain pressure sizing on and opacity dynamics off. Fill uses slider opacity and hides pressure options.
+
+Native gate: test light Size 256 strokes with both brushes, all four toggle combinations, deliberate taps and combined channels. Native result pending. Standing main/Pages push authorization applies.

@@ -1,3 +1,11 @@
+## .1074 — brush controls and Pencil onset — 4 November 2026
+
+.1073 native FAIL: strokes started at the upper right with Size 256 and a large head. The first moving pressure sample could still stamp an oversized head. .1074 confirms it against the next distinct moving sample and uses the lower reading for the initial segment. Later samples retain normal dynamics. Taps retain release behaviour.
+
+Brush tip settings are visible in Brush controls. Independent Pencil Size and Opacity toggles use the sliders as ceilings. Size 256 gives the full size range. Defaults remain pressure sizing on and opacity dynamics off. Fill uses slider opacity and hides pressure options.
+
+Native gate: test light Size 256 strokes with both brushes, all four toggle combinations, deliberate taps and combined channels. Native result pending. Standing main/Pages push authorization applies.
+
 ## .1073 — defer the positive Pencil-down stamp — 3 November 2026
 
 USER .1072 FAIL: screenshot visibly reports v0.36.18.1072 and shows round thick caps followed by thin strokes. Zero-pressure/stale-pressure handling was insufficient. Do NOT claim .1072 repaired the native onset, or explain this as stale cache. Auto removal remains retained (14 sliders), but no unrelated device PASS is inferred.
