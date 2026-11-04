@@ -18861,3 +18861,8 @@ Native gate: test light Size 256 strokes with both brushes, all four toggle comb
 ## .1074 native acceptance — 4 November 2026
 
 User device PASS for .1074 on 4 November 2026. Pencil stroke onset no longer produces the large dab. Protect the two-sample onset handling and independent Size/Opacity pressure controls.
+
+
+## .1070 and .1071 device acceptance — 4 November 2026
+
+User reports PASS for .1070 proportional image import and .1071 whole-image adjustments. Record both as protected. The already recorded .1074 Pencil onset/pressure controls PASS remains protected.

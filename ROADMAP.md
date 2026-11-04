@@ -1,3 +1,7 @@
+## Protected device results — 4 November 2026
+
+PASS .1074 Pencil onset and brush pressure controls. PASS .1071 image adjustments. PASS .1070 proportional image import. These gates are closed. Continue with the next open roadmap priority below.
+
 ## .1074 — brush controls and Pencil onset — 4 November 2026
 
 .1073 native FAIL: strokes started at the upper right with Size 256 and a large head. The first moving pressure sample could still stamp an oversized head. .1074 confirms it against the next distinct moving sample and uses the lower reading for the initial segment. Later samples retain normal dynamics. Taps retain release behaviour.
