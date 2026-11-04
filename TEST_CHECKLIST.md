@@ -4,7 +4,7 @@
 
 Brush tip settings are visible in Brush controls. Independent Pencil Size and Opacity toggles use the sliders as ceilings. Size 256 gives the full size range. Defaults remain pressure sizing on and opacity dynamics off. Fill uses slider opacity and hides pressure options.
 
-Native gate: test light Size 256 strokes with both brushes, all four toggle combinations, deliberate taps and combined channels. Native result pending. Standing main/Pages push authorization applies.
+Native gate: test light Size 256 strokes with both brushes, all four toggle combinations, deliberate taps and combined channels. User device PASS for .1074 on 4 November 2026. Pencil stroke onset no longer produces the large dab. Protect the two-sample onset handling and independent Size/Opacity pressure controls. Standing main/Pages push authorization applies.
 
 ## .1073 — defer the positive Pencil-down stamp — 3 November 2026
 

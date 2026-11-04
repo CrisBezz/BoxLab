@@ -18856,3 +18856,8 @@ User .1072 FAIL remains recorded. .1073 native Pencil onset/taps, combined chann
 Brush tip settings are visible in Brush controls. Independent Pencil Size and Opacity toggles use the sliders as ceilings. Size 256 gives the full size range. Defaults remain pressure sizing on and opacity dynamics off. Fill uses slider opacity and hides pressure options.
 
 Native gate: test light Size 256 strokes with both brushes, all four toggle combinations, deliberate taps and combined channels. Native result pending. Standing main/Pages push authorization applies.
+
+
+## .1074 native acceptance — 4 November 2026
+
+User device PASS for .1074 on 4 November 2026. Pencil stroke onset no longer produces the large dab. Protect the two-sample onset handling and independent Size/Opacity pressure controls.
