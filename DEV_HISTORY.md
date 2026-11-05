@@ -18944,3 +18944,5 @@ The first diagnostic publication used `.1079`; hosted Topology caught two stale 
 ## .1081 — refresh the canonical release-version import chain — 5 November 2026
 
 Hosted Topology for `.1080` found the release marker suite requires the direct `release-version.js` URL to equal `version.json`. Refresh the complete existing loader chain: index → drawer-ui → face-workflow-layout → release-version. Also repin the viewport paint child/core and comparison shell. No new diagnostic or paint behavior is added; this advances the previously published diagnostic to cache-distinct URLs and satisfies the existing release owner contract. Hosted Topology and Pages must pass before native report capture.
+
+The first `.1081` hosted Topology run passed 3160/3162 checks; two release-contract tests identified the stale index `release-version.js` cache reference in `tests/fixtures/runtime-asset-contract.json`. Update that reviewed URL to `.1081` (module bytes are unchanged) and rerun the hosted regression; Pages and live runtime byte verification already succeeded for `.1081`.

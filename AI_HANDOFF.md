@@ -6,7 +6,7 @@ User reports `.1077` PASS for compact Paint and four-channel strokes. `.1078` FA
 
 Build `.1081` adds an opt-in trace to the existing Gesture Debug owner. It records raw pointer type/pressure/buttons, normalized pressure, brush size and pressure toggles, the first eight coalesced samples, pen-onset pressure selection, and the first eight UV dabs with computed texture radii and hit results. The existing Capture/Copy report includes these entries. Use this evidence to locate whether the initial mark comes from pointerdown classification/pressure, onset confirmation, or the brush kernel before changing stroke behavior.
 
-Release `0.36.18.1081`. Automated and hosted checks pending. Native iPad/Safari acceptance is pending; the immediate task is to capture one failing Pencil stroke report. Enable View → Gesture Debug, reproduce one blob, then use Capture report → Copy report. Standing direct-main and Pages publication authorization remains active.
+Release `0.36.18.1081`. Pages deployed successfully and the live version marker plus changed runtime modules match the repository. The first hosted Topology run exposed one stale `release-version.js` cache-contract entry after the loader-chain repin; the contract now reflects `.1081`, and hosted regression must be rerun before device checking. Native iPad/Safari acceptance is pending; the immediate task is to capture one failing Pencil stroke report. Enable View → Gesture Debug, reproduce one blob, then use Capture report → Copy report. Standing direct-main and Pages publication authorization remains active.
 
 ## Current protected device PASSes — 5 November 2026
 
