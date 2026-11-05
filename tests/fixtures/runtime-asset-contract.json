@@ -1,5 +1,5 @@
 {
-  "baseline": "Reviewed .1080: opt-in Pencil paint diagnostics capture raw/coalesced pressure, onset choice and the first UV dab radii/hits without changing painting.",
+  "baseline": "Reviewed .1081: opt-in Pencil paint diagnostics capture raw/coalesced pressure, onset choice and the first UV dab radii/hits without changing painting.",
   "references": [
     {
       "owner": "index.html",
@@ -161,9 +161,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1080",
+      "url": "./src/drawer-ui.js?v=0.36.18.1081",
       "target": "src/drawer-ui.js",
-      "sha256": "8554fd6922f4b10740c088a7374da96aa1c9017dd44cfa178d6331620d1078e3"
+      "sha256": "fefa4324311dff074e6b6c1ca6c7bab7f37e9505d446ad2dbd20469ed7f3facf"
     },
     {
       "owner": "index.html",
@@ -864,9 +864,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1078",
+      "url": "./face-workflow-layout.js?v=0.36.18.1081",
       "target": "src/face-workflow-layout.js",
-      "sha256": "826214ff7d08aaaadca6279268409228a09dabb7109254a49979af2f1381c50a"
+      "sha256": "fdd5b33d39dc61d1926c9a1b47b7a9521d209c0958f178d454d8299916ba9b27"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1361,7 +1361,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1078",
+      "url": "./release-version.js?v=0.36.18.1081",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -2456,13 +2456,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/viewport-paint.js?v=0.36.18.1080",
+      "url": "./src/viewport-paint.js?v=0.36.18.1081",
       "target": "src/viewport-paint.js",
-      "sha256": "0c9a79d2f7c815be65f7347ac1ab915cafe5d38d0d90e9462bd91fadfd309246"
+      "sha256": "a020c9385f0ded11023b6e2b694e8ed801427982cb84512ed65f86db1801616f"
     },
     {
       "owner": "src/viewport-paint.js",
-      "url": "./viewport-paint-core.js?v=0.36.18.1080",
+      "url": "./viewport-paint-core.js?v=0.36.18.1081",
       "target": "src/viewport-paint-core.js",
       "sha256": "04f7a473750643307bbf61663cf59808a57681b11ead589e9219e8b0ddeb1fd7"
     },
@@ -3326,9 +3326,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1080",
+      "url": "./src/shell-comparison.js?v=0.36.18.1081",
       "target": "src/shell-comparison.js",
-      "sha256": "0f996fbf1b9bd58070557bfa33828b2bfca0ba0600de5a863cd817183433fd73"
+      "sha256": "51c06d7a97789c834cde4114655ce6554595bad8d42fa47d9c6cc6d3653e6d4f"
     },
     {
       "owner": "src/main.js",

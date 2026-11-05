@@ -18939,3 +18939,8 @@ Manual diagnostic: View → Gesture Debug ON; reproduce one first-touch blob in 
 ## .1080 — correct diagnostic release markers after hosted gate — 5 November 2026
 
 The first diagnostic publication used `.1079`; hosted Topology caught two stale release-contract references and three old visible shell-comparison labels. The diagnostic code itself did not fail; 3159/3162 checks passed. Correct the release marker to `.1080`, update the shell comparison labels and expectation, and keep the direct/nested `release-version.js` pins paired at `.1078` because that owner is unchanged. Paint diagnostics and painting behavior remain unchanged. Re-run hosted Topology and Pages before requesting the native capture.
+
+
+## .1081 — refresh the canonical release-version import chain — 5 November 2026
+
+Hosted Topology for `.1080` found the release marker suite requires the direct `release-version.js` URL to equal `version.json`. Refresh the complete existing loader chain: index → drawer-ui → face-workflow-layout → release-version. Also repin the viewport paint child/core and comparison shell. No new diagnostic or paint behavior is added; this advances the previously published diagnostic to cache-distinct URLs and satisfies the existing release owner contract. Hosted Topology and Pages must pass before native report capture.

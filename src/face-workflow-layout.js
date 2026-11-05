@@ -34,7 +34,7 @@ import './backdrop-presets.js?v=0.36.18.190';
 import './studio-light-angle.js?v=0.36.18.199';
 import './cage-intensity.js?v=0.36.18.846';
 import './live-mesh-bridge.js?v=0.36.18.840';
-import './release-version.js?v=0.36.18.1078';
+import './release-version.js?v=0.36.18.1081';
 import './beta-runtime-guard.js?v=0.36.18.193';
 import './loop-cut-feedback.js?v=0.36.18.193';
 

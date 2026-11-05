@@ -1,4 +1,4 @@
-## .1080 diagnostic capture — pending user check
+## .1081 diagnostic capture — pending user check
 
 Use the existing Gesture Debug controls; no model or Paint settings need to change.
 

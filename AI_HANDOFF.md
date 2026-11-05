@@ -1,12 +1,12 @@
-# Current build — .1080 Pencil stroke diagnostics — 5 November 2026
+# Current build — .1081 Pencil stroke diagnostics — 5 November 2026
 
 User reports `.1077` PASS for compact Paint and four-channel strokes. `.1078` FAIL: a large dab still appears on first touch. Protect the `.1077` menu, combined Colour/Roughness/Metalness/Opacity painting and the two-sided `.1076` opacity preview. The `.1078` synthetic pressure test did not reproduce the device failure; do not treat its coalesced-sample hypothesis as confirmed.
 
 `.1077` shortens the Paint panel: Roughness, Metalness and Opacity controls use directional value sliders; extended channel and brush-tip explanations move into control tooltips and the existing Paint help button. The optional Colour-stroke set now includes Opacity with Roughness and Metalness. Selecting Opacity under “Also paint” reveals its value slider; Brush, Fill, Eraser, Smudge, Blur and Sharpen use the original multi-map transaction, preview, stencil and history owners. One Undo restores all maps together. Imported-object maps remain protected.
 
-Build `.1080` adds an opt-in trace to the existing Gesture Debug owner. It records raw pointer type/pressure/buttons, normalized pressure, brush size and pressure toggles, the first eight coalesced samples, pen-onset pressure selection, and the first eight UV dabs with computed texture radii and hit results. The existing Capture/Copy report includes these entries. Use this evidence to locate whether the initial mark comes from pointerdown classification/pressure, onset confirmation, or the brush kernel before changing stroke behavior.
+Build `.1081` adds an opt-in trace to the existing Gesture Debug owner. It records raw pointer type/pressure/buttons, normalized pressure, brush size and pressure toggles, the first eight coalesced samples, pen-onset pressure selection, and the first eight UV dabs with computed texture radii and hit results. The existing Capture/Copy report includes these entries. Use this evidence to locate whether the initial mark comes from pointerdown classification/pressure, onset confirmation, or the brush kernel before changing stroke behavior.
 
-Release `0.36.18.1080`. Automated and hosted checks pending. Native iPad/Safari acceptance is pending; the immediate task is to capture one failing Pencil stroke report. Enable View → Gesture Debug, reproduce one blob, then use Capture report → Copy report. Standing direct-main and Pages publication authorization remains active.
+Release `0.36.18.1081`. Automated and hosted checks pending. Native iPad/Safari acceptance is pending; the immediate task is to capture one failing Pencil stroke report. Enable View → Gesture Debug, reproduce one blob, then use Capture report → Copy report. Standing direct-main and Pages publication authorization remains active.
 
 ## Current protected device PASSes — 5 November 2026
 

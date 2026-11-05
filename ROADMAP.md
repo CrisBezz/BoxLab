@@ -1,10 +1,10 @@
-# Current build: .1080 Pencil stroke diagnostic (5 November 2026)
+# Current build: .1081 Pencil stroke diagnostic (5 November 2026)
 
 ## Delivered for native checking
 
 - `.1077` compact Paint menu and combined Colour/Roughness/Metalness/Opacity strokes received user PASS; preserve them.
 - User reports `.1078` FAIL: first touch still paints a large dab. The previous synthetic test missed the device path, so the cause is not established.
-- `.1080` adds opt-in evidence for raw/coalesced pointer events, normalized pressure, onset decisions, first dab radii and surface hit results through the existing Gesture Debug report.
+- `.1081` adds opt-in evidence for raw/coalesced pointer events, normalized pressure, onset decisions, first dab radii and surface hit results through the existing Gesture Debug report.
 - Automated checks and hosted release validation are pending.
 
 ## Next
