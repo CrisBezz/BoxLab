@@ -1,4 +1,4 @@
-# Current build — .1082 Pencil onset pressure settling — 6 November 2026
+# Current build — .1083 adaptive Pencil onset settling — 6 November 2026
 
 User reports `.1077` PASS for compact Paint and four-channel strokes. `.1078` FAIL: a large dab still appears on first touch. Protect the `.1077` menu, combined Colour/Roughness/Metalness/Opacity painting and the two-sided `.1076` opacity preview. The `.1078` synthetic pressure test did not reproduce the device failure; do not treat its coalesced-sample hypothesis as confirmed.
 
@@ -6,7 +6,7 @@ User reports `.1077` PASS for compact Paint and four-channel strokes. `.1078` FA
 
 Build `.1081` added an opt-in trace to the existing Gesture Debug owner. The user's `.1081` capture showed down pressure `0.08`, several early `0.08` moving samples, then values falling to about `0.02`; the initial dab used radius `20.48px` while later dabs were about `5–9px`. The onset guard committed before pressure settled.
 
-Build `.1082` keeps the same Pencil path pending for eight positive pressure samples (including down when positive), uses the lowest pressure observed for the initial segment, and replays the buffered segment through the original stroke kernel. Stationary taps still paint on release using the latest pressure. Diagnostic onset entries report the settle sample count and resolved pressure. Hosted validation and Pages publication are pending; native iPad/Safari acceptance remains pending. Standing direct-main and Pages publication authorization remains active.
+Build `.1082` diagnosed the first dab as pressure settling: `.08` at down/early samples predicted a `20.48px` radius, then pressure fell to `.02–.03` and later dabs were `5–9px`. Its blanket eight-sample wait regressed two hosted live-preview checks, so `.1083` keeps that wait only while the predicted initial radius exceeds `8px`; it starts sooner as soon as the minimum observed pressure predicts a safe radius. Fixed-size brushes also start immediately. It still buffers/replays the same path and leaves deliberate taps on release. Gesture Debug records the settle reason, sample count and resolved radius. `.1083` hosted validation and Pages publication pending; native iPad/Safari acceptance remains pending. Standing direct-main and Pages publication authorization remains active.
 
 ## Current protected device PASSes — 5 November 2026
 

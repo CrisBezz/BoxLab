@@ -1,17 +1,17 @@
-# Current build: .1082 Pencil onset pressure settling (6 November 2026)
+# Current build: .1083 adaptive Pencil onset settling (6 November 2026)
 
 ## Delivered for native checking
 
 - `.1077` compact Paint menu and combined Colour/Roughness/Metalness/Opacity strokes received user PASS; preserve them.
 - User's `.1081` report identified the large onset dab: down/early pressures stayed at `0.08`, then fell to `0.02`; the first dab radius was `20.48px` versus `5–9px` later.
-- `.1082` holds the initial Pencil segment in the existing painter until eight positive pressure samples (including down when positive) arrive, then replays it using the minimum onset pressure. Tap-on-release and shared channel painting remain with their existing owners.
-- `.1082` hosted Topology and Pages validation pending. Native iPad/Safari confirmation remains the next gate.
+- `.1083` waits for pressure settling only when the projected initial dab exceeds 8px; it releases the existing buffered stroke as soon as the minimum observed pressure predicts a safe first dab. Fixed-size brushes start immediately.
+- The `.1082` blanket wait caused two hosted live-preview regressions and is superseded. `.1083` hosted Topology and Pages validation pending; native iPad/Safari confirmation remains the next gate.
 
 ## Next
 
-1. Enable View → Gesture Debug, reproduce one first-touch dab, then Capture report → Copy report and return the report for diagnosis.
-2. Preserve the `.1077` menu/channel behavior and `.1076` two-sided opacity preview while confirming the source from a device trace.
-3. Recheck light strokes, deliberate taps and finger navigation after the root-cause fix. Imported NOM/GLB UV painting and opacity export remain separate roadmap work.
+1. Check `.1083` on device: Size 256, Pencil Size enabled, slow-light strokes; compare their first mark with the rest of each stroke.
+2. Check combined Colour/Roughness/Metalness/Opacity, deliberate taps, Undo/Redo, brush switching and finger orbit.
+3. Keep `.1077` menu/channel behavior and `.1076` two-sided opacity preview protected. Imported NOM/GLB UV painting and opacity export remain separate roadmap work.
 
 ## Protected device results — 4 November 2026
 

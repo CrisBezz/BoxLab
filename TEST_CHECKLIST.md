@@ -1,10 +1,10 @@
-## .1082 Pencil onset settling — pending user check
+## .1083 Adaptive Pencil onset — pending user check
 
-Protect `.1077` compact Paint and combined channels, `.1076` two-sided opacity and `.1074` brush pressure controls. The `.1081` device report showed down pressure `0.08`, a short early plateau, then a fall to `0.02`; its initial dab was `20.48px` versus `5–9px` later.
+Protect `.1077` compact Paint and combined channels, `.1076` two-sided opacity and `.1074` brush pressure controls. The `.1081` device report showed down pressure `0.08`, a short early plateau, then a fall to `0.02`; its initial dab was `20.48px` versus `5–9px` later. `.1082` blanket eight-sample settling fixed the large onset in theory but regressed two hosted immediate-preview checks.
 
-`.1082` defers the initial Pencil segment until eight positive pressure samples (including down when positive) and uses their minimum for the buffered onset segment. The existing stroke kernel, pressure dynamics after onset and tap-on-release path remain active. Hosted validation pending.
+`.1083` now settles only while the minimum observed pressure predicts a first radius above `8px`. It starts as soon as the projected radius is safe; pressure-independent size starts immediately. The existing painter buffers and replays its path through the same stroke kernel. Deliberate taps still paint on release. Hosted validation and Pages publication pending.
 
-Hands-on check: with Size 256 and Pencil Size enabled, make slow-light and fast-light strokes in Colour, then combined Colour/Roughness/Metalness/Opacity; compare the first mark to the rest of each stroke. Also test deliberate taps, Undo/Redo, brush switch and orbit with fingers. If the blob persists, enable View → Gesture Debug and capture one report; `.1082` logs onset sample count and resolved minimum pressure as well as dab radii/hits.
+Hands-on check: with Size 256 and Pencil Size enabled, make slow-light strokes in Colour and combined Colour/Roughness/Metalness/Opacity; inspect the first dab against later marks. Then check deliberate taps, Undo/Redo, brush switching and finger orbit. If the large dab remains, capture View → Gesture Debug; `.1083` records settle reason, sample count, chosen pressure and first dab radius.
 
 The report records the pointer type/pressure on down, normalized pressure, brush size and pressure toggles, up to eight coalesced samples, onset decision and the first eight generated UV dabs with pressure, computed map radius and surface-hit result. This determines whether the device event already carries a high pressure, the onset guard selects it, or the brush output expands it. The `.1078` automated reproduction passed but did not match the user-reported first-touch failure; do not claim a fix until the device trace is understood.
 
