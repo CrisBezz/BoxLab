@@ -1,5 +1,5 @@
 {
-  "baseline": "Reviewed .1077: compact Paint controls use clear value sliders and Colour strokes can also paint Roughness, Metalness and Opacity atomically.",
+  "baseline": "Reviewed .1078: Paint pressure samples inherit the active Pencil contact type when coalesced events omit it, preventing stale Pencil-down pressure from creating an oversized stroke cap.",
   "references": [
     {
       "owner": "index.html",
@@ -161,9 +161,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1077",
+      "url": "./src/drawer-ui.js?v=0.36.18.1078",
       "target": "src/drawer-ui.js",
-      "sha256": "d1deb43f2cf8f6415566578dd0e92f64d7cafd85b7ecc9c1313bc519f7687156"
+      "sha256": "8554fd6922f4b10740c088a7374da96aa1c9017dd44cfa178d6331620d1078e3"
     },
     {
       "owner": "index.html",
@@ -378,7 +378,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1077",
+      "url": "./src/release-version.js?v=0.36.18.1078",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -864,9 +864,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1077",
+      "url": "./face-workflow-layout.js?v=0.36.18.1078",
       "target": "src/face-workflow-layout.js",
-      "sha256": "4f831e38f4be66327fa6f25e4378915970ee7f16a6944053da94d37bb0452b83"
+      "sha256": "826214ff7d08aaaadca6279268409228a09dabb7109254a49979af2f1381c50a"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1361,7 +1361,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1077",
+      "url": "./release-version.js?v=0.36.18.1078",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -2456,13 +2456,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/viewport-paint.js?v=0.36.18.1077",
+      "url": "./src/viewport-paint.js?v=0.36.18.1078",
       "target": "src/viewport-paint.js",
-      "sha256": "57585996f82083c7d73643481a1aabdc8ff2231393f573673edd5dd810325ac2"
+      "sha256": "f0799d53fc76829529fecc5e3b6d4f0d6f074f5b9c01ae0fb467fa802ab71f4b"
     },
     {
       "owner": "src/viewport-paint.js",
-      "url": "./viewport-paint-core.js?v=0.36.18.1077",
+      "url": "./viewport-paint-core.js?v=0.36.18.1078",
       "target": "src/viewport-paint-core.js",
       "sha256": "ea507e2cdd8a949e48c3662ced0d03602a325b51ff662e01a02f7dacd6e74f03"
     },
@@ -3326,9 +3326,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1077",
+      "url": "./src/shell-comparison.js?v=0.36.18.1078",
       "target": "src/shell-comparison.js",
-      "sha256": "dd7ca3c178d180fcf7e6626351428eb30ba3d10726bfddfa8084539c1eb06af7"
+      "sha256": "6bb09ed84da12d438ab26e03cca1f10107a2b5b1c941bf24972b853a4c14e7b9"
     },
     {
       "owner": "src/main.js",

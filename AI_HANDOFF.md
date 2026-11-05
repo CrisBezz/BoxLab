@@ -1,14 +1,16 @@
-# Current build — .1077 compact Paint and four-channel strokes — 5 November 2026
+# Current build — .1078 Pencil onset pressure guard — 5 November 2026
 
-User reports `.1076` opacity interior preview PASS. Keep two-sided opacity preview protected alongside `.1075` opacity authoring and the prior device PASSes.
+User reports `.1077` PASS for compact Paint and four-channel strokes, with a remaining blob at the start of Pencil strokes. Protect the `.1077` menu, combined Colour/Roughness/Metalness/Opacity painting and the two-sided `.1076` opacity preview.
 
 `.1077` shortens the Paint panel: Roughness, Metalness and Opacity controls use directional value sliders; extended channel and brush-tip explanations move into control tooltips and the existing Paint help button. The optional Colour-stroke set now includes Opacity with Roughness and Metalness. Selecting Opacity under “Also paint” reveals its value slider; Brush, Fill, Eraser, Smudge, Blur and Sharpen use the original multi-map transaction, preview, stencil and history owners. One Undo restores all maps together. Imported-object maps remain protected.
 
-Release `0.36.18.1077`. Code changes are limited to the existing viewport Paint UI and painter core, plus their release/cache pins and runtime contracts. Full local and hosted regression: 3161/3161 PASS / 0 FAIL (Topology run `41977607206`, job `127080007955`). Pages run `41977606852` succeeded; live release marker, index, Paint UI/core, shell and loader files byte-match commit `7e8dea8c3d7cd596fd8fc9ff7fe6d8b2baf5e43f`. Native iPad/Safari validation remains pending. Check compact labels/tooltips, all four channels in one stroke, opacity slider visibility, undo/redo, and Fill/Brush re-entry. Standing direct-main and Pages publication authorization remains active.
+Audit traced the residual start blob to coalesced Pencil move samples: some omit `pointerType`, so the Paint adapter did not update pressure and reused the high Pencil-down value. The existing active pointer contact now owns the pointer type and supplies it when decoding every coalesced sample. Brush path, pressure mapping, tap-on-release, color kernel and multi-map transaction remain unchanged. Regression compares a high-pressure down plus low-pressure coalesced samples lacking `pointerType` against a low-pressure reference for both BoxLab and Klecks across Colour, Roughness, Metalness and Opacity.
+
+Release `0.36.18.1078`. Full local regression: 3162/3162 PASS / 0 FAIL (129.8 s); focused onset/contact/channel checks 14/14 PASS. Hosted Topology and Pages verification are pending. Native iPad/Safari validation remains pending. Check fine-pressure lines, firm-to-light onset, deliberate taps, both brush paths and all four channels. Standing direct-main and Pages publication authorization remains active.
 
 ## Current protected device PASSes — 5 November 2026
 
-User reports `.1076` two-sided opacity preview PASS; `.1075` opacity authoring PASS; `.1074` Pencil onset and pressure controls PASS; `.1071` whole-image adjustments PASS; `.1070` proportional image import PASS. Preserve each behavior.
+User reports `.1077` Paint menu/four-channel strokes PASS; `.1076` two-sided opacity preview PASS; `.1075` opacity authoring PASS; `.1074` Pencil onset and pressure controls PASS; `.1071` whole-image adjustments PASS; `.1070` proportional image import PASS. Preserve each behavior.
 
 ## .1074 — brush controls and Pencil onset — 4 November 2026
 

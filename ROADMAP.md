@@ -1,18 +1,17 @@
-# Current build: .1077 compact Paint and combined material strokes (5 November 2026)
+# Current build: .1078 Pencil onset pressure guard (5 November 2026)
 
 ## Delivered for native checking
 
-- The Paint panel replaces verbose scalar “Paint value” rows with Roughness, Metalness and Transparent/Opaque sliders. Longer brush-tip and channel explanations are available through tooltips and Paint help.
-- “Also paint” can include Roughness, Metalness and Opacity in a Colour stroke. The Opacity value slider appears when that map is selected.
-- Combined maps use the existing Paint stroke, lit material preview, mask stencil, atomic scene history and Save/Open owners. One Undo/Redo applies to the full stroke.
-- `.1076` two-sided opacity preview PASS and `.1075` opacity authoring PASS remain protected.
-- Full local and hosted regression: 3161/3161 PASS / 0 FAIL (Topology `41977607206`, job `127080007955`). Pages `41977606852` succeeded; the live version marker and changed runtime files byte-match commit `7e8dea8c3d7cd596fd8fc9ff7fe6d8b2baf5e43f`. Native iPad/Safari check remains pending.
+- `.1077` compact Paint menu and combined Colour/Roughness/Metalness/Opacity strokes received user PASS; preserve them.
+- Fixed a stale-pressure fallback for coalesced Pencil move samples that omit `pointerType`: the active Pencil contact type is now passed through to each sample before pressure is read.
+- The existing pressure-dynamics settings, two brush paths, intentional tap behavior, and atomic four-map stroke/undo path stay in place.
+- Focused onset/contact/channel checks: 14/14 PASS. Full local regression: 3162/3162 PASS. Hosted validation pending.
 
 ## Next
 
-1. Check the compact Paint menu and explanations; paint Colour, Roughness, Metalness and Opacity together, then Undo/Redo and verify the material preview and saved project.
-2. Repeat a combined stroke with Brush, Fill and Eraser; verify Smudge, Blur and Sharpen still expose “Also paint” and retain one-step history.
-3. Imported NOM/GLB UV painting and opacity export remain separate roadmap work.
+1. Test long light-pressure lines, especially after a firm start, with both brush paths and all four channels. There should be no oversized start blob.
+2. Test deliberate stationary taps, Undo/Redo, Done/reopen, and finger navigation.
+3. Preserve the `.1077` menu/channel behavior and `.1076` two-sided opacity preview. Imported NOM/GLB UV painting and opacity export remain separate roadmap work.
 
 ## Protected device results — 4 November 2026
 
