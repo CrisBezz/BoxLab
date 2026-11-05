@@ -18947,4 +18947,12 @@ Hosted Topology for `.1080` found the release marker suite requires the direct `
 
 The first `.1081` hosted Topology run passed 3160/3162 checks; two release-contract tests identified the stale index `release-version.js` cache reference in `tests/fixtures/runtime-asset-contract.json`. Update that reviewed URL to `.1081` (module bytes are unchanged) and rerun the hosted regression; Pages and live runtime byte verification already succeeded for `.1081`.
 
-After updating that reviewed cache reference, hosted Topology run `42030334556` passed 3162/3162; Pages run `42030333960` succeeded. The live `.1081` version marker and changed runtime modules byte-match the repository. Runtime behavior remains unchanged; request one device Capture/Copy report to identify the first-touch oversized dab.
+After updating that reviewed cache reference, hosted Topology run `42030334556` passed 3162/3162; Pages run `42030333960` succeeded. The live `.1081` version marker and changed runtime modules byte-match the repository. The later user capture is recorded in `.1082` below.
+
+## .1082 — settle Pencil pressure across the actual startup sample window — 6 November 2026
+
+User supplied a `.1081` Gesture Debug report. A Pencil down at pressure `0.08` was followed by several early `0.08` samples; the painter confirmed onset while pressure remained `0.08` and stamped a `20.48px` texture-radius dab. Subsequent pressures fell to `0.02–0.03`, producing `5–9px` radii. Surface hits succeeded. The `60px` difference between document pointer coordinates and painter onset coordinates is viewport client-to-canvas conversion, not a raycast miss.
+
+Keep the existing deferred Pencil stroke in `viewport-paint-core`; collect eight positive pressure samples (including down when positive) before beginning, retain the minimum pressure over that startup window, and replay buffered positions through the original kernel using that resolved pressure. Do not add a second painter. Stationary touches remain unpainted until release and use the latest pressure for deliberate taps. Later samples resume live pressure dynamics. The opt-in Gesture Debug onset line now includes the collected count and settling window.
+
+Protected `.1077` compact Paint/four-channel strokes, `.1076` two-sided opacity preview, `.1075` opacity authoring and `.1074` brush controls. Automated suite and Pages validation pending; native iPad/Safari stroke check pending. Test Size 256/light starts, combined channels, taps, Undo/Redo, brush switching and finger orbit. If onset still blobs, collect `.1082` Capture/Copy; it will show pressure sample count, chosen minimum and first dab radius.

@@ -1,13 +1,10 @@
-## .1081 diagnostic capture — pending user check
+## .1082 Pencil onset settling — pending user check
 
-Use the existing Gesture Debug controls; no model or Paint settings need to change.
+Protect `.1077` compact Paint and combined channels, `.1076` two-sided opacity and `.1074` brush pressure controls. The `.1081` device report showed down pressure `0.08`, a short early plateau, then a fall to `0.02`; its initial dab was `20.48px` versus `5–9px` later.
 
-Hosted Topology `.1081` PASS: 3162/3162, run `42030334556`. Pages run `42030333960` PASS; live version marker and changed runtime module bytes verified. This does not resolve the reported device blob; the capture remains pending.
+`.1082` defers the initial Pencil segment until eight positive pressure samples (including down when positive) and uses their minimum for the buffered onset segment. The existing stroke kernel, pressure dynamics after onset and tap-on-release path remain active. Hosted validation pending.
 
-1. Open View → Gesture Debug and turn it on before painting.
-2. In UV Paint, touch the model once and make one short stroke that shows the oversized dab.
-3. Open the on-screen UI Debug controls, choose Capture report, then Copy report. Send the copied report.
-4. Turn debug off after capture.
+Hands-on check: with Size 256 and Pencil Size enabled, make slow-light and fast-light strokes in Colour, then combined Colour/Roughness/Metalness/Opacity; compare the first mark to the rest of each stroke. Also test deliberate taps, Undo/Redo, brush switch and orbit with fingers. If the blob persists, enable View → Gesture Debug and capture one report; `.1082` logs onset sample count and resolved minimum pressure as well as dab radii/hits.
 
 The report records the pointer type/pressure on down, normalized pressure, brush size and pressure toggles, up to eight coalesced samples, onset decision and the first eight generated UV dabs with pressure, computed map radius and surface-hit result. This determines whether the device event already carries a high pressure, the onset guard selects it, or the brush output expands it. The `.1078` automated reproduction passed but did not match the user-reported first-touch failure; do not claim a fix until the device trace is understood.
 

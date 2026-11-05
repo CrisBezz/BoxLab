@@ -1,11 +1,11 @@
-# Current build: .1081 Pencil stroke diagnostic (5 November 2026)
+# Current build: .1082 Pencil onset pressure settling (6 November 2026)
 
 ## Delivered for native checking
 
 - `.1077` compact Paint menu and combined Colour/Roughness/Metalness/Opacity strokes received user PASS; preserve them.
-- User reports `.1078` FAIL: first touch still paints a large dab. The previous synthetic test missed the device path, so the cause is not established.
-- `.1081` adds opt-in evidence for raw/coalesced pointer events, normalized pressure, onset decisions, first dab radii and surface hit results through the existing Gesture Debug report.
-- `.1081` Pages deployment and hosted Topology both PASS after the stale release-version cache-contract pin was corrected. Native device capture remains the next gate.
+- User's `.1081` report identified the large onset dab: down/early pressures stayed at `0.08`, then fell to `0.02`; the first dab radius was `20.48px` versus `5–9px` later.
+- `.1082` holds the initial Pencil segment in the existing painter until eight positive pressure samples (including down when positive) arrive, then replays it using the minimum onset pressure. Tap-on-release and shared channel painting remain with their existing owners.
+- `.1082` hosted Topology and Pages validation pending. Native iPad/Safari confirmation remains the next gate.
 
 ## Next
 
