@@ -1,14 +1,13 @@
-## .1078 native acceptance — pending user check
+## .1079 diagnostic capture — pending user check
 
-Use a BoxLab-created mesh with native UVs and Apple Pencil.
+Use the existing Gesture Debug controls; no model or Paint settings need to change.
 
-1. Set brush size to 256 with pressure sizing enabled. Start a light stroke; verify the first part has the same small width as the rest, with no oversized blob. Repeat after a firm stroke.
-2. Repeat with BoxLab round and Klecks brushes. Try pressure sizing on and off, and pressure opacity on and off.
-3. Test a deliberate stationary tap; it should still paint on lift at the pressure used. Check Undo/Redo and that controls recover after cancel.
-4. Turn on Colour, Roughness, Metalness and Opacity together; verify the same onset behavior, updated map previews and one-step Undo/Redo.
-5. Done/reopen Paint. Confirm `.1077` compact controls and `.1076` transparent interior preview remain correct; fingers continue to orbit/navigate.
+1. Open View → Gesture Debug and turn it on before painting.
+2. In UV Paint, touch the model once and make one short stroke that shows the oversized dab.
+3. Open the on-screen UI Debug controls, choose Capture report, then Copy report. Send the copied report.
+4. Turn debug off after capture.
 
-Regression specifically covers high Pencil-down pressure followed by low-pressure coalesced move events without `pointerType`, for both brushes and all four maps. Focused onset/contact/channel checks: 14/14 PASS. Full local suite: 3162/3162 PASS / 0 FAIL. Hosted Topology run 41995563177 passed 3162/3162; Pages run 41995562728 succeeded. Live `.1078` marker and runtime bytes verified.
+The report records the pointer type/pressure on down, normalized pressure, brush size and pressure toggles, up to eight coalesced samples, onset decision and the first eight generated UV dabs with pressure, computed map radius and surface-hit result. This determines whether the device event already carries a high pressure, the onset guard selects it, or the brush output expands it. The `.1078` automated reproduction passed but did not match the user-reported first-touch failure; do not claim a fix until the device trace is understood.
 
 ## Protected device results — 4 November 2026
 

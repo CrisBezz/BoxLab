@@ -1,17 +1,17 @@
-# Current build: .1078 Pencil onset pressure guard (5 November 2026)
+# Current build: .1079 Pencil stroke diagnostic (5 November 2026)
 
 ## Delivered for native checking
 
 - `.1077` compact Paint menu and combined Colour/Roughness/Metalness/Opacity strokes received user PASS; preserve them.
-- Fixed a stale-pressure fallback for coalesced Pencil move samples that omit `pointerType`: the active Pencil contact type is now passed through to each sample before pressure is read.
-- The existing pressure-dynamics settings, two brush paths, intentional tap behavior, and atomic four-map stroke/undo path stay in place.
-- Focused onset/contact/channel checks: 14/14 PASS. Full local regression: 3162/3162 PASS. Hosted Topology run 41995563177 passed 3162/3162; Pages run 41995562728 succeeded. Live `.1078` marker and runtime bytes verified.
+- User reports `.1078` FAIL: first touch still paints a large dab. The previous synthetic test missed the device path, so the cause is not established.
+- `.1079` adds opt-in evidence for raw/coalesced pointer events, normalized pressure, onset decisions, first dab radii and surface hit results through the existing Gesture Debug report.
+- Automated checks and hosted release validation are pending.
 
 ## Next
 
-1. Test long light-pressure lines, especially after a firm start, with both brush paths and all four channels. There should be no oversized start blob.
-2. Test deliberate stationary taps, Undo/Redo, Done/reopen, and finger navigation.
-3. Preserve the `.1077` menu/channel behavior and `.1076` two-sided opacity preview. Imported NOM/GLB UV painting and opacity export remain separate roadmap work.
+1. Enable View → Gesture Debug, reproduce one first-touch dab, then Capture report → Copy report and return the report for diagnosis.
+2. Preserve the `.1077` menu/channel behavior and `.1076` two-sided opacity preview while confirming the source from a device trace.
+3. Recheck light strokes, deliberate taps and finger navigation after the root-cause fix. Imported NOM/GLB UV painting and opacity export remain separate roadmap work.
 
 ## Protected device results — 4 November 2026
 

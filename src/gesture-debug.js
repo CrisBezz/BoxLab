@@ -74,7 +74,7 @@ function enable(){return setEnabled(true);}
 function disable(){return setEnabled(false);}
 function toggle(){return setEnabled(!enabled);}
 try{enabled=localStorage.getItem(PREF_KEY)==='1';}catch{}
-globalThis.__boxlabGestureDebug={log,clear,enable,disable,toggle,setEnabled,get enabled(){return enabled;}};
+globalThis.__boxlabGestureDebug={log,clear,enable,disable,toggle,setEnabled,paint:paintEvidence,get enabled(){return enabled;}};
 queueMicrotask(()=>{if(enabled){ensurePanel();installDeepCaptureTrace();log('DEBUG READY');}});
 
 document.addEventListener('pointerdown',event=>{
@@ -199,6 +199,7 @@ document.addEventListener('visibilitychange',()=>{if(document.hidden)displayRefr
 const uiEvidence=[];let uiControls=null,uiReport=null;
 const describe=node=>node?{tag:node.tagName,id:node.id||'',class:String(node.className||'').slice(0,180)}:null;
 function evidence(kind,data){if(!enabled)return;uiEvidence.push({at:Math.round(performance.now()),kind,data});if(uiEvidence.length>100)uiEvidence.shift();}
+function paintEvidence(stage,data){if(!enabled)return false;evidence('paint-'+stage,data);log('PAINT '+stage,data);return true;}
 function uiControlEvidence(){
  const selectors=['.top-actions','#frameAllBtn','#undoBtn','#redoBtn','#focusViewBtn','#objectBrowserBtn','#viewModes','#objectBrowserPanel'];
  return selectors.map(selector=>{const node=document.querySelector(selector);if(!node)return {selector,present:false};const r=node.getBoundingClientRect(),s=getComputedStyle(node),x=Math.round(r.left+r.width/2),y=Math.round(r.top+r.height/2);return {selector,present:true,...describe(node),rect:{x:r.x,y:r.y,width:r.width,height:r.height},hidden:!!node.hidden,disabled:!!node.disabled,expanded:node.getAttribute?.('aria-expanded'),style:{display:s.display,visibility:s.visibility,pointerEvents:s.pointerEvents,opacity:s.opacity,zIndex:s.zIndex,transform:s.transform,overflow:s.overflow,contain:s.contain,isolation:s.isolation,willChange:s.willChange,clipPath:s.clipPath,filter:s.filter,backdropFilter:s.backdropFilter},centre:{x,y,inside:x>=0&&y>=0&&x<innerWidth&&y<innerHeight,stack:document.elementsFromPoint(x,y).slice(0,6).map(describe)}};});

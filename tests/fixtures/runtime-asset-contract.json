@@ -1,5 +1,5 @@
 {
-  "baseline": "Reviewed .1078: Paint pressure samples inherit the active Pencil contact type when coalesced events omit it, preventing stale Pencil-down pressure from creating an oversized stroke cap.",
+  "baseline": "Reviewed .1079: opt-in Pencil paint diagnostics capture raw/coalesced pressure, onset choice and the first UV dab radii/hits without changing painting.",
   "references": [
     {
       "owner": "index.html",
@@ -161,7 +161,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1078",
+      "url": "./src/drawer-ui.js?v=0.36.18.1079",
       "target": "src/drawer-ui.js",
       "sha256": "8554fd6922f4b10740c088a7374da96aa1c9017dd44cfa178d6331620d1078e3"
     },
@@ -255,7 +255,7 @@
       "owner": "index.html",
       "url": "./src/gesture-debug.js?v=0.36.18.1005",
       "target": "src/gesture-debug.js",
-      "sha256": "0b034554f7b5b2afc8b435395dc5fbf806aade609032ee647b886c0bb8563a8b"
+      "sha256": "d63202aaf8e9fae8d34dcecabb88c25f20f8a383b62093492479c6cdef0fd321"
     },
     {
       "owner": "index.html",
@@ -378,7 +378,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1078",
+      "url": "./src/release-version.js?v=0.36.18.1079",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -2456,15 +2456,15 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/viewport-paint.js?v=0.36.18.1078",
+      "url": "./src/viewport-paint.js?v=0.36.18.1079",
       "target": "src/viewport-paint.js",
-      "sha256": "f0799d53fc76829529fecc5e3b6d4f0d6f074f5b9c01ae0fb467fa802ab71f4b"
+      "sha256": "fd4e0aea1c85a5cf3628ccb9894122bfdf6fa3e9264855b1d25c86570ce9a41e"
     },
     {
       "owner": "src/viewport-paint.js",
-      "url": "./viewport-paint-core.js?v=0.36.18.1078",
+      "url": "./viewport-paint-core.js?v=0.36.18.1079",
       "target": "src/viewport-paint-core.js",
-      "sha256": "ea507e2cdd8a949e48c3662ced0d03602a325b51ff662e01a02f7dacd6e74f03"
+      "sha256": "04f7a473750643307bbf61663cf59808a57681b11ead589e9219e8b0ddeb1fd7"
     },
     {
       "owner": "src/viewport-paint.js",
@@ -3326,9 +3326,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1078",
+      "url": "./src/shell-comparison.js?v=0.36.18.1079",
       "target": "src/shell-comparison.js",
-      "sha256": "6bb09ed84da12d438ab26e03cca1f10107a2b5b1c941bf24972b853a4c14e7b9"
+      "sha256": "4f77bef90593d955a8efedcb8b7afc4473e54e26cb4fb9e13b35bbef03981dc2"
     },
     {
       "owner": "src/main.js",
