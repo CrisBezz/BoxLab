@@ -18895,4 +18895,4 @@ Completed the BoxLab-native UV opacity authoring build after the earlier impleme
 
 Full local regression: 3160 tests PASS / 0 FAIL (148.8 s). Focused opacity UI/resource/project/export checks and relevant release/cache regression passed. Native iPad/Safari acceptance is pending; do not count automated results as a device PASS.
 
-Direct-main and Pages publication was explicitly authorized as a standing instruction. CI, Pages, and public live-byte checks are to be added here once the deployment completes.
+Direct-main and Pages publication was explicitly authorized as a standing instruction. Published commit `57ccff2de0e256559adc5b05c9270a6c52b866b0`. Hosted Topology regression run `41966147389` / job `127043485643` passed; Pages deployment run `41966146559` succeeded. Live `version.json`, `index.html`, `viewport-paint.js`, `viewport-paint-core.js`, scalar/opacity resources, project codec, paint target and shell comparison byte-match local main. Native iPad/Safari acceptance is now the user check.

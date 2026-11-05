@@ -4,7 +4,7 @@ Built for release `0.36.18.1075` from main. Scope: opacity authoring on BoxLab-n
 
 Opacity maps remain limited to 512×512 and a single selected channel. Imported NOM/GLB UV painting is outside scope. NOM, GLB and OBJ exports explicitly refuse scenes containing authored opacity maps, with a `.boxlab` save message, to prevent silent loss. Native iPad/Safari validation for .1075 is pending; do not infer a device PASS from automated checks.
 
-Release pins and `version.json` announce .1075. Exact Multi Object Transform Beta6 pin remains frozen. Full local regression: 3160/3160 PASS, 0 FAIL (148.8 s). Focused opacity and cross-regression checks also pass. CI/Pages/live-byte proof will be recorded here after publication. Standing authorization to commit/push directly to `main` and publish GitHub Pages applies at every BoxLab development stage; no repeated confirmation is needed.
+Release pins and `version.json` announce .1075. Exact Multi Object Transform Beta6 pin remains frozen. Full local regression: 3160/3160 PASS, 0 FAIL (148.8 s). Hosted Topology regression run 41966147389/job 127043485643 passed; Pages deployment run 41966146559 succeeded. Live `version.json`, `index.html`, `viewport-paint.js`, `viewport-paint-core.js`, `scalar-paint-resource.js`, `opacity-resource.js`, `project-opacity-resources.js`, `boxlab-project-codec.js`, `paint-target.js` and `shell-comparison.js` byte-match local main. Published commit `57ccff2de0e256559adc5b05c9270a6c52b866b0`. Standing authorization to commit/push directly to `main` and publish GitHub Pages applies at every BoxLab development stage; no repeated confirmation is needed.
 
 ## Current protected device PASSes — 4 November 2026
 
