@@ -3,7 +3,7 @@ import {createFacegroupList} from './facegroup-list.js?v=0.36.18.995';
 import {createFacegroupPaintDock} from './facegroup-paint-dock.js?v=0.36.18.991';
 import {createFacegroupStroke} from './facegroup-stroke.js?v=0.36.18.995';
 import {assignSelectedFacegroup,facegroupAuthoringTarget,selectedFacegroupName} from './facegroup-authoring.js?v=0.36.18.995';
-import {createCommittedPaintSurface} from './paint-target.js?v=0.36.18.1055';
+import {createCommittedPaintSurface} from './paint-target.js?v=0.36.18.1075';
 import {createUVImageOverlay} from './uv-image-surface-preview.js?v=0.36.18.1035';
 import {createUVCheckerOverlay} from './uv-checker-preview.js?v=0.36.18.879';
 import * as THREE from 'three';
@@ -219,7 +219,7 @@ function applyMode(body){
     const regularPreview=!settings.subd&&!mirrors;
     if(object?.glbPassthrough?.source==='nomad'&&object.visible!==false&&body.visible!==false&&object.kind!=='reference'&&!object.sourceId&&!object.booleanRecipe&&!object.arrayRecipe&&!object.curveProfile&&(regularPreview||subdPreview?.payload?.source==='nomad'))createUVImageOverlay(body,subdPreview?.mesh||(inactive?object.mesh:bridge()?.mesh),subdPreview?.payload||object.glbPassthrough,globalThis.__boxlabExportAs?.buildUVPreviewGeometry,checkerHiddenMaterial,{lit:true});
   }
-  if(['studio','solid','uvimage'].includes(mode)){const m=manager(),object=m?.objects?.find(o=>o.id===(inactive?body.userData.objectId:m.activeId));if(object?.colourPaint||object?.roughnessPaint||object?.metalnessPaint)createCommittedPaintSurface(body,object,inactive?object.mesh:bridge()?.mesh);}
+  if(['studio','solid','uvimage'].includes(mode)){const m=manager(),object=m?.objects?.find(o=>o.id===(inactive?body.userData.objectId:m.activeId));if(object?.colourPaint||object?.roughnessPaint||object?.metalnessPaint||object?.opacityPaint)createCommittedPaintSurface(body,object,inactive?object.mesh:bridge()?.mesh);}
 }
 
 Object.assign(globalThis.__boxlabRenderModes ||= {},{

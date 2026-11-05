@@ -1,3 +1,5 @@
+import {captureOpacityResource,copyOpacityResource} from './opacity-resource.js?v=0.36.18.1075';
+import {createProjectOpacityPool} from './project-opacity-resources.js?v=0.36.18.1075';
 import {createFaceFillPlan} from './paint-face-fill.js?v=0.36.18.1004';
 import {createFacegroupBoundaryPreview,facegroupBoundaryEdges} from './facegroup-boundary-preview.js?v=0.36.18.1004';
 import {createPaintFilterDomain} from './paint-filter-domain.js?v=0.36.18.951';
@@ -12,22 +14,22 @@ import {surfaceImageFrameFromHit} from './paint-image-surface.js?v=0.36.18.933';
 import {capturePaintImagePlacement,paintImagePlacementFromCamera} from './paint-image-placement.js?v=0.36.18.907';
 import {captureLayeredColourResource,capturePaintResource} from './paint-layer-resource.js?v=0.36.18.1033';
 import {createProjectPaintPool} from './project-paint-resources.js?v=0.36.18.1033';
-import {paintTargetKey,paintTargetDigest,paintTexture,createPaintSurface} from './paint-target.js?v=0.36.18.1055';
-import {captureRoughnessResource,copyRoughnessResource} from './roughness-resource.js?v=0.36.18.1033';
-import {createProjectRoughnessPool} from './project-roughness-resources.js?v=0.36.18.1033';
-import {captureMetalnessResource,copyMetalnessResource} from './metalness-resource.js?v=0.36.18.1033';
-import {createProjectMetalnessPool} from './project-metalness-resources.js?v=0.36.18.1033';
-const scalarOwners={roughness:{field:'roughnessPaint',capture:captureRoughnessResource,copy:copyRoughnessResource,pool:createProjectRoughnessPool,initial:255,label:'Roughness'},metalness:{field:'metalnessPaint',capture:captureMetalnessResource,copy:copyMetalnessResource,pool:createProjectMetalnessPool,initial:0,label:'Metalness'}};
+import {paintTargetKey,paintTargetDigest,paintTexture,createPaintSurface} from './paint-target.js?v=0.36.18.1075';
+import {captureRoughnessResource,copyRoughnessResource} from './roughness-resource.js?v=0.36.18.1075';
+import {createProjectRoughnessPool} from './project-roughness-resources.js?v=0.36.18.1075';
+import {captureMetalnessResource,copyMetalnessResource} from './metalness-resource.js?v=0.36.18.1075';
+import {createProjectMetalnessPool} from './project-metalness-resources.js?v=0.36.18.1075';
+const scalarOwners={opacity:{field:'opacityPaint',capture:captureOpacityResource,copy:copyOpacityResource,pool:createProjectOpacityPool,initial:255,label:'Opacity'},roughness:{field:'roughnessPaint',capture:captureRoughnessResource,copy:copyRoughnessResource,pool:createProjectRoughnessPool,initial:255,label:'Roughness'},metalness:{field:'metalnessPaint',capture:captureMetalnessResource,copy:copyMetalnessResource,pool:createProjectMetalnessPool,initial:0,label:'Metalness'}};
 // Scene history, selection, camera and body lifetime remain with the existing app.
 export function createViewportPainter({target,activeId=()=>target()?.id,body,owner,camera,controls,scene,checkpoint,onClose=()=>{},refresh=()=>{},allowed=()=>true,objects=()=>[target()],newColourSize=512,setTimer=setTimeout,clearTimer=clearTimeout}){
  if(![512,1024].includes(newColourSize))throw Error('New colour texture must be 512 or 1024');
  let session=null,generation=0,stroke=null;const ray=new THREE.Raycaster(),occluderMaterial=new THREE.MeshBasicMaterial({side:THREE.DoubleSide});
- function current(){if(!session)return false;const o=session.object;return !session.display.disposed&&allowed()&&activeId()===session.id&&o?.id===session.id&&o.colourPaint===session.resource&&o.roughnessPaint===session.roughness&&o.metalnessPaint===session.metalness&&o.glbPassthrough===session.uv&&o.visible!==false&&!o.locked&&!o.sourceId&&!o.arrayRecipe&&!o.booleanRecipe&&!o.curveProfile&&!o.settings?.subd&&!Object.values(o.settings?.mirror||{}).some(Boolean);}
+ function current(){if(!session)return false;const o=session.object;return !session.display.disposed&&allowed()&&activeId()===session.id&&o?.id===session.id&&o.colourPaint===session.resource&&o.roughnessPaint===session.roughness&&o.metalnessPaint===session.metalness&&o.opacityPaint===session.opacity&&o.glbPassthrough===session.uv&&o.visible!==false&&!o.locked&&!o.sourceId&&!o.arrayRecipe&&!o.booleanRecipe&&!o.curveProfile&&!o.settings?.subd&&!Object.values(o.settings?.mirror||{}).some(Boolean);}
  function finishStrokeLayers(cancelled=false){if(!stroke?.scalarLayers)return;for(const layer of Object.values(stroke.scalarLayers)){layer.finish(cancelled);layer.dispose();}stroke.scalarLayers=null;}
  function cancel(){if(!stroke)return;clearTimer(stroke.timer);stroke.path?.cancel();session?.layer.finish(true);finishStrokeLayers(true);if(session)updatePreview();controls.enabled=stroke.controls;stroke=null;}
  function close(redraw=true){generation++;session?.aoJob?.abort();if(!session)return;cancel();const old=session;session=null;old.body.geometry.removeEventListener('dispose',old.lost);old.boundaries?.dispose();old.display.dispose();old.layer.dispose();onClose();if(redraw)refresh(old.body);}
- async function open(){close();const token=++generation,o=target();if(o?.locked||o?.visible===false)throw Error('Unlock and show the selected object first');const key=paintTargetKey(o,o?.mesh,owner),resource=o.colourPaint,roughness=o.roughnessPaint,metalness=o.metalnessPaint,binding=await paintTargetDigest(key);
-  if(token!==generation||!allowed()||target()!==o||target()?.colourPaint!==resource||target()?.roughnessPaint!==roughness||target()?.metalnessPaint!==metalness||paintTargetKey(target(),target()?.mesh,owner)!==key)throw Error('Object changed while opening paint');
+ async function open(){close();const token=++generation,o=target();if(o?.locked||o?.visible===false)throw Error('Unlock and show the selected object first');const key=paintTargetKey(o,o?.mesh,owner),resource=o.colourPaint,roughness=o.roughnessPaint,metalness=o.metalnessPaint,opacity=o.opacityPaint,binding=await paintTargetDigest(key);
+  if(token!==generation||!allowed()||target()!==o||target()?.colourPaint!==resource||target()?.roughnessPaint!==roughness||target()?.metalnessPaint!==metalness||target()?.opacityPaint!==opacity||paintTargetKey(target(),target()?.mesh,owner)!==key)throw Error('Object changed while opening paint');
   const size=resource?.width||newColourSize;
   if(resource&&(resource.binding!==binding||![512,1024].includes(size)||resource.height!==size))throw Error('Stored paint no longer matches this geometry/UVs; Undo the change, or use Object → UV → Clear paint to start again');
   for(const [channel,cfg] of Object.entries(scalarOwners)){const resource=o[cfg.field];if(resource){const r=cfg.copy(resource);if(r.binding!==binding)throw Error('Stored '+channel+' no longer matches this geometry/UVs; Undo the change, or use Object → UV → Clear paint to start again');}}
@@ -37,7 +39,7 @@ export function createViewportPainter({target,activeId=()=>target()?.id,body,own
   // layered profile; no blank resource or history entry is published on open.
   const stack=resource?.version>=2?capturePaintResource(resource).layers:!resource&&size===1024?createPaintLayerStack(captureColourResource({width:size,height:size,pixels:preview,binding})):null,selected=stack?.layers.at(-1)?.id||'$base';
   let layer,display;try{layer=createPaintLayer(size,{transparent:!!stack&&selected!=='$base'});if(stack)layer.restore(selected==='$base'?stack.base.pixels:stack.layers.find(l=>l.id===selected).pixels);else if(resource)layer.restore(resource.pixels);for(const child of [...b.children])child.userData?.boxlabColourPaintDispose?.();display=createPaintSurface(b,geometry,paintTexture(preview,size));display.show();}catch(e){geometry.dispose();display?.dispose();layer?.dispose();throw e;}
-  const lost=()=>close(false);session={size,object:o,id:o.id,key,binding,resource,roughness,metalness,uv:o.glbPassthrough,body:b,layer,display,lost,stack,selected,preview,dirty:true,paintTarget:'colour',previewMode:'material',multiPaintChannels:[]};b.geometry.addEventListener('dispose',lost);return true;
+  const lost=()=>close(false);session={size,object:o,id:o.id,key,binding,resource,roughness,metalness,opacity,uv:o.glbPassthrough,body:b,layer,display,lost,stack,selected,preview,dirty:true,paintTarget:'colour',previewMode:'material',multiPaintChannels:[]};b.geometry.addEventListener('dispose',lost);return true;
  }
  function hit(p){if(!current())return null;scene.updateMatrixWorld(true);ray.setFromCamera(new THREE.Vector2(p.x/p.width*2-1,1-p.y/p.height*2),camera);
   const proxy=new THREE.Mesh(session.display.surface.geometry,session.display.surface.material);proxy.matrixWorld.copy(session.body.matrixWorld);const h=ray.intersectObject(proxy,false)[0];if(!h?.uv)return null;
@@ -83,13 +85,13 @@ export function createViewportPainter({target,activeId=()=>target()?.id,body,own
   }
   return {pixels,changed};
  }
- function begin(p,settings,kind='boxlab',maskValue=0,roughnessValue=128,metalnessValue=255,action='paint'){
+ function begin(p,settings,kind='boxlab',maskValue=0,roughnessValue=128,metalnessValue=255,action='paint',opacityValue=0){
   if(session?.aoPreview||session?.aoJob)throw Error('Apply or cancel AO preview first');
   if(!['paint','fill','fill-face','fill-facegroup','erase','blur','smudge','sharpen'].includes(action))throw Error('Unknown paint action');
   if(!session||stroke)return false;clearImagePreview();
   const selected=session.stack?.layers.find(l=>l.id===session.selected),multiChannels=session.paintTarget==='colour'?session.multiPaintChannels:[];
   if(!scalar()&&selected&&(!selected.visible||!selected.opacity))throw Error('Show the selected layer and increase its opacity before painting');
-  if(scalar()){const value=session.paintTarget==='roughness'?roughnessValue:metalnessValue;if(!Number.isInteger(value)||value<0||value>255)throw Error(scalarOwners[session.paintTarget].label+' value must be 0 to 255');const hex=value.toString(16).padStart(2,'0');settings={...settings,colour:'#'+hex.repeat(3)};}
+  if(scalar()){const value=session.paintTarget==='opacity'?opacityValue:session.paintTarget==='roughness'?roughnessValue:metalnessValue;if(!Number.isInteger(value)||value<0||value>255)throw Error(scalarOwners[session.paintTarget].label+' value must be 0 to 255');const hex=value.toString(16).padStart(2,'0');settings={...settings,colour:'#'+hex.repeat(3)};}
   if(session.paintTarget==='mask'){if(!selected?.mask?.enabled)throw Error('Enable the selected layer mask before painting it');if(!Number.isInteger(maskValue)||maskValue<0||maskValue>255)throw Error('Mask value must be 0 to 255');const hex=maskValue.toString(16).padStart(2,'0');settings={...settings,colour:'#'+hex.repeat(3)};}
   if(action==='erase'){const value=scalar()?scalarOwners[session.paintTarget].initial:session.paintTarget==='mask'?(selected?.mask?.inverted?0:255):255;const hex=value.toString(16).padStart(2,'0');settings={...settings,colour:'#'+hex.repeat(3)};}
   if(selected?.image&&session.paintTarget==='colour')throw Error('Image colour is retained; use Convert to paint for Brush/Blur, or edit its mask');
@@ -158,7 +160,7 @@ export function createViewportPainter({target,activeId=()=>target()?.id,body,own
   if(s.previewMode!=='material'){s.display.showChannel();return;}
   const colour=scalar()?(s.resource?.pixels||null):s.preview,roughScratch=stroke?.scalarLayers?.roughness,metalScratch=stroke?.scalarLayers?.metalness;
   const roughness=scalarMaterialPreview('roughness',roughScratch||(s.paintTarget==='roughness'?s.layer:null)),metalness=scalarMaterialPreview('metalness',metalScratch||(s.paintTarget==='metalness'?s.layer:null));
-  s.display.showMaterial(colour,roughness.resource,roughness.rgba,metalness.resource,metalness.rgba);
+  s.display.showMaterial(colour,roughness.resource,roughness.rgba,metalness.resource,metalness.rgba,scalarMaterialPreview('opacity',s.paintTarget==='opacity'?s.layer:null));
  }
  function scalarMaterialPreview(channel,layer){
   if(!layer)return {resource:session[channel],rgba:false};
@@ -311,7 +313,7 @@ export function createViewportPainter({target,activeId=()=>target()?.id,body,own
  function editLayer(patch){colourOnly();if(!ready()||session.selected==='$base')return false;const layer=session.stack.layers.find(l=>l.id===session.selected);if(Object.keys(patch).every(k=>layer[k]===patch[k]))return false;return commit(captureLayeredColourResource(replacePaintLayer(session.stack,session.selected,patch)));}
  function removeLayer(){colourOnly();if(!ready()||session.selected==='$base')return false;const s=session,layers=s.stack.layers.filter(l=>l.id!==s.selected);if(commit(captureLayeredColourResource({...s.stack,layers}))){session.selected=layers.at(-1)?.id||'$base';loadLayer();return true;}return false;}
  function moveLayer(direction){colourOnly();if(!ready()||session.selected==='$base'||![-1,1].includes(direction))return false;const layers=[...session.stack.layers],i=layers.findIndex(l=>l.id===session.selected),j=i+direction;if(j<0||j>=layers.length)return false;[layers[i],layers[j]]=[layers[j],layers[i]];return commit(captureLayeredColourResource({...session.stack,layers}));}
- function selectPaintTarget(value){if(!ready())return false;if(!['colour','mask','roughness','metalness'].includes(value))throw Error('Unknown paint target');if(value==='mask'&&!session.stack?.layers.find(l=>l.id===session.selected)?.mask)throw Error('Add a mask to the selected paint layer first');if(session.paintTarget===value){session.previewMode='material';session.dirty=true;return false;}if(Object.hasOwn(scalarOwners,value)&&session[value]&&(session[value].width!==512||session[value].height!==512))throw Error(scalarOwners[value].label+' painting requires a 512 × 512 map; existing map kept unchanged');session.paintTarget=value;if(Object.hasOwn(scalarOwners,value))session.multiPaintChannels=[];session.previewMode='material';loadLayer();updatePreview();return true;}
+ function selectPaintTarget(value){if(!ready())return false;if(!['colour','mask','roughness','metalness','opacity'].includes(value))throw Error('Unknown paint target');if(value==='mask'&&!session.stack?.layers.find(l=>l.id===session.selected)?.mask)throw Error('Add a mask to the selected paint layer first');if(session.paintTarget===value){session.previewMode='material';session.dirty=true;return false;}if(Object.hasOwn(scalarOwners,value)&&session[value]&&(session[value].width!==512||session[value].height!==512))throw Error(scalarOwners[value].label+' painting requires a 512 × 512 map; existing map kept unchanged');session.paintTarget=value;if(Object.hasOwn(scalarOwners,value))session.multiPaintChannels=[];session.previewMode='material';loadLayer();updatePreview();return true;}
  function addMask(){if(!ready())return false;const layer=session.stack?.layers.find(l=>l.id===session.selected);if(!layer)throw Error('Select a paint layer above Base colour for a mask');if(layer.mask)return false;
   if(commit(captureLayeredColourResource(replacePaintLayer(session.stack,session.selected,{mask:{enabled:true,inverted:false,pixels:new Uint8Array(session.size*session.size).fill(255)}})))){session.paintTarget='mask';loadLayer();return true;}return false;
  }

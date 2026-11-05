@@ -1,6 +1,6 @@
 import {nomadMaterialMaps} from './nomad-material-resource.js?v=0.36.18.1033';
 import {faceGroupPalette} from './facegroup-colours-core.js?v=0.36.18.992';
-import {preparedPaintImage,preparedRoughnessImage,preparedMetalnessImage,paintExportGeometryObject} from './paint-export.js?v=0.36.18.1055';
+import {preparedPaintImage,preparedRoughnessImage,preparedMetalnessImage,paintExportGeometryObject} from './paint-export.js?v=0.36.18.1075';
 import {nomadDisplacementMap} from './nomad-displacement-map.js?v=0.36.18.1032';
 import {uvImageSurfaceSource,uvImageMaterialSource} from './uv-image-surface-preview.js?v=0.36.18.1035';
 import {embeddedUVImage} from './uv-image-preview.js?v=0.36.18.1032';
@@ -9,7 +9,7 @@ import {embeddedUVImage} from './uv-image-preview.js?v=0.36.18.1032';
 // src/nomadBalloonExport.js + nomadBalloonExport097.js; validated donor copied intact.
 // BoxLab adapter writes editable polygon meshes, not MeshUtilz procedural Tubes.
 import * as THREE from 'three';
-import {resolveExportMesh,safeOBJName} from './scene-obj-export-core.js?v=0.36.18.1037';
+import {resolveExportMesh,safeOBJName} from './scene-obj-export-core.js?v=0.36.18.1075';
 const enc=new TextEncoder(),dec=new TextDecoder(),clone=value=>structuredClone(value);
 const DATA_FIELDS=['vertices','uvs','faces','faces_uv','faces_group','normals','colors','materials'];
 const u64=(dv,o)=>Number(dv.getBigUint64(o,true)),w64=(dv,o,n)=>dv.setBigUint64(o,BigInt(n),true);
@@ -132,6 +132,7 @@ export function createNomadImageIdentity(){
  };
 }
 export function buildNomadProject(objects,templateBytes,{subd=false,name='BoxLab',topologySignature=globalThis.__boxlabExportAs?.topologySignature,packedMaps=new Map()}={}){
+ if(objects.some(o=>o?.opacityPaint))throw Error('Opacity map export is not available in this authoring build. Save .boxlab to preserve the opacity map.');
  const base=readNomadProject(templateBytes),donor=base.json.meshes?.[0];if(!donor?.vertices)throw Error('Nomad donor mesh is missing');
  const project=clone(base.json),parts=[],proto=findNode(base.json.scene)||{};project.meshes=[];
  const group={name,group:0,selected:true,selected_main:true,children:[],visible:true,node_collapse:false,lock:false};let offset=0,vertices=0,faces=0,uvObjects=0,colourTextureObjects=0,normalTextureObjects=0,emissiveTextureObjects=0,roughnessTextureObjects=0,metalnessTextureObjects=0,displacementTextureObjects=0,imageBytes=0;

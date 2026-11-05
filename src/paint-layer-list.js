@@ -19,7 +19,7 @@ export function createPaintLayerList({root,mapRoot,document,onSelect,onVisible,o
   const text=document.createElement('span'),name=document.createElement('strong'),status=document.createElement('small');text.className='paint-map-text';name.textContent=label;status.textContent='No map';text.appendChild(name);text.appendChild(status);node.appendChild(canvas);node.appendChild(text);
   mapRoot?.appendChild(node);return {node,canvas,name,status,guide};
  }
- for(const [channel,label,guide] of [['roughness','Roughness','White = rough'],['metalness','Metalness','White = metal']])maps.set(channel,mapRow(channel,label,guide));
+ for(const [channel,label,guide] of [['opacity','Opacity','0 transparent · 255 opaque'],['roughness','Roughness','White = rough'],['metalness','Metalness','White = metal']])maps.set(channel,mapRow(channel,label,guide));
  function update(state,disabled=false){
   const layers=[...state.layers].reverse(),key=layers.map(l=>l.id).join('|');
   if(key!==layout){layout=key;const ids=new Set(layers.map(l=>l.id));for(const id of rows.keys())if(!ids.has(id))rows.delete(id);for(const l of layers)if(!rows.has(l.id))rows.set(l.id,row(l.id));root.replaceChildren(...layers.map(l=>rows.get(l.id).node));}
@@ -37,9 +37,9 @@ export function createPaintLayerList({root,mapRoot,document,onSelect,onVisible,o
   if(!mapRoot)return;
   for(const [channel,row] of maps){
    const preview=mapThumbnail?.(channel);row.status.textContent=preview?row.guide:'No map';row.node.dataset.available=String(!!preview);
-   row.node.setAttribute('aria-label',preview?`${channel==='roughness'?'Roughness':'Metalness'} map preview; ${row.guide.toLowerCase()}`:`${channel==='roughness'?'Roughness':'Metalness'} map preview; no map saved`);
+   row.node.setAttribute('aria-label',preview?`${row.name.textContent} map preview; ${row.guide.toLowerCase()}`:`${row.name.textContent} map preview; no map saved`);
    const ctx=row.canvas.getContext('2d'),data=ctx.createImageData(64,64);if(preview)data.data.set(preview.pixels);ctx.putImageData(data,0,0);
   }
  }
- return {update,updateMaps,clear(){layout='';rows.clear();root.replaceChildren();for(const [channel,row] of maps){row.status.textContent='No map';row.node.dataset.available='false';row.node.setAttribute('aria-label',`${channel==='roughness'?'Roughness':'Metalness'} map preview; no map saved`);const ctx=row.canvas.getContext('2d'),data=ctx.createImageData(64,64);ctx.putImageData(data,0,0);}}};
+ return {update,updateMaps,clear(){layout='';rows.clear();root.replaceChildren();for(const [channel,row] of maps){row.status.textContent='No map';row.node.dataset.available='false';row.node.setAttribute('aria-label',`${row.name.textContent} map preview; no map saved`);const ctx=row.canvas.getContext('2d'),data=ctx.createImageData(64,64);ctx.putImageData(data,0,0);}}};
 }

@@ -1,3 +1,14 @@
+## .1075 native acceptance — pending user check
+
+Use a BoxLab-created mesh with valid native UVs (imported NOM/GLB paint is not supported).
+
+1. Open UV Paint → Material → Paint channel → Opacity. Paint black and confirm that area becomes transparent; paint white to restore it. Check the Opacity preview thumbnail and keep an existing Colour map unchanged.
+2. Switch Brush to Fill, Eraser, Smudge and Blur. Confirm each edits the selected Opacity map and the paint radial/value controls stay available. Undo and Redo one opacity edit.
+3. Tap Done, orbit the model, then reopen UV Paint. Confirm transparency and opacity thumbnail remain; save as `.boxlab`, reopen, and confirm they remain.
+4. Try a NOM/GLB/OBJ export with authored opacity. Confirm it refuses clearly and directs you to `.boxlab` so opacity is not dropped silently.
+
+Automated .1075 native-owner tests pass; physical iPad/Safari acceptance remains pending. User-reported protected PASSes remain .1074 Pencil onset/pressure controls, .1071 whole-image adjustments, and .1070 proportional image import.
+
 ## Protected device results — 4 November 2026
 
 PASS .1074 Pencil onset and brush pressure controls. PASS .1071 image adjustments. PASS .1070 proportional image import. Keep all three PASS results protected.

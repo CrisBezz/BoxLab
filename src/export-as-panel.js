@@ -1,13 +1,13 @@
 import {meshTopologySignature} from './mesh-topology-signature.js?v=0.36.18.939';
-import {capturePaintExportObjects,preparePaintExportObjects,preparedPaintImage,preparedRoughnessImage,preparedMetalnessImage,preparedMetallicRoughnessImage,paintExportGeometryObject} from './paint-export.js?v=0.36.18.1055';
+import {capturePaintExportObjects,preparePaintExportObjects,preparedPaintImage,preparedRoughnessImage,preparedMetalnessImage,preparedMetallicRoughnessImage,paintExportGeometryObject} from './paint-export.js?v=0.36.18.1075';
 // BoxLab .735 — native NOMAD handoff; regular OBJ/GLB exports remain available.
 // GLB keeps BoxLab editable objects as separate named scene nodes for Nomad/3D handoff.
 import * as THREE from 'three';
 import {GLTFExporter} from 'three/addons/exporters/GLTFExporter.js';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
-import {buildSceneOBJ,resolveExportMesh,safeOBJName} from './scene-obj-export-core.js?v=0.36.18.1037';
+import {buildSceneOBJ,resolveExportMesh,safeOBJName} from './scene-obj-export-core.js?v=0.36.18.1075';
 
-import {buildNomadProjectWithMaps} from './nomad-packed-maps.js?v=0.36.18.1055';
+import {buildNomadProjectWithMaps} from './nomad-packed-maps.js?v=0.36.18.1075';
 
 const VERSION='0.36.18.892';
 const MAX_UV_PREVIEW_CORNERS=20000;
@@ -48,6 +48,7 @@ function updateNote(){
 }
 let nomadTemplatePromise=null;
 async function buildNOM(sceneObjects,subd=false){
+ if(sceneObjects.some(o=>o?.opacityPaint))throw Error('Opacity map export is not available in this authoring build. Save .boxlab to preserve the opacity map.');
   if(!nomadTemplatePromise)nomadTemplatePromise=fetch(new URL('./templates/nomad-tube.nom',import.meta.url)).then(response=>{if(!response.ok)throw Error('Nomad template could not be loaded');return response.arrayBuffer();}).catch(error=>{nomadTemplatePromise=null;throw error;});
   return buildNomadProjectWithMaps(sceneObjects,nomadTemplatePromise,{subd,name:cleanName(nameInput?.value)});
 }
@@ -545,6 +546,7 @@ async function verifyGLB(buffer,expectedObjects,expectedGroupSlots){
   return report;
 }
 async function buildGLB(sceneObjects,subd){
+ if(sceneObjects.some(o=>o?.opacityPaint))throw Error('Opacity map export is not available in this authoring build. Save .boxlab to preserve the opacity map.');
   if(sceneObjects.some(o=>o?.glbPassthrough?.source==='nomad'&&Object.keys(o.glbPassthrough.nomadMaterial?.textures||{}).length))throw Error('Native NOM materials are retained for NOMAD export and .boxlab Save; use NOMAD to keep their textures');
   if(sceneObjects.some(o=>o?.colourPaint||o?.roughnessPaint||o?.metalnessPaint)){sceneObjects=capturePaintExportObjects(sceneObjects);await preparePaintExportObjects(sceneObjects,{subd,packedScalars:true,owner:{topologySignature,buildUVPreviewGeometry}});}
   const root=new THREE.Group();

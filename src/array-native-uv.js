@@ -3,7 +3,7 @@ import {inspectImportedUV} from './imported-uv-inspection.js?v=0.36.18.951';
 import {meshTopologySignature} from './mesh-topology-signature.js?v=0.36.18.939';
 
 export function arrayNativeUVSource(object,mesh,live=false){
-  if(object.colourPaint||object.roughnessPaint||object.metalnessPaint)throw Error('Clear paint in Object → UV before applying Array; existing paint is retained');
+  if(object.colourPaint||object.roughnessPaint||object.metalnessPaint||object.opacityPaint)throw Error('Clear paint in Object → UV before applying Array; existing paint is retained');
   const payload=live&&object.arrayRecipe?object.arrayRecipe.nativeUV:object.glbPassthrough;
   if(payload?.version!==1||payload.source!=='boxlab'||Object.keys(payload).some(k=>!['version','source','uvTopologySignature','uvCorners'].includes(k)))throw Error('Array needs plain native UVs without imported resources');
   const report=inspectImportedUV(mesh,payload,meshTopologySignature);

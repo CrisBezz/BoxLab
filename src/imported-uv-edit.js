@@ -34,7 +34,7 @@ export function packImportedUVIslands(object,mesh,topologySignature,history,scop
 // No seam metadata: separated face-corner coordinates are the authored result.
 export function cutNativeUVEdges(object,mesh,topologySignature,history,edgePairs){
  const error=nativeUVTargetError(object,mesh,topologySignature);if(error)return {ok:false,reason:error};
- if(object.colourPaint||object.roughnessPaint||object.metalnessPaint)return {ok:false,reason:'Clear paint in Object → UV before cutting UVs; existing paint is retained'};
+ if(object.colourPaint||object.roughnessPaint||object.metalnessPaint||object.opacityPaint)return {ok:false,reason:'Clear paint in Object → UV before cutting UVs; existing paint is retained'};
  if(mesh.faces.reduce((n,f)=>n+(Array.isArray(f)?f.length:0),0)>20000)return {ok:false,reason:'Cut UVs supports up to 20,000 face corners'};
  if(!Array.isArray(edgePairs)||!edgePairs.length||edgePairs.length>20000)return {ok:false,reason:'Select mesh edges to cut'};
  const previous=object.glbPassthrough,report=inspectImportedUV(mesh,previous,topologySignature,{includeEdgeOwners:true});
@@ -70,7 +70,7 @@ export function cutNativeUVEdges(object,mesh,topologySignature,history,edgePairs
 // commit owners and refuse distorted or curved charts rather than flatten them.
 export function stitchNativeUVEdge(object,mesh,topologySignature,history,pair){
  const error=nativeUVTargetError(object,mesh,topologySignature);if(error)return {ok:false,reason:error};
- if(object.colourPaint||object.roughnessPaint||object.metalnessPaint)return {ok:false,reason:'Clear paint in Object → UV before stitching UVs; existing paint is retained'};
+ if(object.colourPaint||object.roughnessPaint||object.metalnessPaint||object.opacityPaint)return {ok:false,reason:'Clear paint in Object → UV before stitching UVs; existing paint is retained'};
  if(mesh.faces.length>128||mesh.faces.reduce((n,f)=>n+(Array.isArray(f)?f.length:0),0)>20000)return {ok:false,reason:'Stitch UVs supports up to 128 faces and 20,000 corners'};
  if(!Array.isArray(pair)||pair.length!==2||pair.some(id=>!Number.isInteger(id)||id<0||id>=mesh.vertices.length)||pair[0]===pair[1])return {ok:false,reason:'Select one shared mesh edge to stitch'};
  const previous=object.glbPassthrough,report=inspectImportedUV(mesh,previous,topologySignature,{includeEdgeOwners:true});
@@ -319,7 +319,7 @@ export function createCoplanarAtlasUV(object,mesh,topologySignature,history,owne
 // Facegroup charts reuse native UV validation, density, packing and ONE checkpoint.
 export async function createFacegroupAtlasUV(object,mesh,topologySignature,history,owner=globalThis.__boxlabExportAs,options={}){
  const error=nativeUVTargetError(object,mesh,topologySignature);if(error)return {ok:false,reason:error};
- if(object.colourPaint||object.roughnessPaint||object.metalnessPaint)return {ok:false,reason:'Clear paint before Facegroup unwrap; existing paint is retained'};
+ if(object.colourPaint||object.roughnessPaint||object.metalnessPaint||object.opacityPaint)return {ok:false,reason:'Clear paint before Facegroup unwrap; existing paint is retained'};
  const signature=JSON.stringify([mesh.vertices,mesh.faces,mesh.faceGroups]),previous=object.glbPassthrough;
  const plan=planFacegroupSeams(mesh);if(!plan.ok)return plan;
  const flat=await unwrapFacegroupCharts(mesh,plan,options);if(!flat.ok)return flat;
@@ -330,13 +330,13 @@ export async function createFacegroupAtlasUV(object,mesh,topologySignature,histo
  const packed=packedLayout(density.uvCorners,plan);if(packed.reason)return {ok:false,reason:packed.reason};
  const validation=inspectImportedUV(mesh,{...payload,uvCorners:packed.uvCorners},topologySignature);
  if(validation.state!=='ready'||validation.islandCount!==plan.islandCount||validation.faceIslands.some((id,fi)=>id!==plan.faceIslands[fi]))return {ok:false,reason:'UV patch boundaries did not match Facegroups'};
- if(options.cancelled?.()||nativeUVTargetError(object,mesh,topologySignature)||object.colourPaint||object.roughnessPaint||object.metalnessPaint)return {ok:false,reason:'Unwrap cancelled: target is no longer editable'};
+ if(options.cancelled?.()||nativeUVTargetError(object,mesh,topologySignature)||object.colourPaint||object.roughnessPaint||object.metalnessPaint||object.opacityPaint)return {ok:false,reason:'Unwrap cancelled: target is no longer editable'};
  return {...commitNativeUV(object,mesh,topologySignature,history,packed.uvCorners),islandCount:plan.islandCount};
 }
 function createAtlasUV(object,mesh,topologySignature,history,owner,coplanar,maxAngle=0){
  if(!Number.isFinite(maxAngle)||maxAngle<0||maxAngle>30)return {ok:false,reason:'Choose an Auto atlas join angle from 0 to 30 degrees'};
  const error=nativeUVTargetError(object,mesh,topologySignature);if(error)return {ok:false,reason:error};
- if(object.colourPaint||object.roughnessPaint||object.metalnessPaint)return {ok:false,reason:'Clear paint before creating a Face atlas; existing paint is retained'};
+ if(object.colourPaint||object.roughnessPaint||object.metalnessPaint||object.opacityPaint)return {ok:false,reason:'Clear paint before creating a Face atlas; existing paint is retained'};
  if(mesh.faces.length>4096||mesh.faces.reduce((sum,face)=>sum+(Array.isArray(face)?face.length:0),0)>20000)return {ok:false,reason:'Atlas supports up to 4096 faces and 20,000 corners'};
  const candidate={},projected=createBoxUV(candidate,mesh,topologySignature,nativeUVCandidate);
  if(!projected.ok)return projected;
@@ -644,10 +644,10 @@ export function createTorusUV(object,mesh,topologySignature,history){
 export function clearNativePaint(object,mesh,history,clearUVs=false){
  if(!object||object.locked||object.kind==='reference'||object.sourceId||object.booleanRecipe||object.arrayRecipe||object.curveProfile||object.materials||object.textures||object.glbPassthrough&&object.glbPassthrough.source!=='boxlab')return {ok:false,reason:'Select an independent BoxLab mesh'};
  if(!mesh?.faces||!history?.capture||!history?.checkpointSnapshot)return {ok:false,reason:'Scene history is not ready'};
- if(!object.colourPaint&&!object.roughnessPaint&&!object.metalnessPaint&&!(clearUVs&&object.glbPassthrough))return {ok:true,changed:false};
+ if(!object.colourPaint&&!object.roughnessPaint&&!object.metalnessPaint&&!object.opacityPaint&&!(clearUVs&&object.glbPassthrough))return {ok:true,changed:false};
  const before=history.capture();
  if(!before||!history.checkpointSnapshot(before,mesh))return {ok:false,reason:'Could not record paint reset'};
- delete object.colourPaint;delete object.roughnessPaint;delete object.metalnessPaint;
+ delete object.colourPaint;delete object.roughnessPaint;delete object.metalnessPaint;delete object.opacityPaint;
  if(clearUVs)delete object.glbPassthrough;
  return {ok:true,changed:true};
 }

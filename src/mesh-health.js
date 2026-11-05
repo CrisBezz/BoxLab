@@ -1,11 +1,11 @@
-import {installFacegroupUVWorkflow} from './facegroup-uv-workflow.js?v=0.36.18.1004';
+import {installFacegroupUVWorkflow} from './facegroup-uv-workflow.js?v=0.36.18.1075';
 import {analyzeMeshHealth} from './mesh-health-core.js?v=0.36.18.443';
 import {safeRepairMesh} from './mesh-health-repair-core.js?v=0.36.18.443';
 import {autoCloseSimpleHoles,simpleBoundaryLoops} from './mesh-auto-close-core.js?v=0.36.18.443';
 import {boundaryDiagnostics} from './mesh-boundary-diagnostics-core.js?v=0.36.18.443';
 import {unifyFaceWinding,flipAllFaces,triangulateMesh} from './mesh-normals-triangulate-core.js?v=0.36.18.443';
 import {inspectImportedUV} from './imported-uv-inspection.js?v=0.36.18.951';
-import {stitchNativeUVEdge,cutNativeUVEdges,clearNativePaint,rotateImportedUV,flipImportedUV,moveImportedUV,scaleImportedUV,rotateImportedUVByAngle,fitImportedUVToTile,packImportedUVIslands,equalizeImportedUVDensity,createPlanarUV,createFaceAtlasUV,createCoplanarAtlasUV,createBoxUV,createCylinderUV,createSphereUV,createTorusUV} from './imported-uv-edit.js?v=0.36.18.1000';
+import {stitchNativeUVEdge,cutNativeUVEdges,clearNativePaint,rotateImportedUV,flipImportedUV,moveImportedUV,scaleImportedUV,rotateImportedUVByAngle,fitImportedUVToTile,packImportedUVIslands,equalizeImportedUVDensity,createPlanarUV,createFaceAtlasUV,createCoplanarAtlasUV,createBoxUV,createCylinderUV,createSphereUV,createTorusUV} from './imported-uv-edit.js?v=0.36.18.1075';
 import {createUVWorkspace} from './uv-workspace.js?v=0.36.18.1063';
 
 // One-shot Edge action uses the original selected edge indices and native history.
@@ -154,7 +154,7 @@ let active=false,last=null,lastBoundary=null,objectId=null,uvWorkspace=null,uvMe
 function renderUVReport(object,mesh){
  uvMesh=mesh;uvPayload=object?.glbPassthrough;
  const resetReady=object&&!object.locked&&object.kind!=='reference'&&!object.sourceId&&!object.booleanRecipe&&!object.arrayRecipe&&!object.curveProfile&&!object.materials&&!object.textures&&(!object.glbPassthrough||object.glbPassthrough.source==='boxlab')&&!!globalThis.__boxlabObjectHistory?.capture&&!!globalThis.__boxlabObjectHistory?.checkpointSnapshot;
- const hasPaint=!!(object?.colourPaint||object?.roughnessPaint||object?.metalnessPaint);
+ const hasPaint=!!(object?.colourPaint||object?.roughnessPaint||object?.metalnessPaint||object?.opacityPaint);
  clearPaint.disabled=!resetReady||!hasPaint;clearPaintUV.disabled=!resetReady||!hasPaint&&!object?.glbPassthrough;
  const nativeReady=object&&!object.locked&&object.kind!=='reference'&&!object.sourceId&&!object.booleanRecipe&&!object.arrayRecipe&&!object.curveProfile&&!object.materials&&!object.textures&&!object.settings?.subd&&!Object.values(object.settings?.mirror||{}).some(Boolean)&&(!object.glbPassthrough||object.glbPassthrough.source==='boxlab')&&!!globalThis.__boxlabObjectHistory?.capture&&!!globalThis.__boxlabObjectHistory?.checkpointSnapshot;
  for(const button of uvPlanar)button.disabled=!nativeReady;uvBox.disabled=uvCylinder.disabled=uvSphere.disabled=!nativeReady;uvTorus.disabled=!nativeReady;uvFaceAtlas.disabled=!nativeReady||hasPaint;uvCoplanarAtlas.disabled=!nativeReady||hasPaint;uvAtlasAngle.disabled=!nativeReady||hasPaint;

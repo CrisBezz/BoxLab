@@ -1,3 +1,11 @@
+## Current build — .1075 opacity-map authoring — 5 November 2026
+
+Built for release `0.36.18.1075` from main. Scope: opacity authoring on BoxLab-native UV meshes. White (255) is opaque; black (0) is transparent. The Paint channel uses the existing scalar paint engine, shows a live opacity preview and committed transparent material, and persists exact linear R8 bytes in `.boxlab` project version 8 while reading legacy project versions 1–7. Original Colour/Roughness/Metalness maps and shared layer-mask stencils remain independent. Undo/Redo, Done/reopen, layer map thumbnails, normal duplicate, and UV clear/unwrap guards include opacity.
+
+Opacity maps remain limited to 512×512 and a single selected channel. Imported NOM/GLB UV painting is outside scope. NOM, GLB and OBJ exports explicitly refuse scenes containing authored opacity maps, with a `.boxlab` save message, to prevent silent loss. Native iPad/Safari validation for .1075 is pending; do not infer a device PASS from automated checks.
+
+Release pins and `version.json` announce .1075. Exact Multi Object Transform Beta6 pin remains frozen. Full local regression: 3160/3160 PASS, 0 FAIL (148.8 s). Focused opacity and cross-regression checks also pass. CI/Pages/live-byte proof will be recorded here after publication. Standing authorization to commit/push directly to `main` and publish GitHub Pages applies at every BoxLab development stage; no repeated confirmation is needed.
+
 ## Current protected device PASSes — 4 November 2026
 
 User reports .1074 Pencil onset PASS, .1071 whole-image adjustments PASS and .1070 image import PASS. Preserve all three. Next narrow build should follow the active roadmap after these validation gates.

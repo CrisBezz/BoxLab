@@ -18866,3 +18866,33 @@ User device PASS for .1074 on 4 November 2026. Pencil stroke onset no longer pro
 ## .1070 and .1071 device acceptance — 4 November 2026
 
 User reports PASS for .1070 proportional image import and .1071 whole-image adjustments. Record both as protected. The already recorded .1074 Pencil onset/pressure controls PASS remains protected.
+
+
+## Opacity .1075 implementation checkpoint — 5 November 2026
+
+WORK IN PROGRESS, UNPUBLISHED. User authorizes opacity map authoring for BoxLab-painted objects only. Imported NOM/GLB painting is outside this build because its UVs are incompatible. White is opaque, black transparent. Current live release remains .1074. Protected device PASSes: .1074 Pencil onset/pressure controls, .1071 adjustments and .1070 image import.
+
+Local implementation now adds strict opacity R8 resource wrappers and a version-8 opacity project envelope around existing version 1–7 projects. boxlab-project-codec integrates encode/decode via the original scalar pools. Syntax and standalone scalar copy check pass. This is foundation work only, not a complete accepted persistence feature. No release pins or assets have been published.
+
+Remaining before release: integrate object capture/history/duplicate/restore and mutation guards; add the scalar Paint channel using original tools and masks; show map preview and Lit transparency; update committed display, clear-paint and UV invalidation; add GLB/NOM export handling; focused old/new project round trips, history, UI and export checks; release markers/pins and reviewed fixture; push main, verify CI/Pages/live bytes. Avoid rewriting the existing painter or kernel. Do not treat this checkpoint as a completed .1075 build.
+
+
+Local follow-up: extended original object duplication/options and snapshot resource capture to include opacityPaint, plus existing UV/Array/join resource-presence guards and Clear paint removal. Syntax and diff checks pass; runtime/history round-trip tests and release integration remain pending. This remains unpublished .1075 work.
+
+
+Opacity follow-up: original viewport painter now recognizes an opacity scalar owner with white default, guarded resource identity and an additional explicit opacityValue input. Its channel chooser supports opacity. Existing createPaintSurface accepts an opacity scalar preview and assigns a linear green-channel alphaMap with transparent blending/depth-write handling and texture disposal. Syntax/diff checks pass. UI wiring, committed transparency display, history/runtime tests and exports remain incomplete; do not publish or claim device readiness.
+
+
+Local opacity progress: Paint UI now has an Opacity channel and 0–255 value slider, passed explicitly to the original painter begin API. Committed display and render-mode selection now include opacity resources. Syntax checks pass and the 3 existing Pencil onset integration cases pass. Export is not integrated, project/history runtime coverage is incomplete, and release pins/markers are still .1074. This is unpublished work and is NOT ready for device testing.
+
+
+Opacity validation follow-up: fixed addMesh option forwarding so opacity-only objects do not accidentally assign undefined metalness. Actual viewport painter smoke check opens a native UV cube, selects Opacity, paints black and verifies committed opacityPaint bytes contain zero. This verifies core commit only; full UI/history/save/export/device readiness remains pending.
+
+
+## .1075 — opacity-map authoring implementation complete — 5 November 2026
+
+Completed the BoxLab-native UV opacity authoring build after the earlier implementation checkpoints in this history. Opacity uses the existing scalar resource, painter, mask, history, project pool, preview and layer-thumbnail owners. Paint is available for Brush, Fill, Eraser, Smudge, Blur and the existing multi-channel tool path. Black is transparent and white opaque. `.boxlab` version 8 retains the linear R8 opacity data and reads v1–v7; duplicate, undo/redo, Done/reopen and UV mutation guards carry opacity. NOM/GLB/OBJ exports explicitly refuse authored opacity and preserve `.boxlab` rather than dropping data. Imported NOM/GLB UV painting remains out of scope.
+
+Full local regression: 3160 tests PASS / 0 FAIL (148.8 s). Focused opacity UI/resource/project/export checks and relevant release/cache regression passed. Native iPad/Safari acceptance is pending; do not count automated results as a device PASS.
+
+Direct-main and Pages publication was explicitly authorized as a standing instruction. CI, Pages, and public live-byte checks are to be added here once the deployment completes.

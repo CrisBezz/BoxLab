@@ -1,3 +1,19 @@
+# Current build: .1075 opacity-map authoring (5 November 2026)
+
+## Delivered for native checking
+
+- BoxLab-native UV meshes can author 512×512 grayscale opacity in the existing Paint channel system. White is opaque; black is transparent.
+- Transparency previews live and after Done. Layer map previews expose Opacity.
+- `.boxlab` v8 retains exact opacity bytes and decodes legacy v1–v7 projects. Undo/Redo, duplicate, UV clear guards, and shared layer-mask stencil use are integrated.
+- NOM/GLB/OBJ exports refuse authored opacity with an explicit `.boxlab` preservation message until opacity export is implemented.
+- Full local regression: 3160/3160 PASS, 0 FAIL. Focused opacity, project codec, preview and export refusal checks pass. CI/Pages/live-byte proof is recorded in the handoff after publication. Native iPad/Safari acceptance remains pending.
+
+## Next
+
+1. User checks .1075 on iPad/Safari using the short checklist in `TEST_CHECKLIST.md`.
+2. After PASS, protect .1075 as a device PASS. Then take a separate narrow build for opacity export (NOM/GLB/OBJ), with round-trip texture tests before removing the explicit export refusals.
+3. Imported NOM/GLB painting remains out of scope until its UV editing/painting path supports the source UVs.
+
 ## Protected device results — 4 November 2026
 
 PASS .1074 Pencil onset and brush pressure controls. PASS .1071 image adjustments. PASS .1070 proportional image import. These gates are closed. Continue with the next open roadmap priority below.
@@ -248,7 +264,7 @@ Full local Node suite was 3,091 PASS / 0 FAIL before the final .1045 Smudge allo
 After .1046 PASS, resume the app-wide help/text audit in the UV Editor gesture footer and Mesh Health UV guidance. Keep essential action names, live status, destructive/reset warnings and scope/cap warnings visible. Imported opacity-map authoring and the separate NOM displacement implementation remain unimplemented.
 ---
 
-## Current build: .1043 Paint help first slice
+## Historical roadmap marker: .1043 Paint help first slice
 
 The .1043 app tree is published on GitHub main at
 `3e3f8c95c3fd62400f0d1ccc22c514cad1977d49`. Pages deployment workflow 41246780287
