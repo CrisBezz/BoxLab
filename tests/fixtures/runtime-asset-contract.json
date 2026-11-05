@@ -1,5 +1,5 @@
 {
-  "baseline": "Reviewed .1075 opacity-map authoring for BoxLab native UV objects, opacity preview and .boxlab save/open; protected .1074 Pencil onset controls. Opacity export paths refuse until supported.",
+  "baseline": "Reviewed .1076: committed opacity surfaces render both face orientations to reveal interior faces through transparent texels; non-opacity materials retain front-face rendering.",
   "references": [
     {
       "owner": "index.html",
@@ -161,9 +161,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1075",
+      "url": "./src/drawer-ui.js?v=0.36.18.1076",
       "target": "src/drawer-ui.js",
-      "sha256": "495e7370b3abea562ea8958b112b4269f4c86b1a244e98a64d78e977dcfa28e0"
+      "sha256": "61b1e602c4cf4ac62d9a6fbc2e3626f423c7c8f1e1f658cb087c1549cc4317b5"
     },
     {
       "owner": "index.html",
@@ -204,9 +204,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/export-as-panel.js?v=0.36.18.1075",
+      "url": "./src/export-as-panel.js?v=0.36.18.1076",
       "target": "src/export-as-panel.js",
-      "sha256": "8bbfba0c397d754126f533deb3e9d27df832b2ef64117a7e0ef5599d52321498",
+      "sha256": "4f309575e56eb78a2d6f859a51a7f936c56a664121a8ffc82de37f39b8b2a80a",
       "sourceVersion": "0.36.18.892"
     },
     {
@@ -378,15 +378,15 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1075",
+      "url": "./src/release-version.js?v=0.36.18.1076",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
     {
       "owner": "index.html",
-      "url": "./src/render-modes.js?v=0.36.18.1075",
+      "url": "./src/render-modes.js?v=0.36.18.1076",
       "target": "src/render-modes.js",
-      "sha256": "b3c6d7a905716bce1a2ff64b0568153643ba9569fba8cf67428d6cc5ace0c08c"
+      "sha256": "9b2d57f38ebbdddf2a96b821fb7b2781fc98463c2e7b393c02ce55cd7632f2c4"
     },
     {
       "owner": "index.html",
@@ -864,9 +864,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1075",
+      "url": "./face-workflow-layout.js?v=0.36.18.1076",
       "target": "src/face-workflow-layout.js",
-      "sha256": "2d15226332a39512a6a77cb710c42bcc8ecb29dbe3e48c9bb192be4b4adf4132"
+      "sha256": "34db41c862b5fe1b6496ab820b645be4114a0a40259c02ca7874a96617fe2f27"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1177,9 +1177,9 @@
     },
     {
       "owner": "src/export-as-panel.js",
-      "url": "./nomad-packed-maps.js?v=0.36.18.1075",
+      "url": "./nomad-packed-maps.js?v=0.36.18.1076",
       "target": "src/nomad-packed-maps.js",
-      "sha256": "f646185131c0ed8bb6c70994b9ef735be7683e2a2bd812ec1544ee15e201e19e"
+      "sha256": "d3109233dda64d1f2d3c545dd7ae1c55579fcc236c2fdacbc0eebb2d466320fa"
     },
     {
       "owner": "src/export-as-panel.js",
@@ -1361,7 +1361,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1075",
+      "url": "./release-version.js?v=0.36.18.1076",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -2426,9 +2426,9 @@
     },
     {
       "owner": "src/nomad-packed-maps.js",
-      "url": "./nomad-export-core.js?v=0.36.18.1075",
+      "url": "./nomad-export-core.js?v=0.36.18.1076",
       "target": "src/nomad-export-core.js",
-      "sha256": "69997dc06c9876fd4f3fd63573b94c56a1cb0cd83b4193e64898e03a71e9d3ac"
+      "sha256": "c2f104007c92a36a0650ae973ba7fb5e47a6f46eb03a8e205d47d8435e32d743"
     },
     {
       "owner": "src/nomad-export-core.js",
@@ -2456,15 +2456,15 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/viewport-paint.js?v=0.36.18.1075",
+      "url": "./src/viewport-paint.js?v=0.36.18.1076",
       "target": "src/viewport-paint.js",
-      "sha256": "22e91e90cff5058f925bc132dd1377db8113b8bf7ca9632176d7325545cd0df7"
+      "sha256": "62e7fccd7588a7b9711e392f2239b52be025f9f7147e4449dc30e4b92b391732"
     },
     {
       "owner": "src/viewport-paint.js",
-      "url": "./viewport-paint-core.js?v=0.36.18.1075",
+      "url": "./viewport-paint-core.js?v=0.36.18.1076",
       "target": "src/viewport-paint-core.js",
-      "sha256": "a842681e7cf2ba0e197a376d0667714092307e73f60d7719c830b9731226cfbb"
+      "sha256": "1379cc6e8de4ecde1b9594ecdee8d7a2ba7ea417df1313065e3ef177e41b6e14"
     },
     {
       "owner": "src/viewport-paint.js",
@@ -2492,9 +2492,9 @@
     },
     {
       "owner": "src/viewport-paint-core.js",
-      "url": "./paint-target.js?v=0.36.18.1075",
+      "url": "./paint-target.js?v=0.36.18.1076",
       "target": "src/paint-target.js",
-      "sha256": "f6b0d6fcc13ad2869851c06977b3455c912638d40f457fc24c8d9c5a1a2dfc04"
+      "sha256": "1e6ab54ae8bcd1c1cff85c8cd428b78b0c50f95f0e5244542cc391e36b0df1e9"
     },
     {
       "owner": "src/paint-target.js",
@@ -2510,33 +2510,33 @@
     },
     {
       "owner": "src/render-modes.js",
-      "url": "./paint-target.js?v=0.36.18.1075",
+      "url": "./paint-target.js?v=0.36.18.1076",
       "target": "src/paint-target.js",
-      "sha256": "f6b0d6fcc13ad2869851c06977b3455c912638d40f457fc24c8d9c5a1a2dfc04"
+      "sha256": "1e6ab54ae8bcd1c1cff85c8cd428b78b0c50f95f0e5244542cc391e36b0df1e9"
     },
     {
       "owner": "src/export-as-panel.js",
-      "url": "./paint-export.js?v=0.36.18.1075",
+      "url": "./paint-export.js?v=0.36.18.1076",
       "target": "src/paint-export.js",
-      "sha256": "abd4007ca572f257863db6d19ae73d59f8d2036eb84943c24e893ae1b5cd207c"
+      "sha256": "84de834084ecdc9595675b07743a2becab82d3c8c47a3cebcc43b87769b919fe"
     },
     {
       "owner": "src/nomad-packed-maps.js",
-      "url": "./paint-export.js?v=0.36.18.1075",
+      "url": "./paint-export.js?v=0.36.18.1076",
       "target": "src/paint-export.js",
-      "sha256": "abd4007ca572f257863db6d19ae73d59f8d2036eb84943c24e893ae1b5cd207c"
+      "sha256": "84de834084ecdc9595675b07743a2becab82d3c8c47a3cebcc43b87769b919fe"
     },
     {
       "owner": "src/nomad-export-core.js",
-      "url": "./paint-export.js?v=0.36.18.1075",
+      "url": "./paint-export.js?v=0.36.18.1076",
       "target": "src/paint-export.js",
-      "sha256": "abd4007ca572f257863db6d19ae73d59f8d2036eb84943c24e893ae1b5cd207c"
+      "sha256": "84de834084ecdc9595675b07743a2becab82d3c8c47a3cebcc43b87769b919fe"
     },
     {
       "owner": "src/paint-export.js",
-      "url": "./paint-target.js?v=0.36.18.1075",
+      "url": "./paint-target.js?v=0.36.18.1076",
       "target": "src/paint-target.js",
-      "sha256": "f6b0d6fcc13ad2869851c06977b3455c912638d40f457fc24c8d9c5a1a2dfc04"
+      "sha256": "1e6ab54ae8bcd1c1cff85c8cd428b78b0c50f95f0e5244542cc391e36b0df1e9"
     },
     {
       "owner": "src/paint-export.js",
@@ -2746,7 +2746,7 @@
       "owner": "evaluations/uv-paint/lab.js",
       "url": "../../src/export-as-panel.js?v=0.36.18.1039",
       "target": "src/export-as-panel.js",
-      "sha256": "8bbfba0c397d754126f533deb3e9d27df832b2ef64117a7e0ef5599d52321498"
+      "sha256": "4f309575e56eb78a2d6f859a51a7f936c56a664121a8ffc82de37f39b8b2a80a"
     },
     {
       "owner": "src/paint-layer-stack.js",
@@ -3098,9 +3098,9 @@
     },
     {
       "owner": "src/viewport-paint.js",
-      "url": "./paint-target.js?v=0.36.18.1075",
+      "url": "./paint-target.js?v=0.36.18.1076",
       "target": "src/paint-target.js",
-      "sha256": "f6b0d6fcc13ad2869851c06977b3455c912638d40f457fc24c8d9c5a1a2dfc04"
+      "sha256": "1e6ab54ae8bcd1c1cff85c8cd428b78b0c50f95f0e5244542cc391e36b0df1e9"
     },
     {
       "owner": "index.html",
@@ -3326,9 +3326,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1075",
+      "url": "./src/shell-comparison.js?v=0.36.18.1076",
       "target": "src/shell-comparison.js",
-      "sha256": "01827eb7bf75cae1a117c87e0bb1b3aed460a05b25305349f3d8f01db95ffbcc"
+      "sha256": "4530eb28057e3a5bdfc17edd3ae9271dd0b76f1eb56064c21c158ccbbfb7badc"
     },
     {
       "owner": "src/main.js",
@@ -3545,6 +3545,12 @@
       "url": "./project-opacity-resources.js?v=0.36.18.1075",
       "target": "src/project-opacity-resources.js",
       "sha256": "8012597581ab34dbf501cecdc6bbe1276d0ada66fba735f140369487ba74a256"
+    },
+    {
+      "owner": "tests/opacity-double-sided-1076.test.mjs",
+      "url": "../src/paint-target.js?v=0.36.18.1076",
+      "target": "src/paint-target.js",
+      "sha256": "1e6ab54ae8bcd1c1cff85c8cd428b78b0c50f95f0e5244542cc391e36b0df1e9"
     }
   ]
 }

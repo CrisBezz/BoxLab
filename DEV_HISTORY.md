@@ -18896,3 +18896,10 @@ Completed the BoxLab-native UV opacity authoring build after the earlier impleme
 Full local regression: 3160 tests PASS / 0 FAIL (148.8 s). Focused opacity UI/resource/project/export checks and relevant release/cache regression passed. Native iPad/Safari acceptance is pending; do not count automated results as a device PASS.
 
 Direct-main and Pages publication was explicitly authorized as a standing instruction. Published commit `57ccff2de0e256559adc5b05c9270a6c52b866b0`. Hosted Topology regression run `41966147389` / job `127043485643` passed; Pages deployment run `41966146559` succeeded. Live `version.json`, `index.html`, `viewport-paint.js`, `viewport-paint-core.js`, scalar/opacity resources, project codec, paint target and shell comparison byte-match local main. Native iPad/Safari acceptance is now the user check.
+
+
+## .1076 — reveal rear-facing interior through opacity — 5 November 2026
+
+User reports .1075 opacity authoring PASS, then found committed opacity-painted objects appeared one-sided. Fix the authoritative committed-preview material in `src/paint-target.js`: use `THREE.DoubleSide` only while the opacity alphaMap is active, and restore `THREE.FrontSide` when opacity is cleared. Existing alphaMap, transparency/depth-write, fallback Studio material, geometry and texture lifetime remain unchanged. The same owner serves the committed material preview; no backface geometry or duplicate mesh is created.
+
+Focused tests cover both-sided material state with opacity, front-only restoration without opacity, existing live opacity/project save path, color/metal shadows, current release markers/pins and canonical shell loaders: 20 PASS / 0 FAIL. Full regression: 3161 PASS / 0 FAIL (114.2 s). User check is pending: paint transparent areas, orbit to inspect rear-facing inside surfaces, Done/reopen, restore opacity and confirm regular surfaces remain unchanged. Protect the .1075 opacity authoring PASS; do not infer .1076 device acceptance.

@@ -62,6 +62,8 @@ export function createPaintSurface(body,geometry,texture,{renderer=globalThis.__
   if(lit.map!==nextColour||lit.roughnessMap!==nextRoughness||lit.metalnessMap!==nextMetalness)lit.needsUpdate=true;
   const alphaMap=opacity?.resource?opacityMap:null;
   if(lit.alphaMap!==alphaMap){lit.alphaMap=alphaMap;lit.transparent=!!alphaMap;lit.depthWrite=!alphaMap;lit.needsUpdate=true;}
+  const materialSide=alphaMap?THREE.DoubleSide:THREE.FrontSide;
+  if(lit.side!==materialSide){lit.side=materialSide;lit.needsUpdate=true;}
   lit.map=nextColour;lit.roughnessMap=nextRoughness;lit.metalnessMap=nextMetalness;surface.material=lit;surface.castShadow=body.castShadow;surface.receiveShadow=body.receiveShadow;
  }
  function dispose(){if(disposed)return;disposed=true;source.removeEventListener('dispose',dispose);body.remove(surface);if(body.material===hidden)body.material=fallback;geometry.dispose();material.dispose();texture.dispose();lit?.dispose();colourMap?.dispose();roughnessMap?.dispose();metalnessMap?.dispose();opacityMap?.dispose();environment?.release();environment=null;}

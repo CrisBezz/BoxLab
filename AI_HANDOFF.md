@@ -1,14 +1,12 @@
-## Current build — .1075 opacity-map authoring — 5 November 2026
+## Current build — .1076 opacity double-sided preview — 5 November 2026
 
-Built for release `0.36.18.1075` from main. Scope: opacity authoring on BoxLab-native UV meshes. White (255) is opaque; black (0) is transparent. The Paint channel uses the existing scalar paint engine, shows a live opacity preview and committed transparent material, and persists exact linear R8 bytes in `.boxlab` project version 8 while reading legacy project versions 1–7. Original Colour/Roughness/Metalness maps and shared layer-mask stencils remain independent. Undo/Redo, Done/reopen, layer map thumbnails, normal duplicate, and UV clear/unwrap guards include opacity.
+.1075 opacity authoring received a user PASS. Follow-up found committed opacity-painted objects appeared one-sided, hiding the rear-facing interior through transparent areas. The existing committed preview surface in `src/paint-target.js` now switches its lit material to `THREE.DoubleSide` while an opacity alphaMap is active, and restores `THREE.FrontSide` when opacity is removed. The original scalar preview, opacity texture, alpha blending, depth-write behavior and disposal owner remain in use; no geometry is duplicated or made hollow.
 
-Opacity maps remain limited to 512×512 and a single selected channel. Imported NOM/GLB UV painting is outside scope. NOM, GLB and OBJ exports explicitly refuse scenes containing authored opacity maps, with a `.boxlab` save message, to prevent silent loss. Native iPad/Safari validation for .1075 is pending; do not infer a device PASS from automated checks.
+Release is `0.36.18.1076`. Scope is only committed opacity preview sidedness. Full project, imported object, materials and non-opacity behavior remain unchanged. Native iPad/Safari check: paint transparent areas into a BoxLab-native UV object, orbit to view interior back faces, then clear/remove opacity and confirm normal one-sided rendering returns. `.1076` device acceptance is pending. Protect `.1075` opacity authoring PASS and prior `.1074`, `.1071`, `.1070` device PASSes.
 
-Release pins and `version.json` announce .1075. Exact Multi Object Transform Beta6 pin remains frozen. Full local regression: 3160/3160 PASS, 0 FAIL (148.8 s). Hosted Topology regression run 41966147389/job 127043485643 passed; Pages deployment run 41966146559 succeeded. Live `version.json`, `index.html`, `viewport-paint.js`, `viewport-paint-core.js`, `scalar-paint-resource.js`, `opacity-resource.js`, `project-opacity-resources.js`, `boxlab-project-codec.js`, `paint-target.js` and `shell-comparison.js` byte-match local main. Published commit `57ccff2de0e256559adc5b05c9270a6c52b866b0`. Standing authorization to commit/push directly to `main` and publish GitHub Pages applies at every BoxLab development stage; no repeated confirmation is needed.
+## Current protected device PASSes — 5 November 2026
 
-## Current protected device PASSes — 4 November 2026
-
-User reports .1074 Pencil onset PASS, .1071 whole-image adjustments PASS and .1070 image import PASS. Preserve all three. Next narrow build should follow the active roadmap after these validation gates.
+User reports .1075 opacity authoring PASS. Preserve opacity channel authoring, project persistence and existing paint workflow. User also reports the committed opacity view is one-sided; .1076 repairs this and awaits hands-on validation. Preserve earlier .1074 Pencil onset/pressure, .1071 whole-image adjustment and .1070 proportional image import PASSes.
 
 ## .1074 — brush controls and Pencil onset — 4 November 2026
 

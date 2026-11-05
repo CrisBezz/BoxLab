@@ -1,18 +1,17 @@
-# Current build: .1075 opacity-map authoring (5 November 2026)
+# Current build: .1076 opacity interior preview (5 November 2026)
 
 ## Delivered for native checking
 
-- BoxLab-native UV meshes can author 512×512 grayscale opacity in the existing Paint channel system. White is opaque; black is transparent.
-- Transparency previews live and after Done. Layer map previews expose Opacity.
-- `.boxlab` v8 retains exact opacity bytes and decodes legacy v1–v7 projects. Undo/Redo, duplicate, UV clear guards, and shared layer-mask stencil use are integrated.
-- NOM/GLB/OBJ exports refuse authored opacity with an explicit `.boxlab` preservation message until opacity export is implemented.
-- Full local regression: 3160/3160 PASS, 0 FAIL. Focused opacity, project codec, preview and export refusal checks pass. CI/Pages/live-byte proof is recorded in the handoff after publication. Native iPad/Safari acceptance remains pending.
+- Opacity-painted committed surfaces now render both face orientations while an opacity map is active, letting transparent areas reveal rear-facing interior faces.
+- Clearing/removing the opacity map restores front-face-only material rendering. No geometry or paint data is changed.
+- `.1075` opacity authoring received user PASS; this build addresses its one-sided committed preview.
+- Focused opacity, material-preview and release/cache checks pass. Full regression and publication proof will be recorded in the handoff after completion. Native iPad/Safari check remains pending.
 
 ## Next
 
-1. User checks .1075 on iPad/Safari using the short checklist in `TEST_CHECKLIST.md`.
-2. After PASS, protect .1075 as a device PASS. Then take a separate narrow build for opacity export (NOM/GLB/OBJ), with round-trip texture tests before removing the explicit export refusals.
-3. Imported NOM/GLB painting remains out of scope until its UV editing/painting path supports the source UVs.
+1. Check opacity transparency from both sides on iPad/Safari, then confirm `.1075` paint workflow still works and removal restores the usual view.
+2. After PASS, protect `.1076` as a device PASS. Opacity export to NOM/GLB/OBJ remains a separate roadmap build.
+3. Imported NOM/GLB UV painting remains out of scope until its UV editing/painting path supports the source UVs.
 
 ## Protected device results — 4 November 2026
 
