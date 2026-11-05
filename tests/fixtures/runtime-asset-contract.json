@@ -1,5 +1,5 @@
 {
-  "baseline": "Reviewed .1079: opt-in Pencil paint diagnostics capture raw/coalesced pressure, onset choice and the first UV dab radii/hits without changing painting.",
+  "baseline": "Reviewed .1080: opt-in Pencil paint diagnostics capture raw/coalesced pressure, onset choice and the first UV dab radii/hits without changing painting.",
   "references": [
     {
       "owner": "index.html",
@@ -161,7 +161,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1079",
+      "url": "./src/drawer-ui.js?v=0.36.18.1080",
       "target": "src/drawer-ui.js",
       "sha256": "8554fd6922f4b10740c088a7374da96aa1c9017dd44cfa178d6331620d1078e3"
     },
@@ -378,7 +378,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1079",
+      "url": "./src/release-version.js?v=0.36.18.1078",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -2456,13 +2456,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/viewport-paint.js?v=0.36.18.1079",
+      "url": "./src/viewport-paint.js?v=0.36.18.1080",
       "target": "src/viewport-paint.js",
-      "sha256": "fd4e0aea1c85a5cf3628ccb9894122bfdf6fa3e9264855b1d25c86570ce9a41e"
+      "sha256": "0c9a79d2f7c815be65f7347ac1ab915cafe5d38d0d90e9462bd91fadfd309246"
     },
     {
       "owner": "src/viewport-paint.js",
-      "url": "./viewport-paint-core.js?v=0.36.18.1079",
+      "url": "./viewport-paint-core.js?v=0.36.18.1080",
       "target": "src/viewport-paint-core.js",
       "sha256": "04f7a473750643307bbf61663cf59808a57681b11ead589e9219e8b0ddeb1fd7"
     },
@@ -3326,9 +3326,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1079",
+      "url": "./src/shell-comparison.js?v=0.36.18.1080",
       "target": "src/shell-comparison.js",
-      "sha256": "4f77bef90593d955a8efedcb8b7afc4473e54e26cb4fb9e13b35bbef03981dc2"
+      "sha256": "0f996fbf1b9bd58070557bfa33828b2bfca0ba0600de5a863cd817183433fd73"
     },
     {
       "owner": "src/main.js",

@@ -18934,3 +18934,8 @@ User reports `.1078` FAIL: the first touch still paints a large dab. The automat
 Extend the existing opt-in Gesture Debug owner and its existing Capture/Copy report. UV Paint records raw pointerdown fields and normalized pressure, active brush/channel/pressure settings, up to eight coalesced samples, and pointerup values. The painter records whether onset is deferred and which pressures the onset guard selects. Its first eight generated UV dabs report pressure, computed colour/scalar map radii, UV hit and location. Instrumentation is inert unless Gesture Debug is enabled; it does not consume input or change painting.
 
 Manual diagnostic: View → Gesture Debug ON; reproduce one first-touch blob in UV Paint; Capture report → Copy report; send the result. Turn diagnostics off afterwards. Keep `.1077` channel/menu PASS protected.
+
+
+## .1080 — correct diagnostic release markers after hosted gate — 5 November 2026
+
+The first diagnostic publication used `.1079`; hosted Topology caught two stale release-contract references and three old visible shell-comparison labels. The diagnostic code itself did not fail; 3159/3162 checks passed. Correct the release marker to `.1080`, update the shell comparison labels and expectation, and keep the direct/nested `release-version.js` pins paired at `.1078` because that owner is unchanged. Paint diagnostics and painting behavior remain unchanged. Re-run hosted Topology and Pages before requesting the native capture.
