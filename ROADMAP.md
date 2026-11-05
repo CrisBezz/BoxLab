@@ -5,7 +5,7 @@
 - `.1077` compact Paint menu and combined Colour/Roughness/Metalness/Opacity strokes received user PASS; preserve them.
 - User reports `.1078` FAIL: first touch still paints a large dab. The previous synthetic test missed the device path, so the cause is not established.
 - `.1081` adds opt-in evidence for raw/coalesced pointer events, normalized pressure, onset decisions, first dab radii and surface hit results through the existing Gesture Debug report.
-- Pages deployed `.1081` and live runtime bytes match; Topology needs rerunning after updating the stale release-version cache-contract pin.
+- `.1081` Pages deployment and hosted Topology both PASS after the stale release-version cache-contract pin was corrected. Native device capture remains the next gate.
 
 ## Next
 

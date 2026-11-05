@@ -2,6 +2,8 @@
 
 Use the existing Gesture Debug controls; no model or Paint settings need to change.
 
+Hosted Topology `.1081` PASS: 3162/3162, run `42030334556`. Pages run `42030333960` PASS; live version marker and changed runtime module bytes verified. This does not resolve the reported device blob; the capture remains pending.
+
 1. Open View → Gesture Debug and turn it on before painting.
 2. In UV Paint, touch the model once and make one short stroke that shows the oversized dab.
 3. Open the on-screen UI Debug controls, choose Capture report, then Copy report. Send the copied report.
