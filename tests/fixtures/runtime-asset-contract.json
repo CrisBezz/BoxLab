@@ -1,5 +1,5 @@
 {
-  "baseline": "Reviewed .1076: committed opacity surfaces render both face orientations to reveal interior faces through transparent texels; non-opacity materials retain front-face rendering.",
+  "baseline": "Reviewed .1077: compact Paint controls use clear value sliders and Colour strokes can also paint Roughness, Metalness and Opacity atomically.",
   "references": [
     {
       "owner": "index.html",
@@ -161,9 +161,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1076",
+      "url": "./src/drawer-ui.js?v=0.36.18.1077",
       "target": "src/drawer-ui.js",
-      "sha256": "61b1e602c4cf4ac62d9a6fbc2e3626f423c7c8f1e1f658cb087c1549cc4317b5"
+      "sha256": "d1deb43f2cf8f6415566578dd0e92f64d7cafd85b7ecc9c1313bc519f7687156"
     },
     {
       "owner": "index.html",
@@ -378,7 +378,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1076",
+      "url": "./src/release-version.js?v=0.36.18.1077",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -864,9 +864,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1076",
+      "url": "./face-workflow-layout.js?v=0.36.18.1077",
       "target": "src/face-workflow-layout.js",
-      "sha256": "34db41c862b5fe1b6496ab820b645be4114a0a40259c02ca7874a96617fe2f27"
+      "sha256": "4f831e38f4be66327fa6f25e4378915970ee7f16a6944053da94d37bb0452b83"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1361,7 +1361,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1076",
+      "url": "./release-version.js?v=0.36.18.1077",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -2456,15 +2456,15 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/viewport-paint.js?v=0.36.18.1076",
+      "url": "./src/viewport-paint.js?v=0.36.18.1077",
       "target": "src/viewport-paint.js",
-      "sha256": "62e7fccd7588a7b9711e392f2239b52be025f9f7147e4449dc30e4b92b391732"
+      "sha256": "57585996f82083c7d73643481a1aabdc8ff2231393f573673edd5dd810325ac2"
     },
     {
       "owner": "src/viewport-paint.js",
-      "url": "./viewport-paint-core.js?v=0.36.18.1076",
+      "url": "./viewport-paint-core.js?v=0.36.18.1077",
       "target": "src/viewport-paint-core.js",
-      "sha256": "1379cc6e8de4ecde1b9594ecdee8d7a2ba7ea417df1313065e3ef177e41b6e14"
+      "sha256": "ea507e2cdd8a949e48c3662ced0d03602a325b51ff662e01a02f7dacd6e74f03"
     },
     {
       "owner": "src/viewport-paint.js",
@@ -3326,9 +3326,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1076",
+      "url": "./src/shell-comparison.js?v=0.36.18.1077",
       "target": "src/shell-comparison.js",
-      "sha256": "4530eb28057e3a5bdfc17edd3ae9271dd0b76f1eb56064c21c158ccbbfb7badc"
+      "sha256": "dd7ca3c178d180fcf7e6626351428eb30ba3d10726bfddfa8084539c1eb06af7"
     },
     {
       "owner": "src/main.js",

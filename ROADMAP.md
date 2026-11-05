@@ -1,17 +1,18 @@
-# Current build: .1076 opacity interior preview (5 November 2026)
+# Current build: .1077 compact Paint and combined material strokes (5 November 2026)
 
 ## Delivered for native checking
 
-- Opacity-painted committed surfaces now render both face orientations while an opacity map is active, letting transparent areas reveal rear-facing interior faces.
-- Clearing/removing the opacity map restores front-face-only material rendering. No geometry or paint data is changed.
-- `.1075` opacity authoring received user PASS; this build addresses its one-sided committed preview.
-- Focused opacity, material-preview and release/cache checks pass. Full local regression passed 3161/3161; hosted Topology regression run 41972658077 passed and Pages run 41972657527 succeeded. Live release marker and affected Paint module chain byte-match main. Native iPad/Safari check remains pending.
+- The Paint panel replaces verbose scalar “Paint value” rows with Roughness, Metalness and Transparent/Opaque sliders. Longer brush-tip and channel explanations are available through tooltips and Paint help.
+- “Also paint” can include Roughness, Metalness and Opacity in a Colour stroke. The Opacity value slider appears when that map is selected.
+- Combined maps use the existing Paint stroke, lit material preview, mask stencil, atomic scene history and Save/Open owners. One Undo/Redo applies to the full stroke.
+- `.1076` two-sided opacity preview PASS and `.1075` opacity authoring PASS remain protected.
+- Full local regression: 3161/3161 PASS. Native iPad/Safari check remains pending.
 
 ## Next
 
-1. Check opacity transparency from both sides on iPad/Safari, then confirm `.1075` paint workflow still works and removal restores the usual view.
-2. After PASS, protect `.1076` as a device PASS. Opacity export to NOM/GLB/OBJ remains a separate roadmap build.
-3. Imported NOM/GLB UV painting remains out of scope until its UV editing/painting path supports the source UVs.
+1. Check the compact Paint menu and explanations; paint Colour, Roughness, Metalness and Opacity together, then Undo/Redo and verify the material preview and saved project.
+2. Repeat a combined stroke with Brush, Fill and Eraser; verify Smudge, Blur and Sharpen still expose “Also paint” and retain one-step history.
+3. Imported NOM/GLB UV painting and opacity export remain separate roadmap work.
 
 ## Protected device results — 4 November 2026
 

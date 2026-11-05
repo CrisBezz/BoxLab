@@ -1,13 +1,14 @@
-## .1076 native acceptance — pending user check
+## .1077 native acceptance — pending user check
 
-Use a BoxLab-created mesh with valid native UVs.
+Use a BoxLab-created mesh with native UVs.
 
-1. Open UV Paint → Opacity, paint a transparent area, then orbit until you can see the back-facing interior surface through that area. Confirm the rear faces render.
-2. Restore opacity with white paint; verify both painted and restored regions while orbiting.
-3. Tap Done and reopen UV Paint. Confirm the two-sided view remains. Remove/clear opacity and verify regular front-face-only rendering returns.
-4. Check a nearby non-opacity object/material still looks unchanged.
+1. Open UV Paint and inspect “Also paint”. Confirm concise Roughness/Metalness controls, the Transparent/Opaque Opacity slider, and that longer explanations are behind the help button or tooltips.
+2. Paint one stroke with Colour, Roughness, Metalness and Opacity selected. Confirm the colour and all three map previews update together; Undo once removes all four changes and Redo restores them.
+3. Turn Opacity off and confirm its value slider hides. Turn it back on and adjust transparency; verify both sides of transparent surfaces remain visible per `.1076`.
+4. Repeat with Fill, Eraser, Smudge, Blur and Sharpen where applicable. Confirm the extra channel controls stay available and each action remains one undo step.
+5. Done/reopen UV Paint; verify map previews and values persist. Confirm fingers still navigate and Pencil paints.
 
-Automated .1076 material and release-owner tests pass (20 focused checks); full local regression is 3161/3161 PASS. Hosted Topology run 41972658077 passed and Pages run 41972657527 succeeded. Native iPad/Safari check remains pending. User reports .1075 opacity authoring PASS. Earlier protected PASSes remain .1074 Pencil onset/pressure, .1071 whole-image adjustments, and .1070 proportional image import.
+Automated Paint/Opacity/channel UI checks pass; full local regression is 3161/3161 PASS. Native iPad/Safari acceptance remains pending.
 
 ## Protected device results — 4 November 2026
 

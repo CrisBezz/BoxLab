@@ -5,21 +5,21 @@ import {createPaintLayer,brushSettings} from '../evaluations/uv-paint/paint-core
 
 const brush={colour:'#e34b37',radius:12,hardness:1,opacity:1,pressure:false};
 const point={x:450,y:300,width:900,height:600,pressure:1};
-test('1045 Colour, Roughness and Metalness can share one dab and one undo checkpoint',async()=>{
- const r=runtime();await r.painter.open();assert(r.painter.setMultiPaintChannels(['roughness','metalness']));
+test('1045 Colour, Roughness, Metalness and Opacity can share one dab and one undo checkpoint',async()=>{
+ const r=runtime();await r.painter.open();assert(r.painter.setMultiPaintChannels(['roughness','metalness','opacity']));
  const before=r.h.undoStack.length;assert(r.painter.begin(point,brush,'boxlab',0,64,220));assert(r.painter.finish(point));
- const colour=r.target().colourPaint,rough=r.target().roughnessPaint,metal=r.target().metalnessPaint;
- assert(colour&&rough&&metal);assert.equal(r.h.undoStack.length,before+1);
+ const colour=r.target().colourPaint,rough=r.target().roughnessPaint,metal=r.target().metalnessPaint,opacity=r.target().opacityPaint;
+ assert(colour&&rough&&metal&&opacity);assert.equal(r.h.undoStack.length,before+1);
  const changed=(bytes,baseline)=>bytes.some((n,i)=>n!==baseline[i]);
  assert(changed(colour.pixels,new Uint8Array(colour.pixels.length).fill(255)));
- assert.equal(rough.width,512);assert.equal(metal.width,512);
- assert(r.h.undo(r.live));assert.equal(r.target().colourPaint,undefined);assert.equal(r.target().roughnessPaint,undefined);assert.equal(r.target().metalnessPaint,undefined);
+ assert.equal(rough.width,512);assert.equal(metal.width,512);assert.equal(opacity.width,512);assert(opacity.pixels.some(v=>v===0));
+ assert(r.h.undo(r.live));assert.equal(r.target().colourPaint,undefined);assert.equal(r.target().roughnessPaint,undefined);assert.equal(r.target().metalnessPaint,undefined);assert.equal(r.target().opacityPaint,undefined);
  r.painter.close();
 });
-test('1045 Brush radial opens Material & Paint directly; quick radial controls are tool-specific',async()=>{
+test('1045 Brush radial exposes compact combined-channel controls and tool-specific quick controls',async()=>{
  const r=runtime(),u=uiRuntime(r);await u.api.open();const n=k=>u.nodes.get('paint-'+k);
  await n('tool-paint').click();assert.equal(u.api.paletteState,'material');assert.equal(n('material-body').hidden,false);assert.equal(n('quick-body').hidden,true);
- n('multi-roughness').checked=true;n('multi-roughness').dispatchEvent({type:'change'});n('multi-metalness').checked=true;n('multi-metalness').dispatchEvent({type:'change'});assert.equal(n('multi-roughness').checked,true);assert.equal(n('multi-metalness').checked,true);const history=r.h.undoStack.length;u.emit('pointerdown');u.emit('pointerup');assert(r.target().colourPaint);assert(r.target().roughnessPaint);assert(r.target().metalnessPaint);assert.equal(r.h.undoStack.length,history+1);
+ n('multi-roughness').checked=true;n('multi-roughness').dispatchEvent({type:'change'});n('multi-metalness').checked=true;n('multi-metalness').dispatchEvent({type:'change'});n('multi-opacity').checked=true;n('multi-opacity').dispatchEvent({type:'change'});assert.equal(n('multi-roughness').checked,true);assert.equal(n('multi-metalness').checked,true);assert.equal(n('multi-opacity').checked,true);assert.equal(n('opacity-controls').hidden,false);const history=r.h.undoStack.length;u.emit('pointerdown');u.emit('pointerup');assert(r.target().colourPaint);assert(r.target().roughnessPaint);assert(r.target().metalnessPaint);assert(r.target().opacityPaint);assert.equal(r.h.undoStack.length,history+1);
  await n('show-tools').click();await n('tool-blur').click();assert.equal(u.api.paletteState,'controls');assert.equal(n('blur-controls').hidden,false);assert.equal(n('fill-controls').hidden,true);assert.equal(n('size-control').hidden,false);
  await n('show-tools').click();await n('tool-fill').click();assert.equal(n('fill-controls').hidden,false);assert.equal(n('blur-controls').hidden,true);assert.equal(n('size-control').hidden,true);
  u.api.close();

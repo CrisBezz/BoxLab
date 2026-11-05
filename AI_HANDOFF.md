@@ -1,14 +1,14 @@
-## Current build — .1076 opacity double-sided preview — 5 November 2026
+# Current build — .1077 compact Paint and four-channel strokes — 5 November 2026
 
-.1075 opacity authoring received a user PASS. Follow-up found committed opacity-painted objects appeared one-sided, hiding the rear-facing interior through transparent areas. The existing committed preview surface in `src/paint-target.js` now switches its lit material to `THREE.DoubleSide` while an opacity alphaMap is active, and restores `THREE.FrontSide` when opacity is removed. The original scalar preview, opacity texture, alpha blending, depth-write behavior and disposal owner remain in use; no geometry is duplicated or made hollow.
+User reports `.1076` opacity interior preview PASS. Keep two-sided opacity preview protected alongside `.1075` opacity authoring and the prior device PASSes.
 
-Release is `0.36.18.1076`. Scope is only committed opacity preview sidedness. Full project, imported object, materials and non-opacity behavior remain unchanged. Native iPad/Safari check: paint transparent areas into a BoxLab-native UV object, orbit to view interior back faces, then clear/remove opacity and confirm normal one-sided rendering returns. `.1076` device acceptance is pending. Protect `.1075` opacity authoring PASS and prior `.1074`, `.1071`, `.1070` device PASSes.
+`.1077` shortens the Paint panel: Roughness, Metalness and Opacity controls use directional value sliders; extended channel and brush-tip explanations move into control tooltips and the existing Paint help button. The optional Colour-stroke set now includes Opacity with Roughness and Metalness. Selecting Opacity under “Also paint” reveals its value slider; Brush, Fill, Eraser, Smudge, Blur and Sharpen use the original multi-map transaction, preview, stencil and history owners. One Undo restores all maps together. Imported-object maps remain protected.
 
-Full local regression: 3161/3161 PASS (114.2 s); focused opacity/material/release coverage: 20/20 PASS. Hosted Topology run `41972658077` / job `127064233246` and Pages run `41972657527` passed. Live marker, shell, opacity preview module and its loader chain byte-match runtime commit `f96ec0627dc5711b23f3e1ba741a282f5967bc04`. Standing direct-main and Pages publication authorization remains active.
+Release `0.36.18.1077`. Code changes are limited to the existing viewport Paint UI and painter core, plus their release/cache pins and runtime contracts. Full local regression: 3161/3161 PASS. Native iPad/Safari validation remains pending. Check compact labels/tooltips, all four channels in one stroke, opacity slider visibility, undo/redo, and Fill/Brush re-entry. Standing direct-main and Pages publication authorization remains active.
 
 ## Current protected device PASSes — 5 November 2026
 
-User reports .1075 opacity authoring PASS. Preserve opacity channel authoring, project persistence and existing paint workflow. User also reports the committed opacity view is one-sided; .1076 repairs this and awaits hands-on validation. Preserve earlier .1074 Pencil onset/pressure, .1071 whole-image adjustment and .1070 proportional image import PASSes.
+User reports `.1076` two-sided opacity preview PASS; `.1075` opacity authoring PASS; `.1074` Pencil onset and pressure controls PASS; `.1071` whole-image adjustments PASS; `.1070` proportional image import PASS. Preserve each behavior.
 
 ## .1074 — brush controls and Pencil onset — 4 November 2026
 

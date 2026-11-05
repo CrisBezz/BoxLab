@@ -18905,3 +18905,14 @@ User reports .1075 opacity authoring PASS, then found committed opacity-painted 
 Focused tests cover both-sided material state with opacity, front-only restoration without opacity, existing live opacity/project save path, color/metal shadows, current release markers/pins and canonical shell loaders: 20 PASS / 0 FAIL. Full regression: 3161 PASS / 0 FAIL (114.2 s). User check is pending: paint transparent areas, orbit to inspect rear-facing inside surfaces, Done/reopen, restore opacity and confirm regular surfaces remain unchanged. Protect the .1075 opacity authoring PASS; do not infer .1076 device acceptance.
 
 Deployment proof: runtime commit `f96ec0627dc5711b23f3e1ba741a282f5967bc04`; full hosted Topology run `41972658077` / job `127064233246` passed; Pages run `41972657527` succeeded. Live release marker, shell and opacity preview/loaders byte-match local main.
+
+
+## .1077 — compact Paint controls and Colour/Roughness/Metalness/Opacity strokes — 5 November 2026
+
+User reports `.1076` opacity double-sided preview PASS. Request: shorten Paint UI, move explanations into tooltips, make scalar controls intuitive, and paint opacity with Colour/Roughness/Metalness in one stroke.
+
+Audit found one existing multi-channel owner in `src/viewport-paint-core.js`: Roughness and Metalness already shared Brush/Fill/Eraser/Smudge/Blur/Sharpen, the material preview, masks and one `commitMulti` checkpoint. Extended that same channel list to Opacity, selecting its configured slider byte and passing its scratch layer into the existing alpha-map preview. No second painter, resource schema or history owner. The `.1075` opacity owner remains authoritative.
+
+Paint UI replaces “Paint value” text with Less/More rough, Less/More metal, and Transparent/Opaque endpoints. Opacity value controls appear only when Opacity is selected in “Also paint” or is the primary channel. “Also paint” includes all three scalar maps with per-channel tooltips; long alpha tip text moved behind a tooltip and help button. Existing brush-size/pressure behavior and imported-object UV protection remain unchanged.
+
+Release `.1077`; refresh shell, viewport Paint, nested painter and release-loader pins. Added atomic four-map Brush and UI checks; expanded the channel checkbox coverage. Focused Paint/opacity/all-tools regression: 21/21 PASS. Full suite: 3161/3161 PASS (112.9 s). Hosted CI/Pages and byte-for-byte live checks pending. `.1076` and earlier user PASSes remain protected. Native check: combined four-channel stroke, preview, one-step Undo/Redo, opacity toggle/value, other Paint tools and Done/reopen.
