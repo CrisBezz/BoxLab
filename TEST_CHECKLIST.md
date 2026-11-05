@@ -8,7 +8,7 @@ Use a BoxLab-created mesh with native UVs and Apple Pencil.
 4. Turn on Colour, Roughness, Metalness and Opacity together; verify the same onset behavior, updated map previews and one-step Undo/Redo.
 5. Done/reopen Paint. Confirm `.1077` compact controls and `.1076` transparent interior preview remain correct; fingers continue to orbit/navigate.
 
-Regression specifically covers high Pencil-down pressure followed by low-pressure coalesced move events without `pointerType`, for both brushes and all four maps. Focused onset/contact/channel checks: 14/14 PASS. Full local suite: 3162/3162 PASS / 0 FAIL. Hosted validation pending.
+Regression specifically covers high Pencil-down pressure followed by low-pressure coalesced move events without `pointerType`, for both brushes and all four maps. Focused onset/contact/channel checks: 14/14 PASS. Full local suite: 3162/3162 PASS / 0 FAIL. Hosted Topology run 41995563177 passed 3162/3162; Pages run 41995562728 succeeded. Live `.1078` marker and runtime bytes verified.
 
 ## Protected device results — 4 November 2026
 

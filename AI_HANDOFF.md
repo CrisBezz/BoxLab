@@ -6,7 +6,7 @@ User reports `.1077` PASS for compact Paint and four-channel strokes, with a rem
 
 Audit traced the residual start blob to coalesced Pencil move samples: some omit `pointerType`, so the Paint adapter did not update pressure and reused the high Pencil-down value. The existing active pointer contact now owns the pointer type and supplies it when decoding every coalesced sample. Brush path, pressure mapping, tap-on-release, color kernel and multi-map transaction remain unchanged. Regression compares a high-pressure down plus low-pressure coalesced samples lacking `pointerType` against a low-pressure reference for both BoxLab and Klecks across Colour, Roughness, Metalness and Opacity.
 
-Release `0.36.18.1078`. Full local regression: 3162/3162 PASS / 0 FAIL (129.8 s); focused onset/contact/channel checks 14/14 PASS. Hosted Topology and Pages verification are pending. Native iPad/Safari validation remains pending. Check fine-pressure lines, firm-to-light onset, deliberate taps, both brush paths and all four channels. Standing direct-main and Pages publication authorization remains active.
+Release `0.36.18.1078`. Full local regression: 3162/3162 PASS / 0 FAIL (129.8 s); focused onset/contact/channel checks 14/14 PASS. Hosted Topology run 41995563177 passed 3162/3162; Pages run 41995562728 succeeded. Live `.1078` version marker, `index.html`, `viewport-paint.js`, `drawer-ui.js`, `face-workflow-layout.js` and `shell-comparison.js` match their local release bytes. Native iPad/Safari validation remains pending. Check fine-pressure lines, firm-to-light onset, deliberate taps, both brush paths and all four channels. Standing direct-main and Pages publication authorization remains active.
 
 ## Current protected device PASSes — 5 November 2026
 

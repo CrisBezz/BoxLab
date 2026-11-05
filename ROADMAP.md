@@ -5,7 +5,7 @@
 - `.1077` compact Paint menu and combined Colour/Roughness/Metalness/Opacity strokes received user PASS; preserve them.
 - Fixed a stale-pressure fallback for coalesced Pencil move samples that omit `pointerType`: the active Pencil contact type is now passed through to each sample before pressure is read.
 - The existing pressure-dynamics settings, two brush paths, intentional tap behavior, and atomic four-map stroke/undo path stay in place.
-- Focused onset/contact/channel checks: 14/14 PASS. Full local regression: 3162/3162 PASS. Hosted validation pending.
+- Focused onset/contact/channel checks: 14/14 PASS. Full local regression: 3162/3162 PASS. Hosted Topology run 41995563177 passed 3162/3162; Pages run 41995562728 succeeded. Live `.1078` marker and runtime bytes verified.
 
 ## Next
 
