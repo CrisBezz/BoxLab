@@ -8,7 +8,7 @@ Use a BoxLab-created mesh with native UVs.
 4. Repeat with Fill, Eraser, Smudge, Blur and Sharpen where applicable. Confirm the extra channel controls stay available and each action remains one undo step.
 5. Done/reopen UV Paint; verify map previews and values persist. Confirm fingers still navigate and Pencil paints.
 
-Automated Paint/Opacity/channel UI checks pass; full local regression is 3161/3161 PASS. Native iPad/Safari acceptance remains pending.
+Automated Paint/Opacity/channel UI checks pass; full local and hosted regression is 3161/3161 PASS / 0 FAIL (Topology `41977607206`, job `127080007955`). Pages `41977606852` succeeded, and live release/Paint files byte-match the runtime commit. Native iPad/Safari acceptance remains pending.
 
 ## Protected device results — 4 November 2026
 

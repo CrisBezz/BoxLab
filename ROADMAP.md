@@ -6,7 +6,7 @@
 - “Also paint” can include Roughness, Metalness and Opacity in a Colour stroke. The Opacity value slider appears when that map is selected.
 - Combined maps use the existing Paint stroke, lit material preview, mask stencil, atomic scene history and Save/Open owners. One Undo/Redo applies to the full stroke.
 - `.1076` two-sided opacity preview PASS and `.1075` opacity authoring PASS remain protected.
-- Full local regression: 3161/3161 PASS. Native iPad/Safari check remains pending.
+- Full local and hosted regression: 3161/3161 PASS / 0 FAIL (Topology `41977607206`, job `127080007955`). Pages `41977606852` succeeded; the live version marker and changed runtime files byte-match commit `7e8dea8c3d7cd596fd8fc9ff7fe6d8b2baf5e43f`. Native iPad/Safari check remains pending.
 
 ## Next
 
