@@ -5,7 +5,7 @@
 - Opacity-painted committed surfaces now render both face orientations while an opacity map is active, letting transparent areas reveal rear-facing interior faces.
 - Clearing/removing the opacity map restores front-face-only material rendering. No geometry or paint data is changed.
 - `.1075` opacity authoring received user PASS; this build addresses its one-sided committed preview.
-- Focused opacity, material-preview and release/cache checks pass. Full regression and publication proof will be recorded in the handoff after completion. Native iPad/Safari check remains pending.
+- Focused opacity, material-preview and release/cache checks pass. Full local regression passed 3161/3161; hosted Topology regression run 41972658077 passed and Pages run 41972657527 succeeded. Live release marker and affected Paint module chain byte-match main. Native iPad/Safari check remains pending.
 
 ## Next
 

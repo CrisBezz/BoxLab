@@ -7,7 +7,7 @@ Use a BoxLab-created mesh with valid native UVs.
 3. Tap Done and reopen UV Paint. Confirm the two-sided view remains. Remove/clear opacity and verify regular front-face-only rendering returns.
 4. Check a nearby non-opacity object/material still looks unchanged.
 
-Automated .1076 material and release-owner tests pass (20 focused checks); full regression is 3161/3161 PASS. Deployment and hosted CI are pending. User reports .1075 opacity authoring PASS. Earlier protected PASSes remain .1074 Pencil onset/pressure, .1071 whole-image adjustments, and .1070 proportional image import.
+Automated .1076 material and release-owner tests pass (20 focused checks); full local regression is 3161/3161 PASS. Hosted Topology run 41972658077 passed and Pages run 41972657527 succeeded. Native iPad/Safari check remains pending. User reports .1075 opacity authoring PASS. Earlier protected PASSes remain .1074 Pencil onset/pressure, .1071 whole-image adjustments, and .1070 proportional image import.
 
 ## Protected device results — 4 November 2026
 

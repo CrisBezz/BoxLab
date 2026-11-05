@@ -4,6 +4,8 @@
 
 Release is `0.36.18.1076`. Scope is only committed opacity preview sidedness. Full project, imported object, materials and non-opacity behavior remain unchanged. Native iPad/Safari check: paint transparent areas into a BoxLab-native UV object, orbit to view interior back faces, then clear/remove opacity and confirm normal one-sided rendering returns. `.1076` device acceptance is pending. Protect `.1075` opacity authoring PASS and prior `.1074`, `.1071`, `.1070` device PASSes.
 
+Full local regression: 3161/3161 PASS (114.2 s); focused opacity/material/release coverage: 20/20 PASS. Hosted Topology run `41972658077` / job `127064233246` and Pages run `41972657527` passed. Live marker, shell, opacity preview module and its loader chain byte-match runtime commit `f96ec0627dc5711b23f3e1ba741a282f5967bc04`. Standing direct-main and Pages publication authorization remains active.
+
 ## Current protected device PASSes — 5 November 2026
 
 User reports .1075 opacity authoring PASS. Preserve opacity channel authoring, project persistence and existing paint workflow. User also reports the committed opacity view is one-sided; .1076 repairs this and awaits hands-on validation. Preserve earlier .1074 Pencil onset/pressure, .1071 whole-image adjustment and .1070 proportional image import PASSes.
