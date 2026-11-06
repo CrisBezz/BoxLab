@@ -22,6 +22,8 @@ import {createProjectMetalnessPool} from './project-metalness-resources.js?v=0.3
 const scalarOwners={opacity:{field:'opacityPaint',capture:captureOpacityResource,copy:copyOpacityResource,pool:createProjectOpacityPool,initial:255,label:'Opacity'},roughness:{field:'roughnessPaint',capture:captureRoughnessResource,copy:copyRoughnessResource,pool:createProjectRoughnessPool,initial:255,label:'Roughness'},metalness:{field:'metalnessPaint',capture:captureMetalnessResource,copy:copyMetalnessResource,pool:createProjectMetalnessPool,initial:0,label:'Metalness'}};
 const PEN_ONSET_PRESSURE_SAMPLES=8;
 const PEN_ONSET_MAX_START_RADIUS=8;
+const PEN_ONSET_UNSETTLED_START_RADIUS=2;
+const PEN_ONSET_PRESSURE_DROP_RATIO=.75;
 // Scene history, selection, camera and body lifetime remain with the existing app.
 export function createViewportPainter({target,activeId=()=>target()?.id,body,owner,camera,controls,scene,checkpoint,onClose=()=>{},refresh=()=>{},allowed=()=>true,objects=()=>[target()],newColourSize=512,setTimer=setTimeout,clearTimer=clearTimeout,onDiagnostic=()=>{}}){
  if(![512,1024].includes(newColourSize))throw Error('New colour texture must be 512 or 1024');
@@ -114,11 +116,17 @@ export function createViewportPainter({target,activeId=()=>target()?.id,body,own
   function startPenPath(active,next,settleReason='sample-window'){
   const {first,origin,pressured,samples=[]}=active.penStart;
   const pressure=Number.isFinite(active.penStart.minPressure)?active.penStart.minPressure:Math.min(first.pressure,next.pressure);
-   diagnostic('onset-confirm',{downPressure:origin.pressure,firstMovePressure:first.pressure,confirmPressure:next.pressure,resolvedPressure:pressure,initialRadius:Math.max(.35,active.settings.radius*(active.settings.pressure?pressure:1)),pressureSamples:active.penStart.pressureSamples,pressureSettleSamples:PEN_ONSET_PRESSURE_SAMPLES,pressureSettleRadius:PEN_ONSET_MAX_START_RADIUS,settleReason,originUsed:pressured,firstMove:{x:first.x,y:first.y},confirm:{x:next.x,y:next.y}});
+  const settings=active.settings,baseline=pressured&&Number.isFinite(origin.pressure)&&origin.pressure>0?origin.pressure:first.pressure;
+  const pressureDropRatio=baseline>0?pressure/baseline:1;
+  const unsettledAtWindow=settleReason==='sample-window'&&active.penStart.pressureSamples>=PEN_ONSET_PRESSURE_SAMPLES&&settings.pressure&&pressureDropRatio<PEN_ONSET_PRESSURE_DROP_RATIO;
+  const appliedPressure=unsettledAtWindow?Math.min(pressure,PEN_ONSET_UNSETTLED_START_RADIUS/Math.max(1,settings.radius)):pressure;
+  const observedRadius=Math.max(.35,settings.radius*(settings.pressure?pressure:1));
+  const initialRadius=Math.max(.35,settings.radius*(settings.pressure?appliedPressure:1));
+  diagnostic('onset-confirm',{downPressure:origin.pressure,firstMovePressure:first.pressure,confirmPressure:next.pressure,resolvedPressure:pressure,appliedPressure,pressureDropRatio:Number(pressureDropRatio.toFixed(4)),pressureClamped:unsettledAtWindow,observedRadius,initialRadius,pressureSamples:active.penStart.pressureSamples,pressureSettleSamples:PEN_ONSET_PRESSURE_SAMPLES,pressureSettleRadius:PEN_ONSET_MAX_START_RADIUS,pressureClampRadius:PEN_ONSET_UNSETTLED_START_RADIUS,pressureDropRatioRequired:PEN_ONSET_PRESSURE_DROP_RATIO,settleReason,originUsed:pressured,firstMove:{x:first.x,y:first.y},confirm:{x:next.x,y:next.y}});
   active.penStart=null;
   active.waitingPressure=false;
-  if(pressured){active.path.start({...origin,pressure});for(const sample of samples)active.path.move({...sample,pressure});}
-  else{active.path.start({...first,pressure});for(const sample of samples.slice(1))active.path.move({...sample,pressure});}
+  if(pressured){active.path.start({...origin,pressure:appliedPressure});for(const sample of samples)active.path.move({...sample,pressure:appliedPressure});}
+  else{active.path.start({...first,pressure:appliedPressure});for(const sample of samples.slice(1))active.path.move({...sample,pressure:appliedPressure});}
  }
  function move(p){if(!stroke)return;if(!current()){close();return;}if(stroke.fill){const dx=p.x-stroke.start.x,dy=p.y-stroke.start.y;if(!stroke.held){if(Math.hypot(dx,dy)>8)cancel();return;}stroke.dx=dx;stroke.dy=dy;renderFill(stroke);return;}try{if(stroke.penStart){
    const pending=stroke.penStart;
@@ -141,7 +149,10 @@ export function createViewportPainter({target,activeId=()=>target()?.id,body,own
    }
    const lastSample=pending.samples.at(-1);if(!lastSample||p.x!==lastSample.x||p.y!==lastSample.y)pending.samples.push({...p});
     const initialRadius=stroke.settings.radius*(stroke.settings.pressure?pending.minPressure:1);
-    const settleReason=!stroke.settings.pressure?'fixed-size':initialRadius<=PEN_ONSET_MAX_START_RADIUS?'radius-safe':pending.pressureSamples>=PEN_ONSET_PRESSURE_SAMPLES?'sample-window':null;
+    const pressureDropRatio=pending.origin.pressure>0?pending.minPressure/pending.origin.pressure:1;
+    const stillSettling=stroke.settings.pressure&&pressureDropRatio<PEN_ONSET_PRESSURE_DROP_RATIO;
+    const safeRadius=stillSettling?PEN_ONSET_UNSETTLED_START_RADIUS:PEN_ONSET_MAX_START_RADIUS;
+    const settleReason=!stroke.settings.pressure?'fixed-size':initialRadius<=safeRadius?'radius-safe':pending.pressureSamples>=PEN_ONSET_PRESSURE_SAMPLES?'sample-window':null;
     if(settleReason)startPenPath(stroke,p,settleReason);
    return;
   }if(stroke.waitingPressure){stroke.lastInput={...p};if(!(p.pressure>0))return;stroke.waitingPressure=false;stroke.path.cancel();stroke.path=stroke.makePath();stroke.path.start(p);return;}if(stroke.smudge||stroke.large){session.layer.resetWorkBudget();for(const layer of Object.values(stroke.scalarLayers||{}))layer.resetWorkBudget();if(stroke.path.stats.limited){stroke.path.cancel();stroke.path=stroke.makePath();stroke.path.start(stroke.lastInput);}}stroke.path.move(p);stroke.lastInput={...p};}catch(error){cancel();throw error;}}

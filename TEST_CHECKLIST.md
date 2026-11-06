@@ -1,12 +1,12 @@
-## .1084 Pencil startup repair — pending user check
+## .1085 Pencil startup blob correction — pending user check
 
-`.1083` failed on device: Brush did not create a stroke. The local actual-UI reproduction exposed `settings is not defined` during adaptive onset; `viewport-paint-core.js` read the `begin()` local from the separate `move()` closure. Store the unchanged active brush settings on the existing stroke transaction and read them through that owner. No onset thresholds or pressure behavior changed.
+The live `.1084` creates strokes but still produces large startup blobs. The supplied trace shows an early pressure plateau: `.08` down pressure falls only to `.0567` after eight samples (`14.51px` radius), or to `.0222` after eleven (`5.67px`), then later dabs fall below `1.62px`.
 
-Gesture Debug now reports surface-hit, begin/move errors, accepted start, onset decision, dabs/hits, stroke finish/commit channels and pointer finish. This distinguishes miss, cancellation, no ink and successful commit. It remains opt-in and uses the existing debug owner.
+`.1085` keeps the existing `8px` early start for stable pressure. When pressure has dropped by at least 25% from positive down pressure, it waits for a `2px` start or caps only the buffered segment at `2px` when the sample window expires; stable pressure remains uncapped. The existing stroke owner and later live pressure are preserved. Gesture Debug records observed versus applied pressure/radius and clamp state.
 
-Focused checks: 11 PASS / 0 FAIL, including both Brush and Klecks pressure startup, combined Colour/Roughness/Metalness/Opacity, stationary taps, zero-pressure cancellation, unpressured travel and actual UI trace. Full local regression: 3,164 PASS / 0 FAIL. Hosted Topology and Pages publication pending; native iPad/Safari acceptance pending.
+Focused checks: 13 PASS / 0 FAIL across both startup behaviors plus existing actual UI, four-channel, tap, cancellation and pressure regressions. Full local suite: 3,166 PASS / 0 FAIL. Hosted release validation pending.
 
-Hands-on check: open UV Paint and draw one Colour stroke, then repeat with Roughness, Metalness and Opacity enabled. Confirm visible paint, Undo/Redo, and that a deliberate tap still paints on lift. If Brush still fails, use View → Gesture Debug → Capture/Copy report; `.1084` identifies the exact stage that stopped.
+Hands-on check: in UV Paint with Pencil Size on and Size 256, draw several slow-light strokes and compare each starting mark with the rest of its line. Confirm a deliberate tap still paints on lift, stable firm pressure still produces a firm stroke, and Undo/Redo works. Repeat with Colour/Roughness/Metalness/Opacity enabled. If a blob remains, use View → Gesture Debug → Capture/Copy report; inspect `observedRadius`, `initialRadius`, `pressureClamped` and subsequent dab radii.
 
 ## Protected device results — 4 November 2026
 

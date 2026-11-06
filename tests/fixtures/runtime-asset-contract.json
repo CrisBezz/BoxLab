@@ -1,5 +1,5 @@
 {
-  "baseline": "Reviewed .1084: active Pencil settings stay attached to the stroke through onset settling; Gesture Debug records surface hit, start, dabs and commit result.",
+  "baseline": "Reviewed .1085: stable pressure retains the 8px safe-start behavior; if minimum pressure drops at least 25% from a positive Pencil-down value, keep settling to 2px or cap only the buffered onset at 2px when the sample window expires. Diagnostics distinguish observed and applied onset size.",
   "references": [
     {
       "owner": "index.html",
@@ -161,9 +161,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1084",
+      "url": "./src/drawer-ui.js?v=0.36.18.1085",
       "target": "src/drawer-ui.js",
-      "sha256": "1b81e309f05a6283bc2b3d2728cab8a1f6d9774a793c9b48ea70d0d967cb335e"
+      "sha256": "1e3fa32acc44d11c2b962b80e87d7fda520e31b421ec527284cec579a83b997d"
     },
     {
       "owner": "index.html",
@@ -378,7 +378,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1084",
+      "url": "./src/release-version.js?v=0.36.18.1085",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -864,9 +864,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1084",
+      "url": "./face-workflow-layout.js?v=0.36.18.1085",
       "target": "src/face-workflow-layout.js",
-      "sha256": "d7c1601b9dfa3bdfa4631f91cc3ee103a1d7311e64e799804e4ff323d8d01f9e"
+      "sha256": "4330ca8544677c4f971f20bd36c70d5232bca61046c1b0dae36721a564bb5662"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1361,7 +1361,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1084",
+      "url": "./release-version.js?v=0.36.18.1085",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -2456,15 +2456,15 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/viewport-paint.js?v=0.36.18.1084",
+      "url": "./src/viewport-paint.js?v=0.36.18.1085",
       "target": "src/viewport-paint.js",
-      "sha256": "244aa41d450ece8e194c050da0a40ccc6f7d864deddd87909c63ce902ed1c670"
+      "sha256": "9efafdac2797b350cc3c5e297986a91e9fae43288ede10dcd2e13e2ea7f2e586"
     },
     {
       "owner": "src/viewport-paint.js",
-      "url": "./viewport-paint-core.js?v=0.36.18.1084",
+      "url": "./viewport-paint-core.js?v=0.36.18.1085",
       "target": "src/viewport-paint-core.js",
-      "sha256": "09fd4a4276a7c7a8848b5330d1d5ce4db2980158725f322f8eaa323992d6ffc3"
+      "sha256": "f629523c48aa390a6e5c8a40a247718291a4b264fec228ed5c4dac596bf9b213"
     },
     {
       "owner": "src/viewport-paint.js",
@@ -3326,9 +3326,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1084",
+      "url": "./src/shell-comparison.js?v=0.36.18.1085",
       "target": "src/shell-comparison.js",
-      "sha256": "2e7e3f924d12bcae15f1229db79aed3b0915dfa947e0b2d9a7a0a4636244da64"
+      "sha256": "1fcab4a9a6dde58a1c7ca3ab897c240aa9ab9dad1beb6399d4044c24dd82b07a"
     },
     {
       "owner": "src/main.js",
