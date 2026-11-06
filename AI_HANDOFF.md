@@ -4,7 +4,7 @@
 
 Build `.1086` adds authored opacity export to the existing GLB paint pipeline. It snapshots the original opacity R8 resource, checks its native Base UV binding, and writes alpha into the standard glTF base-colour RGBA PNG; opacity-only export uses white RGB. The GLB material is `BLEND` and double-sided so transparent faces reveal the back surfaces, matching the accepted opacity preview. A lower-resolution alpha source is linearly resampled only if paired with 1024 colour; current authored opacity is 512 × 512. Source resources are unchanged. NOMAD and OBJ retain their explicit opacity-export refusals. No duplicate painter, model kernel, or exporter was introduced.
 
-Focused GLB/export/PNG checks and full regression results are recorded in DEV_HISTORY.md. Release `.1086` is published from main and awaits the short native export check below. Do not treat local GLB-loader validation as Nomad/device acceptance.
+Focused GLB/export/PNG checks: 8 PASS / 0 FAIL; full local regression: 3,168 PASS / 0 FAIL. Commit `f9cbff5470e2d690095c015dd02fd15730653550` is on `main`; Pages serves `.1086`. Live version, index, exporter, PNG/paint modules, Nomad export modules, shell and drawer/face layout assets byte-match the release tree. GitHub status returned no checks, so no hosted suite result is claimed. Native Nomad/device acceptance remains pending. Do not treat local GLB-loader validation as device acceptance.
 
 ## Current protected device PASSes — 6 November 2026
 

@@ -19006,3 +19006,8 @@ The file GLB export status reports authored opacity maps. OBJ and NOMAD preserve
 Focused `paint-export-901` suite: 8 PASS / 0 FAIL, including exact PNG alpha/color bytes, opacity-only white RGB, resolution handling, actual GLB JSON/loader transparency and double-sided material, source immutability, and NOMAD refusal. Current release/asset-pin checks: 9 PASS / 0 FAIL. Full local regression: 3,168 PASS / 0 FAIL in 149.2 seconds. `git diff --check` is clean. Native iPad → Nomad export acceptance is pending.
 
 Hands-on check: combined Colour+Opacity stroke; Done/reopen/redraw; export GLB and inspect the transparent region and rear faces in Nomad. Export opacity-only GLB and check transparency. Do not retest OBJ/NOMAD opacity as a success path; their warnings remain expected. After PASS, resume imported NOM/GLB UV paint as the next roadmap item.
+
+
+## .1086 publication and live asset verification — 6 November 2026
+
+Runtime commit `f9cbff5470e2d690095c015dd02fd15730653550` is on `main`, tree `0648b21457d5f60f10e3dc926a7ede41f2edf76c`; checked-out source matches that tree. Pages serves `version.json` `.1086`. Live SHA-256 exactly matches local for version.json, index.html, export-as-panel.js, paint-export.js, nomad-scalar-png.js, nomad-packed-maps.js, nomad-export-core.js, shell-comparison.js, drawer-ui.js and face-workflow-layout.js. GitHub combined status returned no checks; no hosted test result is claimed. Full local regression is 3,168 PASS / 0 FAIL; native iPad/Nomad acceptance remains pending.

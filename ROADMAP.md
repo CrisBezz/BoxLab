@@ -5,7 +5,7 @@
 - `.1085` Pencil Paint PASS is protected. The user also passed the Done → reopen Paint → draw smoke check.
 - `.1086` exports authored opacity from the existing native 512 × 512 R8 resource through the existing GLB paint exporter. It validates the original UV binding, combines opacity into base-colour RGBA, sets standard glTF `BLEND`, and enables double-sided display. Opacity-only GLBs use white RGB. Source paint data is snapshotted and unchanged.
 - NOMAD and OBJ still refuse authored opacity with their existing preservation warnings. No parallel export or paint owner was introduced.
-- Focused and full local validation, plus publication state, are in DEV_HISTORY.md. Native Nomad acceptance remains pending.
+- Focused: 8 PASS / 0 FAIL; full local suite: 3,168 PASS / 0 FAIL. Published commit `f9cbff5470e2d690095c015dd02fd15730653550`; Pages reports `.1086` and changed runtime assets byte-match the release tree. Native Nomad acceptance remains pending.
 
 ## Next
 

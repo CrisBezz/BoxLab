@@ -10,7 +10,7 @@ The `.1085` Pencil/combined-channel acceptance is protected. User also reports P
 - [ ] Export an opacity-only object and check that GLB retains the transparent area.
 - [ ] Reply PASS or FAIL. A PASS becomes protected; report any format/import difference.
 
-Local focused tests verify PNG alpha bytes, opacity-only white RGB, GLB `BLEND`/double-sided material, loader transparency, source immutability and continued NOMAD refusal. They do not replace the native export check.
+Build `.1086` is published. Local focused tests verify PNG alpha bytes, opacity-only white RGB, GLB `BLEND`/double-sided material, loader transparency, source immutability and continued NOMAD refusal. Full local suite: 3,168 PASS / 0 FAIL. These checks do not replace the native export check.
 
 ## .1085 — Pencil Paint — protected PASS
 
