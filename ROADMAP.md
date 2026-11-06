@@ -5,14 +5,13 @@
 - `.1084` restored stroke creation; device feedback found startup blobs remain.
 - The trace shows early `0.08` pressure settling to `.0567`/`.0222` only after the eight-sample limit or eleven samples; later dabs reach `.87–1.62px` while the initial radius was `5.67–14.51px`.
 - `.1085` preserves the `8px` immediate-safe start for stable pressure. If minimum pressure drops at least 25% from positive Pencil-down pressure, it waits for a `2px` safe radius or clamps only the buffered onset to `2px` if the sample window expires. Stable pressure sizing and later live dabs remain unchanged.
-- Gesture Debug reports observed/applied onset pressure and radius plus clamp state. Focused regression: 13 PASS / 0 FAIL. Full local suite: 3,166 PASS / 0 FAIL. Hosted validation and native device acceptance pending.
+- Gesture Debug reports observed/applied onset pressure and radius plus clamp state. Focused regression: 13 PASS / 0 FAIL. Full local suite: 3,166 PASS / 0 FAIL. `.1085` is published on `main` and Pages; no hosted status check was returned. Native device acceptance pending.
 
 ## Next
 
-1. Complete full regression and release validation; publish `.1085` to main and Pages.
-2. On iPad, check slow-light Size 256 strokes for a clean start and stable firm-pressure strokes for unchanged size; test tap-on-lift, Undo/Redo and all four channels.
-3. If a blob remains, capture Gesture Debug and compare `observedRadius`, `initialRadius`, `pressureClamped` and later dabs.
-4. Preserve `.1077` compact Paint/four-channel strokes and `.1076` two-sided opacity PASSes. Imported NOM/GLB UV painting and opacity export remain separate work.
+1. On iPad, check slow-light Size 256 strokes for a clean start and stable firm-pressure strokes for unchanged size; test tap-on-lift, Undo/Redo and all four channels.
+2. If a blob remains, capture Gesture Debug and compare `observedRadius`, `initialRadius`, `pressureClamped` and later dabs before changing the onset model again.
+3. Preserve `.1077` compact Paint/four-channel strokes and `.1076` two-sided opacity PASSes. Imported NOM/GLB UV painting and opacity export remain separate work.
 
 ## Protected device results — 4 November 2026
 

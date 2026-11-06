@@ -4,7 +4,7 @@ The live `.1084` creates strokes but still produces large startup blobs. The sup
 
 `.1085` keeps the existing `8px` early start for stable pressure. When pressure has dropped by at least 25% from positive down pressure, it waits for a `2px` start or caps only the buffered segment at `2px` when the sample window expires; stable pressure remains uncapped. The existing stroke owner and later live pressure are preserved. Gesture Debug records observed versus applied pressure/radius and clamp state.
 
-Focused checks: 13 PASS / 0 FAIL across both startup behaviors plus existing actual UI, four-channel, tap, cancellation and pressure regressions. Full local suite: 3,166 PASS / 0 FAIL. Hosted release validation pending.
+Focused checks: 13 PASS / 0 FAIL across both startup behaviors plus existing actual UI, four-channel, tap, cancellation and pressure regressions. Full local suite: 3,166 PASS / 0 FAIL. Pages marker and changed runtime assets are verified against `main`; GitHub status returned no hosted check. Native blob-free acceptance remains pending.
 
 Hands-on check: in UV Paint with Pencil Size on and Size 256, draw several slow-light strokes and compare each starting mark with the rest of its line. Confirm a deliberate tap still paints on lift, stable firm pressure still produces a firm stroke, and Undo/Redo works. Repeat with Colour/Roughness/Metalness/Opacity enabled. If a blob remains, use View → Gesture Debug → Capture/Copy report; inspect `observedRadius`, `initialRadius`, `pressureClamped` and subsequent dab radii.
 
