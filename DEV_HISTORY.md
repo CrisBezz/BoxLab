@@ -19017,7 +19017,7 @@ Runtime commit `f9cbff5470e2d690095c015dd02fd15730653550` is on `main`, tree `06
 
 User reports PASS for the complete native gate: Colour and Opacity paint together; Done/reopen/redraw succeeds; exported GLB transparency and reverse-face visibility work in Nomad; and an opacity-only GLB retains transparency. Protect these results. This closes the `.1086` manual checklist.
 
-User asks how many more builds before WASM starts. Repo audit finds no WASM code or explicit milestone. Set `.1087` as the kickoff: audit existing performance-sensitive owners, record repeatable JavaScript baselines, choose one measured candidate and define pass thresholds. Target `.1088` for a narrow WASM A/B prototype only if the baseline identifies a worthwhile target. Keep the original JavaScript owner and require equivalent output plus a measured speed gain; measure memory separately before claiming larger-mesh capacity. Imported NOM/GLB UV painting is deferred behind the initial WASM feasibility work and is not a prerequisite.
+User asks how many more builds before WASM starts. Repo audit finds no WASM code or explicit milestone. Set `.1087` as the kickoff: audit existing performance-sensitive owners, record repeatable JavaScript baselines, choose one measured candidate and define pass thresholds. Target `.1088` for a narrow WASM A/B prototype only if the baseline identifies a worthwhile target. Keep the original JavaScript owner and require equivalent output plus a measured speed gain; measure memory separately before claiming larger-mesh capacity. That WASM-first proposal was superseded by the user’s next message; imported NOM/GLB UV painting now comes first.
 
 ## .1087 — reconnect imported textureless NOM/GLB UV meshes to Paint — 6 November 2026
 
