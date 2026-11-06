@@ -1,12 +1,25 @@
-## .1085 Pencil startup blob correction — pending user check
+## .1086 GLB opacity export — awaiting native check
 
-The live `.1084` creates strokes but still produces large startup blobs. The supplied trace shows an early pressure plateau: `.08` down pressure falls only to `.0567` after eight samples (`14.51px` radius), or to `.0222` after eleven (`5.67px`), then later dabs fall below `1.62px`.
+The `.1085` Pencil/combined-channel acceptance is protected. User also reports PASS for `Done → reopen UV Paint → draw again`.
 
-`.1085` keeps the existing `8px` early start for stable pressure. When pressure has dropped by at least 25% from positive down pressure, it waits for a `2px` start or caps only the buffered segment at `2px` when the sample window expires; stable pressure remains uncapped. The existing stroke owner and later live pressure are preserved. Gesture Debug records observed versus applied pressure/radius and clamp state.
+`.1086` carries the existing opacity R8 map into the GLB base-colour texture alpha. Colour-plus-opacity uses authored RGB; opacity-only uses white RGB. glTF material is blended and double-sided. NOMAD and OBJ opacity refusals remain expected.
 
-Focused checks: 13 PASS / 0 FAIL across both startup behaviors plus existing actual UI, four-channel, tap, cancellation and pressure regressions. Full local suite: 3,166 PASS / 0 FAIL. Pages marker and changed runtime assets are verified against `main`; GitHub status returned no hosted check. Native blob-free acceptance remains pending.
+- [ ] Paint Colour with Opacity enabled in Also paint; check both update in one stroke.
+- [ ] Done, reopen UV Paint, and draw again.
+- [ ] Export GLB; open in Nomad Sculpt and inspect colour, transparent region, and reverse faces through the surface.
+- [ ] Export an opacity-only object and check that GLB retains the transparent area.
+- [ ] Reply PASS or FAIL. A PASS becomes protected; report any format/import difference.
 
-Hands-on check: in UV Paint with Pencil Size on and Size 256, draw several slow-light strokes and compare each starting mark with the rest of its line. Confirm a deliberate tap still paints on lift, stable firm pressure still produces a firm stroke, and Undo/Redo works. Repeat with Colour/Roughness/Metalness/Opacity enabled. If a blob remains, use View → Gesture Debug → Capture/Copy report; inspect `observedRadius`, `initialRadius`, `pressureClamped` and subsequent dab radii.
+Local focused tests verify PNG alpha bytes, opacity-only white RGB, GLB `BLEND`/double-sided material, loader transparency, source immutability and continued NOMAD refusal. They do not replace the native export check.
+
+## .1085 — Pencil Paint — protected PASS
+
+- [x] Slow-light Pencil strokes start without oversized blobs; steady pressure retains the full brush size.
+- [x] Deliberate tap and Undo/Redo.
+- [x] Colour, Roughness, Metalness and Opacity paint in the same stroke.
+- [x] Done → reopen UV Paint → draw again smoke check.
+
+User confirms `.1085` PASS. Protect this acceptance and existing `.1077` compact Paint/four-channel, `.1076` two-sided opacity, `.1075` opacity authoring, `.1074` brush-controls, `.1071` image adjustments and `.1070` proportional image import PASSes.
 
 ## Protected device results — 4 November 2026
 

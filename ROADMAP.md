@@ -1,17 +1,21 @@
-# Current build: .1085 Pencil startup blob correction (6 November 2026)
+# Current build: .1086 GLB opacity texture export (6 November 2026)
 
-## Delivered for native checking
+## Delivered; native export acceptance pending
 
-- `.1084` restored stroke creation; device feedback found startup blobs remain.
-- The trace shows early `0.08` pressure settling to `.0567`/`.0222` only after the eight-sample limit or eleven samples; later dabs reach `.87–1.62px` while the initial radius was `5.67–14.51px`.
-- `.1085` preserves the `8px` immediate-safe start for stable pressure. If minimum pressure drops at least 25% from positive Pencil-down pressure, it waits for a `2px` safe radius or clamps only the buffered onset to `2px` if the sample window expires. Stable pressure sizing and later live dabs remain unchanged.
-- Gesture Debug reports observed/applied onset pressure and radius plus clamp state. Focused regression: 13 PASS / 0 FAIL. Full local suite: 3,166 PASS / 0 FAIL. `.1085` is published on `main` and Pages; no hosted status check was returned. Native device acceptance pending.
+- `.1085` Pencil Paint PASS is protected. The user also passed the Done → reopen Paint → draw smoke check.
+- `.1086` exports authored opacity from the existing native 512 × 512 R8 resource through the existing GLB paint exporter. It validates the original UV binding, combines opacity into base-colour RGBA, sets standard glTF `BLEND`, and enables double-sided display. Opacity-only GLBs use white RGB. Source paint data is snapshotted and unchanged.
+- NOMAD and OBJ still refuse authored opacity with their existing preservation warnings. No parallel export or paint owner was introduced.
+- Focused and full local validation, plus publication state, are in DEV_HISTORY.md. Native Nomad acceptance remains pending.
 
 ## Next
 
-1. On iPad, check slow-light Size 256 strokes for a clean start and stable firm-pressure strokes for unchanged size; test tap-on-lift, Undo/Redo and all four channels.
-2. If a blob remains, capture Gesture Debug and compare `observedRadius`, `initialRadius`, `pressureClamped` and later dabs before changing the onset model again.
-3. Preserve `.1077` compact Paint/four-channel strokes and `.1076` two-sided opacity PASSes. Imported NOM/GLB UV painting and opacity export remain separate work.
+1. On iPad, confirm a combined Colour + Opacity stroke survives Done/reopen/redraw, then export GLB and inspect its transparent area and reverse faces in Nomad.
+2. Check an opacity-only GLB has the expected transparent region. Report PASS or FAIL; record a PASS as protected.
+3. After this gate, resume the deferred import work: UV paint on imported NOM/GLB textures. NOMAD and OBJ opacity export remain separate format work.
+
+## Protected device results — 6 November 2026
+
+PASS `.1085` clean Pencil onset, pressure sizing, tap, Undo/Redo, four-channel stroke, and Done/reopen/redraw smoke. PASS `.1077` compact Paint/four-channel strokes, `.1076` two-sided opacity preview, `.1075` opacity authoring and `.1074` brush controls. Preserve these results.
 
 ## Protected device results — 4 November 2026
 

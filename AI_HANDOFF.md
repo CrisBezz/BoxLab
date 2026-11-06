@@ -1,16 +1,27 @@
-# Current build — .1085 Pencil startup blob correction — 6 November 2026
+# Current build — .1086 GLB opacity texture export — 6 November 2026
 
-`.1084` restored Pencil stroke creation after `.1083` failed with `settings is not defined`. The user tested the live `.1084`: painting now works, but strokes still begin with visible blobs. The attached Gesture Debug trace confirms the startup pressure was still unsettled when ink began. One stroke began at down pressure `.08`, minimum `.0567` after eight samples, and a reported initial radius of `14.51px` (`sample-window`). Another began at `.0222` / `5.67px` after eleven samples, then subsequent dabs fell to `.87–1.62px`.
+`.1085` is now protected: the user passed the clean-start Pencil strokes, pressure size, deliberate tap, Undo/Redo and combined Colour/Roughness/Metalness/Opacity stroke. The follow-up `Done → reopen UV Paint → draw again` smoke check also PASSed. Preserve this exact regression gate.
 
-`.1085` keeps the original painter and buffered onset. Stable pressure retains the existing `8px` immediate-safe path. When minimum pressure has dropped by at least 25% from positive Pencil-down pressure, the painter waits for a `2px` radius before early start; if the eight-sample window expires first, only the buffered startup segment is capped at `2px`. Stable intentional pressure remains unchanged. Later dabs resume the live pressure stream. Diagnostics distinguish observed radius/pressure from applied startup radius and report whether this evidence-based clamp ran. No second painter or input owner was added.
+Build `.1086` adds authored opacity export to the existing GLB paint pipeline. It snapshots the original opacity R8 resource, checks its native Base UV binding, and writes alpha into the standard glTF base-colour RGBA PNG; opacity-only export uses white RGB. The GLB material is `BLEND` and double-sided so transparent faces reveal the back surfaces, matching the accepted opacity preview. A lower-resolution alpha source is linearly resampled only if paired with 1024 colour; current authored opacity is 512 × 512. Source resources are unchanged. NOMAD and OBJ retain their explicit opacity-export refusals. No duplicate painter, model kernel, or exporter was introduced.
 
-Focused checks: 13 PASS / 0 FAIL across the `.1085` onset clamp and stable-pressure controls, actual UI stroke/finish diagnostics, `.1072` zero-pressure/no-bridge, `.1073/.1074` onset, and `.1078` coalesced four-channel painting. Full local regression: 3,166 PASS / 0 FAIL. Runtime commit `92c37a155e1d4780fcf7b17368acd693d923beb0` is on `main`; Pages reports `.1085`, and the shell, Paint modules, and refreshed drawer/face-layout loaders match the local source hashes. The GitHub combined-status query returned no checks, so no hosted suite result is claimed. Native confirmation of blob-free onset remains pending. `.1084` restored stroke creation but its blob behavior is a device FAIL, not protected.
+Focused GLB/export/PNG checks and full regression results are recorded in DEV_HISTORY.md. Release `.1086` is published from main and awaits the short native export check below. Do not treat local GLB-loader validation as Nomad/device acceptance.
 
-Protected device PASSes remain `.1077` compact Paint/four-channel strokes, `.1076` two-sided opacity preview, `.1075` opacity authoring and `.1074` brush controls. Preserve stable pressure sizing, deliberate taps, Undo/Redo and finger navigation. Standing direct-main and Pages publication authorization remains active.
+## Current protected device PASSes — 6 November 2026
 
-## Current protected device PASSes — 5 November 2026
+- `.1085`: clean Pencil onset, steady pressure sizing, tap, Undo/Redo, four-channel stroke, and Done/reopen/redraw smoke.
+- `.1077`: compact Paint controls and combined four-channel strokes.
+- `.1076`: two-sided opacity preview.
+- `.1075`: opacity authoring.
+- `.1074`: brush pressure controls.
+- `.1071` and `.1070`: image adjustments and proportional image import.
 
-User reports `.1077` Paint menu/four-channel strokes PASS; `.1076` two-sided opacity preview PASS; `.1075` opacity authoring PASS; `.1074` Pencil onset and pressure controls PASS; `.1071` whole-image adjustments PASS; `.1070` proportional image import PASS. Preserve each behavior.
+## .1086 hands-on check — awaiting user result
+
+1. In UV Paint, make a short Colour stroke with Opacity enabled in Also paint. Confirm the transparent area and colour are produced in the same stroke; Done, reopen Paint and draw once more.
+2. Export GLB and open it in Nomad Sculpt. Check the colour texture, transparent region, and visibility of the reverse faces through that region.
+3. Export an opacity-only stroke on a clean object and confirm GLB still contains a white base-colour texture with the authored transparency.
+
+Keep the test focused on GLB opacity. NOMAD and OBJ remain unsupported for authored opacity; their existing warnings are expected. Imported NOM/GLB UV painting remains a separate roadmap item.
 
 ## .1074 — brush controls and Pencil onset — 4 November 2026
 

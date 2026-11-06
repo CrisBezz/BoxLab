@@ -18991,3 +18991,18 @@ Runtime tree `c007fbc04d15c30a2214c5fd2ac067350a931a26` published to `main` at c
 ## .1085 native acceptance — protected PASS — 6 November 2026
 
 User confirms `.1085` Paint works without startup blobs. The tested workflow passed: slow-light Pencil strokes start cleanly; steady pressure retains full brush size; deliberate tap and Undo/Redo work; Colour, Roughness, Metalness and Opacity paint together. Protect the `.1085` onset repair and these Paint behaviors. Next build may proceed from current main; preserve `.1077` compact menu/four-channel, `.1076` two-sided opacity, `.1075` opacity authoring and `.1074` brush controls PASSes.
+
+
+## .1085 Done/reopen smoke — protected PASS — 6 November 2026
+
+After the full `.1085` native Pencil Paint PASS, user also confirms `Done → reopen UV Paint → draw again` passes. Protect this re-entry smoke with the onset, steady-pressure, tap, Undo/Redo and combined four-channel checks.
+
+## .1086 — export authored opacity in GLB — 6 November 2026
+
+The next narrow roadmap item was opacity export. Audit found the live paint exporter already snapshots Colour/Roughness/Metalness and the GLB writer already embeds lossless textures; native 512 × 512 opacity is an R8 resource with the same UV binding. Extend these original owners only: copy opacity into the existing export snapshot, validate its binding alongside other painted maps, encode RGBA base-colour PNG with authored alpha, and use white RGB when no Colour map exists. Use standard glTF `alphaMode: BLEND` and `doubleSided: true` for opacity materials, matching the accepted two-sided opacity preview. Colour/opacity dimensions are currently 512; the PNG writer also handles linear clamp resampling if a 512 opacity map is paired with a 1024 Colour map. Source resources remain unchanged.
+
+The file GLB export status reports authored opacity maps. OBJ and NOMAD preserve their existing explicit opacity refusals. No changes to painting, preview rendering, topology, model kernel, `.boxlab` persistence or native NOM format. Release pins were refreshed for the GLB/exporter chain and canonical release-version shell loaders; the protected Multi transform pin is untouched.
+
+Focused `paint-export-901` suite: 8 PASS / 0 FAIL, including exact PNG alpha/color bytes, opacity-only white RGB, resolution handling, actual GLB JSON/loader transparency and double-sided material, source immutability, and NOMAD refusal. Current release/asset-pin checks: 9 PASS / 0 FAIL. Full local regression: 3,168 PASS / 0 FAIL in 149.2 seconds. `git diff --check` is clean. Native iPad → Nomad export acceptance is pending.
+
+Hands-on check: combined Colour+Opacity stroke; Done/reopen/redraw; export GLB and inspect the transparent region and rear faces in Nomad. Export opacity-only GLB and check transparency. Do not retest OBJ/NOMAD opacity as a success path; their warnings remain expected. After PASS, resume imported NOM/GLB UV paint as the next roadmap item.

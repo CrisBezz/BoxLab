@@ -32,6 +32,32 @@ export async function encodeNomadScalarPNG(rgba,width,height,channel){
 export async function encodeNomadColourPNG(rgba,width,height){return encodeRGBPNG(rgba,width,height,true);}
 // Packed scalar RGB uses the same PNG owner without colour metadata or conversion.
 export async function encodeNomadDataPNG(rgba,width,height){return encodeRGBPNG(rgba,width,height,false);}
+// glTF has no separate opacity texture slot. Preserve authored colour and alpha
+// together in the standard base-colour RGBA texture. When map resolutions differ,
+// resample the lower-resolution alpha with the same linear/clamped sampling used by
+// the viewport texture owner; source resources remain unchanged.
+export async function encodeNomadColourAlphaPNG(colourPixels,colourWidth,colourHeight,alphaPixels,alphaWidth,alphaHeight){
+ if(!(alphaPixels instanceof Uint8Array)||alphaWidth!==512||alphaHeight!==512||alphaPixels.length!==alphaWidth*alphaHeight)throw Error('Opacity PNG input is invalid');
+ const hasColour=colourPixels instanceof Uint8Array;
+ if(hasColour&&(![512,1024].includes(colourWidth)||colourHeight!==colourWidth||colourPixels.length!==colourWidth*colourHeight*4))throw Error('Paint PNG input is invalid');
+ const width=hasColour?colourWidth:alphaWidth,height=hasColour?colourHeight:alphaHeight,rows=new Uint8Array((width*4+1)*height);
+ const alphaAt=(x,y)=>{
+  const sx=Math.max(0,Math.min(alphaWidth-1,(x+.5)*alphaWidth/width-.5)),sy=Math.max(0,Math.min(alphaHeight-1,(y+.5)*alphaHeight/height-.5));
+  const x0=Math.floor(sx),y0=Math.floor(sy),x1=Math.min(alphaWidth-1,x0+1),y1=Math.min(alphaHeight-1,y0+1),tx=sx-x0,ty=sy-y0;
+  const top=alphaPixels[y0*alphaWidth+x0]*(1-tx)+alphaPixels[y0*alphaWidth+x1]*tx,bottom=alphaPixels[y1*alphaWidth+x0]*(1-tx)+alphaPixels[y1*alphaWidth+x1]*tx;
+  return Math.max(0,Math.min(255,Math.round(top*(1-ty)+bottom*ty)));
+ };
+ for(let y=0;y<height;y++){
+  const row=y*(width*4+1);rows[row]=0;
+  for(let x=0;x<width;x++){
+   const out=row+1+x*4;
+   if(hasColour){const from=(y*width+x)*4;if(colourPixels[from+3]!==255)throw Error('Paint PNG requires opaque colour pixels');rows[out]=colourPixels[from];rows[out+1]=colourPixels[from+1];rows[out+2]=colourPixels[from+2];}
+   else rows[out]=rows[out+1]=rows[out+2]=255;
+   rows[out+3]=alphaAt(x,y);
+  }
+ }
+ return packagePNG(rows,width,height,6,true);
+}
 async function encodeRGBPNG(rgba,width,height,colour){
  if(!Number.isInteger(width)||!Number.isInteger(height)||width<16||height<16||width>1024||height>1024||!(rgba instanceof Uint8Array)||rgba.length!==width*height*4)throw Error('Paint PNG input is invalid');
  const stride=width*3+1,rows=new Uint8Array(stride*height);
@@ -42,7 +68,7 @@ async function packagePNG(rows,width,height,type,colour=true){
  if(typeof globalThis.CompressionStream!=='function')throw Error('NOMAD PNG compression is unavailable in this browser');
  const compressed=new Uint8Array(await new Response(new Blob([rows]).stream().pipeThrough(new CompressionStream('deflate'))).arrayBuffer());
  const header=new Uint8Array(13),view=new DataView(header.buffer);view.setUint32(0,width);view.setUint32(4,height);header[8]=8;header[9]=type; // scalar remains type0 without colour metadata
- const parts=[new Uint8Array([137,80,78,71,13,10,26,10]),chunk('IHDR',header),...(type===2&&colour?[chunk('sRGB',new Uint8Array([0]))]:[]),chunk('IDAT',compressed),chunk('IEND',new Uint8Array())],size=parts.reduce((n,b)=>n+b.length,0);
+ const parts=[new Uint8Array([137,80,78,71,13,10,26,10]),chunk('IHDR',header),...([2,6].includes(type)&&colour?[chunk('sRGB',new Uint8Array([0]))]:[]),chunk('IDAT',compressed),chunk('IEND',new Uint8Array())],size=parts.reduce((n,b)=>n+b.length,0);
  if(size>8*1024*1024)throw Error('NOMAD converted map exceeds 8 MB');
  const png=new Uint8Array(size);let at=0;for(const part of parts){png.set(part,at);at+=part.length;}return png;
 }

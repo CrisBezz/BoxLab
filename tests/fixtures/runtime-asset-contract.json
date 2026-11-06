@@ -1,5 +1,5 @@
 {
-  "baseline": "Reviewed .1085: stable pressure retains the 8px safe-start behavior; if minimum pressure drops at least 25% from a positive Pencil-down value, keep settling to 2px or cap only the buffered onset at 2px when the sample window expires. Diagnostics distinguish observed and applied onset size.",
+  "baseline": "Reviewed .1086: stable pressure retains the 8px safe-start behavior; if minimum pressure drops at least 25% from a positive Pencil-down value, keep settling to 2px or cap only the buffered onset at 2px when the sample window expires. Diagnostics distinguish observed and applied onset size.",
   "references": [
     {
       "owner": "index.html",
@@ -161,9 +161,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1085",
+      "url": "./src/drawer-ui.js?v=0.36.18.1086",
       "target": "src/drawer-ui.js",
-      "sha256": "1e3fa32acc44d11c2b962b80e87d7fda520e31b421ec527284cec579a83b997d"
+      "sha256": "27d0a526ed2748883a79a2694d3109bce9580716edb2db1dfb824df0079b2b64"
     },
     {
       "owner": "index.html",
@@ -204,9 +204,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/export-as-panel.js?v=0.36.18.1076",
+      "url": "./src/export-as-panel.js?v=0.36.18.1086",
       "target": "src/export-as-panel.js",
-      "sha256": "4f309575e56eb78a2d6f859a51a7f936c56a664121a8ffc82de37f39b8b2a80a",
+      "sha256": "7446bcf3f11bb16704dc33da4fec294a0ab6ddcd9d1ab8e0fe4360bbd097570b",
       "sourceVersion": "0.36.18.892"
     },
     {
@@ -378,7 +378,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1085",
+      "url": "./src/release-version.js?v=0.36.18.1086",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -864,9 +864,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1085",
+      "url": "./face-workflow-layout.js?v=0.36.18.1086",
       "target": "src/face-workflow-layout.js",
-      "sha256": "4330ca8544677c4f971f20bd36c70d5232bca61046c1b0dae36721a564bb5662"
+      "sha256": "765785e6e69b68ed52f9bfde3a50c45a53674d952051b2f4d2c42967bf3c4568"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1177,9 +1177,9 @@
     },
     {
       "owner": "src/export-as-panel.js",
-      "url": "./nomad-packed-maps.js?v=0.36.18.1076",
+      "url": "./nomad-packed-maps.js?v=0.36.18.1086",
       "target": "src/nomad-packed-maps.js",
-      "sha256": "d3109233dda64d1f2d3c545dd7ae1c55579fcc236c2fdacbc0eebb2d466320fa"
+      "sha256": "cd4a0bc2966fc549c6b1635cce72fa1987e7b649af4470d4a947eb9cf2a72c87"
     },
     {
       "owner": "src/export-as-panel.js",
@@ -1361,7 +1361,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1085",
+      "url": "./release-version.js?v=0.36.18.1086",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -2426,9 +2426,9 @@
     },
     {
       "owner": "src/nomad-packed-maps.js",
-      "url": "./nomad-export-core.js?v=0.36.18.1076",
+      "url": "./nomad-export-core.js?v=0.36.18.1086",
       "target": "src/nomad-export-core.js",
-      "sha256": "c2f104007c92a36a0650ae973ba7fb5e47a6f46eb03a8e205d47d8435e32d743"
+      "sha256": "8374b95a04601810dce6c051b944c4464bc4e3214ffc90b708b5eeea38c481ea"
     },
     {
       "owner": "src/nomad-export-core.js",
@@ -2446,7 +2446,7 @@
       "owner": "src/nomad-packed-maps.js",
       "url": "./nomad-scalar-png.js?v=0.36.18.1035",
       "target": "src/nomad-scalar-png.js",
-      "sha256": "8b91b97d117ae6feb05fa6d1e1e1a47623f8c2ba4988ed79fb2bd0b1fb82f910"
+      "sha256": "2e28e5272c14f0702066d15101746f25a500e31fc769434fe419e461f11c0f25"
     },
     {
       "owner": "src/boxlab-project-codec.js",
@@ -2516,21 +2516,21 @@
     },
     {
       "owner": "src/export-as-panel.js",
-      "url": "./paint-export.js?v=0.36.18.1076",
+      "url": "./paint-export.js?v=0.36.18.1086",
       "target": "src/paint-export.js",
-      "sha256": "84de834084ecdc9595675b07743a2becab82d3c8c47a3cebcc43b87769b919fe"
+      "sha256": "2103a4251ad26c61891a82b081813e6d40d61eaec915dd5bfab88516237690b7"
     },
     {
       "owner": "src/nomad-packed-maps.js",
-      "url": "./paint-export.js?v=0.36.18.1076",
+      "url": "./paint-export.js?v=0.36.18.1086",
       "target": "src/paint-export.js",
-      "sha256": "84de834084ecdc9595675b07743a2becab82d3c8c47a3cebcc43b87769b919fe"
+      "sha256": "2103a4251ad26c61891a82b081813e6d40d61eaec915dd5bfab88516237690b7"
     },
     {
       "owner": "src/nomad-export-core.js",
-      "url": "./paint-export.js?v=0.36.18.1076",
+      "url": "./paint-export.js?v=0.36.18.1086",
       "target": "src/paint-export.js",
-      "sha256": "84de834084ecdc9595675b07743a2becab82d3c8c47a3cebcc43b87769b919fe"
+      "sha256": "2103a4251ad26c61891a82b081813e6d40d61eaec915dd5bfab88516237690b7"
     },
     {
       "owner": "src/paint-export.js",
@@ -2540,9 +2540,9 @@
     },
     {
       "owner": "src/paint-export.js",
-      "url": "./nomad-scalar-png.js?v=0.36.18.1035",
+      "url": "./nomad-scalar-png.js?v=0.36.18.1086",
       "target": "src/nomad-scalar-png.js",
-      "sha256": "8b91b97d117ae6feb05fa6d1e1e1a47623f8c2ba4988ed79fb2bd0b1fb82f910"
+      "sha256": "2e28e5272c14f0702066d15101746f25a500e31fc769434fe419e461f11c0f25"
     },
     {
       "owner": "src/paint-layer-stack.js",
@@ -2746,7 +2746,7 @@
       "owner": "evaluations/uv-paint/lab.js",
       "url": "../../src/export-as-panel.js?v=0.36.18.1039",
       "target": "src/export-as-panel.js",
-      "sha256": "4f309575e56eb78a2d6f859a51a7f936c56a664121a8ffc82de37f39b8b2a80a"
+      "sha256": "7446bcf3f11bb16704dc33da4fec294a0ab6ddcd9d1ab8e0fe4360bbd097570b"
     },
     {
       "owner": "src/paint-layer-stack.js",
@@ -3326,9 +3326,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1085",
+      "url": "./src/shell-comparison.js?v=0.36.18.1086",
       "target": "src/shell-comparison.js",
-      "sha256": "1fcab4a9a6dde58a1c7ca3ab897c240aa9ab9dad1beb6399d4044c24dd82b07a"
+      "sha256": "6fe8de4a580b82dc0066cee521effd9b745e9795f716f49cad47b62bfbb1c758"
     },
     {
       "owner": "src/main.js",
@@ -3448,7 +3448,7 @@
       "owner": "src/uv-image-surface-preview.js",
       "url": "./nomad-scalar-png.js?v=0.36.18.1035",
       "target": "src/nomad-scalar-png.js",
-      "sha256": "8b91b97d117ae6feb05fa6d1e1e1a47623f8c2ba4988ed79fb2bd0b1fb82f910"
+      "sha256": "2e28e5272c14f0702066d15101746f25a500e31fc769434fe419e461f11c0f25"
     },
     {
       "owner": "src/viewport-paint.js",
@@ -3472,7 +3472,7 @@
       "owner": "src/nomad-height-benchmark.js",
       "url": "./nomad-scalar-png.js?v=0.36.18.1064",
       "target": "src/nomad-scalar-png.js",
-      "sha256": "8b91b97d117ae6feb05fa6d1e1e1a47623f8c2ba4988ed79fb2bd0b1fb82f910"
+      "sha256": "2e28e5272c14f0702066d15101746f25a500e31fc769434fe419e461f11c0f25"
     },
     {
       "owner": "src/nomad-height-benchmark.js",
