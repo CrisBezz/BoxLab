@@ -1,12 +1,12 @@
-## .1083 Adaptive Pencil onset — pending user check
+## .1084 Pencil startup repair — pending user check
 
-Protect `.1077` compact Paint and combined channels, `.1076` two-sided opacity and `.1074` brush pressure controls. The `.1081` device report showed down pressure `0.08`, a short early plateau, then a fall to `0.02`; its initial dab was `20.48px` versus `5–9px` later. `.1082` blanket eight-sample settling fixed the large onset in theory but regressed two hosted immediate-preview checks.
+`.1083` failed on device: Brush did not create a stroke. The local actual-UI reproduction exposed `settings is not defined` during adaptive onset; `viewport-paint-core.js` read the `begin()` local from the separate `move()` closure. Store the unchanged active brush settings on the existing stroke transaction and read them through that owner. No onset thresholds or pressure behavior changed.
 
-`.1083` now settles only while the minimum observed pressure predicts a first radius above `8px`. It starts as soon as the projected radius is safe; pressure-independent size starts immediately. The existing painter buffers and replays its path through the same stroke kernel. Deliberate taps still paint on release. Hosted validation and Pages publication pending.
+Gesture Debug now reports surface-hit, begin/move errors, accepted start, onset decision, dabs/hits, stroke finish/commit channels and pointer finish. This distinguishes miss, cancellation, no ink and successful commit. It remains opt-in and uses the existing debug owner.
 
-Hands-on check: with Size 256 and Pencil Size enabled, make slow-light strokes in Colour and combined Colour/Roughness/Metalness/Opacity; inspect the first dab against later marks. Then check deliberate taps, Undo/Redo, brush switching and finger orbit. If the large dab remains, capture View → Gesture Debug; `.1083` records settle reason, sample count, chosen pressure and first dab radius.
+Focused checks: 11 PASS / 0 FAIL, including both Brush and Klecks pressure startup, combined Colour/Roughness/Metalness/Opacity, stationary taps, zero-pressure cancellation, unpressured travel and actual UI trace. Full local regression: 3,164 PASS / 0 FAIL. Hosted Topology and Pages publication pending; native iPad/Safari acceptance pending.
 
-The report records the pointer type/pressure on down, normalized pressure, brush size and pressure toggles, up to eight coalesced samples, onset decision and the first eight generated UV dabs with pressure, computed map radius and surface-hit result. This determines whether the device event already carries a high pressure, the onset guard selects it, or the brush output expands it. The `.1078` automated reproduction passed but did not match the user-reported first-touch failure; do not claim a fix until the device trace is understood.
+Hands-on check: open UV Paint and draw one Colour stroke, then repeat with Roughness, Metalness and Opacity enabled. Confirm visible paint, Undo/Redo, and that a deliberate tap still paints on lift. If Brush still fails, use View → Gesture Debug → Capture/Copy report; `.1084` identifies the exact stage that stopped.
 
 ## Protected device results — 4 November 2026
 

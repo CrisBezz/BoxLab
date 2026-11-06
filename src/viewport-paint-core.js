@@ -108,13 +108,13 @@ export function createViewportPainter({target,activeId=()=>target()?.id,body,own
   const enabled=controls.enabled;controls.enabled=false;
   if(action==='fill'||facePlan){stroke={fill:true,facePlan,scalarFacePlan,scalarLayers,start:{x:p.x,y:p.y},controls:enabled,held:false,count:0,dx:0,dy:0};renderFill(stroke);if(action==='fill-face'){const active=stroke;stroke.timer=setTimer(()=>{if(stroke!==active||!current())return;try{active.held=true;renderFill(active);updatePreview();}catch(error){cancel();throw error;}},420);}return true;}
   const makePath=()=>createStroke(kind,q=>{if(!(q.pressure>0))return;const index=stroke?.diagnosticDabs||0;if(stroke)stroke.diagnosticDabs=index+1;const h=hit({...q,width:p.width,height:p.height});if(index<8)diagnostic('dab',{index,pressure:q.pressure,primaryRadius:Math.max(.35,settings.radius*(settings.pressure?q.pressure:1)),scalarRadii:Object.keys(stroke?.scalarLayers||{}).map(channel=>({channel,radius:Math.max(.35,Math.max(1,settings.radius*512/session.size)*(settings.pressure?q.pressure:1))})),hit:!!h,uv:h?.uv?{u:Number(h.uv.x.toFixed(5)),v:Number(h.uv.y.toFixed(5))}:null});if(h){const face=['blur','smudge','sharpen'].includes(action)?session.filterDomain.faceAt(h.faceIndex):null;session.layer.stamp(h.uv.x,h.uv.y,q.pressure,face);for(const layer of Object.values(stroke?.scalarLayers||{}))layer.stamp(h.uv.x,h.uv.y,q.pressure,face);}else if(action==='smudge'){session.layer.resetPickup();for(const layer of Object.values(stroke?.scalarLayers||{}))layer.resetPickup();}});
-  const path=makePath(),penStart=settings.deferPenStart?{origin:{...p},pressured:p.pressure>0,pressureSamples:p.pressure>0?1:0,minPressure:p.pressure>0?p.pressure:null,samples:[]}:null;stroke={path,penStart,waitingPressure:!(p.pressure>0),controls:enabled,smudge:action==='smudge',large:settings.radius>48,makePath,lastInput:{...p},scalarLayers,diagnosticDabs:0};diagnostic('stroke-begin',{kind,action,inputPressure:p.pressure,radius:settings.radius,pressureSize:settings.pressure,pressureOpacity:settings.pressureOpacity,deferred:!!penStart,pressureSettleSamples:PEN_ONSET_PRESSURE_SAMPLES,pressureSettleRadius:PEN_ONSET_MAX_START_RADIUS,channels:[session.paintTarget,...Object.keys(scalarLayers)]});if(!penStart)path.start(p);return true;
+  const path=makePath(),penStart=settings.deferPenStart?{origin:{...p},pressured:p.pressure>0,pressureSamples:p.pressure>0?1:0,minPressure:p.pressure>0?p.pressure:null,samples:[]}:null;stroke={path,penStart,settings,waitingPressure:!(p.pressure>0),controls:enabled,smudge:action==='smudge',large:settings.radius>48,makePath,lastInput:{...p},scalarLayers,diagnosticDabs:0};diagnostic('stroke-begin',{kind,action,inputPressure:p.pressure,radius:settings.radius,pressureSize:settings.pressure,pressureOpacity:settings.pressureOpacity,deferred:!!penStart,pressureSettleSamples:PEN_ONSET_PRESSURE_SAMPLES,pressureSettleRadius:PEN_ONSET_MAX_START_RADIUS,channels:[session.paintTarget,...Object.keys(scalarLayers)]});if(!penStart)path.start(p);return true;
  }
  // Let the Pencil's initial pressure plateau settle before emitting the first dab.
   function startPenPath(active,next,settleReason='sample-window'){
   const {first,origin,pressured,samples=[]}=active.penStart;
   const pressure=Number.isFinite(active.penStart.minPressure)?active.penStart.minPressure:Math.min(first.pressure,next.pressure);
-   diagnostic('onset-confirm',{downPressure:origin.pressure,firstMovePressure:first.pressure,confirmPressure:next.pressure,resolvedPressure:pressure,initialRadius:Math.max(.35,settings.radius*(settings.pressure?pressure:1)),pressureSamples:active.penStart.pressureSamples,pressureSettleSamples:PEN_ONSET_PRESSURE_SAMPLES,pressureSettleRadius:PEN_ONSET_MAX_START_RADIUS,settleReason,originUsed:pressured,firstMove:{x:first.x,y:first.y},confirm:{x:next.x,y:next.y}});
+   diagnostic('onset-confirm',{downPressure:origin.pressure,firstMovePressure:first.pressure,confirmPressure:next.pressure,resolvedPressure:pressure,initialRadius:Math.max(.35,active.settings.radius*(active.settings.pressure?pressure:1)),pressureSamples:active.penStart.pressureSamples,pressureSettleSamples:PEN_ONSET_PRESSURE_SAMPLES,pressureSettleRadius:PEN_ONSET_MAX_START_RADIUS,settleReason,originUsed:pressured,firstMove:{x:first.x,y:first.y},confirm:{x:next.x,y:next.y}});
   active.penStart=null;
   active.waitingPressure=false;
   if(pressured){active.path.start({...origin,pressure});for(const sample of samples)active.path.move({...sample,pressure});}
@@ -140,23 +140,26 @@ export function createViewportPainter({target,activeId=()=>target()?.id,body,own
     return;
    }
    const lastSample=pending.samples.at(-1);if(!lastSample||p.x!==lastSample.x||p.y!==lastSample.y)pending.samples.push({...p});
-    const initialRadius=settings.radius*(settings.pressure?pending.minPressure:1);
-    const settleReason=!settings.pressure?'fixed-size':initialRadius<=PEN_ONSET_MAX_START_RADIUS?'radius-safe':pending.pressureSamples>=PEN_ONSET_PRESSURE_SAMPLES?'sample-window':null;
+    const initialRadius=stroke.settings.radius*(stroke.settings.pressure?pending.minPressure:1);
+    const settleReason=!stroke.settings.pressure?'fixed-size':initialRadius<=PEN_ONSET_MAX_START_RADIUS?'radius-safe':pending.pressureSamples>=PEN_ONSET_PRESSURE_SAMPLES?'sample-window':null;
     if(settleReason)startPenPath(stroke,p,settleReason);
    return;
   }if(stroke.waitingPressure){stroke.lastInput={...p};if(!(p.pressure>0))return;stroke.waitingPressure=false;stroke.path.cancel();stroke.path=stroke.makePath();stroke.path.start(p);return;}if(stroke.smudge||stroke.large){session.layer.resetWorkBudget();for(const layer of Object.values(stroke.scalarLayers||{}))layer.resetWorkBudget();if(stroke.path.stats.limited){stroke.path.cancel();stroke.path=stroke.makePath();stroke.path.start(stroke.lastInput);}}stroke.path.move(p);stroke.lastInput={...p};}catch(error){cancel();throw error;}}
  function finish(p){
-  if(!stroke)return false;if(p)move(p);if(!stroke)return false;const active=stroke;
+  if(!stroke){diagnostic('stroke-finish',{accepted:false,reason:'no-active-stroke'});return false;}if(p)move(p);if(!stroke){diagnostic('stroke-finish',{accepted:false,reason:'stroke-cancelled-during-final-sample'});return false;}const active=stroke;
   try{if(active.penStart?.first)startPenPath(active,active.penStart.first);if(active.penStart){active.penStart=null;if(active.lastInput.pressure>0){active.waitingPressure=false;active.path.start(active.lastInput);}}if(active.smudge||active.large){session.layer.resetWorkBudget();for(const layer of Object.values(active.scalarLayers||{}))layer.resetWorkBudget();}active.path?.end();}catch(error){cancel();throw error;}
   const enabled=active.controls;clearTimer(active.timer);stroke=null;controls.enabled=enabled;
-  if(!current()||paintTargetKey(target(),target()?.mesh,owner)!==session.key){session.layer.finish(true);for(const layer of Object.values(active.scalarLayers||{})){layer.finish(true);layer.dispose();}close();return false;}
+  if(!current()||paintTargetKey(target(),target()?.mesh,owner)!==session.key){session.layer.finish(true);for(const layer of Object.values(active.scalarLayers||{})){layer.finish(true);layer.dispose();}diagnostic('stroke-finish',{accepted:false,reason:'paint-target-changed',dabs:active.diagnosticDabs||0});close();return false;}
   const colourChanged=session.layer.finish(),scalarPixels={};for(const [channel,layer] of Object.entries(active.scalarLayers||{})){const changed=layer.finish();if(changed){const result=scalarStrokePixels(channel,layer);if(result.changed)scalarPixels[channel]=result.pixels;}layer.dispose();}
-  if(!colourChanged&&!Object.keys(scalarPixels).length){updatePreview();return false;}
+  const changedChannels=[...(colourChanged?['colour']:[]),...Object.keys(scalarPixels)];
+  if(!changedChannels.length){updatePreview();diagnostic('stroke-finish',{accepted:true,committed:false,reason:'no-visible-pixels',dabs:active.diagnosticDabs||0,channels:[]});return false;}
   try{
-   if(Object.keys(scalarPixels).length){const colour=colourChanged?(session.stack?captureLayeredColourResource(workingStack()):captureColourResource({width:session.size,height:session.size,pixels:session.layer.pixels,binding:session.binding})):null;return commitMulti(colour,scalarPixels);}
-   if(scalar())return commitScalar();
-   const resource=session.stack?captureLayeredColourResource(workingStack()):captureColourResource({width:session.size,height:session.size,pixels:session.layer.pixels,binding:session.binding});return commit(resource);
-  }catch(error){loadLayer();updatePreview();throw error;}
+   let committed;
+   if(Object.keys(scalarPixels).length){const colour=colourChanged?(session.stack?captureLayeredColourResource(workingStack()):captureColourResource({width:session.size,height:session.size,pixels:session.layer.pixels,binding:session.binding})):null;committed=commitMulti(colour,scalarPixels);}
+   else if(scalar())committed=commitScalar();
+   else{const resource=session.stack?captureLayeredColourResource(workingStack()):captureColourResource({width:session.size,height:session.size,pixels:session.layer.pixels,binding:session.binding});committed=commit(resource);}
+   diagnostic('stroke-finish',{accepted:true,committed:!!committed,reason:committed?'committed':'no-visible-pixels',dabs:active.diagnosticDabs||0,channels:committed?changedChannels:[]});return committed;
+  }catch(error){diagnostic('stroke-finish',{accepted:true,committed:false,reason:'commit-error',dabs:active.diagnosticDabs||0,channels:changedChannels,error:error?.message||String(error)});loadLayer();updatePreview();throw error;}
  }
  function workingStack(){const s=session;if(s.stack.layers.find(l=>l.id===s.selected)?.image&&s.paintTarget==='colour')return s.stack;if(s.selected==='$base')return {...s.stack,base:captureColourResource({...s.stack.base,pixels:s.layer.pixels})};
   const maskPixels=s.paintTarget==='mask'?new Uint8Array(s.size*s.size):null;if(maskPixels)for(let i=0;i<maskPixels.length;i++)maskPixels[i]=s.layer.pixels[i*4];

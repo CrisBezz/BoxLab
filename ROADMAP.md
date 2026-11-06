@@ -1,17 +1,18 @@
-# Current build: .1083 adaptive Pencil onset settling (6 November 2026)
+# Current build: .1084 Pencil stroke startup repair (6 November 2026)
 
 ## Delivered for native checking
 
-- `.1077` compact Paint menu and combined Colour/Roughness/Metalness/Opacity strokes received user PASS; preserve them.
-- User's `.1081` report identified the large onset dab: down/early pressures stayed at `0.08`, then fell to `0.02`; the first dab radius was `20.48px` versus `5–9px` later.
-- `.1083` waits for pressure settling only when the projected initial dab exceeds 8px; it releases the existing buffered stroke as soon as the minimum observed pressure predicts a safe first dab. Fixed-size brushes start immediately.
-- The `.1082` blanket wait caused two hosted live-preview regressions and is superseded. `.1083` hosted Topology and Pages validation pending; native iPad/Safari confirmation remains the next gate.
+- `.1083` FAIL reproduced: a valid Pencil contact hit the mesh and began the Paint transaction, then adaptive onset threw `settings is not defined` and the UI cancelled the stroke.
+- `.1084` stores active brush settings on the existing stroke object and uses that data in the onset closure. Pressure thresholds and brush output behavior are unchanged.
+- Gesture Debug adds surface hit, begin/move errors and final commit/no-ink outcomes to the existing opt-in trace.
+- Focused Paint regression: 11 PASS / 0 FAIL. Full local regression: 3,164 PASS / 0 FAIL. Hosted Topology, Pages publication and device acceptance pending.
 
 ## Next
 
-1. Check `.1083` on device: Size 256, Pencil Size enabled, slow-light strokes; compare their first mark with the rest of each stroke.
-2. Check combined Colour/Roughness/Metalness/Opacity, deliberate taps, Undo/Redo, brush switching and finger orbit.
-3. Keep `.1077` menu/channel behavior and `.1076` two-sided opacity preview protected. Imported NOM/GLB UV painting and opacity export remain separate roadmap work.
+1. Complete full regression and release validation; publish `.1084` to main and Pages.
+2. On iPad, make a Brush stroke in Colour and in combined Colour/Roughness/Metalness/Opacity; verify a deliberate tap, Undo/Redo and brush switching.
+3. If a stroke still fails, capture View → Gesture Debug → Capture/Copy report. The trace now records surface hit, begin/move errors, accepted start, onset, generated dabs and commit result.
+4. Preserve `.1077` compact Paint/four-channel strokes and `.1076` two-sided opacity PASSes. Imported NOM/GLB UV painting and opacity export remain separate work.
 
 ## Protected device results — 4 November 2026
 
