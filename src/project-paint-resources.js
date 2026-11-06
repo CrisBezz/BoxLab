@@ -2,9 +2,19 @@
 // Native UV envelopev3 is still UV-only. History/duplicates share immutable resources.
 import {encodePaintResourceEntry,decodePaintResourceEntry,paintResourceEntryBytes} from './paint-layer-resource.js?v=0.36.18.1033';
 import {createPaintBytePool,expandPaintBytePool} from './project-paint-byte-pool.js?v=0.36.18.1033';
+import {meshTopologySignature} from './mesh-topology-signature.js?v=0.36.18.1087';
 const LIMIT=8*1024*1024;
+export function importedPaintEligible(o){
+ const p=o?.glbPassthrough,m=o?.mesh,faces=m?.faces,uv=p?.uvCorners;
+ if(!p||p.version!==1||!['glb','nomad'].includes(p.source)||!Array.isArray(faces)||!faces.length||p.uvTopologySignature!==meshTopologySignature(m)||!Array.isArray(uv)||uv.length!==faces.length||uv.some((corners,i)=>!Array.isArray(corners)||corners.length!==faces[i]?.length||corners.some(v=>!Array.isArray(v)||v.length!==2||!v.every(Number.isFinite)||v[0]<0||v[0]>1||v[1]<0||v[1]>1)))return false;
+ if(p.source==='nomad')return Array.isArray(p.images)&&p.images.length===0&&!Object.keys(p.nomadMaterial?.textures||{}).length&&(p.nomadMaterial?.material_type??'opaque')==='opaque'&&(p.nomadMaterial?.opacity??1)===1&&(p.nomadMaterial?.factorOpacity??1)===1&&p.nomadMaterial?.two_sided!==1&&p.nomadMaterial?.flip_culling!==true&&p.nomadMaterial?.always_unlit!==true;
+ const assignments=Array.isArray(p.materialIndices)?new Set(p.materialIndices):new Set(),materialIds=[...assignments];
+ const material=materialIds.length===1?p.materials?.[materialIds[0]]:null,factor=material?.pbrMetallicRoughness?.baseColorFactor;
+ return Array.isArray(p.images)&&p.images.length===0&&Array.isArray(p.textures)&&p.textures.length===0&&Array.isArray(p.materials)&&assignments.size<=1&&(materialIds.length===0||!!material)&&(!factor||(Array.isArray(factor)&&factor.length===4&&factor.every(Number.isFinite)&&factor[3]===1))&&material?.doubleSided!==true&&!p.vertexColorCorners?.some(Array.isArray)&&!p.tangentCorners?.some(Array.isArray)&&!p.morphTargets?.some(Boolean)&&!(p.originalTopology?.attributes||[]).some(a=>Object.keys(a||{}).some(k=>!['POSITION','NORMAL','TEXCOORD_0'].includes(k)));
+}
 export function paintOwner(o){
- if(o.sourceId||o.arrayRecipe||o.booleanRecipe||o.curveProfile||o.kind==='reference'||o.glbPassthrough?.source!=='boxlab')throw Error('Colour paint requires an independent native UV object');
+ const source=o?.glbPassthrough?.source;
+ if(o.sourceId||o.arrayRecipe||o.booleanRecipe||o.curveProfile||o.kind==='reference'||(source!=='boxlab'&&!importedPaintEligible(o)))throw Error('Paint requires an independent native UV object or an imported single-material UV mesh with no embedded images; textured and multi-material imports stay protected');
 }
 export function createProjectPaintPool(){
  const resources=[],indices=new Map(),shared=new WeakMap(),bytePool=createPaintBytePool();let total=0;

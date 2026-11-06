@@ -1,17 +1,19 @@
 import {copyOpacityResource} from './opacity-resource.js?v=0.36.18.1075';
 import * as THREE from 'three';
 import {paintMaterialEnvironments} from './paint-material-environment.js?v=0.36.18.925';
-import {encodeBoxlabScene} from './boxlab-project-codec.js?v=0.36.18.1075';
+import {encodeBoxlabScene} from './boxlab-project-codec.js?v=0.36.18.1087';
 import {copyMetalnessResource} from './metalness-resource.js?v=0.36.18.1075';
 import {copyRoughnessResource} from './roughness-resource.js?v=0.36.18.1075';
 import {paintDigest} from './paint-resource.js?v=898';
+import {importedPaintEligible} from './project-paint-resources.js?v=0.36.18.1087';
 const encoder=new TextEncoder(),hidden=new THREE.MeshBasicMaterial({colorWrite:false,depthWrite:false});
 const METAL_ONLY_PAINT_ENV_INTENSITY=.55;
 const COMBINED_PAINT_ENV_INTENSITY=.35;
 // Reuse original codec/UV topology validation. Positions may move/deform with unchanged UVs.
 export function paintTargetKey(object,mesh=object?.mesh,owner=globalThis.__boxlabExportAs){
  const s=object?.settings||{},p=object?.glbPassthrough;
- if(!object||object.kind==='reference'||object.sourceId||object.arrayRecipe||object.booleanRecipe||object.curveProfile||s.subd||Object.values(s.mirror||{}).some(Boolean)||p?.source!=='boxlab'||p.version!==1||p.uvTopologySignature!==owner?.topologySignature(mesh)||!mesh?.faces?.length||mesh.faces.reduce((n,f)=>n+f.length,0)>20000)throw Error('Choose one unlocked native UV object; turn SubD/Mirror off and create UVs in UV Editor first (20,000 corners maximum)');
+ const imported=p?.source==='glb'||p?.source==='nomad';
+ if(!object||object.kind==='reference'||object.sourceId||object.arrayRecipe||object.booleanRecipe||object.curveProfile||s.subd||Object.values(s.mirror||{}).some(Boolean)||(!imported&&p?.source!=='boxlab')||p.version!==1||p.uvTopologySignature!==owner?.topologySignature(mesh)||imported&&!importedPaintEligible({...object,mesh})||!mesh?.faces?.length||mesh.faces.reduce((n,f)=>n+f.length,0)>20000)throw Error('Paint requires an independent native UV object or an imported single-material UV mesh with no embedded images; imported UVs must fit the 0–1 tile (20,000 corners maximum)');
  const encoded=encodeBoxlabScene({objects:[{mesh,glbPassthrough:p,kind:'editable',settings:{}}]}).objects[0];
  return JSON.stringify({uv:encoded.glbResource});
 }

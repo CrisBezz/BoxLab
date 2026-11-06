@@ -13,8 +13,8 @@ import {projectPaintImage} from './paint-image-project.js?v=0.36.18.951';
 import {surfaceImageFrameFromHit} from './paint-image-surface.js?v=0.36.18.933';
 import {capturePaintImagePlacement,paintImagePlacementFromCamera} from './paint-image-placement.js?v=0.36.18.907';
 import {captureLayeredColourResource,capturePaintResource} from './paint-layer-resource.js?v=0.36.18.1033';
-import {createProjectPaintPool} from './project-paint-resources.js?v=0.36.18.1033';
-import {paintTargetKey,paintTargetDigest,paintTexture,createPaintSurface} from './paint-target.js?v=0.36.18.1076';
+import {createProjectPaintPool} from './project-paint-resources.js?v=0.36.18.1087';
+import {paintTargetKey,paintTargetDigest,paintTexture,createPaintSurface} from './paint-target.js?v=0.36.18.1087';
 import {captureRoughnessResource,copyRoughnessResource} from './roughness-resource.js?v=0.36.18.1075';
 import {createProjectRoughnessPool} from './project-roughness-resources.js?v=0.36.18.1075';
 import {captureMetalnessResource,copyMetalnessResource} from './metalness-resource.js?v=0.36.18.1075';
@@ -35,11 +35,11 @@ export function createViewportPainter({target,activeId=()=>target()?.id,body,own
  function close(redraw=true){generation++;session?.aoJob?.abort();if(!session)return;cancel();const old=session;session=null;old.body.geometry.removeEventListener('dispose',old.lost);old.boundaries?.dispose();old.display.dispose();old.layer.dispose();onClose();if(redraw)refresh(old.body);}
  async function open(){close();const token=++generation,o=target();if(o?.locked||o?.visible===false)throw Error('Unlock and show the selected object first');const key=paintTargetKey(o,o?.mesh,owner),resource=o.colourPaint,roughness=o.roughnessPaint,metalness=o.metalnessPaint,opacity=o.opacityPaint,binding=await paintTargetDigest(key);
   if(token!==generation||!allowed()||target()!==o||target()?.colourPaint!==resource||target()?.roughnessPaint!==roughness||target()?.metalnessPaint!==metalness||target()?.opacityPaint!==opacity||paintTargetKey(target(),target()?.mesh,owner)!==key)throw Error('Object changed while opening paint');
-  const size=resource?.width||newColourSize;
+  const size=resource?.width||newColourSize,b=body();if(!b?.geometry)throw Error('Selected viewport body unavailable');
   if(resource&&(resource.binding!==binding||![512,1024].includes(size)||resource.height!==size))throw Error('Stored paint no longer matches this geometry/UVs; Undo the change, or use Object → UV → Clear paint to start again');
   for(const [channel,cfg] of Object.entries(scalarOwners)){const resource=o[cfg.field];if(resource){const r=cfg.copy(resource);if(r.binding!==binding)throw Error('Stored '+channel+' no longer matches this geometry/UVs; Undo the change, or use Object → UV → Clear paint to start again');}}
-  const b=body();if(!b?.geometry)throw Error('Selected viewport body unavailable');const geometry=owner.buildUVPreviewGeometry(o.mesh,o.glbPassthrough,{faceIndices:true});if(!geometry)throw Error('UV geometry unavailable');
-  const preview=new Uint8Array(size*size*4).fill(255);if(resource)preview.set(resource.pixels);
+  const geometry=owner.buildUVPreviewGeometry(o.mesh,o.glbPassthrough,{faceIndices:true});if(!geometry)throw Error('UV geometry unavailable');
+  const preview=new Uint8Array(size*size*4).fill(255);if(resource)preview.set(resource.pixels);else if(['glb','nomad'].includes(o.glbPassthrough?.source)){const material=Array.isArray(b.material)?b.material[0]:b.material;if(material?.color){const colour=material.color.clone().convertLinearToSRGB(),rgb=[colour.r,colour.g,colour.b].map(v=>Math.max(0,Math.min(255,Math.round(v*255))));for(let i=0;i<preview.length;i+=4)preview.set([...rgb,255],i);}}
   // Opening a new 1024 document stays transient: first edit uses the accepted
   // layered profile; no blank resource or history entry is published on open.
   const stack=resource?.version>=2?capturePaintResource(resource).layers:!resource&&size===1024?createPaintLayerStack(captureColourResource({width:size,height:size,pixels:preview,binding})):null,selected=stack?.layers.at(-1)?.id||'$base';
