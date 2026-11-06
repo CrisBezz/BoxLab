@@ -1,16 +1,16 @@
-## .1086 GLB opacity export — awaiting native check
+## .1086 GLB opacity export — protected native PASS
 
 The `.1085` Pencil/combined-channel acceptance is protected. User also reports PASS for `Done → reopen UV Paint → draw again`.
 
 `.1086` carries the existing opacity R8 map into the GLB base-colour texture alpha. Colour-plus-opacity uses authored RGB; opacity-only uses white RGB. glTF material is blended and double-sided. NOMAD and OBJ opacity refusals remain expected.
 
-- [ ] Paint Colour with Opacity enabled in Also paint; check both update in one stroke.
-- [ ] Done, reopen UV Paint, and draw again.
-- [ ] Export GLB; open in Nomad Sculpt and inspect colour, transparent region, and reverse faces through the surface.
-- [ ] Export an opacity-only object and check that GLB retains the transparent area.
-- [ ] Reply PASS or FAIL. A PASS becomes protected; report any format/import difference.
+- [x] Paint Colour with Opacity enabled in Also paint; both update in one stroke.
+- [x] Done, reopen UV Paint, and draw again.
+- [x] Export GLB; open in Nomad Sculpt; colour, transparent region, and reverse faces through the surface PASS.
+- [x] Export an opacity-only object; GLB retains the transparent area.
+User reports PASS for all `.1086` checks. Protect combined paint, re-entry smoke, transparent/double-sided GLB, and opacity-only GLB export.
 
-Build `.1086` is published. Local focused tests verify PNG alpha bytes, opacity-only white RGB, GLB `BLEND`/double-sided material, loader transparency, source immutability and continued NOMAD refusal. Full local suite: 3,168 PASS / 0 FAIL. These checks do not replace the native export check.
+Build `.1086` is published and native acceptance is protected. Local focused tests verify PNG alpha bytes, opacity-only white RGB, GLB `BLEND`/double-sided material, loader transparency, source immutability, and continued NOMAD/OBJ refusals. Full local suite: 3,168 PASS / 0 FAIL.
 
 ## .1085 — Pencil Paint — protected PASS
 

@@ -1,21 +1,22 @@
-# Current build: .1086 GLB opacity texture export (6 November 2026)
+# Current build: .1086 GLB opacity texture export — native PASS (6 November 2026)
 
-## Delivered; native export acceptance pending
+## Delivered and protected
 
-- `.1085` Pencil Paint PASS is protected. The user also passed the Done → reopen Paint → draw smoke check.
-- `.1086` exports authored opacity from the existing native 512 × 512 R8 resource through the existing GLB paint exporter. It validates the original UV binding, combines opacity into base-colour RGBA, sets standard glTF `BLEND`, and enables double-sided display. Opacity-only GLBs use white RGB. Source paint data is snapshotted and unchanged.
-- NOMAD and OBJ still refuse authored opacity with their existing preservation warnings. No parallel export or paint owner was introduced.
-- Focused: 8 PASS / 0 FAIL; full local suite: 3,168 PASS / 0 FAIL. Published commit `f9cbff5470e2d690095c015dd02fd15730653550`; Pages reports `.1086` and changed runtime assets byte-match the release tree. Native Nomad acceptance remains pending.
+- User `.1086` PASS: Colour + Opacity paint in one stroke; Done/reopen/redraw; exported GLB transparency and reverse faces in Nomad; opacity-only GLB transparency.
+- `.1086` exports authored opacity through the existing paint snapshot and GLB owners, using the bound 512 × 512 R8 map in base-colour RGBA. Materials use standard glTF `BLEND` and double-sided rendering; opacity-only maps use white RGB. OBJ and NOMAD remain unsupported for authored opacity.
+- Focused: 8 PASS / 0 FAIL. Full local suite: 3,168 PASS / 0 FAIL. Published runtime commit `f9cbff5470e2d690095c015dd02fd15730653550`; Pages assets match. Preserve `.1085` onset/Paint PASSes and earlier Paint PASSes.
 
-## Next
+## Next: begin WASM feasibility in .1087
 
-1. On iPad, confirm a combined Colour + Opacity stroke survives Done/reopen/redraw, then export GLB and inspect its transparent area and reverse faces in Nomad.
-2. Check an opacity-only GLB has the expected transparent region. Report PASS or FAIL; record a PASS as protected.
-3. After this gate, resume the deferred import work: UV paint on imported NOM/GLB textures. NOMAD and OBJ opacity export remain separate format work.
+The repository currently has no WASM implementation or explicit WASM milestone. Begin next build with a narrow performance audit and repeatable JavaScript baseline for existing performance-sensitive operations. Choose one existing owner as a candidate and set pass/fail thresholds against equivalent workloads. Do not create a second modelling kernel.
+
+Target `.1088` for the first WASM-backed A/B prototype if `.1087` evidence shows a worthwhile candidate. Compare output equivalence and timing on the same mesh workloads, with device/runtime and warm-up recorded. Keep JavaScript as fallback; retain WASM only if the measured improvement clears the agreed threshold. Treat larger-mesh capacity as a separate memory test.
+
+Imported NOM/GLB UV painting moves behind this WASM kickoff; it is not a prerequisite. Do not delay the first feasibility build for unrelated format work.
 
 ## Protected device results — 6 November 2026
 
-PASS `.1085` clean Pencil onset, pressure sizing, tap, Undo/Redo, four-channel stroke, and Done/reopen/redraw smoke. PASS `.1077` compact Paint/four-channel strokes, `.1076` two-sided opacity preview, `.1075` opacity authoring and `.1074` brush controls. Preserve these results.
+PASS `.1086` combined Colour/Opacity stroke, Done/reopen/redraw, transparent/double-sided GLB, and opacity-only GLB. PASS `.1085` clean Pencil onset, pressure sizing, tap, Undo/Redo and four-channel stroke. PASS `.1077` compact Paint/four-channel strokes, `.1076` two-sided opacity preview, `.1075` opacity authoring and `.1074` brush controls.
 
 ## Protected device results — 4 November 2026
 

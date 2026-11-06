@@ -19011,3 +19011,10 @@ Hands-on check: combined Colour+Opacity stroke; Done/reopen/redraw; export GLB a
 ## .1086 publication and live asset verification — 6 November 2026
 
 Runtime commit `f9cbff5470e2d690095c015dd02fd15730653550` is on `main`, tree `0648b21457d5f60f10e3dc926a7ede41f2edf76c`; checked-out source matches that tree. Pages serves `version.json` `.1086`. Live SHA-256 exactly matches local for version.json, index.html, export-as-panel.js, paint-export.js, nomad-scalar-png.js, nomad-packed-maps.js, nomad-export-core.js, shell-comparison.js, drawer-ui.js and face-workflow-layout.js. GitHub combined status returned no checks; no hosted test result is claimed. Full local regression is 3,168 PASS / 0 FAIL; native iPad/Nomad acceptance remains pending.
+
+
+## .1086 native opacity export — protected PASS — 6 November 2026
+
+User reports PASS for the complete native gate: Colour and Opacity paint together; Done/reopen/redraw succeeds; exported GLB transparency and reverse-face visibility work in Nomad; and an opacity-only GLB retains transparency. Protect these results. This closes the `.1086` manual checklist.
+
+User asks how many more builds before WASM starts. Repo audit finds no WASM code or explicit milestone. Set `.1087` as the kickoff: audit existing performance-sensitive owners, record repeatable JavaScript baselines, choose one measured candidate and define pass thresholds. Target `.1088` for a narrow WASM A/B prototype only if the baseline identifies a worthwhile target. Keep the original JavaScript owner and require equivalent output plus a measured speed gain; measure memory separately before claiming larger-mesh capacity. Imported NOM/GLB UV painting is deferred behind the initial WASM feasibility work and is not a prerequisite.
