@@ -6,9 +6,9 @@ Focused `.1087` imported-Paint tests pass 3/3; nearby Paint/project/export/NOM-r
 
 GLB opacity uses the existing paint snapshot/export owners, original UV binding, and base-colour RGBA with glTF `BLEND` and double-sided materials. Opacity-only maps use white RGB. NOMAD and OBJ retain their explicit opacity-export refusals. `.1085` clean Pencil onset and Done/reopen/redraw smoke are also protected, as are `.1077` multi-channel Paint, `.1076` two-sided preview, `.1075` opacity authoring, and `.1074` brush pressure controls.
 
-## Current next step — finish imported textured NOM/GLB painting
+## Current next step — reproduce Nomad facegroup loss
 
-The user put imported NOM/GLB UV painting ahead of WASM. `.1087` only accepts textureless single-material imports; embedded source images and multi-material meshes remain protected. Next, extend existing import/paint owners to compose authored paint with eligible source base-colour images while preserving the original image bytes, UV transforms and material appearance. Audit source texture channels and material assignment before expanding eligibility. Do not start WASM until textured NOM/GLB paint passes native checks.
+The user reports facegroups missing from a Nomad file. The supported fixture's actual File-dispatcher path now asserts named groups reach `EditableMesh.faceGroups` through the manager. The exact user file is not present. Obtain that `.nom` or a minimal export and inspect per-face group values, name-table placement and active multires levels before modifying the existing NOM importer. After repair, continue textured imported NOM/GLB Paint; defer WASM until that work passes native checks.
 
 After that gate, begin the measured WASM feasibility audit: benchmark existing JavaScript owners with repeatable workloads and define pass thresholds before any A/B prototype. Keep the JavaScript owner as fallback; require output equivalence and a measured speed gain. Test memory separately before claiming larger-mesh capacity. Never add a duplicate modelling kernel.
 
@@ -124,7 +124,7 @@ Focused checks passed for 512/1024 exact before/after pixels, mask hide with raw
 
 ## .1065 final release validation — 2 November 2026
 
-Runtime 47d806a621a45ce0a238d782d412179fbbff3dd7. Focused 80 PASS / 0 FAIL. Hosted Topology 41442368061: 3,127 PASS / 0 FAIL. Pages 41442366714 succeeded; live marker, shell, Paint UI, Paint core and screen comparison match the runtime tree. Native device acceptance remains pending. User added maskable Base requirement during publication; .1066 includes this accepted implementation scope, not a claimed device PASS. Shared stencil scope remains as explained to user: current colour-layer mask limits NEW scalar edits and does not retroactively hide/reveal committed scalar maps.
+Runtime 47d806a621a45ce0a238d782d412179fbbff3dd7. Focused 80 PASS / 0 FAIL. Hosted Topology 41442368061: 3,127 PASS / 0 FAIL. Pages 41442366714 succeeded; live marker, shell, Paint UI, Paint core and screen comparison match the runtime tree. Native iPad/Safari acceptance remained pending at that release. User added maskable Base requirement during publication; .1066 includes this accepted implementation scope, not a claimed device PASS. Shared stencil scope remains as explained to user: current colour-layer mask limits NEW scalar edits and does not retroactively hide/reveal committed scalar maps.
 
 ## .1065 — all-channel Paint tools and shared mask stencil — 2 November 2026
 
@@ -7689,4 +7689,6 @@ Final Topology run `41305462939` passed 3,096 / 3,096. Pages run `41305462046` s
 
 ## Current release status — 6 November 2026
 
-Current main and live Pages release: `0.36.18.1085`. User has PASSed native Pencil Paint: startup blobs are gone, steady pressure keeps normal brush size, tap and Undo/Redo work, and Colour/Roughness/Metalness/Opacity paint together. Protect this result and the earlier `.1077`–`.1074` Paint PASSes recorded in `TEST_CHECKLIST.md`. `.1085` full local regression passed 3,166 / 3,166. No hosted status checks were returned. The native acceptance is recorded in this handoff, history, checklist and roadmap. Preserve the `.1085` Paint acceptance when continuing from current main.
+Current main and live Pages release: `0.36.18.1087`. User confirms `.1087` PASS for the textureless imported NOM/GLB UV Paint workflow. Protect the imported Paint acceptance together with the `.1086` opacity-export PASS, `.1085` Pencil Paint PASS and earlier Paint results in `TEST_CHECKLIST.md`. Runtime main `11c9218724a7db38da4983cb9d35801177a7418f`; hosted Topology `42226136656` passed 3,171 / 3,171; Pages run `42226136614` succeeded and live markers show `.1087`.
+
+New report: facegroups did not import from the user's Nomad file. Existing parser fixtures cover named facegroups, and an actual File-dispatcher regression now asserts `EditableMesh.faceGroups` survives into the object manager. That known-format test passes; it does not explain the user's file. Next action is obtain the exact `.nom` (or a minimal export reproducing the missing groups), inspect its facegroup arrays/name table and multires levels, then repair the existing NOM importer only where the file demonstrates a gap. Do not guess a new group format or add a parallel importer. Keep the protected `src/multi-object-transform.js?v=0.36.1.0` unchanged.

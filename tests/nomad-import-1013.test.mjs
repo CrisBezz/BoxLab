@@ -97,7 +97,7 @@ test('1015 affine tolerance still refuses perspective, invalid rows and singular
 });
 test('1013 actual File import dispatcher adds named editable native objects via original fit/manager, keeps indices/UV-only codec and Save/Open/GLB/NOM UVs',async()=>{
  const r=importRuntime(),data=bytes('chunked');await r.c.importFile({name:'From Nomad.NOM',size:data.length,arrayBuffer:async()=>data.buffer});
- assert.equal(r.added.length,2,r.c.status.textContent);const [a,b]=r.added;assert.equal(a.name,'Native pair');assert.equal(b.name,'Hidden copy');assert.equal(b.visible,false);assert.equal(a.mesh.vertices.length,5);assert.deepEqual(a.mesh.faces.map(f=>[...f]),[[3,2,1,0],[2,4,1]]);
+ assert.equal(r.added.length,2,r.c.status.textContent);const [a,b]=r.added;assert.equal(a.name,'Native pair');assert.equal(b.name,'Hidden copy');assert.equal(b.visible,false);assert.equal(a.mesh.vertices.length,5);assert.deepEqual(a.mesh.faces.map(f=>[...f]),[[3,2,1,0],[2,4,1]]);assert.deepEqual(a.mesh.faceGroups,['Body','Trim']);
  assert.match(r.c.status.textContent,/NOM polygons preserved/);assert.match(r.c.status.textContent,/UVs preserved/);
  assert.equal(inspectImportedUV(a.mesh,a.glbPassthrough,meshTopologySignature).state,'ready');
  const objects=r.added.map((o,i)=>({...o,id:i+1})),encoded=encodeBoxlabScene({activeId:1,objects}),restored=decodeBoxlabScene(JSON.parse(JSON.stringify(encoded)),(...args)=>new EditableMesh(...args));

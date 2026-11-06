@@ -19032,3 +19032,10 @@ Validation: focused imported-Paint 3/3; focused surrounding Paint/project/export
 ## .1087 publication verification — 6 November 2026
 
 Runtime commit `11c9218724a7db38da4983cb9d35801177a7418f` is on `main`. Hosted Topology run `42226136656` passed all 3,171 tests in 308.2 s; Pages run `42226136614` succeeded. Live `https://crisbezz.github.io/BoxLab/` renders title and visible version `v0.36.18.1087`. Native iPad/Safari painting acceptance remains pending; no device PASS is inferred. This priority supersedes the preceding WASM-first proposal.
+
+
+## .1087 native acceptance — protected PASS; Nomad facegroups report — 6 November 2026
+
+User confirms `.1087` PASS for imported textureless NOM/GLB UV painting. Record the complete device checklist as protected: NOM/GLB Paint, source solid colour, Done/reopen, `.boxlab` Save/Open, Undo/Redo, and safe refusal of textured or multi-material sources.
+
+User additionally reports that facegroups did not import from their Nomad file. Audit found the existing NOM parser reads per-face `faces_group`, resolves names from the mesh `groups` table and constructs `EditableMesh.faceGroups`. The actual File-dispatcher fixture did not previously assert that the object-manager result retained those labels, so strengthen that regression. The checked-in supported-format integration test now asserts `['Body','Trim']` on the manager-added editable mesh; focused `tests/nomad-import-1013.test.mjs` passes 12/12. The manager path preserves named groups for this fixture. The user's specific `.nom` is not present, so do not claim the report fixed or guess at an undocumented format. Next: request/inspect the file or a minimal export, checking facegroup index values, name-table placement and active multires-level ownership, then patch the existing import owner. Preserve .1087 user PASS and the protected Multi transform file.

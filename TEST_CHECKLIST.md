@@ -1,16 +1,16 @@
-## .1087 — imported NOM/GLB UV Paint — native acceptance pending
+## .1087 — imported NOM/GLB UV Paint — protected native PASS
 
 This stage enables the existing UV Paint owner only for imported NOM/GLB meshes with complete UV corners inside tile 0–1, one solid material, no embedded images, vertex colours, tangent maps or morph targets, and at most 20,000 corners. Imported source data stays in the original payload. Paint starts with the imported solid base colour and uses the existing history and `.boxlab` project codec.
 
-- [ ] Import a low-poly untextured NOM with valid UVs. Open Object → UV → UV Paint, paint a stroke, press Done, then reopen and paint again. Confirm the imported solid base colour remains outside the stroke.
-- [ ] Repeat with an untextured GLB that has one solid material. Confirm the stroke starts from its material colour.
-- [ ] Save `.boxlab`, reopen it, and confirm imported source metadata and painted pixels remain. Undo/Redo one stroke.
-- [ ] Confirm a textured or multi-material imported object remains protected with a clear Paint eligibility message; do not alter its original UVs or source maps.
+- [x] Import a low-poly untextured NOM with valid UVs. Open Object → UV → UV Paint, paint a stroke, press Done, then reopen and paint again. Confirm the imported solid base colour remains outside the stroke.
+- [x] Repeat with an untextured GLB that has one solid material. Confirm the stroke starts from its material colour.
+- [x] Save `.boxlab`, reopen it, and confirm imported source metadata and painted pixels remain. Undo/Redo one stroke.
+- [x] Confirm a textured or multi-material imported object remains protected with a clear Paint eligibility message; do not alter its original UVs or source maps.
 - [x] Automated: actual NOM and GLB imported Paint owner opens, starts from source solid colour, commits a stroke, binds it to the original UVs, and survives project encode/decode. Textured, multi-material and out-of-tile targets refuse before mutation/history. Nearby Paint/project/export/NOM-retention regressions pass.
 
-Release verification: local suite 3,171/3,171 PASS; hosted Topology run `42226136656` 3,171/3,171 PASS; Pages run `42226136614` succeeded. The live app reports `.1087`. Manual iPad/Safari checks above remain open.
+User reports PASS for the complete `.1087` device workflow above. Protect this result. Release verification: local suite 3,171/3,171 PASS; hosted Topology run `42226136656` 3,171/3,171 PASS; Pages run `42226136614` succeeded; live app reports `.1087`.
 
-Imported texture compositing remains the next required stage before WASM feasibility begins. Do not count `.1087` as full imported-texture Paint completion.
+Follow-up report: facegroups did not import from the user’s Nomad file. Existing parser and actual File-dispatcher fixture now assert named groups survive through manager insertion (12/12 importer tests PASS), but the exact user file format is not reproduced. Obtain that `.nom` or a minimal export before changing the parser. Imported texture compositing remains queued after this facegroup import repair and before WASM feasibility.
 
 ## .1086 GLB opacity export — protected native PASS
 

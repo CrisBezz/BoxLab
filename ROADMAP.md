@@ -1,23 +1,23 @@
-# Current build: .1087 imported NOM/GLB UV Paint — automated PASS; device pending (6 November 2026)
+# Current build: .1087 imported NOM/GLB UV Paint — protected device PASS; facegroup import follow-up open (6 November 2026)
 
 ## Delivered and protected
 
 - `.1087` reconnects imported NOM and GLB UV meshes to the existing viewport painter, paint binding, history and `.boxlab` project codec. It preserves the source payload and solid base colour while painting.
 - Scope is deliberately bounded to complete UVs in tile 0–1, one solid material, no embedded images, vertex colours, tangent maps or morph targets, and 20,000 corners maximum. Imported image textures and multi-material meshes remain protected and cannot enter Paint yet.
-- Focused imported-Paint tests: 3 PASS / 0 FAIL. Focused surrounding Paint/project/export/NOM-retention tests: 24 PASS / 0 FAIL. Local and hosted Topology regressions both pass 3,171/3,171. Runtime commit `11c9218724a7db38da4983cb9d35801177a7418f` is on `main`; Pages run `42226136614` succeeded and the live app reports `.1087`. Native device acceptance remains pending.
+- Focused imported-Paint tests: 3 PASS / 0 FAIL. Focused surrounding Paint/project/export/NOM-retention tests: 24 PASS / 0 FAIL. Local and hosted Topology regressions both pass 3,171/3,171. Runtime commit `11c9218724a7db38da4983cb9d35801177a7418f` is on `main`; Pages run `42226136614` succeeded and the live app reports `.1087`. User reports native iPad/Safari PASS for `.1087`; protect the complete device workflow.
 - `.1086` native PASS: Colour + Opacity paint in one stroke; Done/reopen/redraw; exported GLB transparency and reverse faces in Nomad; opacity-only GLB transparency. Protect this acceptance.
 - `.1086` exports authored opacity through the existing paint snapshot/export owners, using the bound 512 × 512 R8 map in base-colour RGBA. Materials use standard glTF `BLEND` and double-sided rendering; opacity-only maps use white RGB. OBJ and NOMAD remain unsupported for authored opacity.
 - Preserve `.1085` onset/Paint PASSes and earlier Paint PASSes.
 
-## Next: finish imported textured NOM/GLB UV painting
+## Next: repair facegroups from the user's Nomad file
 
-Keep WASM queued until imported textured painting is usable and passes its native gate. Next extend the existing import and paint owners so authored paint composes with eligible imported base-colour images without dropping the source maps, UV transforms, or material appearance. Audit multi-material and tile behavior before broadening eligibility. Retain explicit safe refusals for unsupported source materials until their composition path is covered.
+The user reports facegroups missing after importing a Nomad file. Existing parser fixtures and the actual File-dispatcher test now verify that named facegroups survive through `EditableMesh` and object-manager insertion for the supported format. The reported file is not in the repository, so obtain the exact `.nom` or a minimal reproduction and inspect its group arrays/name table and active multires level before changing the existing importer. After this repair, continue imported textured painting by extending the existing import and paint owners to compose authored paint with eligible base-colour images while preserving source maps, UV transforms, and material appearance. Audit multi-material and tile behavior before broadening eligibility. Retain explicit safe refusals until their composition path is covered. WASM remains after imported Paint completion.
 
 After imported NOM/GLB painting passes, begin the measured WASM feasibility audit. Establish repeatable JavaScript baselines for existing performance-sensitive owners, then prototype only an existing operation if evidence shows a worthwhile target. Keep the JavaScript owner as fallback; require equivalent output and a measured speed gain. Treat memory capacity as a separate test.
 
 ## Protected device results — 6 November 2026
 
-`.1087` imported NOM/GLB textureless Paint is pending native acceptance. `.1086` combined Colour/Opacity, Done/reopen/redraw, transparent/double-sided GLB and opacity-only GLB PASS. `.1085` clean Pencil onset, pressure sizing, tap, Undo/Redo and four-channel stroke PASS. `.1077` compact Paint/four-channel strokes, `.1076` two-sided opacity preview, `.1075` opacity authoring and `.1074` brush controls PASS.
+`.1087` imported NOM/GLB textureless Paint is protected native PASS. Facegroup import from the user’s Nomad file remains open pending a reproduction. `.1086` combined Colour/Opacity, Done/reopen/redraw, transparent/double-sided GLB and opacity-only GLB PASS. `.1085` clean Pencil onset, pressure sizing, tap, Undo/Redo and four-channel stroke PASS. `.1077` compact Paint/four-channel strokes, `.1076` two-sided opacity preview, `.1075` opacity authoring and `.1074` brush controls PASS.
 
 ## Protected device results — 4 November 2026
 
