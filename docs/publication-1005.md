@@ -1,0 +1,27 @@
+# Build .1005
+
+48 focused checks PASS/0 FAIL/0 skipped (5.46s). Syntax/whitespace clean.
+Actual initial main allocation, saved sizing binding restart/reset/pagehide/default,
+storage failures, real debug controls/snapshot, prior viewport/probe/refresh, UV entry,
+workspace and1004 face/group fill plus original Paint input/history covered.
+No local full-suite or native pixel proof claimed. Published runtime698ef5083509674616e29fadcd83b704e3ae007f, tree
+aed551042b9403e432dbbfa1e66ba315374b1724, identical to tested local235b0808 tree.
+All13 blobs verified before non-forced atomic main update. Fetched origin confirms
+runtime/tree. Final5 release checks PASS. Pages40626822934 completed SUCCESS.
+Five fresh live files byte-match:version.json,index.html,src/main.js,
+src/viewport-sizing.js,src/gesture-debug.js;1005 shell/parent/child/debug pins verified.
+1005 is LIVE and ready for explicit saved1x fresh-launch test. No native acceptance
+or permanent right-region repair inferred. No runtime edits after focused validation.
+No permanent right-region fix claimed;1004 fill retained without runtime edits.
+
+Hosted regression40626823442 completed SUCCESS (verified 28 October 2026).
+Continuation audit on main dbc716d4: fresh local Node24.22.1 full suite
+2926 PASS / 0 FAIL / 0 skipped (109.81s). Docs-head Pages40626977468 SUCCESS.
+All five original live1005 release files still byte-match main. No runtime change
+or new build; saved1x fresh-launch and1004 Pencil Fill device gates remain pending.
+
+28 October device feedback: user PASS for1004 Fill behaviour (protected), FAIL for
+screen behaviour (Facegroup menu empty; bottom-right status missing during startup).
+No saved-startup/requested/backing values accompany feedback; fresh saved1x launch
+not yet confirmed. Screen remains OPEN/FAILED; no permanent rendering repair claimed.
+No runtime edits/new build or new automated test run in this feedback-only update.

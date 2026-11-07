@@ -1,0 +1,204 @@
+{
+  "total": 2081,
+  "passed": 2049,
+  "failed": 32,
+  "skipped": 0,
+  "classification_counts": {
+    "source-pattern-review": 31,
+    "version-pin-assertion": 1
+  },
+  "failures": [
+    {
+      "file": "tests/edge-extrude-move-plane-510.test.mjs",
+      "test": "510 repeated pulls preserve later user-selected constraint",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /if\\(armed&&!wasArmed\\)/."
+    },
+    {
+      "file": "tests/edge-progressive-disclosure-508.test.mjs",
+      "test": "508 compacts Edge home into requested three-column rows",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /for\\(const button of \\[dissolveEdge,del\\]\\)/."
+    },
+    {
+      "file": "tests/face-compact-layout-505.test.mjs",
+      "test": "505 creates three compact Face modelling rows",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /faceSecondaryCompactRow/."
+    },
+    {
+      "file": "tests/face-compact-layout-505.test.mjs",
+      "test": "505 keeps armed contextual controls between primary and secondary rows",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /if\\(cursor\\.nextElementSibling!==secondary\\)cursor\\.insertAdjacentElement\\('afterend',secondary\\)/."
+    },
+    {
+      "file": "tests/face-compact-layout-505.test.mjs",
+      "test": "505 puts diagnostics below the entire compact modelling block",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /let tail=tertiary/."
+    },
+    {
+      "file": "tests/face-compact-layout-505.test.mjs",
+      "test": "505 Join Coplanar honors compact secondary row",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /const compact=document\\.querySelector\\('#faceSecondaryCompactRow'\\)/."
+    },
+    {
+      "file": "tests/face-diagnostics-bottom-506.test.mjs",
+      "test": "506 keeps compact modelling rows and frozen interaction pins",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /faceSecondaryCompactRow/."
+    },
+    {
+      "file": "tests/face-disclosure-order-503.test.mjs",
+      "test": "503 installs Face contextual controls directly after primary Face row",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /const primary=faceTools\\?\\.querySelector\\(':scope > \\.outliner-actions'\\)/."
+    },
+    {
+      "file": "tests/face-disclosure-order-504.test.mjs",
+      "test": "504 orders Inspect and Repair directly above Topology Gate",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /repair\\.insertAdjacentElement\\('afterend',gate\\)/."
+    },
+    {
+      "file": "tests/facegroup-data-connection-456.test.mjs",
+      "test": "456 restores split import control and authoritative Facegroups mesh lookup",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /return bridge\\(\\)\\?\\.mesh\\|\\|null/."
+    },
+    {
+      "file": "tests/facegroup-first-activation-457.test.mjs",
+      "test": "457 entering Facegroups rebuilds and reapplies after viewport settles",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /requestAnimationFrame\\(\\(\\)=>requestAnimationFrame/."
+    },
+    {
+      "file": "tests/facegroup-mirror-459.test.mjs",
+      "test": "459 Facegroups viewport evaluates Mirror but not SubD yet",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /applyMirror\\(source,active\\.settings\\.mirror\\)/."
+    },
+    {
+      "file": "tests/facegroup-solidify-465.test.mjs",
+      "test": "465 does not touch Shell core",
+      "category": "source-pattern-review",
+      "assertion": "The input was expected to not match the regular expression /target\\.faceGroups=/."
+    },
+    {
+      "file": "tests/fix-component-rotate-start-482.test.mjs",
+      "test": "482 Rotate no longer depends on selected-component hit test",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /hitIndex=t==='rotate'\\?ids\\[0\\]\\?\\?0:hitSelectedIndex/."
+    },
+    {
+      "file": "tests/fix-face-rotate-479.test.mjs",
+      "test": "479 generic transform owner yields Face Rotate",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /if\\(m==='face'&&t==='rotate'\\)return;/."
+    },
+    {
+      "file": "tests/fix-face-rotate-479.test.mjs",
+      "test": "479 dedicated Face Rotate reads selection from authoritative bridge",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /mode!=='face'/."
+    },
+    {
+      "file": "tests/nomad-facegroups-540.test.mjs",
+      "test": "540 GLB import maps primitive/material groups to BoxLab faceGroups",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /geometry\\.groups/."
+    },
+    {
+      "file": "tests/nomad-facegroups-540.test.mjs",
+      "test": "540 GLB export emits one mesh with material groups per facegroup",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /new THREE\\.Mesh\\(geometry,materials\\.length===1\\?materials\\[0\\]:materials\\)/."
+    },
+    {
+      "file": "tests/nomad-glb-passthrough-549.test.mjs",
+      "test": "549 export reattaches safe Nomad metadata and texture bytes",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /passthrough:object\\.glbPassthrough\\|\\|null/."
+    },
+    {
+      "file": "tests/nomad-indexed-topology-553.test.mjs",
+      "test": "553 keeps preserved corner channels in the weld key",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /if\\(uvComplete\\)parts\\.push\\('u:'/."
+    },
+    {
+      "file": "tests/nomad-roundtrip-543.test.mjs",
+      "test": "543 import records round-trip object and facegroup details",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /lastImport=\\{objects:meshes\\.length,faceGroups:groupCount,details:perObject\\}/."
+    },
+    {
+      "file": "tests/nomad-uv-preservation-550.test.mjs",
+      "test": "550 captures GLB UVs per face corner",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /quadCornerUVs\\(/."
+    },
+    {
+      "file": "tests/nomad-uv-preservation-550.test.mjs",
+      "test": "550 restores UV attribute only when topology still matches",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /passthrough\\.uvTopologySignature===topologySignature\\(editable\\)/."
+    },
+    {
+      "file": "tests/revolve-profile-tool-session-422.test.mjs",
+      "test": "422 Revolve Profile exposes compact launcher before session ownership",
+      "category": "source-pattern-review",
+      "assertion": "The expression evaluated to a falsy value:\n\n  assert.ok(revolve.includes(&quot;launchRow.hidden=true&quot;))"
+    },
+    {
+      "file": "tests/revolve-refine-389.test.mjs",
+      "test": "389 new construction starts positioned before profile editing",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /position\\/snap the plane first/."
+    },
+    {
+      "file": "tests/selection-mode-dock-557.test.mjs",
+      "test": "557 selection modes are docked bottom-left without DOM/id changes",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /v0\\.36\\.18\\.557 bottom-left selection mode dock/."
+    },
+    {
+      "file": "tests/shell-solidify-recovery-464.test.mjs",
+      "test": "464 restores .461 Shell and Solidify core contracts",
+      "category": "source-pattern-review",
+      "assertion": "The input was expected to not match the regular expression /target\\.faceGroups=/."
+    },
+    {
+      "file": "tests/sweep-declaration-ui-472.test.mjs",
+      "test": "472 Edge Bevel exact control is repositioned before Slide precision anchor",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /edgePrecisionAnchor=document\\.querySelector\\('\\.loop-slide-option'\\)/."
+    },
+    {
+      "file": "tests/sweep-edit-ownership-400.test.mjs",
+      "test": "400 transform gestures yield to Sweep editing ownership",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /__boxlabSweepPath\\?\\.editing\\?\\.\\(\\)/."
+    },
+    {
+      "file": "tests/ui-fit-face-layout.test.mjs",
+      "test": "342 File menu fits below command bar with internal scrolling",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /top:calc\\(100% \\+ var\\(--boxlab-commandbar-h\\) \\+ 6px\\)/."
+    },
+    {
+      "file": "tests/unify-component-rotate-483.test.mjs",
+      "test": "483 shared transform yields component Rotate only",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /if\\(t==='rotate'&&\\['vertex','edge','face'\\]\\.includes\\(m\\)\\)return;/."
+    },
+    {
+      "file": "tests/viewport-scroll-467.test.mjs",
+      "test": "467 Viewport menu is height-limited and vertically scrollable",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /max-height:calc\\(100dvh - 118px\\)/."
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';test('453 note requests hands-on test',()=>assert.match(fs.readFileSync(new URL('../453_NOTE.txt',import.meta.url),'utf8'),/Hands-on/));

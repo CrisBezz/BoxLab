@@ -1,0 +1,1 @@
+import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';test('453 ready for merge',()=>assert.equal(fs.readFileSync(new URL('../453_READY_FOR_MERGE',import.meta.url),'utf8').trim(),'YES'));

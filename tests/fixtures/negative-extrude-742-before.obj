@@ -1,0 +1,44 @@
+# BoxLab scene OBJ export
+# BoxLab v0.36.18.742
+# Export mode: Base
+# Preflight: 1 closed clean | 0 open clean | 0 issues
+
+# Object 1: Extrude Test before
+# BoxLab health: Closed · Clean | boundary 0 | non-manifold 0 | winding 0 | tris 0 | quads 11 | ngons 2
+o Extrude Test before
+v -1 -1 -1
+v 1 -1 -1
+v 1 1 -1
+v -1 1 -1
+v -1 -1 1
+v 1 -1 1
+v 1 1 1
+v -1 1 1
+v 1 0 1
+v 1 0 -1
+v 1 0.5 1
+v 1 0.5 -1
+v 1 0.75 1
+v 1 0.75 -1
+v 1 0.25 1
+v 1 0.25 -1
+v 1 -0.5 1
+v 1 -0.5 -1
+v 1 -0.25 -1
+v 1 -0.25 1
+v 1 -0.75 -1
+v 1 -0.75 1
+g
+f 1 4 3 14 12 16 10 19 18 21 2
+f 5 6 22 17 20 9 15 11 13 7 8
+f 1 5 8 4
+f 21 18 17 22
+f 22 6 2 21
+f 19 10 9 20
+f 20 17 18 19
+f 15 9 10 16
+f 16 12 11 15
+f 13 11 12 14
+f 14 3 7 13
+f 1 2 6 5
+f 4 8 7 3

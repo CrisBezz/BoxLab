@@ -1,0 +1,37 @@
+import test from 'node:test';import assert from 'node:assert/strict';
+import {EditableMesh} from '../src/mesh.js';
+import {glbOwnerRuntime} from './helpers/glb-owner-runtime.mjs';
+import {viewportPaintRuntime as runtime,viewportPaintUIRuntime as uiRuntime} from './helpers/viewport-paint-runtime.mjs';
+import {bakePaintAO,bakePaintAOAsync} from '../src/paint-ao-bake.js';
+import {createPaintAOPixels,createPaintAOPixelsAsync} from '../src/paint-ao-layer.js';
+import {captureColourResource} from '../src/paint-resource.js';
+const owner=glbOwnerRuntime().c,node=(u,k)=>u.nodes.get('paint-'+k);
+function fixture(thin=false){const mesh=new EditableMesh([[0,0,0],[1,0,0],[1,1,0],[0,1,0],[0,0,.1],[1,0,.1],[1,1,.1],[0,1,.1]],[[0,1,2,3],[4,5,6,7]]),payload={source:'boxlab',version:1,uvTopologySignature:owner.topologySignature(mesh),uvCorners:[thin?[[.501,.05],[.503,.05],[.503,.45],[.501,.45]]:[[.05,.05],[.45,.05],[.45,.45],[.05,.45]],[[.55,.05],[.95,.05],[.95,.45],[.55,.45]]]},geometry=owner.buildUVPreviewGeometry(mesh,payload,{faceIndices:true});return{mesh,payload,geometry,topologySignature:owner.topologySignature};}
+async function setup(options={}){const r=runtime(options),f=fixture();r.c.replaceMeshInPlace(r.live,f.mesh);r.target().glbPassthrough=f.payload;r.target().booleanRecipe=undefined;f.geometry.dispose();return r;}
+test('945 high AO traces actual256 grid/64 samples with finer shade levels; async64 remains exactly legacy and source bytes stay untouched',async()=>{
+ const f=fixture(),before=JSON.stringify({mesh:f.mesh,payload:f.payload,geometry:f.geometry.toJSON()}),old=bakePaintAO(f),quick=await bakePaintAOAsync({...f,size:64,samples:16});assert.deepEqual(quick.pixels,old.pixels);assert.deepEqual(quick.coverage,old.coverage);
+ const high=await bakePaintAOAsync({...f,size:256,samples:64});assert.equal(high.width,256);assert.equal(high.samples,64);assert(high.rayTests>old.rayTests*50);const levels=a=>new Set([...a.pixels].filter((v,i)=>a.coverage[i]&&a.labels[i]===0));assert(levels(high).size>levels(old).size);for(let i=0;i<high.pixels.length;i++)if(high.labels[i]===1&&high.coverage[i])assert.equal(high.pixels[i],255);
+ assert.throws(()=>bakePaintAO({...f,size:256}),/AO/);assert.equal(JSON.stringify({mesh:f.mesh,payload:f.payload,geometry:f.geometry.toJSON()}),before);f.geometry.dispose();
+});
+test('945 256 bake recovers a thin UV face missed by64 without sampling a neighbouring face; Quick transfer stays byte-identical',async()=>{
+ const f=fixture(true),old=createPaintAOPixels({...f,size:512}),quick=await createPaintAOPixelsAsync({...f,size:512,resolution:64}),high=await createPaintAOPixelsAsync({...f,size:512,resolution:256});assert.deepEqual(quick,old);let oldCovered=0,highCovered=0;
+ for(let y=30;y<220;y++)for(let x=256;x<=257;x++){const at=(y*512+x)*4;oldCovered+=!!old[at+3];highCovered+=!!high[at+3];if(high[at+3])assert(high[at]<255);}assert.equal(oldCovered,0);assert(highCovered>20);f.geometry.dispose();
+});
+test('945 asynchronous high bake yields progress and stops on cancellation; aborted input and invalid quality cannot return partial pixels',async()=>{
+ const f=fixture(),abort=new AbortController();let progress=0;const pending=bakePaintAOAsync({...f,size:256,samples:64},{signal:abort.signal,onProgress:p=>{progress++;assert(p>=0&&p<=1);abort.abort();}});await assert.rejects(pending,/cancelled/);assert(progress>0);const pre=new AbortController();pre.abort();await assert.rejects(bakePaintAOAsync(f,{signal:pre.signal}),/cancelled/);await assert.rejects(createPaintAOPixelsAsync({...f,resolution:512}),/resolution/);f.geometry.dispose();
+});
+test('945 actual painter Cancel/close/stale geometry during high bake leave resource/history unchanged, then retry applies exactly once',async()=>{
+ const r=await setup();await r.painter.open();const original=r.target().colourPaint,n=r.h.undoStack.length;let pending=r.painter.previewAOHigh();assert(r.painter.state.aoBusy);assert.throws(()=>r.painter.addLayer(),/Apply or cancel/);assert(r.painter.cancelAO());assert.equal(await pending,false);assert(!r.painter.state.aoBusy);assert(!r.painter.state.aoPreview);assert.equal(r.target().colourPaint,original);assert.equal(r.h.undoStack.length,n);
+ pending=r.painter.previewAOHigh();r.live.vertices[0].x+=.01;r.manager.saveActive();await assert.rejects(pending,/Object changed/);assert(!r.painter.state.aoBusy);assert.equal(r.target().colourPaint,original);assert.equal(r.h.undoStack.length,n);
+ pending=r.painter.previewAOHigh();r.painter.close();assert.equal(await pending,false);assert(!r.painter.active);await r.painter.open();assert(await r.painter.previewAOHigh({resolution:128}));assert(r.painter.applyAO());assert.equal(r.h.undoStack.length,n+1);assert.equal(r.target().colourPaint.layers.layers[0].blendMode,'multiply');r.painter.close();
+});
+test('945 actual UI defaults to256/64, exposes Cancel while baking, prevents late results after Done and supports Quick comparison',async()=>{
+ const r=await setup(),u=uiRuntime(r);await u.api.open();assert.equal(node(u,'ao-resolution').value,'256');const old=r.target().colourPaint,n=r.h.undoStack.length;let pending=node(u,'bake-ao').click();assert(!node(u,'cancel-ao').hidden);assert(node(u,'apply-ao').hidden);assert(node(u,'ao-resolution').disabled);await node(u,'cancel-ao').click();await pending;assert(!node(u,'ao-resolution').disabled);assert(node(u,'apply-ao').hidden);assert.equal(r.target().colourPaint,old);assert.equal(r.h.undoStack.length,n);
+ pending=node(u,'bake-ao').click();await node(u,'done').click();await pending;assert(!u.api.active);assert.equal(r.target().colourPaint,old);assert.equal(r.h.undoStack.length,n);await u.api.open();node(u,'ao-resolution').value='64';await node(u,'bake-ao').click();assert(!node(u,'apply-ao').hidden);await node(u,'apply-ao').click();assert.equal(r.h.undoStack.length,n+1);assert(u.api.active);u.api.close();
+});
+test('945 expanded asynchronous work cap, pool and checkpoint refusals retain committed data/history and leave cancellation usable',async()=>{
+ const vertices=[],faces=[],uvCorners=[];for(let i=0;i<256;i++){const id=vertices.length,x=i%16/16,y=Math.floor(i/16)/16;vertices.push([0,0,i*.001],[1,0,i*.001],[1,1,i*.001],[0,1,i*.001]);faces.push([id,id+1,id+2,id+3]);uvCorners.push([[x+.001,y+.001],[x+.0615,y+.001],[x+.0615,y+.0615],[x+.001,y+.0615]]);}
+ const mesh=new EditableMesh(vertices,faces),payload={source:'boxlab',version:1,uvTopologySignature:owner.topologySignature(mesh),uvCorners},geometry=owner.buildUVPreviewGeometry(mesh,payload,{faceIndices:true});await assert.rejects(bakePaintAOAsync({geometry,mesh,payload,topologySignature:owner.topologySignature,size:256,samples:64}),/too complex/);geometry.dispose();
+ let extras=[],allow=false;const r=await setup({checkpoint:()=>allow,objects:()=>[r.target(),...extras]});await r.painter.open();const old=r.target().colourPaint,n=r.h.undoStack.length;assert(await r.painter.previewAOHigh({resolution:128}));assert.throws(()=>r.painter.applyAO(),/checkpoint/);assert(r.painter.state.aoPreview);assert(r.painter.cancelAO());
+ extras=[1,2].map(c=>({colourPaint:captureColourResource({width:1024,height:1024,binding:'a'.repeat(64),pixels:Uint8Array.from({length:4*1024*1024},(_,i)=>i%4===3?255:c)})}));await assert.rejects(r.painter.previewAOHigh({resolution:128}),/8 MiB/);assert(!r.painter.state.aoBusy);assert(!r.painter.state.aoPreview);assert.equal(r.target().colourPaint,old);assert.equal(r.h.undoStack.length,n);assert(r.controls.enabled);r.painter.close();
+});

@@ -1,0 +1,1 @@
+import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';test('453 PR ready',()=>assert.match(fs.readFileSync(new URL('../453_PR_READY.txt',import.meta.url),'utf8'),/READY/));

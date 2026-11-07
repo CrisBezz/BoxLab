@@ -1,0 +1,12 @@
+<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BoxLab .1072 adjustment controls check</title>
+<style>body{font:16px system-ui;color:#eee;background:#10141b;margin:24px}button{font:inherit;padding:12px}canvas{width:min(420px,65vw);image-rendering:auto;border:1px solid #678}p{max-width:700px}</style>
+<h1>Selected layer adjustments · .1072</h1><p>Isolated browser UI check using the production adjustment panel and filters. Generated sample only; does not touch the open project. Scene/history integration is covered by the actual painter tests.</p>
+<button id="adjust">Adjust demo layer</button><p id="status">Ready · no applied edits</p><canvas id="image" width="128" height="128"></canvas>
+<script type="module">
+import {createPaintAdjustmentUI} from '../src/paint-adjustments-ui.js?v=0.36.18.1072';
+const size=128,canvas=document.querySelector('#image'),ctx=canvas.getContext('2d'),status=document.querySelector('#status');let stored=new Uint8Array(size*size*4),commits=0;
+for(let y=0;y<size;y++)for(let x=0;x<size;x++){const i=(y*size+x)*4,edge=(x>>4)%2;stored.set([40+x,30+y,edge?180:70,255],i);}
+const draw=pixels=>{const im=ctx.createImageData(size,size);im.data.set(pixels);ctx.putImageData(im,0,0);};draw(stored);
+createPaintAdjustmentUI({document,button:document.querySelector('#adjust'),painter:()=>({beginAdjustment(){const original=stored.slice();let candidate=null;return {pixels:original,size,name:'Demo image',image:true,filter:()=>({domains:new Int32Array(size*size)}),preview(pixels){candidate=pixels.some((v,i)=>v!==original[i])?pixels.slice():null;draw(candidate||original);status.textContent='Preview · '+commits+' applied edits';return !!candidate;},apply(){if(!candidate)return false;stored=candidate;candidate=null;commits++;draw(stored);return true;},cancel(){draw(stored);}};}}),changed:()=>{status.textContent=commits+' applied edit(s)'},say:text=>{status.textContent=text+' · '+commits+' applied edit(s)'}});
+</script>

@@ -1,0 +1,52 @@
+{
+  "source": "User textured NOM donor, 2026-10-16",
+  "sha256": "ab3d9293d51d0597cdd6b17439112378e11a486c2898bc72282686a849dcfd6f",
+  "headerVersion": 7,
+  "jsonOffset": 65608,
+  "images": [
+    {
+      "length": 1412537,
+      "offset": 0,
+      "type": "image/jpeg"
+    },
+    {
+      "length": 738877,
+      "offset": 1412540,
+      "type": "image/jpeg"
+    },
+    {
+      "length": 1248872,
+      "offset": 2151420,
+      "type": "image/jpeg"
+    },
+    {
+      "length": 6200450,
+      "offset": 3400292,
+      "type": "image/png"
+    }
+  ],
+  "colourTexture": {
+    "index": 0,
+    "magFilter": "auto",
+    "minFilter": "auto",
+    "name": "blue_floor_tiles_01_color.jpg",
+    "offset": [
+      0,
+      0
+    ],
+    "projection": "auto",
+    "rotation": 0,
+    "scale": [
+      1,
+      1
+    ],
+    "triplanar_hardness": [
+      0.8999999761581421,
+      0.8999999761581421,
+      0.8999999761581421
+    ],
+    "triplanar_world": true,
+    "wrapS": "repeat",
+    "wrapT": "repeat"
+  }
+}

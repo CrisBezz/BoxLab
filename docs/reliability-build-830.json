@@ -1,0 +1,16 @@
+{
+  "runtime": "Node v24.19.0",
+  "tests": 2216,
+  "pass": 2216,
+  "fail": 0,
+  "skipped": 0,
+  "remainingFailures": [],
+  "baseline": "e745411d main .829",
+  "resolution": {
+    "quadball": "Versioned new grids remove two orphan pole vertices; legacy recipes preserved",
+    "concavity": "Unsafe donor pole refusal retained, safe shallow-notch acceptance tested",
+    "merge": "Requery current SVG node after redraw",
+    "diagnostic": "Retain refusal with actual concavity error",
+    "pointer": "Match accepted .824 inside-pad primary touch and test outside yielding"
+  }
+}

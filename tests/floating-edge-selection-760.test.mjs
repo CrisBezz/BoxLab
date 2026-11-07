@@ -1,0 +1,45 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import * as THREE from 'three';
+import {EditableMesh} from '../src/mesh.js';
+import {pencilSelectionRuntime as fixture} from './helpers/pencil-selection-runtime.mjs';
+test('floating Edge tap survives physical Pencil release instead of semantic background clear',()=>{
+ for(const body of [false,true]){const f=fixture();if(body)f.body();const p=f.screen(new THREE.Vector3());f.pointer('pointerdown',{clientX:p.x,clientY:p.y});assert.deepEqual(f.ids(),[0]);f.pointer('pointerup',{clientX:p.x,clientY:p.y});assert.deepEqual(f.ids(),[0]);assert.equal(f.events.some(e=>e.type==='boxlab-pencil-background-tap'),false);assert.equal(f.orbit().down,0);}
+});
+test('floating multi Edge paint gets horizontal/vertical movement before deferred orbit',()=>{
+ const f=fixture(),p=f.screen(new THREE.Vector3());f.pointer('pointerdown',{clientX:p.x,clientY:p.y});assert.equal(f.context.__boxlabPaintSelectDebug.pending().pointerId,1);const q=f.screen(new THREE.Vector3(0,1,0));f.pointer('pointermove',{clientX:q.x,clientY:q.y});assert.ok(f.ids().includes(1));assert.equal(f.context.__boxlabPaintSelectDebug.active().type,'edge');assert.equal(f.orbit().down,0);assert.equal(f.events.some(e=>e.type==='boxlab-pencil-orbit-claim'),false);f.pointer('pointerup',{clientX:q.x,clientY:q.y});assert.equal(f.context.__boxlabPaintSelectDebug.active(),null);
+});
+test('floating held Edge yields to original horizontal/vertical modeless browser',()=>{
+ for(const delta of [[70,0],[0,70]]){const f=fixture();f.multi.checked=false;let browsed=0;f.context.__boxlabModelessSelection={browsing:()=>true};f.canvas.addEventListener('pointermove',()=>browsed++,true);const p=f.screen(new THREE.Vector3());f.pointer('pointerdown',{clientX:p.x,clientY:p.y});f.pointer('pointermove',{clientX:p.x+delta[0],clientY:p.y+delta[1]});assert.equal(browsed,1);assert.equal(f.orbit().down,0);}
+});
+test('Visible Edge Lasso includes floating edge with no body under midpoint',()=>{
+ const f=fixture();f.body();const a=f.screen(new THREE.Vector3(-1.2,-.2,0)),b=f.screen(new THREE.Vector3(1.2,.2,0));f.lassoPoly([{x:a.x,y:a.y},{x:b.x,y:a.y},{x:b.x,y:b.y},{x:a.x,y:b.y}]);assert.deepEqual(Array.from(f.ids()),[0]);assert.equal(f.orbit().down,0);assert.equal(f.context.__boxlabLasso.isArmed(),true);
+});
+test('Visible Edge Lasso keeps foreground loose rail but refuses edge hidden behind a body; Through includes it',()=>{
+ for(const [z,depth,expected] of [[-2,'visible',[0]],[2,'visible',[]],[2,'through',[0]]]){const f=fixture();f.depth.dataset.paintDepth=depth;f.body(new THREE.Vector3(0,0,z));const a=f.screen(new THREE.Vector3(-1.2,-.2,0)),b=f.screen(new THREE.Vector3(1.2,.2,0));f.lassoPoly([{x:a.x,y:a.y},{x:b.x,y:a.y},{x:b.x,y:b.y},{x:a.x,y:b.y}]);assert.deepEqual(Array.from(f.ids()),expected);}
+});
+test('stationary floating Edge tap while Lasso armed keeps mode/selection; real empty tap still clears',()=>{
+ const f=fixture();f.setIds([0]);f.lasso();const p=f.screen(new THREE.Vector3());f.pointer('pointerdown',{clientX:p.x,clientY:p.y});f.pointer('pointerup',{clientX:p.x,clientY:p.y});assert.equal(f.context.__boxlabLasso.isArmed(),true);assert.deepEqual(f.ids(),[0]);assert.equal(f.events.some(e=>e.type==='boxlab-pencil-background-tap'),false);
+ f.pointer('pointerdown',{clientX:990,clientY:590});f.pointer('pointerup',{clientX:990,clientY:590});assert.equal(f.events.some(e=>e.type==='boxlab-pencil-background-tap'),true);
+});
+test('empty-space Pencil navigation and finger Orbit remain available around floating edges',()=>{
+ const f=fixture();f.pointer('pointerdown',{clientX:990,clientY:590});assert.equal(f.orbit().down,1);f.pointer('pointermove',{clientX:940,clientY:550});assert.ok(f.orbit().move>0);f.pointer('pointerup',{clientX:940,clientY:550});f.pointer('pointerdown',{clientX:500,clientY:300,pointerType:'touch'});assert.equal(f.orbit().down,2);
+});
+
+// .766: a body behind the same rail must not change its paint ownership.
+for(const direction of ['horizontal','vertical'])for(const phase of ['pending','active'])test(`Edge paint ${phase} ${direction} drag over a body cannot become Orbit`,()=>{
+ const f=fixture();f.body(new THREE.Vector3(0,0,-1));const p=f.screen(new THREE.Vector3());
+ f.pointer('pointerdown',{clientX:p.x,clientY:p.y});assert.equal(f.context.__boxlabPaintSelectDebug.pending()?.type,'edge');
+ if(phase==='active'){f.pointer('pointermove',{clientX:p.x+6,clientY:p.y});assert.equal(f.context.__boxlabPaintSelectDebug.active()?.type,'edge');}
+ const q=direction==='horizontal'?{x:p.x+50,y:p.y}:f.screen(new THREE.Vector3(0,1,0));
+ f.pointer('pointermove',{clientX:q.x,clientY:q.y});assert.equal(f.context.__boxlabPaintSelectDebug.active()?.type,'edge');assert.equal(f.orbit().down,0);assert.equal(f.events.some(e=>e.type==='boxlab-pencil-orbit-claim'),false);
+ if(direction==='vertical')assert.ok(f.ids().includes(1));
+ f.pointer('pointerup',{clientX:q.x,clientY:q.y});assert.equal(f.context.__boxlabPaintSelectDebug.active(),null);assert.equal(f.context.__boxlabPaintSelectDebug.pending(),null);assert.equal(f.history.undoStack.length,0);
+});
+for(const phase of ['pending','active'])test(`surfaced face-boundary Edge ${phase} paint keeps ownership across later movement`,()=>{
+ const m=new EditableMesh([[-1,0,0],[1,0,0],[-1,1,0],[1,1,0]],[[0,1,3,2]]),f=fixture(m);f.body(new THREE.Vector3(0,0,-1));const p=f.screen(new THREE.Vector3()),q=f.screen(new THREE.Vector3(0,1,0));
+ f.pointer('pointerdown',{clientX:p.x,clientY:p.y});assert.equal(f.context.__boxlabPaintSelectDebug.pending()?.type,'edge');if(phase==='active')f.pointer('pointermove',{clientX:p.x+6,clientY:p.y});f.pointer('pointermove',{clientX:q.x,clientY:q.y});assert.equal(f.context.__boxlabPaintSelectDebug.active()?.type,'edge');assert.ok(f.ids().includes(2));assert.equal(f.orbit().down,0);f.pointer('pointercancel',{clientX:q.x,clientY:q.y});assert.equal(f.context.__boxlabPaintSelectDebug.active(),null);assert.equal(f.context.__boxlabPencilOrbitDebug.snapshot().pendingMeshOrbit,null);assert.equal(f.history.undoStack.length,0);
+});
+test('Edge single selection and non-Edge idle Pencil mesh drags still defer to Orbit when no selection owner claims them',()=>{
+ for(const mode of ['edge','face','vertex']){const f=fixture();f.body(new THREE.Vector3(0,0,-1));f.setMode(mode);f.multi.checked=false;const p=f.screen(new THREE.Vector3());f.pointer('pointerdown',{clientX:p.x,clientY:p.y});f.pointer('pointermove',{clientX:p.x+50,clientY:p.y});assert.equal(f.orbit().down,1,mode);f.pointer('pointerup',{clientX:p.x+50,clientY:p.y});}
+});

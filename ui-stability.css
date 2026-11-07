@@ -1,0 +1,25 @@
+/* .972 — Plain UI rendering for the recurring iPad visual-loss device gate.
+   Keep layout, hit targets, enabled/disabled opacity and canvas isolation unchanged.
+   Dynamic tool styles also pass through this rule; no blur/filter layers linger. */
+#app, #app * {
+  -webkit-backdrop-filter:none!important;
+  backdrop-filter:none!important;
+}
+
+/* Decorative button saturation and SVG brightness do not carry tool state.
+   Existing opacity, borders, fills and stroke widths remain authoritative. */
+#app button, #app button *, #totalGizmo, #totalGizmo svg, #totalGizmo svg * {
+  filter:none!important;
+}
+
+/* Retain .967 isolation boundaries but stop requesting opacity layers. */
+#app .topbar, #app .statusbar, #app #objectBrowserPanel {
+  will-change:auto!important;
+}
+
+/* Replace frosted panels with an opaque surface at the same size and position. */
+#app .floating-panel, #app .top-file-content, #app .viewport-menu-panel,
+#app #objectBrowserPanel, #app #selectionModes,
+#app #viewportSelectionControls {
+  background-color:rgb(18,21,27)!important;
+}

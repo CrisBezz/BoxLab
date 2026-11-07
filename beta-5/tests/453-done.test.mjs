@@ -1,0 +1,1 @@
+import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';test('453 done',()=>assert.equal(fs.readFileSync(new URL('../453_DONE',import.meta.url),'utf8').trim(),'DONE'));

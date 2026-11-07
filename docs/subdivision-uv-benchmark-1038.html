@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#111318">
+  <title>BoxLab UV subdivision benchmark .1038</title>
+  <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.179.1/build/three.module.js"}}</script>
+  <style>
+    :root{color-scheme:dark;font:16px/1.45 system-ui,-apple-system,sans-serif;background:#191c22;color:#eef1f7}
+    *{box-sizing:border-box}body{margin:0;padding:18px;max-width:820px;margin-inline:auto}
+    h1{font-size:1.35rem;margin:0 0 8px}p{color:#bdc4d1;margin:10px 0}
+    .card{background:#252a33;border:1px solid #39414e;border-radius:14px;padding:16px;margin:14px 0}
+    button{font:inherit;font-weight:650;color:#101318;background:#d9e2f2;border:0;border-radius:10px;min-height:48px;padding:10px 16px;touch-action:manipulation}
+    button:disabled{opacity:.55}#progress{min-height:1.5em;color:#c3d5ff}table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+    th,td{text-align:right;padding:9px 5px;border-bottom:1px solid #3b424d}th:first-child,td:first-child{text-align:left}
+    th{color:#c1c9d7;font-size:.86rem}td{font-size:.9rem}code{overflow-wrap:anywhere}
+    textarea{display:block;width:100%;min-height:180px;margin-top:12px;background:#111318;color:#e8edf7;border:1px solid #414957;border-radius:8px;padding:10px}
+    .muted{font-size:.9rem;color:#aeb6c4}.actions{display:flex;gap:10px;flex-wrap:wrap}
+  </style>
+</head>
+<body>
+  <h1>UV subdivision timing · BoxLab .1038</h1>
+  <p>This compares BoxLab’s geometry-only Catmull–Clark path with its existing UV-aware path. It does not touch your open project.</p>
+  <section class="card">
+    <p><strong>Bound:</strong> 16, 64 and 256 source faces; levels 1–3; at most 16,384 output faces / 80,000 UV corners. Each path gets one warm-up and three timed runs. If any timed run exceeds 1.2 seconds, remaining cases stop.</p>
+    <p class="muted">Each case compares a continuous UV grid with deliberately separate per-face charts. This measures CPU subdivision and UV propagation only; it does not measure image decoding/sampling, transient memory, GPU upload/rendering, or frame time. It cannot approve viewport displacement by itself.</p>
+    <div class="actions"><button id="run" type="button">Run benchmark</button><button id="copy" type="button" disabled>Copy report</button></div>
+    <p id="progress" role="status" aria-live="polite">Ready. Keep the browser open and BoxLab orientation/resolution unchanged while it runs.</p>
+    <table aria-label="UV subdivision timing results">
+      <thead><tr><th>Faces</th><th>Level</th><th>Output</th><th>Geometry</th><th>UV grid</th><th>UV seams</th></tr></thead>
+      <tbody id="results"><tr><td colspan="6">No measurements yet.</td></tr></tbody>
+    </table>
+    <textarea id="report" readonly hidden aria-label="Benchmark report"></textarea>
+  </section>
+  <p class="muted">Open from BoxLab: File → Screen comparison / test list → UV subdivision timing. No displacement deformation ships in .1038.</p>
+  <script type="module">
+    import * as THREE from 'three';
+    import {EditableMesh} from '../src/mesh.js';
+    import {subdivide,subdivideWithCornerUVs,MAX_CORNER_UV_SUBDIVISION_FACES,MAX_CORNER_UV_SUBDIVISION_CORNERS} from '../src/subdivision.js?v=0.36.18.1037';
+
+    const presets=[4,8,16],stopMs=1200,samples=3;
+    const runButton=document.querySelector('#run'),copyButton=document.querySelector('#copy');
+    const progress=document.querySelector('#progress'),body=document.querySelector('#results'),report=document.querySelector('#report');
+    let reportData=null;
+    function grid(side){
+      const vertices=[],faces=[],continuous=[],seamed=[];
+      for(let y=0;y<=side;y++)for(let x=0;x<=side;x++)vertices.push(new THREE.Vector3(x/side,y/side,0));
+      for(let y=0;y<side;y++)for(let x=0;x<side;x++){
+        const a=y*(side+1)+x,fi=y*side+x,face=[a,a+1,a+side+2,a+side+1];faces.push(face);
+        continuous.push([[x/side,y/side],[(x+1)/side,y/side],[(x+1)/side,(y+1)/side],[x/side,(y+1)/side]]);
+        const u=fi*2;seamed.push([[u,0],[u+1,0],[u+1,1],[u,1]]);
+      }
+      return {mesh:new EditableMesh(vertices,faces),continuous,seamed};
+    }
+    const nextFrame=()=>new Promise(resolve=>requestAnimationFrame(resolve));
+    const median=values=>[...values].sort((a,b)=>a-b)[Math.floor(values.length/2)];
+    const fmt=value=>`${value.toFixed(2)} ms`;
+    function sameGeometry(a,b){
+      if(!a||!b||a.faces.length!==b.faces.length||a.vertices.length!==b.vertices.length)return false;
+      for(let i=0;i<a.vertices.length;i++)if(a.vertices[i].x!==b.vertices[i].x||a.vertices[i].y!==b.vertices[i].y||a.vertices[i].z!==b.vertices[i].z)return false;
+      for(let i=0;i<a.faces.length;i++)if(a.faces[i].length!==b.faces[i].length||a.faces[i].some((v,j)=>v!==b.faces[i][j]))return false;
+      return JSON.stringify([...a.creases])===JSON.stringify([...b.creases])&&JSON.stringify(a.faceGroups)===JSON.stringify(b.faceGroups);
+    }
+    function addRow(item){
+      const row=document.createElement('tr'),values=[item.sourceFaces,item.level,`${item.outputFaces} / ${item.outputVertices}`,fmt(item.geometry.medianMs),fmt(item.uvContinuous.medianMs),fmt(item.uvPerFace.medianMs)];
+      for(const value of values){const cell=document.createElement('td');cell.textContent=String(value);row.append(cell);}body.append(row);
+    }
+    async function measure(run){
+      run();
+      const times=[];let output=null;
+      for(let i=0;i<samples;i++){
+        await nextFrame();const start=performance.now();output=run();const elapsed=performance.now()-start;
+        if(elapsed>stopMs)return {stopped:true,output,elapsedMs:Number(elapsed.toFixed(2))};
+        times.push(elapsed);
+      }
+      return {stopped:false,output,medianMs:Number(median(times).toFixed(2)),samplesMs:times.map(v=>Number(v.toFixed(2)))};
+    }
+    runButton.addEventListener('click',async()=>{
+      runButton.disabled=true;copyButton.disabled=true;body.replaceChildren();report.hidden=true;reportData=null;
+      const started=new Date().toISOString(),results=[];let stopped=false;
+      for(const side of presets){
+        const sourceFaces=side*side,fixture=grid(side),source=fixture.mesh;
+        const sourceSnapshot=JSON.stringify({vertices:source.vertices.map(v=>v.toArray()),faces:source.faces});
+        const uvSnapshots={continuous:JSON.stringify(fixture.continuous),seamed:JSON.stringify(fixture.seamed)};
+        for(let level=1;level<=3;level++){
+          const projected=sourceFaces*(4**level);
+          if(projected>MAX_CORNER_UV_SUBDIVISION_FACES||projected*4>MAX_CORNER_UV_SUBDIVISION_CORNERS||stopped)continue;
+          progress.textContent=`Measuring ${sourceFaces} faces at level ${level}…`;await nextFrame();
+          const geometry=await measure(()=>subdivide(source,level));
+          if(geometry.stopped){stopped=true;break;}
+          const uvContinuous=await measure(()=>subdivideWithCornerUVs(source,fixture.continuous,level));
+          if(uvContinuous.stopped){stopped=true;break;}
+          const uvPerFace=await measure(()=>subdivideWithCornerUVs(source,fixture.seamed,level));
+          if(uvPerFace.stopped){stopped=true;break;}
+          const baseMesh=geometry.output,gridResult=uvContinuous.output,seamResult=uvPerFace.output;
+          const outputFaces=baseMesh.faces.length,outputVertices=baseMesh.vertices.length;
+          const uvCornersGrid=gridResult.cornerUVs.reduce((n,face)=>n+face.length,0),uvCornersSeamed=seamResult.cornerUVs.reduce((n,face)=>n+face.length,0);
+          const item={sourceFaces,level,outputFaces,outputVertices,outputCorners:uvCornersGrid,geometry:{medianMs:geometry.medianMs,samplesMs:geometry.samplesMs},uvContinuous:{medianMs:uvContinuous.medianMs,samplesMs:uvContinuous.samplesMs,cornerCount:uvCornersGrid},uvPerFace:{medianMs:uvPerFace.medianMs,samplesMs:uvPerFace.samplesMs,cornerCount:uvCornersSeamed},geometryMatchesBaseline:sameGeometry(baseMesh,gridResult.mesh)&&sameGeometry(baseMesh,seamResult.mesh),sourceUnchanged:JSON.stringify({vertices:source.vertices.map(v=>v.toArray()),faces:source.faces})===sourceSnapshot,uvInputsUnchanged:JSON.stringify(fixture.continuous)===uvSnapshots.continuous&&JSON.stringify(fixture.seamed)===uvSnapshots.seamed};
+          results.push(item);addRow(item);
+          if(!item.geometryMatchesBaseline||!item.sourceUnchanged||!item.uvInputsUnchanged){stopped=true;progress.textContent='Validation mismatch detected. Copy the partial report and send it.';break;}
+        }
+        if(stopped)break;
+      }
+      reportData={benchmark:'BoxLab UV subdivision timing .1038',started,ended:new Date().toISOString(),userAgent:navigator.userAgent,devicePixelRatio:window.devicePixelRatio,source:'src/subdivision.js · subdivide vs subdivideWithCornerUVs',sourceFaceCases:presets.map(side=>side*side),levels:[1,2,3],outputFaceCap:MAX_CORNER_UV_SUBDIVISION_FACES,outputCornerCap:MAX_CORNER_UV_SUBDIVISION_CORNERS,stopAfterSingleRunMs:stopMs,timedSamplesPerPath:samples,uvPatterns:['continuous grid','separate per-face charts'],results,stoppedEarly:stopped,scope:'CPU mesh and UV generation only; excludes texture decode/sampling, actual memory, GPU work and rendered frame time.'};
+      report.value=JSON.stringify(reportData,null,2);progress.textContent=stopped?`Stopped at the 1.2-second guard or a validation mismatch · ${results.length} complete cases. Copy the report.`:`Done · ${results.length} cases measured. Copy the report and share it.`;
+      copyButton.disabled=results.length===0;runButton.disabled=false;
+    });
+    copyButton.addEventListener('click',async()=>{
+      if(!reportData)return;report.value=JSON.stringify(reportData,null,2);report.hidden=false;
+      try{await navigator.clipboard.writeText(report.value);progress.textContent='Report copied to clipboard.';}
+      catch{report.focus();report.select();progress.textContent='Copy the selected report.';}
+    });
+  </script>
+</body>
+</html>

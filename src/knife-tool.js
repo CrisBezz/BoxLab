@@ -1,0 +1,144 @@
+import * as THREE from 'three';
+
+const canvas=document.querySelector('#viewport');
+const button=document.querySelector('#knifeBtn');
+const status=document.querySelector('#selectionStatus');
+const ray=new THREE.Raycaster();
+const pointer=new THREE.Vector2();
+const END_SNAP_PX=16;
+const MID_SNAP_PX=14;
+const PERP_SNAP_PX=13;
+const EDGE_PICK_PX=26;
+const RELEASE_HYSTERESIS_PX=34;
+const MIN_DRAG_PX=12;
+const END_EPS=0.001;
+let armed=false,drag=null,preview=null,startMarker=null,endMarker=null;
+
+function state(){return globalThis.__boxlabBridgeState;}
+function bridge(){return globalThis.__boxlabSelectionBridge;}
+function editable(){return !document.querySelector('#app')?.classList?.contains?.('boxlab-active-locked');}
+function captureDragSource(mesh){return {vertices:mesh.vertices.map(v=>v.clone()),faces:mesh.faces.map(face=>[...face])};}
+function dragSourceUnchanged(d){
+  const mesh=d.mesh,source=d.source;
+  return !!(mesh&&source&&mesh.vertices.length===source.vertices.length&&mesh.faces.length===source.faces.length
+    &&source.vertices.every((v,i)=>v.equals(mesh.vertices[i]))
+    &&source.faces.every((face,i)=>face.length===mesh.faces[i]?.length&&face.every((v,j)=>v===mesh.faces[i][j])));
+}
+function dragContextValid(d){return state()?.mesh===d.mesh&&globalThis.__boxlabObjectManager?.activeId===d.object&&bridge()?.mode?.()==='face'&&editable()&&dragSourceUnchanged(d);}
+function cancelDrag(){const d=drag;drag=null;clearPreview();if(d)try{canvas.releasePointerCapture?.(d.id);}catch{}}
+function render(){document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));}
+function inferenceOn(){return !!document.querySelector('#inferenceSnapToggle')?.checked;}
+function edgeKey(mesh,e){return mesh.edgeKey(e.a,e.b);}
+function screenPoint(v,camera){const p=v.clone().project(camera),r=canvas.getBoundingClientRect();return{x:r.left+(p.x*.5+.5)*r.width,y:r.top+(-p.y*.5+.5)*r.height};}
+function distSeg(px,py,a,b){const vx=b.x-a.x,vy=b.y-a.y,l2=vx*vx+vy*vy;if(!l2)return{d:Math.hypot(px-a.x,py-a.y),t:0,q:{x:a.x,y:a.y}};const t=Math.max(0,Math.min(1,((px-a.x)*vx+(py-a.y)*vy)/l2)),q={x:a.x+vx*t,y:a.y+vy*t};return{d:Math.hypot(px-q.x,py-q.y),t,q};}
+function hitFace(event){const s=state(),mesh=s?.mesh,camera=s?.camera;if(!mesh||!camera)return null;const r=canvas.getBoundingClientRect();pointer.set((event.clientX-r.left)/r.width*2-1,-((event.clientY-r.top)/r.height*2-1));ray.setFromCamera(pointer,camera);const geometry=mesh.triangulatedGeometry(),material=new THREE.MeshBasicMaterial({side:THREE.DoubleSide}),picker=new THREE.Mesh(geometry,material),hit=ray.intersectObject(picker,false)[0];geometry.dispose();material.dispose();if(!hit)return null;let tri=hit.faceIndex,faceIndex=-1;for(let fi=0;fi<mesh.faces.length;fi++){const n=Math.max(0,mesh.faces[fi].length-2);if(tri<n){faceIndex=fi;break;}tri-=n;}return faceIndex>=0?{faceIndex,point:hit.point.clone()}:null;}
+function vertexSnap(vertex,screen,point3,d=0){return{kind:'vertex',snapType:'END',vertex,d,screen,point3:point3.clone()};}
+function edgeSnap(mesh,a,b,t,screen,point3,snapType='EDGE',d=0){return{kind:'edge',snapType,key:mesh.edgeKey(a,b),faceA:a,faceB:b,t:THREE.MathUtils.clamp(t,0,1),d,screen,point3:point3.clone()};}
+function midpointSnap(mesh,a,b,camera){const point3=mesh.vertices[a].clone().lerp(mesh.vertices[b],.5);return edgeSnap(mesh,a,b,.5,screenPoint(point3,camera),point3,'MID');}
+// Screen interpolation is perspective-divided; undo that division before using
+// its fraction on a world-space edge. Orthographic clip weights are both one.
+function worldEdgeParameter(a,b,fraction,camera){
+  const clipWeight=v=>new THREE.Vector4(v.x,v.y,v.z,1).applyMatrix4(camera.matrixWorldInverse).applyMatrix4(camera.projectionMatrix).w;
+  const wa=clipWeight(a),wb=clipWeight(b);
+  if(!Number.isFinite(wa)||!Number.isFinite(wb)||wa<=0||wb<=0)return null;
+  return fraction*wa/((1-fraction)*wb+fraction*wa);
+}
+function freeBoundaryPoint(faceIndex,x,y,allowMid=true){const s=state(),mesh=s?.mesh,camera=s?.camera,face=mesh?.faces?.[faceIndex];if(!mesh||!camera||!face)return null;let bestEnd=null,bestMid=null,bestEdge=null;for(let i=0;i<face.length;i++){const a=face[i],b=face[(i+1)%face.length],va=mesh.vertices[a],vb=mesh.vertices[b],pa=screenPoint(va,camera),pb=screenPoint(vb,camera),seg=distSeg(x,y,pa,pb),da=Math.hypot(x-pa.x,y-pa.y),db=Math.hypot(x-pb.x,y-pb.y);if(da<=END_SNAP_PX&&(!bestEnd||da<bestEnd.d))bestEnd=vertexSnap(a,pa,va,da);if(db<=END_SNAP_PX&&(!bestEnd||db<bestEnd.d))bestEnd=vertexSnap(b,pb,vb,db);if(allowMid&&inferenceOn()){const mid=midpointSnap(mesh,a,b,camera),dm=Math.hypot(x-mid.screen.x,y-mid.screen.y);if(dm<=MID_SNAP_PX&&(!bestMid||dm<bestMid.d))bestMid={...mid,d:dm};}if(seg.d<=EDGE_PICK_PX&&(!bestEdge||seg.d<bestEdge.d)){const t=worldEdgeParameter(va,vb,seg.t,camera);if(t!==null){const point3=va.clone().lerp(vb,t);bestEdge=edgeSnap(mesh,a,b,t,seg.q,point3,'EDGE',seg.d);}}}return bestEnd||bestMid||bestEdge;}
+function perpendicularCandidate(faceIndex,start,x,y){if(!inferenceOn()||!start?.point3)return null;const s=state(),mesh=s?.mesh,camera=s?.camera,face=mesh?.faces?.[faceIndex];if(!mesh||!camera||!face)return null;let best=null;for(let i=0;i<face.length;i++){const a=face[i],b=face[(i+1)%face.length],va=mesh.vertices[a],vb=mesh.vertices[b],ab=vb.clone().sub(va),l2=ab.lengthSq();if(l2<1e-10)continue;const t=start.point3.clone().sub(va).dot(ab)/l2;if(t<=END_EPS||t>=1-END_EPS)continue;const point3=va.clone().addScaledVector(ab,t),sp=screenPoint(point3,camera),d=Math.hypot(x-sp.x,y-sp.y);if(d>PERP_SNAP_PX)continue;const candidate=edgeSnap(mesh,a,b,t,sp,point3,'PERP',d);if(!best||d<best.d)best=candidate;}return best;}
+function endpointFor(faceIndex,start,event){const basic=freeBoundaryPoint(faceIndex,event.clientX,event.clientY,true);if(basic?.snapType==='END'||basic?.snapType==='MID')return basic;const perp=perpendicularCandidate(faceIndex,start,event.clientX,event.clientY);if(perp)return perp;return basic;}
+function candidateFacesForStart(start,fallbackFace){const mesh=state()?.mesh;if(!mesh||!start)return[fallbackFace];let faces=[];if(start.kind==='vertex'){mesh.faces.forEach((face,fi)=>{if(Array.isArray(face)&&face.includes(start.vertex))faces.push(fi);});}else if(start.kind==='edge'){const edge=mesh.edges().find(e=>edgeKey(mesh,e)===start.key);faces=[...(edge?.faces||[])];}if(Number.isInteger(fallbackFace))faces.push(fallbackFace);return[...new Set(faces)].filter(fi=>Array.isArray(mesh.faces[fi]));}
+function snapRank(snap){if(snap?.snapType==='END')return 0;if(snap?.snapType==='MID')return 1;if(snap?.snapType==='PERP')return 2;return 3;}
+function endpointAcrossFaces(d,event){let best=null;for(const faceIndex of d.faceIndices){const snap=endpointFor(faceIndex,d.start,event);if(!snap)continue;const candidate={...snap,faceIndex};if(!best||snapRank(candidate)<snapRank(best)||(snapRank(candidate)===snapRank(best)&&(candidate.d??Infinity)<(best.d??Infinity)))best=candidate;}return best;}
+function rememberEndpoint(d,end,event){if(!d||!end)return end;d.lastEnd={snap:end,x:event.clientX,y:event.clientY};return end;}
+function endpointWithHysteresis(d,event){const live=endpointAcrossFaces(d,event);if(live)return rememberEndpoint(d,live,event);const last=d.lastEnd;if(!last?.snap)return null;return Math.hypot(event.clientX-last.x,event.clientY-last.y)<=RELEASE_HYSTERESIS_PX?last.snap:null;}
+function splitFaceEdge(face,a,b,vertex){for(let i=0;i<face.length;i++){const x=face[i],y=face[(i+1)%face.length];if((x===a&&y===b)||(x===b&&y===a)){const out=[...face];out.splice(i+1,0,vertex);return out;}}return null;}
+function splitEdge(mesh,snap){const edge=mesh.edges().find(e=>edgeKey(mesh,e)===snap.key);if(!edge)return null;let t=snap.t;if(edge.a===snap.faceB&&edge.b===snap.faceA)t=1-t;t=THREE.MathUtils.clamp(t,.001,.999);const {a,b}=edge,vertex=mesh.vertices.length,incident=[...(edge.faces||[])];if(!incident.length)return null;const replacements=[];for(const fi of incident){const face=mesh.faces[fi];if(!Array.isArray(face))return null;const next=splitFaceEdge(face,a,b,vertex);if(!next||next.length!==face.length+1||!next.includes(vertex))return null;replacements.push([fi,next]);}const crease=mesh.creases?.get(snap.key)||0,point=mesh.vertices[a].clone().lerp(mesh.vertices[b],t);mesh.vertices.push(point);for(const [fi,next] of replacements)mesh.faces[fi]=next;if(mesh.creases instanceof Map){mesh.creases.delete(snap.key);if(crease>0){mesh.creases.set(mesh.edgeKey(a,vertex),crease);mesh.creases.set(mesh.edgeKey(vertex,b),crease);}}const splitA=mesh.edges().some(e=>mesh.edgeKey(e.a,e.b)===mesh.edgeKey(a,vertex));const splitB=mesh.edges().some(e=>mesh.edgeKey(e.a,e.b)===mesh.edgeKey(vertex,b));if(!splitA||!splitB)return null;return vertex;}
+function resolveEndpoint(mesh,snap){return snap.kind==='vertex'?snap.vertex:splitEdge(mesh,snap);}
+function restore(mesh,before){mesh.vertices=before.vertices.map(v=>v.clone());mesh.faces=before.faces.map(f=>[...f]);mesh.creases=new Map(before.creases);mesh.faceGroups=[...before.faceGroups];if(before.looseEdges instanceof Set)mesh.looseEdges=new Set(before.looseEdges);if(before.looseVertices instanceof Set)mesh.looseVertices=new Set(before.looseVertices);}
+// A topological split alone can put a diagonal outside a concave face or
+// create a zero-area sliver along a subdivided boundary. Validate its interior
+// in the source face plane before asking the existing splitter to mutate it.
+function cleanDiagonal(mesh,a,b){
+  const face=mesh.faces.find(f=>f.length>=4&&f.includes(a)&&f.includes(b));
+  if(!face)return false;
+  const origin=mesh.vertices[face[0]],points=face.map(i=>mesh.vertices[i].clone().sub(origin));
+  const scale=points.reduce((n,p)=>Math.max(n,p.length()),0),eps=scale*1e-7;
+  if(!Number.isFinite(scale)||scale===0)return false;
+  const normal=new THREE.Vector3();
+  for(let i=0;i<points.length;i++)normal.add(points[i].clone().cross(points[(i+1)%points.length]));
+  if(normal.length()<=eps*scale)return false;
+  normal.normalize();
+  if(points.some(p=>!Number.isFinite(p.x+p.y+p.z)||Math.abs(p.dot(normal))>eps))return false;
+  const components=['x','y','z'].sort((x,y)=>Math.abs(normal[x])-Math.abs(normal[y])).slice(0,2);
+  const xy=p=>[p[components[0]],p[components[1]]],polygon=points.map(xy);
+  const A=polygon[face.indexOf(a)],B=polygon[face.indexOf(b)],dx=B[0]-A[0],dy=B[1]-A[1],length=Math.hypot(dx,dy);
+  if(length<=eps)return false;
+  const cross=(x,y)=>x[0]*y[1]-x[1]*y[0];
+  for(let i=0;i<polygon.length;i++){
+    const P=polygon[i],Q=polygon[(i+1)%polygon.length],pa=[P[0]-A[0],P[1]-A[1]],edge=[Q[0]-P[0],Q[1]-P[1]];
+    const t=(pa[0]*dx+pa[1]*dy)/(length*length);
+    if(face[i]!==a&&face[i]!==b&&t>eps/length&&t<1-eps/length&&Math.abs(cross([dx,dy],pa))<=eps*length)return false;
+    const denom=cross([dx,dy],edge);
+    if(Math.abs(denom)<=eps*Math.hypot(...edge))continue;
+    const along=cross(pa,edge)/denom,across=cross(pa,[dx,dy])/denom;
+    if(along>eps/length&&along<1-eps/length&&across>=-1e-7&&across<=1+1e-7)return false;
+  }
+  const mid=[(A[0]+B[0])/2,(A[1]+B[1])/2];let inside=false;
+  for(let i=0,j=polygon.length-1;i<polygon.length;j=i++){
+    const P=polygon[i],Q=polygon[j];
+    if((P[1]>mid[1])!==(Q[1]>mid[1])&&mid[0]<(Q[0]-P[0])*(mid[1]-P[1])/(Q[1]-P[1])+P[0])inside=!inside;
+  }
+  return inside;
+}
+function tryCut(mesh,start,end){
+  const before=mesh.clone();
+  try{
+    const a=resolveEndpoint(mesh,start),b=resolveEndpoint(mesh,end);
+    if(Number.isInteger(a)&&Number.isInteger(b)&&a!==b&&cleanDiagonal(mesh,a,b)){
+      const result=mesh.connectVertices(a,b);
+      if(result?.ok)return{before,result};
+    }
+  }catch{}
+  restore(mesh,before);return null;
+}
+function clearPreview(){preview?.remove();preview=null;startMarker?.remove();startMarker=null;endMarker?.remove();endMarker=null;}
+function snapColor(snap){if(snap?.snapType==='MID')return'#62d8ff';if(snap?.snapType==='PERP')return'#ff68d8';return'#ffe14a';}
+function marker(point,snap){const type=snap?.snapType||'EDGE',size=type==='END'?12:type==='MID'?10:type==='PERP'?10:8,color=snapColor(snap),el=document.createElement('div');el.style.cssText=`position:fixed;pointer-events:none;width:${size}px;height:${size}px;border-radius:50%;border:2px solid ${type==='END'?'#ffffff':color};background:${type==='END'?color:'#111318'};box-shadow:0 0 0 2px #0008;z-index:10000;transform:translate(-50%,-50%)`;el.style.left=`${point.x}px`;el.style.top=`${point.y}px`;document.body.appendChild(el);return el;}
+function showPreview(start,endSnap,fallback){clearPreview();startMarker=marker(start.screen,start);const b=endSnap?.screen||fallback,color=snapColor(endSnap),el=document.createElement('div');el.style.cssText=`position:fixed;pointer-events:none;height:2px;background:${color};transform-origin:0 50%;z-index:9999;box-shadow:0 0 4px #0008`;const dx=b.x-start.screen.x,dy=b.y-start.screen.y;el.style.left=`${start.screen.x}px`;el.style.top=`${start.screen.y}px`;el.style.width=`${Math.hypot(dx,dy)}px`;el.style.transform=`rotate(${Math.atan2(dy,dx)}rad)`;document.body.appendChild(el);preview=el;if(endSnap)endMarker=marker(endSnap.screen,endSnap);}
+function snapLabel(snap){return snap?.snapType||'NO SNAP';}
+function sameSnap(a,b){if(!a||!b)return false;if(a.kind==='vertex'&&b.kind==='vertex')return a.vertex===b.vertex;if(a.kind==='edge'&&b.kind==='edge'&&a.key===b.key)return Math.abs((a.t??0)-(b.t??0))<.001;return false;}
+function disarm(reason='Knife off'){
+  const wasArmed=armed;
+  armed=false;cancelDrag();button?.classList.remove('active');
+  if(wasArmed)window.dispatchEvent(new CustomEvent('boxlab-knife-disarmed',{detail:{reason}}));
+  return wasArmed;
+}
+function disableMulti(){const multi=document.querySelector('#multiSelectToggle');if(multi?.checked){multi.checked=false;multi.dispatchEvent(new Event('change',{bubbles:true}));}}
+function clearFaceSelection(){if(bridge()?.mode?.()==='face')bridge()?.set?.('face',[]);}
+function disarmOtherTools(){globalThis.__boxlabTransformArming?.disarm?.();document.querySelectorAll('#toolModes button,#extrudeBtn,#insetBtn').forEach(b=>b.classList.remove('active'));document.dispatchEvent(new CustomEvent('boxlab-direct-tool-exclusive',{detail:{tool:'knife'}}));}
+function modeFromTarget(target){return target?.closest?.('#selectionModes button[data-mode]')?.dataset?.mode||null;}
+
+button?.addEventListener('click',e=>{e.preventDefault();e.stopImmediatePropagation();if(armed){disarm('button-toggle');if(status)status.textContent='Face mode • Knife off';return;}if(!editable())return;armed=true;drag=null;clearPreview();disableMulti();disarmOtherTools();if(bridge()?.mode?.()!=='face')document.querySelector('#selectionModes button[data-mode="face"]')?.click();clearFaceSelection();button.classList.add('active');window.dispatchEvent(new CustomEvent('boxlab-knife-armed'));if(status)status.textContent=`Knife • END → MID → PERP → EDGE${inferenceOn()?' • geometric inference ON':' • MID/PERP off'}`;},true);
+document.addEventListener('click',e=>{if(!armed||!e.isTrusted||e.target?.closest?.('#knifeBtn'))return;const otherTool=e.target?.closest?.('#extrudeBtn,#insetBtn,#toolModes button,#vertexBevelBtn,#bevelBtn,#edgeSlideBtn,#offsetLoopBtn,#loopCutBtn,#faceSplitBtn,#extractFacesBtn,#bridgeFacesBtn,#deleteFaceBtn');if(otherTool)disarm();},true);
+window.addEventListener('pointerdown',e=>{if(!armed)return;const mode=modeFromTarget(e.target);if(mode&&mode!=='face')disarm();},true);
+document.querySelector('#selectionModes')?.addEventListener('click',e=>{if(!armed)return;const mode=modeFromTarget(e.target);if(mode&&mode!=='face')disarm();},true);
+window.addEventListener('boxlab-bridge-state',()=>{if(armed&&(bridge()?.mode?.()!=='face'||(drag&&!dragContextValid(drag))))disarm('context-changed');});
+document.addEventListener('boxlab-direct-tool-exclusive',event=>{if(event.detail?.tool&&event.detail.tool!=='knife')disarm();},true);
+
+document.querySelector('#inferenceSnapToggle')?.addEventListener('change',()=>{if(armed&&status)status.textContent=`Knife • END → MID → PERP → EDGE${inferenceOn()?' • geometric inference ON':' • MID/PERP off'}`;});
+
+canvas?.addEventListener('pointerdown',e=>{if(!armed||!e.isPrimary||e.pointerType==='touch'||(e.pointerType==='pen'&&!(e.pressure>0)))return;if(!editable()||bridge()?.mode?.()!=='face'){disarm('context-changed');return;}const face=hitFace(e);if(!face)return;const start=freeBoundaryPoint(face.faceIndex,e.clientX,e.clientY,true);if(!start)return;e.preventDefault();e.stopImmediatePropagation();const faceIndices=candidateFacesForStart(start,face.faceIndex);drag={source:captureDragSource(state().mesh),mesh:state()?.mesh,object:globalThis.__boxlabObjectManager?.activeId,id:e.pointerId,faceIndex:face.faceIndex,faceIndices,x:e.clientX,y:e.clientY,start,lastEnd:null};showPreview(start,null,start.screen);if(status)status.textContent=`Knife start • ${snapLabel(start)} • ${faceIndices.length} candidate face${faceIndices.length===1?'':'s'}`;canvas.setPointerCapture?.(e.pointerId);},true);
+canvas?.addEventListener('pointermove',e=>{if(!drag||drag.id!==e.pointerId)return;e.preventDefault();e.stopImmediatePropagation();if(!dragContextValid(drag)){disarm('context-changed');return;}const end=endpointWithHysteresis(drag,e);showPreview(drag.start,end,{x:e.clientX,y:e.clientY});if(status)status.textContent=end?`Knife end • ${snapLabel(end)} • release to cut`:'Knife • move onto a boundary snap before releasing';},true);
+canvas?.addEventListener('pointerup',e=>{if(!drag||drag.id!==e.pointerId)return;e.preventDefault();e.stopImmediatePropagation();if(!dragContextValid(drag)){disarm('context-changed');return;}const d=drag,end=endpointWithHysteresis(d,e);cancelDrag();if(Math.hypot(e.clientX-d.x,e.clientY-d.y)<MIN_DRAG_PX)return;if(!dragContextValid(d)){disarm('context-changed');return;}const mesh=d.mesh;if(!end){if(status)status.textContent='Knife • release only after END / MID / PERP / EDGE snap appears';return;}if(sameSnap(d.start,end))return;const cut=tryCut(mesh,d.start,end);if(!cut){render();if(status)status.textContent='Knife could not make a clean cut • use two different face boundaries';return;}globalThis.__boxlabHistory?.push(cut.before);render();if(bridge()?.mode?.()!=='face')document.querySelector('#selectionModes button[data-mode="face"]')?.click();button?.classList.add('active');armed=true;if(status)status.textContent=`Knife cut committed • ${snapLabel(d.start)} → ${snapLabel(end)} • Knife remains active`;},true);
+canvas?.addEventListener('pointercancel',e=>{if(drag?.id!==e.pointerId)return;cancelDrag();},true);
+
+canvas?.addEventListener('lostpointercapture',e=>{if(drag?.id===e.pointerId)cancelDrag();},true);
+window.addEventListener('keydown',e=>{if(armed&&e.key==='Escape')disarm('escape');},true);
+window.addEventListener('blur',()=>{if(armed)disarm('blur');});
+
+globalThis.__boxlabKnifeTool={
+  version:'0.36.18.684',
+  armed:()=>armed,
+  disarm:(reason='session-done')=>disarm(reason)
+};
+

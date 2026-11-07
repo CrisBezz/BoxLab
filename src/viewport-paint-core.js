@@ -1,0 +1,392 @@
+import {importedPaintColourSource,decodeImportedPaintColour} from './imported-paint-colour.js?v=0.36.18.1095';
+import {captureOpacityResource,copyOpacityResource} from './opacity-resource.js?v=0.36.18.1075';
+import {createProjectOpacityPool} from './project-opacity-resources.js?v=0.36.18.1075';
+import {createFaceFillPlan} from './paint-face-fill.js?v=0.36.18.1004';
+import {createFacegroupBoundaryPreview,facegroupBoundaryEdges} from './facegroup-boundary-preview.js?v=0.36.18.1004';
+import {createPaintFilterDomain} from './paint-filter-domain.js?v=0.36.18.1091';
+import {createPaintAOPixels,createPaintAOPixelsAsync} from './paint-ao-layer.js?v=0.36.18.951';
+import * as THREE from 'three';
+import {createPaintLayer} from '../evaluations/uv-paint/paint-core.js?v=0.36.18.1074';
+import {createStroke} from '../evaluations/uv-paint/stroke.js?v=896';
+import {captureColourResource} from './paint-resource.js?v=898';
+import {createPaintLayerStack,appendPaintLayer,replacePaintLayer,flattenPaintLayerStack,appendImagePaintLayer,replaceImagePaintLayer,rasterizeImagePaintLayer,enlargePaintLayerStack,mergePaintLayersToBase} from './paint-layer-stack.js?v=0.36.18.938';
+import {projectPaintImage} from './paint-image-project.js?v=0.36.18.951';
+import {surfaceImageFrameFromHit} from './paint-image-surface.js?v=0.36.18.933';
+import {capturePaintImagePlacement,paintImagePlacementFromCamera} from './paint-image-placement.js?v=0.36.18.907';
+import {captureLayeredColourResource,capturePaintResource} from './paint-layer-resource.js?v=0.36.18.1033';
+import {createProjectPaintPool} from './project-paint-resources.js?v=0.36.18.1095';
+import {paintTargetKey,paintTargetDigest,paintTexture,createPaintSurface} from './paint-target.js?v=0.36.18.1095';
+import {captureRoughnessResource,copyRoughnessResource} from './roughness-resource.js?v=0.36.18.1075';
+import {createProjectRoughnessPool} from './project-roughness-resources.js?v=0.36.18.1075';
+import {captureMetalnessResource,copyMetalnessResource} from './metalness-resource.js?v=0.36.18.1075';
+import {createProjectMetalnessPool} from './project-metalness-resources.js?v=0.36.18.1075';
+const scalarOwners={opacity:{field:'opacityPaint',capture:captureOpacityResource,copy:copyOpacityResource,pool:createProjectOpacityPool,initial:255,label:'Opacity'},roughness:{field:'roughnessPaint',capture:captureRoughnessResource,copy:copyRoughnessResource,pool:createProjectRoughnessPool,initial:255,label:'Roughness'},metalness:{field:'metalnessPaint',capture:captureMetalnessResource,copy:copyMetalnessResource,pool:createProjectMetalnessPool,initial:0,label:'Metalness'}};
+const PEN_ONSET_PRESSURE_SAMPLES=8;
+const PEN_ONSET_MAX_START_RADIUS=8;
+const PEN_ONSET_UNSETTLED_START_RADIUS=2;
+const PEN_ONSET_PRESSURE_DROP_RATIO=.75;
+// Scene history, selection, camera and body lifetime remain with the existing app.
+export function createViewportPainter({target,activeId=()=>target()?.id,body,owner,camera,controls,scene,checkpoint,onClose=()=>{},refresh=()=>{},allowed=()=>true,objects=()=>[target()],newColourSize=512,setTimer=setTimeout,clearTimer=clearTimeout,onDiagnostic=()=>{},decodeImportedColour=decodeImportedPaintColour}){
+ if(![512,1024].includes(newColourSize))throw Error('New colour texture must be 512 or 1024');
+ const diagnostic=(stage,data)=>{try{onDiagnostic(stage,data);}catch{}};
+ let session=null,generation=0,stroke=null;const ray=new THREE.Raycaster(),occluderMaterial=new THREE.MeshBasicMaterial({side:THREE.DoubleSide});
+ function current(){if(!session)return false;const o=session.object;return !session.display.disposed&&allowed()&&activeId()===session.id&&o?.id===session.id&&o.colourPaint===session.resource&&o.roughnessPaint===session.roughness&&o.metalnessPaint===session.metalness&&o.opacityPaint===session.opacity&&o.glbPassthrough===session.uv&&o.visible!==false&&!o.locked&&!o.sourceId&&!o.arrayRecipe&&!o.booleanRecipe&&!o.curveProfile&&!o.settings?.subd&&!Object.values(o.settings?.mirror||{}).some(Boolean);}
+ function finishStrokeLayers(cancelled=false){if(!stroke?.scalarLayers)return;for(const layer of Object.values(stroke.scalarLayers)){layer.finish(cancelled);layer.dispose();}stroke.scalarLayers=null;}
+ function cancel(){if(!stroke)return;clearTimer(stroke.timer);stroke.path?.cancel();session?.layer.finish(true);finishStrokeLayers(true);if(session)updatePreview();controls.enabled=stroke.controls;stroke=null;}
+ function close(redraw=true){generation++;session?.aoJob?.abort();if(!session)return;cancel();const old=session;session=null;old.body.geometry.removeEventListener('dispose',old.lost);old.boundaries?.dispose();old.display.dispose();old.layer.dispose();onClose();if(redraw)refresh(old.body);}
+ async function open(){close();const token=++generation,o=target();if(o?.locked||o?.visible===false)throw Error('Unlock and show the selected object first');const key=paintTargetKey(o,o?.mesh,owner),resource=o.colourPaint,roughness=o.roughnessPaint,metalness=o.metalnessPaint,opacity=o.opacityPaint,binding=await paintTargetDigest(key);
+  if(token!==generation||!allowed()||target()!==o||target()?.colourPaint!==resource||target()?.roughnessPaint!==roughness||target()?.metalnessPaint!==metalness||target()?.opacityPaint!==opacity||paintTargetKey(target(),target()?.mesh,owner)!==key)throw Error('Object changed while opening paint');
+  const importedColour=!resource?importedPaintColourSource(o.glbPassthrough):null,importedPixels=importedColour?await decodeImportedColour(importedColour):null;
+  if(token!==generation||!allowed()||target()!==o||o.colourPaint!==resource||o.roughnessPaint!==roughness||o.metalnessPaint!==metalness||o.opacityPaint!==opacity||paintTargetKey(o,o.mesh,owner)!==key)throw Error('Object changed while decoding imported colour');
+  const size=resource?.width||importedColour?.size||newColourSize,b=body();if(!b?.geometry)throw Error('Selected viewport body unavailable');
+  if(resource&&(resource.binding!==binding||![512,1024].includes(size)||resource.height!==size))throw Error('Stored paint no longer matches this geometry/UVs; Undo the change, or use Object → UV → Clear paint to start again');
+  for(const [channel,cfg] of Object.entries(scalarOwners)){const resource=o[cfg.field];if(resource){const r=cfg.copy(resource);if(r.binding!==binding)throw Error('Stored '+channel+' no longer matches this geometry/UVs; Undo the change, or use Object → UV → Clear paint to start again');}}
+  const geometry=owner.buildUVPreviewGeometry(o.mesh,o.glbPassthrough,{faceIndices:true});if(!geometry)throw Error('UV geometry unavailable');
+  const preview=new Uint8Array(size*size*4).fill(255);if(resource)preview.set(resource.pixels);else if(importedPixels)preview.set(importedPixels);else if(['glb','nomad'].includes(o.glbPassthrough?.source)){const material=Array.isArray(b.material)?b.material[0]:b.material;if(material?.color){const colour=material.color.clone().convertLinearToSRGB(),rgb=[colour.r,colour.g,colour.b].map(v=>Math.max(0,Math.min(255,Math.round(v*255))));for(let i=0;i<preview.length;i+=4)preview.set([...rgb,255],i);}}
+  // Opening a new 1024 document stays transient: first edit uses the accepted
+  // layered profile; no blank resource or history entry is published on open.
+  const stack=resource?.version>=2?capturePaintResource(resource).layers:!resource&&size===1024?createPaintLayerStack(captureColourResource({width:size,height:size,pixels:preview,binding})):null,selected=stack?.layers.at(-1)?.id||'$base';
+  let layer,display;try{layer=createPaintLayer(size,{transparent:!!stack&&selected!=='$base'});if(stack)layer.restore(selected==='$base'?stack.base.pixels:stack.layers.find(l=>l.id===selected).pixels);else if(resource||importedPixels)layer.restore(preview);for(const child of [...b.children])child.userData?.boxlabColourPaintDispose?.();display=createPaintSurface(b,geometry,paintTexture(preview,size),{padding:0,materialFactors:importedPaintColourSource(o.glbPassthrough)});display.show();}catch(e){geometry.dispose();display?.dispose();layer?.dispose();throw e;}
+  const lost=()=>close(false);session={size,object:o,id:o.id,key,binding,resource,roughness,metalness,opacity,uv:o.glbPassthrough,body:b,layer,display,lost,stack,selected,preview,dirty:true,paintTarget:'colour',previewMode:'material',multiPaintChannels:[]};b.geometry.addEventListener('dispose',lost);return true;
+ }
+ function hit(p){if(!current())return null;scene.updateMatrixWorld(true);ray.setFromCamera(new THREE.Vector2(p.x/p.width*2-1,1-p.y/p.height*2),camera);
+  const proxy=new THREE.Mesh(session.display.surface.geometry,session.display.surface.material);proxy.matrixWorld.copy(session.body.matrixWorld);const h=ray.intersectObject(proxy,false)[0];if(!h?.uv)return null;
+  let blocked=false;scene.traverse(b=>{if(blocked||b===session.body||!['body','boxlab-inactive-body'].includes(b.userData?.kind)||!b.geometry)return;for(let a=b;a;a=a.parent)if(!a.visible)return;const other=new THREE.Mesh(b.geometry,occluderMaterial);other.matrixWorld.copy(b.matrixWorld);const nearest=ray.intersectObject(other,false)[0];if(nearest&&nearest.distance<h.distance-1e-6)blocked=true;});return blocked?null:h;
+ }
+ function setFillScope(value){
+  if(!session||!['object','face','facegroup',null].includes(value))return false;
+  if(session.fillScope===value)return true;cancel();session.boundaries?.dispose();session.boundaries=null;session.fillScope=value;
+  if(value==='facegroup')session.boundaries=createFacegroupBoundaryPreview({mesh:session.object.mesh,body:session.body,scene,edges:facegroupBoundaryEdges(session.object.mesh)});
+  return true;
+ }
+ function scalar(){return !!session&&Object.hasOwn(scalarOwners,session.paintTarget);}
+ function scalarStrokeLayer(channel,value,settings,action,filter){
+  const cfg=scalarOwners[channel],resource=session[channel];
+  if(resource&&(resource.width!==512||resource.height!==512))throw Error(cfg.label+' painting requires a 512 × 512 map; existing map kept unchanged');
+  const pixels=new Uint8Array(512*512*4);
+  for(let i=0;i<512*512;i++){const n=resource?.pixels[i]??cfg.initial,at=i*4;pixels[at]=pixels[at+1]=pixels[at+2]=n;pixels[at+3]=255;}
+  const layer=createPaintLayer(512);layer.restore(pixels);const hex=(action==='erase'?cfg.initial:value).toString(16).padStart(2,'0');layer.begin({...settings,radius:Math.max(1,settings.radius*512/session.size),colour:'#'+hex.repeat(3)},{filter,smudge:action==='smudge'});return layer;
+ }
+ function strokeFilter(size,action,settings){
+  if(!['blur','smudge','sharpen'].includes(action))return null;
+  session.filterDomains??=new Map();let domain=session.filterDomains.get(size);
+  if(!domain){domain=createPaintFilterDomain(session.display.surface.geometry,size,{mesh:session.object.mesh,payload:session.uv,topologySignature:owner.topologySignature});session.filterDomains.set(size,domain);}
+  return {domains:domain.labels,neighbours:domain.neighbours,connectedFaces:action==='smudge'?domain.connectedFaces:undefined,amount:['blur','sharpen'].includes(action)?(settings.blurAmount??1):1,sharpen:action==='sharpen'};
+ }
+ function renderFill(active){
+  const scalarLayers=Object.values(active.scalarLayers||{});
+  if(!active.facePlan){session.layer.fill();for(const layer of scalarLayers)layer.fill();return;}
+  active.count=active.facePlan.render(session.layer,active);
+  active.scalarFacePlan?.render({fill:(...args)=>{for(const layer of scalarLayers)layer.fill(...args);}},active);
+ }
+ // Reuse the selected colour-layer mask as a stencil for NEW scalar edits.
+ // It does not retroactively change committed scalar maps. Colour retains its
+ // original non-destructive layer-mask compositor. No resource/schema fork.
+ function scalarStrokePixels(channel,layer){
+  const cfg=scalarOwners[channel],base=session[channel]?.pixels,mask=session.stack?.layers.find(l=>l.id===session.selected)?.mask,pixels=new Uint8Array(512*512);let changed=false;
+  if(!mask?.enabled){for(let i=0;i<pixels.length;i++){pixels[i]=layer.pixels[i*4];if(pixels[i]!== (base?.[i]??cfg.initial))changed=true;}return {pixels,changed};}
+  const step=session.size/512;
+  for(let y=0;y<512;y++)for(let x=0;x<512;x++){
+   const i=y*512+x,before=base?.[i]??cfg.initial;let coverage=1;
+   if(mask?.enabled){let value=0;for(let dy=0;dy<step;dy++)for(let dx=0;dx<step;dx++)value+=mask.pixels[(y*step+dy)*session.size+x*step+dx];coverage=value/(255*step*step);if(mask.inverted)coverage=1-coverage;}
+   const value=Math.round(before+(layer.pixels[i*4]-before)*coverage);pixels[i]=value;if(value!==before)changed=true;
+  }
+  return {pixels,changed};
+ }
+ function begin(p,settings,kind='boxlab',maskValue=0,roughnessValue=128,metalnessValue=255,action='paint',opacityValue=0){
+  if(session?.aoPreview||session?.aoJob)throw Error('Apply or cancel AO preview first');
+  if(!['paint','fill','fill-face','fill-facegroup','erase','blur','smudge','sharpen'].includes(action))throw Error('Unknown paint action');
+  if(!session||stroke)return false;clearImagePreview();
+  const selected=session.stack?.layers.find(l=>l.id===session.selected),multiChannels=session.paintTarget==='colour'?session.multiPaintChannels:[];
+  if(!scalar()&&selected&&(!selected.visible||!selected.opacity))throw Error('Show the selected layer and increase its opacity before painting');
+  if(scalar()){const value=session.paintTarget==='opacity'?opacityValue:session.paintTarget==='roughness'?roughnessValue:metalnessValue;if(!Number.isInteger(value)||value<0||value>255)throw Error(scalarOwners[session.paintTarget].label+' value must be 0 to 255');const hex=value.toString(16).padStart(2,'0');settings={...settings,colour:'#'+hex.repeat(3)};}
+  if(session.paintTarget==='mask'){if(!selected?.mask?.enabled)throw Error('Enable the selected layer mask before painting it');if(!Number.isInteger(maskValue)||maskValue<0||maskValue>255)throw Error('Mask value must be 0 to 255');const hex=maskValue.toString(16).padStart(2,'0');settings={...settings,colour:'#'+hex.repeat(3)};}
+  if(action==='erase'){const value=scalar()?scalarOwners[session.paintTarget].initial:session.paintTarget==='mask'?(selected?.mask?.inverted?0:255):255;const hex=value.toString(16).padStart(2,'0');settings={...settings,colour:'#'+hex.repeat(3)};}
+  if(selected?.image&&session.paintTarget==='colour')throw Error('Image colour is retained; use Convert to paint for Brush/Blur, or edit its mask');
+  if(!current()||paintTargetKey(target(),target()?.mesh,owner)!==session.key){close();return false;}
+  if(['fill','fill-face','fill-facegroup','blur','smudge','sharpen'].includes(action)&&!hit(p))return false;
+  let facePlan=null;if(action.startsWith('fill-')){const h=hit(p),seed=session.display.surface.geometry.userData.boxlabTriangleFaces?.[h.faceIndex];facePlan=createFaceFillPlan({mesh:session.object.mesh,geometry:session.display.surface.geometry,size:scalar()?512:session.size,seed,group:action==='fill-facegroup'});}
+  const filterSize=scalar()?512:session.size,filter=strokeFilter(filterSize,action,settings);if(filter)session.filterDomain=session.filterDomains.get(filterSize);
+  const scalarFilter=multiChannels.length?strokeFilter(512,action,settings):null;
+  const scalarFacePlan=facePlan&&multiChannels.length?createFaceFillPlan({mesh:session.object.mesh,geometry:session.display.surface.geometry,size:512,seed:session.display.surface.geometry.userData.boxlabTriangleFaces?.[hit(p).faceIndex],group:action==='fill-facegroup'}):null;
+  const scalarLayers={};try{for(const channel of multiChannels){const value=channel==='roughness'?roughnessValue:channel==='metalness'?metalnessValue:opacityValue;if(!Number.isInteger(value)||value<0||value>255)throw Error(scalarOwners[channel].label+' value must be 0 to 255');scalarLayers[channel]=scalarStrokeLayer(channel,value,settings,action,scalarFilter);}session.layer.begin(settings,{erase:action==='erase'&&session.paintTarget==='colour'&&!!selected,filter,smudge:action==='smudge'});}catch(error){for(const layer of Object.values(scalarLayers))layer.dispose();throw error;}
+  const enabled=controls.enabled;controls.enabled=false;
+  if(action==='fill'||facePlan){stroke={fill:true,facePlan,scalarFacePlan,scalarLayers,start:{x:p.x,y:p.y},controls:enabled,held:false,count:0,dx:0,dy:0};renderFill(stroke);if(action==='fill-face'){const active=stroke;stroke.timer=setTimer(()=>{if(stroke!==active||!current())return;try{active.held=true;renderFill(active);updatePreview();}catch(error){cancel();throw error;}},420);}return true;}
+  const makePath=()=>createStroke(kind,q=>{if(!(q.pressure>0))return;const index=stroke?.diagnosticDabs||0;if(stroke)stroke.diagnosticDabs=index+1;const h=hit({...q,width:p.width,height:p.height});if(index<8)diagnostic('dab',{index,pressure:q.pressure,primaryRadius:Math.max(.35,settings.radius*(settings.pressure?q.pressure:1)),scalarRadii:Object.keys(stroke?.scalarLayers||{}).map(channel=>({channel,radius:Math.max(.35,Math.max(1,settings.radius*512/session.size)*(settings.pressure?q.pressure:1))})),hit:!!h,uv:h?.uv?{u:Number(h.uv.x.toFixed(5)),v:Number(h.uv.y.toFixed(5))}:null});if(h){const face=['blur','smudge','sharpen'].includes(action)?session.filterDomain.faceAt(h.faceIndex):null;session.layer.stamp(h.uv.x,h.uv.y,q.pressure,face);for(const layer of Object.values(stroke?.scalarLayers||{}))layer.stamp(h.uv.x,h.uv.y,q.pressure,face);}else if(action==='smudge'){session.layer.resetPickup();for(const layer of Object.values(stroke?.scalarLayers||{}))layer.resetPickup();}});
+  const path=makePath(),penStart=settings.deferPenStart?{origin:{...p},pressured:p.pressure>0,pressureSamples:p.pressure>0?1:0,minPressure:p.pressure>0?p.pressure:null,samples:[]}:null;stroke={path,penStart,settings,waitingPressure:!(p.pressure>0),controls:enabled,smudge:action==='smudge',large:settings.radius>48,makePath,lastInput:{...p},scalarLayers,diagnosticDabs:0};diagnostic('stroke-begin',{kind,action,inputPressure:p.pressure,radius:settings.radius,pressureSize:settings.pressure,pressureOpacity:settings.pressureOpacity,deferred:!!penStart,pressureSettleSamples:PEN_ONSET_PRESSURE_SAMPLES,pressureSettleRadius:PEN_ONSET_MAX_START_RADIUS,channels:[session.paintTarget,...Object.keys(scalarLayers)]});if(!penStart)path.start(p);return true;
+ }
+ // Let the Pencil's initial pressure plateau settle before emitting the first dab.
+  function startPenPath(active,next,settleReason='sample-window'){
+  const {first,origin,pressured,samples=[]}=active.penStart;
+  const pressure=Number.isFinite(active.penStart.minPressure)?active.penStart.minPressure:Math.min(first.pressure,next.pressure);
+  const settings=active.settings,baseline=pressured&&Number.isFinite(origin.pressure)&&origin.pressure>0?origin.pressure:first.pressure;
+  const pressureDropRatio=baseline>0?pressure/baseline:1;
+  const unsettledAtWindow=settleReason==='sample-window'&&active.penStart.pressureSamples>=PEN_ONSET_PRESSURE_SAMPLES&&settings.pressure&&pressureDropRatio<PEN_ONSET_PRESSURE_DROP_RATIO;
+  const appliedPressure=unsettledAtWindow?Math.min(pressure,PEN_ONSET_UNSETTLED_START_RADIUS/Math.max(1,settings.radius)):pressure;
+  const observedRadius=Math.max(.35,settings.radius*(settings.pressure?pressure:1));
+  const initialRadius=Math.max(.35,settings.radius*(settings.pressure?appliedPressure:1));
+  diagnostic('onset-confirm',{downPressure:origin.pressure,firstMovePressure:first.pressure,confirmPressure:next.pressure,resolvedPressure:pressure,appliedPressure,pressureDropRatio:Number(pressureDropRatio.toFixed(4)),pressureClamped:unsettledAtWindow,observedRadius,initialRadius,pressureSamples:active.penStart.pressureSamples,pressureSettleSamples:PEN_ONSET_PRESSURE_SAMPLES,pressureSettleRadius:PEN_ONSET_MAX_START_RADIUS,pressureClampRadius:PEN_ONSET_UNSETTLED_START_RADIUS,pressureDropRatioRequired:PEN_ONSET_PRESSURE_DROP_RATIO,settleReason,originUsed:pressured,firstMove:{x:first.x,y:first.y},confirm:{x:next.x,y:next.y}});
+  active.penStart=null;
+  active.waitingPressure=false;
+  if(pressured){active.path.start({...origin,pressure:appliedPressure});for(const sample of samples)active.path.move({...sample,pressure:appliedPressure});}
+  else{active.path.start({...first,pressure:appliedPressure});for(const sample of samples.slice(1))active.path.move({...sample,pressure:appliedPressure});}
+ }
+ function move(p){if(!stroke)return;if(!current()){close();return;}if(stroke.fill){const dx=p.x-stroke.start.x,dy=p.y-stroke.start.y;if(!stroke.held){if(Math.hypot(dx,dy)>8)cancel();return;}stroke.dx=dx;stroke.dy=dy;renderFill(stroke);return;}try{if(stroke.penStart){
+   const pending=stroke.penStart;
+   stroke.lastInput={...p};
+   if(!(p.pressure>0)){
+    if(pending.first) startPenPath(stroke,pending.first);
+    else {pending.origin={...p};pending.pressured=false;pending.pressureSamples=0;pending.minPressure=null;pending.samples.length=0;}
+    return;
+   }
+   pending.pressureSamples++;pending.minPressure=Number.isFinite(pending.minPressure)?Math.min(pending.minPressure,p.pressure):p.pressure;
+   if(!pending.first){
+    if(p.x===pending.origin.x&&p.y===pending.origin.y){pending.pressured=true;return;}
+    pending.first={...p};pending.samples.push({...p});
+    return;
+   }
+   if(p.x===pending.first.x&&p.y===pending.first.y){
+    pending.first.pressure=Math.min(pending.first.pressure,p.pressure);
+    const firstSample=pending.samples[0];if(firstSample)firstSample.pressure=Math.min(firstSample.pressure,p.pressure);
+    return;
+   }
+   const lastSample=pending.samples.at(-1);if(!lastSample||p.x!==lastSample.x||p.y!==lastSample.y)pending.samples.push({...p});
+    const initialRadius=stroke.settings.radius*(stroke.settings.pressure?pending.minPressure:1);
+    const pressureDropRatio=pending.origin.pressure>0?pending.minPressure/pending.origin.pressure:1;
+    const stillSettling=stroke.settings.pressure&&pressureDropRatio<PEN_ONSET_PRESSURE_DROP_RATIO;
+    const safeRadius=stillSettling?PEN_ONSET_UNSETTLED_START_RADIUS:PEN_ONSET_MAX_START_RADIUS;
+    const settleReason=!stroke.settings.pressure?'fixed-size':initialRadius<=safeRadius?'radius-safe':pending.pressureSamples>=PEN_ONSET_PRESSURE_SAMPLES?'sample-window':null;
+    if(settleReason)startPenPath(stroke,p,settleReason);
+   return;
+  }if(stroke.waitingPressure){stroke.lastInput={...p};if(!(p.pressure>0))return;stroke.waitingPressure=false;stroke.path.cancel();stroke.path=stroke.makePath();stroke.path.start(p);return;}if(stroke.smudge||stroke.large){session.layer.resetWorkBudget();for(const layer of Object.values(stroke.scalarLayers||{}))layer.resetWorkBudget();if(stroke.path.stats.limited){stroke.path.cancel();stroke.path=stroke.makePath();stroke.path.start(stroke.lastInput);}}stroke.path.move(p);stroke.lastInput={...p};}catch(error){cancel();throw error;}}
+ function finish(p){
+  if(!stroke){diagnostic('stroke-finish',{accepted:false,reason:'no-active-stroke'});return false;}if(p)move(p);if(!stroke){diagnostic('stroke-finish',{accepted:false,reason:'stroke-cancelled-during-final-sample'});return false;}const active=stroke;
+  try{if(active.penStart?.first)startPenPath(active,active.penStart.first);if(active.penStart){active.penStart=null;if(active.lastInput.pressure>0){active.waitingPressure=false;active.path.start(active.lastInput);}}if(active.smudge||active.large){session.layer.resetWorkBudget();for(const layer of Object.values(active.scalarLayers||{}))layer.resetWorkBudget();}active.path?.end();}catch(error){cancel();throw error;}
+  const enabled=active.controls;clearTimer(active.timer);stroke=null;controls.enabled=enabled;
+  if(!current()||paintTargetKey(target(),target()?.mesh,owner)!==session.key){session.layer.finish(true);for(const layer of Object.values(active.scalarLayers||{})){layer.finish(true);layer.dispose();}diagnostic('stroke-finish',{accepted:false,reason:'paint-target-changed',dabs:active.diagnosticDabs||0});close();return false;}
+  const colourChanged=session.layer.finish(),scalarPixels={};for(const [channel,layer] of Object.entries(active.scalarLayers||{})){const changed=layer.finish();if(changed){const result=scalarStrokePixels(channel,layer);if(result.changed)scalarPixels[channel]=result.pixels;}layer.dispose();}
+  const changedChannels=[...(colourChanged?['colour']:[]),...Object.keys(scalarPixels)];
+  if(!changedChannels.length){updatePreview();diagnostic('stroke-finish',{accepted:true,committed:false,reason:'no-visible-pixels',dabs:active.diagnosticDabs||0,channels:[]});return false;}
+  try{
+   let committed;
+   if(Object.keys(scalarPixels).length){const colour=colourChanged?(session.stack?captureLayeredColourResource(workingStack()):captureColourResource({width:session.size,height:session.size,pixels:session.layer.pixels,binding:session.binding})):null;committed=commitMulti(colour,scalarPixels);}
+   else if(scalar())committed=commitScalar();
+   else{const resource=session.stack?captureLayeredColourResource(workingStack()):captureColourResource({width:session.size,height:session.size,pixels:session.layer.pixels,binding:session.binding});committed=commit(resource);}
+   diagnostic('stroke-finish',{accepted:true,committed:!!committed,reason:committed?'committed':'no-visible-pixels',dabs:active.diagnosticDabs||0,channels:committed?changedChannels:[]});return committed;
+  }catch(error){diagnostic('stroke-finish',{accepted:true,committed:false,reason:'commit-error',dabs:active.diagnosticDabs||0,channels:changedChannels,error:error?.message||String(error)});loadLayer();updatePreview();throw error;}
+ }
+ function workingStack(){const s=session;if(s.stack.layers.find(l=>l.id===s.selected)?.image&&s.paintTarget==='colour')return s.stack;if(s.selected==='$base')return {...s.stack,base:captureColourResource({...s.stack.base,pixels:s.layer.pixels})};
+  const maskPixels=s.paintTarget==='mask'?new Uint8Array(s.size*s.size):null;if(maskPixels)for(let i=0;i<maskPixels.length;i++)maskPixels[i]=s.layer.pixels[i*4];
+  return {...s.stack,layers:s.stack.layers.map(l=>l.id===s.selected?(maskPixels?{...l,mask:{...l.mask,pixels:maskPixels}}:{...l,pixels:s.layer.pixels}):l)};
+ }
+ function scalarPreview(){const s=session,masked=s.stack?.layers.find(l=>l.id===s.selected)?.mask?.enabled;if(s.size===512&&!masked)return s.layer.pixels;const values=masked?scalarStrokePixels(s.paintTarget,s.layer).pixels:null,out=s.preview,step=s.size/512;for(let y=0;y<s.size;y++)for(let x=0;x<s.size;x++){const at=(y*s.size+x)*4,from=Math.floor(y/step)*512+Math.floor(x/step);if(values){out[at]=out[at+1]=out[at+2]=values[from];out[at+3]=255;}else out.set(s.layer.pixels.subarray(from*4,from*4+4),at);}return out;}
+ function updatePreview(){if(!session)return;session.preview.set(scalar()?scalarPreview():session.aoPreview?.resource.pixels||session.imagePreview?.resource.pixels||(session.stack?flattenPaintLayerStack(workingStack()).pixels:session.layer.pixels));session.dirty=true;}
+ function updateMaterialPreview(){const s=session;if(!s)return;
+  if(s.previewMode!=='material'){s.display.showChannel();return;}
+  const colour=scalar()?(s.resource?.pixels||null):s.preview,roughScratch=stroke?.scalarLayers?.roughness,metalScratch=stroke?.scalarLayers?.metalness,opacityScratch=stroke?.scalarLayers?.opacity;
+  const roughness=scalarMaterialPreview('roughness',roughScratch||(s.paintTarget==='roughness'?s.layer:null)),metalness=scalarMaterialPreview('metalness',metalScratch||(s.paintTarget==='metalness'?s.layer:null));
+  s.display.showMaterial(colour,roughness.resource,roughness.rgba,metalness.resource,metalness.rgba,scalarMaterialPreview('opacity',opacityScratch||(s.paintTarget==='opacity'?s.layer:null)));
+ }
+ function scalarMaterialPreview(channel,layer){
+  if(!layer)return {resource:session[channel],rgba:false};
+  const masked=session.stack?.layers.find(l=>l.id===session.selected)?.mask?.enabled;
+  return {resource:{width:512,height:512,pixels:masked?scalarStrokePixels(channel,layer).pixels:layer.pixels},rgba:!masked};
+ }
+ function selectPreviewMode(value){if(!ready())return false;if(!['channel','material'].includes(value))throw Error('Unknown paint preview');if(session.previewMode===value)return false;session.previewMode=value;session.dirty=true;return true;}
+ function loadLayer(){const s=session;if(!s)return;const selected=s.stack?.layers.find(l=>l.id===s.selected);if(s.paintTarget==='mask'&&!selected?.mask)s.paintTarget='colour';
+  s.layer.dispose();s.layer=createPaintLayer(scalar()?512:s.size,{transparent:!!selected&&s.paintTarget==='colour'});
+  if(scalar()){const cfg=scalarOwners[s.paintTarget],rgba=new Uint8Array(512*512*4).fill(255),pixels=s[s.paintTarget]?.pixels;for(let i=0;i<512*512;i++)rgba[i*4]=rgba[i*4+1]=rgba[i*4+2]=pixels?pixels[i]:cfg.initial;s.layer.restore(rgba);}
+  else if(s.paintTarget==='mask'){const rgba=new Uint8Array(s.size*s.size*4),mask=selected.mask.pixels;for(let i=0;i<mask.length;i++){const at=i*4;rgba[at]=rgba[at+1]=rgba[at+2]=mask[i];rgba[at+3]=255;}s.layer.restore(rgba);}
+  else{const pixels=selected?.pixels||s.stack?.base.pixels||s.resource?.pixels;if(pixels)s.layer.restore(pixels);}
+ }
+ // The opaque raster interpolates raw bytes; equal RGB channels carry linear R8
+ // values without gamma conversion or colour blend modes. Publish only R8 copies.
+ function commitScalar(){
+  if(!current()||paintTargetKey(target(),target()?.mesh,owner)!==session.key){close();throw Error('Object changed during paint');}
+  const channel=session.paintTarget,result=scalarStrokePixels(channel,session.layer);if(!result.changed){loadLayer();updatePreview();return false;}const pixels=result.pixels;
+  const cfg=scalarOwners[channel],resource=cfg.capture({width:512,height:512,pixels,binding:session.binding}),pool=cfg.pool();
+  for(const o of objects()){const r=o===target()?resource:o?.[cfg.field];if(r)pool.add(r);}
+  if(!checkpoint())throw Error('Scene history checkpoint unavailable');
+  target()[cfg.field]=resource;session[channel]=resource;loadLayer();updatePreview();return true;
+ }
+ function commitMulti(colourResource,scalarPixels){
+  if(!current()||paintTargetKey(target(),target()?.mesh,owner)!==session.key){close();throw Error('Object changed during paint');}
+  if(colourResource)preflight(colourResource);
+  const resources={};for(const [channel,pixels] of Object.entries(scalarPixels)){const cfg=scalarOwners[channel],resource=cfg.capture({width:512,height:512,pixels,binding:session.binding}),pool=cfg.pool();for(const o of objects()){const existing=o===target()?resource:o?.[cfg.field];if(existing)pool.add(existing);}resources[channel]=resource;}
+  if(!checkpoint())throw Error('Scene history checkpoint unavailable');
+  if(colourResource){target().colourPaint=colourResource;session.resource=colourResource;session.stack=colourResource.version>=2?colourResource.layers:null;}
+  for(const [channel,resource] of Object.entries(resources)){const cfg=scalarOwners[channel];target()[cfg.field]=resource;session[channel]=resource;}
+  session.imagePreview=null;session.aoPreview=null;loadLayer();updatePreview();return true;
+ }
+ function setMultiPaintChannels(channels){if(!ready())return false;if(!Array.isArray(channels)||channels.some(c=>!['roughness','metalness','opacity'].includes(c))||new Set(channels).size!==channels.length)throw Error('Choose Roughness, Metalness and/or Opacity for combined Colour strokes');if(!['colour','mask'].includes(session.paintTarget)&&channels.length)throw Error('Choose Colour as the primary paint channel before combining material values');for(const channel of channels){const r=session[channel];if(r&&(r.width!==512||r.height!==512))throw Error(scalarOwners[channel].label+' painting requires a 512 × 512 map; existing map kept unchanged');}session.multiPaintChannels=channels.slice();session.previewMode='material';session.dirty=true;return true;}
+ function colourOnly(){if(scalar())throw Error('Switch to Colour to edit layers, masks or images');}
+ function preflight(resource){const pool=createProjectPaintPool();for(const o of objects()){const r=o===target()?resource:o?.colourPaint;if(r)pool.add(r);}}
+ function clearImagePreview(){if(session?.imagePreview){session.imagePreview=null;updatePreview();}}
+ function commit(resource){
+  if(!current()||paintTargetKey(target(),target()?.mesh,owner)!==session.key){close();throw Error('Object changed during paint');}
+  preflight(resource);
+  if(!checkpoint())throw Error('Scene history checkpoint unavailable');
+  target().colourPaint=resource;session.imagePreview=null;session.aoPreview=null;session.resource=resource;session.stack=resource.version>=2?resource.layers:null;loadLayer();updatePreview();return true;
+ }
+ function ready(){if(!session)return false;if(session.aoPreview||session.aoJob)throw Error('Apply or cancel AO preview first');cancel();clearImagePreview();if(!current()||paintTargetKey(target(),target()?.mesh,owner)!==session.key){close();return false;}return true;}
+ function selectLayer(id){if(!ready())return false;colourOnly();if(id!=='$base'&&!session.stack?.layers.some(l=>l.id===id))throw Error('Unknown paint layer');session.selected=id;session.paintTarget='colour';loadLayer();return true;}
+ function addLayer(){colourOnly();if(!ready())return false;const s=session,stack=s.stack||createPaintLayerStack(s.resource||captureColourResource({width:s.size,height:s.size,pixels:s.preview,binding:s.binding}));let n=1;while(stack.layers.some(l=>l.id==='layer'+n))n++;const id='layer'+n,resource=captureLayeredColourResource(appendPaintLayer(stack,{id,name:'Layer '+n}));if(commit(resource)){session.selected=id;session.paintTarget='colour';loadLayer();return true;}return false;}
+ function prepareImage(source,placement,{replace=false,name='Image layer',surface=null}={}){colourOnly();
+ const s=session,selected=s.stack?.layers.find(l=>l.id===s.selected);
+  if(replace&&!selected?.image)throw Error('Select an image layer to edit');
+  const stack=s.stack||createPaintLayerStack(s.resource||captureColourResource({width:s.size,height:s.size,pixels:s.preview,binding:s.binding}));
+  if(!replace&&stack.layers.length>=3)throw Error('Delete a layer first; three overlays maximum');
+  scene.updateMatrixWorld(true);
+  const image={version:1,source,placement:placement?.worldToClip?capturePaintImagePlacement(placement):paintImagePlacementFromCamera(camera,placement),objectToWorld:s.body.matrixWorld.toArray()},result=projectPaintImage({geometry:s.display.surface.geometry,image,scene,body:s.body,size:s.size,surface,mesh:s.object.mesh,payload:s.uv,topologySignature:owner.topologySignature});
+  let n=1;while(stack.layers.some(l=>l.id==='image'+n))n++;const id=replace?s.selected:'image'+n;
+  const next=replace?replaceImagePaintLayer(stack,id,result):appendImagePaintLayer(stack,{...result,id,name:name.trim().slice(0,64)||'Image layer'});
+  return {resource:captureLayeredColourResource(next),id};
+ }
+ function projectImage(source,placement,options={}){if(!ready())return false;const candidate=prepareImage(source,placement,options);return publishImage(candidate);}
+ function publishImage(candidate){if(commit(candidate.resource)){session.selected=candidate.id;session.paintTarget='colour';loadLayer();return true;}return false;}
+ function previewImage(source,placement,options={}){if(!ready())return false;const candidate=prepareImage(source,placement,options);preflight(candidate.resource);session.imagePreview=candidate;updatePreview();return true;}
+ function applyImagePreview(){const candidate=session?.imagePreview;if(!candidate||!ready())return false;try{return publishImage(candidate);}catch(error){updatePreview();throw error;}}
+ function surfaceFrame(p,source){if(!current())return null;const h=hit(p);return h?surfaceImageFrameFromHit(h,{matrixWorld:session.body.matrixWorld,geometry:session.display.surface.geometry,source}):null;}
+
+ function prepareAO({radius=.25,strength=.65}={}){
+  if(session?.imagePreview)throw Error('Apply or cancel image placement before baking AO');
+  if(!ready())return null;
+  const s=session;if(s.paintTarget!=='colour')throw Error('Switch to Colour before baking AO');
+  if(!Number.isFinite(strength)||strength<0||strength>1)throw Error('AO strength must be 0 to 1');
+  const stack=s.stack||createPaintLayerStack(s.resource||captureColourResource({width:s.size,height:s.size,pixels:s.preview,binding:s.binding}));
+  if(stack.layers.length>=3)throw Error('Merge or delete a layer first; three overlays maximum');
+  const mesh=s.object.mesh,positions=JSON.stringify(mesh.vertices),geometry=owner.buildUVPreviewGeometry(mesh,s.uv,{faceIndices:true});
+  if(!geometry)throw Error('AO needs current native UV geometry');
+  return {s,stack,mesh,positions,geometry,radius,strength};
+ }
+ function publishAOPreview(job,pixels){
+  const {s,stack,positions,strength}=job;
+  let n=1;while(stack.layers.some(l=>l.id==='ao'+n))n++;const id='ao'+n;
+  const resource=captureLayeredColourResource(appendPaintLayer(stack,{id,name:'AO '+n,blendMode:'multiply',opacity:strength,pixels}));
+  preflight(resource);
+  const object=target();if(!current()||s!==session||JSON.stringify(object?.mesh?.vertices)!==positions||paintTargetKey(object,object?.mesh,owner)!==s.key)throw Error('Object changed during AO bake');
+  s.aoPreview={resource,id,positions};updatePreview();return true;
+ }
+ function previewAO(options={}){const job=prepareAO(options);if(!job)return false;
+  const {s,mesh,geometry,radius}=job;try{return publishAOPreview(job,createPaintAOPixels({geometry,mesh,payload:s.uv,topologySignature:owner.topologySignature,size:s.size,radius}));}finally{geometry.dispose();}
+ }
+ async function previewAOHigh({resolution=256,...options}={}){
+  const job=prepareAO(options);if(!job)return false;
+  const {s,mesh,geometry,radius}=job,abort=new AbortController();s.aoJob=abort;s.aoProgress=0;
+  try{const pixels=await createPaintAOPixelsAsync({geometry,mesh,payload:s.uv,topologySignature:owner.topologySignature,size:s.size,radius,resolution},{signal:abort.signal,onProgress:p=>{s.aoProgress=p;if(!current())abort.abort();}});
+   if(abort.signal.aborted||session!==s||s.aoJob!==abort)return false;
+   return publishAOPreview(job,pixels);
+  }catch(error){if(abort.signal.aborted)return false;throw error;}
+  finally{geometry.dispose();if(s.aoJob===abort)s.aoJob=null;}
+ }
+ function cancelAO(){if(!session)return false;const had=!!session.aoJob||!!session.aoPreview;session.aoJob?.abort();session.aoJob=null;session.aoPreview=null;if(had)updatePreview();return had;}
+ function applyAO(){const s=session,candidate=s?.aoPreview;if(!candidate)return false;
+  const object=target();if(!current()||JSON.stringify(object?.mesh?.vertices)!==candidate.positions||paintTargetKey(object,object?.mesh,owner)!==s.key){cancelAO();throw Error('Object changed after AO preview; bake again');}
+  if(commit(candidate.resource)){session.selected=candidate.id;session.paintTarget='colour';loadLayer();updatePreview();return true;}return false;
+ }
+
+ function rasterizeImage(){colourOnly();if(session?.imagePreview)throw Error('Apply or cancel image placement before converting');if(!ready())return false;
+  const s=session;if(!s.stack?.layers.find(l=>l.id===s.selected)?.image)throw Error('Select an image layer to convert');
+  if(commit(captureLayeredColourResource(rasterizeImagePaintLayer(s.stack,s.selected)))){session.paintTarget='colour';loadLayer();updatePreview();return true;}return false;
+ }
+ function increaseResolution(){colourOnly();if(session?.imagePreview)throw Error('Apply or cancel image placement before increasing resolution');if(!ready())return false;
+  const s=session;if(s.size!==512)throw Error('Colour texture is already 1024 × 1024');
+  const stack=s.stack||createPaintLayerStack(s.resource||captureColourResource({width:s.size,height:s.size,pixels:s.preview,binding:s.binding}));
+  const enlarged=enlargePaintLayerStack(stack),resource=captureLayeredColourResource(enlarged);
+  preflight(resource);
+  let layer,texture;try{const selected=enlarged.layers.find(l=>l.id===s.selected);layer=createPaintLayer(1024,{transparent:!!selected&&s.paintTarget==='colour'});
+   if(s.paintTarget==='mask'){const rgba=new Uint8Array(1024*1024*4),mask=selected.mask.pixels;for(let i=0;i<mask.length;i++){const at=i*4;rgba[at]=rgba[at+1]=rgba[at+2]=mask[i];rgba[at+3]=255;}layer.restore(rgba);}else layer.restore(selected?.pixels||enlarged.base.pixels);
+   const preview=resource.pixels.slice();texture=paintTexture(preview,1024);
+   if(!current()||paintTargetKey(target(),target()?.mesh,owner)!==s.key)throw Error('Object changed during paint');
+   if(!checkpoint())throw Error('Scene history checkpoint unavailable');
+   target().colourPaint=resource;s.resource=resource;s.stack=resource.version>=2?resource.layers:null;s.size=1024;s.preview=preview;s.layer.dispose();s.layer=layer;s.filterDomain=null;s.filterDomains=null;s.display.replaceChannelTexture(texture);s.dirty=true;return true;
+  }catch(error){layer?.dispose();texture?.dispose();throw error;}
+ }
+ function baseToLayer(){
+  colourOnly();if(session?.imagePreview)throw Error('Apply or cancel image placement before lifting Base');
+  if(!ready()||session.selected!=='$base')return false;
+  const s=session,stack=s.stack||createPaintLayerStack(captureColourResource({width:s.size,height:s.size,pixels:s.preview,binding:s.binding}));
+  if(stack.layers.length>=3)throw Error('Merge or remove a layer first; three overlays maximum');
+  let n=1;while(stack.layers.some(l=>l.id==='basePaint'+n))n++;const id='basePaint'+n;
+  const appended=appendPaintLayer(stack,{id,name:'Base paint',pixels:stack.base.pixels}),lifted=appended.layers.at(-1),base=captureColourResource({...stack.base,pixels:new Uint8Array(stack.base.pixels.length).fill(255)});
+  // Insert UNDER every existing overlay. Its full opaque pixels exactly replace
+  // the former backing before the original blend/mask/image stack is composited.
+  const resource=captureLayeredColourResource({...appended,base,layers:[lifted,...appended.layers.slice(0,-1)]});
+  if(commit(resource)){session.selected=id;session.paintTarget='colour';loadLayer();updatePreview();return true;}return false;
+ }
+ function mergeLayers(all=false){colourOnly();if(session?.imagePreview)throw Error('Apply or cancel image placement before merging');if(!ready())return false;
+  const s=session;if(!s.stack?.layers.length||!all&&s.selected==='$base')return false;
+  const resource=captureLayeredColourResource(mergePaintLayersToBase(s.stack,all?null:s.selected));
+  if(commit(resource)){session.selected='$base';session.paintTarget='colour';loadLayer();updatePreview();return true;}return false;
+ }
+ function imageForEdit(){if(!ready())return null;const image=session.stack?.layers.find(l=>l.id===session.selected)?.image;return image?{source:image.source,placement:{centre:[...image.placement.centre],size:[...image.placement.size],rotation:image.placement.rotation}}:null;}
+ function beginAdjustment(){
+  if(!ready())return null;const s=session;if(s.paintTarget!=='colour')throw Error('Choose Colour for layer adjustments');
+  const selected=s.stack?.layers.find(l=>l.id===s.selected),original=(selected?.pixels||s.stack?.base.pixels||s.layer.pixels).slice(),resource=s.resource,id=s.selected;let candidate=null;
+  const valid=()=>session===s&&current()&&s.resource===resource&&s.selected===id&&s.paintTarget==='colour'&&paintTargetKey(target(),target()?.mesh,owner)===s.key;
+  function cancelPreview(){if(session===s&&s.imagePreview===candidate){s.imagePreview=null;updatePreview();}candidate=null;}
+  return {pixels:original.slice(),size:s.size,name:selected?.name||'Base colour',image:!!selected?.image,
+   filter(){if(!valid())throw Error('Layer changed during adjustments');return strokeFilter(s.size,'blur',{});},
+   preview(pixels){if(!valid())throw Error('Layer changed during adjustments');if(!(pixels instanceof Uint8Array)||pixels.length!==original.length)throw Error('Invalid adjusted pixels');let changed=false;for(let i=0;i<pixels.length;i++){if(i%4===3&&pixels[i]!==original[i])throw Error('Adjustments must preserve layer coverage');if(pixels[i]!==original[i])changed=true;}
+    cancelPreview();if(!changed)return false;let next;
+    if(s.stack){let stack=selected?.image?rasterizeImagePaintLayer(s.stack,id):s.stack;stack=id==='$base'?{...stack,base:captureColourResource({...stack.base,pixels})}:replacePaintLayer(stack,id,{pixels});next=captureLayeredColourResource(stack);}
+    else next=captureColourResource({width:s.size,height:s.size,pixels,binding:s.binding});
+    preflight(next);candidate={resource:next,id};s.imagePreview=candidate;updatePreview();return true;
+   },
+   apply(){if(!valid())throw Error('Layer changed during adjustments');if(!candidate)return false;const next=candidate.resource;const result=commit(next);candidate=null;return result;},cancel:cancelPreview};
+ }
+ function editLayer(patch){colourOnly();if(!ready()||session.selected==='$base')return false;const layer=session.stack.layers.find(l=>l.id===session.selected);if(Object.keys(patch).every(k=>layer[k]===patch[k]))return false;return commit(captureLayeredColourResource(replacePaintLayer(session.stack,session.selected,patch)));}
+ function removeLayer(){colourOnly();if(!ready()||session.selected==='$base')return false;const s=session,layers=s.stack.layers.filter(l=>l.id!==s.selected);if(commit(captureLayeredColourResource({...s.stack,layers}))){session.selected=layers.at(-1)?.id||'$base';loadLayer();return true;}return false;}
+ function moveLayer(direction){colourOnly();if(!ready()||session.selected==='$base'||![-1,1].includes(direction))return false;const layers=[...session.stack.layers],i=layers.findIndex(l=>l.id===session.selected),j=i+direction;if(j<0||j>=layers.length)return false;[layers[i],layers[j]]=[layers[j],layers[i]];return commit(captureLayeredColourResource({...session.stack,layers}));}
+ function selectPaintTarget(value){if(!ready())return false;if(!['colour','mask','roughness','metalness','opacity'].includes(value))throw Error('Unknown paint target');if(value==='mask'&&!session.stack?.layers.find(l=>l.id===session.selected)?.mask)throw Error('Add a mask to the selected paint layer first');if(session.paintTarget===value){session.previewMode='material';session.dirty=true;return false;}if(Object.hasOwn(scalarOwners,value)&&session[value]&&(session[value].width!==512||session[value].height!==512))throw Error(scalarOwners[value].label+' painting requires a 512 × 512 map; existing map kept unchanged');session.paintTarget=value;if(Object.hasOwn(scalarOwners,value))session.multiPaintChannels=[];session.previewMode='material';loadLayer();updatePreview();return true;}
+ function addMask(){if(!ready())return false;const layer=session.stack?.layers.find(l=>l.id===session.selected);if(!layer)throw Error('Select a paint layer above Base colour for a mask');if(layer.mask)return false;
+  if(commit(captureLayeredColourResource(replacePaintLayer(session.stack,session.selected,{mask:{enabled:true,inverted:false,pixels:new Uint8Array(session.size*session.size).fill(255)}})))){session.paintTarget='mask';loadLayer();return true;}return false;
+ }
+ function editMask(patch){if(!ready())return false;const layer=session.stack?.layers.find(l=>l.id===session.selected);if(!layer?.mask)throw Error('Add a mask to the selected paint layer first');if(!patch||Object.keys(patch).some(k=>!['enabled','inverted'].includes(k)))throw Error('Unsupported mask edit');if(Object.keys(patch).every(k=>layer.mask[k]===patch[k]))return false;return commit(captureLayeredColourResource(replacePaintLayer(session.stack,session.selected,{mask:{...layer.mask,...patch}})));}
+ function removeMask(){if(!ready())return false;const layer=session.stack?.layers.find(l=>l.id===session.selected);if(!layer?.mask)return false;return commit(captureLayeredColourResource(replacePaintLayer(session.stack,session.selected,{mask:null})));}
+ // Read-only UI thumbnails use committed raw layer colour/coverage, independent
+ // of opacity/blend/mask. Area averaging preserves thin marks; UV v=1 is at top.
+ function layerThumbnail(id){
+  const s=session;if(!s)return null;
+  const source=id==='$base'?(s.stack?.base.pixels||s.resource?.pixels):s.stack?.layers.find(l=>l.id===id)?.pixels;
+  if(!source&&id!=='$base')return null;
+  s.thumbnails??=new WeakMap();let pixels=source&&s.thumbnails.get(source);
+  if(!pixels){
+   pixels=new Uint8Array(64*64*4);
+   if(!source)pixels.fill(255);
+   else{const step=s.size/64,count=step*step;
+    for(let y=0;y<64;y++)for(let x=0;x<64;x++){
+     let a=0,r=0,g=0,b=0;
+     for(let j=0;j<step;j++)for(let i=0;i<step;i++){const at=((y*step+j)*s.size+x*step+i)*4,alpha=source[at+3];a+=alpha;r+=source[at]*alpha;g+=source[at+1]*alpha;b+=source[at+2]*alpha;}
+     const out=((63-y)*64+x)*4;if(a){pixels[out]=Math.round(r/a);pixels[out+1]=Math.round(g/a);pixels[out+2]=Math.round(b/a);}pixels[out+3]=Math.round(a/count);
+    }
+    s.thumbnails.set(source,pixels);
+   }
+  }
+  return {width:64,height:64,pixels:pixels.slice()};
+ }
+ // Roughness and Metalness are object material maps, separate from the colour
+ // layer stack. Return small read-only grayscale previews for the Layers page.
+ function materialMapThumbnail(channel){
+  if(!Object.hasOwn(scalarOwners,channel))throw Error('Unknown material map preview');
+  const s=session,resource=s?.[channel];if(!resource)return null;
+  const source=resource.pixels,{width,height}=resource;
+  s.scalarThumbnails??=new WeakMap();let pixels=s.scalarThumbnails.get(source);
+  if(!pixels){
+   pixels=new Uint8Array(64*64*4);
+   for(let y=0;y<64;y++)for(let x=0;x<64;x++){
+    const x0=Math.floor(x*width/64),x1=Math.max(x0+1,Math.floor((x+1)*width/64));
+    const y0=Math.floor(y*height/64),y1=Math.max(y0+1,Math.floor((y+1)*height/64));let sum=0,count=0;
+    for(let sy=y0;sy<y1;sy++)for(let sx=x0;sx<x1;sx++){sum+=source[sy*width+sx];count++;}
+    const value=Math.round(sum/count),out=((63-y)*64+x)*4;
+    pixels[out]=pixels[out+1]=pixels[out+2]=value;pixels[out+3]=255;
+   }
+   s.scalarThumbnails.set(source,pixels);
+  }
+  return {width:64,height:64,pixels:pixels.slice()};
+ }
+ function state(){const s=session;return s?{multiPaintChannels:s.multiPaintChannels.slice(),fillPreview:stroke?.facePlan?{held:stroke.held,count:stroke.count}:null,resolution:s.size,strokeLimited:!!s.layer.limited,selected:s.selected,paintTarget:s.paintTarget,previewMode:s.previewMode,aoPreview:!!s.aoPreview,aoBusy:!!s.aoJob,aoProgress:s.aoProgress||0,layered:!!s.stack,layers:[{id:'$base',name:'Base colour',visible:true,opacity:1,blendMode:'normal',mask:null},...(s.stack?.layers||[]).map(({id,name,visible,opacity,blendMode,mask,image})=>({id,name,visible,opacity,blendMode,image:!!image,mask:mask?{enabled:mask.enabled,inverted:mask.inverted}:null}))]}:null;}
+ return {beginAdjustment,open,close,cancel,begin,move,finish,hit,setFillScope,layerThumbnail,materialMapThumbnail,selectPreviewMode,selectLayer,addLayer,editLayer,removeLayer,moveLayer,selectPaintTarget,setMultiPaintChannels,addMask,editMask,removeMask,projectImage,imageForEdit,rasterizeImage,increaseResolution,baseToLayer,mergeToBase:()=>mergeLayers(false),flattenLayers:()=>mergeLayers(true),previewImage,applyImagePreview,clearImagePreview,surfaceFrame,previewAO,previewAOHigh,applyAO,cancelAO,
+  tick(){if(session&&!current()){close();return;}session?.boundaries?.update();if(session?.layer.consumeDirty()||Object.values(stroke?.scalarLayers||{}).some(layer=>layer.consumeDirty()))updatePreview();if(session?.dirty){updateMaterialPreview();const map=session.display.surface.material.map;if(session.previewMode==='channel'&&map)map.needsUpdate=true;session.dirty=false;}},
+  get state(){return state();},get active(){return !!session;},get drawing(){return !!stroke;},get pixels(){return session?.preview;}};
+}

@@ -1,0 +1,11 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+
+test('453 Studio remains default and complete',()=>{
+ const s=fs.readFileSync(new URL('../src/render-modes.js',import.meta.url),'utf8');
+ assert.match(s,/let mode='studio'/);
+ assert.match(s,/studioRig/);
+ assert.match(s,/refreshStudio/);
+ assert.match(s,/syncStudio/);
+});

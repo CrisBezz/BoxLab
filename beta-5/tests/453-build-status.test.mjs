@@ -1,0 +1,1 @@
+import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';test('453 build status ready',()=>{const x=JSON.parse(fs.readFileSync(new URL('../453_BUILD_STATUS.json',import.meta.url),'utf8'));assert.equal(x.status,'recovery-ready');});
