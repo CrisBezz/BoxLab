@@ -1,1 +1,0 @@
-Recovery only: exact .451 render runtime restored after .452 load failure. No new modelling or Facegroups viewport behaviour.

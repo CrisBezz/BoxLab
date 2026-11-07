@@ -5,22 +5,22 @@ import {createUVImageOverlay,decodeSurfaceImage} from '../src/uv-image-surface-p
 import {nomadColourAlphaFixture} from './helpers/nomad-colour-alpha-fixture.mjs';
 import {glbOwnerRuntime} from './helpers/glb-owner-runtime.mjs';
 
-const tick=()=>new Promise(resolve=>setImmediate(resolve));
+const tick=()=>new Promise(resolve=>setTimeout(resolve,5));
 
 test('.1099 measures the asynchronous image decode and time until the imported UV surface appears',async()=>{
  const globals=['__boxlabPerformance','createImageBitmap'].map(key=>[key,Object.getOwnPropertyDescriptor(globalThis,key)]);
- let now=0,finishBitmap,bitmapStarted=false;
+ let now=0,finishBitmap,signalBitmapStarted;
+ const bitmapStarted=new Promise(resolve=>{signalBitmapStarted=resolve;});
  const stages=[];
  globalThis.__boxlabPerformance={start:()=>now,stage:(name,start)=>stages.push({name,elapsed:now-start})};
- globalThis.createImageBitmap=()=>{bitmapStarted=true;return new Promise(resolve=>{finishBitmap=resolve;});};
+ globalThis.createImageBitmap=()=>{signalBitmapStarted();return new Promise(resolve=>{finishBitmap=resolve;});};
  try{
   const {objects}=await nomadColourAlphaFixture(),object=objects[2];
   const body=new THREE.Mesh(object.mesh.triangulatedGeometry(),new THREE.MeshStandardMaterial());
   const original=body.material,hidden=new THREE.MeshBasicMaterial();
   const overlay=createUVImageOverlay(body,object.mesh,object.glbPassthrough,glbOwnerRuntime().c.buildUVPreviewGeometry,hidden,{lit:true,decode:decodeSurfaceImage});
   assert(overlay);
-  for(let i=0;i<100&&!bitmapStarted;i++)await tick();
-  assert(bitmapStarted,'import should start browser image decoding');
+  let timeout;await Promise.race([bitmapStarted,new Promise((_,reject)=>{timeout=setTimeout(()=>reject(Error('import should start browser image decoding')),10000);})]);clearTimeout(timeout);
   assert.equal(overlay.visible,false);
   assert.deepEqual(stages,[],'no completed decode or visible-surface sample before the bitmap resolves');
 
