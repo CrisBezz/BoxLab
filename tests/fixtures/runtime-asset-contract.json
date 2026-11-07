@@ -1,5 +1,5 @@
 {
-  "baseline": "Reviewed .1098: opt-in phase details instrument active scene synchronization and render-mode preview work after .1097 removed repeated cage group saves. Timing breakdowns overlap and do not prove an optimization. Prior .1097 functional PASS, .1096 baseline and .1095 Paint PASS protected.",
+  "baseline": "Reviewed .1099: the .1098 iPad report shows UV preview setup averaged 4.48 ms, but it omitted the asynchronous image decode and delay until an imported UV surface became visible. Source audit found the existing overlay waits for decoded images before replacing the grey body material. This diagnostic build measures that decode wait and time-to-visible in the existing Performance monitor; it does not claim a speedup. Prior .1097 functional PASS, .1096 baseline and .1095 Paint PASS remain protected.",
   "references": [
     {
       "owner": "index.html",
@@ -161,9 +161,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1098",
+      "url": "./src/drawer-ui.js?v=0.36.18.1099",
       "target": "src/drawer-ui.js",
-      "sha256": "5059d967aea88e9772097ddecdd4d935e7122c42a4f63b403762bb604ae13902"
+      "sha256": "a25c1b8777ff31c22177855820f421d234633219ffc2705329a35afc8c1610b8"
     },
     {
       "owner": "index.html",
@@ -378,15 +378,15 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1098",
+      "url": "./src/release-version.js?v=0.36.18.1099",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
     {
       "owner": "index.html",
-      "url": "./src/render-modes.js?v=0.36.18.1098",
+      "url": "./src/render-modes.js?v=0.36.18.1099",
       "target": "src/render-modes.js",
-      "sha256": "a8a6a137fad5f8a009ae6797d3d6eaf262529341adb43a546a636716017db18d"
+      "sha256": "ecfef3052711c8fe76ffe60ed519cab551371ed65282c131c77cedfb0a2c9515"
     },
     {
       "owner": "index.html",
@@ -864,9 +864,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1098",
+      "url": "./face-workflow-layout.js?v=0.36.18.1099",
       "target": "src/face-workflow-layout.js",
-      "sha256": "226ae5620010eef8cffc3764c58b64d1ed955b08542beec985cf43b3e9a02f0b"
+      "sha256": "e23c1d00a684bc5a1227625f5f38caf74d9c9ab6edbc5d530118ec99b36873a0"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1361,7 +1361,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1098",
+      "url": "./release-version.js?v=0.36.18.1099",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -2240,15 +2240,15 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/performance-monitor.js?v=0.36.18.1098",
+      "url": "./src/performance-monitor.js?v=0.36.18.1099",
       "target": "src/performance-monitor.js",
-      "sha256": "6e11384176f7026e98fe450b6db6c14e69b2a68621d2a31679e973f416010442"
+      "sha256": "260bc4b2fdcc717f3a1b135a721a53f49db3c9d9b3203252d56c4eaed1ab940c"
     },
     {
       "owner": "src/performance-monitor.js",
-      "url": "./performance-core.js?v=0.36.18.1098",
+      "url": "./performance-core.js?v=0.36.18.1099",
       "target": "src/performance-core.js",
-      "sha256": "1224062edb71c8726168d5a9d99eca3fd88e787ee8a50fc9b90ad357d9f6daaf"
+      "sha256": "31fb012156d53523f7f248e5665e577d59e7830e52e2ce8ad55ba54abf108ed2"
     },
     {
       "owner": "src/main.js",
@@ -2402,9 +2402,9 @@
     },
     {
       "owner": "src/render-modes.js",
-      "url": "./uv-image-surface-preview.js?v=0.36.18.1035",
+      "url": "./uv-image-surface-preview.js?v=0.36.18.1099",
       "target": "src/uv-image-surface-preview.js",
-      "sha256": "7851d7e567d09f228b7e23faeb0ca0d37b4543f7e18d046c8d0515934aa71bd9"
+      "sha256": "54a48fece0a05f9d9a6059f2b181d87197c1066fbcc6186920f8db2ceb146b70"
     },
     {
       "owner": "src/uv-image-surface-preview.js",
@@ -2416,7 +2416,7 @@
       "owner": "src/nomad-export-core.js",
       "url": "./uv-image-surface-preview.js?v=0.36.18.1035",
       "target": "src/uv-image-surface-preview.js",
-      "sha256": "7851d7e567d09f228b7e23faeb0ca0d37b4543f7e18d046c8d0515934aa71bd9"
+      "sha256": "54a48fece0a05f9d9a6059f2b181d87197c1066fbcc6186920f8db2ceb146b70"
     },
     {
       "owner": "src/nomad-export-core.js",
@@ -3326,9 +3326,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1098",
+      "url": "./src/shell-comparison.js?v=0.36.18.1099",
       "target": "src/shell-comparison.js",
-      "sha256": "3a1ad7623da8717311971baf15cf4a147885b3318632be6954a19e883c4c6e21"
+      "sha256": "313774cab14a354aad3487af1fe05831e6e75beb9f12ec35d1fd6dfde52b860d"
     },
     {
       "owner": "src/main.js",
@@ -3592,7 +3592,7 @@
       "owner": "src/imported-paint-colour.js",
       "url": "./uv-image-surface-preview.js?v=0.36.18.1033",
       "target": "src/uv-image-surface-preview.js",
-      "sha256": "7851d7e567d09f228b7e23faeb0ca0d37b4543f7e18d046c8d0515934aa71bd9"
+      "sha256": "54a48fece0a05f9d9a6059f2b181d87197c1066fbcc6186920f8db2ceb146b70"
     },
     {
       "owner": "src/imported-paint-colour.js",

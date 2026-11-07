@@ -5,8 +5,11 @@ import * as THREE from 'three';
 import {importedUVImageChoices,decodeUVImage} from './uv-image-preview.js?v=0.36.18.1032';
 // Keep native alpha policy at the surface boundary, outside shared UV/GLB decoding.
 export async function decodeSurfaceImage(choice){
+ const perf=globalThis.__boxlabPerformance,decodeStart=perf?.start();
+ try{
  const data=choice.ignoreColourAlpha&&choice.mime==='image/png'?await opaqueNomadColourPNG(choice.data):choice.data;
- return decodeUVImage(data===choice.data?choice:{...choice,data});
+ return await decodeUVImage(data===choice.data?choice:{...choice,data});
+ }finally{perf?.stage?.('texture-decode',decodeStart);}
 }
 // Active Base inspection. Mixed materials require exact per-face import provenance.
 // Names/facegroup labels are never interpreted as material assignments.
@@ -44,6 +47,7 @@ function nativeReservation(source,payload,maps){
 const wraps={33071:THREE.ClampToEdgeWrapping,33648:THREE.MirroredRepeatWrapping,10497:THREE.RepeatWrapping};
 const filters={9728:THREE.NearestFilter,9729:THREE.LinearFilter,9984:THREE.NearestMipmapNearestFilter,9985:THREE.LinearMipmapNearestFilter,9986:THREE.NearestMipmapLinearFilter,9987:THREE.LinearMipmapLinearFilter};
 export function createUVImageOverlay(body,mesh,payload,buildGeometry,hiddenMaterial,{decode=decodeSurfaceImage,lit=false,renderer=globalThis.__boxlabBridgeState?.renderer,environmentPool=paintMaterialEnvironments}={}){
+ const perf=globalThis.__boxlabPerformance,displayStart=perf?.start();
  const native=payload?.source==='nomad';
  const single=uvImageSurfaceSource(payload,{nativeOpacity:lit}),multiple=!single;if(native&&!single)return null;
  if(!body?.geometry||typeof buildGeometry!=='function')return null;
@@ -113,7 +117,7 @@ export function createUVImageOverlay(body,mesh,payload,buildGeometry,hiddenMater
    material.color.fromArray(source.factor);material.side=source.doubleSided?THREE.DoubleSide:THREE.FrontSide;material.toneMapped=material.isMeshStandardMaterial===true;material.needsUpdate=true;
    if(native&&lit&&!source.standalone&&material.isMeshStandardMaterial&&source.opacityPreview&&(source.opacity<1||source.colourAlpha))opacityMode(material,source.opacity);
   }
-  if(!disposed&&!single?.standalone){overlay.visible=true;body.material=hiddenMaterial;}
+  if(!disposed&&!single?.standalone){overlay.visible=true;body.material=hiddenMaterial;perf?.stage?.('texture-display',displayStart);}
   // Colour becomes visible first. Unsupported/failed auxiliaries keep it intact.
   // One serial decode/lifetime owner; cancellation cannot start another map.
   if(native&&lit&&materials[0].isMeshStandardMaterial){
@@ -134,7 +138,7 @@ export function createUVImageOverlay(body,mesh,payload,buildGeometry,hiddenMater
      material.needsUpdate=true;
      if(single.standalone&&!overlay.visible){
       if(single.opacity<1&&slot!=='opacity')opacityMode(material,single.opacity);
-      overlay.visible=true;body.material=hiddenMaterial;
+      overlay.visible=true;body.material=hiddenMaterial;perf?.stage?.('texture-display',displayStart);
      }
     }catch{/* Retained-only map; accepted colour remains visible. */}
    }

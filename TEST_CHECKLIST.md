@@ -13,6 +13,15 @@ User .1097 functional PASS and all earlier Paint/interaction PASSes remain prote
 
 ---
 
+## .1099 — imported UV texture timing (device acceptance pending)
+
+- [ ] Enable VIEW → Diagnostics → Performance, Reset, import the same UV-painted NOM/GLB, wait until its texture appears, then download the viewport report.
+- [ ] Confirm the report includes `texture-decode` and `texture-display` samples; report decode mean/max and until-overlay-enabled mean/max. Repeat with the same model/device/settings for comparison.
+- [ ] Confirm the imported UV surface remains textured and usable in UV Paint; no regression to import or paint workflow.
+- [x] Automated regression covers delayed async decode, no timing sample before completion, elapsed decode and until-enabled durations, rejection timing, and body-material restoration/disposal. Existing NOM decoder and standalone map-preview tests also pass.
+- [x] Full local suite: 3,216 PASS / 0 FAIL; `git diff --check` clean. Hosted regression and Pages/live-byte check pending.
+- [ ] Do not record a speedup/performance PASS from instrumentation alone. The .1098 iPad report is inconclusive and has no matched import sequence.
+
 # .1097 dense-model report received — cage win; overall stall remains — 7 November 2026
 
 Latest user report is .1097 with1,002 vertices/1,000 faces,6,006 rendered triangles,7 draw calls,2,007 renderer geometries and3 textures, matching .1096 latest counts and browser/viewport/DPR. User .1097 functional PASS remains protected. No new runtime/build in this investigation record. Raw reports/model remain private; retain aggregate evidence only.
