@@ -41,6 +41,8 @@ const linkedSources = new Map();
 function state() { return globalThis.__boxlabBridgeState; }
 function history() { return globalThis.__boxlabHistory; }
 function activeObject() { return objects.find(object => object.id === activeId) || null; }
+// Derived metadata only: no geometry/history synchronization or retained cache.
+function groupMetadata(){return objects.map(object=>({id:object.id,groupId:object.groupId}));}
 function currentMode() { return globalThis.__boxlabSelectionBridge?.mode?.() || document.querySelector('#selectionModes button.active')?.dataset?.mode || 'face'; }
 function cap(text) { return text ? text.charAt(0).toUpperCase() + text.slice(1) : ''; }
 
@@ -1107,6 +1109,7 @@ function initialize() {
     resetAll,
     saveActive,
     get activeId() { return activeId; },
+    groupMetadata,
     get objects() { saveActive(); return objects; },
     get soloId() { return soloId; }
   };

@@ -1,3 +1,15 @@
+## .1097 — metadata-only cage group context — native pending
+
+`.1096 PASS` and earlier Paint/interaction PASSes protected. Original cage geometry/picking owners unchanged.
+
+- [ ] Same imported model as .1096: Reset Performance; select/edit/Undo/Redo repeatedly; download viewport report. Compare cage/rebuild means to298/312 ms baseline.
+- [ ] Vertex/Edge/Face/Object picking, gizmo and selection remain correct; compare perceived stalls.
+- [ ] Whole-group selection suppresses member cage; ordinary member selection restores it. Hide/solo and Undo/Redo restore correct state.
+- [ ] Imported UV Paint opens/paints/exits normally; all accepted .1094 mode exits remain intact.
+- [x] 133 focused PASS:12 new real-owner cases plus original groups/linked/Paint/monitor/cage/release checks; all-mode proxy and raycast parity, metadata no-write/freshness/legacy fallback.
+- [x] Interleaved Node A/B fixture report:1,024-face saves4,227→1; clones8,454→2;606.24→46.38 ms median. CPU integration evidence only; actual iPad gain pending.
+- [ ] Hosted full suite, Pages and live bytes verified.
+
 # .1096 protected native PASS — iPad performance evidence — 7 November 2026
 
 User confirms `.1096 PASS` and supplies both baseline and live viewport JSON reports. Protect the baseline lab, export controls and accepted ordinary navigation/Undo behaviour. This accepts the measurement build, not a speedup or increased editable mesh capacity. No runtime changes or new build in this acceptance record.

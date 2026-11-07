@@ -1,5 +1,5 @@
 {
-  "baseline": "Reviewed .1096: opt-in Performance Lab baseline only; .1095 Paint PASS protected; original modelling and render owners unchanged.",
+  "baseline": "Reviewed .1097: metadata-only whole-group context avoids active mesh/history saves per cage proxy. Exact cage/picker owner unchanged; .1096 baseline and .1095 Paint PASS protected.",
   "references": [
     {
       "owner": "index.html",
@@ -161,9 +161,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1096",
+      "url": "./src/drawer-ui.js?v=0.36.18.1097",
       "target": "src/drawer-ui.js",
-      "sha256": "b49f2b39bb0c6f0fe955526bb2b7e52e452afa4ec2b1d7492e791849bf06afc7"
+      "sha256": "d47e1843c6ea866b2c0d14ccdcf160b3484918fef47fae5ae7a652e23c4bc7ec"
     },
     {
       "owner": "index.html",
@@ -323,15 +323,15 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/multi-object.js?v=0.36.18.1094",
+      "url": "./src/multi-object.js?v=0.36.18.1097",
       "target": "src/multi-object.js",
-      "sha256": "eba5935af065a506dab0e88cb05df614e12d4aff41ffcca9d10bf9e9498c3046"
+      "sha256": "e9c33ff6f9f1540c20fb08e09cd44c5aeb96aefae0bf770d066b882c57df5c51"
     },
     {
       "owner": "index.html",
-      "url": "./src/object-management.js?v=0.36.18.1095",
+      "url": "./src/object-management.js?v=0.36.18.1097",
       "target": "src/object-management.js",
-      "sha256": "b3180cd7fab39a071db4980ff7dc27e9c53ccdc6511e4d614754da92817ec1c3"
+      "sha256": "f6974d5032dfb862380853ad8c69cc3791289869d7ebe12bdf7fc0e9578539f7"
     },
     {
       "owner": "index.html",
@@ -378,7 +378,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1096",
+      "url": "./src/release-version.js?v=0.36.18.1097",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -864,9 +864,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1096",
+      "url": "./face-workflow-layout.js?v=0.36.18.1097",
       "target": "src/face-workflow-layout.js",
-      "sha256": "e944505301b409dd7a723a3418f48ba9fe8e815cc8bb683ad1f4b29548c679e1"
+      "sha256": "a39eb1685928947406428274074c24d400cbef46cf42ad6536d978e067d9e687"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -921,7 +921,7 @@
       "owner": "src/drawer-ui.js",
       "url": "./object-management.js?v=0.36.18.1095",
       "target": "src/object-management.js",
-      "sha256": "b3180cd7fab39a071db4980ff7dc27e9c53ccdc6511e4d614754da92817ec1c3"
+      "sha256": "f6974d5032dfb862380853ad8c69cc3791289869d7ebe12bdf7fc0e9578539f7"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1361,7 +1361,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1096",
+      "url": "./release-version.js?v=0.36.18.1097",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -3326,9 +3326,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1096",
+      "url": "./src/shell-comparison.js?v=0.36.18.1097",
       "target": "src/shell-comparison.js",
-      "sha256": "142b05301cd9ed3ef61165de7644d317f0814799f59d5333ddf0d439d7ce5d1c"
+      "sha256": "262094afc7c42971e76941e422b726cab870f704c4bb906a841c7778e2b5710b"
     },
     {
       "owner": "src/main.js",

@@ -64,11 +64,15 @@ function pruneGroupMetadata(){
   for(const id of [...collapsedGroups])if(!valid.has(id))collapsedGroups.delete(id);
 }
 function groupLabel(groupId){return groupNames.get(groupId)||`Group ${groupId}`;}
-function selectedWholeGroupId(chosen=selectedObjects()){
+function selectedWholeGroupId(chosen){
+  // Cage observers need group membership only. manager.objects synchronizes the
+  // active mesh/history; never trigger that write for each edge/vertex/picker.
+  const available=manager()?.groupMetadata?.()||objects();
+  chosen=chosen??available.filter(object=>selectedIds.has(object.id));
   if(!chosen.length)return null;
   const ids=new Set(chosen.map(o=>o.groupId).filter(id=>id!=null));
   if(ids.size!==1)return null;
-  const groupId=[...ids][0],members=groupMembers(groupId);
+  const groupId=[...ids][0],members=available.filter(object=>object.groupId===groupId);
   return members.length===chosen.length&&members.every(o=>selectedIds.has(o.id))?groupId:null;
 }
 function selectedCompleteGroupIds(){
