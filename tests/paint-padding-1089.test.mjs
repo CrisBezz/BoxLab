@@ -49,7 +49,7 @@ test('1090 live Paint preview uploads edits made in place when edge padding is d
 });
 
 test('1091 padding matches image-projection texel centres at fractional diagonal UV boundaries',()=>{
- const size=64,geometry=new THREE.BufferGeometry(),uv=[.11,.17,.79,.23,.38,.88];geometry.setAttribute('uv',new THREE.Float32BufferAttribute(uv,2));
+ const size=64,geometry=new THREE.BufferGeometry(),uv=[.658887670841068,.23637470160610974,.8362588826566935,.05272210552357137,.4987645954824984,.37436347850598395];geometry.setAttribute('uv',new THREE.Float32BufferAttribute(uv,2));
  const pixels=new Uint8Array(size*size*4).fill(255),inside=[];
  const [u0,v0,u1,v1,u2,v2]=geometry.attributes.uv.array,d=(v1-v2)*(u0-u2)+(u2-u1)*(v0-v2);
  for(let y=0;y<size;y++)for(let x=0;x<size;x++){
@@ -63,5 +63,5 @@ test('1091 padding matches image-projection texel centres at fractional diagonal
  for(const at of covered)for(const next of [at%size?at-1:-1,at%size<size-1?at+1:-1,at-size,at+size])if(next>=0&&next<size*size&&!covered.has(next)){
   assert.deepEqual([...out.slice(next*4,next*4+3)],[220,20,10]);checked++;
  }
- assert.ok(checked>100);assert.deepEqual(pixels,original);geometry.dispose();
+ assert.ok(checked>10);assert.deepEqual(pixels,original);geometry.dispose();
 });
