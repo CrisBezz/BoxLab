@@ -1,5 +1,5 @@
 import {meshTopologySignature} from './mesh-topology-signature.js?v=0.36.18.939';
-import {capturePaintExportObjects,preparePaintExportObjects,preparedPaintImage,preparedOpacityImage,preparedRoughnessImage,preparedMetalnessImage,preparedMetallicRoughnessImage,paintExportGeometryObject} from './paint-export.js?v=0.36.18.1092';
+import {capturePaintExportObjects,preparePaintExportObjects,preparedPaintImage,preparedOpacityImage,preparedRoughnessImage,preparedMetalnessImage,preparedMetallicRoughnessImage,paintExportGeometryObject} from './paint-export.js?v=0.36.18.1093';
 // BoxLab .735 — native NOMAD handoff; regular OBJ/GLB exports remain available.
 // GLB keeps BoxLab editable objects as separate named scene nodes for Nomad/3D handoff.
 import * as THREE from 'three';
@@ -7,7 +7,7 @@ import {GLTFExporter} from 'three/addons/exporters/GLTFExporter.js';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {buildSceneOBJ,resolveExportMesh,safeOBJName} from './scene-obj-export-core.js?v=0.36.18.1075';
 
-import {buildNomadProjectWithMaps} from './nomad-packed-maps.js?v=0.36.18.1092';
+import {buildNomadProjectWithMaps} from './nomad-packed-maps.js?v=0.36.18.1093';
 
 const VERSION='0.36.18.892';
 const MAX_UV_PREVIEW_CORNERS=20000;
@@ -452,9 +452,9 @@ function patchNomadFaceGroupGLB(buffer,objectDetails){
     if(detail.paintImage||detail.roughnessImage||detail.metalnessImage){
       const image=detail.paintImage,roughness=detail.scalarImage||detail.roughnessImage,metalness=!!detail.metalnessImage;
       const colourTexture=image?addPaintTexture(image):null,roughnessTexture=roughness?addPaintTexture(roughness):null;
-      const hasOpacity=!!detail.opacityImage,materialKey=JSON.stringify([colourTexture,roughnessTexture,metalness,hasOpacity]);let material=paintMaterials.get(materialKey);
+      const hasOpacity=!!detail.opacityImage,materialKey=JSON.stringify([colourTexture,roughnessTexture,metalness,hasOpacity,image?.materialFactors?.roughness,image?.materialFactors?.metalness]);let material=paintMaterials.get(materialKey);
       if(material===undefined){
-       material=gltf.materials.length;gltf.materials.push({name:'BoxLab painted material',pbrMetallicRoughness:{...(image?{baseColorTexture:{index:colourTexture,texCoord:0}}:{}),...(roughness?{metallicRoughnessTexture:{index:roughnessTexture,texCoord:0}}:{}),baseColorFactor:[1,1,1,1],roughnessFactor:1,metallicFactor:metalness?1:0},alphaMode:hasOpacity?'BLEND':'OPAQUE',doubleSided:hasOpacity});paintMaterials.set(materialKey,material);
+       material=gltf.materials.length;gltf.materials.push({name:'BoxLab painted material',pbrMetallicRoughness:{...(image?{baseColorTexture:{index:colourTexture,texCoord:0}}:{}),...(roughness?{metallicRoughnessTexture:{index:roughnessTexture,texCoord:0}}:{}),baseColorFactor:[1,1,1,1],roughnessFactor:roughness?1:(image?.materialFactors?.roughness??1),metallicFactor:metalness?1:(image?.materialFactors?.metalness??0)},alphaMode:hasOpacity?'BLEND':'OPAQUE',doubleSided:hasOpacity});paintMaterials.set(materialKey,material);
       }
       for(const primitive of mesh.primitives||[])primitive.material=material;
     }else if(passthrough?.materials?.length){
@@ -546,8 +546,8 @@ async function verifyGLB(buffer,expectedObjects,expectedGroupSlots){
   return report;
 }
 async function buildGLB(sceneObjects,subd){
-  if(sceneObjects.some(o=>o?.glbPassthrough?.source==='nomad'&&Object.keys(o.glbPassthrough.nomadMaterial?.textures||{}).length))throw Error('Native NOM materials are retained for NOMAD export and .boxlab Save; use NOMAD to keep their textures');
   if(sceneObjects.some(o=>o?.colourPaint||o?.roughnessPaint||o?.metalnessPaint||o?.opacityPaint)){sceneObjects=capturePaintExportObjects(sceneObjects);await preparePaintExportObjects(sceneObjects,{subd,packedScalars:true,includeOpacity:true,owner:{topologySignature,buildUVPreviewGeometry,padPaintEdges:true}});}
+  if(sceneObjects.some(o=>o?.glbPassthrough?.source==='nomad'&&Object.keys(o.glbPassthrough.nomadMaterial?.textures||{}).length&&!preparedPaintImage(o)?.materialFactors))throw Error('Native NOM materials are retained for NOMAD export and .boxlab Save; use NOMAD to keep their textures');
   const root=new THREE.Group();
   root.name='BoxLab';
   let count=0,faceGroupCount=0,groupSlotCount=0,uvRestoredCount=0,tangentsRestoredCount=0,vertexColorsRestoredCount=0,morphTargetsRestoredCount=0;

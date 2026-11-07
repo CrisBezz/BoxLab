@@ -1,5 +1,5 @@
 {
-  "baseline": "Reviewed .1092: seed existing Paint from supported imported opaque single-material 512/1024 colour textures; preserve .1091 image seam and earlier native PASSes.",
+  "baseline": "Reviewed .1093: complete imported colour-texture Paint and native/GLB export, preserving material constants and protected .1091 seam acceptance.",
   "references": [
     {
       "owner": "index.html",
@@ -161,9 +161,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1092",
+      "url": "./src/drawer-ui.js?v=0.36.18.1093",
       "target": "src/drawer-ui.js",
-      "sha256": "5aca1db3e3ee4c4078a0f9a33d35da57be909344c8191f0dd84d4abd7e83a495"
+      "sha256": "a39f8ea8bfb784cec6d50890d97824170df835d82162432c02699d704ca69837"
     },
     {
       "owner": "index.html",
@@ -204,9 +204,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/export-as-panel.js?v=0.36.18.1092",
+      "url": "./src/export-as-panel.js?v=0.36.18.1093",
       "target": "src/export-as-panel.js",
-      "sha256": "0ea57ea9959795929a16a4f8c7aa1e387810ecaba16d0cff51e212012c0cabf0",
+      "sha256": "4b5494eed0091ac41cd69c90f9ee236d044f1534b0b14f3e5456e40730df0480",
       "sourceVersion": "0.36.18.892"
     },
     {
@@ -329,9 +329,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/object-management.js?v=0.36.18.1092",
+      "url": "./src/object-management.js?v=0.36.18.1093",
       "target": "src/object-management.js",
-      "sha256": "0531a6bbb5ab0afef5484d4b81f84f465190e2ccfabd161044fd3e4a9679b5c9"
+      "sha256": "2d76e9eeb7b3e030dda6fa544ce92e03bf795ca8b4eb4996fade7e5403724d47"
     },
     {
       "owner": "index.html",
@@ -378,15 +378,15 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1092",
+      "url": "./src/release-version.js?v=0.36.18.1093",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
     {
       "owner": "index.html",
-      "url": "./src/render-modes.js?v=0.36.18.1092",
+      "url": "./src/render-modes.js?v=0.36.18.1093",
       "target": "src/render-modes.js",
-      "sha256": "735b22f62e0e9e11ccd148bdfce34b0d7c4d7643650d4eaf8cdd028f8f826ec9"
+      "sha256": "1345ea0b077b4e84d581ce2534f6081e3cafd6962fa11d6554d9c4c7aa14d636"
     },
     {
       "owner": "index.html",
@@ -864,9 +864,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1092",
+      "url": "./face-workflow-layout.js?v=0.36.18.1093",
       "target": "src/face-workflow-layout.js",
-      "sha256": "8cb2979d2b96710d16ab6fc2e9f068f3475862e2e7c65568065600027345ff97"
+      "sha256": "2140164f35803efaa4300b28f9d6b71d81662d58da47f2af38ce9f2ede8037f8"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -919,9 +919,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./object-management.js?v=0.36.18.1092",
+      "url": "./object-management.js?v=0.36.18.1093",
       "target": "src/object-management.js",
-      "sha256": "0531a6bbb5ab0afef5484d4b81f84f465190e2ccfabd161044fd3e4a9679b5c9"
+      "sha256": "2d76e9eeb7b3e030dda6fa544ce92e03bf795ca8b4eb4996fade7e5403724d47"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1177,9 +1177,9 @@
     },
     {
       "owner": "src/export-as-panel.js",
-      "url": "./nomad-packed-maps.js?v=0.36.18.1092",
+      "url": "./nomad-packed-maps.js?v=0.36.18.1093",
       "target": "src/nomad-packed-maps.js",
-      "sha256": "c81159ffeaddd63beedfaebfec2b2b70ad8482fa41c6b8bacca69d790e9f5448"
+      "sha256": "7f88db1fdca5319d4ce854faa7b59fb0845b92996f8a3cdc1d6966968010dfd7"
     },
     {
       "owner": "src/export-as-panel.js",
@@ -1361,7 +1361,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1092",
+      "url": "./release-version.js?v=0.36.18.1093",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -2282,9 +2282,9 @@
     },
     {
       "owner": "src/object-management.js",
-      "url": "./boxlab-project-codec.js?v=0.36.18.1092",
+      "url": "./boxlab-project-codec.js?v=0.36.18.1093",
       "target": "src/boxlab-project-codec.js",
-      "sha256": "0f5fd2573482eac12e4a5d606d209283b0b7c1ecbc2b114907bc0f3dc9533f85"
+      "sha256": "d42d723ce4056c1bc6001de605911f85be1027d8770e2aac3d2088dd1458ec6d"
     },
     {
       "owner": "src/linear-array.js",
@@ -2426,9 +2426,9 @@
     },
     {
       "owner": "src/nomad-packed-maps.js",
-      "url": "./nomad-export-core.js?v=0.36.18.1087",
+      "url": "./nomad-export-core.js?v=0.36.18.1093",
       "target": "src/nomad-export-core.js",
-      "sha256": "41838081c60a24047a04a56589e7870199b938c1e98d0ca19e500dea6ccd287d"
+      "sha256": "5f69043ad21ca6c5e785b6e4df02fbddb85ae6113dc30aa67074ed3ef0702860"
     },
     {
       "owner": "src/nomad-export-core.js",
@@ -2450,21 +2450,21 @@
     },
     {
       "owner": "src/boxlab-project-codec.js",
-      "url": "./project-paint-resources.js?v=0.36.18.1092",
+      "url": "./project-paint-resources.js?v=0.36.18.1093",
       "target": "src/project-paint-resources.js",
-      "sha256": "66dbf41b7de94d93b694b1239bd26ed69e3b4d76afe5f86c41acec49365a0d13"
+      "sha256": "f89416e65f1a542cf62cc08e0a334d40895fceb6c88b79b13fa31f20bb1df405"
     },
     {
       "owner": "index.html",
-      "url": "./src/viewport-paint.js?v=0.36.18.1092",
+      "url": "./src/viewport-paint.js?v=0.36.18.1093",
       "target": "src/viewport-paint.js",
-      "sha256": "9d8a8714d1eff6340387cd0d1f8c0154b488cd902fc1528b8ad10ceec94c5cc5"
+      "sha256": "1d49a54e652f67ec611c3bc90ce78a3a0b4e66c832760a0d297dd8380268cb5d"
     },
     {
       "owner": "src/viewport-paint.js",
-      "url": "./viewport-paint-core.js?v=0.36.18.1092",
+      "url": "./viewport-paint-core.js?v=0.36.18.1093",
       "target": "src/viewport-paint-core.js",
-      "sha256": "816ea67b4e50c50b98f75db14e58b8f0db87a9de95b36c4e41580fe27633f292"
+      "sha256": "6f0c98fed211ca49a3c0f67f98c74117943a41753c6770a2672726f4eaa2beba"
     },
     {
       "owner": "src/viewport-paint.js",
@@ -2492,9 +2492,9 @@
     },
     {
       "owner": "src/viewport-paint-core.js",
-      "url": "./paint-target.js?v=0.36.18.1092",
+      "url": "./paint-target.js?v=0.36.18.1093",
       "target": "src/paint-target.js",
-      "sha256": "734176842fa3925316016fd9fbf7b1c2c67fbbc3405408aab8c113ab99f96ad9"
+      "sha256": "b171ca601b04e1bb2b08c7183c9231a54496babbe5fbb2095c85e58a81070953"
     },
     {
       "owner": "src/paint-target.js",
@@ -2504,39 +2504,39 @@
     },
     {
       "owner": "src/paint-target.js",
-      "url": "./boxlab-project-codec.js?v=0.36.18.1092",
+      "url": "./boxlab-project-codec.js?v=0.36.18.1093",
       "target": "src/boxlab-project-codec.js",
-      "sha256": "0f5fd2573482eac12e4a5d606d209283b0b7c1ecbc2b114907bc0f3dc9533f85"
+      "sha256": "d42d723ce4056c1bc6001de605911f85be1027d8770e2aac3d2088dd1458ec6d"
     },
     {
       "owner": "src/render-modes.js",
-      "url": "./paint-target.js?v=0.36.18.1092",
+      "url": "./paint-target.js?v=0.36.18.1093",
       "target": "src/paint-target.js",
-      "sha256": "734176842fa3925316016fd9fbf7b1c2c67fbbc3405408aab8c113ab99f96ad9"
+      "sha256": "b171ca601b04e1bb2b08c7183c9231a54496babbe5fbb2095c85e58a81070953"
     },
     {
       "owner": "src/export-as-panel.js",
-      "url": "./paint-export.js?v=0.36.18.1092",
+      "url": "./paint-export.js?v=0.36.18.1093",
       "target": "src/paint-export.js",
-      "sha256": "8d126845ae0db946ba20e096cfbfb6f4d8437355fef24dfbbe789c6aa4664ef1"
+      "sha256": "f5222920145405f115bd25839cf52042da192e4c1fa6ec6fd2da7671934b0216"
     },
     {
       "owner": "src/nomad-packed-maps.js",
-      "url": "./paint-export.js?v=0.36.18.1092",
+      "url": "./paint-export.js?v=0.36.18.1093",
       "target": "src/paint-export.js",
-      "sha256": "8d126845ae0db946ba20e096cfbfb6f4d8437355fef24dfbbe789c6aa4664ef1"
+      "sha256": "f5222920145405f115bd25839cf52042da192e4c1fa6ec6fd2da7671934b0216"
     },
     {
       "owner": "src/nomad-export-core.js",
-      "url": "./paint-export.js?v=0.36.18.1092",
+      "url": "./paint-export.js?v=0.36.18.1093",
       "target": "src/paint-export.js",
-      "sha256": "8d126845ae0db946ba20e096cfbfb6f4d8437355fef24dfbbe789c6aa4664ef1"
+      "sha256": "f5222920145405f115bd25839cf52042da192e4c1fa6ec6fd2da7671934b0216"
     },
     {
       "owner": "src/paint-export.js",
-      "url": "./paint-target.js?v=0.36.18.1092",
+      "url": "./paint-target.js?v=0.36.18.1093",
       "target": "src/paint-target.js",
-      "sha256": "734176842fa3925316016fd9fbf7b1c2c67fbbc3405408aab8c113ab99f96ad9"
+      "sha256": "b171ca601b04e1bb2b08c7183c9231a54496babbe5fbb2095c85e58a81070953"
     },
     {
       "owner": "src/paint-export.js",
@@ -2600,9 +2600,9 @@
     },
     {
       "owner": "src/viewport-paint-core.js",
-      "url": "./project-paint-resources.js?v=0.36.18.1092",
+      "url": "./project-paint-resources.js?v=0.36.18.1093",
       "target": "src/project-paint-resources.js",
-      "sha256": "66dbf41b7de94d93b694b1239bd26ed69e3b4d76afe5f86c41acec49365a0d13"
+      "sha256": "f89416e65f1a542cf62cc08e0a334d40895fceb6c88b79b13fa31f20bb1df405"
     },
     {
       "owner": "src/viewport-paint.js",
@@ -2746,7 +2746,7 @@
       "owner": "evaluations/uv-paint/lab.js",
       "url": "../../src/export-as-panel.js?v=0.36.18.1089",
       "target": "src/export-as-panel.js",
-      "sha256": "0ea57ea9959795929a16a4f8c7aa1e387810ecaba16d0cff51e212012c0cabf0"
+      "sha256": "4b5494eed0091ac41cd69c90f9ee236d044f1534b0b14f3e5456e40730df0480"
     },
     {
       "owner": "src/paint-layer-stack.js",
@@ -2764,7 +2764,7 @@
       "owner": "evaluations/uv-paint/paint-session.js",
       "url": "../../src/boxlab-project-codec.js?v=0.36.18.1033",
       "target": "src/boxlab-project-codec.js",
-      "sha256": "0f5fd2573482eac12e4a5d606d209283b0b7c1ecbc2b114907bc0f3dc9533f85"
+      "sha256": "d42d723ce4056c1bc6001de605911f85be1027d8770e2aac3d2088dd1458ec6d"
     },
     {
       "owner": "evaluations/uv-paint/paint-session.js",
@@ -3098,9 +3098,9 @@
     },
     {
       "owner": "src/viewport-paint.js",
-      "url": "./paint-target.js?v=0.36.18.1092",
+      "url": "./paint-target.js?v=0.36.18.1093",
       "target": "src/paint-target.js",
-      "sha256": "734176842fa3925316016fd9fbf7b1c2c67fbbc3405408aab8c113ab99f96ad9"
+      "sha256": "b171ca601b04e1bb2b08c7183c9231a54496babbe5fbb2095c85e58a81070953"
     },
     {
       "owner": "index.html",
@@ -3326,9 +3326,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1092",
+      "url": "./src/shell-comparison.js?v=0.36.18.1093",
       "target": "src/shell-comparison.js",
-      "sha256": "0a5c5ece53486e184c506709187ebb8d3fb46dad8142108218d63447b9980d99"
+      "sha256": "196ea05bb84349d973a091ad9115ec36dbf82039603ea3aa0bc2b4c534d32496"
     },
     {
       "owner": "src/main.js",
@@ -3550,13 +3550,13 @@
       "owner": "tests/opacity-double-sided-1076.test.mjs",
       "url": "../src/paint-target.js?v=0.36.18.1076",
       "target": "src/paint-target.js",
-      "sha256": "734176842fa3925316016fd9fbf7b1c2c67fbbc3405408aab8c113ab99f96ad9"
+      "sha256": "b171ca601b04e1bb2b08c7183c9231a54496babbe5fbb2095c85e58a81070953"
     },
     {
       "owner": "src/paint-target.js",
-      "url": "./project-paint-resources.js?v=0.36.18.1092",
+      "url": "./project-paint-resources.js?v=0.36.18.1093",
       "target": "src/project-paint-resources.js",
-      "sha256": "66dbf41b7de94d93b694b1239bd26ed69e3b4d76afe5f86c41acec49365a0d13"
+      "sha256": "f89416e65f1a542cf62cc08e0a334d40895fceb6c88b79b13fa31f20bb1df405"
     },
     {
       "owner": "src/project-paint-resources.js",
@@ -3566,19 +3566,19 @@
     },
     {
       "owner": "src/project-paint-resources.js",
-      "url": "./imported-paint-colour.js?v=0.36.18.1092",
+      "url": "./imported-paint-colour.js?v=0.36.18.1093",
       "target": "src/imported-paint-colour.js",
       "sha256": "cfbd46b4b4d3c6d8e89e7428cd21c06e9ae8ad32530c7c1db1257443cf8aa38e"
     },
     {
       "owner": "src/viewport-paint-core.js",
-      "url": "./imported-paint-colour.js?v=0.36.18.1092",
+      "url": "./imported-paint-colour.js?v=0.36.18.1093",
       "target": "src/imported-paint-colour.js",
       "sha256": "cfbd46b4b4d3c6d8e89e7428cd21c06e9ae8ad32530c7c1db1257443cf8aa38e"
     },
     {
       "owner": "src/paint-target.js",
-      "url": "./imported-paint-colour.js?v=0.36.18.1092",
+      "url": "./imported-paint-colour.js?v=0.36.18.1093",
       "target": "src/imported-paint-colour.js",
       "sha256": "cfbd46b4b4d3c6d8e89e7428cd21c06e9ae8ad32530c7c1db1257443cf8aa38e"
     },
@@ -3605,6 +3605,24 @@
       "url": "./nomad-scalar-png.js?v=0.36.18.1035",
       "target": "src/nomad-scalar-png.js",
       "sha256": "2e28e5272c14f0702066d15101746f25a500e31fc769434fe419e461f11c0f25"
+    },
+    {
+      "owner": "src/paint-export.js",
+      "url": "./imported-paint-colour.js?v=0.36.18.1093",
+      "target": "src/imported-paint-colour.js",
+      "sha256": "cfbd46b4b4d3c6d8e89e7428cd21c06e9ae8ad32530c7c1db1257443cf8aa38e"
+    },
+    {
+      "owner": "src/paint-export.js",
+      "url": "./opacity-resource.js?v=0.36.18.1075",
+      "target": "src/opacity-resource.js",
+      "sha256": "46c5bcdd85f207ee5e27955335d90e6e092fed9c0b409ce075737df0a34bd261"
+    },
+    {
+      "owner": "src/paint-export.js",
+      "url": "./paint-filter-domain.js?v=0.36.18.1091",
+      "target": "src/paint-filter-domain.js",
+      "sha256": "a7c676866679ba7f1dddf350f07c31a2edc1ad149ac3c62bc26cd92950e6eb65"
     }
   ]
 }

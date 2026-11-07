@@ -1,4 +1,4 @@
-## .1092 — imported opaque colour texture painting — native pending
+## .1093 — imported opaque colour texture painting — native pending
 
 Protect `.1091` image seam PASS, `.1090` Paint visibility PASS and `.1088` Facegroups PASS. Supported first-stage files: one opaque UV0 colour texture, PNG/JPEG up to 2 MiB, square 512/1024, no additional PBR maps or transformed UV sampling. Original import/UV/image bytes stay retained.
 

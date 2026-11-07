@@ -19101,3 +19101,7 @@ Opening decodes a transient base, bakes material colour factors in linear light 
 New integration tests exercise NOM/GLB at 512/1024, exact initial pixels, no opening history/resource, original image preservation, stroke and untouched pixels, Save/Open and prepared colour export, factor conversion, rejected transforms/maps/transparency and cancellation during decode. Focused validation and hosted publication outcomes are recorded below when complete. Native `.1092` acceptance pending.
 
 Focused .1092 validation: 37 PASS / 0 FAIL. Hosted regression, Pages and live marker verification pending. Native acceptance pending.
+
+## .1093 — imported texture export closure and fresh release graph — 7 November 2026
+
+End-to-end export review after .1092 implementation found authored colour exports reset imported scalar constants and native-NOM-to-GLB guard ran before supported colour conversion. Carry validated imported roughness/metalness constants in export-local image metadata; both original exporters consume them when no authored scalar map replaces them. Include constants in GLB material deduplication. Allow native NOM to GLB only after original Paint preparation proves a supported imported colour conversion. Extra PBR maps remain refused. Add real GLB and NOM writer assertions to all four 512/1024 NOM/GLB integration cases, plus preview retirement. No private file committed. Issue fresh .1093 markers and loader graph so clients cannot retain the earlier .1092 intermediate modules. .1091 remains protected native PASS; .1093 native acceptance pending.

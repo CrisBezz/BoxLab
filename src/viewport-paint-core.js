@@ -1,4 +1,4 @@
-import {importedPaintColourSource,decodeImportedPaintColour} from './imported-paint-colour.js?v=0.36.18.1092';
+import {importedPaintColourSource,decodeImportedPaintColour} from './imported-paint-colour.js?v=0.36.18.1093';
 import {captureOpacityResource,copyOpacityResource} from './opacity-resource.js?v=0.36.18.1075';
 import {createProjectOpacityPool} from './project-opacity-resources.js?v=0.36.18.1075';
 import {createFaceFillPlan} from './paint-face-fill.js?v=0.36.18.1004';
@@ -14,8 +14,8 @@ import {projectPaintImage} from './paint-image-project.js?v=0.36.18.951';
 import {surfaceImageFrameFromHit} from './paint-image-surface.js?v=0.36.18.933';
 import {capturePaintImagePlacement,paintImagePlacementFromCamera} from './paint-image-placement.js?v=0.36.18.907';
 import {captureLayeredColourResource,capturePaintResource} from './paint-layer-resource.js?v=0.36.18.1033';
-import {createProjectPaintPool} from './project-paint-resources.js?v=0.36.18.1092';
-import {paintTargetKey,paintTargetDigest,paintTexture,createPaintSurface} from './paint-target.js?v=0.36.18.1092';
+import {createProjectPaintPool} from './project-paint-resources.js?v=0.36.18.1093';
+import {paintTargetKey,paintTargetDigest,paintTexture,createPaintSurface} from './paint-target.js?v=0.36.18.1093';
 import {captureRoughnessResource,copyRoughnessResource} from './roughness-resource.js?v=0.36.18.1075';
 import {createProjectRoughnessPool} from './project-roughness-resources.js?v=0.36.18.1075';
 import {captureMetalnessResource,copyMetalnessResource} from './metalness-resource.js?v=0.36.18.1075';
