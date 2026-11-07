@@ -1,3 +1,7 @@
+## .1091 — protected native PASS
+
+User confirms `.1091 PASS` on 7 November 2026. Protect the image-seam repair, existing saved-image workflow, Paint/history/Done-reopen and NOM/GLB round-trip acceptance. Next priority: imported textured NOM/GLB Paint, followed by measured performance/WASM work. No new runtime build for this acceptance record.
+
 ## .1091 image seam padding alignment — device acceptance pending
 
 `.1090` is now user-confirmed PASS and protected. Preserve viewport Brush/Fill visibility, history and Done/reopen. `.1088` Facegroups PASS remains protected.

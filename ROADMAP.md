@@ -1,3 +1,7 @@
+## .1091 — protected native PASS
+
+User confirms `.1091 PASS` on 7 November 2026. Protect the image-seam repair, existing saved-image workflow, Paint/history/Done-reopen and NOM/GLB round-trip acceptance. Next priority: imported textured NOM/GLB Paint, followed by measured performance/WASM work. No new runtime build for this acceptance record.
+
 # Current priority — .1091 image seam padding alignment — 7 November 2026
 
 User confirms `.1090 PASS`; protect immediate Brush/Fill viewport visibility, Done/reopen/history and the earlier `.1088` Facegroups PASS. Remaining report: an image placed with Paint + Image on a Nomad facegroup-unwrapped sphere has thin dotted seams after Done. The supplied private `.boxlab` reproduction contains 98 vertices, 96 quads, 1024² colour and a retained editable image recipe; do not commit the user project or portrait.
