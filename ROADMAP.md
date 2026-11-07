@@ -1,9 +1,9 @@
-# Current build: .1088 duplicate-named Nomad facegroups — protected native PASS (7 November 2026)
+# Current build: .1089 four-texel UV edge padding (7 November 2026)
 
 ## Delivered and protected
 
-- `.1087` imported textureless NOM/GLB UV Paint is a protected native PASS.
-- `.1088` fixes the uploaded Nomad facegroup case: 96 faces use eight IDs from a ten-entry table where all names are `Patch`. Distinct IDs now get stable suffixed labels while unique names remain unchanged. Existing Facegroups palette/render/export owners are reused. The user file is not checked into the repo; a generated fixture covers manager insertion, palette rows and NOM round trip.
+- `.1088` imported Nomad facegroups with repeated names is a protected native PASS.
+- `.1089` adds fixed four-texel RGB dilation into unused UV atlas space for committed Paint display and GLB/NOM export. UVs, mapped pixels, source resources and alpha remain unchanged. The active stroke loop is not padded per frame. No resolution cap increase.
 
 - Scope is deliberately bounded to complete UVs in tile 0–1, one solid material, no embedded images, vertex colours, tangent maps or morph targets, and 20,000 corners maximum. Imported image textures and multi-material meshes remain protected and cannot enter Paint yet.
 - Focused imported-Paint tests: 3 PASS / 0 FAIL. Focused surrounding Paint/project/export/NOM-retention tests: 24 PASS / 0 FAIL. Local and hosted Topology regressions both pass 3,171/3,171. Runtime commit `11c9218724a7db38da4983cb9d35801177a7418f` is on `main`; Pages run `42226136614` succeeded and the live app reports `.1087`. User reports native iPad/Safari PASS for `.1087`; protect the complete device workflow.
@@ -11,15 +11,15 @@
 - `.1086` exports authored opacity through the existing paint snapshot/export owners, using the bound 512 × 512 R8 map in base-colour RGBA. Materials use standard glTF `BLEND` and double-sided rendering; opacity-only maps use white RGB. OBJ and NOMAD remain unsupported for authored opacity.
 - Preserve `.1085` onset/Paint PASSes and earlier Paint PASSes.
 
-## Next: diagnose UV paint join artifacts, then imported textured Paint
+## Current next: publish `.1089`, then native seam check and imported textured Paint
 
-User reports `.1088 PASS`; protect import, eight distinct Facegroups rows/regions, Save/Open and NOM export/reimport. Next, inspect the UV paint join artifacts and determine whether they come from texel density or island-edge sampling/padding. Existing colour maps support 512² and 1024². A larger cap affects paint storage, project encoding/budgets, previews and export validators, so audit those owners before increasing it. Then continue imported textured painting through existing source-image and Paint owners, preserving embedded bytes, UV transforms and material appearance. Audit multi-material/tile behavior before expanding eligibility. Keep WASM queued until imported textured Paint passes native checks.
+Focused helper/export regressions verify four-texel gutters on both NOM and GLB, mapped pixels and source resources, alpha preservation, and the existing 512/1024 project/export limits. The local full suite reports 3,169/3,171; two Metalness/Roughness test worker processes are SIGKILLed after their cases print as passing, without an assertion failure. Focused files pass; do not report the full suite as green. Runtime source `.1089` is prepared for publication; live Pages verification and native iPad/Safari acceptance are pending. Verify seams after Paint Done and through NOM/GLB export/reimport. If artifacts remain, distinguish insufficient padding from low texel density before changing resolution.
 
-After imported textured NOM/GLB painting passes, begin the measured WASM feasibility audit. Establish repeatable JavaScript baselines for existing performance-sensitive owners, then prototype only an existing operation if evidence shows a worthwhile target. Keep the JavaScript owner as fallback; require equivalent output and a measured speed gain. Treat memory capacity as a separate test.
+2048² RGBA maps consume 16 MiB each, four times 1024², before layered copies, previews, history, GPU textures and export buffers. Current paint/resource budgets do not measure total browser/iPad heap or GPU residency; no current evidence says ordinary use is already at the device ceiling. WASM may accelerate CPU-bound raster work only after benchmarks; it does not inherently reduce texture bytes or browser memory ceilings. Keep imported textured NOM/GLB painting ahead of WASM evaluation. Then set measurable JavaScript baselines, prototype only a proven CPU bottleneck, and compare memory separately.
 
 ## Protected device results — 7 November 2026
 
-`.1088` duplicate-name Nomad Facegroups PASS, protecting the complete native import/assignment/Save-Open/NOM round-trip workflow. `.1087` imported textureless NOM/GLB Paint PASS.
+`.1088` duplicate-name Nomad Facegroups PASS, protecting the complete native import/assignment/Save-Open/NOM round-trip workflow. `.1087` imported textureless NOM/GLB Paint PASS. `.1089` device seam acceptance is pending.
 
 ## Protected device results — 6 November 2026
 

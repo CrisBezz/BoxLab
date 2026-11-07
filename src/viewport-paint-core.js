@@ -2,7 +2,7 @@ import {captureOpacityResource,copyOpacityResource} from './opacity-resource.js?
 import {createProjectOpacityPool} from './project-opacity-resources.js?v=0.36.18.1075';
 import {createFaceFillPlan} from './paint-face-fill.js?v=0.36.18.1004';
 import {createFacegroupBoundaryPreview,facegroupBoundaryEdges} from './facegroup-boundary-preview.js?v=0.36.18.1004';
-import {createPaintFilterDomain} from './paint-filter-domain.js?v=0.36.18.951';
+import {createPaintFilterDomain} from './paint-filter-domain.js?v=0.36.18.1089';
 import {createPaintAOPixels,createPaintAOPixelsAsync} from './paint-ao-layer.js?v=0.36.18.951';
 import * as THREE from 'three';
 import {createPaintLayer} from '../evaluations/uv-paint/paint-core.js?v=0.36.18.1074';
@@ -14,7 +14,7 @@ import {surfaceImageFrameFromHit} from './paint-image-surface.js?v=0.36.18.933';
 import {capturePaintImagePlacement,paintImagePlacementFromCamera} from './paint-image-placement.js?v=0.36.18.907';
 import {captureLayeredColourResource,capturePaintResource} from './paint-layer-resource.js?v=0.36.18.1033';
 import {createProjectPaintPool} from './project-paint-resources.js?v=0.36.18.1087';
-import {paintTargetKey,paintTargetDigest,paintTexture,createPaintSurface} from './paint-target.js?v=0.36.18.1087';
+import {paintTargetKey,paintTargetDigest,paintTexture,createPaintSurface} from './paint-target.js?v=0.36.18.1089';
 import {captureRoughnessResource,copyRoughnessResource} from './roughness-resource.js?v=0.36.18.1075';
 import {createProjectRoughnessPool} from './project-roughness-resources.js?v=0.36.18.1075';
 import {captureMetalnessResource,copyMetalnessResource} from './metalness-resource.js?v=0.36.18.1075';
@@ -43,7 +43,7 @@ export function createViewportPainter({target,activeId=()=>target()?.id,body,own
   // Opening a new 1024 document stays transient: first edit uses the accepted
   // layered profile; no blank resource or history entry is published on open.
   const stack=resource?.version>=2?capturePaintResource(resource).layers:!resource&&size===1024?createPaintLayerStack(captureColourResource({width:size,height:size,pixels:preview,binding})):null,selected=stack?.layers.at(-1)?.id||'$base';
-  let layer,display;try{layer=createPaintLayer(size,{transparent:!!stack&&selected!=='$base'});if(stack)layer.restore(selected==='$base'?stack.base.pixels:stack.layers.find(l=>l.id===selected).pixels);else if(resource)layer.restore(resource.pixels);for(const child of [...b.children])child.userData?.boxlabColourPaintDispose?.();display=createPaintSurface(b,geometry,paintTexture(preview,size));display.show();}catch(e){geometry.dispose();display?.dispose();layer?.dispose();throw e;}
+  let layer,display;try{layer=createPaintLayer(size,{transparent:!!stack&&selected!=='$base'});if(stack)layer.restore(selected==='$base'?stack.base.pixels:stack.layers.find(l=>l.id===selected).pixels);else if(resource)layer.restore(resource.pixels);for(const child of [...b.children])child.userData?.boxlabColourPaintDispose?.();display=createPaintSurface(b,geometry,paintTexture(preview,size),{padding:0});display.show();}catch(e){geometry.dispose();display?.dispose();layer?.dispose();throw e;}
   const lost=()=>close(false);session={size,object:o,id:o.id,key,binding,resource,roughness,metalness,opacity,uv:o.glbPassthrough,body:b,layer,display,lost,stack,selected,preview,dirty:true,paintTarget:'colour',previewMode:'material',multiPaintChannels:[]};b.geometry.addEventListener('dispose',lost);return true;
  }
  function hit(p){if(!current())return null;scene.updateMatrixWorld(true);ray.setFromCamera(new THREE.Vector2(p.x/p.width*2-1,1-p.y/p.height*2),camera);

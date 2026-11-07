@@ -1,3 +1,15 @@
+## .1089 — four-texel UV edge padding — native acceptance pending
+
+For the current build, the committed lit Paint preview and GLB/NOM export fill unused atlas pixels up to four texels from valid UV triangles. The source resource and occupied texels remain unchanged; mapped alpha is preserved. Active stroke updates do not run this dilation every frame. 512²/1024² limits are unchanged.
+
+- [ ] On the UV-unwrapped Nomad model, paint close to a seam, press Done, and inspect both adjoining faces. Check for reduced color bleed/artefacting at the join.
+- [ ] Repeat after Save/Open and after NOM export/reimport; verify the painted face and existing seam layout remain intact.
+- [ ] Check GLB export/reimport for reduced join artifacts and unchanged mapped paint/opacity.
+- [x] Automated: separated UV charts receive four-texel RGB gutter fill; mapped texels, source resources, alpha and UVs are preserved; committed material preview, NOM/GLB export and 1024² resource paths are covered.
+- [x] Automated: existing paint resolution, project, memory-budget and export caps remain 512²/1024².
+
+Do not raise the map cap as part of this seam repair. A 2048² RGBA map is 16 MiB, four times 1024², before layered copies, previews, working/history buffers, GPU textures and export snapshots. The existing budgets are bounded resource accounting, not total iPad heap/GPU telemetry. WASM may speed CPU raster work but cannot reduce pixel memory or browser/GPU limits by itself. Consider a 2048 option only after measuring a real use case and auditing all paint, project, preview, and export owners.
+
 ## .1088 — imported Nomad facegroups with repeated names — protected native PASS
 
 The attached `Test Import.nom` has 96 faces and ten group-table records, all named `Patch`; eight IDs are assigned to faces. The old importer mapped only the repeated name string, collapsing those IDs into one BoxLab group. `.1088` generates stable ID-based labels only for duplicate source names (for example `Patch (1)`); unique Nomad group names stay unchanged. The uploaded model is not committed; regression uses a generated equivalent to avoid publishing user geometry.
@@ -8,6 +20,8 @@ The attached `Test Import.nom` has 96 faces and ten group-table records, all nam
 - [x] Automated: repeated names resolve to stable distinct labels through parse, actual File import/object manager, Facegroups palette, and NOM export/import; existing unique `Body`/`Trim` names remain unchanged.
 
 User reports `.1088 PASS`; protect the complete device workflow above. Focused NOM importer tests: 13 PASS / 0 FAIL. Full local suite: 3,172 PASS / 0 FAIL. Release/loader contract checks, hosted Topology and Pages publication passed.
+
+`.1089` focused automated coverage: helper/committed preview 4 PASS; Paint image/export 8 PASS; export/opacity 8 PASS; AO 6 PASS; 1024² resolution/project 7 PASS; release/cache 10 PASS. The complete suite reported 3,169/3,171 because the Metalness and Roughness test worker processes were SIGKILLed after their listed test cases printed PASS; no assertion failure was reported. Do not mark the full suite green. `.1089` live publication and native visual acceptance remain pending.
 
 ## .1087 — imported NOM/GLB UV Paint — protected native PASS
 
@@ -21,7 +35,7 @@ This stage enables the existing UV Paint owner only for imported NOM/GLB meshes 
 
 User reports PASS for the complete `.1087` device workflow above. Protect this result. Release verification: local suite 3,171/3,171 PASS; hosted Topology run `42226136656` 3,171/3,171 PASS; Pages run `42226136614` succeeded; live app reports `.1087`.
 
-Next Paint investigation: UV-island join artifacts versus texel resolution. Existing maps support 512²/1024²; decide from seam-padding/sampling and resource/export audits before any higher-resolution expansion. Imported texture compositing remains queued before WASM feasibility.
+Next Paint gate: `.1089` native UV edge-padding check above. Existing maps support 512²/1024²; resolve residual seam issues by measuring padding and texel density before considering higher resolution. Imported texture compositing remains queued before WASM feasibility.
 
 ## .1086 GLB opacity export — protected native PASS
 

@@ -1,11 +1,12 @@
 // Export-local adaptation only. Never add material/provenance fields to native UVs.
 import {captureFlattenedPaint} from './paint-layer-resource.js?v=0.36.18.1033';
-import {paintTargetKey,paintTargetDigest} from './paint-target.js?v=0.36.18.1087';
+import {paintTargetKey,paintTargetDigest} from './paint-target.js?v=0.36.18.1089';
 import {copyMetalnessResource} from './metalness-resource.js?v=0.36.18.1075';
 import {copyRoughnessResource} from './roughness-resource.js?v=0.36.18.1075';
 import {copyOpacityResource} from './opacity-resource.js?v=0.36.18.1075';
 import {encodeNomadScalarPNG,encodeNomadColourPNG,encodeNomadColourAlphaPNG,encodeNomadDataPNG} from './nomad-scalar-png.js?v=0.36.18.1086';
-const prepared=new WeakMap(),roughnessPrepared=new WeakMap(),metalnessPrepared=new WeakMap(),opacityPrepared=new WeakMap(),packedPrepared=new WeakMap();
+import {padPaintPixels} from './paint-filter-domain.js?v=0.36.18.1089';
+const prepared=new WeakMap(),roughnessPrepared=new WeakMap(),metalnessPrepared=new WeakMap(),opacityPrepared=new WeakMap(),packedPrepared=new WeakMap(),exportColourSource=new WeakMap();
 export function capturePaintExportObjects(objects){
  const copies=new WeakMap(),roughnessCopies=new WeakMap(),metalnessCopies=new WeakMap(),opacityCopies=new WeakMap();return (objects||[]).map(o=>{
   if(!o)return o;let colourPaint=o.colourPaint,roughnessPaint=o.roughnessPaint,metalnessPaint=o.metalnessPaint,opacityPaint=o.opacityPaint;
@@ -13,7 +14,7 @@ export function capturePaintExportObjects(objects){
   if(roughnessPaint){let copy=roughnessCopies.get(roughnessPaint);if(!copy){copy=copyRoughnessResource(roughnessPaint);roughnessCopies.set(roughnessPaint,copy);}roughnessPaint=copy;}
   if(metalnessPaint){let copy=metalnessCopies.get(metalnessPaint);if(!copy){copy=copyMetalnessResource(metalnessPaint);metalnessCopies.set(metalnessPaint,copy);}metalnessPaint=copy;}
   if(opacityPaint){let copy=opacityCopies.get(opacityPaint);if(!copy){copy=copyOpacityResource(opacityPaint);opacityCopies.set(opacityPaint,copy);}opacityPaint=copy;}
-  return {...o,roughnessPaint,metalnessPaint,opacityPaint,mesh:o.mesh?.clone?o.mesh.clone():structuredClone(o.mesh),settings:structuredClone(o.settings||{}),...((colourPaint||roughnessPaint||metalnessPaint||opacityPaint)?{colourPaint,glbPassthrough:structuredClone(o.glbPassthrough)}:{})};
+  const copy={...o,roughnessPaint,metalnessPaint,opacityPaint,mesh:o.mesh?.clone?o.mesh.clone():structuredClone(o.mesh),settings:structuredClone(o.settings||{}),...((colourPaint||roughnessPaint||metalnessPaint||opacityPaint)?{colourPaint,glbPassthrough:structuredClone(o.glbPassthrough)}:{})};if(colourPaint&&o.colourPaint?.pixels)exportColourSource.set(copy,o.colourPaint.pixels);return copy;
  });
 }
 export async function preparePaintExportObjects(objects,{subd=false,owner=globalThis.__boxlabExportAs,packedScalars=false,includeOpacity=false}={}){
@@ -25,7 +26,12 @@ export async function preparePaintExportObjects(objects,{subd=false,owner=global
  const encoded=new WeakMap(),packedEncoded=new WeakMap(),noRoughness={};
  for(const {object,key} of items){
   const binding=await paintTargetDigest(key);
-  const colour=object.colourPaint,roughness=object.roughnessPaint,metalness=object.metalnessPaint,opacity=includeOpacity?object.opacityPaint:null;
+  let colour=object.colourPaint;const roughness=object.roughnessPaint,metalness=object.metalnessPaint,opacity=includeOpacity?object.opacityPaint:null;
+  if(colour&&owner?.padPaintEdges===true&&typeof owner?.buildUVPreviewGeometry==='function'){
+   let geometry;try{geometry=owner.buildUVPreviewGeometry(object.mesh,object.glbPassthrough,{faceIndices:true});if(geometry)padPaintPixels(colour.pixels,colour.width,geometry,4,colour.pixels,exportColourSource.get(object)||colour.pixels);}
+   catch{/* Keep otherwise valid texture exports available if UV padding cannot be derived. */}
+   finally{geometry?.dispose?.();}
+  }
   if(colour&&(![512,1024].includes(colour.width)||colour.height!==colour.width||binding!==colour.binding)||roughness&&binding!==roughness.binding||metalness&&binding!==metalness.binding||opacity&&(![16,512].includes(opacity.width)||opacity.height!==512||binding!==opacity.binding))throw Error('Paint export requires matching native Base UVs; Undo UV/topology changes first');
   if(opacity&&(opacity.width!==512||opacity.height!==512))throw Error('GLB opacity map must be 512 × 512');
   if(opacity){const image={name:'BoxLab colour opacity.png',choice:{data:await encodeNomadColourAlphaPNG(colour?.pixels||null,colour?.width||0,colour?.height||0,opacity.pixels,opacity.width,opacity.height),mime:'image/png'}};prepared.set(object,image);opacityPrepared.set(object,true);}

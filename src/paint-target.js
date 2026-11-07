@@ -6,7 +6,9 @@ import {copyMetalnessResource} from './metalness-resource.js?v=0.36.18.1075';
 import {copyRoughnessResource} from './roughness-resource.js?v=0.36.18.1075';
 import {paintDigest} from './paint-resource.js?v=898';
 import {importedPaintEligible} from './project-paint-resources.js?v=0.36.18.1087';
+import {padPaintPixels} from './paint-filter-domain.js?v=0.36.18.1089';
 const encoder=new TextEncoder(),hidden=new THREE.MeshBasicMaterial({colorWrite:false,depthWrite:false});
+const PAINT_EDGE_PADDING=4;
 const METAL_ONLY_PAINT_ENV_INTENSITY=.55;
 const COMBINED_PAINT_ENV_INTENSITY=.35;
 // Reuse original codec/UV topology validation. Positions may move/deform with unchanged UVs.
@@ -20,12 +22,13 @@ export function paintTargetKey(object,mesh=object?.mesh,owner=globalThis.__boxla
 export const paintTargetDigest=key=>paintDigest(encoder.encode(key));
 export function paintTexture(pixels,size){const t=new THREE.DataTexture(pixels,size,size,THREE.RGBAFormat);t.colorSpace=THREE.SRGBColorSpace;t.flipY=false;t.generateMipmaps=false;t.minFilter=t.magFilter=THREE.LinearFilter;t.needsUpdate=true;return t;}
 // One surface/lifetime owner for committed display and temporary stroke preview.
-export function createPaintSurface(body,geometry,texture,{renderer=globalThis.__boxlabBridgeState?.renderer,environmentPool=paintMaterialEnvironments}={}){
- const fallback=body.material,source=body.geometry,material=new THREE.MeshBasicMaterial({map:texture,toneMapped:false}),surface=new THREE.Mesh(geometry,material);let disposed=false,lit=null,colourMap=null,roughnessMap=null,metalnessMap=null,opacityMap=null,environment=null;
+export function createPaintSurface(body,geometry,texture,{renderer=globalThis.__boxlabBridgeState?.renderer,environmentPool=paintMaterialEnvironments,padding=PAINT_EDGE_PADDING}={}){
+ const fallback=body.material,source=body.geometry,material=new THREE.MeshBasicMaterial({map:texture,toneMapped:false}),surface=new THREE.Mesh(geometry,material);let disposed=false,lit=null,colourMap=null,colourSource=null,roughnessMap=null,metalnessMap=null,opacityMap=null,environment=null;
  surface.userData.boxlabRenderOverlay=true;surface.raycast=()=>{};
  // Textures belong to this surface, never the shared committed resources.
  // Roughness G and metalness B are linear data; colour keeps the accepted sRGB map.
  function validateScalar(resource,rgba,label){if(resource){const {width,height,pixels}=resource;if(![width,height].every(v=>Number.isInteger(v)&&v>=16&&v<=512)||!(pixels instanceof Uint8Array)||pixels.length!==width*height*(rgba?4:1))throw Error('Invalid material '+label+' preview');}}
+ function padded(pixels,size,output){if(!padding||!renderer||size<16)return pixels;try{return padPaintPixels(pixels,size,geometry,padding,output);}catch{return pixels;}}
  function scalarTexture(texture,resource,rgba,channel){
   const {width,height,pixels}=resource;
   if(!texture||texture.image.width!==width||texture.image.height!==height){texture?.dispose();texture=new THREE.DataTexture(new Uint8Array(width*height*4),width,height,THREE.RGBAFormat);texture.colorSpace=THREE.NoColorSpace;texture.flipY=false;texture.generateMipmaps=false;texture.minFilter=texture.magFilter=THREE.LinearFilter;}
@@ -38,7 +41,7 @@ export function createPaintSurface(body,geometry,texture,{renderer=globalThis.__
   validateScalar(opacity?.resource,opacity?.rgba,'opacity');
   validateScalar(roughness,rgba,'roughness');validateScalar(metalness,metalnessRGBA,'metalness');
   if(!lit)lit=new THREE.MeshStandardMaterial({color:0xffffff,roughness:1,metalness:0,side:THREE.FrontSide});
-  if(colour){if(!colourMap||colourMap.image.width!==colourSize){colourMap?.dispose();colourMap=paintTexture(colour.slice(),colourSize);}else{colourMap.image.data.set(colour);colourMap.needsUpdate=true;}}
+  if(colour){if(!colourMap||colourMap.image.width!==colourSize){colourMap?.dispose();const mapPixels=colour.slice();padded(colour,colourSize,mapPixels);colourMap=paintTexture(mapPixels,colourSize);colourSource=colour;}else if(!padding||colourSource!==colour){padded(colour,colourSize,colourMap.image.data);colourMap.needsUpdate=true;colourSource=colour;}}
   if(opacity?.resource)opacityMap=scalarTexture(opacityMap,opacity.resource,opacity.rgba,1);
   if(roughness)roughnessMap=scalarTexture(roughnessMap,roughness,rgba,1);
   if(metalness)metalnessMap=scalarTexture(metalnessMap,metalness,metalnessRGBA,2);
@@ -75,7 +78,7 @@ export function createPaintSurface(body,geometry,texture,{renderer=globalThis.__
 export function createCommittedPaintSurface(body,object,mesh,owner=globalThis.__boxlabExportAs){
  const resource=object?.colourPaint,roughness=object?.roughnessPaint,metalness=object?.metalnessPaint,opacity=object?.opacityPaint;if(!resource&&!roughness&&!metalness&&!opacity)return null;
  if(resource&&(![512,1024].includes(resource.width)||resource.height!==resource.width))return null;
- let key,geometry,scalar,metal,alpha;try{key=paintTargetKey(object,mesh,owner);if(roughness)scalar=copyRoughnessResource(roughness);if(metalness)metal=copyMetalnessResource(metalness);if(opacity)alpha=copyOpacityResource(opacity);geometry=owner.buildUVPreviewGeometry(mesh,object.glbPassthrough);if(!geometry)return null;}catch{return null;}
+ let key,geometry,scalar,metal,alpha;try{key=paintTargetKey(object,mesh,owner);if(roughness)scalar=copyRoughnessResource(roughness);if(metalness)metal=copyMetalnessResource(metalness);if(opacity)alpha=copyOpacityResource(opacity);geometry=owner.buildUVPreviewGeometry(mesh,object.glbPassthrough,{faceIndices:true});if(!geometry)return null;}catch{return null;}
  const display=createPaintSurface(body,geometry,paintTexture(resource?.pixels||new Uint8Array([255,255,255,255]),resource?resource.width:1));display.surface.visible=false;
  display.ready=paintTargetDigest(key).then(binding=>{
   if(display.disposed)return;

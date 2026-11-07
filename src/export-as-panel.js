@@ -1,5 +1,5 @@
 import {meshTopologySignature} from './mesh-topology-signature.js?v=0.36.18.939';
-import {capturePaintExportObjects,preparePaintExportObjects,preparedPaintImage,preparedOpacityImage,preparedRoughnessImage,preparedMetalnessImage,preparedMetallicRoughnessImage,paintExportGeometryObject} from './paint-export.js?v=0.36.18.1087';
+import {capturePaintExportObjects,preparePaintExportObjects,preparedPaintImage,preparedOpacityImage,preparedRoughnessImage,preparedMetalnessImage,preparedMetallicRoughnessImage,paintExportGeometryObject} from './paint-export.js?v=0.36.18.1089';
 // BoxLab .735 — native NOMAD handoff; regular OBJ/GLB exports remain available.
 // GLB keeps BoxLab editable objects as separate named scene nodes for Nomad/3D handoff.
 import * as THREE from 'three';
@@ -7,7 +7,7 @@ import {GLTFExporter} from 'three/addons/exporters/GLTFExporter.js';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {buildSceneOBJ,resolveExportMesh,safeOBJName} from './scene-obj-export-core.js?v=0.36.18.1075';
 
-import {buildNomadProjectWithMaps} from './nomad-packed-maps.js?v=0.36.18.1087';
+import {buildNomadProjectWithMaps} from './nomad-packed-maps.js?v=0.36.18.1089';
 
 const VERSION='0.36.18.892';
 const MAX_UV_PREVIEW_CORNERS=20000;
@@ -547,7 +547,7 @@ async function verifyGLB(buffer,expectedObjects,expectedGroupSlots){
 }
 async function buildGLB(sceneObjects,subd){
   if(sceneObjects.some(o=>o?.glbPassthrough?.source==='nomad'&&Object.keys(o.glbPassthrough.nomadMaterial?.textures||{}).length))throw Error('Native NOM materials are retained for NOMAD export and .boxlab Save; use NOMAD to keep their textures');
-  if(sceneObjects.some(o=>o?.colourPaint||o?.roughnessPaint||o?.metalnessPaint||o?.opacityPaint)){sceneObjects=capturePaintExportObjects(sceneObjects);await preparePaintExportObjects(sceneObjects,{subd,packedScalars:true,includeOpacity:true,owner:{topologySignature,buildUVPreviewGeometry}});}
+  if(sceneObjects.some(o=>o?.colourPaint||o?.roughnessPaint||o?.metalnessPaint||o?.opacityPaint)){sceneObjects=capturePaintExportObjects(sceneObjects);await preparePaintExportObjects(sceneObjects,{subd,packedScalars:true,includeOpacity:true,owner:{topologySignature,buildUVPreviewGeometry,padPaintEdges:true}});}
   const root=new THREE.Group();
   root.name='BoxLab';
   let count=0,faceGroupCount=0,groupSlotCount=0,uvRestoredCount=0,tangentsRestoredCount=0,vertexColorsRestoredCount=0,morphTargetsRestoredCount=0;
