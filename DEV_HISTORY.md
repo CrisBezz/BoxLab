@@ -6706,23 +6706,8 @@ order, old release adds no duplicate, recent log bounded12, Clear removes eviden
 Disable removes panel and later selection adds no panel. Geometry/history/redo and
 expected native toggles remain intact. Reuse real native picker integration checks.
 Controlled 
-... 450094 bytes omitted ...
-934dae7594d22bc4a64438b0d5bc003097fd, is published on main. Connected Git
-Data uploaded17 exact blobs; created tree and fetched main match locally tested tree.
-Local Node24 and hosted Node22 regression39762188060/job119768813511 both pass
-**2720 tests / 0 failures / 0 skipped**; complete hosted log totals verified.
-Pages39762187055 build119768816536/deploy119769033835 succeeded. All20 checked
-postdeployment shell/version, changed main/Lab/filter/seam runtime graph, recovery,
-retained main/Multi1.0/triangle graph/UV/project/export/primitive and frozenBeta7
-marker files byte-match tested source. Original assertions retained; protected/frozen
-bytes unchanged. This publication proof changes four continuity files only.
-
-Build942 complete and ready: cube two faces visible, paint patch up to shared edge,
-Smudge across it, compare Opacity and painted overlay, UndoRedo retains Paint, SaveOpen
-retains result. Seam transition carries averaged colour, not detailed patch orientation.
-User941PASS protected. Repeated PASS/nextbuild arrived before942 publication: it is
-not942 device acceptance. Actual942 iPad seam feel gate remains next. Then refine from
-feedback before AO/Edge seam authoring; alpha929/reflection gates stay independent.
+... 1195 bytes omitted ...
+ before AO/Edge seam authoring; alpha929/reflection gates stay independent.
 
 ## .942 user PASS — 22 October 2026 (Brisbane)
 
@@ -12741,3 +12726,10 @@ The .1098 viewport report is not a controlled performance comparison. iPad Chrom
 User observes a UV-painted import entering grey and pausing before its textures appear. Audit of the authoritative render-modes → UV image surface path found the overlay remains hidden until async source image decoding finishes; prior UV-preview timing only covered synchronous setup. Instrument the existing Performance monitor with opt-in `texture-decode` duration (source prep plus async decode wait) and `texture-display` (overlay construction until logical enablement). No import/render behavior, pixels or material ownership changed. Enable/reset Performance, import the same UV-painted NOM/GLB, download the report after it textures, repeat consistently and confirm Paint remains usable. Time-to-enabled is not a GPU frame-present measurement. Do not claim an optimization or WASM gain from this diagnostic build.
 
 Two new tests cover delayed decode timing, visibility only after completion, decode rejection and restoration; existing NOM color decode/standalone preview tests pass. Focused run: 9 PASS / 0 FAIL across the new timing tests, existing NOM decode/preview and release contract. Full local suite: 3,216 PASS / 0 FAIL; `git diff --check` clean. Initial full runs exposed only the release cache-contract updates; the direct shell and drawer/face-workflow release-version loaders now share the current .1099 key, and the final full suite passes. Hosted regression, Pages and live-byte publication checks remain pending. Device acceptance pending. Preserve .1097 cage/group behavior, .1096 Performance Lab, .1095 imported Colour Paint and all earlier PASSes; protected Multi transform unchanged.
+
+
+## .1099 validation and publication follow-up — 7 November 2026
+
+Local full suite:3,216 PASS/0 FAIL; `git diff --check` clean. Hosted Topology `42424611168` first reported3,215 PASS/1 FAIL: the new test exhausted100 `setImmediate` turns before the slower runner reached `createImageBitmap` during opaque PNG preparation. Runtime assertions passed. Test-only correction waits for a decoder-start promise with a bounded timeout and timer-based visibility polling; focused decode/NOM-preview/release checks pass19/19.
+
+During publication of that test-only follow-up, an API tree was created without its base. The intermediate main commit `db008449` briefly contained only `tests/`; this was caught by local `git ls-tree` and repaired before completion by restoring the full `.1099` tree and fixed test in `167d909cc44eeee4d0be8823659c42651e2cfa7b`. Current remote main tree is complete; the local checkout was synced to it before this handoff-only follow-up. Final hosted Topology `42425598493` passed3,216/3,216. Pages `42425597657` succeeded; live `.1099` marker, changed runtime modules and handoff files byte-match the repo. Device acceptance remains pending.

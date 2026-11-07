@@ -19,7 +19,11 @@ User .1097 functional PASS and all earlier Paint/interaction PASSes remain prote
 - [ ] Confirm the report includes `texture-decode` and `texture-display` samples; report decode mean/max and until-overlay-enabled mean/max. Repeat with the same model/device/settings for comparison.
 - [ ] Confirm the imported UV surface remains textured and usable in UV Paint; no regression to import or paint workflow.
 - [x] Automated regression covers delayed async decode, no timing sample before completion, elapsed decode and until-enabled durations, rejection timing, and body-material restoration/disposal. Existing NOM decoder and standalone map-preview tests also pass.
-- [x] Full local suite: 3,216 PASS / 0 FAIL; `git diff --check` clean. Hosted regression and Pages/live-byte check pending.
+- [x] Full local suite: 3,216 PASS / 0 FAIL; `git diff --check` clean.
+- [x] Hosted Topology `42424611168` initially had one timing-test harness failure (3,215/3,216); replaced the immediate-turn wait with a decoder-start event and bounded timeout.
+- [x] Restored complete repo tree after an incomplete intermediate API tree at `db008449`; current source tree is `167d909cc44eeee4d0be8823659c42651e2cfa7b`.
+- [x] Focused corrected decode/NOM-preview/release tests: 19 PASS / 0 FAIL.
+- [x] Final hosted Topology `42425598493`: 3,216 PASS / 0 FAIL. Pages `42425597657` succeeded; all checked live markers, changed modules and handoff files match.
 - [ ] Do not record a speedup/performance PASS from instrumentation alone. The .1098 iPad report is inconclusive and has no matched import sequence.
 
 # .1097 dense-model report received — cage win; overall stall remains — 7 November 2026
