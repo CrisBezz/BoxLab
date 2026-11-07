@@ -934,7 +934,9 @@ function installRenderObserver() {
     if (body) {
       activeRoot = this;
       activeBody = body;
+      const perf=globalThis.__boxlabPerformance,perfStart=perf?.start();
       saveActive();
+      perf?.stage?.('scene-sync',perfStart);
       body.visible = activeShouldShow();
     } else if (this === activeRoot) {
       const show = activeShouldShow(),groupContext=globalThis.__boxlabObjectSelection?.wholeGroupId!=null;

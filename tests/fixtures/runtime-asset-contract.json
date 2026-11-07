@@ -1,5 +1,5 @@
 {
-  "baseline": "Reviewed .1097: metadata-only whole-group context avoids active mesh/history saves per cage proxy. Exact cage/picker owner unchanged; .1096 baseline and .1095 Paint PASS protected.",
+  "baseline": "Reviewed .1098: opt-in phase details instrument active scene synchronization and render-mode preview work after .1097 removed repeated cage group saves. Timing breakdowns overlap and do not prove an optimization. Prior .1097 functional PASS, .1096 baseline and .1095 Paint PASS protected.",
   "references": [
     {
       "owner": "index.html",
@@ -161,9 +161,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1097",
+      "url": "./src/drawer-ui.js?v=0.36.18.1098",
       "target": "src/drawer-ui.js",
-      "sha256": "d47e1843c6ea866b2c0d14ccdcf160b3484918fef47fae5ae7a652e23c4bc7ec"
+      "sha256": "5059d967aea88e9772097ddecdd4d935e7122c42a4f63b403762bb604ae13902"
     },
     {
       "owner": "index.html",
@@ -323,9 +323,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/multi-object.js?v=0.36.18.1097",
+      "url": "./src/multi-object.js?v=0.36.18.1098",
       "target": "src/multi-object.js",
-      "sha256": "e9c33ff6f9f1540c20fb08e09cd44c5aeb96aefae0bf770d066b882c57df5c51"
+      "sha256": "1cd6260a190be7fffa96a22696deb7bdf37a964f749ecdc777bfc401018d7fed"
     },
     {
       "owner": "index.html",
@@ -378,15 +378,15 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1097",
+      "url": "./src/release-version.js?v=0.36.18.1098",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
     {
       "owner": "index.html",
-      "url": "./src/render-modes.js?v=0.36.18.1095",
+      "url": "./src/render-modes.js?v=0.36.18.1098",
       "target": "src/render-modes.js",
-      "sha256": "50bd0105e80d5de7c861ad818b6cd2142de69ddca04f26a1401db8498e08a68c"
+      "sha256": "a8a6a137fad5f8a009ae6797d3d6eaf262529341adb43a546a636716017db18d"
     },
     {
       "owner": "index.html",
@@ -864,9 +864,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1097",
+      "url": "./face-workflow-layout.js?v=0.36.18.1098",
       "target": "src/face-workflow-layout.js",
-      "sha256": "a39eb1685928947406428274074c24d400cbef46cf42ad6536d978e067d9e687"
+      "sha256": "226ae5620010eef8cffc3764c58b64d1ed955b08542beec985cf43b3e9a02f0b"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1361,7 +1361,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1097",
+      "url": "./release-version.js?v=0.36.18.1098",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -2240,15 +2240,15 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/performance-monitor.js?v=0.36.18.1096",
+      "url": "./src/performance-monitor.js?v=0.36.18.1098",
       "target": "src/performance-monitor.js",
-      "sha256": "02ed8f9eaee93e41e977de0e589c8a076d38b72d82375af9cbfb396f3acee22c"
+      "sha256": "6e11384176f7026e98fe450b6db6c14e69b2a68621d2a31679e973f416010442"
     },
     {
       "owner": "src/performance-monitor.js",
-      "url": "./performance-core.js?v=0.36.18.848",
+      "url": "./performance-core.js?v=0.36.18.1098",
       "target": "src/performance-core.js",
-      "sha256": "141ab2919c502168172f59a23d7b648fcea4e928dcbf23facde6c5a42a01c4b3"
+      "sha256": "1224062edb71c8726168d5a9d99eca3fd88e787ee8a50fc9b90ad357d9f6daaf"
     },
     {
       "owner": "src/main.js",
@@ -3326,9 +3326,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1097",
+      "url": "./src/shell-comparison.js?v=0.36.18.1098",
       "target": "src/shell-comparison.js",
-      "sha256": "262094afc7c42971e76941e422b726cab870f704c4bb906a841c7778e2b5710b"
+      "sha256": "3a1ad7623da8717311971baf15cf4a147885b3318632be6954a19e883c4c6e21"
     },
     {
       "owner": "src/main.js",
@@ -3626,9 +3626,9 @@
     },
     {
       "owner": "src/performance-monitor.js",
-      "url": "./performance-lab-ui.js?v=0.36.18.1096",
+      "url": "./performance-lab-ui.js?v=0.36.18.1098",
       "target": "src/performance-lab-ui.js",
-      "sha256": "263e4e5ef48a5958f318047f5e1d7d6ae1c45f5f01a24c29c5e4c3d9e4e896c6"
+      "sha256": "e2caac7795cdf85b07de8029a158b2d8753cba4185dbe129d30055ecd881510a"
     },
     {
       "owner": "src/performance-lab-ui.js",

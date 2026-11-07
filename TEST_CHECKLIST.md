@@ -1,3 +1,18 @@
+# .1098 — scene hook profiling breakdown — 7 November 2026
+
+User .1097 functional PASS and all earlier Paint/interaction PASSes remain protected. This build adds read-only timings to the existing opt-in Performance monitor; no performance fix or WASM kernel is claimed. This .1098 build is committed locally but is not yet on remote main/Pages because automatic approval review rejected the push. Run the hands-on checks below after publication.
+
+- [ ] On the same imported 1,000-face model and settings as the .1096/.1097 reports, activate it, then VIEW → Diagnostics → Performance → Reset.
+- [ ] Keep selection/render modes fixed. Change selection, make one safe edit, and Undo/Redo several times. Download viewport report before switching models.
+- [ ] Compare reported vertex/face counts. Record the operation sequence and mode alongside total rebuild and Scene hooks mean/max.
+- [ ] Read nested Multi saveActive, object reads, Render mode, UV preview and Paint preview timings; these phases overlap and are not additive. A missing phase means it had no samples in this window.
+- [ ] Confirm all Vertex/Edge/Face/Object picking and gizmo remain usable; briefly open imported UV Paint and confirm existing Paint PASS behavior.
+- [x] Existing focused regression tests cover bounded opt-in timing, reset/sample cap, the actual render-mode owner and preview builders, exception propagation, current release markers and canonical loader pins.
+- [x] Full local suite: `npm test` — 3,214 PASS / 0 FAIL.
+- [ ] Overall dense latency diagnosis remains OPEN. Do not infer improved editable capacity or a WASM benefit from this instrumentation build.
+
+---
+
 # .1097 dense-model report received — cage win; overall stall remains — 7 November 2026
 
 Latest user report is .1097 with1,002 vertices/1,000 faces,6,006 rendered triangles,7 draw calls,2,007 renderer geometries and3 textures, matching .1096 latest counts and browser/viewport/DPR. User .1097 functional PASS remains protected. No new runtime/build in this investigation record. Raw reports/model remain private; retain aggregate evidence only.

@@ -8,7 +8,7 @@ export function createPerformanceMonitor(now=()=>performance.now()){
   get enabled(){return enabled;},setEnabled(value){enabled=!!value;reset();return enabled;},reset,
   start(){return enabled?now():null;},
   rebuild(start){if(!enabled||start===null)return;const duration=now()-start;if(valid(duration)){retain(rebuilds,duration);rebuildCount++;}},
-  stage(name,start){if(!enabled||start==null||!['display','geometry','scene','inactive','cage'].includes(name))return;const duration=now()-start;if(valid(duration))retain(stages[name] ||= [],duration);},
+  stage(name,start){if(!enabled||start==null||!['display','geometry','scene','inactive','cage','scene-sync','object-sync','render-mode','uv-preview','paint-preview'].includes(name))return;const duration=now()-start;if(valid(duration))retain(stages[name] ||= [],duration);},
   cache(hit,owner='active'){if(enabled){if(hit)cacheHits++;else cacheMisses++;cacheOwners[owner==='inactive'?'inactive':'active'][hit?'hits':'misses']++;}},
   frame(stamp,markers,render,info,mesh,history){
    if(!enabled)return;

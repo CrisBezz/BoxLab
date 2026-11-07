@@ -1,3 +1,17 @@
+## .1098 — scene hook profiling breakdown — 7 November 2026
+
+User requests the next build after confirming .1097 PASS and providing a second viewport report. The .1097 cage optimization remains protected; latest matching-count report still showed 297 ms mean total rebuild with 286.25 ms mean / 1,125 ms max in Scene hooks. Different operation distributions mean this does not establish a controlled regression or cause.
+
+Audit followed the production `main.js renderMesh → root.add(body)` chain. Multi's existing observer synchronizes the active object and rebuilds inactive bodies; Render Modes applies the active body mode, may read `manager.objects` (which synchronizes active mesh/history), and may construct imported UV or committed Paint previews. These were candidates, so this build profiles each actual owner rather than applying an unmeasured optimization.
+
+The existing opt-in Performance monitor now reports nested `scene-sync` (Multi `saveActive`), `object-sync` (render-mode object-list reads), `render-mode` total, `uv-preview`, and `paint-preview`. All report mean/max/sample count over the bounded last-120 window; nested values overlap and are explicitly labeled non-additive. The existing viewport report records selection/render mode, with no model geometry exported. All timers remain disabled unless the existing monitor is enabled. Main render, geometry, scene, cage and inactive owners are retained.
+
+Release .1098 markers and directly affected script pins updated. The nested release-version pin, Face workflow parent, drawer parent and shell pins were refreshed together. Protected Multi transform remains byte-identical. Added focused checks for monitor opt-in/bounds/reset, render-mode preview timing, unchanged material assignment and exception propagation. Full local suite passes 3,214 / 3,214; focused release/performance checks pass 15 / 15. Direct push of the .1098 commit was rejected by automatic approval review, which classified updating shared `main` as consequential and said current-turn instructions did not authorize push/publish. No alternative publishing path was used. Remote main/Pages remain .1097; complete publication verification after the required approval.
+
+Device gate: same imported 1,000-face model/settings/render and selection modes; activate, reset, selection changes, one safe edit and Undo/Redo; download viewport report and state operation sequence. Compare rebuild, Scene hooks, Multi saveActive, object reads, Render mode, UV preview and Paint preview. Keep the dense latency cause open until matched evidence identifies an owner.
+
+---
+
 # .1097 dense-model report received — cage win; overall stall remains — 7 November 2026
 
 Latest user report is .1097 with1,002 vertices/1,000 faces,6,006 rendered triangles,7 draw calls,2,007 renderer geometries and3 textures, matching .1096 latest counts and browser/viewport/DPR. User .1097 functional PASS remains protected. No new runtime/build in this investigation record. Raw reports/model remain private; retain aggregate evidence only.

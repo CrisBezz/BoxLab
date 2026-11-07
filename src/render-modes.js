@@ -95,7 +95,8 @@ function sourceMeshForBody(body){
   const m=manager();
   if(body?.userData?.kind==='body'){
     const source=bridge()?.mesh||null;
-    const active=m?.objects?.find(item=>item.id===m.activeId);
+    const perf=globalThis.__boxlabPerformance,lookupStart=perf?.start();let active;
+    try{active=m?.objects?.find(item=>item.id===m.activeId);}finally{perf?.stage?.('object-sync',lookupStart);}
     return evaluatedFacegroupMesh(source,active?.settings||{});
   }
   if(body?.userData?.kind==='boxlab-inactive-body'){
@@ -174,7 +175,10 @@ function syncStudio(){
 }
 
 function applyMode(body){
+  const perf=globalThis.__boxlabPerformance,perfStart=perf?.start();
+  try{
   const kind=body?.userData?.kind;if(!body?.isMesh||(kind!=='body'&&kind!=='boxlab-inactive-body'))return;
+  const objectFor=id=>{const lookupStart=perf?.start();try{return manager()?.objects?.find(object=>object.id===id)||null;}finally{perf?.stage?.('object-sync',lookupStart);}};
   const inactive=kind==='boxlab-inactive-body';if(!inactive)lastBody=body;clearRenderChildren(body);
   if(!body.userData.boxlabOriginalMaterial)body.userData.boxlabOriginalMaterial=body.material;
   const original=body.userData.boxlabOriginalMaterial;syncStudio();
@@ -182,13 +186,15 @@ function applyMode(body){
   // The replacement surface inherits these flags even when its digest wins the race.
   if(mode==='studio'){body.castShadow=true;body.receiveShadow=true;body.material=inactive?studioInactiveMaterial:studioMaterial;addBackface(body);}
   else if(mode==='uvchecker'||mode==='uvimage'){
-    const m=manager(),object=m?.objects?.find(o=>o.id===(inactive?body.userData.objectId:m.activeId));
+    const m=manager(),object=objectFor(inactive?body.userData.objectId:m?.activeId);
     const settings=object?.settings||{},mesh=inactive?object?.mesh:bridge()?.mesh;
     const eligible=object&&!object.sourceId&&!object.booleanRecipe&&!object.arrayRecipe&&!object.curveProfile&&object.kind!=='reference'&&!settings.subd&&!Object.values(settings.mirror||{}).some(Boolean);
     body.material=frontOnly(original);
-    const preview=mode==='uvimage'
+    const previewStart=perf?.start();let preview;
+    try{preview=mode==='uvimage'
       ?eligible&&!inactive?createUVImageOverlay(body,mesh,object.glbPassthrough,globalThis.__boxlabExportAs?.buildUVPreviewGeometry,checkerHiddenMaterial):null
       :eligible?createUVCheckerOverlay(body,mesh,object.glbPassthrough,globalThis.__boxlabExportAs?.buildUVPreviewGeometry):null;
+    }finally{perf?.stage?.('uv-preview',previewStart);}
     if(preview&&mode==='uvchecker')body.material=checkerHiddenMaterial;
     else if(!preview){body.material=frontOnly(original);addBackface(body);}
   }
@@ -214,12 +220,13 @@ function applyMode(body){
   }
   else{body.material=frontOnly(original);addBackface(body);}
   if(mode==='studio'||mode==='solid'){
-    const m=manager(),object=m?.objects?.find(o=>o.id===(inactive?body.userData.objectId:m.activeId)),settings=object?.settings||{};
+    const m=manager(),object=objectFor(inactive?body.userData.objectId:m?.activeId),settings=object?.settings||{};
     const mirrors=Object.values(settings.mirror||{}).some(Boolean),subdPreview=settings.subd&&!mirrors?body.userData.boxlabSubdUVPreview:null;
     const regularPreview=!settings.subd&&!mirrors;
-    if(object?.glbPassthrough?.source==='nomad'&&object.visible!==false&&body.visible!==false&&object.kind!=='reference'&&!object.sourceId&&!object.booleanRecipe&&!object.arrayRecipe&&!object.curveProfile&&(regularPreview||subdPreview?.payload?.source==='nomad'))createUVImageOverlay(body,subdPreview?.mesh||(inactive?object.mesh:bridge()?.mesh),subdPreview?.payload||object.glbPassthrough,globalThis.__boxlabExportAs?.buildUVPreviewGeometry,checkerHiddenMaterial,{lit:true});
+    if(object?.glbPassthrough?.source==='nomad'&&object.visible!==false&&body.visible!==false&&object.kind!=='reference'&&!object.sourceId&&!object.booleanRecipe&&!object.arrayRecipe&&!object.curveProfile&&(regularPreview||subdPreview?.payload?.source==='nomad')){const previewStart=perf?.start();try{createUVImageOverlay(body,subdPreview?.mesh||(inactive?object.mesh:bridge()?.mesh),subdPreview?.payload||object.glbPassthrough,globalThis.__boxlabExportAs?.buildUVPreviewGeometry,checkerHiddenMaterial,{lit:true});}finally{perf?.stage?.('uv-preview',previewStart);}}
   }
-  if(['studio','solid','uvimage'].includes(mode)){const m=manager(),object=m?.objects?.find(o=>o.id===(inactive?body.userData.objectId:m.activeId));if(object?.colourPaint||object?.roughnessPaint||object?.metalnessPaint||object?.opacityPaint)createCommittedPaintSurface(body,object,inactive?object.mesh:bridge()?.mesh);}
+  if(['studio','solid','uvimage'].includes(mode)){const m=manager(),object=objectFor(inactive?body.userData.objectId:m?.activeId);if(object?.colourPaint||object?.roughnessPaint||object?.metalnessPaint||object?.opacityPaint){const previewStart=perf?.start();try{createCommittedPaintSurface(body,object,inactive?object.mesh:bridge()?.mesh);}finally{perf?.stage?.('paint-preview',previewStart);}}}
+  }finally{perf?.stage?.('render-mode',perfStart);}
 }
 
 Object.assign(globalThis.__boxlabRenderModes ||= {},{

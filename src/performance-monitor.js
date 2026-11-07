@@ -1,8 +1,8 @@
-import {createPerformanceMonitor} from './performance-core.js?v=0.36.18.848';
+import {createPerformanceMonitor} from './performance-core.js?v=0.36.18.1098';
 const monitor=createPerformanceMonitor();
 let panel=null,output=null,timer=null,button=null;
 const number=(value,digits=0)=>Number(value||0).toFixed(digits);
-const phase=(s,key)=>s.stages?.[key]?`${number(s.stages[key].meanMs,1)}/${number(s.stages[key].maxMs,1)}`:'—';
+const phase=(s,key)=>s.stages?.[key]?`${number(s.stages[key].meanMs,1)}/${number(s.stages[key].maxMs,1)} ms · n=${s.stages[key].samples}`:'—';
 function refresh(){
  if(!output)return;const s=monitor.snapshot();
  output.textContent=s.samples?[
@@ -15,6 +15,8 @@ function refresh(){
   `Phase mean/max ms:`,
   `Base/SubD ${phase(s,'display')} · Body ${phase(s,'geometry')}`,
   `Scene hooks ${phase(s,'scene')} · Inactive ${phase(s,'inactive')}`,
+  `Scene detail, nested: Multi saveActive ${phase(s,'scene-sync')} · object reads ${phase(s,'object-sync')}`,
+  `Render mode ${phase(s,'render-mode')} · UV preview ${phase(s,'uv-preview')} · Paint preview ${phase(s,'paint-preview')}`,
   `Cage/highlights ${phase(s,'cage')}`,
   `SubD cache ${s.cacheHits} hits · ${s.cacheMisses} misses`,
   `Active cache ${s.cacheOwners.active.hits} hits · ${s.cacheOwners.active.misses} misses`,
@@ -30,11 +32,11 @@ function setEnabled(value){
   panel=document.createElement('section');panel.id='boxlabPerformance';panel.setAttribute('aria-label','Performance measurements');
   panel.style.cssText='position:absolute;right:8px;bottom:80px;z-index:110;width:min(370px,48vw);padding:9px;border:1px solid #ffffff40;border-radius:8px;background:#10141bf2;color:white;font:11px/1.5 ui-monospace,monospace;pointer-events:auto';
   const title=document.createElement('strong');title.textContent='PERFORMANCE';output=document.createElement('pre');output.style.cssText='white-space:pre-wrap;margin:5px 0';
-  const note=document.createElement('small');note.textContent='CPU timings; render submit excludes GPU time. Resource counts are not RAM usage. Last 120 samples per phase; pauses excluded. Inactive is included in Scene hooks.';
+  const note=document.createElement('small');note.textContent='CPU timings; render submit excludes GPU time. Resource counts are not RAM usage. Last 120 samples per phase; pauses excluded. Inactive is included in Scene hooks. Scene detail timings overlap and are not additive.';
   const actions=document.createElement('div');actions.style.cssText='display:flex;gap:6px;margin-top:6px';
   for(const [label,action] of [['Reset',()=>{monitor.reset();refresh();}],['Close',()=>setEnabled(false)]]){const b=document.createElement('button');b.type='button';b.textContent=label;b.addEventListener('click',action);actions.append(b);}
   panel.append(title,output,note,actions);document.querySelector('#viewportWrap')?.append(panel);
-  const currentPanel=panel;import('./performance-lab-ui.js?v=0.36.18.1096').then(m=>{if(panel===currentPanel&&panel.isConnected)m.installPerformanceLab(panel,monitor);}).catch(()=>{if(panel===currentPanel)note.textContent+=' Lab could not load; reopen to retry.';});
+  const currentPanel=panel;import('./performance-lab-ui.js?v=0.36.18.1098').then(m=>{if(panel===currentPanel&&panel.isConnected)m.installPerformanceLab(panel,monitor);}).catch(()=>{if(panel===currentPanel)note.textContent+=' Lab could not load; reopen to retry.';});
  }
  refresh();timer=setInterval(refresh,500);return true;
 }

@@ -1,3 +1,13 @@
+# .1098 — profile remaining dense rebuild cost — 7 November 2026
+
+The .1097 cage/group fix is accepted functionally, and the user supplied a second dense report. Similar mesh counts and environment are present, but captured workload states and operation sequences differ, so the total rebuild means (312 ms in .1096 and 297 ms in .1097) cannot establish a before/after speedup or regression. The remaining measured Scene hooks cost requires attribution.
+
+Build .1098 adds read-only stages to the original Performance monitor: Multi saveActive, render-mode object list reads, full render-mode setup, UV preview creation and committed Paint preview creation. The same viewport report now records current selection/render modes. These nested measurements overlap the Scene hooks total; use their individual mean/max/sample counts to identify the dominant owner. User testing should use the same imported 1,000-face model and settings, reset after activation, record the exact operation sequence, then download the report.
+
+Next step after matched evidence: repair only the demonstrated owner while retaining .1097 group metadata behavior, body insertion/history semantics, Paint, scene rendering and selection. Continue to require same-device end-to-end evidence before promoting a performance optimization or WASM candidate. No capacity, total-memory or WASM performance claim is established. Further Paint expansion remains deferred behind the dense-model work. Local `npm test` passes 3,214 / 3,214, including release asset-contract and current profiling coverage. The .1098 commit is local only; remote Pages remains .1097 because automatic approval review rejected the direct push. Publish after the required approval, then collect the matched device profile.
+
+---
+
 # .1097 dense-model report received — cage win; overall stall remains — 7 November 2026
 
 Latest user report is .1097 with1,002 vertices/1,000 faces,6,006 rendered triangles,7 draw calls,2,007 renderer geometries and3 textures, matching .1096 latest counts and browser/viewport/DPR. User .1097 functional PASS remains protected. No new runtime/build in this investigation record. Raw reports/model remain private; retain aggregate evidence only.

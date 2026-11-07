@@ -10,6 +10,7 @@ export function installPerformanceLab(panel,monitor){
  const run=button('Run baseline'),cancel=button('Cancel'),save=button('Download JSON'),baseline=button('Keep as baseline'),live=button('Download viewport report');cancel.disabled=save.disabled=baseline.disabled=true;
  let busy=false,stop=false,report=null;
  const env=()=>({userAgent:navigator.userAgent,dpr:devicePixelRatio,width:innerWidth,height:innerHeight,visibility:document.visibilityState,standalone:!!navigator.standalone,powerThermal:'unknown'});
+ const viewportEnv=()=>({...env(),selectionMode:document.querySelector('#selectionModes button.active')?.dataset.mode||null,renderMode:document.querySelector('#viewportRenderLooks [data-render].active')?.dataset.render||null});
  const readBaseline=()=>{try{return JSON.parse(localStorage.getItem(KEY));}catch{return null;}};
  run.addEventListener('click',async()=>{
   if(busy)return;busy=true;stop=false;report=null;run.disabled=size.disabled=save.disabled=baseline.disabled=live.disabled=true;cancel.disabled=false;
@@ -25,6 +26,6 @@ export function installPerformanceLab(panel,monitor){
  baseline.addEventListener('click',()=>{if(!report)return;try{localStorage.setItem(KEY,JSON.stringify(report));output.textContent+='\nBaseline kept on this device.';}catch{output.textContent+='\nStorage unavailable; download JSON instead.';}});
  const download=value=>{const url=URL.createObjectURL(new Blob([JSON.stringify(value,null,2)],{type:'application/json'})),link=document.createElement('a');link.href=url;link.download=`BoxLab-performance-${value.release}-${value.fixture?.triangles||'viewport'}.json`;link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
  save.addEventListener('click',()=>{if(report)download(report);});
- live.addEventListener('click',()=>download({schemaVersion:1,protocol:'viewport-snapshot-v1',release:document.querySelector('#appVersion')?.dataset.releaseVersion,timestamp:new Date().toISOString(),environment:env(),metrics:monitor.snapshot(),decision:'INCONCLUSIVE',notes:'Manual live scene snapshot; CPU frame/rebuild timings, not GPU time or total RAM. No deterministic camera sequence or before/after comparison. Report contains counts, not model geometry.'}));
+ live.addEventListener('click',()=>download({schemaVersion:1,protocol:'viewport-snapshot-v1',release:document.querySelector('#appVersion')?.dataset.releaseVersion,timestamp:new Date().toISOString(),environment:viewportEnv(),metrics:monitor.snapshot(),decision:'INCONCLUSIVE',notes:'Manual live scene snapshot; CPU frame/rebuild timings, not GPU time or total RAM. No deterministic camera sequence or before/after comparison. Report contains counts, not model geometry.'}));
  section.append(note,size,run,cancel,save,baseline,live,output);panel.append(section);panel.style.maxHeight='70vh';panel.style.overflowY='auto';
 }
