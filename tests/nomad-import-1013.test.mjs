@@ -8,6 +8,7 @@ import {meshTopologySignature} from '../src/mesh-topology-signature.js';
 import {EditableMesh} from '../src/mesh.js';
 import {encodeBoxlabScene,decodeBoxlabScene} from '../src/boxlab-project-codec.js';
 import {inspectImportedUV} from '../src/imported-uv-inspection.js';
+import {faceGroupPalette} from '../src/facegroup-colours-core.js';
 import {glbOwnerRuntime,glbSource} from './helpers/glb-owner-runtime.mjs';
 const fixture=JSON.parse(fs.readFileSync(new URL('./fixtures/nomad-import-1013.json',import.meta.url),'utf8'));
 const bytes=mode=>Uint8Array.from(Buffer.from(fixture.blobs[mode],'base64'));
@@ -32,6 +33,16 @@ test('1013 upstream writer/native LZ4 fixtures decode raw v7, chunked v7 and leg
   assert(result.warnings.includes('hidden faces imported visibly'));
   const serial=JSON.stringify(result.meshes);if(expected)assert.equal(serial,expected);else expected=serial;
  }
+});
+test('1088 repeated Nomad facegroup names retain distinct IDs through File import and NOM round trip',async()=>{
+ const input=editJSON(bytes('chunked'),j=>{j.meshes[0].groups=j.meshes[0].groups.map(()=>({name:'Patch'}));});
+ const parsed=parseNomadMeshes(input);assert.deepEqual(parsed.meshes[0].mesh.faceGroups,['Patch (4)','Patch (5)']);
+ const r=importRuntime();await r.c.importFile({name:'Repeated patches.NOM',size:input.length,arrayBuffer:async()=>input.buffer});
+ assert.equal(r.added.length,2,r.c.status.textContent);assert.deepEqual(r.added[0].mesh.faceGroups,['Patch (4)','Patch (5)']);
+ assert.equal(faceGroupPalette(r.added[0].mesh).size,2);
+ assert.match(r.c.status.textContent,/2 facegroups preserved/);
+ const project=buildNomadProject([{name:'Repeated patches',mesh:r.added[0].mesh,settings:{}}],template,{topologySignature:meshTopologySignature});
+ assert.deepEqual(parseNomadMeshes(project.bytes).meshes[0].mesh.faceGroups,['Patch (4)','Patch (5)']);
 });
 test('1013 thumbnail after binary is accepted and all header/section/array size corruption refuses safely',()=>{
  const input=bytes('raw');assert.equal(parseNomadMeshes(editJSON(input,()=>{},{thumb:true})).meshes.length,2);

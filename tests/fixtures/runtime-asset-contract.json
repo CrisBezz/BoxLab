@@ -1,5 +1,5 @@
 {
-  "baseline": "Reviewed .1087: imported NOM/GLB UV painting now uses the existing painter for complete in-tile UV meshes with a single solid material and no embedded images. Imported source maps, multi-material meshes, vertex colours and out-of-tile UVs remain protected; textured imported-base compositing is the next Paint milestone before WASM.",
+  "baseline": "Reviewed .1088: repeated Nomad facegroup labels no longer collapse distinct source IDs; stable ID-based names reach the existing Facegroups and export owners. Imported textured Paint remains the next milestone before WASM.",
   "references": [
     {
       "owner": "index.html",
@@ -161,9 +161,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1087",
+      "url": "./src/drawer-ui.js?v=0.36.18.1088",
       "target": "src/drawer-ui.js",
-      "sha256": "6171e177d55e8020ee4e386793b2a0d133ad2d6dad257f19fbe97f633eeafa78"
+      "sha256": "63648d92a0d44baf7e6afc38b9155732d1641f6414529b08d4641e790b3ca5a6"
     },
     {
       "owner": "index.html",
@@ -259,9 +259,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/import-mesh.js?v=0.36.18.1033",
+      "url": "./src/import-mesh.js?v=0.36.18.1088",
       "target": "src/import-mesh.js",
-      "sha256": "7b19e1bb4b6e4345fb5de277ed9cfa433da10e867f204a31dd8f28ed2d243fed",
+      "sha256": "46140064307c5361309a2cf525110abeca1c3136acd37171d312ab0e29d24ae4",
       "sourceVersion": "0.36.18.882"
     },
     {
@@ -378,7 +378,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1087",
+      "url": "./src/release-version.js?v=0.36.18.1088",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -864,9 +864,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1087",
+      "url": "./face-workflow-layout.js?v=0.36.18.1088",
       "target": "src/face-workflow-layout.js",
-      "sha256": "c668467687a5dec420c0d9cc609e3f3f381edc9918664bdc8eb0e67a1cf35239"
+      "sha256": "9dd4810e0f5279b3fa4214c10f1db6ffe8fe281196d6b2a495663c7099af7817"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1361,7 +1361,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1087",
+      "url": "./release-version.js?v=0.36.18.1088",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -3326,9 +3326,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1087",
+      "url": "./src/shell-comparison.js?v=0.36.18.1088",
       "target": "src/shell-comparison.js",
-      "sha256": "21fdf488c5f9128e48ef8f382ed15f5cade22a3eb8ed3b052765d151760b69ad"
+      "sha256": "13350b4a18b19cee5a1adf3e0f86deb0ac948494bda6d6848046644552870491"
     },
     {
       "owner": "src/main.js",
@@ -3380,9 +3380,9 @@
     },
     {
       "owner": "src/import-mesh.js",
-      "url": "./nomad-import-core.js?v=0.36.18.1033",
+      "url": "./nomad-import-core.js?v=0.36.18.1088",
       "target": "src/nomad-import-core.js",
-      "sha256": "3749ff21a88b08c5b37cc3bab0bdb138c188ec716bdcfada9c1dd67756e976b8"
+      "sha256": "a2df349bc976b5a2c94d97953c75bd3855ad886b52ffc52b4c83f62e20457741"
     },
     {
       "owner": "src/nomad-import-core.js",
@@ -3458,15 +3458,15 @@
     },
     {
       "owner": "docs/native-height-benchmark-1064.html",
-      "url": "../src/native-height-benchmark-ui.js?v=0.36.18.1064",
+      "url": "../src/native-height-benchmark-ui.js?v=0.36.18.1088",
       "target": "src/native-height-benchmark-ui.js",
-      "sha256": "522bfed08fa79446aee15e25548f3360351a552ac03011c3f058382c749f1d03"
+      "sha256": "8b9933fbde51c4f04292c2a9a16b36f0c9427d6d2bc971ef1d61265b9caac982"
     },
     {
       "owner": "src/native-height-benchmark-ui.js",
-      "url": "./nomad-height-benchmark.js?v=0.36.18.1064",
+      "url": "./nomad-height-benchmark.js?v=0.36.18.1088",
       "target": "src/nomad-height-benchmark.js",
-      "sha256": "9c04744f98ab872e4c1091f4ee662d8f02a39b8c33356424da6a85bea9a3faed"
+      "sha256": "82aa0fe1c8fccba6db55134b69d3b157975b50574e378bda1a0e2821f9c5c21e"
     },
     {
       "owner": "src/nomad-height-benchmark.js",
@@ -3476,9 +3476,9 @@
     },
     {
       "owner": "src/nomad-height-benchmark.js",
-      "url": "./nomad-import-core.js?v=0.36.18.1033",
+      "url": "./nomad-import-core.js?v=0.36.18.1088",
       "target": "src/nomad-import-core.js",
-      "sha256": "3749ff21a88b08c5b37cc3bab0bdb138c188ec716bdcfada9c1dd67756e976b8"
+      "sha256": "a2df349bc976b5a2c94d97953c75bd3855ad886b52ffc52b4c83f62e20457741"
     },
     {
       "owner": "docs/paint-panel-layout-1068.html",

@@ -1,6 +1,9 @@
-# Current build: .1087 imported NOM/GLB UV Paint — protected device PASS; facegroup import follow-up open (6 November 2026)
+# Current build: .1088 duplicate-named Nomad facegroups — automated PASS; native check pending (7 November 2026)
 
 ## Delivered and protected
+
+- `.1087` imported textureless NOM/GLB UV Paint is a protected native PASS.
+- `.1088` fixes the uploaded Nomad facegroup case: 96 faces use eight IDs from a ten-entry table where all names are `Patch`. Distinct IDs now get stable suffixed labels while unique names remain unchanged. Existing Facegroups palette/render/export owners are reused. The user file is not checked into the repo; a generated fixture covers manager insertion, palette rows and NOM round trip.
 
 - `.1087` reconnects imported NOM and GLB UV meshes to the existing viewport painter, paint binding, history and `.boxlab` project codec. It preserves the source payload and solid base colour while painting.
 - Scope is deliberately bounded to complete UVs in tile 0–1, one solid material, no embedded images, vertex colours, tangent maps or morph targets, and 20,000 corners maximum. Imported image textures and multi-material meshes remain protected and cannot enter Paint yet.
@@ -9,11 +12,15 @@
 - `.1086` exports authored opacity through the existing paint snapshot/export owners, using the bound 512 × 512 R8 map in base-colour RGBA. Materials use standard glTF `BLEND` and double-sided rendering; opacity-only maps use white RGB. OBJ and NOMAD remain unsupported for authored opacity.
 - Preserve `.1085` onset/Paint PASSes and earlier Paint PASSes.
 
-## Next: repair facegroups from the user's Nomad file
+## Next: native `.1088` check, then imported textured Paint
 
-The user reports facegroups missing after importing a Nomad file. Existing parser fixtures and the actual File-dispatcher test now verify that named facegroups survive through `EditableMesh` and object-manager insertion for the supported format. The reported file is not in the repository, so obtain the exact `.nom` or a minimal reproduction and inspect its group arrays/name table and active multires level before changing the existing importer. After this repair, continue imported textured painting by extending the existing import and paint owners to compose authored paint with eligible base-colour images while preserving source maps, UV transforms, and material appearance. Audit multi-material and tile behavior before broadening eligibility. Retain explicit safe refusals until their composition path is covered. WASM remains after imported Paint completion.
+Import the attached `Test Import.nom`; confirm eight separate Facegroups rows and assignments, Save/Open retention, and NOM export/reimport. The focused test suite covers the repeated-name parser fix and the original owner path. After this device gate, continue imported textured painting through the existing source-image and Paint owners, preserving embedded bytes, UV transforms and material appearance. Audit multi-material/tile behavior before expanding eligibility. Keep WASM queued until imported textured Paint passes native checks.
 
-After imported NOM/GLB painting passes, begin the measured WASM feasibility audit. Establish repeatable JavaScript baselines for existing performance-sensitive owners, then prototype only an existing operation if evidence shows a worthwhile target. Keep the JavaScript owner as fallback; require equivalent output and a measured speed gain. Treat memory capacity as a separate test.
+After imported textured NOM/GLB painting passes, begin the measured WASM feasibility audit. Establish repeatable JavaScript baselines for existing performance-sensitive owners, then prototype only an existing operation if evidence shows a worthwhile target. Keep the JavaScript owner as fallback; require equivalent output and a measured speed gain. Treat memory capacity as a separate test.
+
+## Protected device results — 7 November 2026
+
+`.1087` imported textureless NOM/GLB Paint PASS. `.1088` runtime is pending the native Facegroups check above.
 
 ## Protected device results — 6 November 2026
 

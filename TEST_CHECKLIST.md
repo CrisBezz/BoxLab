@@ -1,3 +1,14 @@
+## .1088 — imported Nomad facegroups with repeated names — native acceptance pending
+
+The attached `Test Import.nom` has 96 faces and ten group-table records, all named `Patch`; eight IDs are assigned to faces. The old importer mapped only the repeated name string, collapsing those IDs into one BoxLab group. `.1088` generates stable ID-based labels only for duplicate source names (for example `Patch (1)`); unique Nomad group names stay unchanged. The uploaded model is not committed; regression uses a generated equivalent to avoid publishing user geometry.
+
+- [ ] Import `Test Import.nom`; open Facegroups and confirm eight named rows appear.
+- [ ] Switch Facegroups view; confirm the mesh shows separate regions and the listed rows match assigned regions.
+- [ ] Save/Open `.boxlab`; confirm assignments remain. Export/reimport NOM and confirm distinct group labels remain.
+- [x] Automated: repeated names resolve to stable distinct labels through parse, actual File import/object manager, Facegroups palette, and NOM export/import; existing unique `Body`/`Trim` names remain unchanged.
+
+Focused NOM importer tests: 13 PASS / 0 FAIL. Full local suite: 3,172 PASS / 0 FAIL. Release/loader contract checks and Pages publication passed. Native acceptance is pending.
+
 ## .1087 — imported NOM/GLB UV Paint — protected native PASS
 
 This stage enables the existing UV Paint owner only for imported NOM/GLB meshes with complete UV corners inside tile 0–1, one solid material, no embedded images, vertex colours, tangent maps or morph targets, and at most 20,000 corners. Imported source data stays in the original payload. Paint starts with the imported solid base colour and uses the existing history and `.boxlab` project codec.
@@ -10,7 +21,7 @@ This stage enables the existing UV Paint owner only for imported NOM/GLB meshes 
 
 User reports PASS for the complete `.1087` device workflow above. Protect this result. Release verification: local suite 3,171/3,171 PASS; hosted Topology run `42226136656` 3,171/3,171 PASS; Pages run `42226136614` succeeded; live app reports `.1087`.
 
-Follow-up report: facegroups did not import from the user’s Nomad file. Existing parser and actual File-dispatcher fixture now assert named groups survive through manager insertion (12/12 importer tests PASS), but the exact user file format is not reproduced. Obtain that `.nom` or a minimal export before changing the parser. Imported texture compositing remains queued after this facegroup import repair and before WASM feasibility.
+`.1088` resolves this facegroup follow-up. Imported texture compositing remains queued after native facegroup acceptance and before WASM feasibility.
 
 ## .1086 GLB opacity export — protected native PASS
 

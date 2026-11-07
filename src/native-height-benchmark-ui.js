@@ -1,4 +1,4 @@
-import {nativeHeightSources,measureNativeHeight} from './nomad-height-benchmark.js?v=0.36.18.1064';
+import {nativeHeightSources,measureNativeHeight} from './nomad-height-benchmark.js?v=0.36.18.1088';
 const samplePNG='iVBORw0KGgoAAAANSUhEUgAAAAIAAAACEAAAAAAHTY67AAAAEklEQVR4nGNgYHBgYGhg+P8fAAbHAr89RY6RAAAAAElFTkSuQmCC';
 const fileInput=document.querySelector('#file'),sourceSelect=document.querySelector('#source'),runButton=document.querySelector('#run'),sampleButton=document.querySelector('#sample'),copyButton=document.querySelector('#copy'),status=document.querySelector('#status'),report=document.querySelector('#report');
 let sources=[],busy=false;

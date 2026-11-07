@@ -1,5 +1,5 @@
 import {decodeNomadHeightPNG} from './nomad-scalar-png.js?v=0.36.18.1064';
-import {readNomadImport} from './nomad-import-core.js?v=0.36.18.1033';
+import {readNomadImport} from './nomad-import-core.js?v=0.36.18.1088';
 
 // Container/material/image reader only: no geometry parsing, UV replacement or
 // live scene access. An explicit native displacement slot is the only authority.

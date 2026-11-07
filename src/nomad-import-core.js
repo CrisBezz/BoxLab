@@ -9,6 +9,18 @@ import {meshTopologySignature} from './mesh-topology-signature.js?v=0.36.18.939'
 const MB=1024*1024,MAX_FILE=128*MB,MAX_ARRAYS=64*MB,MAX_ELEMENTS=500000;
 const TYPES={f32vec3:[3,4,'getFloat32'],f32vec2:[2,4,'getFloat32'],i32vec4:[4,4,'getInt32'],u16:[1,2,'getUint16']};
 const fail=message=>{throw Error('NOM '+message);};
+function nomadGroupNames(source){
+  if(!Array.isArray(source?.groups))return[];
+  const names=source.groups.map((group,index)=>typeof group?.name==='string'&&group.name.trim()?group.name.trim():`FaceGroup ${index+1}`),counts=new Map();
+  for(const name of names)counts.set(name,(counts.get(name)||0)+1);
+  const used=new Set(names.filter(name=>counts.get(name)===1));
+  return names.map((name,index)=>{
+    if(counts.get(name)===1)return name;
+    let candidate=`${name} (${index+1})`,suffix=2;
+    while(used.has(candidate))candidate=`${name} (${index+1}, ${suffix++})`;
+    used.add(candidate);return candidate;
+  });
+}
 function integer(value,label,max=Number.MAX_SAFE_INTEGER){
   if(!Number.isSafeInteger(value)||value<0||value>max)fail('invalid '+label);
   return value;
@@ -128,7 +140,7 @@ export function parseNomadMeshes(input){
     if(uvs&&source.count_uv!=null&&source.count_uv!==uvs.count)fail(name+': UV count does not match its array');
     if(source.layers?.length)warnings.add('sculpt layers flattened to saved shape');
     if(['colors','roughness','metalness','opacity','masks'].some(k=>source[k]))warnings.add('vertex paint, materials on vertices and masks are not imported');
-    return{source,positions,faces,uvs,uvFaces,groups,material:retainNomadMaterial(file,original.material??source.material)};
+    return{source,positions,faces,uvs,uvFaces,groups,groupNames:nomadGroupNames(source),material:retainNomadMaterial(file,original.material??source.material)};
   }
   function walk(entries,parent,visible,depth){
     if(!Array.isArray(entries)||depth>128)fail('invalid or excessively deep scene tree');
@@ -167,8 +179,8 @@ export function parseNomadMeshes(input){
           if(mirrored){face.reverse();uv?.reverse();}
           const meta=g.groups?.get(fi)??0,id=meta&0x7fff;
           if(meta&0x8000)warnings.add('hidden faces imported visibly');
-          const group=g.source.groups?.[id]?.name;
-          faces.push(face);faceGroups.push(g.groups?(typeof group==='string'&&group.trim()?group.trim():'FaceGroup '+(id+1)):null);cornerUVs.push(uv);
+          const group=g.groupNames[id];
+          faces.push(face);faceGroups.push(g.groups?(typeof group==='string'&&group.trim()?group:'FaceGroup '+(id+1)):null);cornerUVs.push(uv);
         }
         const mesh=new EditableMesh(vertices,faces,null,faceGroups);
         const uvPayload=g.uvs?{version:1,source:'boxlab',uvTopologySignature:meshTopologySignature(mesh),uvCorners:cornerUVs}:null;

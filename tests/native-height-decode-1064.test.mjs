@@ -71,6 +71,6 @@ test('1064 benchmark reads canonical seven-map NOM export without reprojecting t
 });
 test('1064 isolated page and app launcher use reviewed module pins without modifying preserved geometry benchmark',()=>{
  const page=fs.readFileSync(new URL('../docs/native-height-benchmark-1064.html',import.meta.url),'utf8'),shell=fs.readFileSync(new URL('../src/shell-comparison.js',import.meta.url),'utf8');
- assert.match(page,/No UV unwrap is needed/);assert.match(page,/not a hard interruption/);assert.match(page,/native-height-benchmark-ui\.js\?v=0\.36\.18\.1064/);assert.match(shell,/native-height-benchmark-1064\.html\?v=0\.36\.18\.1064/);
+ assert.match(page,/No UV unwrap is needed/);assert.match(page,/not a hard interruption/);assert.match(page,/native-height-benchmark-ui\.js\?v=0\.36\.18\.1088/);assert.match(shell,/native-height-benchmark-1064\.html\?v=0\.36\.18\.1064/);
  assert(!page.includes('WebGLRenderer'));assert.match(page,/not total memory/);
 });
