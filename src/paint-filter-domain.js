@@ -33,6 +33,8 @@ export function createPaintFilterDomain(geometry,size=512,source=null,{captureTr
 // Derive a UV gutter copy for display/export. The alpha byte in the OUTPUT is a
 // transient occupancy/distance marker; editable source pixels are never changed.
 const paintUVCoverage=new WeakMap();
+// Match projectPaintImage: texture samples lie at (pixel + 0.5) / size.
+// The old size-1 convention protected blank image gutters and overwrote edge pixels.
 function coverageMask(size,geometry){
  let bySize=paintUVCoverage.get(geometry);if(bySize?.has(size))return bySize.get(size);
  const uv=geometry?.attributes?.uv,index=geometry?.index,count=index?.count??uv?.count;
@@ -42,9 +44,9 @@ function coverageMask(size,geometry){
   const ids=[0,1,2].map(k=>index?index.getX(i+k):i+k);if(ids.some(n=>!Number.isInteger(n)||n<0||n>=uv.count))throw Error('Invalid UV paint padding geometry');
   const u=ids.map(n=>uv.getX(n)),v=ids.map(n=>uv.getY(n));if([...u,...v].some(n=>!Number.isFinite(n)))throw Error('Invalid UV paint padding coordinates');
   const d=(v[1]-v[2])*(u[0]-u[2])+(u[2]-u[1])*(v[0]-v[2]);if(Math.abs(d)<1e-14)continue;
-  const x0=Math.max(0,Math.ceil(Math.min(...u)*(size-1))),x1=Math.min(size-1,Math.floor(Math.max(...u)*(size-1))),y0=Math.max(0,Math.ceil(Math.min(...v)*(size-1))),y1=Math.min(size-1,Math.floor(Math.max(...v)*(size-1)));
+  const x0=Math.max(0,Math.ceil(Math.min(...u)*size-.5)),x1=Math.min(size-1,Math.floor(Math.max(...u)*size-.5)),y0=Math.max(0,Math.ceil(Math.min(...v)*size-.5)),y1=Math.min(size-1,Math.floor(Math.max(...v)*size-.5));
   if(x1<x0||y1<y0)continue;work+=(x1-x0+1)*(y1-y0+1);if(work>2e6)throw Error('UV paint padding exceeds its bounded raster budget');
-  for(let y=y0;y<=y1;y++)for(let x=x0;x<=x1;x++){const a=x/(size-1),b=y/(size-1),w0=((v[1]-v[2])*(a-u[2])+(u[2]-u[1])*(b-v[2]))/d,w1=((v[2]-v[0])*(a-u[2])+(u[0]-u[2])*(b-v[2]))/d;if(Math.min(w0,w1,1-w0-w1)>=-1e-8){const at=y*size+x;mask[at>>3]|=1<<(at&7);}}
+  for(let y=y0;y<=y1;y++)for(let x=x0;x<=x1;x++){const a=(x+.5)/size,b=(y+.5)/size,w0=((v[1]-v[2])*(a-u[2])+(u[2]-u[1])*(b-v[2]))/d,w1=((v[2]-v[0])*(a-u[2])+(u[0]-u[2])*(b-v[2]))/d;if(Math.min(w0,w1,1-w0-w1)>=-1e-8){const at=y*size+x;mask[at>>3]|=1<<(at&7);}}
  }
  if(!bySize){bySize=new Map();paintUVCoverage.set(geometry,bySize);}bySize.set(size,mask);return mask;
 }

@@ -6,7 +6,7 @@ import {copyMetalnessResource} from './metalness-resource.js?v=0.36.18.1075';
 import {copyRoughnessResource} from './roughness-resource.js?v=0.36.18.1075';
 import {paintDigest} from './paint-resource.js?v=898';
 import {importedPaintEligible} from './project-paint-resources.js?v=0.36.18.1087';
-import {padPaintPixels} from './paint-filter-domain.js?v=0.36.18.1089';
+import {padPaintPixels} from './paint-filter-domain.js?v=0.36.18.1091';
 const encoder=new TextEncoder(),hidden=new THREE.MeshBasicMaterial({colorWrite:false,depthWrite:false});
 const PAINT_EDGE_PADDING=4;
 const METAL_ONLY_PAINT_ENV_INTENSITY=.55;

@@ -1,11 +1,11 @@
 // Export-local adaptation only. Never add material/provenance fields to native UVs.
 import {captureFlattenedPaint} from './paint-layer-resource.js?v=0.36.18.1033';
-import {paintTargetKey,paintTargetDigest} from './paint-target.js?v=0.36.18.1090';
+import {paintTargetKey,paintTargetDigest} from './paint-target.js?v=0.36.18.1091';
 import {copyMetalnessResource} from './metalness-resource.js?v=0.36.18.1075';
 import {copyRoughnessResource} from './roughness-resource.js?v=0.36.18.1075';
 import {copyOpacityResource} from './opacity-resource.js?v=0.36.18.1075';
 import {encodeNomadScalarPNG,encodeNomadColourPNG,encodeNomadColourAlphaPNG,encodeNomadDataPNG} from './nomad-scalar-png.js?v=0.36.18.1086';
-import {padPaintPixels} from './paint-filter-domain.js?v=0.36.18.1089';
+import {padPaintPixels} from './paint-filter-domain.js?v=0.36.18.1091';
 const prepared=new WeakMap(),roughnessPrepared=new WeakMap(),metalnessPrepared=new WeakMap(),opacityPrepared=new WeakMap(),packedPrepared=new WeakMap(),exportColourSource=new WeakMap();
 export function capturePaintExportObjects(objects){
  const copies=new WeakMap(),roughnessCopies=new WeakMap(),metalnessCopies=new WeakMap(),opacityCopies=new WeakMap();return (objects||[]).map(o=>{

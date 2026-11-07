@@ -1,3 +1,14 @@
+## .1091 image seam padding alignment — device acceptance pending
+
+`.1090` is now user-confirmed PASS and protected. Preserve viewport Brush/Fill visibility, history and Done/reopen. `.1088` Facegroups PASS remains protected.
+
+- [x] Fractional diagonal image UV boundaries: mapped pixels exact; adjacent gutters receive image colour; source bytes unchanged.
+- [x] Existing padding, alpha/in-place handling, live Paint visibility and release/protected-Multi checks: 18/18 pass.
+- [ ] Supplied image sphere: after Done, inspect thin dotted seams while orbiting and zooming.
+- [ ] Image placement/editing, Brush/Fill, Undo/Redo and Done/reopen remain usable.
+- [ ] Save/Open and NOM/GLB export/reimport retain image, UVs and alpha.
+- [ ] Hosted regression and Pages/live markers verified.
+
 ## .1090 — live Paint viewport texture refresh — native acceptance pending
 
 The `.1089` user FAIL was: Paint strokes updated the Material layer thumbnail but remained invisible on the model. The live painter intentionally creates its display surface with edge padding disabled to avoid dilating a full atlas per frame. Its mutable source buffer is reused; the new `.1089` early-return skipped copying updates into the persistent GPU texture.

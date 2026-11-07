@@ -1,3 +1,13 @@
+# Current priority — .1091 image seam padding alignment — 7 November 2026
+
+User confirms `.1090 PASS`; protect immediate Brush/Fill viewport visibility, Done/reopen/history and the earlier `.1088` Facegroups PASS. Remaining report: an image placed with Paint + Image on a Nomad facegroup-unwrapped sphere has thin dotted seams after Done. The supplied private `.boxlab` reproduction contains 98 vertices, 96 quads, 1024² colour and a retained editable image recipe; do not commit the user project or portrait.
+
+Audit found `projectPaintImage` samples `(pixel+.5)/size`, while the padding coverage mask used `pixel/(size-1)`. On the supplied face-corner UVs those masks disagree on 3,124 texels (1,229 blank gutters incorrectly protected, 1,895 image-covered texels treated as gutters). `.1091` repairs only padding coverage bounds and sample coordinates to match image projection. Original filter/brush domain coordinates remain unchanged. Existing source pixels, alpha, image recipe, UVs, topology, history and 1024² cap remain intact; live Pencil preview still avoids per-frame padding.
+
+Focused padding/live-preview/release tests pass 18/18; surrounding image-resource/export tests passed 21/21 before the final added regression. The new fractional diagonal fixture proves image-covered texels stay exact and adjacent gutters receive image colour. Supplied-project derived padding changed 12,205 gutter RGB texels, preserved all alpha bytes and left source bytes exact. This is pixel-level evidence, not native visual acceptance. Hosted validation/publication and `.1091` device acceptance pending.
+
+Next: finish hosted validation and publish, then inspect the supplied project after Done, orbit/zoom, image edits and NOM/GLB export/reimport. After `.1091` native acceptance continue imported textured NOM/GLB Paint, then performance/WASM benchmarks.
+
 # Current build: .1090 live Paint viewport refresh (7 November 2026)
 
 ## Delivered and protected
