@@ -7,7 +7,7 @@
 - [ ] Supplied image sphere: after Done, inspect thin dotted seams while orbiting and zooming.
 - [ ] Image placement/editing, Brush/Fill, Undo/Redo and Done/reopen remain usable.
 - [ ] Save/Open and NOM/GLB export/reimport retain image, UVs and alpha.
-- [ ] Hosted regression and Pages/live markers verified.
+- [x] Runtime hosted Topology `42345128728`: 3,178 PASS / 0 FAIL. Pages `42345450668` succeeded; seven checked live release/Paint files match. Final strengthened-fixture run `42345451098`, job `128322079814`: 3,178 PASS / 0 FAIL.
 
 ## .1090 — live Paint viewport texture refresh — native acceptance pending
 
