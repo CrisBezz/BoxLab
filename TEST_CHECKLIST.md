@@ -7,7 +7,7 @@ Protect `.1091` image seam PASS, `.1090` Paint visibility PASS and `.1088` Faceg
 - [ ] Save/Open and NOM/GLB export/reimport retain original image plus new paint.
 - [ ] Existing added-image seams remain improved; ordinary native Paint works.
 - [x] Automated new coverage: 512/1024 NOM/GLB seeded pixels, immutable source, stroke/project/export, colour factors, unsupported maps/transforms/transparency and late-decode cancellation.
-- [ ] Final focused/hosted and Pages/live release verification recorded.
+- [x] Focused 37 PASS / 0 FAIL; Hosted Topology `42351396825`, job `128340123666`, runtime commit `3e09b066be0a59ca4592a64c854fe6b775286ed4`: 3,185 PASS / 0 FAIL. Pages `42351396724` succeeded; cache-busted version/index and ten import/Paint/export modules (12 files total) byte-match source. Local/main trees match. `.1092` was an intermediate build, superseded by the fresh `.1093` cache graph and export closure; no `.1092` native PASS is inferred.
 
 ## .1091 — protected native PASS
 
