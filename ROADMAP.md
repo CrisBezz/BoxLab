@@ -8,9 +8,9 @@
 - `.1090` updates the live preview texture by copying in-place pixels when padding is off. Padded committed preview/export behavior remains unchanged. Regression coverage asserts actual viewport surface bytes match the live and committed paint resource after a real stroke. No parallel renderer or paint owner.
 - Keep imported textured NOM/GLB Paint ahead of WASM. 2048² remains deferred; current resource budgets do not measure total browser/iPad heap or GPU use. Do not infer a current memory ceiling.
 
-## Current next: clear the hosted `.1090` regression, then run the iPad Paint check
+## Current next: run the iPad Paint check
 
-Local focused Paint/viewport/export/image/release checks pass 33/33. Pages run `42337036973` succeeded, and `.1090` live markers plus affected runtime bytes match main. Hosted Topology `42336793328` reported one real failure: the historical `.1041` benchmark test still expected `.1089` for the release/version pin. Replaced that fixed value with the version from `version.json`; focused benchmark and release tests pass 7/7. Hosted rerun is pending. The older `.1089` job-log endpoint still closes before returning the body, so its failure cause remains unknown. After hosted success, use iPad to confirm Brush/Fill updates appear immediately, Undo/Redo and Done/reopen preserve paint, and check `.1089` seam padding plus NOM/GLB export/reimport. Native `.1090` acceptance remains pending.
+Local focused Paint/viewport/export/image/release checks pass 33/33. The stale `.1041` release assertion was changed to read `version.json` and compare the shell pin dynamically. Hosted Topology rerun `42337591263` (job `128297928568`, commit `311209e7024a530ae577962808ee3cd367bb7e75`) passed 3,177/3,177. Pages run `42337590652` succeeded after the test correction; the `.1090` live markers and affected runtime bytes were verified. The original `.1089` job-log endpoint still closes before returning the body, so its failure cause remains unknown. Use iPad to confirm Brush/Fill updates appear immediately, Undo/Redo and Done/reopen preserve paint, and check `.1089` seam padding plus NOM/GLB export/reimport. Native `.1090` acceptance remains pending.
 
 ## Protected device results — 7 November 2026
 

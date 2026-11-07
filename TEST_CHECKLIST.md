@@ -8,8 +8,10 @@ The `.1089` user FAIL was: Paint strokes updated the Material layer thumbnail bu
 - [ ] Save/Open, then export/reimport NOM and GLB; verify the visible paint remains and alpha/UVs are unchanged.
 - [x] Automated: same-buffer in-place preview edits update texture bytes/version when padding is disabled; real viewport stroke preview and committed surface match the layer resource.
 - [x] Automated: four-texel padding, source pixels/alpha, image composition, NOM/GLB export and existing 512²/1024² limits remain covered.
+- [x] Hosted Topology run `42337591263`, job `128297928568`, commit `311209e7024a530ae577962808ee3cd367bb7e75`: 3,177 PASS / 0 FAIL. The initial `.1090` hosted failure was a stale `.1041` release assertion expecting `.1089`; it now reads the current `version.json` and checks the shell pin against it.
+- [x] Pages run `42337590652` succeeded after the regression-test correction; `.1090` remains the live runtime.
 
-Focused correction validation: 33 tests across Paint preview, viewport strokes, image resources, Paint export and release contracts; 32 pass, one stale reviewed hash for the restored `.1089` filter-domain dependency pin was pending fixture refresh at the time of the run. Re-run after refreshing that reviewed hash. Hosted Topology and Pages for `.1090` remain pending until publication. Keep `.1088` PASS protected. `.1089` native acceptance is FAIL for live viewport visibility; no `.1090` device PASS is inferred.
+Focused correction validation: 33/33 PASS across Paint preview, viewport strokes, image resources, Paint export and release contracts. The stale reviewed hash encountered in an intermediate run was refreshed and the corrected focused suite passed. Hosted Topology and Pages both succeeded as recorded above. Keep `.1088` PASS protected. `.1089` native acceptance is FAIL for live viewport visibility; no `.1090` device PASS is inferred. The device checks above are now the outstanding gate.
 
 ## .1089 — four-texel UV edge padding — native acceptance FAIL
 
