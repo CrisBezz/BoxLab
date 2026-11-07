@@ -1,12 +1,12 @@
-import {importedPaintColourSource} from './imported-paint-colour.js?v=0.36.18.1094';
+import {importedPaintColourSource} from './imported-paint-colour.js?v=0.36.18.1095';
 import {copyOpacityResource} from './opacity-resource.js?v=0.36.18.1075';
 import * as THREE from 'three';
 import {paintMaterialEnvironments} from './paint-material-environment.js?v=0.36.18.925';
-import {encodeBoxlabScene} from './boxlab-project-codec.js?v=0.36.18.1094';
+import {encodeBoxlabScene} from './boxlab-project-codec.js?v=0.36.18.1095';
 import {copyMetalnessResource} from './metalness-resource.js?v=0.36.18.1075';
 import {copyRoughnessResource} from './roughness-resource.js?v=0.36.18.1075';
 import {paintDigest} from './paint-resource.js?v=898';
-import {importedPaintEligible} from './project-paint-resources.js?v=0.36.18.1094';
+import {importedPaintEligible} from './project-paint-resources.js?v=0.36.18.1095';
 import {padPaintPixels} from './paint-filter-domain.js?v=0.36.18.1091';
 const encoder=new TextEncoder(),hidden=new THREE.MeshBasicMaterial({colorWrite:false,depthWrite:false});
 const PAINT_EDGE_PADDING=4;
@@ -24,7 +24,7 @@ export const paintTargetDigest=key=>paintDigest(encoder.encode(key));
 export function paintTexture(pixels,size){const t=new THREE.DataTexture(pixels,size,size,THREE.RGBAFormat);t.colorSpace=THREE.SRGBColorSpace;t.flipY=false;t.generateMipmaps=false;t.minFilter=t.magFilter=THREE.LinearFilter;t.needsUpdate=true;return t;}
 // One surface/lifetime owner for committed display and temporary stroke preview.
 export function createPaintSurface(body,geometry,texture,{renderer=globalThis.__boxlabBridgeState?.renderer,environmentPool=paintMaterialEnvironments,padding=PAINT_EDGE_PADDING,materialFactors=null}={}){
- const fallback=body.material,source=body.geometry,material=new THREE.MeshBasicMaterial({map:texture,toneMapped:false}),surface=new THREE.Mesh(geometry,material);let disposed=false,lit=null,colourMap=null,colourSource=null,roughnessMap=null,metalnessMap=null,opacityMap=null,environment=null;
+ const fallback=body.material,source=body.geometry,material=new THREE.MeshBasicMaterial({map:texture,toneMapped:false,side:materialFactors?.doubleSided===true?THREE.DoubleSide:THREE.FrontSide}),surface=new THREE.Mesh(geometry,material);let disposed=false,lit=null,colourMap=null,colourSource=null,roughnessMap=null,metalnessMap=null,opacityMap=null,environment=null;
  surface.userData.boxlabRenderOverlay=true;surface.raycast=()=>{};
  // Textures belong to this surface, never the shared committed resources.
  // Roughness G and metalness B are linear data; colour keeps the accepted sRGB map.
@@ -68,7 +68,7 @@ export function createPaintSurface(body,geometry,texture,{renderer=globalThis.__
   if(lit.map!==nextColour||lit.roughnessMap!==nextRoughness||lit.metalnessMap!==nextMetalness)lit.needsUpdate=true;
   const alphaMap=opacity?.resource?opacityMap:null;
   if(lit.alphaMap!==alphaMap){lit.alphaMap=alphaMap;lit.transparent=!!alphaMap;lit.depthWrite=!alphaMap;lit.needsUpdate=true;}
-  const materialSide=alphaMap?THREE.DoubleSide:THREE.FrontSide;
+  const materialSide=alphaMap||materialFactors?.doubleSided===true?THREE.DoubleSide:THREE.FrontSide;
   if(lit.side!==materialSide){lit.side=materialSide;lit.needsUpdate=true;}
   lit.map=nextColour;lit.roughnessMap=nextRoughness;lit.metalnessMap=nextMetalness;surface.material=lit;surface.castShadow=body.castShadow;surface.receiveShadow=body.receiveShadow;
  }

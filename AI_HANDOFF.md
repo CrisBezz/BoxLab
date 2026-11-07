@@ -1,4 +1,16 @@
-# Current build — .1094 retain UV Paint on object taps — 7 November 2026
+# Current build — .1095 two-sided imported colour Paint — 7 November 2026
+
+User confirms `.1094 PASS` for retaining Paint on object taps and using Done/the four bottom mode buttons as exits. Protect that behaviour alongside `.1093` supported imported colour Paint, `.1091` seams and earlier native PASSes. Remaining user report: `Stephane.nom` cannot enter Paint despite valid UVs.
+
+Actual private file audit: 1,002 vertices, 1,000 faces, one opaque 1024² PNG (1,119,845 encoded bytes), UV coordinates inside the 0–1 tile, and `nomadMaterial.two_sided=1`. The imported-colour adapter rejected `source.doubleSided`; changing only that flag made the original file eligible. The UVs and resolution were not the blocker. Never commit the supplied model or portrait.
+
+`.1095` removes only that sidedness refusal for otherwise supported imported colour textures. Pass the existing source flag into both initial/channel and lit Paint materials. Carry it through export-local material metadata; GLB writes doubleSided and includes it in material deduplication, NOM writes two_sided=1. Save/Open retains the original imported payload/flag and authored pixels through existing pools. Opacity still enables its existing two-sided transparent path; opaque two-sided materials keep depth-write and opaque rendering. One-sided controls retain their previous behaviour. Other material/UV/map/size guards stay intact; no schema, texture-budget, topology, camera, input or modelling-kernel changes. Main/Multi/Object-mode-retain assets stay pinned at accepted .1094; protected Multi transform remains at 0.36.1.0.
+
+Focused validation: 51 PASS / 0 FAIL across imported textures/project/both actual exporters, Paint mode ownership, UV padding, image resources, opacity and release contracts. Two new synthetic NOM/GLB cases check two-sided initial/lit preview, opaque depth settings, source pixels, Save/Open and both writer flags; existing one-sided cases assert false/not-on export flags. Local private-file integration opens Stephane.nom at 1024², renders with DoubleSide, commits a stroke and leaves original image bytes exact. This is integration evidence, not native iPad acceptance. Hosted regression, Pages/live verification and native `.1095` acceptance pending.
+
+Next: finish publication, then import Stephane.nom on iPad, enter Paint without reprojection/clearing, paint/Undo/Redo/Done/reopen and Save/Open; inspect NOM/GLB round-trip including sidedness. Preserve `.1094` mode behaviour. Continue remaining imported PBR/transform coverage before measured performance/WASM work.
+
+## .1094 — previous release, protected native PASS — 7 November 2026
 
 User confirms `.1093 PASS` for imported colour-texture Paint, preserving original image/UVs, new strokes, Done/reopen, Save/Open and NOM/GLB round-trip within the documented single-map scope. Protect that result alongside `.1091` seams, `.1090` live Paint visibility and `.1088` Facegroups. New interaction requirement: object taps must stay in Paint; Done or the four bottom mode buttons exit.
 
@@ -6,7 +18,7 @@ Audit found independent object activation in `multi-object.js` and ordinary sele
 
 The original Paint mode-button capture listener previously blocked every selection-mode change and demanded Done. It now closes Paint and allows the original Vertex/Edge/Face/Object click action to continue. Done, background palette access, existing Undo/Redo/history reopening and lifecycle cancellation remain original owners. No new pointer consumer, modelling kernel, camera control or history transaction. Keep protected `multi-object-transform.js?v=0.36.1.0` unchanged.
 
-Focused validation: 40 PASS / 0 FAIL across seven new ownership cases, original touch activation/navigation, Paint strokes, history/contact/pressure and release contracts. Covers pen/mouse/touch with Multi on/off, queued pre-Paint touch, direct activation, all four mode exits, original canvas selection and delayed Object restoration. Hosted Topology `42356365552`, job `128355227218`, runtime commit `33fdbb20822661fc427bb32cdcceba9a55c82af4`: 3,192 PASS / 0 FAIL. Pages `42356365346` succeeded. Cache-busted version/index, main, multi-object, object-mode-retain, viewport-paint and drawer-ui (seven files) byte-match the published source.; native `.1094` acceptance pending.
+Focused validation: 40 PASS / 0 FAIL across seven new ownership cases, original touch activation/navigation, Paint strokes, history/contact/pressure and release contracts. Covers pen/mouse/touch with Multi on/off, queued pre-Paint touch, direct activation, all four mode exits, original canvas selection and delayed Object restoration. Hosted Topology `42356365552`, job `128355227218`, runtime commit `33fdbb20822661fc427bb32cdcceba9a55c82af4`: 3,192 PASS / 0 FAIL. Pages `42356365346` succeeded. Cache-busted version/index, main, multi-object, object-mode-retain, viewport-paint and drawer-ui (seven files) byte-match the published source.; user confirms `.1094 PASS`; mode ownership is protected.
 
 Next: device object taps and finger navigation stay in Paint; each bottom mode button exits to its requested mode; Done exits and completed paint survives. After acceptance return to remaining imported material coverage before measured performance/WASM work.
 

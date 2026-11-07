@@ -19119,3 +19119,13 @@ Audit finds multi-object activation and original main canvas selection/transform
 Seven new actual-owner cases cover pen/mouse/touch with Multi on/off, queued touch, direct activation, all four mode exits, main selection yielding and deferred restoration. Focused validation: 40 PASS / 0 FAIL with surrounding touch/navigation/Paint/history/contact/pressure/release checks. Hosted and Pages/live verification pending. Native .1094 acceptance pending.
 
 .1094 publication verified: Hosted Topology `42356365552`, job `128355227218`, runtime commit `33fdbb20822661fc427bb32cdcceba9a55c82af4`: 3,192 PASS / 0 FAIL. Pages `42356365346` succeeded. Cache-busted version/index, main, multi-object, object-mode-retain, viewport-paint and drawer-ui (seven files) byte-match the published source. Focused validation 40/40 passed. Native .1094 acceptance remains pending for object taps, all four mode exits, Done, navigation and paint/history retention. .1093 imported texture Paint remains protected PASS.
+
+## .1094 native mode acceptance — protected PASS — 7 November 2026
+
+User confirms PASS for Paint object-tap retention, navigation and intentional exits. Separately reports an already-painted imported model still cannot Paint; screenshot shows valid UVs on all 1,000 faces. User supplies private Stephane.nom. Do not infer every imported material is accepted from the .1093/.1094 PASSes.
+
+## .1095 — preserve two-sided imported colour materials in Paint and export — 7 November 2026
+
+Actual file has 1,002 vertices/1,000 faces, one 1024² PNG of 1,119,845 bytes, all UVs within tile and native two_sided=1. Changing only that flag makes the prior eligibility check pass. Remove the adapter's doubleSided refusal; retain all other guards. Initial/channel and lit Paint inherit sides; export-local materialFactors carries doubleSided, GLB emits/deduplicates by it, NOM writes two_sided=1. Project original payload/image/UVs remain exact. Existing opacity DoubleSide and one-sided defaults stay intact; no source resolution/budget/schema/kernel changes. Accepted .1094 selection owners and protected Multi transform are unchanged.
+
+Two new generated NOM/GLB integration cases cover preview/depth, strokes, project Save/Open and actual NOM/GLB writers; old one-sided cases check their exported flags remain off. Focused 51 PASS / 0 FAIL. A local integration against the actual private file opens Paint at 1024, uses DoubleSide, commits a stroke and preserves original encoded image bytes. No private file or portrait committed. Hosted regression, Pages/live and native .1095 acceptance pending.

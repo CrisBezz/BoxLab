@@ -1,4 +1,4 @@
-import {importedPaintColourSource} from './imported-paint-colour.js?v=0.36.18.1094';
+import {importedPaintColourSource} from './imported-paint-colour.js?v=0.36.18.1095';
 // Separate project colour pool. Opaque scenev2 stays byte-compatible; raster scenev3; image scenev4.
 // Native UV envelopev3 is still UV-only. History/duplicates share immutable resources.
 import {encodePaintResourceEntry,decodePaintResourceEntry,paintResourceEntryBytes} from './paint-layer-resource.js?v=0.36.18.1033';

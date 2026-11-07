@@ -1,5 +1,5 @@
 import {meshTopologySignature} from './mesh-topology-signature.js?v=0.36.18.939';
-import {capturePaintExportObjects,preparePaintExportObjects,preparedPaintImage,preparedOpacityImage,preparedRoughnessImage,preparedMetalnessImage,preparedMetallicRoughnessImage,paintExportGeometryObject} from './paint-export.js?v=0.36.18.1094';
+import {capturePaintExportObjects,preparePaintExportObjects,preparedPaintImage,preparedOpacityImage,preparedRoughnessImage,preparedMetalnessImage,preparedMetallicRoughnessImage,paintExportGeometryObject} from './paint-export.js?v=0.36.18.1095';
 // BoxLab .735 — native NOMAD handoff; regular OBJ/GLB exports remain available.
 // GLB keeps BoxLab editable objects as separate named scene nodes for Nomad/3D handoff.
 import * as THREE from 'three';
@@ -7,7 +7,7 @@ import {GLTFExporter} from 'three/addons/exporters/GLTFExporter.js';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {buildSceneOBJ,resolveExportMesh,safeOBJName} from './scene-obj-export-core.js?v=0.36.18.1075';
 
-import {buildNomadProjectWithMaps} from './nomad-packed-maps.js?v=0.36.18.1094';
+import {buildNomadProjectWithMaps} from './nomad-packed-maps.js?v=0.36.18.1095';
 
 const VERSION='0.36.18.892';
 const MAX_UV_PREVIEW_CORNERS=20000;
@@ -452,9 +452,9 @@ function patchNomadFaceGroupGLB(buffer,objectDetails){
     if(detail.paintImage||detail.roughnessImage||detail.metalnessImage){
       const image=detail.paintImage,roughness=detail.scalarImage||detail.roughnessImage,metalness=!!detail.metalnessImage;
       const colourTexture=image?addPaintTexture(image):null,roughnessTexture=roughness?addPaintTexture(roughness):null;
-      const hasOpacity=!!detail.opacityImage,materialKey=JSON.stringify([colourTexture,roughnessTexture,metalness,hasOpacity,image?.materialFactors?.roughness,image?.materialFactors?.metalness]);let material=paintMaterials.get(materialKey);
+      const hasOpacity=!!detail.opacityImage,materialKey=JSON.stringify([colourTexture,roughnessTexture,metalness,hasOpacity,image?.materialFactors?.roughness,image?.materialFactors?.metalness,image?.materialFactors?.doubleSided]);let material=paintMaterials.get(materialKey);
       if(material===undefined){
-       material=gltf.materials.length;gltf.materials.push({name:'BoxLab painted material',pbrMetallicRoughness:{...(image?{baseColorTexture:{index:colourTexture,texCoord:0}}:{}),...(roughness?{metallicRoughnessTexture:{index:roughnessTexture,texCoord:0}}:{}),baseColorFactor:[1,1,1,1],roughnessFactor:roughness?1:(image?.materialFactors?.roughness??1),metallicFactor:metalness?1:(image?.materialFactors?.metalness??0)},alphaMode:hasOpacity?'BLEND':'OPAQUE',doubleSided:hasOpacity});paintMaterials.set(materialKey,material);
+       material=gltf.materials.length;gltf.materials.push({name:'BoxLab painted material',pbrMetallicRoughness:{...(image?{baseColorTexture:{index:colourTexture,texCoord:0}}:{}),...(roughness?{metallicRoughnessTexture:{index:roughnessTexture,texCoord:0}}:{}),baseColorFactor:[1,1,1,1],roughnessFactor:roughness?1:(image?.materialFactors?.roughness??1),metallicFactor:metalness?1:(image?.materialFactors?.metalness??0)},alphaMode:hasOpacity?'BLEND':'OPAQUE',doubleSided:hasOpacity||image?.materialFactors?.doubleSided===true});paintMaterials.set(materialKey,material);
       }
       for(const primitive of mesh.primitives||[])primitive.material=material;
     }else if(passthrough?.materials?.length){

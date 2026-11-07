@@ -1,7 +1,7 @@
-import {importedPaintColourSource} from './imported-paint-colour.js?v=0.36.18.1094';
+import {importedPaintColourSource} from './imported-paint-colour.js?v=0.36.18.1095';
 // Export-local adaptation only. Never add material/provenance fields to native UVs.
 import {captureFlattenedPaint} from './paint-layer-resource.js?v=0.36.18.1033';
-import {paintTargetKey,paintTargetDigest} from './paint-target.js?v=0.36.18.1094';
+import {paintTargetKey,paintTargetDigest} from './paint-target.js?v=0.36.18.1095';
 import {copyMetalnessResource} from './metalness-resource.js?v=0.36.18.1075';
 import {copyRoughnessResource} from './roughness-resource.js?v=0.36.18.1075';
 import {copyOpacityResource} from './opacity-resource.js?v=0.36.18.1075';
@@ -37,7 +37,7 @@ export async function preparePaintExportObjects(objects,{subd=false,owner=global
   if(opacity&&(opacity.width!==512||opacity.height!==512))throw Error('GLB opacity map must be 512 × 512');
   if(opacity){const image={name:'BoxLab colour opacity.png',choice:{data:await encodeNomadColourAlphaPNG(colour?.pixels||null,colour?.width||0,colour?.height||0,opacity.pixels,opacity.width,opacity.height),mime:'image/png'}};prepared.set(object,image);opacityPrepared.set(object,true);}
   else if(colour){let image=encoded.get(colour);if(!image){image={name:'BoxLab paint.png',choice:{data:await encodeNomadColourPNG(colour.pixels,colour.width,colour.height),mime:'image/png'}};encoded.set(colour,image);}prepared.set(object,image);}
-  const inherited=importedPaintColourSource(object.glbPassthrough);if(inherited&&prepared.has(object))prepared.set(object,{...prepared.get(object),materialFactors:{roughness:inherited.roughness,metalness:inherited.metalness}});
+  const inherited=importedPaintColourSource(object.glbPassthrough);if(inherited&&prepared.has(object))prepared.set(object,{...prepared.get(object),materialFactors:{roughness:inherited.roughness,metalness:inherited.metalness,doubleSided:inherited.doubleSided===true}});
   if(roughness){
    let image=encoded.get(roughness);if(!image){
     // Reuse the authoritative lossless scalar PNG writer. glTF reads G;

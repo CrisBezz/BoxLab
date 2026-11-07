@@ -1,6 +1,6 @@
 import {nomadMaterialMaps} from './nomad-material-resource.js?v=0.36.18.1033';
 import {faceGroupPalette} from './facegroup-colours-core.js?v=0.36.18.992';
-import {preparedPaintImage,preparedRoughnessImage,preparedMetalnessImage,paintExportGeometryObject} from './paint-export.js?v=0.36.18.1094';
+import {preparedPaintImage,preparedRoughnessImage,preparedMetalnessImage,paintExportGeometryObject} from './paint-export.js?v=0.36.18.1095';
 import {nomadDisplacementMap} from './nomad-displacement-map.js?v=0.36.18.1032';
 import {uvImageSurfaceSource,uvImageMaterialSource} from './uv-image-surface-preview.js?v=0.36.18.1035';
 import {embeddedUVImage} from './uv-image-preview.js?v=0.36.18.1032';
@@ -146,7 +146,7 @@ export function buildNomadProject(objects,templateBytes,{subd=false,name='BoxLab
    if(stored.length!==editable.faces.length||stored.some((uv,fi)=>!Array.isArray(uv)||uv.length!==editable.faces[fi].length||uv.some(p=>!Array.isArray(p)||p.length!==2||p.some(v=>!Number.isFinite(v)||!Number.isFinite(Math.fround(v))))))throw Error('NOMAD UV channel is incomplete or invalid');
    cornerUVs=stored;uvObjects++;
   }
-  const paint=preparedPaintImage(object),roughness=preparedRoughnessImage(object),metalness=preparedMetalnessImage(object),source=(paint||roughness||metalness)?{factor:[1,1,1,1],material:{pbrMetallicRoughness:{roughnessFactor:roughness?1:(paint?.materialFactors?.roughness??1),metallicFactor:metalness?1:(paint?.materialFactors?.metalness??0)}},maps:{...(paint?{color:paint}:{}),...(roughness?{roughness}:{}),...(metalness?{metalness}:{})}}:nativeMaterialMaps(payload);let materialIndex=null;
+  const paint=preparedPaintImage(object),roughness=preparedRoughnessImage(object),metalness=preparedMetalnessImage(object),source=(paint||roughness||metalness)?{factor:[1,1,1,1],material:{doubleSided:paint?.materialFactors?.doubleSided===true,pbrMetallicRoughness:{roughnessFactor:roughness?1:(paint?.materialFactors?.roughness??1),metallicFactor:metalness?1:(paint?.materialFactors?.metalness??0)}},maps:{...(paint?{color:paint}:{}),...(roughness?{roughness}:{}),...(metalness?{metalness}:{})}}:nativeMaterialMaps(payload);let materialIndex=null;
   if(source){
    if(Object.keys(source.maps).length&&!cornerUVs)throw Error('NOMAD image maps require a complete matching Base UV channel');
    const material=clone(source.nativeMaterial||base.json.materials?.[0]||{});if(!source.nativeMaterial)material.textures={};
@@ -176,7 +176,7 @@ export function buildNomadProject(objects,templateBytes,{subd=false,name='BoxLab
     for(const [slot,increment] of [['color',()=>colourTextureObjects++],['normal',()=>normalTextureObjects++],['emissive',()=>emissiveTextureObjects++],['roughness',()=>roughnessTextureObjects++],['metalness',()=>metalnessTextureObjects++],['displacement',()=>displacementTextureObjects++]])if(maps[slot])increment();
    }else{
    material.factorColor=[...source.factor.slice(0,3)];material.color=source.maps.color?[1,1,1]:[...source.factor.slice(0,3)];material.opacity=1;material.factorOpacity=1;material.material_type='opaque';
-   const pbr=source.material.pbrMetallicRoughness||{};
+   const pbr=source.material.pbrMetallicRoughness||{};if(source.material.doubleSided===true)material.two_sided=1;
    material.roughness=Number.isFinite(pbr.roughnessFactor)?pbr.roughnessFactor:1;material.metalness=Number.isFinite(pbr.metallicFactor)?pbr.metallicFactor:1;
    if(maps.roughness){material.factorRoughness=pbr.roughnessFactor??1;roughnessTextureObjects++;}
    if(maps.metalness){material.factorMetalness=pbr.metallicFactor??1;metalnessTextureObjects++;}

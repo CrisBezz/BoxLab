@@ -1,10 +1,21 @@
-## .1094 — UV Paint owns object taps; explicit mode exits — native pending
+## .1095 — two-sided imported colour Paint — native pending
+
+`.1094` mode ownership is user-confirmed PASS and protected. Stephane.nom was refused solely for its two-sided material flag, not for UVs or map size. The private model/image is not committed.
+
+- [ ] Import Stephane.nom; UV Paint opens with its current UVs and image, without clearing/reprojection.
+- [ ] Paint, Undo/Redo and Done/reopen keep image, new paint and two-sided appearance. Object taps still retain Paint.
+- [ ] Save/Open and NOM/GLB export/reimport retain painted pixels and sidedness.
+- [x] Generated two-sided NOM/GLB tests exercise initial/lit preview, opaque depth state, project persistence and both actual exporter flags. One-sided and opacity controls pass.
+- [x] Focused 51/51 pass; private-file integration opens and paints successfully with source image bytes unchanged.
+- [ ] Hosted regression and Pages/live verification recorded.
+
+## .1094 — UV Paint owns object taps; explicit mode exits — protected native PASS
 
 `.1093` imported colour texture Paint is user-confirmed PASS and protected. New requirement: tapping objects must retain Paint and its current target. Done and all four bottom mode buttons are intentional exits; finger navigation remains available.
 
-- [ ] In Paint, tap the current mesh and another object with finger/Pencil; Paint stays active on its original target. Orbit/pan/pinch still work.
-- [ ] Reopen Paint before each test: Vertex, Edge, Face and Object each close Paint and select that mode. Done also exits.
-- [ ] Completed strokes survive exits/reopening; Undo/Redo works and imported texture painting remains intact.
+- [x] In Paint, tap the current mesh and another object with finger/Pencil; Paint stays active on its original target. Orbit/pan/pinch still work.
+- [x] Reopen Paint before each test: Vertex, Edge, Face and Object each close Paint and select that mode. Done also exits.
+- [x] Completed strokes survive exits/reopening; Undo/Redo works and imported texture painting remains intact.
 - [x] Seven production-owner regression cases plus original activation/navigation/Paint/history/contact/release checks: 40 PASS / 0 FAIL.
 - [x] Hosted Topology `42356365552`, job `128355227218`, runtime commit `33fdbb20822661fc427bb32cdcceba9a55c82af4`: 3,192 PASS / 0 FAIL. Pages `42356365346` succeeded. Cache-busted version/index, main, multi-object, object-mode-retain, viewport-paint and drawer-ui (seven files) byte-match the published source.
 

@@ -4,7 +4,7 @@ import {inspectPaintImage,importPaintImage} from './paint-image-source.js?v=0.36
 import {opaqueNomadColourPNG} from './nomad-scalar-png.js?v=0.36.18.1035';
 export function importedPaintColourSource(payload){
  try{
-  const source=uvImageSurfaceSource(payload);if(!source?.choice||source.doubleSided||source.unlit)return null;
+  const source=uvImageSurfaceSource(payload);if(!source?.choice||source.unlit)return null;
   if(payload.source==='nomad'){
    const m=payload.nomadMaterial;
    if(Object.keys(m.textures||{}).some(k=>k!=='color')||source.rotation!==0||source.repeat?.some(v=>v!==1)||source.offset?.some(v=>v!==0))return null;
