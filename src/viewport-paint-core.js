@@ -1,3 +1,4 @@
+import {importedPaintColourSource,decodeImportedPaintColour} from './imported-paint-colour.js?v=0.36.18.1092';
 import {captureOpacityResource,copyOpacityResource} from './opacity-resource.js?v=0.36.18.1075';
 import {createProjectOpacityPool} from './project-opacity-resources.js?v=0.36.18.1075';
 import {createFaceFillPlan} from './paint-face-fill.js?v=0.36.18.1004';
@@ -13,8 +14,8 @@ import {projectPaintImage} from './paint-image-project.js?v=0.36.18.951';
 import {surfaceImageFrameFromHit} from './paint-image-surface.js?v=0.36.18.933';
 import {capturePaintImagePlacement,paintImagePlacementFromCamera} from './paint-image-placement.js?v=0.36.18.907';
 import {captureLayeredColourResource,capturePaintResource} from './paint-layer-resource.js?v=0.36.18.1033';
-import {createProjectPaintPool} from './project-paint-resources.js?v=0.36.18.1087';
-import {paintTargetKey,paintTargetDigest,paintTexture,createPaintSurface} from './paint-target.js?v=0.36.18.1091';
+import {createProjectPaintPool} from './project-paint-resources.js?v=0.36.18.1092';
+import {paintTargetKey,paintTargetDigest,paintTexture,createPaintSurface} from './paint-target.js?v=0.36.18.1092';
 import {captureRoughnessResource,copyRoughnessResource} from './roughness-resource.js?v=0.36.18.1075';
 import {createProjectRoughnessPool} from './project-roughness-resources.js?v=0.36.18.1075';
 import {captureMetalnessResource,copyMetalnessResource} from './metalness-resource.js?v=0.36.18.1075';
@@ -25,7 +26,7 @@ const PEN_ONSET_MAX_START_RADIUS=8;
 const PEN_ONSET_UNSETTLED_START_RADIUS=2;
 const PEN_ONSET_PRESSURE_DROP_RATIO=.75;
 // Scene history, selection, camera and body lifetime remain with the existing app.
-export function createViewportPainter({target,activeId=()=>target()?.id,body,owner,camera,controls,scene,checkpoint,onClose=()=>{},refresh=()=>{},allowed=()=>true,objects=()=>[target()],newColourSize=512,setTimer=setTimeout,clearTimer=clearTimeout,onDiagnostic=()=>{}}){
+export function createViewportPainter({target,activeId=()=>target()?.id,body,owner,camera,controls,scene,checkpoint,onClose=()=>{},refresh=()=>{},allowed=()=>true,objects=()=>[target()],newColourSize=512,setTimer=setTimeout,clearTimer=clearTimeout,onDiagnostic=()=>{},decodeImportedColour=decodeImportedPaintColour}){
  if(![512,1024].includes(newColourSize))throw Error('New colour texture must be 512 or 1024');
  const diagnostic=(stage,data)=>{try{onDiagnostic(stage,data);}catch{}};
  let session=null,generation=0,stroke=null;const ray=new THREE.Raycaster(),occluderMaterial=new THREE.MeshBasicMaterial({side:THREE.DoubleSide});
@@ -35,15 +36,17 @@ export function createViewportPainter({target,activeId=()=>target()?.id,body,own
  function close(redraw=true){generation++;session?.aoJob?.abort();if(!session)return;cancel();const old=session;session=null;old.body.geometry.removeEventListener('dispose',old.lost);old.boundaries?.dispose();old.display.dispose();old.layer.dispose();onClose();if(redraw)refresh(old.body);}
  async function open(){close();const token=++generation,o=target();if(o?.locked||o?.visible===false)throw Error('Unlock and show the selected object first');const key=paintTargetKey(o,o?.mesh,owner),resource=o.colourPaint,roughness=o.roughnessPaint,metalness=o.metalnessPaint,opacity=o.opacityPaint,binding=await paintTargetDigest(key);
   if(token!==generation||!allowed()||target()!==o||target()?.colourPaint!==resource||target()?.roughnessPaint!==roughness||target()?.metalnessPaint!==metalness||target()?.opacityPaint!==opacity||paintTargetKey(target(),target()?.mesh,owner)!==key)throw Error('Object changed while opening paint');
-  const size=resource?.width||newColourSize,b=body();if(!b?.geometry)throw Error('Selected viewport body unavailable');
+  const importedColour=!resource?importedPaintColourSource(o.glbPassthrough):null,importedPixels=importedColour?await decodeImportedColour(importedColour):null;
+  if(token!==generation||!allowed()||target()!==o||o.colourPaint!==resource||o.roughnessPaint!==roughness||o.metalnessPaint!==metalness||o.opacityPaint!==opacity||paintTargetKey(o,o.mesh,owner)!==key)throw Error('Object changed while decoding imported colour');
+  const size=resource?.width||importedColour?.size||newColourSize,b=body();if(!b?.geometry)throw Error('Selected viewport body unavailable');
   if(resource&&(resource.binding!==binding||![512,1024].includes(size)||resource.height!==size))throw Error('Stored paint no longer matches this geometry/UVs; Undo the change, or use Object → UV → Clear paint to start again');
   for(const [channel,cfg] of Object.entries(scalarOwners)){const resource=o[cfg.field];if(resource){const r=cfg.copy(resource);if(r.binding!==binding)throw Error('Stored '+channel+' no longer matches this geometry/UVs; Undo the change, or use Object → UV → Clear paint to start again');}}
   const geometry=owner.buildUVPreviewGeometry(o.mesh,o.glbPassthrough,{faceIndices:true});if(!geometry)throw Error('UV geometry unavailable');
-  const preview=new Uint8Array(size*size*4).fill(255);if(resource)preview.set(resource.pixels);else if(['glb','nomad'].includes(o.glbPassthrough?.source)){const material=Array.isArray(b.material)?b.material[0]:b.material;if(material?.color){const colour=material.color.clone().convertLinearToSRGB(),rgb=[colour.r,colour.g,colour.b].map(v=>Math.max(0,Math.min(255,Math.round(v*255))));for(let i=0;i<preview.length;i+=4)preview.set([...rgb,255],i);}}
+  const preview=new Uint8Array(size*size*4).fill(255);if(resource)preview.set(resource.pixels);else if(importedPixels)preview.set(importedPixels);else if(['glb','nomad'].includes(o.glbPassthrough?.source)){const material=Array.isArray(b.material)?b.material[0]:b.material;if(material?.color){const colour=material.color.clone().convertLinearToSRGB(),rgb=[colour.r,colour.g,colour.b].map(v=>Math.max(0,Math.min(255,Math.round(v*255))));for(let i=0;i<preview.length;i+=4)preview.set([...rgb,255],i);}}
   // Opening a new 1024 document stays transient: first edit uses the accepted
   // layered profile; no blank resource or history entry is published on open.
   const stack=resource?.version>=2?capturePaintResource(resource).layers:!resource&&size===1024?createPaintLayerStack(captureColourResource({width:size,height:size,pixels:preview,binding})):null,selected=stack?.layers.at(-1)?.id||'$base';
-  let layer,display;try{layer=createPaintLayer(size,{transparent:!!stack&&selected!=='$base'});if(stack)layer.restore(selected==='$base'?stack.base.pixels:stack.layers.find(l=>l.id===selected).pixels);else if(resource)layer.restore(resource.pixels);for(const child of [...b.children])child.userData?.boxlabColourPaintDispose?.();display=createPaintSurface(b,geometry,paintTexture(preview,size),{padding:0});display.show();}catch(e){geometry.dispose();display?.dispose();layer?.dispose();throw e;}
+  let layer,display;try{layer=createPaintLayer(size,{transparent:!!stack&&selected!=='$base'});if(stack)layer.restore(selected==='$base'?stack.base.pixels:stack.layers.find(l=>l.id===selected).pixels);else if(resource||importedPixels)layer.restore(preview);for(const child of [...b.children])child.userData?.boxlabColourPaintDispose?.();display=createPaintSurface(b,geometry,paintTexture(preview,size),{padding:0,materialFactors:importedPaintColourSource(o.glbPassthrough)});display.show();}catch(e){geometry.dispose();display?.dispose();layer?.dispose();throw e;}
   const lost=()=>close(false);session={size,object:o,id:o.id,key,binding,resource,roughness,metalness,opacity,uv:o.glbPassthrough,body:b,layer,display,lost,stack,selected,preview,dirty:true,paintTarget:'colour',previewMode:'material',multiPaintChannels:[]};b.geometry.addEventListener('dispose',lost);return true;
  }
  function hit(p){if(!current())return null;scene.updateMatrixWorld(true);ray.setFromCamera(new THREE.Vector2(p.x/p.width*2-1,1-p.y/p.height*2),camera);

@@ -1,11 +1,12 @@
+import {importedPaintColourSource} from './imported-paint-colour.js?v=0.36.18.1092';
 import {copyOpacityResource} from './opacity-resource.js?v=0.36.18.1075';
 import * as THREE from 'three';
 import {paintMaterialEnvironments} from './paint-material-environment.js?v=0.36.18.925';
-import {encodeBoxlabScene} from './boxlab-project-codec.js?v=0.36.18.1087';
+import {encodeBoxlabScene} from './boxlab-project-codec.js?v=0.36.18.1092';
 import {copyMetalnessResource} from './metalness-resource.js?v=0.36.18.1075';
 import {copyRoughnessResource} from './roughness-resource.js?v=0.36.18.1075';
 import {paintDigest} from './paint-resource.js?v=898';
-import {importedPaintEligible} from './project-paint-resources.js?v=0.36.18.1087';
+import {importedPaintEligible} from './project-paint-resources.js?v=0.36.18.1092';
 import {padPaintPixels} from './paint-filter-domain.js?v=0.36.18.1091';
 const encoder=new TextEncoder(),hidden=new THREE.MeshBasicMaterial({colorWrite:false,depthWrite:false});
 const PAINT_EDGE_PADDING=4;
@@ -15,14 +16,14 @@ const COMBINED_PAINT_ENV_INTENSITY=.35;
 export function paintTargetKey(object,mesh=object?.mesh,owner=globalThis.__boxlabExportAs){
  const s=object?.settings||{},p=object?.glbPassthrough;
  const imported=p?.source==='glb'||p?.source==='nomad';
- if(!object||object.kind==='reference'||object.sourceId||object.arrayRecipe||object.booleanRecipe||object.curveProfile||s.subd||Object.values(s.mirror||{}).some(Boolean)||(!imported&&p?.source!=='boxlab')||p.version!==1||p.uvTopologySignature!==owner?.topologySignature(mesh)||imported&&!importedPaintEligible({...object,mesh})||!mesh?.faces?.length||mesh.faces.reduce((n,f)=>n+f.length,0)>20000)throw Error('Paint requires an independent native UV object or an imported single-material UV mesh with no embedded images; imported UVs must fit the 0–1 tile (20,000 corners maximum)');
+ if(!object||object.kind==='reference'||object.sourceId||object.arrayRecipe||object.booleanRecipe||object.curveProfile||s.subd||Object.values(s.mirror||{}).some(Boolean)||(!imported&&p?.source!=='boxlab')||p.version!==1||p.uvTopologySignature!==owner?.topologySignature(mesh)||imported&&!importedPaintEligible({...object,mesh})||!mesh?.faces?.length||mesh.faces.reduce((n,f)=>n+f.length,0)>20000)throw Error('Paint requires an independent native UV object or an imported single-material UV mesh with no embedded images or one opaque 512/1024 square colour texture (PNG/JPEG, at most 2 MiB); imported UVs must fit the 0–1 tile (20,000 corners maximum)');
  const encoded=encodeBoxlabScene({objects:[{mesh,glbPassthrough:p,kind:'editable',settings:{}}]}).objects[0];
  return JSON.stringify({uv:encoded.glbResource});
 }
 export const paintTargetDigest=key=>paintDigest(encoder.encode(key));
 export function paintTexture(pixels,size){const t=new THREE.DataTexture(pixels,size,size,THREE.RGBAFormat);t.colorSpace=THREE.SRGBColorSpace;t.flipY=false;t.generateMipmaps=false;t.minFilter=t.magFilter=THREE.LinearFilter;t.needsUpdate=true;return t;}
 // One surface/lifetime owner for committed display and temporary stroke preview.
-export function createPaintSurface(body,geometry,texture,{renderer=globalThis.__boxlabBridgeState?.renderer,environmentPool=paintMaterialEnvironments,padding=PAINT_EDGE_PADDING}={}){
+export function createPaintSurface(body,geometry,texture,{renderer=globalThis.__boxlabBridgeState?.renderer,environmentPool=paintMaterialEnvironments,padding=PAINT_EDGE_PADDING,materialFactors=null}={}){
  const fallback=body.material,source=body.geometry,material=new THREE.MeshBasicMaterial({map:texture,toneMapped:false}),surface=new THREE.Mesh(geometry,material);let disposed=false,lit=null,colourMap=null,colourSource=null,roughnessMap=null,metalnessMap=null,opacityMap=null,environment=null;
  surface.userData.boxlabRenderOverlay=true;surface.raycast=()=>{};
  // Textures belong to this surface, never the shared committed resources.
@@ -56,8 +57,8 @@ export function createPaintSurface(body,geometry,texture,{renderer=globalThis.__
   // a Metalness map on white makes the surface appear brighter/darker than the
   // same unpainted Studio material after Paint closes.
   if(nextColour)lit.color.set(0xffffff);else if(fallback?.color?.isColor)lit.color.copy(fallback.color);
-  lit.roughness=nextRoughness?1:(Number.isFinite(fallback?.roughness)?fallback.roughness:1);
-  lit.metalness=nextMetalness?1:(Number.isFinite(fallback?.metalness)?fallback.metalness:0);
+  lit.roughness=nextRoughness?1:(Number.isFinite(materialFactors?.roughness)?materialFactors.roughness:Number.isFinite(fallback?.roughness)?fallback.roughness:1);
+  lit.metalness=nextMetalness?1:(Number.isFinite(materialFactors?.metalness)?materialFactors.metalness:Number.isFinite(fallback?.metalness)?fallback.metalness:0);
   if(fallback?.emissive?.isColor)lit.emissive.copy(fallback.emissive);
   if(Number.isFinite(fallback?.emissiveIntensity))lit.emissiveIntensity=fallback.emissiveIntensity;
   if(Number.isFinite(fallback?.envMapIntensity)){
@@ -73,13 +74,13 @@ export function createPaintSurface(body,geometry,texture,{renderer=globalThis.__
  }
  function dispose(){if(disposed)return;disposed=true;source.removeEventListener('dispose',dispose);body.remove(surface);if(body.material===hidden)body.material=fallback;geometry.dispose();material.dispose();texture.dispose();lit?.dispose();colourMap?.dispose();roughnessMap?.dispose();metalnessMap?.dispose();opacityMap?.dispose();environment?.release();environment=null;}
  surface.userData.boxlabColourPaintDispose=dispose;source.addEventListener('dispose',dispose);body.add(surface);
- return {surface,showMaterial,replaceChannelTexture(next){texture.dispose();texture=next;material.map=next;material.needsUpdate=true;},showChannel(){if(!disposed)surface.material=material;},show(){if(!disposed){surface.visible=true;body.material=hidden;for(const child of [...body.children])if(child.userData?.boxlabBackfaceCue){body.remove(child);child.material?.dispose?.();}}},dispose,get disposed(){return disposed;}};
+ return {surface,showMaterial,replaceChannelTexture(next){texture.dispose();texture=next;material.map=next;material.needsUpdate=true;},showChannel(){if(!disposed)surface.material=material;},show(){if(!disposed){surface.visible=true;for(const child of [...body.children])child.userData?.boxlabUVImageDispose?.();body.material=hidden;for(const child of [...body.children])if(child.userData?.boxlabBackfaceCue){body.remove(child);child.material?.dispose?.();}}},dispose,get disposed(){return disposed;}};
 }
 export function createCommittedPaintSurface(body,object,mesh,owner=globalThis.__boxlabExportAs){
  const resource=object?.colourPaint,roughness=object?.roughnessPaint,metalness=object?.metalnessPaint,opacity=object?.opacityPaint;if(!resource&&!roughness&&!metalness&&!opacity)return null;
  if(resource&&(![512,1024].includes(resource.width)||resource.height!==resource.width))return null;
  let key,geometry,scalar,metal,alpha;try{key=paintTargetKey(object,mesh,owner);if(roughness)scalar=copyRoughnessResource(roughness);if(metalness)metal=copyMetalnessResource(metalness);if(opacity)alpha=copyOpacityResource(opacity);geometry=owner.buildUVPreviewGeometry(mesh,object.glbPassthrough,{faceIndices:true});if(!geometry)return null;}catch{return null;}
- const display=createPaintSurface(body,geometry,paintTexture(resource?.pixels||new Uint8Array([255,255,255,255]),resource?resource.width:1));display.surface.visible=false;
+ const display=createPaintSurface(body,geometry,paintTexture(resource?.pixels||new Uint8Array([255,255,255,255]),resource?resource.width:1),{materialFactors:importedPaintColourSource(object.glbPassthrough)});display.surface.visible=false;
  display.ready=paintTargetDigest(key).then(binding=>{
   if(display.disposed)return;
   if(object.colourPaint!==resource||object.roughnessPaint!==roughness||object.metalnessPaint!==metalness||object.opacityPaint!==opacity||paintTargetKey(object,mesh,owner)!==key){display.dispose();return;}

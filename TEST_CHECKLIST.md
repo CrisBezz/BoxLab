@@ -1,3 +1,14 @@
+## .1092 — imported opaque colour texture painting — native pending
+
+Protect `.1091` image seam PASS, `.1090` Paint visibility PASS and `.1088` Facegroups PASS. Supported first-stage files: one opaque UV0 colour texture, PNG/JPEG up to 2 MiB, square 512/1024, no additional PBR maps or transformed UV sampling. Original import/UV/image bytes stay retained.
+
+- [ ] Import a compatible painted NOM and GLB; Paint opens showing the original image, without replacing UVs.
+- [ ] Brush/Fill over the image; untouched parts stay. Undo/Redo and Done/reopen preserve appearance.
+- [ ] Save/Open and NOM/GLB export/reimport retain original image plus new paint.
+- [ ] Existing added-image seams remain improved; ordinary native Paint works.
+- [x] Automated new coverage: 512/1024 NOM/GLB seeded pixels, immutable source, stroke/project/export, colour factors, unsupported maps/transforms/transparency and late-decode cancellation.
+- [ ] Final focused/hosted and Pages/live release verification recorded.
+
 ## .1091 — protected native PASS
 
 User confirms `.1091 PASS` on 7 November 2026. Protect the image-seam repair, existing saved-image workflow, Paint/history/Done-reopen and NOM/GLB round-trip acceptance. Next priority: imported textured NOM/GLB Paint, followed by measured performance/WASM work. No new runtime build for this acceptance record.

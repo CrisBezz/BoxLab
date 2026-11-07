@@ -1,3 +1,15 @@
+# Current build — .1092 Paint over imported colour textures — 7 November 2026
+
+`.1091` image-seam repair is user-confirmed PASS and protected, alongside `.1090` Paint visibility and `.1088` Facegroups. User requests painted UV NOM/GLB import as the next build.
+
+Audit found imported encoded images and native colour inspection already retained by the original import owners, while Paint/project eligibility deliberately excluded every embedded image. `.1092` adds a bounded seed adapter using the existing UV material source resolver and editable-image decoder. Supports independent opaque single-material NOM/GLB UV0 colour maps, square 512 or 1024, PNG/JPEG up to 2 MiB encoded, unchanged 0–1 UVs. Multiple materials, extra PBR maps, unsupported texture transforms/attributes, two-sided/unlit materials and true native colour transparency remain refused before mutation. GLB OPAQUE and native colour-alpha-off ignore alpha using the original opaque PNG conversion. Native colour-alpha-on requires decoded pixels fully opaque. This is colour-texture painting, not full imported PBR editing.
+
+Opening decodes a transient base, bakes material colour factors in linear light and seeds the existing layer; no resource/checkpoint until the first edit. Original encoded image/UV payload stays intact. First stroke creates the original Paint resource/history transaction, and Save/Open carries original import plus edited pixels through existing pools. Existing export owners use composed paint. Current source roughness/metalness constants are used for preview; existing paint-export scalar policies remain. Retire the native image preview only when the Paint surface takes over, avoiding competing overlays. Stale target/channel changes or closing during decode cannot open/publish a late session. Source files, kernels, project schema and budgets remain unchanged.
+
+New integration tests exercise NOM/GLB at 512/1024, exact initial pixels, no opening history/resource, original image preservation, stroke and untouched pixels, Save/Open and prepared colour export, factor conversion, rejected transforms/maps/transparency and cancellation during decode. Focused validation: 37 PASS / 0 FAIL across imported textures, existing imported UV Paint, seam padding, Paint/image export and release contracts. Hosted validation/publication pending. Native `.1092` acceptance pending.
+
+Next: publish/verify `.1092`, then device import a compatible painted NOM/GLB, paint over it, Done/reopen, Save/Open and export/reimport. No need to recreate UVs. Continue remaining textured-material coverage before performance/WASM benchmarks.
+
 ## .1091 — protected native PASS
 
 User confirms `.1091 PASS` on 7 November 2026. Protect the image-seam repair, existing saved-image workflow, Paint/history/Done-reopen and NOM/GLB round-trip acceptance. Next priority: imported textured NOM/GLB Paint, followed by measured performance/WASM work. No new runtime build for this acceptance record.

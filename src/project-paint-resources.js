@@ -1,3 +1,4 @@
+import {importedPaintColourSource} from './imported-paint-colour.js?v=0.36.18.1092';
 // Separate project colour pool. Opaque scenev2 stays byte-compatible; raster scenev3; image scenev4.
 // Native UV envelopev3 is still UV-only. History/duplicates share immutable resources.
 import {encodePaintResourceEntry,decodePaintResourceEntry,paintResourceEntryBytes} from './paint-layer-resource.js?v=0.36.18.1033';
@@ -7,6 +8,7 @@ const LIMIT=8*1024*1024;
 export function importedPaintEligible(o){
  const p=o?.glbPassthrough,m=o?.mesh,faces=m?.faces,uv=p?.uvCorners;
  if(!p||p.version!==1||!['glb','nomad'].includes(p.source)||!Array.isArray(faces)||!faces.length||p.uvTopologySignature!==meshTopologySignature(m)||!Array.isArray(uv)||uv.length!==faces.length||uv.some((corners,i)=>!Array.isArray(corners)||corners.length!==faces[i]?.length||corners.some(v=>!Array.isArray(v)||v.length!==2||!v.every(Number.isFinite)||v[0]<0||v[0]>1||v[1]<0||v[1]>1)))return false;
+ if(importedPaintColourSource(p))return true;
  if(p.source==='nomad')return Array.isArray(p.images)&&p.images.length===0&&!Object.keys(p.nomadMaterial?.textures||{}).length&&(p.nomadMaterial?.material_type??'opaque')==='opaque'&&(p.nomadMaterial?.opacity??1)===1&&(p.nomadMaterial?.factorOpacity??1)===1&&p.nomadMaterial?.two_sided!==1&&p.nomadMaterial?.flip_culling!==true&&p.nomadMaterial?.always_unlit!==true;
  const assignments=Array.isArray(p.materialIndices)?new Set(p.materialIndices):new Set(),materialIds=[...assignments];
  const material=materialIds.length===1?p.materials?.[materialIds[0]]:null,factor=material?.pbrMetallicRoughness?.baseColorFactor;
@@ -14,7 +16,7 @@ export function importedPaintEligible(o){
 }
 export function paintOwner(o){
  const source=o?.glbPassthrough?.source;
- if(o.sourceId||o.arrayRecipe||o.booleanRecipe||o.curveProfile||o.kind==='reference'||(source!=='boxlab'&&!importedPaintEligible(o)))throw Error('Paint requires an independent native UV object or an imported single-material UV mesh with no embedded images; textured and multi-material imports stay protected');
+ if(o.sourceId||o.arrayRecipe||o.booleanRecipe||o.curveProfile||o.kind==='reference'||(source!=='boxlab'&&!importedPaintEligible(o)))throw Error('Paint requires an independent native UV object or an imported single-material UV mesh with no embedded images or one opaque 512/1024 square colour texture (PNG/JPEG, at most 2 MiB); additional PBR maps, texture transforms and multi-material imports stay protected');
 }
 export function createProjectPaintPool(){
  const resources=[],indices=new Map(),shared=new WeakMap(),bytePool=createPaintBytePool();let total=0;
