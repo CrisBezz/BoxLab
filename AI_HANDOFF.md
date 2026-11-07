@@ -1,3 +1,13 @@
+# Session checkpoint — .1095 protected PASS; performance is next — 7 November 2026
+
+User confirms `.1095 PASS` and explicitly prioritizes dense imported-object performance ahead of further Paint features. Protect two-sided imported colour Paint and earlier accepted behaviour.
+
+Next `/nextbuild`: start the WASM performance roadmap at B0. The user's BOXLAB_WASM_PERFORMANCE_HANDOFF.md explicitly starts with baseline instrumentation, repeatable fixtures, JSON export and target-iPad measurement before a compiled kernel. Audit found the existing opt-in File → Performance monitor already records display/body/scene/inactive/cage CPU stages, frame intervals and renderer counts. Extend that owner; do not create a second monitor or modelling kernel. EditableMesh.triangulatedGeometry is the existing body packing/normal owner. Cage batching and SubD caching already exist and must not be reimplemented. No measured bottleneck or WASM speedup has yet been established.
+
+This session's workspace became unavailable before implementation could be written or tested. No .1096 runtime build was published; live remains .1095. The drafted baseline lab is NOT repository code. Resume from main, implement the narrow B0 lab, verify correctness/cancellation/report export and ordinary app behaviour, then publish through the normal checks. Do not claim an optimisation or larger editable capacity from a CPU microbenchmark. Record CPU buffers as scoped proxies, not total RAM, and require same-device end-to-end evidence before promoting any WASM candidate.
+
+---
+
 # Current build — .1095 two-sided imported colour Paint — 7 November 2026
 
 User confirms `.1094 PASS` for retaining Paint on object taps and using Done/the four bottom mode buttons as exits. Protect that behaviour alongside `.1093` supported imported colour Paint, `.1091` seams and earlier native PASSes. Remaining user report: `Stephane.nom` cannot enter Paint despite valid UVs.
