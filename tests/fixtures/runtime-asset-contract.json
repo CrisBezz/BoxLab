@@ -1,5 +1,5 @@
 {
-  "baseline": "Reviewed .1095: accept and preserve two-sided imported colour texture Paint; original .1094 selection/navigation owners and protected Multi transform stay unchanged.",
+  "baseline": "Reviewed .1096: opt-in Performance Lab baseline only; .1095 Paint PASS protected; original modelling and render owners unchanged.",
   "references": [
     {
       "owner": "index.html",
@@ -378,7 +378,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1095",
+      "url": "./src/release-version.js?v=0.36.18.1096",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -2240,9 +2240,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/performance-monitor.js?v=0.36.18.848",
+      "url": "./src/performance-monitor.js?v=0.36.18.1096",
       "target": "src/performance-monitor.js",
-      "sha256": "28ce92e906d4fd21e6cee9e287b65087b9eb1abb0a03dbfa7f01a1df1d4b80de"
+      "sha256": "02ed8f9eaee93e41e977de0e589c8a076d38b72d82375af9cbfb396f3acee22c"
     },
     {
       "owner": "src/performance-monitor.js",
@@ -3623,6 +3623,24 @@
       "url": "./paint-filter-domain.js?v=0.36.18.1091",
       "target": "src/paint-filter-domain.js",
       "sha256": "a7c676866679ba7f1dddf350f07c31a2edc1ad149ac3c62bc26cd92950e6eb65"
+    },
+    {
+      "owner": "src/performance-monitor.js",
+      "url": "./performance-lab-ui.js?v=0.36.18.1096",
+      "target": "src/performance-lab-ui.js",
+      "sha256": "263e4e5ef48a5958f318047f5e1d7d6ae1c45f5f01a24c29c5e4c3d9e4e896c6"
+    },
+    {
+      "owner": "src/performance-lab-ui.js",
+      "url": "./performance-lab-core.js?v=0.36.18.1096",
+      "target": "src/performance-lab-core.js",
+      "sha256": "35d370cbf08fd6a0e7a4a1f8e9139a0b3685e41cb6b1348a10153361a967eb12"
+    },
+    {
+      "owner": "src/performance-lab-core.js",
+      "url": "./mesh.js?v=0.12",
+      "target": "src/mesh.js",
+      "sha256": "70511061a5e8701124616a387ced43d0bd1297ecf130afc1fbc74c3b3b010e24"
     }
   ]
 }

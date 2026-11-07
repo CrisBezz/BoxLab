@@ -1,3 +1,19 @@
+# .1096 — performance baseline lab (B0) — 7 November 2026
+
+User confirms `.1095 PASS`; two-sided imported colour Paint is protected. User reprioritizes dense imported-object performance ahead of further Paint work. The user's WASM handoff starts at B0: baseline before a compiled kernel. No WASM or modelling algorithm change in this build.
+
+Audit current main `814b1550`: original opt-in Performance monitor is under VIEW → Diagnostics (not File, despite older handoff wording). Existing stages already distinguish display, body geometry, scene hooks, inactive bodies and cage; existing cage batching/SubD caching remain intact. `EditableMesh.triangulatedGeometry` is the authoritative body packing/allocation/normal owner. No measured hotspot has yet justified a WASM candidate.
+
+Extend only the existing panel with lazy-loaded Performance Lab. Separate versioned irregular shared-vertex triangle fixtures: 10k/50k/100k. Two warm-ups and five measured repeats call the actual body builder; hash/check output every repeat, dispose temporary geometries, yield between runs and cancel on Close/background or Cancel. No fixture is inserted into the user's scene; no model/history/selection mutation. Report contains deterministic fixture/output fingerprints, raw timings, median/p95, scoped CPU position/normal bytes, browser/viewport metadata, release and pre-benchmark monitor snapshot. Optional same-device baseline storage compares only matching protocol/input/output/environment and reports descriptive percentage change. Always INCONCLUSIVE: no candidate or end-to-end performance/capacity PASS claimed. Memory is not total RAM. Renderer counters are not GPU timings.
+
+Download JSON exports fixture report. Download viewport report exports current monitor counts/timings without model geometry, so the actual slow imported scene can be diagnosed. Reports stay on device until the user shares them. Storage refusal and cancelled runs are handled. Monitoring stays opt-in; fixture code loads only when the panel opens. No new renderer, pointer handler, mesh limit, Paint budget or modelling kernel. Protected Multi transform remains byte-identical at 0.36.1.0. Changed monitor/child pins and release contract reviewed.
+
+Validation: 18 focused checks pass (five new lab cases plus existing monitor, phases/cage and release contracts). Covers real-owner repeated output/disposal, read-only fixtures, cancellation/output mismatch, timing statistics, exact comparison guards, UI JSON export, storage refusal and detached-panel refusal. Reproducible Node baseline: `node scripts/benchmark-dense-body.mjs`; example report in `docs/performance-1096-node-baseline.json`. It is CPU-only Node evidence, not iPad performance. Hosted suite/Pages/live verification pending.
+
+Next device gate: VIEW → Diagnostics → Performance → Performance Lab. Run 10k, Keep as baseline, repeat, Download JSON; advance to 50k if comfortable. Cancel a run/Close and confirm original scene/navigation/Undo still work. With the slow imported model, Reset, orbit/edit briefly, then Download viewport report. Share reports before selecting the first optimisation/WASM candidate. Further Paint expansion deferred. `.1096` native acceptance pending.
+
+---
+
 # Session checkpoint — .1095 protected PASS; performance is next — 7 November 2026
 
 User confirms `.1095 PASS` and explicitly prioritizes dense imported-object performance ahead of further Paint features. Protect two-sided imported colour Paint and earlier accepted behaviour.

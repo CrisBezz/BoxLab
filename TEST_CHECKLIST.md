@@ -1,10 +1,22 @@
-## .1095 — two-sided imported colour Paint — native pending
+## .1096 — Performance Lab baseline — native pending
 
-`.1094` mode ownership is user-confirmed PASS and protected. Stephane.nom was refused solely for its two-sided material flag, not for UVs or map size. The private model/image is not committed.
+`.1095 PASS` protected. Performance now precedes further Paint additions. No WASM acceleration or new mesh-capacity claim yet.
 
-- [ ] Import Stephane.nom; UV Paint opens with its current UVs and image, without clearing/reprojection.
-- [ ] Paint, Undo/Redo and Done/reopen keep image, new paint and two-sided appearance. Object taps still retain Paint.
-- [ ] Save/Open and NOM/GLB export/reimport retain painted pixels and sidedness.
+- [ ] VIEW → Diagnostics → Performance → Performance Lab: 10k baseline completes, reports median/p95, downloads JSON.
+- [ ] Keep as baseline and repeat at same size/orientation: comparison appears. Try 50k if comfortable.
+- [ ] Cancel/Close during a run; scene, navigation and Undo remain usable; reopen works.
+- [ ] Slow imported model: Reset monitor, orbit/select/edit, Download viewport report and share it with fixture report.
+- [x] 18 focused tests pass; exact application body owner, five new lab cases, existing monitor/cage/phases and cache/release contracts.
+- [x] Versioned CPU-only Node example generated with reproducible script; does not establish an iPad improvement.
+- [ ] Hosted regression, Pages and live byte verification.
+
+## .1095 — two-sided imported colour Paint — protected native PASS
+
+User confirms `.1095 PASS`; its three native checks below are protected. `.1094` mode ownership remains protected. Stephane.nom was refused solely for its two-sided material flag, not for UVs or map size. The private model/image is not committed.
+
+- [x] Import Stephane.nom; UV Paint opens with its current UVs and image, without clearing/reprojection.
+- [x] Paint, Undo/Redo and Done/reopen keep image, new paint and two-sided appearance. Object taps still retain Paint.
+- [x] Save/Open and NOM/GLB export/reimport retain painted pixels and sidedness.
 - [x] Generated two-sided NOM/GLB tests exercise initial/lit preview, opaque depth state, project persistence and both actual exporter flags. One-sided and opacity controls pass.
 - [x] Focused 51/51 pass; private-file integration opens and paints successfully with source image bytes unchanged.
 - [x] Hosted Topology `42359449442`, job `128364498292`, runtime commit `98b5d43dbed480e599cd8fa26793972221b0e5b8`: 3,194 PASS / 0 FAIL. Pages `42359448474` succeeded. Cache-busted version/index and ten import/Paint/export modules (12 files total) byte-match source.
