@@ -41,3 +41,9 @@ test('1089 committed material preview uses padded texture pixels while retaining
  const source=pixels.slice(),body=new THREE.Mesh(new THREE.BufferGeometry(),new THREE.MeshBasicMaterial()),display=createPaintSurface(body,geometry,paintTexture(pixels,size),{renderer:{}});display.showMaterial(pixels);
  const shown=display.surface.material.map.image.data;assert.deepEqual([...shown.slice((205*size+198)*4,(205*size+198)*4+4)],[220,20,10,255]);assert.deepEqual(pixels,source);display.dispose();body.geometry.dispose();body.material.dispose();
 });
+
+test('1090 live Paint preview uploads edits made in place when edge padding is disabled',()=>{
+ const size=512,pixels=new Uint8Array(size*size*4).fill(255),geometry=new THREE.BufferGeometry(),body=new THREE.Mesh(new THREE.BufferGeometry(),new THREE.MeshBasicMaterial()),display=createPaintSurface(body,geometry,paintTexture(pixels,size),{padding:0});
+ display.showMaterial(pixels);const map=display.surface.material.map,version=map.version,at=(200*size+200)*4;pixels.set([220,20,10,255],at);display.showMaterial(pixels);
+ assert.equal(map.image.data[at],220);assert.equal(map.image.data[at+1],20);assert.equal(map.version,version+1);display.dispose();body.geometry.dispose();body.material.dispose();
+});

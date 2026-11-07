@@ -1,25 +1,20 @@
-# Current build: .1089 four-texel UV edge padding (7 November 2026)
+# Current build: .1090 live Paint viewport refresh (7 November 2026)
 
 ## Delivered and protected
 
-- `.1088` imported Nomad facegroups with repeated names is a protected native PASS.
-- `.1089` adds fixed four-texel RGB dilation into unused UV atlas space for committed Paint display and GLB/NOM export. UVs, mapped pixels, source resources and alpha remain unchanged. The active stroke loop is not padded per frame. No resolution cap increase.
+- `.1088` duplicate-named Nomad Facegroups is a protected native PASS.
+- `.1089` adds four-texel RGB padding for committed Paint previews and NOM/GLB exports, with source pixels, mapped texels, alpha, UVs and 512²/1024² caps preserved.
+- User reports `.1089` FAIL: layer thumbnails update but live viewport paint does not. Audit found the exact cause in the existing `createPaintSurface` owner: Paint passes `padding:0`, and the `.1089` fast path returned before copying same-buffer edits to the display texture.
+- `.1090` updates the live preview texture by copying in-place pixels when padding is off. Padded committed preview/export behavior remains unchanged. Regression coverage asserts actual viewport surface bytes match the live and committed paint resource after a real stroke. No parallel renderer or paint owner.
+- Keep imported textured NOM/GLB Paint ahead of WASM. 2048² remains deferred; current resource budgets do not measure total browser/iPad heap or GPU use. Do not infer a current memory ceiling.
 
-- Scope is deliberately bounded to complete UVs in tile 0–1, one solid material, no embedded images, vertex colours, tangent maps or morph targets, and 20,000 corners maximum. Imported image textures and multi-material meshes remain protected and cannot enter Paint yet.
-- Focused imported-Paint tests: 3 PASS / 0 FAIL. Focused surrounding Paint/project/export/NOM-retention tests: 24 PASS / 0 FAIL. Local and hosted Topology regressions both pass 3,171/3,171. Runtime commit `11c9218724a7db38da4983cb9d35801177a7418f` is on `main`; Pages run `42226136614` succeeded and the live app reports `.1087`. User reports native iPad/Safari PASS for `.1087`; protect the complete device workflow.
-- `.1086` native PASS: Colour + Opacity paint in one stroke; Done/reopen/redraw; exported GLB transparency and reverse faces in Nomad; opacity-only GLB transparency. Protect this acceptance.
-- `.1086` exports authored opacity through the existing paint snapshot/export owners, using the bound 512 × 512 R8 map in base-colour RGBA. Materials use standard glTF `BLEND` and double-sided rendering; opacity-only maps use white RGB. OBJ and NOMAD remain unsupported for authored opacity.
-- Preserve `.1085` onset/Paint PASSes and earlier Paint PASSes.
+## Current next: publish `.1090` and run the iPad Paint check
 
-## Current next: publish `.1089`, then native seam check and imported textured Paint
-
-Focused helper/export regressions verify four-texel gutters on both NOM and GLB, mapped pixels and source resources, alpha preservation, and the existing 512/1024 project/export limits. The local full suite reports 3,169/3,171; two Metalness/Roughness test worker processes are SIGKILLed after their cases print as passing, without an assertion failure. Focused files pass; do not report the full suite as green. Runtime source `.1089` is prepared for publication; live Pages verification and native iPad/Safari acceptance are pending. Verify seams after Paint Done and through NOM/GLB export/reimport. If artifacts remain, distinguish insufficient padding from low texel density before changing resolution.
-
-2048² RGBA maps consume 16 MiB each, four times 1024², before layered copies, previews, history, GPU textures and export buffers. Current paint/resource budgets do not measure total browser/iPad heap or GPU residency; no current evidence says ordinary use is already at the device ceiling. WASM may accelerate CPU-bound raster work only after benchmarks; it does not inherently reduce texture bytes or browser memory ceilings. Keep imported textured NOM/GLB painting ahead of WASM evaluation. Then set measurable JavaScript baselines, prototype only a proven CPU bottleneck, and compare memory separately.
+Local focused Paint/viewport/export/image/release checks pass 33/33. Publish, verify Pages markers and runtime assets, and rerun hosted Topology. On iPad, confirm Brush/Fill updates show immediately in the viewport, Undo/Redo and Done/reopen preserve the visible paint, and test the `.1089` seam-padding benefit plus NOM/GLB export/reimport. `.1090` native acceptance remains pending. GitHub's `.1089` job-log endpoint closed the connection on both retrieval attempts; do not claim its exact worker failure cause.
 
 ## Protected device results — 7 November 2026
 
-`.1088` duplicate-name Nomad Facegroups PASS, protecting the complete native import/assignment/Save-Open/NOM round-trip workflow. `.1087` imported textureless NOM/GLB Paint PASS. `.1089` device seam acceptance is pending.
+`.1088` duplicate-name Nomad Facegroups PASS, protecting the complete native import/assignment/Save-Open/NOM round-trip workflow. `.1087` imported textureless NOM/GLB Paint PASS. `.1090` viewport and seam device acceptance are pending.
 
 ## Protected device results — 6 November 2026
 

@@ -41,7 +41,7 @@ export function createPaintSurface(body,geometry,texture,{renderer=globalThis.__
   validateScalar(opacity?.resource,opacity?.rgba,'opacity');
   validateScalar(roughness,rgba,'roughness');validateScalar(metalness,metalnessRGBA,'metalness');
   if(!lit)lit=new THREE.MeshStandardMaterial({color:0xffffff,roughness:1,metalness:0,side:THREE.FrontSide});
-  if(colour){if(!colourMap||colourMap.image.width!==colourSize){colourMap?.dispose();const mapPixels=colour.slice();padded(colour,colourSize,mapPixels);colourMap=paintTexture(mapPixels,colourSize);colourSource=colour;}else if(!padding||colourSource!==colour){padded(colour,colourSize,colourMap.image.data);colourMap.needsUpdate=true;colourSource=colour;}}
+  if(colour){if(!colourMap||colourMap.image.width!==colourSize){colourMap?.dispose();const mapPixels=colour.slice();padded(colour,colourSize,mapPixels);colourMap=paintTexture(mapPixels,colourSize);colourSource=colour;}else if(!padding){colourMap.image.data.set(colour);colourMap.needsUpdate=true;colourSource=colour;}else if(colourSource!==colour){padded(colour,colourSize,colourMap.image.data);colourMap.needsUpdate=true;colourSource=colour;}}
   if(opacity?.resource)opacityMap=scalarTexture(opacityMap,opacity.resource,opacity.rgba,1);
   if(roughness)roughnessMap=scalarTexture(roughnessMap,roughness,rgba,1);
   if(metalness)metalnessMap=scalarTexture(metalnessMap,metalness,metalnessRGBA,2);

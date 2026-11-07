@@ -1,14 +1,23 @@
-## .1089 — four-texel UV edge padding — native acceptance pending
+## .1090 — live Paint viewport texture refresh — native acceptance pending
 
-For the current build, the committed lit Paint preview and GLB/NOM export fill unused atlas pixels up to four texels from valid UV triangles. The source resource and occupied texels remain unchanged; mapped alpha is preserved. Active stroke updates do not run this dilation every frame. 512²/1024² limits are unchanged.
+The `.1089` user FAIL was: Paint strokes updated the Material layer thumbnail but remained invisible on the model. The live painter intentionally creates its display surface with edge padding disabled to avoid dilating a full atlas per frame. Its mutable source buffer is reused; the new `.1089` early-return skipped copying updates into the persistent GPU texture.
 
-- [ ] On the UV-unwrapped Nomad model, paint close to a seam, press Done, and inspect both adjoining faces. Check for reduced color bleed/artefacting at the join.
-- [ ] Repeat after Save/Open and after NOM export/reimport; verify the painted face and existing seam layout remain intact.
-- [ ] Check GLB export/reimport for reduced join artifacts and unchanged mapped paint/opacity.
-- [x] Automated: separated UV charts receive four-texel RGB gutter fill; mapped texels, source resources, alpha and UVs are preserved; committed material preview, NOM/GLB export and 1024² resource paths are covered.
-- [x] Automated: existing paint resolution, project, memory-budget and export caps remain 512²/1024².
+- [ ] In UV Paint, use Brush and Fill; confirm each edit appears on the model immediately and matches the selected layer thumbnail.
+- [ ] Undo/Redo, then Done and reopen; confirm the painted material remains visible in the viewport.
+- [ ] Paint near an island edge, press Done, and check the `.1089` four-texel padding reduces join artefacts without expanding the painted face.
+- [ ] Save/Open, then export/reimport NOM and GLB; verify the visible paint remains and alpha/UVs are unchanged.
+- [x] Automated: same-buffer in-place preview edits update texture bytes/version when padding is disabled; real viewport stroke preview and committed surface match the layer resource.
+- [x] Automated: four-texel padding, source pixels/alpha, image composition, NOM/GLB export and existing 512²/1024² limits remain covered.
 
-Do not raise the map cap as part of this seam repair. A 2048² RGBA map is 16 MiB, four times 1024², before layered copies, previews, working/history buffers, GPU textures and export snapshots. The existing budgets are bounded resource accounting, not total iPad heap/GPU telemetry. WASM may speed CPU raster work but cannot reduce pixel memory or browser/GPU limits by itself. Consider a 2048 option only after measuring a real use case and auditing all paint, project, preview, and export owners.
+Focused correction validation: 33 tests across Paint preview, viewport strokes, image resources, Paint export and release contracts; 32 pass, one stale reviewed hash for the restored `.1089` filter-domain dependency pin was pending fixture refresh at the time of the run. Re-run after refreshing that reviewed hash. Hosted Topology and Pages for `.1090` remain pending until publication. Keep `.1088` PASS protected. `.1089` native acceptance is FAIL for live viewport visibility; no `.1090` device PASS is inferred.
+
+## .1089 — four-texel UV edge padding — native acceptance FAIL
+
+`.1089` adds four-texel RGB dilation around UV triangles in committed previews and NOM/GLB exports. Source paint pixels, occupied texels, alpha and 512²/1024² limits remain unchanged. User confirmed a FAIL: painting changes the material layer list but not the viewport. The regression was in the new `createPaintSurface` path when live Paint disabled padding; `.1090` repairs it without running dilation during live strokes.
+
+- [x] Automated: separate UV charts receive padded RGB while mapped texels, source bytes, alpha and UVs are preserved.
+- [x] Automated: committed preview and NOM/GLB exports use padded pixels; existing resolution/project/export caps remain.
+- [ ] Native seam-padding benefit is still pending; `.1089` failed the visible viewport paint check. Verify under `.1090`.
 
 ## .1088 — imported Nomad facegroups with repeated names — protected native PASS
 
@@ -35,7 +44,7 @@ This stage enables the existing UV Paint owner only for imported NOM/GLB meshes 
 
 User reports PASS for the complete `.1087` device workflow above. Protect this result. Release verification: local suite 3,171/3,171 PASS; hosted Topology run `42226136656` 3,171/3,171 PASS; Pages run `42226136614` succeeded; live app reports `.1087`.
 
-Next Paint gate: `.1089` native UV edge-padding check above. Existing maps support 512²/1024²; resolve residual seam issues by measuring padding and texel density before considering higher resolution. Imported texture compositing remains queued before WASM feasibility.
+Next Paint gate: `.1090` live viewport and UV edge-padding check above. Existing maps support 512²/1024²; resolve residual seam issues by measuring padding and texel density before considering higher resolution. Imported texture compositing remains queued before WASM feasibility.
 
 ## .1086 GLB opacity export — protected native PASS
 

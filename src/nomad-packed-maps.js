@@ -1,4 +1,4 @@
-import {capturePaintExportObjects,preparePaintExportObjects,preparedPaintImage,preparedRoughnessImage,preparedMetalnessImage} from './paint-export.js?v=0.36.18.1089';
+import {capturePaintExportObjects,preparePaintExportObjects,preparedPaintImage,preparedRoughnessImage,preparedMetalnessImage} from './paint-export.js?v=0.36.18.1090';
 import {encodeNomadScalarPNG} from './nomad-scalar-png.js?v=0.36.18.1035';
 // Export-local glTF G/B unpacking. Source resources remain read-only; the original
 // native writer owns materials, UV validation, binary layout and final byte budgets.
