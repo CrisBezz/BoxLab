@@ -161,9 +161,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1095",
+      "url": "./src/drawer-ui.js?v=0.36.18.1096",
       "target": "src/drawer-ui.js",
-      "sha256": "8f569083b60aa220d0a813fd2726deac3805be3007c45a731eb2880f161ff9e4"
+      "sha256": "b49f2b39bb0c6f0fe955526bb2b7e52e452afa4ec2b1d7492e791849bf06afc7"
     },
     {
       "owner": "index.html",
@@ -378,7 +378,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1095",
+      "url": "./src/release-version.js?v=0.36.18.1096",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -864,9 +864,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1095",
+      "url": "./face-workflow-layout.js?v=0.36.18.1096",
       "target": "src/face-workflow-layout.js",
-      "sha256": "ec80a5c0b59e8599db6adfde06c9ae1c827ea128396151c2f66e8c4795766f0b"
+      "sha256": "e944505301b409dd7a723a3418f48ba9fe8e815cc8bb683ad1f4b29548c679e1"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1361,7 +1361,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1095",
+      "url": "./release-version.js?v=0.36.18.1096",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
