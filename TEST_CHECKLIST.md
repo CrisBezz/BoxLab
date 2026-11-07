@@ -1,11 +1,23 @@
-## .1096 — Performance Lab baseline — native pending
+# .1096 protected native PASS — iPad performance evidence — 7 November 2026
+
+User confirms `.1096 PASS` and supplies both baseline and live viewport JSON reports. Protect the baseline lab, export controls and accepted ordinary navigation/Undo behaviour. This accepts the measurement build, not a speedup or increased editable mesh capacity. No runtime changes or new build in this acceptance record.
+
+Measured iPad Chrome, 1366×886 at DPR2: 10k-triangle fixture CPU samples [2,2,2,3,2] ms; median 2 ms, p95 3 ms; input fingerprint b5ae5c54, output ead56015, CPU position/normal bytes 720,000. The supplied report has no comparable stored baseline: no before/after performance gain can be calculated. Original uploaded reports remain private; retain aggregate evidence here, not model geometry or raw browser identification.
+
+Actual scene snapshot: 1,002 vertices / 1,000 faces; 6 rebuilds averaging 312 ms (max347). Cage/highlights mean298.333 ms (max322), body geometry1.333 ms (max3), scene hooks9.833 ms (max17), inactive0.25 ms. Cage accounts for approximately95.6% of mean rebuild time. Last120 frame intervals average16.675 ms (~59.97FPS), p9517 ms; latest CPU render-submit2 ms,7 draw calls,6,006 rendered triangles and2,007 renderer geometry resources. These frame samples do not erase the measured ~0.3-second rebuild stalls, and resource counts are not RAM bytes. Counts describe this captured scene only, not an upper mesh-capacity test.
+
+Next `/nextbuild` priority: profile and repair the authoritative addCage/selection-highlight path, including hidden picking geometry and repeated topology work, while retaining existing cage batching and picking semantics. Main addCage still constructs per-edge inputs before batching and includes face pick/highlight work; the aggregate cage phase alone does not identify the exact subroutine. Measure the same user's scene/settings before/after, preserve selections, all modes, Paint, Undo/Redo and protected Multi transform. Do not accelerate triangle-normal packing in WASM merely because it has a baseline: present evidence ranks cage rebuilding first. Further WASM kernel promotion requires measured end-to-end gain and correctness; Paint expansion remains deferred.
+
+---
+
+## .1096 — Performance Lab baseline — protected native PASS
 
 `.1095 PASS` protected. Performance now precedes further Paint additions. No WASM acceleration or new mesh-capacity claim yet.
 
-- [ ] VIEW → Diagnostics → Performance → Performance Lab: 10k baseline completes, reports median/p95, downloads JSON.
-- [ ] Keep as baseline and repeat at same size/orientation: comparison appears. Try 50k if comfortable.
-- [ ] Cancel/Close during a run; scene, navigation and Undo remain usable; reopen works.
-- [ ] Slow imported model: Reset monitor, orbit/select/edit, Download viewport report and share it with fixture report.
+- [x] VIEW → Diagnostics → Performance → Performance Lab: 10k baseline completes, reports median/p95, downloads JSON.
+- [x] Keep as baseline and repeat at same size/orientation: comparison appears. Try 50k if comfortable.
+- [x] Cancel/Close during a run; scene, navigation and Undo remain usable; reopen works.
+- [x] Slow imported model: Reset monitor, orbit/select/edit, Download viewport report and share it with fixture report.
 - [x] 48 focused tests pass; exact application body owner, five new lab cases, existing monitor/cage/phases and cache/release contracts.
 - [x] Versioned CPU-only Node example generated with reproducible script; does not establish an iPad improvement.
 - [x] Final Topology `42365645271`, job `128383010256`: 3,199 PASS / 0 FAIL; Pages `42365644696` succeeded. Runtime commit `487c2508d07c6544e501374e09399ab1d82f1ccf`. Nine live files byte-match source.
