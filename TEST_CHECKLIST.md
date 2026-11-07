@@ -8,7 +8,8 @@
 - [ ] Imported UV Paint opens/paints/exits normally; all accepted .1094 mode exits remain intact.
 - [x] 133 focused PASS:12 new real-owner cases plus original groups/linked/Paint/monitor/cage/release checks; all-mode proxy and raycast parity, metadata no-write/freshness/legacy fallback.
 - [x] Interleaved Node A/B fixture report:1,024-face saves4,227→1; clones8,454→2;606.24→46.38 ms median. CPU integration evidence only; actual iPad gain pending.
-- [ ] Hosted full suite, Pages and live bytes verified.
+- [x] Hosted Topology `42368562276`, job `128391734922`: 3,211 PASS / 0 FAIL, runtime `022d790e7ca79e24cd6ad0e1f3fb856e6cec66f2`.
+- [ ] Pages/live verification: first Pages build succeeded but deploy remained in progress with live .1096; this docs-only checkpoint republishes identical validated runtime. Native .1097 gate pending.
 
 # .1096 protected native PASS — iPad performance evidence — 7 November 2026
 
