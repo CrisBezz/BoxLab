@@ -8,9 +8,9 @@
 - `.1090` updates the live preview texture by copying in-place pixels when padding is off. Padded committed preview/export behavior remains unchanged. Regression coverage asserts actual viewport surface bytes match the live and committed paint resource after a real stroke. No parallel renderer or paint owner.
 - Keep imported textured NOM/GLB Paint ahead of WASM. 2048² remains deferred; current resource budgets do not measure total browser/iPad heap or GPU use. Do not infer a current memory ceiling.
 
-## Current next: publish `.1090` and run the iPad Paint check
+## Current next: clear the hosted `.1090` regression, then run the iPad Paint check
 
-Local focused Paint/viewport/export/image/release checks pass 33/33. Publish, verify Pages markers and runtime assets, and rerun hosted Topology. On iPad, confirm Brush/Fill updates show immediately in the viewport, Undo/Redo and Done/reopen preserve the visible paint, and test the `.1089` seam-padding benefit plus NOM/GLB export/reimport. `.1090` native acceptance remains pending. GitHub's `.1089` job-log endpoint closed the connection on both retrieval attempts; do not claim its exact worker failure cause.
+Local focused Paint/viewport/export/image/release checks pass 33/33. Pages run `42337036973` succeeded, and `.1090` live markers plus affected runtime bytes match main. Hosted Topology `42336793328` reported one real failure: the historical `.1041` benchmark test still expected `.1089` for the release/version pin. Replaced that fixed value with the version from `version.json`; focused benchmark and release tests pass 7/7. Hosted rerun is pending. The older `.1089` job-log endpoint still closes before returning the body, so its failure cause remains unknown. After hosted success, use iPad to confirm Brush/Fill updates appear immediately, Undo/Redo and Done/reopen preserve paint, and check `.1089` seam padding plus NOM/GLB export/reimport. Native `.1090` acceptance remains pending.
 
 ## Protected device results — 7 November 2026
 

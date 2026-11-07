@@ -4,13 +4,13 @@
 
 `.1090` fixes that existing preview owner: with padding disabled, copy the current source pixels into the display texture and mark it dirty; the four-texel padded path remains unchanged and is still used for committed preview/export. Added coverage for same-buffer live updates and a real viewport stroke asserting display-texture bytes match live and committed Paint pixels. Do not rerun padding on each live Pencil frame. Keep source bytes, UVs, alpha, history, export behavior, and 512²/1024² caps unchanged. Keep `src/multi-object-transform.js?v=0.36.1.0` untouched.
 
-Focused validation: 33/33 pass across live preview and padding checks, real viewport paint, export and image-resource paths, and reviewed release/cache contracts. `.1089` does not have native acceptance; the new `.1090` viewport check is pending on iPad/Safari. The full hosted Topology test result for the original `.1089` run is still being investigated; GitHub's job-log endpoint closed the connection on both attempts, so no detailed failure cause is claimed. Pages deployment for `.1089` succeeded after retry and its live markers were verified.
+Focused validation: 33/33 pass across live preview and padding checks, real viewport paint, export and image-resource paths, and reviewed release/cache contracts. `.1090` is live: Pages run `42337036973` succeeded, and cache-busted `version.json`, `index.html`, Paint target/core/UI, Render Modes and test-list bytes match the repository. Native iPad/Safari acceptance remains pending. Hosted Topology run `42336793328` found one real failure: historical `tests/displacement-preview-gate-1041.test.mjs` hard-coded `.1089` for the current release and shell-comparison pin. Updated that test to read `version.json` and compare the pin dynamically; focused regression/release tests pass 7/7. A full hosted rerun is pending. The older `.1089` failed-run log endpoint still closes before returning its body; do not infer its cause.
 
 2048² remains out of scope: one RGBA map is 16 MiB before layers, working/history buffers, GPU copies or exports. Existing budgets do not measure total iPad/browser memory; no telemetry establishes ordinary use is at the browser ceiling. WASM may accelerate measured CPU work, but cannot reduce texture bytes or browser/GPU limits. Keep imported textured Paint ahead of WASM benchmarking.
 
-## Current next step — publish and hands-on check `.1090`
+## Current next step — rerun hosted tests, then hands-on check `.1090`
 
-Verify that Brush and Fill edits become visible on the model immediately, continue matching the layer thumbnail, and remain visible after Done/reopen. Recheck a seam for `.1089` edge-padding benefit and export/reimport NOM/GLB. After native PASS, continue imported textured NOM/GLB Paint before WASM feasibility work.
+Complete the hosted Topology rerun after the stale historical assertion correction and confirm Pages still serves `.1090`. Then verify Brush and Fill edits appear immediately, match the layer thumbnail, and remain after Done/reopen. Recheck the `.1089` edge-padding benefit and NOM/GLB export/reimport. After native PASS, continue imported textured NOM/GLB Paint before WASM feasibility work.
 
 ## .1074 — brush controls and Pencil onset — 4 November 2026
 
