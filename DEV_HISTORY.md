@@ -1,3 +1,17 @@
+# .1097 dense-model report received — cage win; overall stall remains — 7 November 2026
+
+Latest user report is .1097 with1,002 vertices/1,000 faces,6,006 rendered triangles,7 draw calls,2,007 renderer geometries and3 textures, matching .1096 latest counts and browser/viewport/DPR. User .1097 functional PASS remains protected. No new runtime/build in this investigation record. Raw reports/model remain private; retain aggregate evidence only.
+
+Reported means (.1096 six rebuilds → .1097 twelve): cage298.333→8.667 ms (~97.1% reduction), body geometry1.333→0.5 ms, scene/body hooks9.833→286.25 ms, total rebuild312→297 ms (~4.8% reduction). Worst scene hook1,125 ms; worst rebuild1,134 ms versus prior347 ms. Latest .1097 Undo0/Redo1 versus earlier Undo1/Redo0. Last120 frame samples16.742 ms mean (~59.73FPS), p9517 ms. The healthy recent frame window does not negate the measured rebuild stalls. Source .1097 cage repair shows a strong stage-specific improvement; overall latency goal is NOT met, and tail latency is concerning. Do not claim a complete performance PASS, larger safe editable capacity or a WASM win.
+
+Counts/environment match, but report does not identify mesh content hash, selection/render modes, operation sequence or each retained rebuild's state; power/thermal unknown. Means from these manual windows are useful diagnostic evidence, not proof of a controlled repeatable end-to-end regression/cause. Do not assert that .1097 moved the same work into another phase. Correct group metadata repair has no new scene/body hook code and remains functionally accepted; investigate the new scene cost before expanding work or deciding on rollback.
+
+Next `/nextbuild`: audit/profile authoritative scene stage (main renderMesh root.add(body)). It includes chained Group.add hooks: Multi saveActive/rebuildInactive and Render Modes applyMode/imported UV/committed Paint surface setup, plus existing bridge hooks. Inactive measured0 ms in this capture, while aggregate scene286.25 ms; this does not isolate which remaining owner is costly. Read-only audit confirms applyMode still reads manager.objects (synchronizing active mesh/history) and may build native UV image or committed Paint previews. These are candidates, not diagnosed causes. Add narrow substage timings or an equivalent reproducible production-path profile, then repair the demonstrated owner. Retain .1097 groupMetadata fix, original cage/picking, history semantics and all protected Paint/Multi interactions. No duplicate kernel or speculative triangle-normal WASM migration. Earlier body benchmark was already inexpensive.
+
+Matched-count report is now received; do not keep asking the user to resend the same baseline. Further hands-on checks wait for a concrete profiling/repair build. Current live .1097 remains functional PASS, with overall dense performance investigation OPEN.
+
+---
+
 # .1097 protected native PASS — dense-model comparison still pending — 7 November 2026
 
 User confirms `.1097 PASS` and supplies a viewport report. Protect native behaviour, all selection modes/group visibility/Undo and imported Paint checks alongside prior PASSes. This accepts the repair's behaviour; do not infer a measured dense-model speedup from this report.
