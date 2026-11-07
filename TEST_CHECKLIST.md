@@ -6,9 +6,10 @@
 - [ ] Keep as baseline and repeat at same size/orientation: comparison appears. Try 50k if comfortable.
 - [ ] Cancel/Close during a run; scene, navigation and Undo remain usable; reopen works.
 - [ ] Slow imported model: Reset monitor, orbit/select/edit, Download viewport report and share it with fixture report.
-- [x] 18 focused tests pass; exact application body owner, five new lab cases, existing monitor/cage/phases and cache/release contracts.
+- [x] 48 focused tests pass; exact application body owner, five new lab cases, existing monitor/cage/phases and cache/release contracts.
 - [x] Versioned CPU-only Node example generated with reproducible script; does not establish an iPad improvement.
-- [ ] Hosted regression, Pages and live byte verification.
+- [x] Final Topology `42365645271`, job `128383010256`: 3,199 PASS / 0 FAIL; Pages `42365644696` succeeded. Runtime commit `487c2508d07c6544e501374e09399ab1d82f1ccf`. Nine live files byte-match source.
+- [x] Live cloud lab run, baseline comparison and JSON download verified. Cloud WebGL disabled; native viewport acceptance remains pending. Initial release-marker failures corrected without weakening tests; full release-loader chain pinned canonically at .1096.
 
 ## .1095 — two-sided imported colour Paint — protected native PASS
 
