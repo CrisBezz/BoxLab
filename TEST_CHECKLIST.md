@@ -7,7 +7,7 @@
 - [ ] Save/Open and NOM/GLB export/reimport retain painted pixels and sidedness.
 - [x] Generated two-sided NOM/GLB tests exercise initial/lit preview, opaque depth state, project persistence and both actual exporter flags. One-sided and opacity controls pass.
 - [x] Focused 51/51 pass; private-file integration opens and paints successfully with source image bytes unchanged.
-- [ ] Hosted regression and Pages/live verification recorded.
+- [x] Hosted Topology `42359449442`, job `128364498292`, runtime commit `98b5d43dbed480e599cd8fa26793972221b0e5b8`: 3,194 PASS / 0 FAIL. Pages `42359448474` succeeded. Cache-busted version/index and ten import/Paint/export modules (12 files total) byte-match source.
 
 ## .1094 — UV Paint owns object taps; explicit mode exits — protected native PASS
 
