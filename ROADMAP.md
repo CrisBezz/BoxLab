@@ -1,3 +1,15 @@
+# .1097 protected native PASS — dense-model comparison still pending — 7 November 2026
+
+User confirms `.1097 PASS` and supplies a viewport report. Protect native behaviour, all selection modes/group visibility/Undo and imported Paint checks alongside prior PASSes. This accepts the repair's behaviour; do not infer a measured dense-model speedup from this report.
+
+Received .1097 report: latest active mesh8 vertices/6 faces, Undo3;98 rebuild samples, mean2.112 ms/max11 ms; cage mean0.255 ms/max3 ms. Last120 frame samples:16.825 ms mean (~59.44FPS), p9522 ms. Earlier .1096 report's latest active mesh was1,002 vertices/1,000 faces, with6 rebuild samples averaging312 ms and cage298.333 ms. Same browser/viewport/DPR, but different latest mesh counts and unknown mesh/mode distribution across each retained timing window. Therefore these are NOT a controlled before/after pair; no percentage gain, capacity promotion or WASM performance PASS is established. Raw report/browser identification remains private; only aggregate evidence is recorded.
+
+Next measurement uses existing .1097; no new build is needed: activate the same1,000-face imported model, match prior mode/settings, Reset Performance AFTER activation, select/edit/Undo/Redo several times on that model, then Download viewport report before switching back to the cube. Confirm report still identifies1,002 vertices/1,000 faces. Compare cage and total rebuild cost only after workload equivalence. Existing Node A/B correctness/copy-count evidence remains valid; target-iPad dense speedup is unquantified. Do not choose another optimisation/WASM kernel until this comparison or equivalent matched workload evidence is available.
+
+No runtime changes or new release for this acceptance record. Current live build remains .1097.
+
+---
+
 # .1097 — remove cage-triggered mesh/history copies — 7 November 2026
 
 `.1096 PASS` is protected, including its Performance Lab and native report exports. Actual iPad evidence: 1,000-face scene averaged312 ms/rebuild, of which cage/highlights298.333 ms (~95.6%); geometry1.333 ms. This build follows the first measured JavaScript bottleneck fix (B1) in the WASM roadmap. No WASM kernel is promoted without target-device evidence.

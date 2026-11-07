@@ -1,11 +1,23 @@
-## .1097 — metadata-only cage group context — native pending
+# .1097 protected native PASS — dense-model comparison still pending — 7 November 2026
+
+User confirms `.1097 PASS` and supplies a viewport report. Protect native behaviour, all selection modes/group visibility/Undo and imported Paint checks alongside prior PASSes. This accepts the repair's behaviour; do not infer a measured dense-model speedup from this report.
+
+Received .1097 report: latest active mesh8 vertices/6 faces, Undo3;98 rebuild samples, mean2.112 ms/max11 ms; cage mean0.255 ms/max3 ms. Last120 frame samples:16.825 ms mean (~59.44FPS), p9522 ms. Earlier .1096 report's latest active mesh was1,002 vertices/1,000 faces, with6 rebuild samples averaging312 ms and cage298.333 ms. Same browser/viewport/DPR, but different latest mesh counts and unknown mesh/mode distribution across each retained timing window. Therefore these are NOT a controlled before/after pair; no percentage gain, capacity promotion or WASM performance PASS is established. Raw report/browser identification remains private; only aggregate evidence is recorded.
+
+Next measurement uses existing .1097; no new build is needed: activate the same1,000-face imported model, match prior mode/settings, Reset Performance AFTER activation, select/edit/Undo/Redo several times on that model, then Download viewport report before switching back to the cube. Confirm report still identifies1,002 vertices/1,000 faces. Compare cage and total rebuild cost only after workload equivalence. Existing Node A/B correctness/copy-count evidence remains valid; target-iPad dense speedup is unquantified. Do not choose another optimisation/WASM kernel until this comparison or equivalent matched workload evidence is available.
+
+No runtime changes or new release for this acceptance record. Current live build remains .1097.
+
+---
+
+## .1097 — protected native PASS; matched dense report pending
 
 `.1096 PASS` and earlier Paint/interaction PASSes protected. Original cage geometry/picking owners unchanged.
 
-- [ ] Same imported model as .1096: Reset Performance; select/edit/Undo/Redo repeatedly; download viewport report. Compare cage/rebuild means to298/312 ms baseline.
-- [ ] Vertex/Edge/Face/Object picking, gizmo and selection remain correct; compare perceived stalls.
-- [ ] Whole-group selection suppresses member cage; ordinary member selection restores it. Hide/solo and Undo/Redo restore correct state.
-- [ ] Imported UV Paint opens/paints/exits normally; all accepted .1094 mode exits remain intact.
+- [ ] Matched dense performance gate remains open: received report ends on8 vertices/6 faces, while .1096 ended on1,002/1,000. Same imported model as .1096: Reset Performance; select/edit/Undo/Redo repeatedly; download viewport report. Compare cage/rebuild means to298/312 ms baseline.
+- [x] Vertex/Edge/Face/Object picking, gizmo and selection remain correct; compare perceived stalls.
+- [x] Whole-group selection suppresses member cage; ordinary member selection restores it. Hide/solo and Undo/Redo restore correct state.
+- [x] Imported UV Paint opens/paints/exits normally; all accepted .1094 mode exits remain intact.
 - [x] 133 focused PASS:12 new real-owner cases plus original groups/linked/Paint/monitor/cage/release checks; all-mode proxy and raycast parity, metadata no-write/freshness/legacy fallback.
 - [x] Interleaved Node A/B fixture report:1,024-face saves4,227→1; clones8,454→2;606.24→46.38 ms median. CPU integration evidence only; actual iPad gain pending.
 - [x] Hosted Topology `42368562276`, job `128391734922`: 3,211 PASS / 0 FAIL, runtime `022d790e7ca79e24cd6ad0e1f3fb856e6cec66f2`.
