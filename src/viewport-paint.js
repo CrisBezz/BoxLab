@@ -2,11 +2,11 @@ import {createPaintAdjustmentUI} from './paint-adjustments-ui.js?v=0.36.18.1072'
 import {createPaintPaletteAnchor,placePaintPalette} from './paint-palette-layout.js?v=0.36.18.1061';
 import {paintBrushPreset} from './paint-brush-presets.js?v=0.36.18.1010';
 import {createBrushSizePreview} from './paint-brush-preview.js?v=0.36.18.1049';
-import {paintTargetKey} from './paint-target.js?v=0.36.18.1093';
+import {paintTargetKey} from './paint-target.js?v=0.36.18.1094';
 import {createPaintLayerList} from './paint-layer-list.js?v=0.36.18.1075';
 import {importPaintAlpha} from './paint-alpha-source.js?v=0.36.18.929';
 import {bindPaintColourControls} from './paint-colour-controls.js?v=0.36.18.915';
-import {createViewportPainter} from './viewport-paint-core.js?v=0.36.18.1093';
+import {createViewportPainter} from './viewport-paint-core.js?v=0.36.18.1094';
 import {brushSettings} from '../evaluations/uv-paint/paint-core.js?v=0.36.18.1074';
 import {PAINT_BLEND_MODES} from './paint-blend-modes.js?v=0.36.18.903';
 import {importResizedPaintImage as importPaintImage,PAINT_IMAGE_INPUT_MAX_BYTES} from './paint-image-source.js?v=0.36.18.1070';
@@ -375,7 +375,7 @@ for(const [name,fn] of [['pointerdown',down],['pointermove',move],['pointerup',u
 canvas?.addEventListener('lostpointercapture',e=>{if(contact===e.pointerId)cancel();});
 window.addEventListener('blur',()=>{cancel();touches.clear();});window.addEventListener('resize',()=>{cancel();hideTools();});document.addEventListener('visibilitychange',()=>{if(document.hidden){cancel();touches.clear();}});
 window.addEventListener('keydown',e=>{if(e.key==='Escape'&&controller?.active){cancel();say('UV Paint stays active · use Done to exit');}});window.addEventListener('boxlab-tool-session-change',e=>{if(e.detail?.id==='uv-paint'&&e.detail.active===false)close();});
-document.querySelectorAll('#selectionModes button').forEach(button=>button.addEventListener('click',event=>{if(!controller?.active)return;event.preventDefault();event.stopImmediatePropagation();say('Use Done to leave UV Paint before changing selection mode');},true));
+document.querySelectorAll('#selectionModes button').forEach(button=>button.addEventListener('click',()=>{if(controller?.active)close();},true));
 window.addEventListener('pagehide',e=>{if(e.persisted){cancel();return;}disposed=true;close();});
 input('radius').addEventListener('input',()=>{input('radius-readout').textContent=input('radius').value;});input('opacity').addEventListener('input',()=>{input('opacity-readout').textContent=Math.round(Number(input('opacity').value)*100)+'%';syncMaterialSwatch();});input('colour').addEventListener('input',syncMaterialSwatch);
 for(const k of ['colour','radius','hardness','opacity','pressure','pressure-opacity','brush'])input(k).addEventListener('input',cancel);

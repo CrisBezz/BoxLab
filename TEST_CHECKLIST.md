@@ -1,10 +1,20 @@
-## .1093 — imported opaque colour texture painting — native pending
+## .1094 — UV Paint owns object taps; explicit mode exits — native pending
+
+`.1093` imported colour texture Paint is user-confirmed PASS and protected. New requirement: tapping objects must retain Paint and its current target. Done and all four bottom mode buttons are intentional exits; finger navigation remains available.
+
+- [ ] In Paint, tap the current mesh and another object with finger/Pencil; Paint stays active on its original target. Orbit/pan/pinch still work.
+- [ ] Reopen Paint before each test: Vertex, Edge, Face and Object each close Paint and select that mode. Done also exits.
+- [ ] Completed strokes survive exits/reopening; Undo/Redo works and imported texture painting remains intact.
+- [x] Seven production-owner regression cases plus original activation/navigation/Paint/history/contact/release checks: 40 PASS / 0 FAIL.
+- [ ] Hosted regression and Pages/live release verification recorded.
+
+## .1093 — imported opaque colour texture painting — protected native PASS
 
 Protect `.1091` image seam PASS, `.1090` Paint visibility PASS and `.1088` Facegroups PASS. Supported first-stage files: one opaque UV0 colour texture, PNG/JPEG up to 2 MiB, square 512/1024, no additional PBR maps or transformed UV sampling. Original import/UV/image bytes stay retained.
 
-- [ ] Import a compatible painted NOM and GLB; Paint opens showing the original image, without replacing UVs.
-- [ ] Brush/Fill over the image; untouched parts stay. Undo/Redo and Done/reopen preserve appearance.
-- [ ] Save/Open and NOM/GLB export/reimport retain original image plus new paint.
+- [x] Import a compatible painted NOM and GLB; Paint opens showing the original image, without replacing UVs.
+- [x] Brush/Fill over the image; untouched parts stay. Undo/Redo and Done/reopen preserve appearance.
+- [x] Save/Open and NOM/GLB export/reimport retain original image plus new paint.
 - [ ] Existing added-image seams remain improved; ordinary native Paint works.
 - [x] Automated new coverage: 512/1024 NOM/GLB seeded pixels, immutable source, stroke/project/export, colour factors, unsupported maps/transforms/transparency and late-decode cancellation.
 - [x] Focused 37 PASS / 0 FAIL; Hosted Topology `42351396825`, job `128340123666`, runtime commit `3e09b066be0a59ca4592a64c854fe6b775286ed4`: 3,185 PASS / 0 FAIL. Pages `42351396724` succeeded; cache-busted version/index and ten import/Paint/export modules (12 files total) byte-match source. Local/main trees match. `.1092` was an intermediate build, superseded by the fresh `.1093` cache graph and export closure; no `.1092` native PASS is inferred.

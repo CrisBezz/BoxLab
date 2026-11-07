@@ -502,6 +502,7 @@ function enterObjectMode() {
 function activateObject(id, forceLocked = false) {
   const target = objects.find(object => object.id === id);
   if (!target || target.id === activeId) { renderOutliner(); return !!target; }
+  if (!forceLocked && globalThis.__boxlabViewportPaint?.active) return false;
   if (target.locked && !forceLocked) {
     if (status) status.textContent = target.kind === 'reference'
       ? `${target.name} • Reference guide • read-only • available for snapping`
@@ -768,6 +769,7 @@ function pickViewportObject(event) {
 }
 
 function handleViewportActivation(event, stopEvent = true) {
+  if (globalThis.__boxlabViewportPaint?.active) return false;
   if (currentMode() === 'object') {
     const objectHit = pickViewportObject(event);
     if (objectHit?.inactive) {
@@ -805,6 +807,7 @@ function handleViewportActivation(event, stopEvent = true) {
 
 function installViewportActivation() {
   const beginActivation = event => {
+    if(globalThis.__boxlabViewportPaint?.active){touchTap=null;return;}
     if(event.target!==canvas)return;
     if(event.pointerType!=='touch'&&globalThis.__boxlabLasso?.isArmed?.())return;
     if(currentMode()==='object'&&pickViewportObject(event))window.dispatchEvent(new CustomEvent('boxlab-background-tap-cancelled'));
@@ -839,7 +842,7 @@ function installViewportActivation() {
   window.addEventListener('pointerup', event => {
     if (!touchTap || event.pointerId !== touchTap.pointerId) return;
     const candidate=touchTap;touchTap=null;
-    if (candidate.cancelled || !candidate.objectMode || currentMode() !== 'object') return;
+    if (globalThis.__boxlabViewportPaint?.active || candidate.cancelled || !candidate.objectMode || currentMode() !== 'object') return;
     if(performance.now()-candidate.startedAt>350)return;
     if(!pickViewportObject(event)){window.dispatchEvent(new CustomEvent('boxlab-pencil-background-tap',{detail:{pointerId:event.pointerId,timeStamp:event.timeStamp,clientX:event.clientX,clientY:event.clientY,source:'object-activation'}}));return;}
     handleViewportActivation(event, false);
