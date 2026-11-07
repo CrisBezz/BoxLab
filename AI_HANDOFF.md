@@ -6,9 +6,9 @@ Audit found independent object activation in `multi-object.js` and ordinary sele
 
 The original Paint mode-button capture listener previously blocked every selection-mode change and demanded Done. It now closes Paint and allows the original Vertex/Edge/Face/Object click action to continue. Done, background palette access, existing Undo/Redo/history reopening and lifecycle cancellation remain original owners. No new pointer consumer, modelling kernel, camera control or history transaction. Keep protected `multi-object-transform.js?v=0.36.1.0` unchanged.
 
-Focused validation: 40 PASS / 0 FAIL across seven new ownership cases, original touch activation/navigation, Paint strokes, history/contact/pressure and release contracts. Covers pen/mouse/touch with Multi on/off, queued pre-Paint touch, direct activation, all four mode exits, original canvas selection and delayed Object restoration. Hosted regression/publication pending; native `.1094` acceptance pending.
+Focused validation: 40 PASS / 0 FAIL across seven new ownership cases, original touch activation/navigation, Paint strokes, history/contact/pressure and release contracts. Covers pen/mouse/touch with Multi on/off, queued pre-Paint touch, direct activation, all four mode exits, original canvas selection and delayed Object restoration. Hosted Topology `42356365552`, job `128355227218`, runtime commit `33fdbb20822661fc427bb32cdcceba9a55c82af4`: 3,192 PASS / 0 FAIL. Pages `42356365346` succeeded. Cache-busted version/index, main, multi-object, object-mode-retain, viewport-paint and drawer-ui (seven files) byte-match the published source.; native `.1094` acceptance pending.
 
-Next: publish/verify `.1094`, then device object taps and finger navigation stay in Paint; each bottom mode button exits to its requested mode; Done exits and completed paint survives. After acceptance return to remaining imported material coverage before measured performance/WASM work.
+Next: device object taps and finger navigation stay in Paint; each bottom mode button exits to its requested mode; Done exits and completed paint survives. After acceptance return to remaining imported material coverage before measured performance/WASM work.
 
 ## .1093 — previous release, protected native PASS — 7 November 2026
 

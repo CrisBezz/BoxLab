@@ -6,7 +6,7 @@
 - [ ] Reopen Paint before each test: Vertex, Edge, Face and Object each close Paint and select that mode. Done also exits.
 - [ ] Completed strokes survive exits/reopening; Undo/Redo works and imported texture painting remains intact.
 - [x] Seven production-owner regression cases plus original activation/navigation/Paint/history/contact/release checks: 40 PASS / 0 FAIL.
-- [ ] Hosted regression and Pages/live release verification recorded.
+- [x] Hosted Topology `42356365552`, job `128355227218`, runtime commit `33fdbb20822661fc427bb32cdcceba9a55c82af4`: 3,192 PASS / 0 FAIL. Pages `42356365346` succeeded. Cache-busted version/index, main, multi-object, object-mode-retain, viewport-paint and drawer-ui (seven files) byte-match the published source.
 
 ## .1093 — imported opaque colour texture painting — protected native PASS
 
