@@ -1,6 +1,6 @@
 # .1098 — scene hook profiling breakdown — 7 November 2026
 
-User .1097 functional PASS and all earlier Paint/interaction PASSes remain protected. This build adds read-only timings to the existing opt-in Performance monitor; no performance fix or WASM kernel is claimed. This .1098 build is committed locally but is not yet on remote main/Pages because automatic approval review rejected the push. Run the hands-on checks below after publication.
+User .1097 functional PASS and all earlier Paint/interaction PASSes remain protected. This build adds read-only timings to the existing opt-in Performance monitor; no performance fix or WASM kernel is claimed. Runtime commit `6fc42cc312888c8985d03e0d21317a7ce9be0462` is published on remote main; Pages deployment `42420882796` succeeded and remote `version.json` reports .1098. Hosted Topology run `42420883102`, job `128548858812`, passed 3,214 / 3,214. Native .1098 acceptance is pending.
 
 - [ ] On the same imported 1,000-face model and settings as the .1096/.1097 reports, activate it, then VIEW → Diagnostics → Performance → Reset.
 - [ ] Keep selection/render modes fixed. Change selection, make one safe edit, and Undo/Redo several times. Download viewport report before switching models.
