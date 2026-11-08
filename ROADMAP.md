@@ -1,3 +1,11 @@
+# .1105 — instrument orbit, pan and zoom response — 8 November 2026
+
+The .1104 user-confirmed spacing PASS is protected, along with scene display and visible/working mode buttons. .1105 extends the existing opt-in Performance monitor and its viewport report with per-gesture input-to-OrbitControls camera-change timing for orbit, pan, zoom and combined pan+zoom. Passive pointer/wheel observation classifies gestures without changing camera controls or consuming input. Timing ends at the controls' camera-change event before rendering; it cannot report GPU/compositor presentation or by itself identify a texture reload. No rendering optimization is included.
+
+Focused checks pass 47/47 and the full local suite passes 3,228/3,228; release/cache pins and the drawer → Face workflow → release-version loader chain were refreshed and reviewed. `git diff --check` is clean. Next: device-check on an already-textured scene. Reset the monitor, record orbit, pan and pinch zoom separately, then download the viewport report and note whether the observed lag matches per-gesture input-to-camera-change samples. Confirm scene, texture, snapping and mode controls remain correct. Decide on any performance fix only from a reproducible signal; temporary orbit pixelation remains unsupported by current evidence.
+
+---
+
 # .1104 — top Snap position and Focus rail alignment — 8 November 2026
 
 The .1103 screenshot showed two remaining spacing errors. Its Snap-at-top rule added the header height inside `#viewportWrap`, which already begins below the header; .1104 uses an 8px local top inset. Focus mode positions its mode dock at 8px while the control rails used 16px; .1104 aligns both rails with the existing dock. Equal widths and 8px lower gaps remain. User confirms .1104 PASS; protect these spacings along with the scene display and mode-button PASSes. No rendering, model state, right-side UI or mode-button owner changed. Focused checks pass 34/34; full local `npm test` passes 3,224/3,224 and `git diff --check` is clean. Hosted Topology `42448808630` passed 3,224/3,224; Pages deployment `42448808498` succeeded.

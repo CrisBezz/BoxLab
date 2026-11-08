@@ -12792,3 +12792,14 @@ Runtime commit `e8f3440737467751dc638ba9b325ac2acdc543bb` advanced `main` with c
 ## .1104 native spacing acceptance — protected PASS — 8 November 2026
 
 User confirms “1104 PASS.” Protect the Snap top gap, Focus rail alignment, equal rail widths, 8px lower gaps and original snap controls. Scene display and mode-button PASSes remain protected. No runtime changes or new release for this acceptance record. Next priority is a controlled orbit/pan/zoom Performance capture on an already-textured model, then choose any rendering optimization from the measured navigation cost; do not infer orbit-time redraw cause from the import-only report or introduce temporary pixelation without evidence.
+
+
+# .1105 — camera navigation response diagnostic — 8 November 2026
+
+User approved adding the suggested navigation diagnostic to the existing Performance monitor as `/nextbuild`. The .1104 screenshot and user-confirmed PASS remain protected: the Snap top inset, Focus rail alignment, equal rail widths and lower gaps. Earlier scene display and mode-button PASSes remain protected.
+
+Audit found the original `FreeOrbitControls` instance in `src/main.js`, the opt-in monitor in `src/performance-core.js` / `src/performance-monitor.js`, and the existing viewport JSON download in `src/performance-lab-ui.js`. New observer attaches to that exact controls instance and existing canvas. It passively classifies one-pointer orbit, two-touch pan/pinch/combined movement, mouse-button orbit/pan/zoom and wheel zoom, while consuming no events. For each camera-change event, bounded stats include first input-to-change response and subsequent input-to-change intervals by gesture. Monitor remains disabled until explicitly opened. Existing animation, camera input, renderer, texture flow, scene, Rails and mode buttons are unchanged. No parallel diagnostic panel or rendering mode was added. The protected `src/multi-object-transform.js?v=0.36.1.0` is untouched.
+
+Interpretation boundary: measurements stop at OrbitControls' camera `change` event, before render submission/presentation. They cannot measure GPU/compositor presentation or prove a displayed frame's latency, and do not show that textures reload. The diagnostic can help check whether the observed delay is before the camera update and how that varies by movement type. No optimization, speedup, WASM gain or texture-reload cause is claimed. Native user check remains pending.
+
+Automated coverage includes bounded per-kind stats, first-response and repeated camera updates, real controls events and passive classification, disabled monitoring and controls-disabled filtering, existing Performance UI/export, release markers and runtime cache hashes. Focused checks passed 44/44; full local suite and publication results are recorded below after completion.

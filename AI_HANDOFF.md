@@ -1,3 +1,17 @@
+# .1105 — camera navigation response diagnostic — 8 November 2026
+
+Current main advances from .1104 to .1105. The user's .1104 spacing PASS is protected: top Snap gap, Focus rail alignment, equal rail widths, 8px lower gaps and snap controls. The scene display and visible/working mode-button PASSes are protected too.
+
+The new opt-in measurements live in the existing VIEW → Diagnostics → Performance monitor and its existing viewport JSON export. Instrumentation observes the original OrbitControls `start`/`change`/`end` events plus passive pointer/wheel events on the existing canvas. It reports gesture counts, first input-to-camera-change response, and subsequent input-to-camera-change intervals for orbit, pan, zoom and combined pan+zoom. Wheel zoom is counted as zoom. Input listeners are passive observers; no pointer or touch event is consumed, and no camera, renderer, texture, or canvas behavior is changed. Sampling is bounded to the monitor's existing 120-sample window and is disabled until Performance is enabled.
+
+Interpretation limit: the timestamp ends at the existing OrbitControls camera `change` event, before the renderer submits/presents that frame. It does not measure GPU/compositor presentation or prove what the user saw. The metric can reveal delay before the controls update the camera and whether that recurs during gestures; it cannot alone establish displayed latency, a texture reload, or a performance improvement. Existing `frameMs`, phase timings, and texture decode samples remain alongside it.
+
+Native device check: open an already-textured model, VIEW → Diagnostics → Performance → Reset, then make short separate passes of one-finger orbit, two-finger pan, and pinch zoom. Download the existing Performance Lab → Download viewport report. Check that the expected per-kind counters and samples appear, scene/textures stay visible, and mode/snap controls still work. For cleaner captures, reset between each gesture type. Send report plus device observation; do not infer a speedup or start pixelation/render changes from this instrumentation release.
+
+Release markers and reviewed direct/nested cache pins are .1105, including the existing drawer → Face workflow → release-version loader chain. Regression coverage exercises timing aggregation, actual controls events and orbit/pan/pinch/wheel classification, opt-in/reset behavior, cache-contract hashes, and existing toolbar/release checks. Focused checks pass 47/47; full local `npm test` passes 3,228/3,228; `git diff --check` is clean. `src/multi-object-transform.js?v=0.36.1.0` remains protected and untouched. Native navigation diagnostic acceptance is pending; prior .1104 spacing, .1102 scene/mode display and earlier PASSes stay protected.
+
+---
+
 # .1104 — top Snap gap and left-rail alignment — 8 November 2026
 
 Current main advances from .1103 to .1104. User reports the .1103 spacing is not yet right. Screenshot diagnosis: `#viewportWrap` already starts below the topbar, but General Settings added the topbar height again to the Snap box's local `top`, leaving a visibly oversized gap. In Focus view, the existing mode dock is at `left:8px` while the rails remain at `left:16px`. .1104 places the top Snap box at `top:8px` inside the viewport and moves both rails to the existing Focus dock's `left:8px`. Existing 8px lower gaps and equal rail widths remain.

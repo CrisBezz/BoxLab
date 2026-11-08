@@ -1,3 +1,16 @@
+# .1105 — camera navigation response diagnostic (device acceptance pending)
+
+- [x] Preserve user-confirmed .1104 spacing PASS: Snap top gap, Focus rail alignment, equal widths and lower gaps.
+- [x] Preserve user-confirmed scene display and mode-button PASSes.
+- [x] Existing Performance monitor/export now records first input-to-camera-change response and subsequent camera changes for orbit, pan, zoom and combined pan+zoom. It remains opt-in and bounded; events are observed passively.
+- [x] Measurements stop at OrbitControls camera-change before rendering; no GPU/compositor latency, texture reload, optimization or performance PASS is claimed.
+- [x] Focused navigation, controls, performance, release/cache, and protected startup checks: 47 PASS / 0 FAIL. Full local `npm test`: 3,228 PASS / 0 FAIL; `git diff --check` clean.
+- [ ] On iPad with an already-textured model: Performance → Reset; perform short one-finger orbit, two-finger pan and pinch zoom passes separately. Confirm expected gesture counters/samples and report export.
+- [ ] Confirm scene/textures remain visible and Snap, mode and other viewport controls still work; note whether observed delay matches the reported input-to-camera-change samples.
+- [ ] Share the viewport report and observation. Device acceptance pending; no rendering change is planned unless captured data identifies the cost.
+
+---
+
 # .1104 — Snap top gap and Focus rail alignment (protected PASS)
 
 - [x] User-confirmed scene display PASS and visible/working mode buttons PASS remain protected.

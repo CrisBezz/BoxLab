@@ -1,5 +1,5 @@
 {
-  "baseline": "Reviewed .1104: the top Snap box sits 8px below the viewport header and both left rails align with the Focus mode dock. Existing Snap/action rails and 8px lower spacing remain. User-confirmed .1102 scene and mode display PASSes stay protected.",
+  "baseline": "Reviewed .1105 navigation diagnostic: reports first input-to-OrbitControls camera change and subsequent movement updates for orbit, pan, zoom, and combined pan/zoom. Timings stop before rendering; existing input handling and rendering remain unchanged. User-confirmed .1104 spacing and .1102 scene/mode PASSes stay protected.",
   "references": [
     {
       "owner": "index.html",
@@ -161,9 +161,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1104",
+      "url": "./src/drawer-ui.js?v=0.36.18.1105",
       "target": "src/drawer-ui.js",
-      "sha256": "eacfef947d116ee1308f914bee5dc72c0fd96c6cf031004a78692400c2118922"
+      "sha256": "15c3e827955b58b4b63846a3af4eba442cd690087556b691352a8dd28fdebdd1"
     },
     {
       "owner": "index.html",
@@ -297,9 +297,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/main.js?v=0.36.18.1094",
+      "url": "./src/main.js?v=0.36.18.1105",
       "target": "src/main.js",
-      "sha256": "ec9a8154c84e7420ee58ab2515de58ea96595921096300273445b473257de3a2",
+      "sha256": "0dc32831f19d28eac15602ee473d73486f9823f564e9f77f803d2fe095585791",
       "sourceVersion": "0.35.1"
     },
     {
@@ -378,7 +378,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1104",
+      "url": "./src/release-version.js?v=0.36.18.1105",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -864,9 +864,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1104",
+      "url": "./face-workflow-layout.js?v=0.36.18.1105",
       "target": "src/face-workflow-layout.js",
-      "sha256": "03f06b24cac4be4e6f9be86e7a002bd557de389011936cd22f5aa1d954349bb3"
+      "sha256": "fa7293518621706aaba1b9ba74d9da3bd77ba0ee8fdb4ce1d7a970d5624d9611"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1361,7 +1361,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1104",
+      "url": "./release-version.js?v=0.36.18.1105",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -2240,15 +2240,15 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/performance-monitor.js?v=0.36.18.1099",
+      "url": "./src/performance-monitor.js?v=0.36.18.1105",
       "target": "src/performance-monitor.js",
-      "sha256": "260bc4b2fdcc717f3a1b135a721a53f49db3c9d9b3203252d56c4eaed1ab940c"
+      "sha256": "56cadbe89d5433173bdb9416632063516a971a7349c24dbffdd01c4c7ebb5d36"
     },
     {
       "owner": "src/performance-monitor.js",
-      "url": "./performance-core.js?v=0.36.18.1099",
+      "url": "./performance-core.js?v=0.36.18.1105",
       "target": "src/performance-core.js",
-      "sha256": "31fb012156d53523f7f248e5665e577d59e7830e52e2ce8ad55ba54abf108ed2"
+      "sha256": "932cd97c4444dc842ded1ab346678fc388f65295cee73ed11d435de9905605c1"
     },
     {
       "owner": "src/main.js",
@@ -3326,9 +3326,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1104",
+      "url": "./src/shell-comparison.js?v=0.36.18.1105",
       "target": "src/shell-comparison.js",
-      "sha256": "4e880d2f2016d2fbec2f6e544239236a5212e1784410840dff0095d35655cce5"
+      "sha256": "ba41b019d072be0d41df9526bd9831a47fda7253a49ee18209bf6fc9492b0eaa"
     },
     {
       "owner": "src/main.js",
@@ -3626,9 +3626,9 @@
     },
     {
       "owner": "src/performance-monitor.js",
-      "url": "./performance-lab-ui.js?v=0.36.18.1098",
+      "url": "./performance-lab-ui.js?v=0.36.18.1105",
       "target": "src/performance-lab-ui.js",
-      "sha256": "e2caac7795cdf85b07de8029a158b2d8753cba4185dbe129d30055ecd881510a"
+      "sha256": "187049b18c80de72d9e2003423242dbde3dac330953bcd7b884514d2d40fbd20"
     },
     {
       "owner": "src/performance-lab-ui.js",
