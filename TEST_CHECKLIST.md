@@ -2,7 +2,7 @@
 
 User confirms .1108 orbit is prompt, pan hesitates and pinch zoom hesitates longer. Its report has no stage/rebuild work, four long frame gaps (max 2302ms), and navigation-submit max11ms. This does not identify the delay cause or prove gaps occurred during gestures. Audit confirms main uses FreeOrbitControls, which preserves Three pointer ownership and customizes two-finger dolly/pan. Existing passive monitor now traces touch-contact, first-touch-move and navigation-onset intervals, contact count, controls enabled state and comparable event timestamp delivery age. Contact-to-move includes deliberate user waiting; timestamp age is not hardware-to-screen latency. No navigation behavior fix is claimed. Protected Multi transform and .1104/.1102 PASSes remain unchanged.
 
-.1109 full local regression passes 3,234/3,234; diff check clean. Publication verification pending. Device: reset Performance with textured model visible; orbit, pan then pinch; download report and describe delay. Native acceptance pending.
+.1109 full local regression passes 3,234/3,234; diff check clean. Published runtime commit `5e2d9f0b8c046d36e4a31c0d99b809113a5dce28`; Pages run `42476135397` and hosted Topology `42476135706` succeeded. Device: reset Performance with textured model visible; orbit, pan then pinch; download report and describe delay. Native acceptance pending.
 
 ---
 
