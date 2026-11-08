@@ -2246,7 +2246,7 @@
     },
     {
       "owner": "src/performance-monitor.js",
-      "url": "./performance-core.js?v=0.36.18.1110",
+      "url": "./performance-core.js?v=0.36.18.1109",
       "target": "src/performance-core.js",
       "sha256": "91ce0233aaaa8fa6dcf2ccedb01f2ac999082c5f6d02789c62c56f5fc650117d"
     },
