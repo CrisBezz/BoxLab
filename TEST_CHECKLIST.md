@@ -4,7 +4,7 @@
 - [x] Review .1106 iPad report: 1002 vertices / 1000 faces, 3 textures, one 33 ms rebuild, 120 frames at 59.97 FPS (p95 17 ms); input-to-camera-change mean 0.044 ms / max 1 ms; input-to-render-submit mean 8.22 ms / p95 11 ms / max 1085 ms.
 - [x] Decode and texture-display each sampled once (17 ms / 43 ms); no repeated texture work appears in this capture. No texture/GPU cause inferred.
 - [x] Add `longFrameGaps` count/max for excluded frame intervals >=1000 ms; preserve existing cadence statistics and rendering behavior. Focused performance/release checks: 30 PASS / 0 FAIL; full local `npm test`: 3,232 PASS / 0 FAIL; `git diff --check` clean.
-- [ ] Publish local commit `03fdb66b` to `origin/main` after the exact push is approved; automatic review blocked the current direct-push attempt. Verify hosted tests, Pages, release marker and live assets.
+- [x] Published release commit `434600b50866f3777d011f86a02563157ac3f891` (tree `112712ea1c5aa4b9d1128294df698ec12b4a2225`). Hosted Topology run `42471794875` succeeded; Pages run `42471794602` succeeded; live app displays `v0.36.18.1107`.
 - [ ] On the same textured model, reset Performance and make separate orbit, pan and pinch passes. Compare `longFrameGaps` with input-to-render-submit maximum and note whether the pause recurs.
 - [ ] Confirm texture/scene visibility, Snap/mode buttons, and viewport report download. Native .1107 acceptance pending.
 - [ ] Render-submit remains CPU-only; GPU execution and compositor presentation are not measured.
