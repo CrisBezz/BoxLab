@@ -161,9 +161,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1101",
+      "url": "./src/drawer-ui.js?v=0.36.18.1102",
       "target": "src/drawer-ui.js",
-      "sha256": "b239b6319f3c8566930fe7df6888858ef16eeb4d6309f64919d991bf4fefef05"
+      "sha256": "61d30d32d1608a1a610903a42a7616ecd030427f691be54bd7f968bd0dde4159"
     },
     {
       "owner": "index.html",
@@ -378,7 +378,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1101",
+      "url": "./src/release-version.js?v=0.36.18.1102",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -539,9 +539,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/topbar-layout.js?v=0.36.18.1101",
+      "url": "./src/topbar-layout.js?v=0.36.18.1102",
       "target": "src/topbar-layout.js",
-      "sha256": "d090b8e3e769b106ec4b4dec0ce810578268167db7e47cf49d44c292c50e993d"
+      "sha256": "958a4ca12d32ea54538797b86b8a00b689b8041a2b37e561221ba3372cccbc0c"
     },
     {
       "owner": "index.html",
@@ -864,9 +864,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1101",
+      "url": "./face-workflow-layout.js?v=0.36.18.1102",
       "target": "src/face-workflow-layout.js",
-      "sha256": "cdf51836967ed926aea10e244b637c83c0d1613462b96bf79fc84213664cbf17"
+      "sha256": "79c06d8463b3e50db269e565f5d40dac5b1aaedda9faf8828b804228435dd25f"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1361,7 +1361,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1101",
+      "url": "./release-version.js?v=0.36.18.1102",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -2044,9 +2044,9 @@
     },
     {
       "owner": "src/topbar-layout.js",
-      "url": "./viewport-toolbar-controls.js?v=0.36.18.1101",
+      "url": "./viewport-toolbar-controls.js?v=0.36.18.1102",
       "target": "src/viewport-toolbar-controls.js",
-      "sha256": "139bd520bfaee868b73daa1b7356be1e6e1d394c5848f3a522fc231674a81b9c"
+      "sha256": "c730a94fc3ecd440501587d2bb92a10b16e6d7329076e6ab0e421e0280a01477"
     },
     {
       "owner": "src/total-gizmo.js",
@@ -3326,9 +3326,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1101",
+      "url": "./src/shell-comparison.js?v=0.36.18.1102",
       "target": "src/shell-comparison.js",
-      "sha256": "2591bc4f88fb6ef2ae07f2ee368a04d22b104212565b3757b0c338278eb0a81a"
+      "sha256": "156a1fa0b0fb1825d5df5940723e874d6a355818e45a8d7674733e08ac690b52"
     },
     {
       "owner": "src/main.js",
@@ -3656,9 +3656,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./icon.svg?v=0.36.18.1101",
-      "target": "icon.svg",
-      "sha256": "e2a286547c5d4d00377608c2843cb05a03e07097b84264a93cb541aacb9dbaa3"
+      "url": "./icons/boxlab-logo-1102.png?v=0.36.18.1102",
+      "target": "icons/boxlab-logo-1102.png",
+      "sha256": "04c5850aaabd2eea7b37354b05d9d9c5318ae9122123bf0242c25a58a704a1c6"
     }
   ]
 }

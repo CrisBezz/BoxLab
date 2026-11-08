@@ -2,7 +2,7 @@
 // Move the original canvas once; no second renderer, input owner or live profile swap.
 (() => {
  'use strict';
- const RELEASE='0.36.18.1101',KEY='boxlab.shell-comparison.v1',LIMIT=30;
+ const RELEASE='0.36.18.1102',KEY='boxlab.shell-comparison.v1',LIMIT=30;
  const url=new URL(window.location.href),choice=url.searchParams.get('shellTest');
  const active=choice==='current'||choice==='separated',mode=active?choice:'current';
  const doc=document,app=doc.querySelector('#app'),wrap=doc.querySelector('#viewportWrap'),canvas=doc.querySelector('#viewport');
@@ -57,10 +57,10 @@
  function el(tag,text){const n=doc.createElement(tag);if(text!==undefined)n.textContent=text;return n;}
  function button(text,action){const b=el('button',text);b.type='button';b.addEventListener('click',action);return b;}
  const header=el('div');header.className='shell-test-header';
- const title=el('strong',active?(mode==='current'?'A · Current · .1101':'B · Separated · .1101'):'Screen comparison · .1101');
+ const title=el('strong',active?(mode==='current'?'A · Current · .1102':'B · Separated · .1102'):'Screen comparison · .1102');
  const body=el('div');body.className='shell-test-body';
  const collapse=button('Collapse',()=>{body.hidden=!body.hidden;collapse.textContent=body.hidden?'Test list':'Collapse';});
- const launcher=button('TEST LIST · .1101',showPanel);launcher.id='shellTestReopen';launcher.hidden=true;
+ const launcher=button('TEST LIST · .1102',showPanel);launcher.id='shellTestReopen';launcher.hidden=true;
  launcher.style.cssText='display:none;position:fixed;left:8px;top:50dvh;z-index:100003;min-height:40px;';
  const hide=button('Hide list',()=>{panel.hidden=true;launcher.hidden=false;launcher.style.display='block';stopDock();});
  header.append(title,collapse,hide);panel.append(header,body);
@@ -84,7 +84,7 @@
  body.append(el('p','Build .1035 repair: Import original NOM_COLOUR_ALPHA_1029.nom. In Studio and Solid, right cube must be solid cyan WITHOUT black squares; left retains checker transparency, middle combined colour-alpha and opacity. Switch VIEW modes and reopen. Check original NOM_SEVEN_OBJECTS_1032.nom Colour cube is cyan; .1033 standalone map sample still works. Move/Undo/Redo, Save/Open and export NOM retain images. .1035 is user-PASS protected.'));
  const benchmark=el('a','Open subdivision timing benchmark · .1036');benchmark.href='./docs/subdivision-benchmark-1036.html';benchmark.target='_blank';benchmark.rel='noopener';benchmark.style.cssText='display:inline-flex;align-items:center;min-height:42px;margin:0 0 12px;padding:8px 12px;border-radius:9px;background:#d9e2f2;color:#111318;font-weight:700;text-decoration:none';body.append(benchmark);
  const uvBenchmark=el('a','Open UV subdivision timing benchmark · .1038');uvBenchmark.href='./docs/subdivision-uv-benchmark-1038.html';uvBenchmark.target='_blank';uvBenchmark.rel='noopener';uvBenchmark.style.cssText=benchmark.style.cssText;body.append(uvBenchmark);
- body.append(el('p','Build .1101 adds the BoxLab mark to the header and groups the left-side actions into a vertical Lasso, Select and UV Paint rail. Snap options sit at the top when VIEW → General Settings → Snap options at top left is enabled; with it off, the snap box sits directly above that rail. Check both positions, the icon labels and that Select/UV Paint still open their existing panels. During a live Geometry Snap preview, turn Geometry Snap off and confirm the guide disappears and does not return on release. The four persistent General Settings and Pencil object-list activation from .1100 remain in place.'));
+ body.append(el('p','Build .1102 uses the supplied BoxLab logo, stacks Axis and Geometry Snap vertically, and keeps the Snap and action controls as compact independent viewport controls. The mode dock remains separately visible above the status lane. Check the logo, modes, Snap setting positions, and that Lasso/Select/UV Paint still open their existing owners. The four persistent General Settings and Pencil object-list activation from .1100 remain in place. A screenshot reported 8 verts and 0 faces, so the empty model body is not attributed to toolbar CSS; verify Reset All restores the default cube if it recurs.'));
  const displacementBenchmark=el('a','Open displacement feasibility gate · .1041');displacementBenchmark.href='./docs/displacement-preview-gate-1041.html?v=0.36.18.1041';displacementBenchmark.target='_blank';displacementBenchmark.rel='noopener';displacementBenchmark.style.cssText=benchmark.style.cssText;body.append(displacementBenchmark);
  const heightBenchmark=el('a','Open native height decode benchmark · .1064');heightBenchmark.href='./docs/native-height-benchmark-1064.html?v=0.36.18.1064';heightBenchmark.target='_blank';heightBenchmark.rel='noopener';heightBenchmark.style.cssText=benchmark.style.cssText;body.append(heightBenchmark);
  const rows=[];

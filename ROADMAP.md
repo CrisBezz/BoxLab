@@ -1,10 +1,10 @@
-# .1101 — left viewport controls and app mark — 8 November 2026
+# .1102 — left controls and header correction — 8 November 2026
 
-The next device check covers the BoxLab mark before the wordmark, the vertical Lasso/Select/UV Paint rail, and Snap box placement. With VIEW → General Settings → Snap options at top left on, snaps appear in their own box beneath the top bar. When off, the snap box sits directly above the lower-left action rail. Turning Geometry Snap off during a live snap preview now cancels that preview and keeps snapping off. Existing snap inputs and selection/Paint/session owners remain authoritative. Confirm the persistent .1100 settings and Pencil outliner activation still work.
+Correct the user-supplied header logo; stack Axis and Geometry Snap vertically; keep Snap and action controls as small, separate viewport children; and explicitly raise the existing mode dock above the status lane. The prior viewport-wide transparent overlay is removed. Do not change the viewport renderer, mesh state, object browser/right-side layout, or protected Multi transform.
 
-The .1099 import timing report remains inconclusive for orbit-time repaint. Keep pixelated navigation deferred until a sustained orbit/pan/zoom report on an already-textured model identifies meaningful cost or repeated decoding. Keep the protected Multi transform and prior navigation, selection, Paint and Undo/Redo behavior intact.
+Screenshot clue: the submitted frame reports `8 verts • 0 faces`. This is an empty mesh body; no renderer fix is justified without a clean default cube reproduction. If the scene remains blank on a clean start in .1102, investigate that separately.
 
-Local .1101 validation is complete: focused follow-up 19/19 and full suite 3,224/3,224 pass. Hosted Topology `42434222660` passed, Pages deployment `42434222583` succeeded, and all 24 changed files byte-match the live site. Device acceptance remains pending.
+Local .1102 validation is complete: focused UI/release checks 31/31; full suite 3,224/3,224; `git diff --check` clean. Publication and device acceptance are pending.
 
 ---
 

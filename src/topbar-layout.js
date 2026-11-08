@@ -1,5 +1,5 @@
 import {installViewportSelectionPanel} from './viewport-selection-panel.js?v=0.36.18.1101';
-import {installViewportToolbarControls} from './viewport-toolbar-controls.js?v=0.36.18.1101';
+import {installViewportToolbarControls} from './viewport-toolbar-controls.js?v=0.36.18.1102';
 const topbar=document.querySelector('.topbar');
 const selectionModes=document.querySelector('#selectionModes');
 const fileMenu=document.querySelector('#fileMenu');
@@ -54,11 +54,11 @@ const style=document.createElement('style');
 style.textContent=`
 :root{--boxlab-topbar-h:max(60px,calc(48px + env(safe-area-inset-top)))}
 .topbar{height:var(--boxlab-topbar-h)!important}
-.brand{order:1;display:flex!important;align-items:center;gap:8px}.brand-logo{width:30px;height:30px;display:block;flex:0 0 auto;border-radius:7px}.top-file-menu{order:0}.top-actions{order:2}
+.brand{order:1;display:flex!important;align-items:center;gap:8px}.brand-logo{width:34px;height:34px;display:block;flex:0 0 auto;object-fit:contain;border-radius:8px}.top-file-menu{order:0}.top-actions{order:2}
 .top-file-menu{z-index:140}
 .top-file-content{top:calc(100% + 6px);max-height:calc(100dvh - var(--boxlab-topbar-h) - 18px);overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
 #viewportWrap{top:var(--boxlab-topbar-h)!important}
-#viewportWrap > #selectionModes{visibility:visible;position:absolute;z-index:120;left:max(16px,env(safe-area-inset-left));bottom:max(10px,calc(env(safe-area-inset-bottom) + 6px));top:auto;right:auto;display:flex;align-items:center;padding:4px;gap:4px;background:rgba(18,21,27,.92);border:1px solid rgba(255,255,255,.14);border-radius:13px;box-shadow:0 10px 28px rgba(0,0,0,.28);backdrop-filter:blur(16px)}
+#viewportWrap > #selectionModes{visibility:visible;position:absolute;z-index:130!important;left:max(16px,env(safe-area-inset-left));bottom:max(10px,calc(env(safe-area-inset-bottom) + 6px));top:auto;right:auto;display:flex!important;align-items:center;padding:4px;gap:4px;background:rgba(18,21,27,.92);border:1px solid rgba(255,255,255,.14);border-radius:13px;box-shadow:0 10px 28px rgba(0,0,0,.28);backdrop-filter:blur(16px);pointer-events:auto}
 #viewportWrap > #selectionModes button{min-width:46px;min-height:42px;padding:7px 11px;justify-content:center}
 #viewportWrap > #selectionModes svg{width:19px;height:19px;flex:0 0 auto}
 #viewportWrap > #selectionModes .mode-label{font-size:12px}

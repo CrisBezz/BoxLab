@@ -30,6 +30,7 @@ export function assertModeDock(transform){
  for(const b of original){assert.equal(b.title,b.dataset.mode[0].toUpperCase()+b.dataset.mode.slice(1));assert.match(b.innerHTML,/<svg/);assert.match(b.attributes['aria-label'],/selection mode$/);}
  const dock=rules(f.styles.slice(0,2).join('\n'),'#viewportWrap > #selectionModes');
  assert.equal(dock[0].position,'absolute');assert.equal(dock[0].left,'max(16px,env(safe-area-inset-left))');
+ assert.equal(dock[0]['z-index'],'130!important');assert.equal(dock[0]['pointer-events'],'auto');
  assert.equal(dock[1].left,'max(8px,env(safe-area-inset-left))');
  assert.equal(dock[2].bottom,'max(27px,calc(env(safe-area-inset-bottom) + 23px))!important');
  assert.equal(dock[3].bottom,'max(25px,calc(env(safe-area-inset-bottom) + 21px))!important');

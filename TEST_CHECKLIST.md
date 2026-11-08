@@ -1,21 +1,17 @@
-# .1101 — left viewport tool rail and app mark (device acceptance pending)
+# .1102 — logo, left rails and mode dock (device acceptance pending)
 
-- [ ] Confirm the BoxLab mark appears directly before the BoxLab header and stays aligned on iPad and desktop widths.
-- [ ] Confirm Lasso, Select and UV Paint form a vertical icon rail at the lower left. Lasso toggles correctly; Select opens/closes its existing panel; UV Paint opens and exits through Done.
-- [ ] In VIEW → General Settings, turn “Snap options at top left” on. Confirm only the Snap box moves beneath the top bar and the action rail stays at the lower left.
-- [ ] Turn “Snap options at top left” off. Confirm the Snap box sits directly above Lasso/Select/UV Paint. Check Axis and Geometry snapping still toggle and work.
-- [ ] During a Geometry Snap preview, turn Geometry Snap off. Confirm the guide disappears immediately, subsequent movement is not snapped, and releasing or undoing does not turn snapping back on.
-- [ ] Reload. Confirm the saved snap placement returns; confirm the other .1100 settings and Pencil object-list controls remain functional.
-- [ ] Regression smoke: selection mode dock, orbit/pan/zoom, UV Paint stroke + Done/reopen.
+- [ ] Confirm the supplied three-colour BoxLab logo appears before the header text.
+- [ ] Confirm Axis and Geometry Snap icons stack vertically in the left strip, alongside the Lasso, Select and Paint actions.
+- [ ] Toggle VIEW → General Settings → Snap options at top left on and off; verify only the Snap box moves and both original snap toggles still work.
+- [ ] Confirm Vertex, Edge, Face and Object mode buttons are visible at the lower left and still switch modes.
+- [ ] Check the right-side Object Browser/toolbar remains visible and opens normally after refresh; .1102 does not change those owners.
+- [ ] If the viewport is blank, note the mesh counter and whether this is a clean default cube. The supplied screenshot read `8 verts • 0 faces`; do not infer a rendering regression from that empty-body state alone.
 - [ ] User device acceptance. Do not protect as PASS until confirmed.
 
-- [x] Focused toolbar/Snap/Paint/release checks: 63 PASS / 0 FAIL; final pin/rail-order follow-up: 19 PASS / 0 FAIL.
-- [x] Full local `npm test`: 3,224 PASS / 0 FAIL; `git diff --check` clean; protected Multi transform unchanged.
-- [x] Hosted Topology `42434222660` passed; Pages deployment `42434222583` succeeded; all 24 changed files byte-match the live site.
+- [x] Focused UI, selection, release/cache and logo checks: 31 PASS / 0 FAIL.
+- [x] Full local `npm test`: 3,224 PASS / 0 FAIL; `git diff --check` clean.
 
-This checklist is the hands-on device gate; do not record device PASS until confirmed by the user.
-
-`.1099` diagnostics: supplied iPad report had one `texture-decode` sample at 1,178 ms and one `texture-display` sample at 2,388 ms; 120 frame intervals averaged16.675 ms (p95 17 ms). Report was captured in Object mode, with three rebuild/scene samples and no controlled orbit sequence. It confirms the recorded import display delay but does not establish a texture reload during orbit or justify reduced-resolution rendering. Capture a sustained orbit/pan/zoom of the same already-textured model before deciding on adaptive texture quality.
+This is the device gate; no iPad visual PASS is inferred from automated tests.
 
 ---
 
