@@ -1,6 +1,6 @@
 // Bounded, opt-in CPU timings. Renderer counters are resource counts, not RAM bytes.
 export function createPerformanceMonitor(now=()=>performance.now()){
- let enabled=false,lastFrame=null,frames=[],longFrameGaps=[],timingTrace=[],rebuilds=[],latest=null,rebuildCount=0,stages={},cacheHits=0,cacheMisses=0,cacheOwners={active:{hits:0,misses:0},inactive:{hits:0,misses:0}},navSession=null,navGestures={},navFirst={},navUpdates={},navFirstRender={},navRenderUpdates={},navPendingRenders=[],navInputs=0,navProbe=null;
+ let callbacks={},heartbeatLast=null,heartbeatDelays=[],enabled=false,lastFrame=null,frames=[],longFrameGaps=[],timingTrace=[],rebuilds=[],latest=null,rebuildCount=0,stages={},cacheHits=0,cacheMisses=0,cacheOwners={active:{hits:0,misses:0},inactive:{hits:0,misses:0}},navSession=null,navGestures={},navFirst={},navUpdates={},navFirstRender={},navRenderUpdates={},navPendingRenders=[],navInputs=0,navProbe=null;
  const navKinds=['orbit','pan','zoom','pan+zoom'];
  const retain=(list,value)=>{list.push(value);if(list.length>120)list.shift();};
  const trace=value=>{timingTrace.push(value);if(timingTrace.length>80)timingTrace.shift();};
@@ -8,7 +8,7 @@ export function createPerformanceMonitor(now=()=>performance.now()){
  const freshSession=()=>({firstInputAt:null,lastInputAt:null,firstKind:null,lastKind:null,counts:{},firstRecorded:false});
  const mean=list=>list.length?list.reduce((a,b)=>a+b,0)/list.length:0;
  function stats(list=[]){const sorted=list.slice().sort((a,b)=>a-b);return{samples:list.length,meanMs:mean(list),maxMs:sorted.at(-1)||0,p95Ms:sorted.length?sorted[Math.ceil(sorted.length*.95)-1]:0};}
- function reset(){navProbe?.reset?.();lastFrame=null;frames=[];longFrameGaps=[];timingTrace=[];rebuilds=[];latest=null;rebuildCount=0;stages={};cacheHits=cacheMisses=0;cacheOwners={active:{hits:0,misses:0},inactive:{hits:0,misses:0}};navSession=null;navGestures={};navFirst={};navUpdates={};navFirstRender={};navRenderUpdates={};navPendingRenders=[];navInputs=0;}
+ function reset(){callbacks={};heartbeatLast=null;heartbeatDelays=[];navProbe?.reset?.();lastFrame=null;frames=[];longFrameGaps=[];timingTrace=[];rebuilds=[];latest=null;rebuildCount=0;stages={};cacheHits=cacheMisses=0;cacheOwners={active:{hits:0,misses:0},inactive:{hits:0,misses:0}};navSession=null;navGestures={};navFirst={};navUpdates={};navFirstRender={};navRenderUpdates={};navPendingRenders=[];navInputs=0;}
  function navigationStart(){if(!enabled||navSession)return;navSession=freshSession();}
  function navigationInput(kind){if(!enabled||!navKinds.includes(kind))return;if(!navSession)navSession=freshSession();const at=now();navInputs++;navSession.counts[kind]=(navSession.counts[kind]||0)+1;if(navSession.firstInputAt===null){navSession.firstInputAt=at;navSession.firstKind=kind;}navSession.lastInputAt=at;navSession.lastKind=kind;}
  function finishNavigation(){if(!navSession)return;if(navSession.firstRecorded){const kind=Object.entries(navSession.counts).sort((a,b)=>b[1]-a[1])[0]?.[0]||navSession.firstKind;navGestures[kind]=(navGestures[kind]||0)+1;}navSession=null;}
@@ -43,6 +43,8 @@ export function createPerformanceMonitor(now=()=>performance.now()){
   get enabled(){return enabled;},setEnabled(value){enabled=!!value;reset();return enabled;},reset,
   navigationStart,navigationInput,navigationChange,navigationEnd,navigationRendered,observeNavigation,
   start(){return enabled?now():null;},
+  callback(name,start){if(!enabled||start==null||!['main-frame','main-controls','gizmo','origin','sweep','clean-view','monitor-refresh'].includes(name))return;const end=now(),duration=end-start;if(!valid(duration))return;retain(callbacks[name] ||= [],duration);if(duration>=50)trace({kind:'callback',name,startMs:start,endMs:end,durationMs:duration});},
+  heartbeat(at=now()){if(!enabled||!valid(at))return;if(heartbeatLast!==null){const delay=Math.max(0,at-heartbeatLast-100);retain(heartbeatDelays,delay);if(delay>=250)trace({kind:'timer-delay',startMs:heartbeatLast,endMs:at,durationMs:at-heartbeatLast,lateMs:delay});}heartbeatLast=at;},
   rebuild(start){if(!enabled||start===null)return;const duration=now()-start;if(valid(duration)){retain(rebuilds,duration);rebuildCount++;}},
   stage(name,start){if(!enabled||start==null||!['display','geometry','scene','inactive','cage','scene-sync','object-sync','render-mode','uv-preview','paint-preview','texture-decode','texture-display'].includes(name))return;const end=now(),duration=end-start;if(valid(duration)){retain(stages[name] ||= [],duration);trace({kind:'stage',name,startMs:start,endMs:end,durationMs:duration});}},
   cache(hit,owner='active'){if(enabled){if(hit)cacheHits++;else cacheMisses++;cacheOwners[owner==='inactive'?'inactive':'active'][hit?'hits':'misses']++;}},
@@ -54,10 +56,10 @@ export function createPerformanceMonitor(now=()=>performance.now()){
     geometries:info?.memory?.geometries||0,textures:info?.memory?.textures||0,vertices:mesh?.vertices?.length||0,faces:mesh?.faces?.length||0,
     undo:history?.undoStack?.length||0,redo:history?.redoStack?.length||0};
   },
-  pause(){lastFrame=null;},
+  pause(){lastFrame=null;heartbeatLast=null;},
   snapshot(){
    const sorted=frames.slice().sort((a,b)=>a-b),interval=mean(frames);
-   return {enabled,...latest,cacheHits,cacheMisses,cacheOwners:{active:{...cacheOwners.active},inactive:{...cacheOwners.inactive}},stages:Object.fromEntries(Object.entries(stages).map(([name,list])=>[name,{samples:list.length,meanMs:mean(list),maxMs:Math.max(...list)}])),navigation:navigationSnapshot(),samples:frames.length,fps:interval?1000/interval:0,frameMs:interval,p95Ms:sorted.length?sorted[Math.ceil(sorted.length*.95)-1]:0,longFrameGaps:{thresholdMs:1000,samples:longFrameGaps.length,maxMs:longFrameGaps.length?Math.max(...longFrameGaps):0},timingTrace:timingTrace.slice(),
+   return {enabled,...latest,callbacks:Object.fromEntries(Object.entries(callbacks).map(([name,list])=>[name,stats(list)])),heartbeat:{intervalMs:100,...stats(heartbeatDelays)},cacheHits,cacheMisses,cacheOwners:{active:{...cacheOwners.active},inactive:{...cacheOwners.inactive}},stages:Object.fromEntries(Object.entries(stages).map(([name,list])=>[name,{samples:list.length,meanMs:mean(list),maxMs:Math.max(...list)}])),navigation:navigationSnapshot(),samples:frames.length,fps:interval?1000/interval:0,frameMs:interval,p95Ms:sorted.length?sorted[Math.ceil(sorted.length*.95)-1]:0,longFrameGaps:{thresholdMs:1000,samples:longFrameGaps.length,maxMs:longFrameGaps.length?Math.max(...longFrameGaps):0},timingTrace:timingTrace.slice(),
     rebuilds:rebuildCount,rebuildSamples:rebuilds.length,rebuildMeanMs:mean(rebuilds),rebuildMaxMs:rebuilds.length?Math.max(...rebuilds):0};
   }
  };

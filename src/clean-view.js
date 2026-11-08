@@ -30,8 +30,7 @@ function applyToScene(){
 
 function maintain(){
   if(!enabled){raf=0;return;}
-  applyToScene();
-  raf=requestAnimationFrame(maintain);
+  const perf=globalThis.__boxlabPerformance,start=perf?.start();try{applyToScene();raf=requestAnimationFrame(maintain);}finally{perf?.callback?.('clean-view',start);}
 }
 
 function syncButton(){

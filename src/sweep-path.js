@@ -455,7 +455,7 @@ function signature(){
   const m=ensureMeta(o);
   return[o.id,planeSignature(mesh),m.profileType,m.profileClosed,m.profilePoints.map(p=>String(Number(p.x).toFixed(4))+','+String(Number(p.y).toFixed(4))).join('|'),m.profileSize,m.profileSides,m.editProfile,m.pathMode,m.pathPoints.map(p=>String(Number(p.x).toFixed(4))+','+String(Number(p.y).toFixed(4))+','+String(Number(p.z).toFixed(4))).join('|'),m.editPath,m.caps,m.sessionStage].join(';');
 }
-function tick(){refreshSelectionLaunchButtons();const s=signature();if(s!==lastSignature){lastSignature=s;buildOverlay();}if(!s&&overlay){lastSignature='';buildOverlay();}raf=requestAnimationFrame(tick);}
+function tick(){const perf=globalThis.__boxlabPerformance,start=perf?.start();try{refreshSelectionLaunchButtons();const s=signature();if(s!==lastSignature){lastSignature=s;buildOverlay();}if(!s&&overlay){lastSignature='';buildOverlay();}raf=requestAnimationFrame(tick);}finally{perf?.callback?.('sweep',start);}}
 function disarmTransforms(){
   globalThis.__boxlabTransformArming?.disarm?.();
   document.querySelectorAll('#toolModes button.active').forEach(button=>button.classList.remove('active'));

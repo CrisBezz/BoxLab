@@ -24,7 +24,7 @@ import './quadify-ngons.js?v=0.36.18.203';
 import './face-inspect-drawer.js?v=0.36.18.141';
 import './face-repair-drawer.js?v=0.36.18.145';
 import './diagnostic-drawer-state.js?v=0.36.18.176';
-import './clean-view.js?v=0.36.18.998';
+import './clean-view.js?v=0.36.18.1111';
 import './cavity-view.js?v=0.36.18.186';
 import './silhouette-view.js?v=0.36.18.186';
 import './studio-polish.js?v=0.36.18.1022';
@@ -34,7 +34,7 @@ import './backdrop-presets.js?v=0.36.18.190';
 import './studio-light-angle.js?v=0.36.18.199';
 import './cage-intensity.js?v=0.36.18.846';
 import './live-mesh-bridge.js?v=0.36.18.840';
-import './release-version.js?v=0.36.18.1110';
+import './release-version.js?v=0.36.18.1111';
 import './beta-runtime-guard.js?v=0.36.18.193';
 import './loop-cut-feedback.js?v=0.36.18.193';
 

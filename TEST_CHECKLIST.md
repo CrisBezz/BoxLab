@@ -1,3 +1,13 @@
+# .1111 — callback and scheduler diagnosis — 9 November 2026
+
+User FAILs .1110 performance: possibly worse. Report records10 gaps/max3212ms and first-move event delivery1084ms; camera response remains0–2ms, texture decode15ms/display38ms and one29ms rebuild. No improvement or regression causality inferred from unmatched manual windows. .1110 copy-removal correctness remains covered, but performance gate is FAIL and latency cause OPEN.
+
+.1111 extends existing opt-in Performance owner: complete main animation callback including controls.update, named recurring gizmo/origin/sweep/Clean View callbacks and monitor-refresh timings;100ms heartbeat records timer lateness separately from animation gaps. Last120 timings per owner,80 trace entries, callback spans>=50ms and timer lateness>=250ms. Hidden-document heartbeat pauses, Reset clears timing baselines, Close clears timers. Async browser work, uninstrumented handlers and GPU/compositor can still cause unexplained gaps; timing correlation alone is not attribution. Existing owners/scheduling retained; protected Multi transform untouched.
+
+Corrected focused checks15/15 pass; initial full local run3235 PASS/2 FAIL exposed timer-count and Sweep cache-key/source-version assumptions. Both contracts corrected without runtime changes; hosted final full regression/publication pending. Device: same textured model → Performance Reset → orbit/pan/pinch and a short hands-off interval → download report; confirm navigation and controls remain usable. This is a diagnostic build, not a claimed performance fix. Prior PASSes retained; native1111 pending.
+
+---
+
 # .1110 — origin marker avoids mesh/history saves — 9 November 2026
 
 .1109 iPad trace: seven long gaps, maximum2244ms, no rebuild/texture stages; one navigation submission2235ms overlaps2241ms frame gap. Two-finger movement-to-camera0–1ms. This does not prove the blocking owner. Code audit found origin marker updateMarker → activeObject → manager.objects → saveActive copying live mesh/settings/history every animation frame, including hidden component modes. .1110 exposes the existing manager activeObject identity through its API and uses it ONLY for the marker display read, after mode/camera guards. The origin module selection-ID wrapper also uses existing groupMetadata instead of the saving objects getter; it needs only IDs/group membership. Existing action-side activeObject reads and saveActive semantics remain. Original ensureOrigin retains lazy origin initialization and live-mesh fallback. No protected Multi transform change or new modelling owner. Device performance gain remains unmeasured.

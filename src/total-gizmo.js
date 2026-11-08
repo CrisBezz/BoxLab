@@ -1122,6 +1122,7 @@ function syncAxisVisuals(center,camera){
 }
 
 function sync(){
+  const perf=globalThis.__boxlabPerformance,start=perf?.start();try{
   raf=requestAnimationFrame(sync);
   const s=state(),mesh=s?.mesh,camera=s?.camera,mode=currentMode();
   if(!canvas||!viewportWrap||!mesh?.vertices?.length||!camera||!selectionAvailable(mesh,mode)){
@@ -1176,6 +1177,7 @@ function sync(){
   root.dataset.singleComponent=mode!=='object'&&selectionKey(mesh,mode).split(':')[1]?.split(',').filter(Boolean).length===1?'true':'false';
   if(!root.hidden&&!suppressed&&!objectTransformDismissed&&(hubState==='transform'||mode==='object'))syncAxisVisuals(c,camera);
   syncEdgeExtrudeConstraintVisuals();
+  }finally{perf?.callback?.('gizmo',start);}
 }
 sync();
 

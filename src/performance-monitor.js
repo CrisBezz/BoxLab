@@ -1,16 +1,18 @@
-import {createPerformanceMonitor} from './performance-core.js?v=0.36.18.1109';
+import {createPerformanceMonitor} from './performance-core.js?v=0.36.18.1111';
 const monitor=createPerformanceMonitor();
-let panel=null,output=null,timer=null,button=null;
+let panel=null,output=null,timer=null,heartbeatTimer=null,button=null;
 const number=(value,digits=0)=>Number(value||0).toFixed(digits);
 const phase=(s,key)=>s.stages?.[key]?`${number(s.stages[key].meanMs,1)}/${number(s.stages[key].maxMs,1)} ms · n=${s.stages[key].samples}`:'—';
 const phaseNavigation=s=>s?.samples?`${number(s.meanMs,1)}/${number(s.maxMs,1)} ms · p95 ${number(s.p95Ms,1)} · n=${s.samples}`:'—';
 const navigationKind=s=>s?.samples?`${number(s.meanMs,1)}/${number(s.p95Ms,1)} · n=${s.samples}`:'—';
 function refresh(){
- if(!output)return;const s=monitor.snapshot();
+ if(!output)return;const refreshStart=monitor.start();try{const s=monitor.snapshot();
  output.textContent=s.samples?[
   `${number(s.fps)} FPS · frame ${number(s.frameMs,1)} ms · p95 ${number(s.p95Ms,1)} ms`,
   `Long frame gaps ≥${s.longFrameGaps.thresholdMs} ms: ${s.longFrameGaps.samples} · max ${number(s.longFrameGaps.maxMs,1)} ms`,
   `Timing trace ${s.timingTrace.length}/80 · stage spans, frame gaps and navigation submits ≥250 ms`,
+  `Timer lateness mean/max ${number(s.heartbeat.meanMs,1)}/${number(s.heartbeat.maxMs,1)} ms`,
+  `Callback mean/max ms: ${Object.entries(s.callbacks).map(([name,v])=>name+' '+number(v.meanMs,1)+'/'+number(v.maxMs,1)).join(' · ')}`,
   `Markers ${number(s.markers,1)} ms · render submit ${number(s.render,1)} ms`,
   `Draw calls ${s.calls} · triangles ${s.triangles}`,
   `Geometries ${s.geometries} · textures ${s.textures}`,
@@ -32,10 +34,10 @@ function refresh(){
   `Active cache ${s.cacheOwners.active.hits} hits · ${s.cacheOwners.active.misses} misses`,
   `Inactive cache ${s.cacheOwners.inactive.hits} hits · ${s.cacheOwners.inactive.misses} misses`,
   `Active Undo ${s.undo} · Redo ${s.redo}`
- ].join('\n'):'Collecting frames…';
+ ].join('\n'):'Collecting frames…';}finally{monitor.callback('monitor-refresh',refreshStart);}
 }
 function setEnabled(value){
- monitor.setEnabled(value);clearInterval(timer);timer=null;
+ monitor.setEnabled(value);clearInterval(timer);timer=null;clearInterval(heartbeatTimer);heartbeatTimer=null;
  button?.setAttribute('aria-pressed',String(monitor.enabled));button?.classList.toggle('active',monitor.enabled);
  if(!monitor.enabled){panel?.remove();panel=null;output=null;return false;}
  if(!panel){
@@ -48,12 +50,12 @@ function setEnabled(value){
   panel.append(title,output,note,actions);document.querySelector('#viewportWrap')?.append(panel);
   const currentPanel=panel;import('./performance-lab-ui.js?v=0.36.18.1106').then(m=>{if(panel===currentPanel&&panel.isConnected)m.installPerformanceLab(panel,monitor);}).catch(()=>{if(panel===currentPanel)note.textContent+=' Lab could not load; reopen to retry.';});
  }
- refresh();timer=setInterval(refresh,500);return true;
+ refresh();timer=setInterval(refresh,500);heartbeatTimer=setInterval(()=>{if(document.visibilityState==='hidden'){monitor.pause();return;}monitor.heartbeat();},100);return true;
 }
 function install(){
  if(button)return;const grid=document.querySelector('#gestureDebugToggle')?.parentElement;if(!grid)return;
  button=document.createElement('button');button.type='button';button.id='performanceToggle';button.textContent='Performance';button.title='Show performance measurements';button.setAttribute('aria-pressed','false');button.addEventListener('click',()=>setEnabled(!monitor.enabled));grid.append(button);
 }
-globalThis.__boxlabPerformance={get enabled(){return monitor.enabled;},start:monitor.start,rebuild:monitor.rebuild,stage:monitor.stage,cache:monitor.cache,frame:monitor.frame,snapshot:monitor.snapshot,setEnabled,observeNavigation:monitor.observeNavigation,navigationRendered:monitor.navigationRendered};
+globalThis.__boxlabPerformance={get enabled(){return monitor.enabled;},start:monitor.start,rebuild:monitor.rebuild,stage:monitor.stage,cache:monitor.cache,frame:monitor.frame,callback:monitor.callback,snapshot:monitor.snapshot,setEnabled,observeNavigation:monitor.observeNavigation,navigationRendered:monitor.navigationRendered};
 document.addEventListener('visibilitychange',()=>monitor.pause());
 install();window.addEventListener('load',install,{once:true});

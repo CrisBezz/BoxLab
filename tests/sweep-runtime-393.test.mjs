@@ -1,4 +1,4 @@
-import {assertAssetReference} from './helpers/release-contract.mjs';
+import {assertAssetReference,contract} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -8,7 +8,7 @@ const ui=fs.readFileSync(new URL('../src/sweep-path.js',import.meta.url),'utf8')
 const version=JSON.parse(fs.readFileSync(new URL('../version.json',import.meta.url),'utf8')).version;
 
 test('Sweep is wired into Add and current runtime',()=>{
-  const wrapper=index.match(/sweep-path\.js\?v=([^"]+)/)?.[1];
+  const wrapper=contract.references.find(r=>r.target==='src/sweep-path.js')?.sourceVersion||index.match(/sweep-path\.js\?v=([^"]+)/)?.[1];
   assertAssetReference(index,'sweep-path.js');
   assert.match(primitive,/button\(p,'Sweep',/);
   assert.match(primitive,/boxlab-add-sweep-path/);

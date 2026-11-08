@@ -222,7 +222,7 @@ function updateMarker(){
   mark.style.left = `${r.left + (p.x*.5+.5)*r.width}px`;
   mark.style.top = `${r.top + (-p.y*.5+.5)*r.height}px`;
 }
-function markerLoop(){ updateMarker(); raf = requestAnimationFrame(markerLoop); }
+function markerLoop(){const perf=globalThis.__boxlabPerformance,start=perf?.start();try{updateMarker();raf=requestAnimationFrame(markerLoop);}finally{perf?.callback?.('origin',start);}}
 function axisVector(axis){ return new THREE.Vector3(axis==='x'?1:0, axis==='y'?1:0, axis==='z'?1:0); }
 function constraint(){
   return globalThis.__boxlabTransformArming?.constraint?.() || document.querySelector('#transformPrecision [data-constraint].active')?.dataset?.constraint || 'free';

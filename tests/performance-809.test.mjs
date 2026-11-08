@@ -30,12 +30,12 @@ test('809 native rebuild timing surrounds existing owner without duplicate rebui
  vm.createContext(c);vm.runInContext(text,c);c.renderMesh();assert.equal(monitor.snapshot().rebuilds,0);monitor.setEnabled(true);c.renderMesh();assert.equal(monitor.snapshot().rebuilds,1);assert.equal(monitor.snapshot().rebuildMeanMs,10);assert.deepEqual(order,['clear','add','cage','clear','add','cage']);
 });
 test('809 whole diagnostic UI installs once, updates counters and closes without claiming viewport gestures',()=>{
- const nodes=new Map(),timers=new Map(),listeners={};let next=0;
+ const nodes=new Map(),timers=new Map(),listeners={},delays=[];let next=0;
  function node(){const n={children:[],style:{},attrs:{},classList:{toggle(){}},handlers:{},append(...children){this.children.push(...children);for(const child of children)child.parentElement=this;},setAttribute(k,v){this.attrs[k]=v;},addEventListener(t,f){this.handlers[t]=f;},remove(){this.parentElement.children=this.parentElement.children.filter(n=>n!==this);}};return n;}
  const grid=node(),wrap=node();nodes.set('#gestureDebugToggle',{parentElement:grid});nodes.set('#viewportWrap',wrap);
- const c={createPerformanceMonitor,document:{createElement:node,querySelector:s=>nodes.get(s),addEventListener:(t,f)=>listeners[t]=f},window:{addEventListener:(t,f)=>listeners[t]=f},setInterval:f=>{timers.set(++next,f);return next;},clearInterval:id=>timers.delete(id)};
+ const c={createPerformanceMonitor,document:{createElement:node,querySelector:s=>nodes.get(s),addEventListener:(t,f)=>listeners[t]=f},window:{addEventListener:(t,f)=>listeners[t]=f},setInterval:(f,ms)=>{delays.push(ms);timers.set(++next,f);return next;},clearInterval:id=>timers.delete(id)};
  vm.createContext(c);vm.runInContext(fs.readFileSync(new URL('../src/performance-monitor.js',import.meta.url),'utf8').replace(/^import .*;\n/,''),c);
- listeners.load();assert.equal(grid.children.length,1);const button=grid.children[0];button.handlers.click();assert.equal(c.__boxlabPerformance.enabled,true);assert.equal(wrap.children.length,1);assert.equal(timers.size,1);
+ listeners.load();assert.equal(grid.children.length,1);const button=grid.children[0];button.handlers.click();assert.equal(c.__boxlabPerformance.enabled,true);assert.equal(wrap.children.length,1);assert.equal(timers.size,2);assert.deepEqual(delays,[500,100]);
  c.__boxlabPerformance.frame(10,2,3,{render:{calls:40,triangles:30},memory:{geometries:12,textures:2}},{vertices:[1],faces:[]},{undoStack:[],redoStack:[]});c.__boxlabPerformance.frame(30,2,3,{render:{calls:40,triangles:30},memory:{geometries:12,textures:2}},{vertices:[1],faces:[]},{undoStack:[],redoStack:[]});[...timers.values()][0]();
  c.__boxlabPerformance.stage('geometry',0);c.__boxlabPerformance.cache(true);[...timers.values()][0]();
  assert.match(wrap.children[0].children[1].textContent,/Phase mean\/max ms/);assert.match(wrap.children[0].children[1].textContent,/SubD cache 1 hits/);assert.match(wrap.children[0].children[1].textContent,/Active cache 1 hits/);assert.match(wrap.children[0].children[1].textContent,/Inactive cache 0 hits/);
