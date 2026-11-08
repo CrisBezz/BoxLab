@@ -4,7 +4,7 @@ The next narrow interaction build exposes four persistent options under VIEW →
 
 The .1099 iPad report confirms the imported UV image's observed delay in this capture: decode 1,178 ms; overlay creation to logical enable 2,388 ms. The same report has healthy recent frame pacing (mean16.675 ms / p95 17 ms), only three scene/rebuild samples, and no recorded deterministic orbit window. One decode sample during import cannot show whether the texture is being recreated while orbiting. Do not implement pixelated orbit rendering yet. Ask for a separate sustained orbit/pan/zoom capture on the already-textured model, with Performance reset after import; compare frame/p95 and render-mode/UV-preview samples and check whether texture decoding recurs. If those timings remain healthy, capture the visible repaint separately before changing render quality.
 
-Protected baselines remain intact, especially `src/multi-object-transform.js?v=0.36.1.0`, imported UV Paint, touch navigation, and undo/redo. Focused checks passed25/25; the complete local suite passed3,223/3,223 and `git diff --check` is clean. Hosted regression, Pages and live-byte verification are pending.
+Protected baselines remain intact, especially `src/multi-object-transform.js?v=0.36.1.0`, imported UV Paint, touch navigation, and undo/redo. Focused checks passed25/25; the complete local suite passed3,223/3,223. Hosted Topology `42429572503` succeeded, Pages `42429572065` succeeded and all19 changed files byte-match the live site. Local `main` is synced to release commit `c53db2f99b8e4cdf7b7c542c18b3427af8ede4dc`. Native device acceptance remains pending.
 
 ---
 

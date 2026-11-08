@@ -8,7 +8,7 @@
 - [ ] Regression smoke: enter UV Paint, paint one stroke, Done/reopen; test orbit, pan, zoom and Object/Face mode switching.
 - [x] Focused local settings, Pencil route, pointer activation, palette placement and release-contract tests: 39 PASS / 0 FAIL.
 - [x] Full local regression suite: 3,223 PASS / 0 FAIL. `git diff --check` clean; protected transform unchanged.
-- [ ] Hosted Topology, Pages and live-byte verification.
+- [x] Hosted Topology `42429572503` succeeded; Pages `42429572065` succeeded; all19 changed files byte-match the live site.
 - [ ] User device acceptance. Do not protect as PASS until confirmed.
 
 `.1099` diagnostics: supplied iPad report had one `texture-decode` sample at 1,178 ms and one `texture-display` sample at 2,388 ms; 120 frame intervals averaged16.675 ms (p95 17 ms). Report was captured in Object mode, with three rebuild/scene samples and no controlled orbit sequence. It confirms the recorded import display delay but does not establish a texture reload during orbit or justify reduced-resolution rendering. Capture a sustained orbit/pan/zoom of the same already-textured model before deciding on adaptive texture quality.
