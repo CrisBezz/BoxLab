@@ -1,3 +1,11 @@
+# .1110 — origin marker avoids mesh/history saves — 9 November 2026
+
+.1109 iPad trace: seven long gaps, maximum2244ms, no rebuild/texture stages; one navigation submission2235ms overlaps2241ms frame gap. Two-finger movement-to-camera0–1ms. This does not prove the blocking owner. Code audit found origin marker updateMarker → activeObject → manager.objects → saveActive copying live mesh/settings/history every animation frame, including hidden component modes. .1110 exposes the existing manager activeObject identity through its API and uses it ONLY for the marker display read, after mode/camera guards. The origin module selection-ID wrapper also uses existing groupMetadata instead of the saving objects getter; it needs only IDs/group membership. Existing action-side activeObject reads and saveActive semantics remain. Original ensureOrigin retains lazy origin initialization and live-mesh fallback. No protected Multi transform change or new modelling owner. Device performance gain remains unmeasured.
+
+Focused origin/cage checks pass14/14; diff check clean. Hosted full regression and publication verification pending. Device: compare orbit→pan→pinch on the same textured model, confirm origin marker follows selection and Move/Undo/Redo, then reset Performance and download report. Native acceptance pending; .1104 spacing/.1102 scene and modes and prior Paint PASSes protected.
+
+---
+
 # .1109 — measure two-finger gesture onset — 8 November 2026
 
 User confirms .1108 orbit is prompt, pan hesitates and pinch zoom hesitates longer. Its report has no stage/rebuild work, four long frame gaps (max 2302ms), and navigation-submit max11ms. This does not identify the delay cause or prove gaps occurred during gestures. Audit confirms main uses FreeOrbitControls, which preserves Three pointer ownership and customizes two-finger dolly/pan. Existing passive monitor now traces touch-contact, first-touch-move and navigation-onset intervals, contact count, controls enabled state and comparable event timestamp delivery age. Contact-to-move includes deliberate user waiting; timestamp age is not hardware-to-screen latency. No navigation behavior fix is claimed. Protected Multi transform and .1104/.1102 PASSes remain unchanged.

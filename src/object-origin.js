@@ -39,7 +39,8 @@ function groupMembers(groupId){
 }
 function expandedSelectionIds(){
   const ids = baseSelectionIds();
-  const objects = manager()?.objects || [];
+  const m = manager();
+  const objects = m?.groupMetadata?.() || [];
   for(const object of objects){
     if(!ids.has(object.id) || object.groupId == null) continue;
     for(const member of objects) if(member.groupId === object.groupId) ids.add(member.id);
@@ -211,8 +212,10 @@ function ensureMarker(){
   return marker;
 }
 function updateMarker(){
-  const mark = ensureMarker(), s = state(), object = activeObject();
-  if(mode() !== 'object' || !s?.camera || !object){ mark.hidden = true; return; }
+  const mark = ensureMarker(), s = state();
+  if(mode() !== 'object' || !s?.camera){ mark.hidden = true; return; }
+  const object = manager()?.activeObject?.();
+  if(!object){ mark.hidden = true; return; }
   const p = ensureOrigin(object, s.mesh).project(s.camera), r = canvas?.getBoundingClientRect();
   if(!r || p.z < -1 || p.z > 1){ mark.hidden = true; return; }
   mark.hidden = false;

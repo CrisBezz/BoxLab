@@ -1110,6 +1110,7 @@ function initialize() {
     sourceId(id) { return objects.find(item=>item.id===id)?.sourceId||null; },
     resetAll,
     saveActive,
+    activeObject, // Stored identity for display readers; does not save mesh/history.
     get activeId() { return activeId; },
     groupMetadata,
     get objects() { saveActive(); return objects; },
