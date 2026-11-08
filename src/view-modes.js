@@ -1,4 +1,5 @@
 import {mountViewMenuSurface} from './view-menu-surface.js?v=0.36.18.998';
+import {mountGeneralSettings} from './general-settings.js?v=0.36.18.1100';
 import * as THREE from 'three';
 
 const status=document.querySelector('#selectionStatus');
@@ -173,6 +174,7 @@ function toggleFocusView(){
 const ui=ensureUI();
 const viewSurface=mountViewMenuSurface({menu:ui,panel:document.querySelector('#viewModesPanel')||ui?.querySelector('.viewport-menu-panel'),parent:document.querySelector('#app')||document.body});
 const viewPanel=viewSurface?.panel;
+mountGeneralSettings(viewPanel);
 const gestureDebugButton=document.querySelector('#gestureDebugToggle');
 function syncGestureDebugButton(){
   if(!gestureDebugButton)return;

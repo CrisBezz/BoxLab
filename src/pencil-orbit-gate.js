@@ -2,6 +2,7 @@ import * as THREE from 'three';
 
 const canvas = document.querySelector('#viewport');
 function gestureDebug(stage,detail=null){globalThis.__boxlabGestureDebug?.log?.(stage,detail);}
+function generalSettings(){return globalThis.__boxlabGeneralSettings?.get?.()||{pencilOrbit:true,pencilSelection:true};}
 
 if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
   const nativeAddEventListener = canvas.addEventListener.bind(canvas);
@@ -21,6 +22,7 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
   const physicalTouchContacts = new Set();
   const recentlyEndedTouchIds = [];
   const penBackgroundTaps = new Map();
+  const suppressedPenSelections = new Set();
   const RECENT_TOUCH_LIMIT = 12;
   let orbitRegistrationDepth = 0;
 
@@ -77,6 +79,30 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
       event.stopImmediatePropagation?.();
     }, { capture: true, passive: false });
   }
+
+  // When Pencil selection is disabled, keep stylus contacts over the model out
+  // of the selection owners. If Pencil orbit remains enabled, the existing
+  // deferred-orbit path can still claim a deliberate drag after its threshold.
+  nativeAddEventListener('pointerdown',event=>{
+    if(event.target!==canvas||event.pointerType!=='pen'||!isPenContact(event)||generalSettings().pencilSelection)return;
+    const toolOwns=!!globalThis.__boxlabFaceDirect?.active?.()||!!globalThis.__boxlabMainDirectTool?.ownsModellingGesture?.()||!!globalThis.__boxlabViewportPaint?.active||!!globalThis.__boxlabLasso?.isArmed?.()||!!globalThis.__boxlabFacegroupStroke?.armed;
+    if(toolOwns||!pencilHitsEditableMesh(event))return;
+    suppressedPenSelections.add(event.pointerId);
+    const settings=generalSettings();
+    if(settings.pencilOrbit)pendingMeshOrbit={pointerId:event.pointerId,x:event.clientX,y:event.clientY,pageX:event.pageX,pageY:event.pageY,button:event.button,buttons:event.buttons||1,pressure:event.pressure,ctrlKey:event.ctrlKey,metaKey:event.metaKey,shiftKey:event.shiftKey,altKey:event.altKey,selectionMode:null,selectionIndices:[]};
+    event.preventDefault?.();
+    event.stopImmediatePropagation?.();
+    gestureDebug('PEN SELECTION DISABLED',{pid:event.pointerId,orbit:settings.pencilOrbit});
+  },{capture:true,passive:false});
+
+  nativeAddEventListener('pointerup',event=>{
+    if(event.pointerType!=='pen'||!suppressedPenSelections.has(event.pointerId))return;
+    suppressedPenSelections.delete(event.pointerId);event.preventDefault?.();event.stopImmediatePropagation?.();
+  },{capture:true,passive:false});
+  nativeAddEventListener('pointercancel',event=>{
+    if(event.pointerType!=='pen'||!suppressedPenSelections.has(event.pointerId))return;
+    suppressedPenSelections.delete(event.pointerId);event.preventDefault?.();event.stopImmediatePropagation?.();
+  },{capture:true,passive:false});
 
   function pencilHitsEditableMesh(event) {
     if (event.pointerType !== 'pen') return false;
@@ -247,7 +273,7 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
       return;
     }
     const dx=event.clientX-pendingMeshOrbit.x,dy=event.clientY-pendingMeshOrbit.y;
-    if(Math.hypot(dx,dy)<DEFERRED_ORBIT_PX)return;
+    if(Math.hypot(dx,dy)<DEFERRED_ORBIT_PX){if(suppressedPenSelections.has(event.pointerId))event.stopImmediatePropagation?.();return;}
     const pending=pendingMeshOrbit;
     pendingMeshOrbit=null;
 
@@ -294,6 +320,10 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
 
     event.preventDefault?.();
     event.stopImmediatePropagation?.();
+  },{capture:true,passive:false});
+
+  nativeAddEventListener('pointermove',event=>{
+    if(event.pointerType==='pen'&&suppressedPenSelections.has(event.pointerId))event.stopImmediatePropagation?.();
   },{capture:true,passive:false});
 
   function pendedSelectionCount(pending){
@@ -372,7 +402,8 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
         // If its stricter hit test declines that down, keep the same mesh contact
         // out of deferred-orbit promotion; only empty-space Pencil drags navigate.
         const modellingToolActive=faceToolActive||mainDirectActive||lassoActive||viewportPaintActive&&(!!meshHit||paintHit)||(selectionMode==='face'&&!!globalThis.__boxlabFacegroupStroke?.armed);
-        const deferred=blocked&&!modellingToolActive;
+        const settings=generalSettings();
+        const deferred=blocked&&!modellingToolActive&&settings.pencilOrbit;
         // Background Pencil tap candidacy is owned by window-capture tracking,
         // independent of whether OrbitControls receives this pointerdown.
         gestureDebug('PEN ORBIT ROUTE',{
@@ -412,7 +443,7 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
           };
           return;
         }
-        if(blocked)return;
+        if(blocked||!settings.pencilOrbit)return;
         penOrbitPointers.add(event.pointerId);
       }
       const result = listener.call(this, event);

@@ -1,3 +1,17 @@
+# .1100 — configurable interaction preferences and Pencil outliner activation — 8 November 2026
+
+Current build .1100 adds persistent **VIEW → General Settings** preferences for Pencil orbit, Pencil mesh selection, placing the snap controls at the top left, and a left-handed layout. Left-handed layout moves the main tool panel to the right, the Object Browser to the left, and prefers the right side of the model for the UV Paint palette. Preferences live in `src/general-settings.js`; the existing Pencil gate and existing Paint palette placement owner consume them. `src/outliner-pointer-activation.js` repairs iPad Pencil/touch activation on the existing object list by dispatching the original control's click on pointerup and suppressing its duplicate browser click. No second object-selection owner or modelling kernel was added.
+
+Defaults preserve the prior behavior: Pencil orbit/selection on; snap controls bottom-left; left-handed layout off. Settings persist in browser local storage. When Pencil selection is off, mesh contacts no longer select; if Pencil orbit is on, a deliberate drag over the mesh can still orbit after the existing movement threshold. Finger selection/navigation and active modelling/Paint tools remain owned by their existing handlers.
+
+Device acceptance is pending. Test all four switches and persistence after reload; select an object from the list using Pencil (also test its visibility and SubD buttons); test Pencil/finger selection and orbit; verify snap positioning and left-handed Object Browser/tool panel/UV Paint palette placement. Keep the `src/multi-object-transform.js?v=0.36.1.0` protected file unchanged.
+
+`.1099` iPad report received (iPad Chrome, 1366×886/DPR2, 1,002 vertices/1,000 faces): texture decode 1,178 ms (1 sample); overlay construction to enable 2,388 ms (1 sample); viewport frames averaged 16.675 ms (~59.97 FPS), p95 17 ms; three rebuild samples averaged 28.67 ms/max41; UV preview averaged8.67 ms/max15. This confirms a visible async import wait in the captured import window, but does not identify the orbit-time visual redraw: there is only one decode sample, three scene samples, and no controlled camera sequence. Do not add reduced-resolution orbit rendering based on this snapshot. Next performance check: capture a sustained orbit/pan/zoom on the same already-textured model and compare frame/p95, render-mode/UV-preview and texture-decode sample counts; only consider temporary pixelation if the measured navigation cost or repeat texture work warrants it.
+
+Focused .1100 settings, pointer activation, orbit routing, palette placement and release-contract checks passed 39/39 before the final continuity check; focused tests including the `.1099` comparison-record migration passed25/25. The full local suite passed3,223/3,223; `git diff --check` is clean and the protected transform file is unchanged. Hosted regression, Pages and live-byte verification are pending.
+
+---
+
 # .1099 — measure imported UV texture delay — 7 November 2026
 
 Build .1099 adds opt-in timings to the existing VIEW → Diagnostics → Performance monitor for imported UV images. It measures each image's decode/preparation wall time, including async browser bitmap decoding, and elapsed time from UV overlay construction until the overlay is enabled and replaces the grey body material. Existing rendering/import ownership and visibility behavior are unchanged; this is diagnosis, not an optimization. Surface-enable time is not proof of when the next GPU frame has finished drawing.

@@ -161,9 +161,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1099",
+      "url": "./src/drawer-ui.js?v=0.36.18.1100",
       "target": "src/drawer-ui.js",
-      "sha256": "a25c1b8777ff31c22177855820f421d234633219ffc2705329a35afc8c1610b8"
+      "sha256": "c5d62c316af6653abd5e1c4af60ee185eb64836387f0e13880085227ea9cd78d"
     },
     {
       "owner": "index.html",
@@ -348,9 +348,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/pencil-orbit-gate.js?v=0.36.18.1055",
+      "url": "./src/pencil-orbit-gate.js?v=0.36.18.1100",
       "target": "src/pencil-orbit-gate.js",
-      "sha256": "a7e8fc86e3964448b29dff9acaa0631a56c1ba75539bb24981205e2ec9bf490c"
+      "sha256": "25ff2840401dd5b33c8bd66a8b3f9972d4a743bf4dd86f8f4bfcb37bafc93ce8"
     },
     {
       "owner": "index.html",
@@ -378,7 +378,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1099",
+      "url": "./src/release-version.js?v=0.36.18.1100",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -575,9 +575,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/view-modes.js?v=0.36.18.998",
+      "url": "./src/view-modes.js?v=0.36.18.1100",
       "target": "src/view-modes.js",
-      "sha256": "ae06f237a8cbb4c5e68af05ab42f146ee89d522ddc6170e0898c4f0e70bcfffc"
+      "sha256": "10240df943de6edc2fc1b270807bd7e9ee90f914426a8807a30ea3cb245c28db"
     },
     {
       "owner": "index.html",
@@ -864,9 +864,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1099",
+      "url": "./face-workflow-layout.js?v=0.36.18.1100",
       "target": "src/face-workflow-layout.js",
-      "sha256": "e23c1d00a684bc5a1227625f5f38caf74d9c9ab6edbc5d530118ec99b36873a0"
+      "sha256": "c58e1746c1492f71be26ca16cd66c0410bc99b8697c22ca7a87e6ac76dc95b5a"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1361,7 +1361,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1099",
+      "url": "./release-version.js?v=0.36.18.1100",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -2456,9 +2456,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/viewport-paint.js?v=0.36.18.1095",
+      "url": "./src/viewport-paint.js?v=0.36.18.1100",
       "target": "src/viewport-paint.js",
-      "sha256": "9c9080f82c5d71f8bee8bdee35454e959745a58fc13fa36888c04a66538e4090"
+      "sha256": "2c346b6c78808ef9796c05635aa71b745c7eead773516bd31b2a97db5750b9bb"
     },
     {
       "owner": "src/viewport-paint.js",
@@ -3326,9 +3326,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1099",
+      "url": "./src/shell-comparison.js?v=0.36.18.1100",
       "target": "src/shell-comparison.js",
-      "sha256": "313774cab14a354aad3487af1fe05831e6e75beb9f12ec35d1fd6dfde52b860d"
+      "sha256": "67a9791e99f6e0beb260371106ff4e5bd384d1c6f94c0493f89232132d635d65"
     },
     {
       "owner": "src/main.js",
@@ -3641,6 +3641,18 @@
       "url": "./mesh.js?v=0.12",
       "target": "src/mesh.js",
       "sha256": "70511061a5e8701124616a387ced43d0bd1297ecf130afc1fbc74c3b3b010e24"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/outliner-pointer-activation.js?v=0.36.18.1100",
+      "target": "src/outliner-pointer-activation.js",
+      "sha256": "829beea3261d3a65c95233d807707710cf566cc2d8de6dd8216d22822810aa32"
+    },
+    {
+      "owner": "src/view-modes.js",
+      "url": "./general-settings.js?v=0.36.18.1100",
+      "target": "src/general-settings.js",
+      "sha256": "1c54e0408d6be6a9e66b38f5ceb21e783a14e809897be5e7f55ead7395650969"
     }
   ]
 }

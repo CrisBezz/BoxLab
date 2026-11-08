@@ -154,9 +154,14 @@ function positionPaintPalette(){
   const node=document.querySelector(selector),r=node&&!node.hidden&&node.getBoundingClientRect?.();
   if(r?.width>0&&r.height>0)obstacles.push({left:r.left-view.left,right:r.left-view.left+r.width,top:r.top-view.top,bottom:r.top-view.top+r.height});
  }
- const base=placePaintPalette(object,{width,height,viewWidth:view.width,viewHeight:view.height,obstacles,side:radialSide});radialSide=base.side;radialBase=base;
+ const preferredSide=globalThis.__boxlabGeneralSettings?.get?.().leftHanded?'right':'left';
+ const base=placePaintPalette(object,{width,height,viewWidth:view.width,viewHeight:view.height,obstacles,side:preferredSide});radialSide=base.side;radialBase=base;
  placeRadial(base.left+radialOffset.x,base.top+radialOffset.y);
 }
+window.addEventListener('boxlab-general-settings-change',event=>{
+ radialSide=event.detail?.leftHanded?'right':'left';
+ if(controller?.active)positionPaintPalette();
+});
 const materialControlKeys=['common-controls','quick-colour','quick-brush','roughness-controls','metalness-controls','opacity-controls','tip-controls','brush-settings','colour-details','multi-channel-controls'];
 function restoreToolControls(){for(const key of ['fill-controls','blur-controls','quick-mask-value'])quickControlParents[key].appendChild(input(key));for(const key of materialControlKeys)materialBody.appendChild(input(key));}
 function showQuickControls(){if(!controller?.active)return false;const action=input('paint-action').value;if(action==='paint')return showMaterialMenu();restoreToolControls();radial.dataset.state='controls';input('tool-picker').hidden=true;input('tool-picker').open=false;input('quick-panel').hidden=false;materialBody.hidden=true;quickBody.hidden=false;const label=paintTools.find(([v])=>v===action)?.[1]||'Brush';input('quick-title').textContent=label+' controls';for(const key of ['common-controls','multi-channel-controls','quick-brush'])quickBody.appendChild(input(key));if(controller.state.paintTarget==='opacity'||controller.state.multiPaintChannels.includes('opacity')){quickBody.appendChild(input('opacity-controls'));input('opacity-controls').hidden=false;}if(action==='fill')quickBody.appendChild(input('fill-controls'));if(['blur','sharpen'].includes(action))quickBody.appendChild(input('blur-controls'));if(action==='fill')quickBody.appendChild(input('quick-mask-value'));if(['erase','smudge','blur','sharpen'].includes(action))quickBody.appendChild(input('tip-controls'));input('size-control').hidden=action==='fill';input('pressure-controls').hidden=action==='fill';input('quick-mask-value').hidden=controller.state.paintTarget!=='mask';input('quick-help-popover').hidden=true;input('quick-help').dataset.helpOpen='false';input('quick-help').setAttribute('aria-expanded','false');input('quick-help').removeAttribute('aria-describedby');radial.hidden=false;positionPaintPalette();return true;}

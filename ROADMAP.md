@@ -1,3 +1,13 @@
+# .1100 — interaction preferences; continue evidence-led import performance work — 8 November 2026
+
+The next narrow interaction build exposes four persistent options under VIEW → General Settings: Pencil orbit, Pencil mesh selection, snap controls at top-left, and a left-handed layout. It reuses the existing Pencil gate and UV Paint palette placement owner, and adds Pencil/touch pointerup activation to the existing object list. No duplicate selection or rendering owner is introduced. User device acceptance is pending; see `TEST_CHECKLIST.md` for the short acceptance list.
+
+The .1099 iPad report confirms the imported UV image's observed delay in this capture: decode 1,178 ms; overlay creation to logical enable 2,388 ms. The same report has healthy recent frame pacing (mean16.675 ms / p95 17 ms), only three scene/rebuild samples, and no recorded deterministic orbit window. One decode sample during import cannot show whether the texture is being recreated while orbiting. Do not implement pixelated orbit rendering yet. Ask for a separate sustained orbit/pan/zoom capture on the already-textured model, with Performance reset after import; compare frame/p95 and render-mode/UV-preview samples and check whether texture decoding recurs. If those timings remain healthy, capture the visible repaint separately before changing render quality.
+
+Protected baselines remain intact, especially `src/multi-object-transform.js?v=0.36.1.0`, imported UV Paint, touch navigation, and undo/redo. Focused checks passed25/25; the complete local suite passed3,223/3,223 and `git diff --check` is clean. Hosted regression, Pages and live-byte verification are pending.
+
+---
+
 # .1099 — diagnose grey-to-textured import delay — 7 November 2026
 
 The .1098 user report identifies a profile window but does not give a controlled performance result: iPad Chrome 1366×886/DPR2, 1,002 vertices/1,000 faces, 81 rebuilds mean56.877/max1,150 ms; Scene hooks mean47.432/max1,139 ms; cage8.049 ms; UV preview4.481 ms; render mode4.815 ms; 120 frame intervals mean8.342 ms/p959 ms. No deterministic operation sequence or matched comparison was captured. Decision remains INCONCLUSIVE; no speedup/cause is established.
