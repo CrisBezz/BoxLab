@@ -33,6 +33,7 @@ export function installViewportToolbarControls(doc=document){
 #viewportSnapControls,#viewportActionControls{position:absolute;z-index:120;left:max(16px,env(safe-area-inset-left));box-sizing:border-box;width:58px;display:flex;flex-direction:column;align-items:stretch;gap:4px;padding:4px;border:1px solid rgba(255,255,255,.14);border-radius:11px;background:rgba(18,21,27,.94)}
 #viewportActionControls{bottom:var(--viewport-action-bottom)}
 #viewportSnapControls{bottom:calc(var(--viewport-action-bottom) + 156px + 8px)}
+html.boxlab-focus-view #viewportSnapControls,html.boxlab-focus-view #viewportActionControls{left:max(8px,env(safe-area-inset-left))}
 #paintSelectDepth{display:none!important}
 #viewportSnapControls>span{font-size:9px;letter-spacing:.06em;text-align:center;opacity:.72}
 #viewportSnapControls label,#viewportActionControls label{position:relative;display:flex;align-items:center;justify-content:center;width:48px;height:42px;cursor:pointer;border-radius:8px}

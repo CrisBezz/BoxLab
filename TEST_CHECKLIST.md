@@ -1,15 +1,13 @@
-# .1103 — left rail spacing (device acceptance pending)
+# .1104 — Snap top gap and Focus rail alignment (device acceptance pending)
 
-- [x] User confirms the .1102 scene/display issue is PASS; protect visible scene and visible/working mode buttons. Do not infer renderer changes; none were made.
-- [x] User supplied current BoxLab logo; .1102 logo placement remains protected.
-- [ ] Confirm Snap and Lasso/Select/Paint rails have matching outside widths.
-- [ ] Confirm an 8px gap between Snap and action rails and between the action rail and mode dock, in landscape and compact view.
-- [ ] Toggle VIEW → General Settings → Snap options at top left on/off; only the Snap box moves and both original snap inputs work.
-- [x] User confirms the scene display and all four visible/working mode buttons PASS; protect this result.
-- [ ] Check the right-side Object Browser/toolbar remains visible and opens normally after refresh; no right-side owner was changed.
-- [x] Focused rail/release regression checks: 34 PASS / 0 FAIL; full local `npm test`: 3,224 PASS / 0 FAIL; `git diff --check` clean.
-- [x] Hosted Topology `42447679178`: 3,224 PASS / 0 FAIL; runtime Pages `42447678875` succeeded. Handoff-only Pages `42447969868` succeeded.
-- [ ] Overall .1103 device acceptance remains pending; only the scene/mode display PASS is protected so far.
+- [x] User-confirmed scene display PASS and visible/working mode buttons PASS remain protected.
+- [x] .1103 equal rail widths and lower gap styling remain in place; user screenshot identifies remaining top-gap and Focus left-edge alignment issues.
+- [ ] With VIEW → General Settings → Snap options at top left enabled, confirm the Snap box is 8px below the viewport header, matching the intended lower spacing.
+- [ ] In Focus view, confirm the left edges of Snap, Lasso/Select/Paint and the mode dock line up.
+- [ ] Confirm equal outside rail widths, 8px Snap-to-action and action-to-mode gaps, and both original snap toggles still work.
+- [x] Focused toolbar/release checks: 34 PASS / 0 FAIL; full local `npm test`: 3,224 PASS / 0 FAIL; `git diff --check` clean. Regression asserts viewport-local `top:8px`, Focus rail left alignment, original General Settings owner and existing rail gaps/widths.
+- [ ] Hosted Topology/Pages verification pending.
+- [ ] User acceptance of .1104 spacing remains pending; do not re-test or unprotect the scene/mode display PASSes.
 
 ---
 

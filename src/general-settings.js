@@ -51,7 +51,7 @@ export function mountGeneralSettings(panel){
 .general-settings-list{display:grid;gap:4px}
 .general-settings-list label{display:flex;align-items:center;gap:9px;min-height:38px;padding:3px 8px;border:1px solid rgba(255,255,255,.08);border-radius:7px;background:rgba(255,255,255,.025);font-size:12px;touch-action:manipulation}
 .general-settings-list input{width:18px;height:18px;margin:0;accent-color:#83b8ff;flex:0 0 auto}
-html.boxlab-snap-top #viewportSnapControls{top:calc(var(--boxlab-topbar-h,60px) + 8px);bottom:auto}
+html.boxlab-snap-top #viewportSnapControls{top:8px;bottom:auto}
 html.boxlab-left-handed #viewportWrap>.floating-panel.left-panel{left:auto!important;right:max(8px,env(safe-area-inset-right))!important}
 html.boxlab-left-handed #objectBrowserPanel{right:auto;left:max(8px,env(safe-area-inset-left))}
 `;

@@ -1,5 +1,5 @@
 {
-  "baseline": "Reviewed .1103: Snap and action rails share a fixed width, with 8px gaps between the snap and action rails and between the action rail and mode dock. The existing Snap placement preference continues to move only the Snap box. .1102 display PASS and supplied logo remain protected.",
+  "baseline": "Reviewed .1104: the top Snap box sits 8px below the viewport header and both left rails align with the Focus mode dock. Existing Snap/action rails and 8px lower spacing remain. User-confirmed .1102 scene and mode display PASSes stay protected.",
   "references": [
     {
       "owner": "index.html",
@@ -161,9 +161,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1103",
+      "url": "./src/drawer-ui.js?v=0.36.18.1104",
       "target": "src/drawer-ui.js",
-      "sha256": "d18b69eef454aac242fb62ef6cb39ebde136d42a24b31c7d09de130ea0a86a8f"
+      "sha256": "eacfef947d116ee1308f914bee5dc72c0fd96c6cf031004a78692400c2118922"
     },
     {
       "owner": "index.html",
@@ -378,7 +378,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1103",
+      "url": "./src/release-version.js?v=0.36.18.1104",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -539,9 +539,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/topbar-layout.js?v=0.36.18.1103",
+      "url": "./src/topbar-layout.js?v=0.36.18.1104",
       "target": "src/topbar-layout.js",
-      "sha256": "2bd538cc72f62fbe09abd3ca6f928691e460c77338b1f1a1e9114464d1abf8e3"
+      "sha256": "4fd5696cf9960ba1a14f3d44d9a7bf9bff33747372ead8c86331d6cfc22b6d6e"
     },
     {
       "owner": "index.html",
@@ -575,9 +575,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/view-modes.js?v=0.36.18.1101",
+      "url": "./src/view-modes.js?v=0.36.18.1104",
       "target": "src/view-modes.js",
-      "sha256": "b05573fdc66eaba24c1360fca25c103ed339b9a9c34e007e378ca0670d4d15e4"
+      "sha256": "330583b963612fc59b4d1eb0a96978c08b6efbe7743f944ace7c94fc6fc4dc8c"
     },
     {
       "owner": "index.html",
@@ -864,9 +864,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1103",
+      "url": "./face-workflow-layout.js?v=0.36.18.1104",
       "target": "src/face-workflow-layout.js",
-      "sha256": "c5bb26b483f8efcdbf395fee965c6c283f2a8155b8f2021c8cf63a42e798607b"
+      "sha256": "03f06b24cac4be4e6f9be86e7a002bd557de389011936cd22f5aa1d954349bb3"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1361,7 +1361,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1103",
+      "url": "./release-version.js?v=0.36.18.1104",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -2044,9 +2044,9 @@
     },
     {
       "owner": "src/topbar-layout.js",
-      "url": "./viewport-toolbar-controls.js?v=0.36.18.1103",
+      "url": "./viewport-toolbar-controls.js?v=0.36.18.1104",
       "target": "src/viewport-toolbar-controls.js",
-      "sha256": "f8357cf1af7fdbe77d4d840b03b643a57b7d8627e39b9524df005f1cff0c83fe"
+      "sha256": "102c2a2d9de64225ff9d6b08f76966b06557eca6d3650d2fb7643a350b1e63f7"
     },
     {
       "owner": "src/total-gizmo.js",
@@ -3326,9 +3326,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1103",
+      "url": "./src/shell-comparison.js?v=0.36.18.1104",
       "target": "src/shell-comparison.js",
-      "sha256": "3e365bbfed4768b81ea5a62ba093119b63f69884cdeed5063025d863452f00c5"
+      "sha256": "4e880d2f2016d2fbec2f6e544239236a5212e1784410840dff0095d35655cce5"
     },
     {
       "owner": "src/main.js",
@@ -3650,9 +3650,9 @@
     },
     {
       "owner": "src/view-modes.js",
-      "url": "./general-settings.js?v=0.36.18.1101",
+      "url": "./general-settings.js?v=0.36.18.1104",
       "target": "src/general-settings.js",
-      "sha256": "c06f053c89c61b6cfe19552f221f82c55a5235ef5bd4ded3d4d35e5a2cf4bcb9"
+      "sha256": "ab28470bdcb50f3b1ea904548999b4d8a25dedc80d7da005f276855223f8a86b"
     },
     {
       "owner": "index.html",

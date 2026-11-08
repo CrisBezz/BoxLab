@@ -12779,3 +12779,8 @@ User confirms “Screen display problem is PASS.” Protect the .1102 scene and 
 ### .1103 publication verification — 8 November 2026
 
 Runtime commit `5cc5daa4d343be0a328f38bf72b497619493f0e1` is on main. Hosted Topology `42447679178` passed 3,224/3,224; runtime Pages `42447678875` succeeded. Full handoff/history/checklist/roadmap verification is published in docs-only commit `08a2cb3922cf0afb18c23c9f5f9067e692cd6801`; Pages `42447969868` succeeded. The live-page byte comparison could not be completed from this environment; the GitHub action runs and main commit are confirmed. User device acceptance remains pending for rail widths, 8px gaps and Snap-at-top; scene display and mode buttons are protected PASS.
+
+
+## .1103 spacing feedback and .1104 correction — 8 November 2026
+
+User screenshot says the .1103 spacing is still off. The top Snap rule used `calc(var(--boxlab-topbar-h) + 8px)` even though `#viewportWrap` is already offset below the topbar; this stacked the header height a second time. Focus view separately places the mode dock at 8px while rails remain 16px. .1104 changes the existing Snap-at-top rule to an 8px viewport-local inset and aligns both rails with the Focus mode dock. Retain equal widths and existing 8px lower gaps. No right-side, renderer, scene/model or mode-button owner changes. Scene display and mode buttons remain protected PASS; .1103 spacing is incomplete. Focused toolbar/release checks pass 34/34; full local suite passes 3,224/3,224; `git diff --check` is clean. Hosted Topology/Pages and device acceptance pending.
