@@ -2,7 +2,7 @@
 
 - [x] Review the .1107 iPad report: 7 frame gaps >=1,000 ms (max 3,243 ms); navigation-submit max 3,243 ms; texture decode/display 3,253 / 3,274 ms. Similar maxima are not proof of overlap because the report contains no timestamps.
 - [x] Extend the existing opt-in monitor with an 80-event timing trace: stage spans, long frame gaps and navigation submits >=250 ms. Reset clears the trace; normal metric windows and renderer behavior are unchanged.
-- [x] Focused diagnostic/release checks: 23 PASS / 0 FAIL; full local `npm test`: 3,233 PASS / 0 FAIL; `git diff --check` clean.
+- [x] Focused diagnostic/release checks: 23 PASS / 0 FAIL; full local `npm test`: 3,233 PASS / 0 FAIL; hosted Topology: 3,233 PASS / 0 FAIL; `git diff --check` clean. Pages succeeded and live app displays .1108.
 - [ ] On iPad, reset after the textured model is fully visible; separately orbit, pan and pinch; download the viewport report. Compare timestamped intervals and confirm ordinary navigation/UI remains usable.
 - [ ] Native result is not yet supplied. Do not infer a performance PASS, cause, GPU/compositor timing or WASM gain.
 

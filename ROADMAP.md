@@ -2,7 +2,7 @@
 
 The .1107 device report records seven >=1 s frame gaps (max 3,243 ms), a 3,243 ms input-to-render-submit maximum, texture decode 3,253 ms and time-until-visible 3,274 ms. Camera response and normal p95 remain low. These are aggregate maxima without timestamps; do not claim the events overlap or identify texture decode as the cause. Zoom samples were grouped into two pan+zoom gestures, so pure pinch was not isolated.
 
-Next narrow step: add bounded timestamped intervals to the existing Performance monitor for stage spans, long frame gaps and slow navigation submits. This should let the next report establish overlap. Focused checks pass 23/23; full local suite passes 3,233/3,233; `git diff --check` is clean. It changes diagnostics only; no renderer, camera, model or texture behavior is changed. Once the report shows which events overlap, audit that authoritative owner before any optimization. Do not infer GPU/compositor time or WASM benefit.
+Completed in .1108: bounded timestamped intervals in the existing Performance monitor for stage spans, long frame gaps and slow navigation submits. Focused checks pass 23/23; full local and hosted suites pass 3,233/3,233; `git diff --check` is clean. Runtime commit `5601dda6e52bc0e7c898e5ed19ff7a1b16eb5e12` is published; Pages `42473921522` succeeded and live app displays .1108. This changes diagnostics only; no renderer, camera, model or texture behavior changed. Once the report shows which events overlap, audit that authoritative owner before any optimization. Do not infer GPU/compositor time or WASM benefit.
 
 Protected: .1104 spacing PASS; .1102 scene and mode-button PASS; prior modelling/Paint behavior; `src/multi-object-transform.js?v=0.36.1.0` byte-identical. Native .1108 check remains pending.
 
