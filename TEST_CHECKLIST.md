@@ -1,14 +1,22 @@
-# .1105 — camera navigation response diagnostic (device acceptance pending)
+# .1106 — input-to-render-submit diagnostic (device acceptance pending)
 
-- [x] Preserve user-confirmed .1104 spacing PASS: Snap top gap, Focus rail alignment, equal widths and lower gaps.
-- [x] Preserve user-confirmed scene display and mode-button PASSes.
-- [x] Existing Performance monitor/export now records first input-to-camera-change response and subsequent camera changes for orbit, pan, zoom and combined pan+zoom. It remains opt-in and bounded; events are observed passively.
-- [x] Measurements stop at OrbitControls camera-change before rendering; no GPU/compositor latency, texture reload, optimization or performance PASS is claimed.
-- [x] Focused navigation, controls, performance, release/cache, and protected startup checks: 47 PASS / 0 FAIL. Full local `npm test`: 3,228 PASS / 0 FAIL; `git diff --check` clean.
-- [x] Runtime commit `5011c9d2a0510b94ac289dc5bfa2922770263cc0` published to `main`; GitHub release marker and live Pages app show .1105. Live shell shows the cube, snap/action rails and mode buttons.
-- [ ] On iPad with an already-textured model: Performance → Reset; perform short one-finger orbit, two-finger pan and pinch zoom passes separately. Confirm expected gesture counters/samples and report export.
-- [ ] Confirm scene/textures remain visible and Snap, mode and other viewport controls still work; note whether observed delay matches the reported input-to-camera-change samples.
-- [ ] Share the viewport report and observation. Device acceptance pending; no rendering change is planned unless captured data identifies the cost.
+- [x] Preserve .1104 spacing PASS and .1102 scene display/mode-button PASSes.
+- [x] The .1105 iPad report shows 1,002 vertices / 1,000 faces, 3 texture resources, 0 rebuilds and 120 frames at 59.97 FPS; camera-change response mean 0.035 ms / max 1 ms. This is CPU-only and does not resolve the reported pause.
+- [x] The .1105 report recorded 70 zoom camera updates but no completed zoom gesture or first zoom response; this exposed a session-boundary/classification gap, not proof that zoom itself failed.
+- [x] .1106 measures input-to-camera-change and input-to-completed-renderer.render submission by gesture. Gesture completion follows observed pointer lifecycle; controls and rendering remain unchanged.
+- [x] Focused performance/release tests: 31 PASS / 0 FAIL; includes actual-render-owner, completed-pinch, between-frame gesture handoff, passive observer and release-pin cases. Full local `npm test`: 3,231 PASS / 0 FAIL.
+- [ ] With an already-textured model, open VIEW → Diagnostics → Performance and Reset.
+- [ ] Make separate one-finger orbit, two-finger pan and pinch zoom passes. Confirm each completed gesture counter increments and first/latest render-submit timings populate for the matching type.
+- [ ] Confirm scene and texture remain visible, Snap and mode buttons work, and the viewport report downloads with per-gesture values. Note whether the perceived delay remains.
+- [ ] Device acceptance pending. Render-submit timing excludes GPU execution and compositor presentation.
+
+---
+
+# .1105 — camera navigation response diagnostic (report received; no PASS inferred)
+
+- [x] User supplied the .1105 iPad viewport report; quantitative summary and limitation are recorded in DEV_HISTORY.
+- [x] Camera-change telemetry emitted input/update samples, but zoom gesture completion was not counted reliably; .1106 supersedes this measurement path.
+- [ ] No user confirmation of .1105 diagnostic acceptance was supplied; do not mark .1105 PASS.
 
 ---
 

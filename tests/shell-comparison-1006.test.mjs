@@ -129,5 +129,5 @@ test('1009 comparison reads immutable shell identity even when legacy label meta
 test('1101 preserves an existing .1099 screen-comparison record when opening the new release',()=>{
  const prior={id:'native1099',release:'0.36.18.1099',mode:'current',ratings:{startup:'pass'},notes:'accepted on .1099'};
  const data=new Map([[key,JSON.stringify({version:1,release:'0.36.18.1099',runs:[prior]})]]),f=fixture('current',{data});
- const runs=f.api.report().runs;assert.equal(runs[0].id,prior.id);assert.equal(runs[0].release,prior.release);assert.equal(runs[0].notes,prior.notes);assert.equal(runs[0].ratings.startup,'pass');assert.equal(runs.at(-1).release,'0.36.18.1105');
+ const runs=f.api.report().runs;assert.equal(runs[0].id,prior.id);assert.equal(runs[0].release,prior.release);assert.equal(runs[0].notes,prior.notes);assert.equal(runs[0].ratings.startup,'pass');assert.equal(runs.at(-1).release,'0.36.18.1106');
 });
