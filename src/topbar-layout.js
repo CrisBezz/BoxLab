@@ -1,5 +1,5 @@
-import {installViewportSelectionPanel} from './viewport-selection-panel.js?v=0.36.18.732';
-import {installViewportToolbarControls} from './viewport-toolbar-controls.js?v=0.36.18.1023';
+import {installViewportSelectionPanel} from './viewport-selection-panel.js?v=0.36.18.1101';
+import {installViewportToolbarControls} from './viewport-toolbar-controls.js?v=0.36.18.1101';
 const topbar=document.querySelector('.topbar');
 const selectionModes=document.querySelector('#selectionModes');
 const fileMenu=document.querySelector('#fileMenu');
@@ -54,7 +54,7 @@ const style=document.createElement('style');
 style.textContent=`
 :root{--boxlab-topbar-h:max(60px,calc(48px + env(safe-area-inset-top)))}
 .topbar{height:var(--boxlab-topbar-h)!important}
-.brand{order:1;display:flex!important}.top-file-menu{order:0}.top-actions{order:2}
+.brand{order:1;display:flex!important;align-items:center;gap:8px}.brand-logo{width:30px;height:30px;display:block;flex:0 0 auto;border-radius:7px}.top-file-menu{order:0}.top-actions{order:2}
 .top-file-menu{z-index:140}
 .top-file-content{top:calc(100% + 6px);max-height:calc(100dvh - var(--boxlab-topbar-h) - 18px);overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
 #viewportWrap{top:var(--boxlab-topbar-h)!important}

@@ -1,15 +1,19 @@
-# .1100 — General Settings and Pencil outliner input (device acceptance pending)
+# .1101 — left viewport tool rail and app mark (device acceptance pending)
 
-- [ ] Open VIEW → General Settings. Toggle Pencil orbit off/on; confirm pen navigation follows the switch and fingers retain their normal navigation.
-- [ ] Toggle Pencil selection off/on. With it off, Pencil taps on the mesh must not select; with Pencil orbit still on, a deliberate Pencil drag over the mesh may orbit. Finger mesh selection remains available.
-- [ ] Toggle Snap options at top left. Confirm the snap controls move from bottom-left to below the top bar at top-left, then return when off.
-- [ ] Toggle Left-handed layout. Confirm the main Object/tools panel moves to the right, Object Browser moves to the left, and the UV Paint palette prefers the opposite side of the model. Reload and confirm the setting persists.
-- [ ] Use Apple Pencil on object names and outliner controls (visibility, SubD and More). Confirm activation works and vertical list scrolling does not accidentally activate a row.
-- [ ] Regression smoke: enter UV Paint, paint one stroke, Done/reopen; test orbit, pan, zoom and Object/Face mode switching.
-- [x] Focused local settings, Pencil route, pointer activation, palette placement and release-contract tests: 39 PASS / 0 FAIL.
-- [x] Full local regression suite: 3,223 PASS / 0 FAIL. `git diff --check` clean; protected transform unchanged.
-- [x] Hosted Topology `42429572503` succeeded; Pages `42429572065` succeeded; all19 changed files byte-match the live site.
+- [ ] Confirm the BoxLab mark appears directly before the BoxLab header and stays aligned on iPad and desktop widths.
+- [ ] Confirm Lasso, Select and UV Paint form a vertical icon rail at the lower left. Lasso toggles correctly; Select opens/closes its existing panel; UV Paint opens and exits through Done.
+- [ ] In VIEW → General Settings, turn “Snap options at top left” on. Confirm only the Snap box moves beneath the top bar and the action rail stays at the lower left.
+- [ ] Turn “Snap options at top left” off. Confirm the Snap box sits directly above Lasso/Select/UV Paint. Check Axis and Geometry snapping still toggle and work.
+- [ ] During a Geometry Snap preview, turn Geometry Snap off. Confirm the guide disappears immediately, subsequent movement is not snapped, and releasing or undoing does not turn snapping back on.
+- [ ] Reload. Confirm the saved snap placement returns; confirm the other .1100 settings and Pencil object-list controls remain functional.
+- [ ] Regression smoke: selection mode dock, orbit/pan/zoom, UV Paint stroke + Done/reopen.
 - [ ] User device acceptance. Do not protect as PASS until confirmed.
+
+- [x] Focused toolbar/Snap/Paint/release checks: 63 PASS / 0 FAIL; final pin/rail-order follow-up: 19 PASS / 0 FAIL.
+- [x] Full local `npm test`: 3,224 PASS / 0 FAIL; `git diff --check` clean; protected Multi transform unchanged.
+- [ ] Hosted Topology, Pages deployment and live byte verification.
+
+This checklist is the hands-on device gate; do not record device PASS until confirmed by the user.
 
 `.1099` diagnostics: supplied iPad report had one `texture-decode` sample at 1,178 ms and one `texture-display` sample at 2,388 ms; 120 frame intervals averaged16.675 ms (p95 17 ms). Report was captured in Object mode, with three rebuild/scene samples and no controlled orbit sequence. It confirms the recorded import display delay but does not establish a texture reload during orbit or justify reduced-resolution rendering. Capture a sustained orbit/pan/zoom of the same already-textured model before deciding on adaptive texture quality.
 

@@ -1,5 +1,5 @@
 {
-  "baseline": "Reviewed .1099: the .1098 iPad report shows UV preview setup averaged 4.48 ms, but it omitted the asynchronous image decode and delay until an imported UV surface became visible. Source audit found the existing overlay waits for decoded images before replacing the grey body material. This diagnostic build measures that decode wait and time-to-visible in the existing Performance monitor; it does not claim a speedup. Prior .1097 functional PASS, .1096 baseline and .1095 Paint PASS remain protected.",
+  "baseline": "Reviewed .1101: existing Snap inputs are separated into a top Snap box and a vertical lower-left Lasso/Select/UV Paint rail. The existing snap placement preference moves only the Snap box. The current BoxLab app mark appears before the wordmark; persistent .1100 settings and Pencil list activation remain protected.",
   "references": [
     {
       "owner": "index.html",
@@ -161,9 +161,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1100",
+      "url": "./src/drawer-ui.js?v=0.36.18.1101",
       "target": "src/drawer-ui.js",
-      "sha256": "c5d62c316af6653abd5e1c4af60ee185eb64836387f0e13880085227ea9cd78d"
+      "sha256": "b239b6319f3c8566930fe7df6888858ef16eeb4d6309f64919d991bf4fefef05"
     },
     {
       "owner": "index.html",
@@ -378,7 +378,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1100",
+      "url": "./src/release-version.js?v=0.36.18.1101",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -539,9 +539,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/topbar-layout.js?v=0.36.18.1023",
+      "url": "./src/topbar-layout.js?v=0.36.18.1101",
       "target": "src/topbar-layout.js",
-      "sha256": "9f4dfe26cf24e70158ba2bcd160a870c947c0d461a394eca0d1fe7ad0284886c"
+      "sha256": "d090b8e3e769b106ec4b4dec0ce810578268167db7e47cf49d44c292c50e993d"
     },
     {
       "owner": "index.html",
@@ -575,9 +575,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/view-modes.js?v=0.36.18.1100",
+      "url": "./src/view-modes.js?v=0.36.18.1101",
       "target": "src/view-modes.js",
-      "sha256": "10240df943de6edc2fc1b270807bd7e9ee90f914426a8807a30ea3cb245c28db"
+      "sha256": "b05573fdc66eaba24c1360fca25c103ed339b9a9c34e007e378ca0670d4d15e4"
     },
     {
       "owner": "index.html",
@@ -828,9 +828,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./cross-object-snap.js?v=0.36.18.6",
+      "url": "./cross-object-snap.js?v=0.36.18.1101",
       "target": "src/cross-object-snap.js",
-      "sha256": "6cb3a9b58ce0cc5162f9e74cc3d81edd96a046a9bde734105d687fb0a0d031f3"
+      "sha256": "41bfde28f2d4848d2596a65f7daac68bb66304818f368931378686db75dfc418"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -864,9 +864,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1100",
+      "url": "./face-workflow-layout.js?v=0.36.18.1101",
       "target": "src/face-workflow-layout.js",
-      "sha256": "c58e1746c1492f71be26ca16cd66c0410bc99b8697c22ca7a87e6ac76dc95b5a"
+      "sha256": "cdf51836967ed926aea10e244b637c83c0d1613462b96bf79fc84213664cbf17"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1361,7 +1361,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1100",
+      "url": "./release-version.js?v=0.36.18.1101",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -2038,15 +2038,15 @@
     },
     {
       "owner": "src/topbar-layout.js",
-      "url": "./viewport-selection-panel.js?v=0.36.18.732",
+      "url": "./viewport-selection-panel.js?v=0.36.18.1101",
       "target": "src/viewport-selection-panel.js",
-      "sha256": "2ccc85d17a4dc5e6c32a5176311f8d0ed69f645b7ac496d37cb76cf577e5e041"
+      "sha256": "7630be5ab871dc4e97e221835bff07663373e59b5de70c7acef9b372ca2f8923"
     },
     {
       "owner": "src/topbar-layout.js",
-      "url": "./viewport-toolbar-controls.js?v=0.36.18.1023",
+      "url": "./viewport-toolbar-controls.js?v=0.36.18.1101",
       "target": "src/viewport-toolbar-controls.js",
-      "sha256": "ff2fdb35b3096177d31ac8247fc8f4addc001bd112cd2db4261bce57e6d4ea52"
+      "sha256": "139bd520bfaee868b73daa1b7356be1e6e1d394c5848f3a522fc231674a81b9c"
     },
     {
       "owner": "src/total-gizmo.js",
@@ -2456,9 +2456,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/viewport-paint.js?v=0.36.18.1100",
+      "url": "./src/viewport-paint.js?v=0.36.18.1101",
       "target": "src/viewport-paint.js",
-      "sha256": "2c346b6c78808ef9796c05635aa71b745c7eead773516bd31b2a97db5750b9bb"
+      "sha256": "e9ba9183c7ec5878f9ca991708f8f5f864bb6c619f25ba1dafedbef641e87b11"
     },
     {
       "owner": "src/viewport-paint.js",
@@ -3326,9 +3326,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1100",
+      "url": "./src/shell-comparison.js?v=0.36.18.1101",
       "target": "src/shell-comparison.js",
-      "sha256": "67a9791e99f6e0beb260371106ff4e5bd384d1c6f94c0493f89232132d635d65"
+      "sha256": "2591bc4f88fb6ef2ae07f2ee368a04d22b104212565b3757b0c338278eb0a81a"
     },
     {
       "owner": "src/main.js",
@@ -3650,9 +3650,15 @@
     },
     {
       "owner": "src/view-modes.js",
-      "url": "./general-settings.js?v=0.36.18.1100",
+      "url": "./general-settings.js?v=0.36.18.1101",
       "target": "src/general-settings.js",
-      "sha256": "1c54e0408d6be6a9e66b38f5ceb21e783a14e809897be5e7f55ead7395650969"
+      "sha256": "c06f053c89c61b6cfe19552f221f82c55a5235ef5bd4ded3d4d35e5a2cf4bcb9"
+    },
+    {
+      "owner": "index.html",
+      "url": "./icon.svg?v=0.36.18.1101",
+      "target": "icon.svg",
+      "sha256": "e2a286547c5d4d00377608c2843cb05a03e07097b84264a93cb541aacb9dbaa3"
     }
   ]
 }

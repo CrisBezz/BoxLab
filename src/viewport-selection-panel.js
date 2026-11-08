@@ -1,11 +1,11 @@
 import {placeToolSessionPanel} from './tool-session-panel-position.js?v=0.36.18.732';
 // Presentation only: move the original selection host, including late Object controls.
 export function installViewportSelectionPanel(doc=document){
- const wrap=doc.querySelector('#viewportWrap'),bar=doc.querySelector('#viewportSelectionControls'),drawer=doc.querySelector('#selectionDrawer');
+ const wrap=doc.querySelector('#viewportWrap'),bar=doc.querySelector('#viewportActionControls')||doc.querySelector('#viewportSelectionControls'),drawer=doc.querySelector('#selectionDrawer');
  if(!wrap||!bar||!drawer||doc.querySelector('#viewportSelectionPanel'))return null;
  const panel=doc.createElement('section');panel.id='viewportSelectionPanel';panel.hidden=true;
  panel.setAttribute('aria-label','Selection controls');placeToolSessionPanel(panel);
- const button=doc.createElement('button');button.id='viewportSelectionBtn';button.type='button';button.textContent='SELECT';button.title='Selection commands and filters';button.setAttribute('aria-controls',panel.id);button.setAttribute('aria-expanded','false');
+ const button=doc.createElement('button');button.id='viewportSelectionBtn';button.type='button';button.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3v17l5-5 3 6 3-1-3-6h7z"/><path d="M4 2h1"/></svg><span class="toolbar-label">SELECT</span>';button.title='Selection commands and filters';button.setAttribute('aria-label','Selection commands and filters');button.setAttribute('aria-controls',panel.id);button.setAttribute('aria-expanded','false');
  const closeButton=doc.createElement('button');closeButton.type='button';closeButton.className='selection-panel-close';closeButton.textContent='Close';closeButton.setAttribute('aria-label','Close selection controls');
  panel.append(closeButton,drawer);wrap.append(panel);bar.append(button);
  function close(){panel.hidden=true;button.setAttribute('aria-expanded','false');button.classList.remove('active');}
@@ -26,12 +26,9 @@ export function installViewportSelectionPanel(doc=document){
 #viewportSelectionPanel #selectionDrawer .always-selection-title{padding-right:70px}
 #viewportSelectionPanel .selection-panel-close{position:absolute;top:8px;right:8px;width:auto;min-height:30px;padding:4px 10px;margin:0}
 #viewportSelectionPanel #objectManagementTools{padding:8px!important}
-#viewportSelectionControls #viewportSelectionBtn{order:4;width:auto;min-width:52px;font-size:11px;letter-spacing:.03em}
+#viewportActionControls #viewportSelectionBtn{font-size:8px;letter-spacing:.02em}
 @media(max-width:500px){
- #viewportSelectionControls{left:8px;gap:3px;padding:4px 6px;max-width:calc(100% - 16px);box-sizing:border-box}
- #viewportSelectionControls label,#viewportSelectionControls>button{width:34px;height:38px}
- #viewportSelectionControls #viewportSelectionBtn{min-width:45px;padding:5px;font-size:10px}
- #viewportSelectionControls>span{font-size:10px;margin-right:0}
+ #viewportSnapControls,#viewportActionControls{left:8px}
 }
 `;doc.head.append(style);
  return {toggle,close,panel,button,drawer};

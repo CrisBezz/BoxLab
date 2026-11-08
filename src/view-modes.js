@@ -1,5 +1,5 @@
 import {mountViewMenuSurface} from './view-menu-surface.js?v=0.36.18.998';
-import {mountGeneralSettings} from './general-settings.js?v=0.36.18.1100';
+import {mountGeneralSettings} from './general-settings.js?v=0.36.18.1101';
 import * as THREE from 'three';
 
 const status=document.querySelector('#selectionStatus');

@@ -131,8 +131,8 @@ const contextStyle=document.createElement('style');contextStyle.textContent=`
 #boxlabViewportPaint [data-paint-page=layers]{display:grid;grid-auto-rows:max-content;align-content:start;gap:5px;position:sticky;top:0;z-index:2;background:#16191f;max-height:42vh;overflow-y:auto;padding-bottom:5px;border-bottom:1px solid #ffffff20}
 #boxlabViewportPaint .paint-stack{grid-auto-rows:max-content;min-height:52px;max-height:200px;overflow-y:auto}
 #boxlabViewportPaint .paint-stack-row{min-height:52px}
-#viewportSelectionControls #viewportPaintBtn{order:5;width:auto;min-width:76px;font-size:11px;padding:5px 8px}
-#viewportSelectionControls #viewportPaintBtn[aria-pressed=true]{background:#1268b6;border-color:#60b5ff}
+#viewportActionControls #viewportPaintBtn{width:48px;min-width:48px;font-size:8px;padding:3px}
+#viewportActionControls #viewportPaintBtn[aria-pressed=true]{background:#1268b6;border-color:#60b5ff}
 #boxlabViewportPaint .paint-footer{position:sticky;bottom:0;z-index:1}
 #boxlabViewportPaint[data-page=brush] [data-paint-page=brush],#boxlabViewportPaint[data-page=layers] [data-paint-page=layers],#boxlabViewportPaint[data-page=mask] [data-paint-page=mask],#boxlabViewportPaint[data-page=image] [data-paint-page=image],#boxlabViewportPaint[data-page=ao] [data-paint-page=ao],#boxlabViewportPaint[data-page=settings] [data-paint-page=settings]{display:grid;gap:5px}
 #boxlabViewportPaint .paint-brush-row{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -386,8 +386,8 @@ input('radius').addEventListener('input',()=>{input('radius-readout').textConten
 for(const k of ['colour','radius','hardness','opacity','pressure','pressure-opacity','brush'])input(k).addEventListener('input',cancel);
 input('done').addEventListener('click',()=>{close();say('UV Paint closed · strokes kept · Save .boxlab to keep paint');});
 for(const k of ['undo','redo'])input(k).addEventListener('click',()=>{document.querySelector('#'+k+'Btn')?.click();});
-const button=document.createElement('button');button.id='viewportPaintBtn';button.type='button';button.textContent='UV PAINT';button.title='Paint the selected native UV object';button.setAttribute('aria-pressed','false');button.addEventListener('click',()=>open());
-function mountPaintEntry(){const bar=document.querySelector('#viewportSelectionControls');if(!bar)return false;if(button.parentNode!==bar)bar.appendChild(button);return true;}
+const button=document.createElement('button');button.id='viewportPaintBtn';button.type='button';button.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 16 9-9 4 4-9 9H4zM13 7l2-2a2.8 2.8 0 0 1 4 4l-2 2M4 20h16"/><path d="M7 16l3 3"/></svg><span class="toolbar-label">PAINT</span>';button.title='Paint the selected native UV object';button.setAttribute('aria-label','UV Paint');button.setAttribute('aria-pressed','false');button.addEventListener('click',()=>open());
+function mountPaintEntry(){const bar=document.querySelector('#viewportActionControls')||document.querySelector('#viewportSelectionControls');if(!bar)return false;if(button.parentNode!==bar)bar.appendChild(button);return true;}
 if(!mountPaintEntry())menu?.insertBefore(button,menu.querySelector('.drawer-subtitle'));
 window.addEventListener('boxlab-bridge-state',mountPaintEntry);window.addEventListener('boxlab-object-manager-ready',mountPaintEntry);
 const entryObserver=typeof MutationObserver==='function'?new MutationObserver(()=>{if(mountPaintEntry())entryObserver.disconnect();}):null;entryObserver?.observe(document.querySelector('#viewportWrap')||document.body,{childList:true,subtree:true});

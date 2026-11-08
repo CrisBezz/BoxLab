@@ -22,6 +22,7 @@ function fixture(seeded=true){
 }
 test('983 shell contains final ordered original toolbar and artwork before any module; accepted mode dock stays out of initial header flow',()=>{
  const shell=read('index.html'),top=shell.slice(shell.indexOf('<div class="top-actions">'),shell.indexOf('</header>'));
+ assert.match(shell,/<div class="brand"><img class="brand-logo" src="\.\/icon\.svg\?v=0\.36\.18\.1101" alt=""\/><strong>BoxLab<\/strong>/);assert.match(read('src/topbar-layout.js'),/\.brand-logo\{width:30px;height:30px/);
  const ids=[...top.matchAll(/id="(frameAllBtn|undoBtn|redoBtn|focusViewBtn|objectBrowserBtn|floorToggleBtn|viewModes)"/g)].map(m=>m[1]);
  assert.deepEqual(ids,['frameAllBtn','undoBtn','redoBtn','focusViewBtn','objectBrowserBtn','floorToggleBtn','viewModes']);
  for(const id of ids)assert.equal([...shell.matchAll(new RegExp('id="'+id+'"','g'))].length,1);

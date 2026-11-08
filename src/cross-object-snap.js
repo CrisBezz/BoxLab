@@ -182,6 +182,20 @@ function suppressLegacyInferenceForEvent(){
   });
 }
 function restoreGeometryToggle(){if(geometryToggle&&gesture?.geometryWasOn)geometryToggle.checked=true;}
+function cancelGeometrySnap(){
+  if(!gesture)return;
+  gesture.geometryWasOn=false;
+  gesture=null;
+  snapQueued=false;
+  hideVisuals();
+}
+
+// A deliberate user toggle-off must win over the temporary legacy-snap
+// suppression used during a live gesture. Never resurrect the checkbox or
+// leave its preview active when the gesture is subsequently released.
+geometryToggle?.addEventListener('change',()=>{
+  if(!geometryToggle.checked)cancelGeometrySnap();
+});
 
 function applySnap(finalCommit=false){
   snapQueued=false;
@@ -267,5 +281,6 @@ window.addEventListener('pointermove',move,true);
 window.addEventListener('pointerup',end,true);
 window.addEventListener('pointercancel',cancel,true);
 window.addEventListener('blur',()=>{restoreGeometryToggle();hideVisuals();gesture=null;snapQueued=false;});
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden'){restoreGeometryToggle();hideVisuals();gesture=null;snapQueued=false;}});
 
 globalThis.__boxlabCrossObjectSnap={version:'0.36.18.6'};
