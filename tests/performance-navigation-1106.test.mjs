@@ -97,3 +97,10 @@ test('1106 navigation observer stays opt-in and does not consume touch input',()
  assert.equal(monitor.snapshot().navigation.inputs,0);assert.equal(event.prevented,false);
  monitor.setEnabled(true);monitor.navigationStart();monitor.navigationInput('pan');monitor.navigationEnd();assert.equal(monitor.snapshot().navigation.gestures.pan,0);cleanup();
 });
+
+ test('1109 traces second touch through movement and camera change without consuming input',()=>{
+ let clock=10;const monitor=createPerformanceMonitor(()=>clock),view=new Events(),controls=new Events(),canvas={ownerDocument:{defaultView:view},contains:target=>target==='inside'};controls.enabled=true;monitor.setEnabled(true);monitor.observeNavigation(controls,canvas);
+ const a=canvasEvent(1,'touch',0,0),b=canvasEvent(2,'touch',100,0);view.dispatch('pointerdown',a);clock=30;view.dispatch('pointerdown',b);clock=80;view.dispatch('pointermove',{...b,clientX:110,timeStamp:75});clock=85;controls.dispatch('change');
+ const onset=monitor.snapshot().timingTrace.find(e=>e.kind==='navigation-onset');assert.equal(onset.contacts,2);assert.equal(onset.durationMs,55);assert.equal(onset.moveToChangeMs,5);assert.equal(onset.eventDeliveryMs,5);
+ monitor.reset();assert.equal(monitor.snapshot().timingTrace.length,0);
+ });

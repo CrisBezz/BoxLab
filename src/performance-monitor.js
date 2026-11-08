@@ -1,4 +1,4 @@
-import {createPerformanceMonitor} from './performance-core.js?v=0.36.18.1108';
+import {createPerformanceMonitor} from './performance-core.js?v=0.36.18.1109';
 const monitor=createPerformanceMonitor();
 let panel=null,output=null,timer=null,button=null;
 const number=(value,digits=0)=>Number(value||0).toFixed(digits);

@@ -8,7 +8,7 @@ export function createPerformanceMonitor(now=()=>performance.now()){
  const freshSession=()=>({firstInputAt:null,lastInputAt:null,firstKind:null,lastKind:null,counts:{},firstRecorded:false});
  const mean=list=>list.length?list.reduce((a,b)=>a+b,0)/list.length:0;
  function stats(list=[]){const sorted=list.slice().sort((a,b)=>a-b);return{samples:list.length,meanMs:mean(list),maxMs:sorted.at(-1)||0,p95Ms:sorted.length?sorted[Math.ceil(sorted.length*.95)-1]:0};}
- function reset(){lastFrame=null;frames=[];longFrameGaps=[];timingTrace=[];rebuilds=[];latest=null;rebuildCount=0;stages={};cacheHits=cacheMisses=0;cacheOwners={active:{hits:0,misses:0},inactive:{hits:0,misses:0}};navSession=null;navGestures={};navFirst={};navUpdates={};navFirstRender={};navRenderUpdates={};navPendingRenders=[];navInputs=0;}
+ function reset(){navProbe?.reset?.();lastFrame=null;frames=[];longFrameGaps=[];timingTrace=[];rebuilds=[];latest=null;rebuildCount=0;stages={};cacheHits=cacheMisses=0;cacheOwners={active:{hits:0,misses:0},inactive:{hits:0,misses:0}};navSession=null;navGestures={};navFirst={};navUpdates={};navFirstRender={};navRenderUpdates={};navPendingRenders=[];navInputs=0;}
  function navigationStart(){if(!enabled||navSession)return;navSession=freshSession();}
  function navigationInput(kind){if(!enabled||!navKinds.includes(kind))return;if(!navSession)navSession=freshSession();const at=now();navInputs++;navSession.counts[kind]=(navSession.counts[kind]||0)+1;if(navSession.firstInputAt===null){navSession.firstInputAt=at;navSession.firstKind=kind;}navSession.lastInputAt=at;navSession.lastKind=kind;}
  function finishNavigation(){if(!navSession)return;if(navSession.firstRecorded){const kind=Object.entries(navSession.counts).sort((a,b)=>b[1]-a[1])[0]?.[0]||navSession.firstKind;navGestures[kind]=(navGestures[kind]||0)+1;}navSession=null;}
@@ -18,10 +18,10 @@ export function createPerformanceMonitor(now=()=>performance.now()){
  function observeNavigation(controls,element,view=element?.ownerDocument?.defaultView){
   if(!controls?.addEventListener||!element||!view?.addEventListener)return()=>{};
   if(navProbe?.controls===controls&&navProbe.element===element)return navProbe.cleanup;
-  navProbe?.cleanup?.();const contacts=new Map();
+  navProbe?.cleanup?.();const contacts=new Map();let onset=null;
   const inside=e=>e.target===element||element.contains?.(e.target);
-  const change=()=>navigationChange();
-  const down=e=>{if(!enabled||!inside(e))return;if(contacts.size===0)navigationStart();contacts.set(e.pointerId,{x:e.clientX,y:e.clientY,type:e.pointerType,buttons:e.buttons});};
+  const change=()=>{navigationChange();if(enabled&&onset?.moveAt!=null){const at=now();trace({kind:'navigation-onset',contacts:onset.contacts,startMs:onset.downAt,firstMoveMs:onset.moveAt,endMs:at,durationMs:at-onset.downAt,moveToChangeMs:at-onset.moveAt,eventDeliveryMs:onset.deliveryMs,gesture:onset.kind});onset=null;}};
+  const down=e=>{if(!enabled||!inside(e))return;if(contacts.size===0)navigationStart();contacts.set(e.pointerId,{x:e.clientX,y:e.clientY,type:e.pointerType,buttons:e.buttons});if(e.pointerType==='touch'){onset={downAt:now(),contacts:[...contacts.values()].filter(p=>p.type==='touch').length};trace({kind:'touch-contact',startMs:onset.downAt,endMs:onset.downAt,contacts:onset.contacts,controlsEnabled:controls.enabled!==false});}};
   const move=e=>{
    if(!enabled||controls.enabled===false||!inside(e))return;const current=contacts.get(e.pointerId);if(!current)return;
    let kind='orbit';
@@ -29,14 +29,14 @@ export function createPerformanceMonitor(now=()=>performance.now()){
     const pair=[...contacts.entries()].filter(([,p])=>p.type==='touch').slice(0,2);
     if(pair.length>=2){const old=pair.map(([,p])=>({x:p.x,y:p.y})),next=pair.map(([id,p])=>id===e.pointerId?{x:e.clientX,y:e.clientY}:{x:p.x,y:p.y});const oldMid={x:(old[0].x+old[1].x)/2,y:(old[0].y+old[1].y)/2},nextMid={x:(next[0].x+next[1].x)/2,y:(next[0].y+next[1].y)/2},midDelta=Math.hypot(nextMid.x-oldMid.x,nextMid.y-oldMid.y),oldSpan=Math.hypot(old[0].x-old[1].x,old[0].y-old[1].y),nextSpan=Math.hypot(next[0].x-next[1].x,next[0].y-next[1].y),spanDelta=Math.abs(nextSpan-oldSpan),pan=midDelta>1&&midDelta>spanDelta*.5,zoom=spanDelta>1;kind=pan&&zoom?'pan+zoom':zoom?'zoom':'pan';}
    }else if(current.type==='mouse'){kind=e.buttons&2?'pan':e.buttons&4?'zoom':'orbit';}
-   navigationInput(kind);current.x=e.clientX;current.y=e.clientY;current.buttons=e.buttons;
+   if(onset&&onset.moveAt==null){const at=now(),stamp=Number(e.timeStamp);onset.moveAt=at;onset.kind=kind;onset.deliveryMs=Number.isFinite(stamp)&&stamp>0&&stamp<=at&&at-stamp<60000?at-stamp:null;trace({kind:'first-touch-move',contacts:onset.contacts,gesture:kind,startMs:onset.downAt,endMs:at,durationMs:at-onset.downAt,eventDeliveryMs:onset.deliveryMs});}navigationInput(kind);current.x=e.clientX;current.y=e.clientY;current.buttons=e.buttons;
   };
-  const up=e=>{if(!contacts.delete(e.pointerId))return;if(contacts.size===0)navigationEnd();};
+  const up=e=>{if(!contacts.delete(e.pointerId))return;onset=null;if(contacts.size===0)navigationEnd();};
   const wheel=e=>{if(!enabled||controls.enabled===false||!inside(e))return;navigationInput('zoom');Promise.resolve().then(()=>{if(enabled&&navSession)navigationEnd();});};
   controls.addEventListener('change',change);
   view.addEventListener('pointerdown',down,{capture:true,passive:true});view.addEventListener('pointermove',move,{capture:true,passive:true});view.addEventListener('pointerup',up,{capture:true,passive:true});view.addEventListener('pointercancel',up,{capture:true,passive:true});view.addEventListener('wheel',wheel,{capture:true,passive:true});
   const cleanup=()=>{controls.removeEventListener?.('change',change);view.removeEventListener('pointerdown',down,true);view.removeEventListener('pointermove',move,true);view.removeEventListener('pointerup',up,true);view.removeEventListener('pointercancel',up,true);view.removeEventListener('wheel',wheel,true);contacts.clear();navSession=null;if(navProbe?.cleanup===cleanup)navProbe=null;};
-  navProbe={controls,element,cleanup};return cleanup;
+  navProbe={controls,element,cleanup,reset:()=>{onset=null;}};return cleanup;
  }
  function navigationSnapshot(){const byKind={};for(const kind of navKinds)byKind[kind]={gestures:navGestures[kind]||0,firstResponse:stats(navFirst[kind]),inputToCameraChange:stats(navUpdates[kind]),firstInputToRenderSubmit:stats(navFirstRender[kind]),inputToRenderSubmit:stats(navRenderUpdates[kind])};const allFirst=navKinds.flatMap(kind=>navFirst[kind]||[]),allUpdates=navKinds.flatMap(kind=>navUpdates[kind]||[]),allFirstRender=navKinds.flatMap(kind=>navFirstRender[kind]||[]),allRenderUpdates=navKinds.flatMap(kind=>navRenderUpdates[kind]||[]);return{inputs:navInputs,gestures:Object.fromEntries(navKinds.map(kind=>[kind,navGestures[kind]||0])),firstResponse:stats(allFirst),inputToCameraChange:stats(allUpdates),firstInputToRenderSubmit:stats(allFirstRender),inputToRenderSubmit:stats(allRenderUpdates),byKind};}
  return {

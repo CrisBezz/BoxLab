@@ -1,3 +1,11 @@
+# .1109 — measure two-finger gesture onset — 8 November 2026
+
+User confirms .1108 orbit is prompt, pan hesitates and pinch zoom hesitates longer. Its report has no stage/rebuild work, four long frame gaps (max 2302ms), and navigation-submit max11ms. This does not identify the delay cause or prove gaps occurred during gestures. Audit confirms main uses FreeOrbitControls, which preserves Three pointer ownership and customizes two-finger dolly/pan. Existing passive monitor now traces touch-contact, first-touch-move and navigation-onset intervals, contact count, controls enabled state and comparable event timestamp delivery age. Contact-to-move includes deliberate user waiting; timestamp age is not hardware-to-screen latency. No navigation behavior fix is claimed. Protected Multi transform and .1104/.1102 PASSes remain unchanged.
+
+.1109 full local regression passes 3,234/3,234; diff check clean. Publication verification pending. Device: reset Performance with textured model visible; orbit, pan then pinch; download report and describe delay. Native acceptance pending.
+
+---
+
 ## .1108 — timestamp long pauses and related work — 8 November 2026
 
 The user supplied the .1107 iPad report after a controlled navigation capture: 1,002 vertices / 1,000 faces, 3 textures, 120 frames at 59.97 FPS (17 ms p95), 7 long frame gaps (max 3,243 ms), navigation-submit max 3,243 ms, decode 3,253 ms and time-until-visible 3,274 ms. Camera-change mean is 0.058 ms / max 1 ms; typical submit p95 is 10–11 ms. The close maxima suggest a possible shared window but the report has no event timestamps, so overlap/cause is unproven. 88 zoom update samples were grouped into two pan+zoom sessions and zero pure-zoom gestures; the test did not isolate pure pinch.
