@@ -5,6 +5,8 @@
 - [x] The .1105 report recorded 70 zoom camera updates but no completed zoom gesture or first zoom response; this exposed a session-boundary/classification gap, not proof that zoom itself failed.
 - [x] .1106 measures input-to-camera-change and input-to-completed-renderer.render submission by gesture. Gesture completion follows observed pointer lifecycle; controls and rendering remain unchanged.
 - [x] Focused performance/release tests: 31 PASS / 0 FAIL; includes actual-render-owner, completed-pinch, between-frame gesture handoff, passive observer and release-pin cases. Full local `npm test`: 3,231 PASS / 0 FAIL.
+- [x] Published runtime commit `1896a9f6cc6a05f089744c9362d50f20d9f4a457`; the GitHub tree matches local `d40b827ea42d1c6db57e70a94a097dd291bd05fa`. Pages run `42467776243` succeeded; the live app loaded as `BoxLab v0.36.18.1106` with the default cube and mode/left-rail controls visible.
+- [ ] Hosted Topology run `42467776484` is still running `npm test`; do not infer its result. Local suite is green.
 - [ ] With an already-textured model, open VIEW → Diagnostics → Performance and Reset.
 - [ ] Make separate one-finger orbit, two-finger pan and pinch zoom passes. Confirm each completed gesture counter increments and first/latest render-submit timings populate for the matching type.
 - [ ] Confirm scene and texture remain visible, Snap and mode buttons work, and the viewport report downloads with per-gesture values. Note whether the perceived delay remains.

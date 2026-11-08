@@ -4,7 +4,7 @@ The .1105 iPad report shows 59.97 FPS and no rebuilds on a 1,002-vertex / 1,000-
 
 .1106 adds timing from first/latest gesture input through the existing `renderer.render` call, and moves session completion to the observed pointer lifecycle. Pinch midpoint drift is interpreted relative to span change. The monitor stays opt-in; pointer observers are passive; camera and render behavior are untouched. Timings end after CPU renderer submission and still exclude GPU/compositor presentation.
 
-Focused diagnostic/release checks pass 31/31; the full local suite passes 3,231/3,231. Publication and live verification will be recorded in DEV_HISTORY. Next: iPad check orbit, pan and pinch separately on an already-textured model, verify per-gesture completed counts and render-submit timings, then note whether the perceived lag remains. Decide on an optimization only if that capture identifies the cost. Keep pixelation deferred unless a measured render bottleneck warrants it.
+Focused diagnostic/release checks pass 31/31; the full local suite passes 3,231/3,231. Runtime commit `1896a9f6cc6a05f089744c9362d50f20d9f4a457` is published; Pages run `42467776243` succeeded and the live app shows .1106. Hosted Topology run `42467776484` is still running; local `npm test` passes3,231/3,231. Next: iPad check orbit, pan and pinch separately on an already-textured model, verify per-gesture completed counts and render-submit timings, then note whether the perceived lag remains. Decide on an optimization only if that capture identifies the cost. Keep pixelation deferred unless a measured render bottleneck warrants it.
 
 ---
 
