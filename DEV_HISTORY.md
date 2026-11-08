@@ -12788,3 +12788,7 @@ User screenshot says the .1103 spacing is still off. The top Snap rule used `cal
 ### .1104 publication verification — 8 November 2026
 
 Runtime commit `e8f3440737467751dc638ba9b325ac2acdc543bb` advanced `main` with complete tree `822422b4fad0b0601828d51074896ada36a9211c`, matching the local commit tree exactly. Hosted Topology run `42448808630` passed `npm test` with 3,224 PASS / 0 FAIL; Pages deployment `42448808498` succeeded. Local focused checks pass 34/34 and local full suite passes 3,224/3,224; `git diff --check` is clean. This follow-up records hosted verification and does not change runtime code. Native device acceptance remains pending for the Snap top gap, Focus rail alignment, widths and lower gaps; user-confirmed scene display and mode-button PASSes remain protected.
+
+## .1104 native spacing acceptance — protected PASS — 8 November 2026
+
+User confirms “1104 PASS.” Protect the Snap top gap, Focus rail alignment, equal rail widths, 8px lower gaps and original snap controls. Scene display and mode-button PASSes remain protected. No runtime changes or new release for this acceptance record. Next priority is a controlled orbit/pan/zoom Performance capture on an already-textured model, then choose any rendering optimization from the measured navigation cost; do not infer orbit-time redraw cause from the import-only report or introduce temporary pixelation without evidence.

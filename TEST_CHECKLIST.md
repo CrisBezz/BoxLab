@@ -1,13 +1,11 @@
-# .1104 — Snap top gap and Focus rail alignment (device acceptance pending)
+# .1104 — Snap top gap and Focus rail alignment (protected PASS)
 
 - [x] User-confirmed scene display PASS and visible/working mode buttons PASS remain protected.
 - [x] .1103 equal rail widths and lower gap styling remain in place; user screenshot identifies remaining top-gap and Focus left-edge alignment issues.
-- [ ] With VIEW → General Settings → Snap options at top left enabled, confirm the Snap box is 8px below the viewport header, matching the intended lower spacing.
-- [ ] In Focus view, confirm the left edges of Snap, Lasso/Select/Paint and the mode dock line up.
-- [ ] Confirm equal outside rail widths, 8px Snap-to-action and action-to-mode gaps, and both original snap toggles still work.
+- [x] User confirms .1104 PASS: Snap top gap, Focus left-edge alignment, equal rail widths, lower gaps and snap controls behave as intended. Protect this spacing.
 - [x] Focused toolbar/release checks: 34 PASS / 0 FAIL; full local `npm test`: 3,224 PASS / 0 FAIL; `git diff --check` clean. Regression asserts viewport-local `top:8px`, Focus rail left alignment, original General Settings owner and existing rail gaps/widths.
 - [x] Hosted Topology run `42448808630`: 3,224 PASS / 0 FAIL; Pages deployment `42448808498` succeeded.
-- [ ] User acceptance of .1104 spacing remains pending; do not re-test or unprotect the scene/mode display PASSes.
+- [x] .1104 spacing is a protected user PASS; scene display and mode-button PASSes remain protected as well.
 
 ---
 
