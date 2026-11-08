@@ -6,7 +6,7 @@
 - [ ] In Focus view, confirm the left edges of Snap, Lasso/Select/Paint and the mode dock line up.
 - [ ] Confirm equal outside rail widths, 8px Snap-to-action and action-to-mode gaps, and both original snap toggles still work.
 - [x] Focused toolbar/release checks: 34 PASS / 0 FAIL; full local `npm test`: 3,224 PASS / 0 FAIL; `git diff --check` clean. Regression asserts viewport-local `top:8px`, Focus rail left alignment, original General Settings owner and existing rail gaps/widths.
-- [ ] Hosted Topology/Pages verification pending.
+- [x] Hosted Topology run `42448808630`: 3,224 PASS / 0 FAIL; Pages deployment `42448808498` succeeded.
 - [ ] User acceptance of .1104 spacing remains pending; do not re-test or unprotect the scene/mode display PASSes.
 
 ---

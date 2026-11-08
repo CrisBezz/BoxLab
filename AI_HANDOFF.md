@@ -4,7 +4,7 @@ Current main advances from .1103 to .1104. User reports the .1103 spacing is not
 
 Only the existing General Settings placement rule, compact toolbar owner and their loader pins change. No renderer, scene/model state, mode-button owner, right-side UI, or Multi transform changes. Keep Snap and action boxes as separate viewport children. Preserve user-confirmed scene display and mode-button PASSes; .1103 rail spacing is incomplete and not a PASS.
 
-Release markers and affected parent/child cache pins are .1104. Focused toolbar/release checks pass 34/34; full local `npm test` passes 3,224/3,224; `git diff --check` is clean. Hosted Topology and Pages deployment are pending. Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched. Device acceptance is pending for top gap, Focus alignment, rail width and lower gaps; see `.1104` at the top of `TEST_CHECKLIST.md`.
+Release markers and affected parent/child cache pins are .1104. Focused toolbar/release checks pass 34/34; full local `npm test` passes 3,224/3,224; `git diff --check` is clean. Hosted Topology run `42448808630` passed 3,224/3,224; Pages run `42448808498` succeeded. Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched. Device acceptance is pending for top gap, Focus alignment, rail width and lower gaps; see `.1104` at the top of `TEST_CHECKLIST.md`.
 
 ---
 
