@@ -10,6 +10,7 @@
 
 - [x] Focused UI, selection, release/cache and logo checks: 31 PASS / 0 FAIL.
 - [x] Full local `npm test`: 3,224 PASS / 0 FAIL; `git diff --check` clean.
+- [x] Hosted Topology `42445617015` passed; Pages `42445616793` succeeded; all 17 changed files byte-match the live site.
 
 This is the device gate; no iPad visual PASS is inferred from automated tests.
 

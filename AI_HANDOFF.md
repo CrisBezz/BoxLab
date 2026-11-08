@@ -4,7 +4,7 @@ Current build .1102 replaces the header mark with the user's supplied `icons/box
 
 Scope is intentionally limited to the topbar logo, left viewport controls and release pins. The mode dock is unchanged in the right-side panel owners; `src/main.js`, renderer, camera, model state, global styles and `src/viewport-selection-panel.js` are untouched. Screenshot supplied with the report showed `8 verts • 0 faces`; this explains the absent mesh body for that captured state but does not prove the grid/axis render path. Do not change rendering or reset/project state based on that screenshot alone. If a clean default cube is still blank in .1102, isolate it as a separate rendering report.
 
-Local validation: focused UI/release checks 31/31; complete `npm test` 3,224 PASS / 0 FAIL; `git diff --check` clean. Current file changes and release markers are in progress until publication verification is recorded below. Preserve protected `src/multi-object-transform.js?v=0.36.1.0` and the known-good right-side UI owners. Device acceptance is pending; use the current top section of `TEST_CHECKLIST.md`.
+Local validation: focused UI/release checks 31/31; complete `npm test` 3,224 PASS / 0 FAIL; `git diff --check` clean. Published .1102 runtime commit: `f2acb97b34512b6a521c0fe6d1a4d201a25f07b5`. Hosted Topology `42445617015` passed; Pages run `42445616793` succeeded; all 17 changed files byte-match the live site. Preserve protected `src/multi-object-transform.js?v=0.36.1.0` and the known-good right-side UI owners. Device acceptance is pending; use the current top section of `TEST_CHECKLIST.md`.
 
 ---
 

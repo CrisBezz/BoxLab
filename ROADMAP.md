@@ -4,7 +4,7 @@ Correct the user-supplied header logo; stack Axis and Geometry Snap vertically; 
 
 Screenshot clue: the submitted frame reports `8 verts • 0 faces`. This is an empty mesh body; no renderer fix is justified without a clean default cube reproduction. If the scene remains blank on a clean start in .1102, investigate that separately.
 
-Local .1102 validation is complete: focused UI/release checks 31/31; full suite 3,224/3,224; `git diff --check` clean. Publication and device acceptance are pending.
+Local .1102 validation is complete: focused UI/release checks 31/31; full suite 3,224/3,224; `git diff --check` clean. Published runtime commit `f2acb97b34512b6a521c0fe6d1a4d201a25f07b5`; hosted Topology `42445617015` passed, Pages `42445616793` succeeded, and all 17 changed files byte-match the live site. Device acceptance remains pending.
 
 ---
 
