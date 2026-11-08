@@ -1,3 +1,9 @@
+## .1108 — timestamp long pauses and related work — 8 November 2026
+
+The user supplied the .1107 iPad report after a controlled navigation capture: 1,002 vertices / 1,000 faces, 3 textures, 120 frames at 59.97 FPS (17 ms p95), 7 long frame gaps (max 3,243 ms), navigation-submit max 3,243 ms, decode 3,253 ms and time-until-visible 3,274 ms. Camera-change mean is 0.058 ms / max 1 ms; typical submit p95 is 10–11 ms. The close maxima suggest a possible shared window but the report has no event timestamps, so overlap/cause is unproven. 88 zoom update samples were grouped into two pan+zoom sessions and zero pure-zoom gestures; the test did not isolate pure pinch.
+
+Audit reuses the authoritative `src/performance-core.js` monitor and `src/performance-monitor.js` UI. .1108 adds a bounded 80-event monotonic-clock trace containing named stage spans, frame gaps >=1,000 ms and navigation-submit spans >=250 ms; Reset clears the trace. No renderer, camera, texture or model behavior changes. Existing summary statistics and navigation ownership remain intact. Protected Multi transform is untouched. Focused performance/release checks pass 23/23; full local `npm test` passes 3,233/3,233; `git diff --check` is clean. Hosted Topology, Pages and live release verification pending. Native acceptance pending.
+
 ## .1098 — scene hook profiling breakdown — 7 November 2026
 
 User requests the next build after confirming .1097 PASS and providing a second viewport report. The .1097 cage optimization remains protected; latest matching-count report still showed 297 ms mean total rebuild with 286.25 ms mean / 1,125 ms max in Scene hooks. Different operation distributions mean this does not establish a controlled regression or cause.

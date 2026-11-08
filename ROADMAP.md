@@ -1,8 +1,20 @@
+# .1108 — timestamped viewport pause correlation — 8 November 2026
+
+The .1107 device report records seven >=1 s frame gaps (max 3,243 ms), a 3,243 ms input-to-render-submit maximum, texture decode 3,253 ms and time-until-visible 3,274 ms. Camera response and normal p95 remain low. These are aggregate maxima without timestamps; do not claim the events overlap or identify texture decode as the cause. Zoom samples were grouped into two pan+zoom gestures, so pure pinch was not isolated.
+
+Next narrow step: add bounded timestamped intervals to the existing Performance monitor for stage spans, long frame gaps and slow navigation submits. This should let the next report establish overlap. Focused checks pass 23/23; full local suite passes 3,233/3,233; `git diff --check` is clean. It changes diagnostics only; no renderer, camera, model or texture behavior is changed. Once the report shows which events overlap, audit that authoritative owner before any optimization. Do not infer GPU/compositor time or WASM benefit.
+
+Protected: .1104 spacing PASS; .1102 scene and mode-button PASS; prior modelling/Paint behavior; `src/multi-object-transform.js?v=0.36.1.0` byte-identical. Native .1108 check remains pending.
+
+---
+
 # .1107 — expose long frame gaps — 8 November 2026
 
-The .1106 iPad report has 59.97 FPS and p95 frame interval 17 ms, but input-to-render-submit reaches 1,085 ms. The frame cadence collector intentionally omitted intervals >=1,000 ms, so the report cannot say whether that latency coincided with a long frame gap. Camera-change timing stays low (mean0.044 ms, max1 ms); one rebuild is33 ms; texture decode/display have one sample each (17/43 ms). This does not establish a texture or GPU cause.
+The .1106 iPad report has 59.97 FPS and p95 frame interval 17 ms, but input-to-render-submit reaches 1,085 ms. The frame cadence collector intentionally omitted intervals >=1,000 ms, so the report cannot say whether that latency coincided with a long frame gap. Camera-change timing stays low (mean 0.044 ms, max 1 ms); one rebuild is 33 ms; texture decode/display have one sample each (17/43 ms). This does not establish a texture or GPU cause.
 
-.1107 adds a bounded `longFrameGaps` count and max to the existing opt-in monitor, while preserving cadence averages/percentiles that exclude these rare gaps. No navigation/render/model behavior changes. Focused performance/release checks pass30/30; the full local suite passes3,232/3,232 and `git diff --check` is clean. Published commit `434600b50866f3777d011f86a02563157ac3f891`; Pages run `42471794602` succeeded, hosted Topology run `42471794875` succeeded, and the live app displays .1107. Local tests pass3,232/3,232 and focused checks30/30. Next, repeat the same textured-model orbit/pan/pinch capture on device and compare the long-gap metric with input-to-render-submit max. If the large delay returns without a long frame gap, investigate CPU renderer submission/frame scheduling next; if the report remains normal while the visible pause persists, web telemetry cannot isolate GPU/compositor presentation.
+.1107 adds a bounded `longFrameGaps` count and max to the existing opt-in monitor, while preserving cadence averages/percentiles that exclude these rare gaps. No navigation/render/model behavior changes. Focused performance/release checks pass 30/30; the full local suite passes 3,232/3,232 and `git diff --check` is clean. Runtime was published as commit `434600b50866f3777d011f86a02563157ac3f891`; Pages and hosted Topology succeeded. The later documentation commit is `a3f6cdde10631b7188e175ab712c8e970873593c`.
+
+The .1107 iPad report now shows seven long gaps, but the maxima are uncorrelated aggregates. .1108 adds timestamps; after that capture, use the actual overlap before selecting an optimization. No texture/GPU cause or performance gain is inferred.
 
 ---
 

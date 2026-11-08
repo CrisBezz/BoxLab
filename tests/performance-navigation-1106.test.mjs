@@ -76,6 +76,21 @@ test('1107 reports frame gaps excluded from normal cadence statistics',()=>{
  monitor.reset();assert.deepEqual(monitor.snapshot().longFrameGaps,{thresholdMs:1000,samples:0,maxMs:0});
 });
 
+test('1108 exports bounded timestamped intervals for frame gaps, texture stages and slow navigation submits',()=>{
+ let clock=0;const monitor=createPerformanceMonitor(()=>clock);monitor.setEnabled(true);
+ const sample=stamp=>monitor.frame(stamp,0,0,{render:{calls:0,triangles:0},memory:{geometries:0,textures:0}},{vertices:[],faces:[]},{undoStack:[],redoStack:[]});
+ sample(0);clock=100;const decodeStart=clock;clock=1100;monitor.stage('texture-decode',decodeStart);sample(3243);
+ monitor.navigationStart();clock=1200;monitor.navigationInput('zoom');clock=4443;monitor.navigationChange();monitor.navigationRendered(clock);
+ let trace=monitor.snapshot().timingTrace;
+ assert.deepEqual(trace.map(({kind})=>kind),['stage','frame-gap','navigation-submit']);
+ assert.deepEqual(trace[0],{kind:'stage',name:'texture-decode',startMs:100,endMs:1100,durationMs:1000});
+ assert.deepEqual(trace[1],{kind:'frame-gap',startMs:0,endMs:3243,durationMs:3243});
+ assert.deepEqual(trace[2],{kind:'navigation-submit',gesture:'zoom',startMs:1200,endMs:4443,durationMs:3243});
+ for(let i=0;i<90;i++){clock+=1;monitor.stage('uv-preview',clock-1);}
+ assert.equal(monitor.snapshot().timingTrace.length,80);
+ monitor.reset();assert.deepEqual(monitor.snapshot().timingTrace,[]);
+});
+
 test('1106 navigation observer stays opt-in and does not consume touch input',()=>{
  let clock=0;const monitor=createPerformanceMonitor(()=>clock),view=new Events(),controls=new Events(),canvas={ownerDocument:{defaultView:view},contains:target=>target==='inside'};controls.enabled=true;const cleanup=monitor.observeNavigation(controls,canvas);
  const event={...canvasEvent(1,'touch',0,0),prevented:false,preventDefault(){this.prevented=true;}};view.dispatch('pointerdown',event);event.clientX=8;view.dispatch('pointermove',event);clock=10;controls.dispatch('change');monitor.navigationRendered(20);view.dispatch('pointerup',event);

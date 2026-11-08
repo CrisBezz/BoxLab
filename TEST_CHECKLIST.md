@@ -1,13 +1,19 @@
-# .1107 — report excluded long frame gaps (device acceptance pending)
+# .1108 — timestamped viewport timing trace (native acceptance pending)
 
-- [x] Preserve .1104 spacing PASS and .1102 scene display/mode-button PASSes.
-- [x] Review .1106 iPad report: 1002 vertices / 1000 faces, 3 textures, one 33 ms rebuild, 120 frames at 59.97 FPS (p95 17 ms); input-to-camera-change mean 0.044 ms / max 1 ms; input-to-render-submit mean 8.22 ms / p95 11 ms / max 1085 ms.
-- [x] Decode and texture-display each sampled once (17 ms / 43 ms); no repeated texture work appears in this capture. No texture/GPU cause inferred.
-- [x] Add `longFrameGaps` count/max for excluded frame intervals >=1000 ms; preserve existing cadence statistics and rendering behavior. Focused performance/release checks: 30 PASS / 0 FAIL; full local `npm test`: 3,232 PASS / 0 FAIL; `git diff --check` clean.
-- [x] Published release commit `434600b50866f3777d011f86a02563157ac3f891` (tree `112712ea1c5aa4b9d1128294df698ec12b4a2225`). Hosted Topology run `42471794875` succeeded; Pages run `42471794602` succeeded; live app displays `v0.36.18.1107`.
-- [ ] On the same textured model, reset Performance and make separate orbit, pan and pinch passes. Compare `longFrameGaps` with input-to-render-submit maximum and note whether the pause recurs.
-- [ ] Confirm texture/scene visibility, Snap/mode buttons, and viewport report download. Native .1107 acceptance pending.
-- [ ] Render-submit remains CPU-only; GPU execution and compositor presentation are not measured.
+- [x] Review the .1107 iPad report: 7 frame gaps >=1,000 ms (max 3,243 ms); navigation-submit max 3,243 ms; texture decode/display 3,253 / 3,274 ms. Similar maxima are not proof of overlap because the report contains no timestamps.
+- [x] Extend the existing opt-in monitor with an 80-event timing trace: stage spans, long frame gaps and navigation submits >=250 ms. Reset clears the trace; normal metric windows and renderer behavior are unchanged.
+- [x] Focused diagnostic/release checks: 23 PASS / 0 FAIL; full local `npm test`: 3,233 PASS / 0 FAIL; `git diff --check` clean.
+- [ ] On iPad, reset after the textured model is fully visible; separately orbit, pan and pinch; download the viewport report. Compare timestamped intervals and confirm ordinary navigation/UI remains usable.
+- [ ] Native result is not yet supplied. Do not infer a performance PASS, cause, GPU/compositor timing or WASM gain.
+
+---
+
+# .1107 — report excluded long frame gaps (device result received; cause inconclusive)
+
+- [x] Report records 7 gaps >=1,000 ms (max 3,243 ms), render-submit max 3,243 ms and texture decode/display 3,253 / 3,274 ms. Aggregates have no timestamps; correlation is not established.
+- [x] Camera-change max is 1 ms; input-to-render-submit p95 is 10–11 ms. Zoom has 88 update samples but zero pure-zoom gestures; two sessions were classified pan+zoom.
+- [x] .1108 adds timestamped intervals to the same monitor for the next controlled capture.
+- [ ] Keep causal diagnosis open until timing intervals are compared; no .1107 performance PASS is inferred.
 
 ---
 

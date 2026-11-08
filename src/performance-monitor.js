@@ -1,4 +1,4 @@
-import {createPerformanceMonitor} from './performance-core.js?v=0.36.18.1107';
+import {createPerformanceMonitor} from './performance-core.js?v=0.36.18.1108';
 const monitor=createPerformanceMonitor();
 let panel=null,output=null,timer=null,button=null;
 const number=(value,digits=0)=>Number(value||0).toFixed(digits);
@@ -10,6 +10,7 @@ function refresh(){
  output.textContent=s.samples?[
   `${number(s.fps)} FPS · frame ${number(s.frameMs,1)} ms · p95 ${number(s.p95Ms,1)} ms`,
   `Long frame gaps ≥${s.longFrameGaps.thresholdMs} ms: ${s.longFrameGaps.samples} · max ${number(s.longFrameGaps.maxMs,1)} ms`,
+  `Timing trace ${s.timingTrace.length}/80 · stage spans, frame gaps and navigation submits ≥250 ms`,
   `Markers ${number(s.markers,1)} ms · render submit ${number(s.render,1)} ms`,
   `Draw calls ${s.calls} · triangles ${s.triangles}`,
   `Geometries ${s.geometries} · textures ${s.textures}`,
@@ -41,7 +42,7 @@ function setEnabled(value){
   panel=document.createElement('section');panel.id='boxlabPerformance';panel.setAttribute('aria-label','Performance measurements');
   panel.style.cssText='position:absolute;right:8px;bottom:80px;z-index:110;width:min(370px,48vw);padding:9px;border:1px solid #ffffff40;border-radius:8px;background:#10141bf2;color:white;font:11px/1.5 ui-monospace,monospace;pointer-events:auto';
   const title=document.createElement('strong');title.textContent='PERFORMANCE';output=document.createElement('pre');output.style.cssText='white-space:pre-wrap;margin:5px 0';
-  const note=document.createElement('small');note.textContent='CPU timings; render-submit navigation latency ends after the existing renderer.render call. It excludes GPU execution and browser/compositor presentation. Camera-change timings stop earlier at the OrbitControls event. Resource counts are not RAM usage. FPS and frame percentiles omit intervals ≥1,000 ms; those gaps are counted separately above. Last 120 samples per phase. Inactive is included in Scene hooks. Nested scene and UV texture timings overlap and are not additive. Texture decode includes async wait; until visible ends when the UV surface is enabled.';
+  const note=document.createElement('small');note.textContent='CPU timings; render-submit navigation latency ends after the existing renderer.render call. It excludes GPU execution and browser/compositor presentation. Camera-change timings stop earlier at the OrbitControls event. Resource counts are not RAM usage. FPS and frame percentiles omit intervals ≥1,000 ms; those gaps are counted separately above. The downloaded report includes the last 80 timed intervals for comparing texture stages, frame gaps and slow navigation submits. Times share the browser performance clock; overlapping intervals suggest timing coincidence, not proof of cause. Last 120 samples per phase. Inactive is included in Scene hooks. Nested scene and UV texture timings overlap and are not additive. Texture decode includes async wait; until visible ends when the UV surface is enabled.';
   const actions=document.createElement('div');actions.style.cssText='display:flex;gap:6px;margin-top:6px';
   for(const [label,action] of [['Reset',()=>{monitor.reset();refresh();}],['Close',()=>setEnabled(false)]]){const b=document.createElement('button');b.type='button';b.textContent=label;b.addEventListener('click',action);actions.append(b);}
   panel.append(title,output,note,actions);document.querySelector('#viewportWrap')?.append(panel);
