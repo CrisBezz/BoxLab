@@ -1,10 +1,18 @@
+# .1107 — expose long frame gaps — 8 November 2026
+
+The .1106 iPad report has 59.97 FPS and p95 frame interval 17 ms, but input-to-render-submit reaches 1,085 ms. The frame cadence collector intentionally omitted intervals >=1,000 ms, so the report cannot say whether that latency coincided with a long frame gap. Camera-change timing stays low (mean0.044 ms, max1 ms); one rebuild is33 ms; texture decode/display have one sample each (17/43 ms). This does not establish a texture or GPU cause.
+
+.1107 adds a bounded `longFrameGaps` count and max to the existing opt-in monitor, while preserving cadence averages/percentiles that exclude these rare gaps. No navigation/render/model behavior changes. Focused performance/release checks pass30/30; the full local suite passes3,232/3,232 and `git diff --check` is clean. Local commit `03fdb66b` is tested; remote main and Pages remain .1106 because automatic review blocked the direct publish pending explicit approval. After approval and publication, repeat the same textured-model orbit/pan/pinch capture on device and compare the long-gap metric with input-to-render-submit max. If the large delay returns without a long frame gap, investigate CPU renderer submission/frame scheduling next; if the report remains normal while the visible pause persists, web telemetry cannot isolate GPU/compositor presentation.
+
+---
+
 # .1106 — measure camera input through renderer submission — 8 November 2026
 
 The .1105 iPad report shows 59.97 FPS and no rebuilds on a 1,002-vertex / 1,000-face textured scene, while input-to-OrbitControls-change averaged 0.035 ms. That measure ends before the frame is submitted and cannot explain the subjective delay. The report also has 70 zoom updates but no completed zoom gesture, with some pinch motion grouped as pan+zoom. No texture reload or GPU cause is established.
 
 .1106 adds timing from first/latest gesture input through the existing `renderer.render` call, and moves session completion to the observed pointer lifecycle. Pinch midpoint drift is interpreted relative to span change. The monitor stays opt-in; pointer observers are passive; camera and render behavior are untouched. Timings end after CPU renderer submission and still exclude GPU/compositor presentation.
 
-Focused diagnostic/release checks pass 31/31; the full local suite passes 3,231/3,231. Runtime commit `1896a9f6cc6a05f089744c9362d50f20d9f4a457` is published; Pages run `42467776243` succeeded and the live app shows .1106. Hosted Topology run `42467776484` passed3,231/3,231; the docs follow-up Pages deployment `42468130519` succeeded. Next: iPad check orbit, pan and pinch separately on an already-textured model, verify per-gesture completed counts and render-submit timings, then note whether the perceived lag remains. Decide on an optimization only if that capture identifies the cost. Keep pixelation deferred unless a measured render bottleneck warrants it.
+Focused diagnostic/release checks pass31/31; the full local suite passes3,231/3,231. Runtime commit `1896a9f6cc6a05f089744c9362d50f20d9f4a457` is published; Pages run `42467776243` succeeded and the live app shows .1106. Hosted Topology run `42467776484` passed3,231/3,231; docs follow-up Pages run `42468130519` succeeded. Its native report is summarized above. Pixelation remains deferred pending evidence that it addresses measured rendering cost.
 
 ---
 

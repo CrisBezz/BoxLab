@@ -1,16 +1,21 @@
-# .1106 — input-to-render-submit diagnostic (device acceptance pending)
+# .1107 — report excluded long frame gaps (device acceptance pending)
 
 - [x] Preserve .1104 spacing PASS and .1102 scene display/mode-button PASSes.
-- [x] The .1105 iPad report shows 1,002 vertices / 1,000 faces, 3 texture resources, 0 rebuilds and 120 frames at 59.97 FPS; camera-change response mean 0.035 ms / max 1 ms. This is CPU-only and does not resolve the reported pause.
-- [x] The .1105 report recorded 70 zoom camera updates but no completed zoom gesture or first zoom response; this exposed a session-boundary/classification gap, not proof that zoom itself failed.
-- [x] .1106 measures input-to-camera-change and input-to-completed-renderer.render submission by gesture. Gesture completion follows observed pointer lifecycle; controls and rendering remain unchanged.
-- [x] Focused performance/release tests: 31 PASS / 0 FAIL; includes actual-render-owner, completed-pinch, between-frame gesture handoff, passive observer and release-pin cases. Full local `npm test`: 3,231 PASS / 0 FAIL.
-- [x] Published runtime commit `1896a9f6cc6a05f089744c9362d50f20d9f4a457`; the GitHub tree matches local `d40b827ea42d1c6db57e70a94a097dd291bd05fa`. Pages run `42467776243` succeeded; the live app loaded as `BoxLab v0.36.18.1106` with the default cube and mode/left-rail controls visible.
-- [x] Hosted Topology run `42467776484` passed `npm test`: 3,231 PASS / 0 FAIL. The docs follow-up Pages run `42468130519` also succeeded.
-- [ ] With an already-textured model, open VIEW → Diagnostics → Performance and Reset.
-- [ ] Make separate one-finger orbit, two-finger pan and pinch zoom passes. Confirm each completed gesture counter increments and first/latest render-submit timings populate for the matching type.
-- [ ] Confirm scene and texture remain visible, Snap and mode buttons work, and the viewport report downloads with per-gesture values. Note whether the perceived delay remains.
-- [ ] Device acceptance pending. Render-submit timing excludes GPU execution and compositor presentation.
+- [x] Review .1106 iPad report: 1002 vertices / 1000 faces, 3 textures, one 33 ms rebuild, 120 frames at 59.97 FPS (p95 17 ms); input-to-camera-change mean 0.044 ms / max 1 ms; input-to-render-submit mean 8.22 ms / p95 11 ms / max 1085 ms.
+- [x] Decode and texture-display each sampled once (17 ms / 43 ms); no repeated texture work appears in this capture. No texture/GPU cause inferred.
+- [x] Add `longFrameGaps` count/max for excluded frame intervals >=1000 ms; preserve existing cadence statistics and rendering behavior. Focused performance/release checks: 30 PASS / 0 FAIL; full local `npm test`: 3,232 PASS / 0 FAIL; `git diff --check` clean.
+- [ ] Publish local commit `03fdb66b` to `origin/main` after the exact push is approved; automatic review blocked the current direct-push attempt. Verify hosted tests, Pages, release marker and live assets.
+- [ ] On the same textured model, reset Performance and make separate orbit, pan and pinch passes. Compare `longFrameGaps` with input-to-render-submit maximum and note whether the pause recurs.
+- [ ] Confirm texture/scene visibility, Snap/mode buttons, and viewport report download. Native .1107 acceptance pending.
+- [ ] Render-submit remains CPU-only; GPU execution and compositor presentation are not measured.
+
+---
+
+# .1106 — input-to-render-submit diagnostic (device acceptance pending)
+
+- [x] .1106 adds input-to-camera-change and input-to-completed-renderer.render-submit timings by gesture. Pointer listeners remain passive; renderer and camera behavior are unchanged.
+- [x] Full .1106 local/hosted suite and Pages deployment are recorded in DEV_HISTORY. Native .1106 acceptance was not supplied; do not mark it PASS.
+- [x] Supplied .1106 report was reviewed and its aggregate values and limitations are documented under .1107.
 
 ---
 

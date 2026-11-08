@@ -65,6 +65,17 @@ test('1106 production render owner records the measurement after its existing re
  assert.equal((main.match(/renderer\.render\(scene,camera\)/g)||[]).length,2);
 });
 
+test('1107 reports frame gaps excluded from normal cadence statistics',()=>{
+ const monitor=createPerformanceMonitor(()=>0);monitor.setEnabled(true);
+ const sample=(stamp)=>monitor.frame(stamp,0,0,{render:{calls:0,triangles:0},memory:{geometries:0,textures:0}},{vertices:[],faces:[]},{undoStack:[],redoStack:[]});
+ sample(0);sample(16);sample(1101);sample(1118);
+ const snapshot=monitor.snapshot();
+ assert.equal(snapshot.samples,2);
+ assert.equal(snapshot.frameMs,16.5);
+ assert.deepEqual(snapshot.longFrameGaps,{thresholdMs:1000,samples:1,maxMs:1085});
+ monitor.reset();assert.deepEqual(monitor.snapshot().longFrameGaps,{thresholdMs:1000,samples:0,maxMs:0});
+});
+
 test('1106 navigation observer stays opt-in and does not consume touch input',()=>{
  let clock=0;const monitor=createPerformanceMonitor(()=>clock),view=new Events(),controls=new Events(),canvas={ownerDocument:{defaultView:view},contains:target=>target==='inside'};controls.enabled=true;const cleanup=monitor.observeNavigation(controls,canvas);
  const event={...canvasEvent(1,'touch',0,0),prevented:false,preventDefault(){this.prevented=true;}};view.dispatch('pointerdown',event);event.clientX=8;view.dispatch('pointermove',event);clock=10;controls.dispatch('change');monitor.navigationRendered(20);view.dispatch('pointerup',event);

@@ -1,5 +1,5 @@
 {
-  "baseline": "Reviewed .1106 navigation response: user .1105 report on iPad Chrome 27.2, 1002 verts/1000 faces, 3 textures, 120 frames at 59.97fps and zero rebuilds. Camera-change response averaged 0.035ms, max 1ms; pinch updates appeared but no completed zoom gesture was counted. .1106 tracks input through the next renderer.render submission and closes gesture sessions from pointer lifecycle. Submit time remains CPU-only, not GPU/compositor presentation. .1104 spacing and .1102 scene/mode PASSes remain protected.",
+  "baseline": "Reviewed .1106 iPad navigation report on Chrome, 1002 verts/1000 faces, 3 textures, 120 frames at 59.97fps and one 33ms rebuild. Camera changes averaged 0.044ms (max 1ms); per-input render-submit averaged 8.22ms, p95 11ms, with one 1085ms maximum. Frame intervals >=1000ms were omitted from the prior cadence summary, so .1107 reports those gaps separately. Texture decode/display each sampled once (17ms/43ms); no repeated texture work is shown. Protected .1104 spacing and .1102 scene/mode PASSes remain.",
   "references": [
     {
       "owner": "index.html",
@@ -161,9 +161,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1106",
+      "url": "./src/drawer-ui.js?v=0.36.18.1107",
       "target": "src/drawer-ui.js",
-      "sha256": "a5ef916f4a32f54aa7ec037dfd686c79d5ed23090a553ed6864ff69f8ff8ebe9"
+      "sha256": "9f7933e7c290f6aab432e5adbb1de04e77869da2efcd8c2395351306c17101bc"
     },
     {
       "owner": "index.html",
@@ -378,7 +378,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1106",
+      "url": "./src/release-version.js?v=0.36.18.1107",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -864,9 +864,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1106",
+      "url": "./face-workflow-layout.js?v=0.36.18.1107",
       "target": "src/face-workflow-layout.js",
-      "sha256": "af14f9fca04089abe67504b1d1f05777dc23bd2508a1a13b7f3a72392148c0f1"
+      "sha256": "f0f9d985af4d4273f91bf92978ab5c49f558e7d9fc668f71e2bccff5a4367252"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1361,7 +1361,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1106",
+      "url": "./release-version.js?v=0.36.18.1107",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -2240,15 +2240,15 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/performance-monitor.js?v=0.36.18.1106",
+      "url": "./src/performance-monitor.js?v=0.36.18.1107",
       "target": "src/performance-monitor.js",
-      "sha256": "2a0d49e6c99a1b1f8cd6148fe6a30b16c0bbb277bdce42d789dddefcbb5fa3d3"
+      "sha256": "2086389a63028b50c7a5a1306315430a43449c5310fba5a17ec3ab89217b2c75"
     },
     {
       "owner": "src/performance-monitor.js",
-      "url": "./performance-core.js?v=0.36.18.1106",
+      "url": "./performance-core.js?v=0.36.18.1107",
       "target": "src/performance-core.js",
-      "sha256": "8907641a2e9eca62a3b34f6f3dbe03a281f54dea0172f2510c56f75e7ca484b9"
+      "sha256": "d737ab8f6f379005b16e013a9e981b3ad9398157f55118b2a86c28078aae2da5"
     },
     {
       "owner": "src/main.js",
@@ -3326,9 +3326,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1106",
+      "url": "./src/shell-comparison.js?v=0.36.18.1107",
       "target": "src/shell-comparison.js",
-      "sha256": "9c68df0978b7faf5121776d2e5d130df1eba68a5ed8343b4e8753f717cb3d14b"
+      "sha256": "1e55e96e1e44aaecc6cdeb7a9fd7a2b99aacb382eeb4c245e2b68c472f124cfc"
     },
     {
       "owner": "src/main.js",
