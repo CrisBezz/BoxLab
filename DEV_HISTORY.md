@@ -12803,3 +12803,8 @@ Audit found the original `FreeOrbitControls` instance in `src/main.js`, the opt-
 Interpretation boundary: measurements stop at OrbitControls' camera `change` event, before render submission/presentation. They cannot measure GPU/compositor presentation or prove a displayed frame's latency, and do not show that textures reload. The diagnostic can help check whether the observed delay is before the camera update and how that varies by movement type. No optimization, speedup, WASM gain or texture-reload cause is claimed. Native user check remains pending.
 
 Automated coverage includes bounded per-kind stats, first-response and repeated camera updates, real controls events and passive classification, disabled monitoring and controls-disabled filtering, existing Performance UI/export, release markers and runtime cache hashes. Focused checks passed 44/44; full local suite and publication results are recorded below after completion.
+
+
+## .1105 publication verification — 8 November 2026
+
+Runtime commit `5011c9d2a0510b94ac289dc5bfa2922770263cc0` updated remote `main` from `ccb356f37f337ad398416e8b267087215b49e446`; published tree `c193baf628cee3b22a8a717877d25efacf5d0542` exactly matched the local runtime tree. GitHub `version.json` and `index.html` report .1105. The live Pages app loaded as `BoxLab v0.36.18.1105`; its initial scene showed the cube, and the snap/action rails and four mode buttons were present. This verifies the release marker and shell/scene visibility, not navigation response on an iPad. Full local suite passed 3,228 / 3,228; focused suite passed 47 / 47; `git diff --check` is clean. The GitHub combined-status endpoint returned no status records, so no hosted Topology run is claimed. Device navigation acceptance remains pending.
