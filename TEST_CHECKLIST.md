@@ -11,7 +11,7 @@
 
 - [x] Focused toolbar/Snap/Paint/release checks: 63 PASS / 0 FAIL; final pin/rail-order follow-up: 19 PASS / 0 FAIL.
 - [x] Full local `npm test`: 3,224 PASS / 0 FAIL; `git diff --check` clean; protected Multi transform unchanged.
-- [ ] Hosted Topology, Pages deployment and live byte verification.
+- [x] Hosted Topology `42434222660` passed; Pages deployment `42434222583` succeeded; all 24 changed files byte-match the live site.
 
 This checklist is the hands-on device gate; do not record device PASS until confirmed by the user.
 

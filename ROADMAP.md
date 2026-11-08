@@ -4,7 +4,7 @@ The next device check covers the BoxLab mark before the wordmark, the vertical L
 
 The .1099 import timing report remains inconclusive for orbit-time repaint. Keep pixelated navigation deferred until a sustained orbit/pan/zoom report on an already-textured model identifies meaningful cost or repeated decoding. Keep the protected Multi transform and prior navigation, selection, Paint and Undo/Redo behavior intact.
 
-Local .1101 validation is complete: focused follow-up 19/19 and full suite 3,224/3,224 pass. Device acceptance remains pending; hosted Topology, Pages deployment and live file verification are the remaining release checks.
+Local .1101 validation is complete: focused follow-up 19/19 and full suite 3,224/3,224 pass. Hosted Topology `42434222660` passed, Pages deployment `42434222583` succeeded, and all 24 changed files byte-match the live site. Device acceptance remains pending.
 
 ---
 
