@@ -1,5 +1,5 @@
 {
-  "baseline": "Reviewed .1101: existing Snap inputs are separated into a top Snap box and a vertical lower-left Lasso/Select/UV Paint rail. The existing snap placement preference moves only the Snap box. The current BoxLab app mark appears before the wordmark; persistent .1100 settings and Pencil list activation remain protected.",
+  "baseline": "Reviewed .1103: Snap and action rails share a fixed width, with 8px gaps between the snap and action rails and between the action rail and mode dock. The existing Snap placement preference continues to move only the Snap box. .1102 display PASS and supplied logo remain protected.",
   "references": [
     {
       "owner": "index.html",
@@ -161,9 +161,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1102",
+      "url": "./src/drawer-ui.js?v=0.36.18.1103",
       "target": "src/drawer-ui.js",
-      "sha256": "61d30d32d1608a1a610903a42a7616ecd030427f691be54bd7f968bd0dde4159"
+      "sha256": "d18b69eef454aac242fb62ef6cb39ebde136d42a24b31c7d09de130ea0a86a8f"
     },
     {
       "owner": "index.html",
@@ -378,7 +378,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1102",
+      "url": "./src/release-version.js?v=0.36.18.1103",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -539,9 +539,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/topbar-layout.js?v=0.36.18.1102",
+      "url": "./src/topbar-layout.js?v=0.36.18.1103",
       "target": "src/topbar-layout.js",
-      "sha256": "958a4ca12d32ea54538797b86b8a00b689b8041a2b37e561221ba3372cccbc0c"
+      "sha256": "2bd538cc72f62fbe09abd3ca6f928691e460c77338b1f1a1e9114464d1abf8e3"
     },
     {
       "owner": "index.html",
@@ -864,9 +864,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1102",
+      "url": "./face-workflow-layout.js?v=0.36.18.1103",
       "target": "src/face-workflow-layout.js",
-      "sha256": "79c06d8463b3e50db269e565f5d40dac5b1aaedda9faf8828b804228435dd25f"
+      "sha256": "c5bb26b483f8efcdbf395fee965c6c283f2a8155b8f2021c8cf63a42e798607b"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1361,7 +1361,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1102",
+      "url": "./release-version.js?v=0.36.18.1103",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -2044,9 +2044,9 @@
     },
     {
       "owner": "src/topbar-layout.js",
-      "url": "./viewport-toolbar-controls.js?v=0.36.18.1102",
+      "url": "./viewport-toolbar-controls.js?v=0.36.18.1103",
       "target": "src/viewport-toolbar-controls.js",
-      "sha256": "c730a94fc3ecd440501587d2bb92a10b16e6d7329076e6ab0e421e0280a01477"
+      "sha256": "f8357cf1af7fdbe77d4d840b03b643a57b7d8627e39b9524df005f1cff0c83fe"
     },
     {
       "owner": "src/total-gizmo.js",
@@ -3326,9 +3326,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1102",
+      "url": "./src/shell-comparison.js?v=0.36.18.1103",
       "target": "src/shell-comparison.js",
-      "sha256": "156a1fa0b0fb1825d5df5940723e874d6a355818e45a8d7674733e08ac690b52"
+      "sha256": "3e365bbfed4768b81ea5a62ba093119b63f69884cdeed5063025d863452f00c5"
     },
     {
       "owner": "src/main.js",

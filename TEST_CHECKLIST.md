@@ -1,18 +1,17 @@
-# .1102 — logo, left rails and mode dock (device acceptance pending)
+# .1103 — left rail spacing (device acceptance pending)
 
-- [ ] Confirm the supplied three-colour BoxLab logo appears before the header text.
-- [ ] Confirm Axis and Geometry Snap icons stack vertically in the left strip, alongside the Lasso, Select and Paint actions.
-- [ ] Toggle VIEW → General Settings → Snap options at top left on and off; verify only the Snap box moves and both original snap toggles still work.
-- [ ] Confirm Vertex, Edge, Face and Object mode buttons are visible at the lower left and still switch modes.
-- [ ] Check the right-side Object Browser/toolbar remains visible and opens normally after refresh; .1102 does not change those owners.
-- [ ] If the viewport is blank, note the mesh counter and whether this is a clean default cube. The supplied screenshot read `8 verts • 0 faces`; do not infer a rendering regression from that empty-body state alone.
-- [ ] User device acceptance. Do not protect as PASS until confirmed.
+- [x] User confirms the .1102 scene/display issue is PASS; protect visible scene and visible/working mode buttons. Do not infer renderer changes; none were made.
+- [x] User supplied current BoxLab logo; .1102 logo placement remains protected.
+- [ ] Confirm Snap and Lasso/Select/Paint rails have matching outside widths.
+- [ ] Confirm an 8px gap between Snap and action rails and between the action rail and mode dock, in landscape and compact view.
+- [ ] Toggle VIEW → General Settings → Snap options at top left on/off; only the Snap box moves and both original snap inputs work.
+- [x] User confirms the scene display and all four visible/working mode buttons PASS; protect this result.
+- [ ] Check the right-side Object Browser/toolbar remains visible and opens normally after refresh; no right-side owner was changed.
+- [x] Focused rail/release regression checks: 34 PASS / 0 FAIL; full local `npm test`: 3,224 PASS / 0 FAIL; `git diff --check` clean.
+- [ ] Hosted Topology and Pages publication verification pending.
+- [ ] Overall .1103 device acceptance remains pending; only the scene/mode display PASS is protected so far.
 
-- [x] Focused UI, selection, release/cache and logo checks: 31 PASS / 0 FAIL.
-- [x] Full local `npm test`: 3,224 PASS / 0 FAIL; `git diff --check` clean.
-- [x] Hosted Topology `42445617015` passed; Pages `42445616793` succeeded; all 17 changed files byte-match the live site.
-
-This is the device gate; no iPad visual PASS is inferred from automated tests.
+---
 
 ---
 

@@ -29,12 +29,13 @@ export function installViewportToolbarControls(doc=document){
  const style=doc.createElement('style');style.textContent=`
 .top-actions>button[data-icon-action]{width:40px;min-width:40px;padding:7px!important;display:grid;place-items:center}
 .top-actions>button[data-icon-action] svg,#viewportSnapControls svg,#viewportActionControls svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-#viewportSnapControls,#viewportActionControls{position:absolute;z-index:120;left:max(16px,env(safe-area-inset-left));display:flex;flex-direction:column;align-items:stretch;gap:4px;padding:4px;border:1px solid rgba(255,255,255,.14);border-radius:11px;background:rgba(18,21,27,.94)}
-#viewportSnapControls{bottom:calc(max(78px,env(safe-area-inset-bottom) + 66px) + 166px)}
-#viewportActionControls{bottom:max(78px,calc(env(safe-area-inset-bottom) + 66px))}
+#viewportWrap{--viewport-action-bottom:calc(max(27px,env(safe-area-inset-bottom) + 23px) + 52px + 8px)}
+#viewportSnapControls,#viewportActionControls{position:absolute;z-index:120;left:max(16px,env(safe-area-inset-left));box-sizing:border-box;width:58px;display:flex;flex-direction:column;align-items:stretch;gap:4px;padding:4px;border:1px solid rgba(255,255,255,.14);border-radius:11px;background:rgba(18,21,27,.94)}
+#viewportActionControls{bottom:var(--viewport-action-bottom)}
+#viewportSnapControls{bottom:calc(var(--viewport-action-bottom) + 156px + 8px)}
 #paintSelectDepth{display:none!important}
 #viewportSnapControls>span{font-size:9px;letter-spacing:.06em;text-align:center;opacity:.72}
-#viewportSnapControls label,#viewportActionControls label{position:relative;display:flex;align-items:center;justify-content:center;width:42px;height:42px;cursor:pointer;border-radius:8px}
+#viewportSnapControls label,#viewportActionControls label{position:relative;display:flex;align-items:center;justify-content:center;width:48px;height:42px;cursor:pointer;border-radius:8px}
 #viewportSnapControls input,#viewportActionControls input{position:absolute;opacity:0;width:100%;height:100%;margin:0;cursor:pointer}
 #viewportSnapControls label:has(input:checked),#viewportActionControls label:has(input:checked),#viewportActionControls button.active{background:rgba(130,170,235,.28)}
 #viewportSnapControls label:has(input:focus-visible),#viewportActionControls label:has(input:focus-visible){outline:2px solid #a9ccff}
@@ -48,6 +49,6 @@ export function installViewportToolbarControls(doc=document){
 #viewportActionControls #viewportPaintBtn{order:2}
 #viewportActionControls #viewportPaintBtn[aria-pressed=true]{background:#1268b6;border-color:#60b5ff}
 #viewportWrap>.floating-panel.left-panel{bottom:132px!important}
-@media(max-width:900px){#viewportSnapControls,#viewportActionControls{left:max(8px,env(safe-area-inset-left))}#viewportSnapControls{bottom:calc(max(78px,env(safe-area-inset-bottom) + 66px) + 166px)}#viewportActionControls{bottom:max(78px,calc(env(safe-area-inset-bottom) + 66px))}}
+@media(max-width:900px){#viewportWrap{--viewport-action-bottom:calc(max(25px,env(safe-area-inset-bottom) + 21px) + 50px + 8px)}#viewportSnapControls,#viewportActionControls{left:max(8px,env(safe-area-inset-left))}#viewportActionControls{bottom:var(--viewport-action-bottom)}#viewportSnapControls{bottom:calc(var(--viewport-action-bottom) + 156px + 8px)}}
 `;doc.head.append(style);
 }

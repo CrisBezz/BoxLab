@@ -1,10 +1,6 @@
-# .1102 — left controls and header correction — 8 November 2026
+# .1103 — left rail spacing refinement — 8 November 2026
 
-Correct the user-supplied header logo; stack Axis and Geometry Snap vertically; keep Snap and action controls as small, separate viewport children; and explicitly raise the existing mode dock above the status lane. The prior viewport-wide transparent overlay is removed. Do not change the viewport renderer, mesh state, object browser/right-side layout, or protected Multi transform.
-
-Screenshot clue: the submitted frame reports `8 verts • 0 faces`. This is an empty mesh body; no renderer fix is justified without a clean default cube reproduction. If the scene remains blank on a clean start in .1102, investigate that separately.
-
-Local .1102 validation is complete: focused UI/release checks 31/31; full suite 3,224/3,224; `git diff --check` clean. Published runtime commit `f2acb97b34512b6a521c0fe6d1a4d201a25f07b5`; hosted Topology `42445617015` passed, Pages `42445616793` succeeded, and all 17 changed files byte-match the live site. Device acceptance remains pending.
+The .1102 scene/mode display problem is user-confirmed PASS; keep that fix protected. The supplied current logo and compact separate left-rail layout remain in place. Next narrow build standardizes Snap and action-rail widths and keeps consistent gaps from Snap to actions and actions to the mode dock. Continue using the existing General Settings Snap-at-top owner. No renderer, scene state, right-side UI or mode-button event owner changes. Validate focused release/layout contracts and full suite, then publish .1103 under standing authorization. User confirms scene display and mode buttons PASS. Focused checks pass 34/34 and full local suite 3,224/3,224; hosted checks/publication remain pending. Device spacing acceptance checklist: `TEST_CHECKLIST.md`.
 
 ---
 

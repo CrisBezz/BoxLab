@@ -6706,134 +6706,8 @@ order, old release adds no duplicate, recent log bounded12, Clear removes eviden
 Disable removes panel and later selection adds no panel. Geometry/history/redo and
 expected native toggles remain intact. Reuse real native picker integration checks.
 Controlled 
-... 1195 bytes omitted ...
- before AO/Edge seam authoring; alpha929/reflection gates stay independent.
-
-## .942 user PASS — 22 October 2026 (Brisbane)
-
-A further PASS/nextbuild arrived AFTER942 deployment,20 live-file matches and hosted
-2720PASS verification. Accept this latest PASS for LIVE942 connected-face mean carry,
-Opacity/overlay/Paint UndoRedo/SaveOpen; earlier prepublication repetitions remain941.
-Protect942 alongside941. Next authorized943 narrow build begins bounded object-only
-AO bake foundation via original UV ownership/triangle geometry; visible controls follow
-validated bake pixels/work guards. No AO UI or rendered AO acceptance is inferred.
-
-## .943 — read-only object AO bake foundation — 22 October 2026 (Brisbane)
-
-User .942 PASS remains protected. Audit found no existing AO baker. New
-`src/paint-ao-bake.js` uses original preview triangle ownership/triangle graph,
-original paint-filter-domain texel raster and Three Ray.intersectTriangle. The
-filter domain optionally returns its existing transient triangle map; ordinary
-brush callers retain exact return shape and allocations. No second triangulator,
-UV rasterizer, adjacency, brush, history, scene resource or export owner.
-
-Pure synchronous object-local bake returns owned linear R8 visibility and separate
-coverage, UV-v0-first. White=unoccluded; uncovered texels white/coverage0. Deterministic
-cosine-weighted hemisphere samples, double-sided same-object blockers, source winding
-normal, normalized object-diagonal radius/bias. Size16–128/default64, samples4–64/
-default16, radius .001–2/default.25 of diagonal. Conservative8M ray/triangle-test
-preflight plus original2M UV scan cap; excess complexity refuses with no scene writes.
-Normalized private graph points only; source mesh/UV/geometry remain unchanged.
-No scene-neighbour, ground-plane, world-transform, rendered SSAO or albedo bake yet.
-No main-app AO import/button/resource/persistence/export change or device-performance
-claim. This intentionally low-resolution foundation is NOT a new paint resolution.
-
-Five new regression tests cover opt-in exact ownership, white open plane/coverage/
-determinism/copy isolation, facing blockers/radius/double-sided rays, supported scale/
-translation/rotated UVs, stale/invalid/overlap/work refusals and source preservation.
-Tiny1e-8 source fixture was rejected by the ORIGINAL preview builder before baking;
-scale tests use accepted .01–1e8 geometry instead, no builder tolerance change.
-Read `docs/paint-ao-foundation-943.md`. Main painter reverse loader chain + shell/
-recovery pins943 reviewed; Lab/main/cage/Multi1.0/frozen algorithms unchanged.
-
-Next: original Paint layer/history transaction for an explicit non-destructive AO
-Multiply layer, with cancellation/stale/pool/checkpoint guards and visible controls,
-then iPad appearance/latency testing. Do not imply AO UI acceptance from pure tests.
-Alpha929/reflection-preview gates remain independently unresolved. No new AO hands-on
-test exists in943; existing Smudge/Paint UndoRedo/SaveOpen remains the nearby baseline.
-Validation/publication evidence follows; do not infer completion before verification.
-
-.943 final local Node24.19.0 complete regression: **2,725 PASS / 0 FAIL / 0 skipped**.
-Five new AO/ownership checks, original Smudge941/942 eleven and release/cache five
-pass on final runtime. No original assertions relaxed; main/cage/Multi1.0/frozen
-unchanged. Hosted regression/Pages/live proof follows. No new AO device controls.
-
-## .943 publication verified — 22 October 2026 (Brisbane)
-
-Runtime `3feb36097fb677165b3162ac852c58c1e452f735`, tested tree
-`223e2d8e82855137f804faf9e95134614fcee51e`, is published on main. Connected Git
-Data uploaded13 exact local blobs and created the identical locally tested tree;
-fetched main matched, local branch aligned with no file changes. Local Node24 and
-hosted Node22 regression39765950426/job119781312111 both pass **2725 tests / 0
-failures / 0 skipped**; complete hosted log totals verified (hosted219.8s).
-Pages39765949659 build119781316369/deploy119781518834 succeeded. All20 checked
-postdeployment shell/version, every changed runtime owner, new AO module, recovery,
-retained main/cage/Multi1.0/triangle graph/UV/paint/project/export and frozenBeta7 marker
-files byte-match tested source. Reviewed pins943; protected/frozen bytes unchanged.
-No original assertion relaxed. This publication proof changes four continuity files
-only, with identical tested runtime bytes.
-
-Build943 complete: no new hands-on AO test needed because no AO controls are exposed.
-Pure bake/ownership/work/refusal coverage is automated. User942PASS remains protected;
-next narrow build integrates explicit AO Multiply-layer creation through original Paint
-history/pool/compositor with staged/cancel/stale/refusal guards and then visible controls.
-AO foundation is local-object16–128 samples only, not rendered SSAO, neighbour-object
-shadows, persistent AO resources or high-resolution albedo baking. Alpha929 and
-reflection-preview gates remain independent. Existing Smudge/Paint history/SaveOpen
-is optional nearby device sanity, not an invented AO acceptance gate.
-
-## .944 — editable AO Multiply layer preview — 22 October 2026 (Brisbane)
-
-Base main0a4e094 /943 audited. No existing AO UI/layer transaction found. New small
-paint-ao-layer helper calls the original943 baker at64²/16 rays and original UV
-filter-domain raster at64 and current512/1024. Same-face, coverage-aware bilinear
-transfer renormalizes only matching source-face samples; atlas neighbours never
-contribute. Uncovered/unsampled thin faces stay transparent. Radius remains a
-fraction of LOCAL object diagonal; no world-transform/scene-neighbour/ground/SSAO.
-Colour Multiply uses existing byte-space compositor, not a physically linear PBR AO
-slot or high-resolution ray bake. Current colour/scalar/source/tip budgets unchanged.
-
-Original painter owns transient AO preview, pool validation, one Apply checkpoint,
-COW resource assignment and selection. New layer is ordinary editable raster named
-AO n, Multiply, user Strength as Layer opacity; existing visibility/mask/eraser/paint/
-Delete/Merge/Flatten/history/SaveOpen and flattened native/GLB writers remain owners.
-No saved AO descriptor/recipe/schema or new writer/history/gesture/modelling kernel.
-Preview never assigns object colourPaint or enters Save/history; Cancel/Done/history/
-body loss discards it. Apply rechecks live positions/UV binding/current target and
-pool before checkpoint; failures keep committed resources/history unchanged.
-
-Compact LEFT Paint → collapsed Ambient occlusion: Reach5–100% (default25%),
-Strength0–100% (default65%), Bake AO preview, Apply AO layer / Cancel AO. Preview
-blocks paint and layer/channel edits; fingers still navigate. Apply selects AO layer;
-existing layer opacity/visibility can change strength afterward. Existing Undo/Redo
-retains Paint with ORIGINAL selection rules (Redo may keep Base selected; select AO).
-Image placement must Apply/Cancel first; image sources/scalars stay independent.
-Three-overlay cap remains; merge/delete to free a slot. Bake defaults64/16 fixed;
-8M ray-work and2M UV-scan limits refuse complex/overlapping/out-of-tile layouts before
-resource/history changes. Final transfer≤4 texel samples per512²/1024² destination.
-No interactive cancellation during the bounded synchronous calculation or iPad
-latency/RAM/appearance claim. Small low-poly UV meshes first; convex cube may show
-little/no darkening. Concave/recessed geometry is the meaningful appearance test.
-
-Important failed approach: manager.objects/target getters call saveActive and CLONE
-the active mesh. Reference identity cannot establish unchanged AO source. Original
-UV key plus exact serialized live vertex content guard the candidate; do not add an
-identity-only check or mutate the manager to make such a check pass. Temporary debug
-reason text removed. No accepted manager/mesh/export algorithm changed.
-
-Six new integrations pass:512/1024 domain-safe output/source preservation; transient
-preview/Cancel/Apply/opacity/visibility/scalar/peer isolation; actual1024 UI+original
-Paint history+SaveOpen+exact NOM/GLB PNG; checkpoint/pool/deformed-source/close refusal;
-scalar/mask/full stack/complexity guards; retained images/staged mutual exclusion and
-Done discarding unapplied AO. Original nearby943/938/942 tests16PASS; release5PASS.
-Read docs/paint-ao-layer-944.md. Full local2802PASS/0FAIL/0skip (97.20s); publication evidence follows. User942PASS remains
-protected; /nextbuild is not AO device acceptance. Alpha929/reflection gates separate.
-
-DEVICE944: simple recessed UV mesh → Paint → Ambient occlusion → Bake; orbit,
-Cancel retains previous paint. Bake→Apply creates AO layer, adjust Layer opacity/
-Visible; UndoRedo keeps Paint, select AO if needed; SaveOpen/native export keeps shade.
-Next: actual iPad quality/latency feedback, then narrowly refine AO quality/coverage/
-work budget as evidence warrants. No automatic further AO feature before device gate.
+... 9042 bytes omitted ...
+ice gate.
 
 .944 final local Node24.19.0 full regression: **2,731 PASS / 0 FAIL / 0 skipped**.
 Six new AO integration checks + existing2725 pass on final source; original nearby
@@ -12769,3 +12643,8 @@ Runtime commit `60e741b9d2b428db0e1de2a09ed8c9a6994d54bb` is on main. Hosted Top
 User corrected the .1101 header asset (supplied 146×146 PNG is the current logo), requested Axis/Geometry Snap icons vertically within the left strip, and reported the mode dock missing and a blank viewport. Audit found .1101 wrapped the controls in a viewport-sized transparent positioned layer at z-index 120, sharing the same stacking level as the mode dock and sitting later in DOM order. Rewound that presentation and rebuilt it with Snap and action controls as separate compact absolute children of `#viewportWrap`; no full-viewport overlay. Snap controls now stack vertically and retain existing checkbox nodes/handlers. The existing mode dock stays in its original node and is explicitly above the compact rails/status lane. The original right-side panel and selection-panel owners, `src/main.js`, renderer, global stylesheet and protected Multi transform are unchanged. Header uses the supplied PNG; legacy `icon.svg` and PWA icons are not altered.
 
 The screenshot status reads 8 verts / 0 faces. This accounts for an empty mesh body in that captured state but does not identify the absent grid/axes; no renderer/state change was made without a clean default-cube reproduction. Focused UI/release/logo batch 31/31; full local `npm test` 3,224 PASS / 0 FAIL; `git diff --check` clean. Published runtime commit `f2acb97b34512b6a521c0fe6d1a4d201a25f07b5`; hosted Topology `42445617015` passed; Pages `42445616793` succeeded; all 17 changed files byte-match live Pages. Native iPad acceptance remains pending.
+
+
+## .1102 scene/mode display PASS and .1103 left-rail spacing — 8 November 2026
+
+User confirms “Screen display problem is PASS.” Protect the .1102 scene and mode-dock display result; do not alter the renderer or reopen that issue absent an obvious clean-scene reproduction. The supplied current logo and compact separate left rails remain the baseline. Next build standardizes both rail widths and establishes 8px gaps between Snap/actions and actions/mode dock, retaining the original Snap-at-top preference owner. Right-side UI, renderer, model state and protected Multi transform stay untouched. User confirms both scene display and mode buttons PASS; preserve them as protected behaviour. Focused checks pass 34/34 and full local suite 3,224/3,224. Device spacing acceptance is pending; see top of `TEST_CHECKLIST.md`.
