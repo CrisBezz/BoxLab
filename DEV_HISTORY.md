@@ -12774,3 +12774,8 @@ The screenshot status reads 8 verts / 0 faces. This accounts for an empty mesh b
 ## .1102 scene/mode display PASS and .1103 left-rail spacing — 8 November 2026
 
 User confirms “Screen display problem is PASS.” Protect the .1102 scene and mode-dock display result; do not alter the renderer or reopen that issue absent an obvious clean-scene reproduction. The supplied current logo and compact separate left rails remain the baseline. Next build standardizes both rail widths and establishes 8px gaps between Snap/actions and actions/mode dock, retaining the original Snap-at-top preference owner. Right-side UI, renderer, model state and protected Multi transform stay untouched. User confirms both scene display and mode buttons PASS; preserve them as protected behaviour. Focused checks pass 34/34 and full local suite 3,224/3,224. Device spacing acceptance is pending; see top of `TEST_CHECKLIST.md`.
+
+
+### .1103 publication verification — 8 November 2026
+
+Runtime commit `5cc5daa4d343be0a328f38bf72b497619493f0e1` is on main. Hosted Topology `42447679178` passed 3,224/3,224; runtime Pages `42447678875` succeeded. Full handoff/history/checklist/roadmap verification is published in docs-only commit `08a2cb3922cf0afb18c23c9f5f9067e692cd6801`; Pages `42447969868` succeeded. The live-page byte comparison could not be completed from this environment; the GitHub action runs and main commit are confirmed. User device acceptance remains pending for rail widths, 8px gaps and Snap-at-top; scene display and mode buttons are protected PASS.

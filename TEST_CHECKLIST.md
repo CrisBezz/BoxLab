@@ -8,7 +8,7 @@
 - [x] User confirms the scene display and all four visible/working mode buttons PASS; protect this result.
 - [ ] Check the right-side Object Browser/toolbar remains visible and opens normally after refresh; no right-side owner was changed.
 - [x] Focused rail/release regression checks: 34 PASS / 0 FAIL; full local `npm test`: 3,224 PASS / 0 FAIL; `git diff --check` clean.
-- [ ] Hosted Topology and Pages publication verification pending.
+- [x] Hosted Topology `42447679178`: 3,224 PASS / 0 FAIL; runtime Pages `42447678875` succeeded. Handoff-only Pages `42447969868` succeeded.
 - [ ] Overall .1103 device acceptance remains pending; only the scene/mode display PASS is protected so far.
 
 ---
