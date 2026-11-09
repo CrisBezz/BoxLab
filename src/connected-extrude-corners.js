@@ -26,33 +26,6 @@ function contains(poly,p,e){
  return inside;
 }
 function edgeUses(faces){const out=new Map();faces.forEach((f,fi)=>f.forEach((a,i)=>{const b=f[(i+1)%f.length],k=key(a,b);if(!out.has(k))out.set(k,[]);out.get(k).push({fi,i,a,b});}));return out;}
-function conformTriangles(triangles,rings,point,e){
- const expected=new Set(rings.flatMap(r=>r.map((a,i)=>key(a,r[(i+1)%r.length]))));
- // Earcut may omit collinear contour corners. Split its boundary triangles at
- // those SAME existing vertices so adjacent cap/old Faces retain matching edges.
- for(let guard=0;guard<rings.flat().length*2;guard++){
-  const missing=[...edgeUses(triangles)].filter(([k,u])=>u.length===1&&!expected.has(k));
-  if(!missing.length)break;
-  let chosen=null;
-  // Split a spanning edge first: a removed zero-area Earcut bridge can leave
-  // several short edges waiting for the corresponding long edge to be split.
-  for(const [,uses] of missing){
-   const edge=uses[0],a=point(edge.a),b=point(edge.b),ab=b.clone().sub(a),l2=ab.lengthSq(),between=[];
-   for(const id of new Set(rings.flat())){
-    if(id===edge.a||id===edge.b)continue;
-    const ap=point(id).clone().sub(a),t=ap.dot(ab)/l2;
-    if(t>0&&t<1&&ap.clone().addScaledVector(ab,-t).length()<=e)between.push({id,t});
-   }
-   if(between.length){chosen={edge,chain:[edge.a,...between.sort((a,b)=>a.t-b.t).map(item=>item.id),edge.b]};break;}
-  }
-  if(!chosen)return null;
-  const {edge,chain}=chosen,c=triangles[edge.fi][(edge.i+2)%3];
-  triangles.splice(edge.fi,1,...chain.slice(0,-1).map((a,i)=>[a,chain[i+1],c]));
- }
- const uses=edgeUses(triangles);
- if([...uses].some(([k,u])=>u.length!==(expected.has(k)?1:2))||[...expected].some(k=>uses.get(k)?.length!==1))return null;
- return triangles;
-}
 export function planConcaveBandWalls(mesh,region,positions,replacement,distance){
  const unsupported={handled:false};
  if(distance<=0||region.faceIndices.some(fi=>mesh.faces[fi].length!==4))return unsupported;
@@ -97,16 +70,23 @@ export function planConcaveBandWalls(mesh,region,positions,replacement,distance)
   if(!simple(oldCorners,e)||!simple(newCorners,e)||oldCorners.some(p=>!contains(newCorners,p,e))||oldCorners.some((a,i)=>newCorners.some((c,j)=>intersects(a,oldCorners[(i+1)%oldCorners.length],c,newCorners[(j+1)%newCorners.length],e))))return fail('Corner offset overlaps; reduce distance');
   const oldIds=[...loop],newIds=loop.map(id=>replacement.get(id)),oldArea=Math.abs(area(d.old)),newArea=Math.abs(area(offset));
   if(newArea<=oldArea+e*e)return fail('Corner offset collapses a side wall');
-  const outer=corners.map(i=>offset[i]),hole=corners.map(i=>d.old[i]),ids=[...corners.map(i=>newIds[i]),...corners.map(i=>oldIds[i])];
-  let triangles=THREE.ShapeUtils.triangulateShape(outer,[hole]).map(t=>t.map(i=>ids[i]));
-  triangles=triangles.filter(tri=>{const [a,b,c]=tri.map(point);return b.clone().sub(a).cross(c.clone().sub(a)).length()>e*e;});
-  triangles=conformTriangles(triangles,[oldIds,newIds],point,e);
-  if(!triangles)return fail('Corner wall could not preserve its boundary');
+  // The existing one-to-one boundary correspondence already gives the minimum
+  // quad strip. Correct the offset runs; do not triangulate the entire wall.
+  const faces=loop.map((id,i)=>[id,loop[(i+1)%loop.length],newIds[(i+1)%loop.length],newIds[i]]);
   const edge=region.boundaryEdges.find(q=>q.a===loop[0]),normal=mesh.vertices[edge.b].clone().sub(mesh.vertices[edge.a]).cross(positions.get(edge.b).clone().sub(mesh.vertices[edge.b])).normalize();
   let total=0;
-  for(const tri of triangles){const [a,b,c]=tri.map(point),cross=b.clone().sub(a).cross(c.clone().sub(a));if(cross.length()<=e*e)return fail('Corner wall collapsed');if(cross.dot(normal)<0)[tri[1],tri[2]]=[tri[2],tri[1]];total+=cross.length()/2;}
+  for(const face of faces){
+   const points=face.map(point);
+   for(let i=0;i<4;i++){
+    const a=points[i],b=points[(i+1)%4],c=points[(i+2)%4];
+    if(b.clone().sub(a).cross(c.clone().sub(b)).dot(normal)<=e*e)return fail('Corner wall folds; reduce distance');
+   }
+   for(const ids of [[0,1,2],[0,2,3]]){const [a,b,c]=ids.map(i=>points[i]),cross=b.clone().sub(a).cross(c.clone().sub(a));if(cross.dot(normal)<=e*e)return fail('Corner wall collapsed');total+=cross.length()/2;}
+  }
+  const expected=new Set([oldIds,newIds].flatMap(r=>r.map((a,i)=>key(a,r[(i+1)%r.length])))),uses=edgeUses(faces);
+  if([...uses].some(([k,u])=>u.length!==(expected.has(k)?1:2))||[...expected].some(k=>uses.get(k)?.length!==1))return fail('Corner wall could not preserve its boundary');
   if(Math.abs(total-(newArea-oldArea))>Math.max(e*e,(newArea-oldArea)*1e-6))return fail('Corner wall overlaps; reduce distance');
-  walls.push(...triangles);
+  walls.push(...faces);
  }
  return {handled:true,ok:true,sideFaces:walls};
 }

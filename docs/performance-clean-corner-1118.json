@@ -1,0 +1,144 @@
+{
+  "release": ".1118",
+  "scope": "Synthetic segmented L bands. Actual original connected-extrusion owner; .1117 planner versus current planner. Counts refer to real mesh Faces/edges, not hidden display diagonals. CPU samples exclude clone/setup/render/history/browser/GPU/iPad; no native speedup claim.",
+  "rows": [
+    {
+      "selectedFaces": 20,
+      "sourceFaces": 96,
+      "before": {
+        "resultFaces": 176,
+        "resultEdges": 294,
+        "resultVertices": 120,
+        "wallFaces": 80,
+        "wallQuads": 0,
+        "wallTriangles": 80,
+        "samplesMs": [
+          2.0783690000000092,
+          4.05987300000001,
+          2.854185000000001,
+          0.8327419999999961,
+          6.046514000000002,
+          1.1122180000000128,
+          3.8601050000000043,
+          1.3537689999999998,
+          1.1701940000000093,
+          0.9474830000000054
+        ],
+        "medianMs": 2.0783690000000092
+      },
+      "after": {
+        "resultFaces": 136,
+        "resultEdges": 254,
+        "resultVertices": 120,
+        "wallFaces": 40,
+        "wallQuads": 40,
+        "wallTriangles": 0,
+        "samplesMs": [
+          0.4369310000000155,
+          0.4499309999999923,
+          0.6140949999999918,
+          0.37984599999998636,
+          6.88738699999999,
+          0.43521899999998936,
+          0.3328160000000082,
+          0.3068070000000205,
+          0.29085399999999595,
+          0.27708300000000463
+        ],
+        "medianMs": 0.43521899999998936
+      }
+    },
+    {
+      "selectedFaces": 40,
+      "sourceFaces": 196,
+      "before": {
+        "resultFaces": 356,
+        "resultEdges": 594,
+        "resultVertices": 240,
+        "wallFaces": 160,
+        "wallQuads": 0,
+        "wallTriangles": 160,
+        "samplesMs": [
+          2.4377540000000124,
+          3.014585000000011,
+          2.4593069999999955,
+          2.2855369999999766,
+          3.1561049999999966,
+          3.0400630000000035,
+          2.4823810000000037,
+          1.8196829999999977,
+          2.529752000000002,
+          8.326263000000012
+        ],
+        "medianMs": 2.529752000000002
+      },
+      "after": {
+        "resultFaces": 276,
+        "resultEdges": 514,
+        "resultVertices": 240,
+        "wallFaces": 80,
+        "wallQuads": 80,
+        "wallTriangles": 0,
+        "samplesMs": [
+          8.826778999999988,
+          6.687700000000007,
+          1.099868999999984,
+          4.852334000000013,
+          0.9952639999999917,
+          0.9157360000000097,
+          0.8974479999999687,
+          4.857812000000024,
+          0.9398910000000456,
+          0.8652500000000032
+        ],
+        "medianMs": 1.099868999999984
+      }
+    },
+    {
+      "selectedFaces": 120,
+      "sourceFaces": 596,
+      "before": {
+        "resultFaces": 1076,
+        "resultEdges": 1794,
+        "resultVertices": 720,
+        "wallFaces": 480,
+        "wallQuads": 0,
+        "wallTriangles": 480,
+        "samplesMs": [
+          5.842300000000023,
+          5.645154999999988,
+          5.7231519999999705,
+          5.573769000000027,
+          7.481715000000008,
+          5.511225999999965,
+          9.310200000000009,
+          9.660411999999951,
+          10.449769000000003,
+          24.65239200000002
+        ],
+        "medianMs": 7.481715000000008
+      },
+      "after": {
+        "resultFaces": 836,
+        "resultEdges": 1554,
+        "resultVertices": 720,
+        "wallFaces": 240,
+        "wallQuads": 240,
+        "wallTriangles": 0,
+        "samplesMs": [
+          4.78601500000002,
+          3.886094000000014,
+          3.0144540000000006,
+          6.333601999999985,
+          10.154588999999987,
+          2.93458499999997,
+          3.561188999999956,
+          3.5412399999999593,
+          2.5155299999999556,
+          8.265982999999949
+        ],
+        "medianMs": 3.886094000000014
+      }
+    }
+  ]
+}

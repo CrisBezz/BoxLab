@@ -161,9 +161,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1117",
+      "url": "./src/drawer-ui.js?v=0.36.18.1118",
       "target": "src/drawer-ui.js",
-      "sha256": "60f28bee386cfcdc46996c76a608bf9234775e52e0946231861e54d8b2d48167"
+      "sha256": "4ab9f5ac6f79c1e5a12e44c25f3ad5bb6c34b266efc3bdd48eaceff38beed121"
     },
     {
       "owner": "index.html",
@@ -311,9 +311,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/multi-face-direct.js?v=0.36.18.1117.1",
+      "url": "./src/multi-face-direct.js?v=0.36.18.1118",
       "target": "src/multi-face-direct.js",
-      "sha256": "ff6c26281efdfe547407e1c3fc048a6bae0cc4a6ba75db98e915939ab77a34f5"
+      "sha256": "070a8b4a0440625e1704639ecd60361a551d3f7613f38921cda83ab4c7cfd2bc"
     },
     {
       "owner": "index.html",
@@ -378,7 +378,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1117",
+      "url": "./src/release-version.js?v=0.36.18.1118",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -864,9 +864,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1117",
+      "url": "./face-workflow-layout.js?v=0.36.18.1118",
       "target": "src/face-workflow-layout.js",
-      "sha256": "038101fe7e4a504dc94687a108aa536c2eeff702c6d2b5cc3cd8c989ae7b6c0c"
+      "sha256": "ed48940efb5ae8b9f1c72dd610399b6e827c99d55660d3e49ed001880065625c"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1361,7 +1361,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1117",
+      "url": "./release-version.js?v=0.36.18.1118",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -3326,9 +3326,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1117",
+      "url": "./src/shell-comparison.js?v=0.36.18.1118",
       "target": "src/shell-comparison.js",
-      "sha256": "75b7e19dd5c8bcfa0407995055a652356705ddf38c30297c2317640628dc0cb5"
+      "sha256": "6d9c904d6e94f17d528c3808396561b88ad0eb81438d2d8a8af08d9a9494a9c0"
     },
     {
       "owner": "src/main.js",
@@ -3680,9 +3680,9 @@
     },
     {
       "owner": "src/multi-face-direct.js",
-      "url": "./connected-extrude-corners.js?v=0.36.18.1117",
+      "url": "./connected-extrude-corners.js?v=0.36.18.1118",
       "target": "src/connected-extrude-corners.js",
-      "sha256": "bd27335a4b3144906c152caf90f24d199b62f0e2ecf6777eda237ea0ad9482c0"
+      "sha256": "81e694fcd4c270706a71a2e898e8e7189f3e59c68b1a8638fd8f779ce79b5d80"
     }
   ]
 }
