@@ -1,3 +1,11 @@
+# .1113 protected PASS — 9 November 2026
+
+User confirms .1113 PASS: retain opened .boxlab filename for repeated saves; editable File name remains the existing owner. Protect this alongside .1112 navigation/Object Browser/classification/cleanup acceptance and all earlier PASSes. Hosted Topology42556110002 completed successfully; local suite3,244/3,244 and verified Pages42556109744 publication remain recorded below. No new runtime build for this acceptance.
+
+Next recommended scoped build: audit remaining vertex valence/classification/cleanable inspectors for repeated topology construction using the .1112 source profile as a lead. Preserve every listener and classification/concave/quad-clean rule; measure production-owner parity and matched before/after cost before choosing a repair. Existing Node measurements are not iPad latency measurements. Resume WASM only for a demonstrated remaining CPU hotspot, with JavaScript baseline and correctness/end-to-end gates; no speculative kernel migration or capacity claim.
+
+---
+
 # .1113 — retain project filename on Open / Save — 9 November 2026
 
 User confirms .1112 PASS; protect its navigation, Object Browser and selection/cleanup behaviour. Pages42543352991 succeeded and live .1112 shell/module bytes matched main. No quantitative iPad speedup is inferred.

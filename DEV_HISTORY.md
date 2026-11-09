@@ -12893,3 +12893,11 @@ Existing Save uses #exportFileName and already retains it across repeated saves.
 Release .1113 markers, changed Object Management pin and existing release-version loader chain refreshed; unchanged sharp-edge owner retains .1112 pin. Prior PASSes retained. Native .1113 filename acceptance pending. Next: Open a named project, Save twice, edit File name and Save; cancel another Open and confirm the current name stays. Validation: 41 focused checks and final full local suite3,244/3,244 PASS; git diff --check clean. Initial cache-contract failures exposed the older drawer Object Management import; both runtime loader URLs now match .1113 and the reviewed contract. Protected Multi and sharp-edge sources unchanged. Publication verified: runtime commit7f14e21d447eaabdbfc985b603f0a94dd3593e6e; Pages42556109744 succeeded. Cache-busted live version.json, index.html, Object Management, drawer and face workflow match tested main. Hosted Topology42556110002 was still running at this documentation update; final local full suite3,244/3,244 passed. Native filename acceptance remains pending.
 
 ---
+
+# .1113 protected PASS — 9 November 2026
+
+User confirms .1113 PASS: retain opened .boxlab filename for repeated saves; editable File name remains the existing owner. Protect this alongside .1112 navigation/Object Browser/classification/cleanup acceptance and all earlier PASSes. Hosted Topology42556110002 completed successfully; local suite3,244/3,244 and verified Pages42556109744 publication remain recorded below. No new runtime build for this acceptance.
+
+Next recommended scoped build: audit remaining vertex valence/classification/cleanable inspectors for repeated topology construction using the .1112 source profile as a lead. Preserve every listener and classification/concave/quad-clean rule; measure production-owner parity and matched before/after cost before choosing a repair. Existing Node measurements are not iPad latency measurements. Resume WASM only for a demonstrated remaining CPU hotspot, with JavaScript baseline and correctness/end-to-end gates; no speculative kernel migration or capacity claim.
+
+---
