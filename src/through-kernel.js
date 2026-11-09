@@ -197,6 +197,29 @@ function assemble(before,polys,eps,groups=null) {
   const keys=new Set(edgeUses(m).keys());m.creases=new Map([...m.creases].filter(([k])=>keys.has(k)));
   return m;
 }
+// A rectangular opening wholly inside one parallel quad needs four frame
+// quads, not clipping strips extended across its neighbouring corners. Keep
+// unsupported/cross-face exits on the original conservative clipping path.
+function quadExitFrame(p,source,n,dir,depth,eps){
+  if(p.length!==4||source.length!==4)return null;
+  const normal=areaVector(p).normalize();
+  if(normal.dot(n)>-.999999)return null;
+  const travel=normal.dot(p[0].clone().sub(source[0]))/normal.dot(dir);
+  if(travel<=eps*32||travel>depth+eps*4)return null;
+  const inner=source.map(v=>v.clone().addScaledVector(dir,travel)).reverse();
+  if(p.some(v=>Math.abs(normal.dot(v.clone().sub(p[0])))>eps)||inner.some(v=>Math.abs(normal.dot(v.clone().sub(p[0])))>eps))return null;
+  const turn=(a,b,c)=>b.clone().sub(a).cross(c.clone().sub(b)).dot(normal);
+  if(p.some((a,i)=>turn(a,p[(i+1)%4],p[(i+2)%4])<=eps*eps))return null;
+  if(inner.some(v=>p.some((a,i)=>p[(i+1)%4].clone().sub(a).cross(v.clone().sub(a)).dot(normal)<=eps*p[(i+1)%4].distanceTo(a))))return null;
+  const expected=areaVector(p).length()-areaVector(inner).length(),candidates=[];
+  for(let offset=0;offset<4;offset++){
+    const hole=inner.map((_,i)=>inner[(i+offset)%4]),faces=p.map((a,i)=>[a,p[(i+1)%4],hole[(i+1)%4],hole[i]]);
+    if(faces.some(f=>f.some((a,i)=>turn(a,f[(i+1)%4],f[(i+2)%4])<=eps*eps)))continue;
+    if(Math.abs(faces.reduce((a,f)=>a+areaVector(f).length(),0)-expected)>Math.max(eps*eps*32,expected*1e-8))continue;
+    candidates.push({faces,cost:p.reduce((sum,v,i)=>sum+v.distanceToSquared(hole[i]),0)});
+  }
+  candidates.sort((a,b)=>a.cost-b.cost);return candidates[0]?.faces||null;
+}
 // Finite inward prism subtraction. Reuse Through's clipping, solid classification
 // and canonical seam assembly; private trials never publish into the live scene.
 // Each source face supplies its own sweep. Shared/coplanar walls disappear when
@@ -232,7 +255,7 @@ export function buildNegativeExtrude(before,faceIndices,distance) {
         const convex=p.every((a,i)=>{const side=new V().crossVectors(p[(i+1)%p.length].clone().sub(a),normal);return p.every(v=>side.dot(v.clone().sub(a))<=eps*side.length());});
         const parts=(!surfaces[fi].warped&&convex?[p]:surfaces[fi].parts.filter(t=>areaVector(t).length()>eps*eps)).map(t=>subtract(t,planes,eps));
         if(parts.every(r=>!r.inside.length))add(p,trial.faceGroups?.[fi]??null);
-        else for(const r of parts)for(const piece of r.outside)add(piece,trial.faceGroups?.[fi]??null);
+        else {const frame=quadExitFrame(p,source,n,dir,depth,eps);if(frame)for(const piece of frame)add(piece,trial.faceGroups?.[fi]??null);else for(const r of parts)for(const piece of r.outside)add(piece,trial.faceGroups?.[fi]??null);}
       }
       const boundary=[...source.map((a,i)=>({p:[a,source[(i+1)%source.length],end[(i+1)%source.length],end[i]],outside:sides[i].n})),{p:end,outside:dir}];
       for(const {p,outside} of boundary){
@@ -267,7 +290,7 @@ export function buildThrough(before,plan) {
       return {...built,validation:validateThrough(built.mesh,eps),finiteWarpedTarget:true};
     }
     const end=plane(dir,source[0].clone().addScaledVector(dir,depth+eps*32)),planes=[...sides,start,end],polys=[];
-    for(let fi=0;fi<before.faces.length;fi++) {if(fi===c.fi)continue;const p=before.faces[fi].map(id=>before.vertices[id]),tris=triangles(p,eps),pieces=tris.map(t=>subtract(t,planes,eps));if(pieces.every(r=>!r.inside.length))polys.push(p);else for(const r of pieces)polys.push(...r.outside);}
+    for(let fi=0;fi<before.faces.length;fi++) {if(fi===c.fi)continue;const p=before.faces[fi].map(id=>before.vertices[id]),tris=triangles(p,eps),pieces=tris.map(t=>subtract(t,planes,eps));if(pieces.every(r=>!r.inside.length))polys.push(p);else {const frame=quadExitFrame(p,source,n,dir,depth,eps);if(frame)polys.push(...frame);else for(const r of pieces)polys.push(...r.outside);}}
     const shellPlanes=ts.map(t=>plane(areaVector(t).normalize(),t[0]));
     for(let i=0;i<source.length;i++) {
       const a=source[i],b=source[(i+1)%source.length];let parts=[[a,b,b.clone().addScaledVector(dir,depth+eps*32),a.clone().addScaledVector(dir,depth+eps*32)]];
