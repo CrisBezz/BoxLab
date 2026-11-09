@@ -63,3 +63,9 @@ test('1117 scaled/rotated planar band retains closed oriented geometry and posit
   const {mesh,ids}=cornerBand({subdivisions:2}),rotation=new THREE.Matrix4().makeRotationFromEuler(new THREE.Euler(.3,.7,.4));mesh.vertices.forEach(v=>v.multiplyScalar(scale).applyMatrix4(rotation));const before=mesh.clone(),r=previewRuntime(mesh,ids);r.begin();r.preview(.6*scale);assert.equal(r.owner.drag().preview,true,r.owner.drag().failureReason);assert.equal(capReversals(before,mesh,ids),0);assert.equal(topologySummary(mesh).closed,true);directedManifold(mesh);
  }
 });
+
+test('1117 blocked explanation survives both main rebuild and subsequent tool status refresh; valid drag clears it',()=>{
+ const {mesh,ids}=cornerBand({subdivisions:2,profile:[[0,0],[3,0],[3,3],[2,3],[2,1],[1,1],[1,3],[0,3]]});
+ let r;r=previewRuntime(mesh,ids,{onRender:()=>{r.context.document.querySelector('#selectionStatus').textContent='regular selection refresh';}});r.begin();r.preview(.7);
+ const status=r.context.document.querySelector('#selectionStatus');assert.match(status.textContent,/Extrude blocked/);r.context.updateStatus();assert.match(status.textContent,/Extrude blocked/);r.preview(.2);r.context.updateStatus();assert.doesNotMatch(status.textContent,/blocked/);
+});

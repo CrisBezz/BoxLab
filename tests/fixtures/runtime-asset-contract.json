@@ -311,9 +311,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/multi-face-direct.js?v=0.36.18.1117",
+      "url": "./src/multi-face-direct.js?v=0.36.18.1117.1",
       "target": "src/multi-face-direct.js",
-      "sha256": "65b4aa9b94b97cc7045572d79adacb7b12c2a693683a3cca0c52dbbcdfc8c8c4"
+      "sha256": "ff6c26281efdfe547407e1c3fc048a6bae0cc4a6ba75db98e915939ab77a34f5"
     },
     {
       "owner": "index.html",

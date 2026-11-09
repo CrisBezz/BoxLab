@@ -12969,3 +12969,9 @@ Reproducible scripts/benchmark-corner-extrusion-1117.mjs writes docs/performance
 Release .1117 shell markers, Face direct/new planner child key and canonical release-version loader chain updated. Unchanged Loop commit retains .1116 pin; no baseline pin cleanup. Focused49/49 and final full local suite3,284/3,284 PASS; mixed-region invalid-offset refusal also checked atomically; git diff --check clean. Publication pending verification. Initial validation caught an accidental unchanged Loop pin advance; restored .1116 and re-ran reviewed contracts without changing Loop source or protections. Next native: recreate selected L-step strip, pull farther than previous failing distance, inspect both inside corners; Cancel, Done/UndoRedo and ordinary convex extrusion. Request source project only if this scoped fixture does not match the native result.
 
 ---
+
+### .1117 refusal-message publication correction
+
+Final UI review found main/tool refresh could overwrite a blocked-corner explanation. The existing status owner now preserves the refusal while dragging; valid motion clears it. Direct module cache key is .1117.1 (app release remains .1117). Initial geometry runtime fe373a87a053d67a1591aae826fdadd7ba469074 and Pages42588702773 succeeded with all six live shell/geometry assets matching. Corrected full validation and publication proof follow.
+
+Corrected focused50/50 and full3,285/3,285 PASS; git diff --check clean. Corrected .1117.1 direct-module publication pending verification.
