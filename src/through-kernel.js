@@ -178,6 +178,26 @@ function context(m,fi) {
 export function planThrough(m,fi) {try {const c=context(m,fi);return {ok:true,sourceFaceIndex:fi,distance:-c.depth,firstDistance:-c.first,targets:c.targets.map(t=>({...t}))};}catch(e){return{ok:false,reason:e.message};}}
 // Split every incident face together before replacing shell fragments. Generated seam
 // vertices are then inserted in *all* output edges, including tunnel wall edges.
+// Static broad phase for the final output-edge conformance pass. The actual
+// projection/distance test remains authoritative; keep the original used order
+// so equal-t seam entries retain exactly the same stable sort order.
+function seamVertexCandidates(vertices,used,eps){
+  const axes=['x','y','z'];
+  if(!(eps>0)||!Number.isFinite(eps)||used.some(id=>axes.some(axis=>!Number.isFinite(vertices[id][axis]))))return ()=>used;
+  const ordered=axes.map(axis=>used.map((id,rank)=>({id,rank,value:vertices[id][axis]})).sort((a,b)=>a.value-b.value));
+  const bound=(items,value,upper=false)=>{let lo=0,hi=items.length;while(lo<hi){const mid=(lo+hi)>>>1;if(items[mid].value<value||(upper&&items[mid].value===value))lo=mid+1;else hi=mid;}return lo;};
+  return (a,b)=>{
+    // Expand beyond the exact distance tolerance, including coordinate-rounding
+    // headroom. This index only rejects clearly distant candidates.
+    const pad=eps*2+Number.EPSILON*32*Math.max(...axes.flatMap(axis=>[Math.abs(a[axis]),Math.abs(b[axis])])),ranges=axes.map((axis,i)=>{
+      const min=Math.min(a[axis],b[axis])-pad,max=Math.max(a[axis],b[axis])+pad,items=ordered[i];return {axis,min,max,items,lo:bound(items,min),hi:bound(items,max,true)};
+    });
+    if(ranges.some(r=>!Number.isFinite(r.min)||!Number.isFinite(r.max)))return used;
+    const best=ranges.reduce((a,b)=>a.hi-a.lo<=b.hi-b.lo?a:b),found=[];
+    for(let i=best.lo;i<best.hi;i++){const item=best.items[i],p=vertices[item.id];if(ranges.every(r=>p[r.axis]>=r.min&&p[r.axis]<=r.max))found.push(item);}
+    found.sort((a,b)=>a.rank-b.rank);return found.map(item=>item.id);
+  };
+}
 function assemble(before,polys,eps,groups=null) {
   const m=Object.create(Object.getPrototypeOf(before));Object.assign(m,topology().cloneMeshState(before));
   // Prevent EditableMesh.edges()'s UI observer from publishing the private trial mesh.
@@ -187,8 +207,8 @@ function assemble(before,polys,eps,groups=null) {
     m.vertices.push(p.clone());return m.vertices.length-1;
   }
   const faces=polys.map(p=>p.map(vertex));m.faces=faces;
-  const used=[...new Set(faces.flat())];
-  m.faces=faces.map(f=>f.flatMap((a,i)=>{const b=f[(i+1)%f.length],ab=m.vertices[b].clone().sub(m.vertices[a]),l2=ab.lengthSq();if(l2<=eps*eps)fail('collapsed-output-edge');const entries=[];for(const id of used){if(id===a||id===b)continue;const t=m.vertices[id].clone().sub(m.vertices[a]).dot(ab)/l2;if(t>eps/Math.sqrt(l2)&&t<1-eps/Math.sqrt(l2)&&m.vertices[a].clone().addScaledVector(ab,t).distanceTo(m.vertices[id])<=eps)entries.push({id,t});}entries.sort((x,y)=>x.t-y.t);return[a,...entries.map(e=>e.id)];}));
+  const used=[...new Set(faces.flat())],candidates=seamVertexCandidates(m.vertices,used,eps);
+  m.faces=faces.map(f=>f.flatMap((a,i)=>{const b=f[(i+1)%f.length],ab=m.vertices[b].clone().sub(m.vertices[a]),l2=ab.lengthSq();if(l2<=eps*eps)fail('collapsed-output-edge');const entries=[];for(const id of candidates(m.vertices[a],m.vertices[b])){if(id===a||id===b)continue;const t=m.vertices[id].clone().sub(m.vertices[a]).dot(ab)/l2;if(t>eps/Math.sqrt(l2)&&t<1-eps/Math.sqrt(l2)&&m.vertices[a].clone().addScaledVector(ab,t).distanceTo(m.vertices[id])<=eps)entries.push({id,t});}entries.sort((x,y)=>x.t-y.t);return[a,...entries.map(e=>e.id)];}));
   // EditableMesh.faceNormal uses its first three vertices. Canonical seam
   // subdivisions can make that triple collinear; rotate, never reverse winding.
   m.faces=m.faces.map(f=>{

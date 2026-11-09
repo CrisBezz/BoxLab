@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {planThrough,buildThrough} from './through-kernel.js?v=0.36.18.1122';
+import {planThrough,buildThrough} from './through-kernel.js?v=0.36.18.1124';
 import {gateClosedEdit} from './topology-seam-conformance.js?v=0.36.18.242';
 
 const canvas=document.querySelector('#viewport');

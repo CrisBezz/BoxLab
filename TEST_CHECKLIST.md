@@ -1,3 +1,13 @@
+# .1124 regression gate — 10 November 2026
+
+- User PASS .1123 protected: Sharpness alone enables Apply for changed pixels, Before/Reset/Cancel, exact single-step layer Undo/Redo and previous Paint acceptance.
+- Indexed Through assembly must match frozen .1123 output exactly, including vertex/face ordering, metadata, creases, cap selection, refusal reasons and source isolation.
+- Preserve tolerance-boundary/equal-t ordering and necessary T-junction insertions on both incident faces. No validation, listener or geometry-quality gate is bypassed.
+- Protect .1121 matching four-quad entry/exit surrounds, .1118 clean outward walls and .1122 validator. Cancel/Done/UndoRedo and ordinary navigation remain unchanged.
+- Automated: through-assembly-performance-1124 plus existing Through/negative/corner tests. Full local 3,323/3,323 PASS; Node complete-cut benchmark gates PASS. Native .1124 pending; compare the same many-face cut on iPad and inspect actual wireframe/history.
+
+---
+
 # .1123 regression gate — 9 November 2026
 
 - Protected user PASS .1122: Through validation performance and accepted geometry, navigation and history.
