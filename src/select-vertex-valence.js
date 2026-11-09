@@ -1,3 +1,4 @@
+import {vertexFaceIncidence} from './vertex-face-incidence.js?v=0.36.18.1114';
 // BoxLab v0.36.18.155 hotfix — non-destructive Vertex valence / SubD inspection.
 // Selects vertices by incident-edge count, interior manifold extraordinary
 // vertices (SubD poles: valence != 4), regular open-manifold boundary corners
@@ -67,9 +68,7 @@ function validOwners(m,edge){
   return (edge?.faces||[]).filter(fi=>Number.isInteger(fi)&&fi>=0&&fi<m.faces.length&&Array.isArray(m.faces[fi]));
 }
 
-function disconnectedFaceFan(m,vertexIndex,edges){
-  const faces=[];
-  m.faces.forEach((face,fi)=>{if(Array.isArray(face)&&face.includes(vertexIndex))faces.push(fi);});
+function disconnectedFaceFan(m,faces,edges){
   if(faces.length<=1)return false;
   const faceSet=new Set(faces),adj=new Map(faces.map(fi=>[fi,new Set()]));
   edges.forEach(edge=>{
@@ -90,6 +89,7 @@ function disconnectedFaceFan(m,vertexIndex,edges){
 
 function inspect(m){
   if(!m)return{v3:[],v4:[],v5plus:[],poles:[],boundaryCorners:[],boundaryIrregular:[],regular:[]};
+  const faceIncidence=vertexFaceIncidence(m);
   const incident=Array.from({length:m.vertices.length},()=>[]);
   (m.edges?.()||[]).forEach(edge=>{
     if(Number.isInteger(edge?.a)&&edge.a>=0&&edge.a<incident.length)incident[edge.a].push(edge);
@@ -104,7 +104,7 @@ function inspect(m){
     if(!count)return;
 
     const ownerCounts=edges.map(edge=>validOwners(m,edge).length);
-    const splitFan=disconnectedFaceFan(m,index,edges);
+    const splitFan=disconnectedFaceFan(m,faceIncidence[index],edges);
     const manifold=!splitFan&&ownerCounts.every(ownerCount=>ownerCount===1||ownerCount===2);
     if(!manifold)return;
 

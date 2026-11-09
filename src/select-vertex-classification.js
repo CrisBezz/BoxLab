@@ -1,3 +1,4 @@
+import {vertexFaceIncidence} from './vertex-face-incidence.js?v=0.36.18.1114';
 // BoxLab v0.36.18.115 — non-destructive Vertex classification selection.
 // Boundary vertices touch at least one boundary edge (1 owning face).
 // Interior vertices have incident topology and every incident edge has exactly 2 owning faces.
@@ -57,9 +58,7 @@ function validOwners(m,edge){
   return (edge?.faces||[]).filter(fi=>Number.isInteger(fi)&&fi>=0&&fi<m.faces.length&&Array.isArray(m.faces[fi]));
 }
 
-function disconnectedFaceFan(m,vertexIndex,edges){
-  const faces=[];
-  m.faces.forEach((face,fi)=>{if(Array.isArray(face)&&face.includes(vertexIndex))faces.push(fi);});
+function disconnectedFaceFan(m,faces,edges){
   if(faces.length<=1)return false;
   const faceSet=new Set(faces),adj=new Map(faces.map(fi=>[fi,new Set()]));
   edges.forEach(edge=>{
@@ -80,6 +79,7 @@ function disconnectedFaceFan(m,vertexIndex,edges){
 
 function inspect(m){
   if(!m)return{boundary:[],interior:[],nonManifold:[]};
+  const faceIncidence=vertexFaceIncidence(m);
   const incident=Array.from({length:m.vertices.length},()=>[]);
   (m.edges?.()||[]).forEach(edge=>{
     if(Number.isInteger(edge?.a)&&incident[edge.a])incident[edge.a].push(edge);
@@ -90,7 +90,7 @@ function inspect(m){
     if(!edges.length)return;
     const ownerCounts=edges.map(edge=>validOwners(m,edge).length);
     const badEdge=ownerCounts.some(count=>count>2);
-    const splitFan=disconnectedFaceFan(m,index,edges);
+    const splitFan=disconnectedFaceFan(m,faceIncidence[index],edges);
     if(badEdge||splitFan)nonManifold.push(index);
     if(ownerCounts.some(count=>count===1))boundary.push(index);
     else if(!badEdge&&!splitFan&&ownerCounts.every(count=>count===2))interior.push(index);

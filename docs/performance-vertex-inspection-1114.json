@@ -1,0 +1,141 @@
+{
+  "release": ".1114",
+  "baselineCommit": "ab3a40bce743d82f0ef2fcf571521ea66cb6e543",
+  "scope": "Node CPU, complete original production inspect functions. Includes fresh incidence construction per call. No cache reuse, GPU, full app event chain or iPad latency measurement; no capacity claim.",
+  "repeats": 5,
+  "warmups": 2,
+  "rows": [
+    {
+      "inspector": "vertex-valence",
+      "faces": 1000,
+      "vertices": 1066,
+      "beforeMs": [
+        147.10305600000004,
+        121.71009500000014,
+        130.59206399999994,
+        131.44314099999997,
+        162.589332
+      ],
+      "afterMs": [
+        7.723467000000028,
+        10.49706100000003,
+        39.134090000000015,
+        19.42181299999993,
+        8.05049699999995
+      ],
+      "beforeMedianMs": 131.44314099999997,
+      "afterMedianMs": 10.49706100000003,
+      "classificationParity": true
+    },
+    {
+      "inspector": "vertex-classification",
+      "faces": 1000,
+      "vertices": 1066,
+      "beforeMs": [
+        122.51271399999996,
+        125.97412699999995,
+        123.16905700000007,
+        122.66586499999994,
+        121.56069399999978
+      ],
+      "afterMs": [
+        7.244743000000199,
+        24.429093000000194,
+        7.398813000000246,
+        7.546884000000318,
+        9.935132000000067
+      ],
+      "beforeMedianMs": 122.66586499999994,
+      "afterMedianMs": 7.546884000000318,
+      "classificationParity": true
+    },
+    {
+      "inspector": "cleanable-verts",
+      "faces": 1000,
+      "vertices": 1066,
+      "beforeMs": [
+        139.32223199999999,
+        115.59726500000033,
+        115.52668000000085,
+        156.5596969999997,
+        135.95357499999955
+      ],
+      "afterMs": [
+        1.0044709999992847,
+        0.6403570000002219,
+        0.865353000000141,
+        0.5949590000000171,
+        0.8887180000001536
+      ],
+      "beforeMedianMs": 135.95357499999955,
+      "afterMedianMs": 0.865353000000141,
+      "classificationParity": true
+    },
+    {
+      "inspector": "vertex-valence",
+      "faces": 2000,
+      "vertices": 2091,
+      "beforeMs": [
+        587.8559810000006,
+        513.9306380000007,
+        481.9528480000008,
+        469.1169229999996,
+        480.4922510000015
+      ],
+      "afterMs": [
+        14.786239000000023,
+        15.576129000000037,
+        14.607260999999198,
+        15.559793999998874,
+        15.039177999999083
+      ],
+      "beforeMedianMs": 481.9528480000008,
+      "afterMedianMs": 15.039177999999083,
+      "classificationParity": true
+    },
+    {
+      "inspector": "vertex-classification",
+      "faces": 2000,
+      "vertices": 2091,
+      "beforeMs": [
+        498.16112299999986,
+        477.2316149999988,
+        564.2368660000011,
+        530.0366519999989,
+        520.2799319999976
+      ],
+      "afterMs": [
+        14.973949999999604,
+        18.499085999999807,
+        15.247470000000249,
+        65.75047799999993,
+        20.279897000000346
+      ],
+      "beforeMedianMs": 520.2799319999976,
+      "afterMedianMs": 18.499085999999807,
+      "classificationParity": true
+    },
+    {
+      "inspector": "cleanable-verts",
+      "faces": 2000,
+      "vertices": 2091,
+      "beforeMs": [
+        515.1204089999992,
+        437.86750499999835,
+        447.2098010000009,
+        453.71099299999696,
+        452.1110230000013
+      ],
+      "afterMs": [
+        1.106181999999535,
+        1.1445499999972526,
+        1.1169590000026801,
+        1.0758270000005723,
+        1.0663229999991017
+      ],
+      "beforeMedianMs": 452.1110230000013,
+      "afterMedianMs": 1.106181999999535,
+      "classificationParity": true
+    }
+  ]
+}

@@ -161,9 +161,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1113",
+      "url": "./src/drawer-ui.js?v=0.36.18.1114",
       "target": "src/drawer-ui.js",
-      "sha256": "c480880933bd3c8bae9b512d61f1b1fc7ef3e8ed4d289c4f9eb52d01f6c144a6"
+      "sha256": "72a7150c599891ee1c1b57dddaaefd12dbf8af067323bd8a243eba1aa97f009e"
     },
     {
       "owner": "index.html",
@@ -378,7 +378,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1113",
+      "url": "./src/release-version.js?v=0.36.18.1114",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -864,9 +864,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1113",
+      "url": "./face-workflow-layout.js?v=0.36.18.1114",
       "target": "src/face-workflow-layout.js",
-      "sha256": "9a41ecbcc4a04f1a0f6ffbad78cd9edec1b4d6d2d2071a7aa26d4f28f1aa3a21"
+      "sha256": "ba9acc60ad5ee4a837df3cb68c04440b4c396b05041397c8d0cf65b517971879"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1361,7 +1361,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1113",
+      "url": "./release-version.js?v=0.36.18.1114",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -1379,9 +1379,9 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./select-cleanable-verts.js?v=0.36.18.134",
+      "url": "./select-cleanable-verts.js?v=0.36.18.1114",
       "target": "src/select-cleanable-verts.js",
-      "sha256": "a006689ed5d6e375d7ade511cafc0332c3aa2c0c766ef3cef150bf841aa452b4"
+      "sha256": "51462978f6c4cc30d8287718f17685008cf2759d0cc47acbae17c0c70510a4be"
     },
     {
       "owner": "src/face-workflow-layout.js",
@@ -1415,15 +1415,15 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./select-vertex-classification.js?v=0.36.18.115",
+      "url": "./select-vertex-classification.js?v=0.36.18.1114",
       "target": "src/select-vertex-classification.js",
-      "sha256": "acfe5a5b1cda0b1aded791e70da0f23088376ec5c26e70609280f928fab4a155"
+      "sha256": "29eda40dc322b67522e38fefbeb93a27985b3d369628f75bb2ee586a6feaa791"
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./select-vertex-valence.js?v=0.36.18.134",
+      "url": "./select-vertex-valence.js?v=0.36.18.1114",
       "target": "src/select-vertex-valence.js",
-      "sha256": "b7da3d686139c748e7ca05d9331dddaa8f4d1498974d28938d8009f3355fa902"
+      "sha256": "6aa046784cc2d951274834842663acc1b81acf9e9ab615b1469c108ce054e051"
     },
     {
       "owner": "src/face-workflow-layout.js",
@@ -3326,9 +3326,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1113",
+      "url": "./src/shell-comparison.js?v=0.36.18.1114",
       "target": "src/shell-comparison.js",
-      "sha256": "5382ef038ac1d29a58e27d4a565a5555c163e3865ebc4790a7f5ccf0a7e0d041"
+      "sha256": "78940b3a244e3a409fc7cdd2e20270210916bc92605004f373db9908ce37d860"
     },
     {
       "owner": "src/main.js",
@@ -3659,6 +3659,24 @@
       "url": "./icons/boxlab-logo-1102.png?v=0.36.18.1102",
       "target": "icons/boxlab-logo-1102.png",
       "sha256": "04c5850aaabd2eea7b37354b05d9d9c5318ae9122123bf0242c25a58a704a1c6"
+    },
+    {
+      "owner": "src/select-vertex-valence.js",
+      "url": "./vertex-face-incidence.js?v=0.36.18.1114",
+      "target": "src/vertex-face-incidence.js",
+      "sha256": "5a50ddf7838de90d4c1229e343959329402530ead597d58dc81e4d7bfa3cb531"
+    },
+    {
+      "owner": "src/select-vertex-classification.js",
+      "url": "./vertex-face-incidence.js?v=0.36.18.1114",
+      "target": "src/vertex-face-incidence.js",
+      "sha256": "5a50ddf7838de90d4c1229e343959329402530ead597d58dc81e4d7bfa3cb531"
+    },
+    {
+      "owner": "src/select-cleanable-verts.js",
+      "url": "./vertex-face-incidence.js?v=0.36.18.1114",
+      "target": "src/vertex-face-incidence.js",
+      "sha256": "5a50ddf7838de90d4c1229e343959329402530ead597d58dc81e4d7bfa3cb531"
     }
   ]
 }

@@ -1,3 +1,4 @@
+import {vertexFaceIncidence} from './vertex-face-incidence.js?v=0.36.18.1114';
 // BoxLab v0.36.18.134 — non-destructive redundant-vertex inspection.
 // Selects safe straight-through face-boundary vertices matching the existing
 // Clean Vertices repair criteria. Loose topology and creased corners are excluded.
@@ -63,14 +64,8 @@ function collinear(a,b,c){
   if(ab.lengthSq()<1e-16||bc.lengthSq()<1e-16)return false;
   return ab.clone().cross(bc).length()<=EPS*scale*scale&&ab.dot(bc)>=-EPS;
 }
-function incidentFaces(m,v){
-  const out=[];
-  for(let fi=0;fi<m.faces.length;fi++)if(Array.isArray(m.faces[fi])&&m.faces[fi].includes(v))out.push(fi);
-  return out;
-}
-function straightCandidate(m,v,protectedLoose,protectedCrease){
+function straightCandidate(m,v,protectedLoose,protectedCrease,faces){
   if(!Number.isInteger(v)||!m.vertices[v]||protectedLoose.has(v)||protectedCrease.has(v)||m.looseVertices?.has?.(v))return false;
-  const faces=incidentFaces(m,v);
   if(!faces.length)return false;
   for(const fi of faces){
     const face=m.faces[fi],i=face.indexOf(v);
@@ -84,8 +79,9 @@ function straightCandidate(m,v,protectedLoose,protectedCrease){
 
 function inspect(m){
   if(!m)return{indices:[],count:0};
+  const faceIncidence=vertexFaceIncidence(m);
   const protectedLoose=looseEdgeVertices(m),protectedCrease=creaseVertices(m),indices=[];
-  for(let v=0;v<m.vertices.length;v++)if(straightCandidate(m,v,protectedLoose,protectedCrease))indices.push(v);
+  for(let v=0;v<m.vertices.length;v++)if(straightCandidate(m,v,protectedLoose,protectedCrease,faceIncidence[v]))indices.push(v);
   return{indices,count:indices.length};
 }
 
