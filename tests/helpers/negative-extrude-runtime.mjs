@@ -1,3 +1,4 @@
+import {planConcaveBandWalls} from '../../src/connected-extrude-corners.js';
 import fs from 'node:fs';
 import vm from 'node:vm';
 import * as THREE from 'three';
@@ -34,7 +35,7 @@ export function faceRuntime(m,ids,{fallback=false,sourceTransform=source=>source
   const document={querySelector:get,querySelectorAll:()=>[],addEventListener:(t,f)=>add(documentHandlers,t,f),dispatchEvent:e=>{events.push(e);for(const fn of documentHandlers.get(e.type)||[])fn(e);}};
   const window={addEventListener:(t,f)=>add(windowHandlers,t,f)};
   const bridge={mode:()=> 'face',indices:()=>selected,pick:()=>({index:selected[0]}),set:(mode,next)=>{selected=[...next];}};
-  const context={THREE,document,window,planThrough,buildThrough,firstThroughContact,buildNegativeExtrude,gateClosedEdit,topologySummary,queueMicrotask,Event,
+  const context={planConcaveBandWalls,THREE,document,window,planThrough,buildThrough,firstThroughContact,buildNegativeExtrude,gateClosedEdit,topologySummary,queueMicrotask,Event,
     CustomEvent:class{constructor(type,{detail}={}){this.type=type;this.detail=detail;}},
     __boxlabBridgeState:state,__boxlabSelectionBridge:bridge,__boxlabHistory:history};
   vm.createContext(context);

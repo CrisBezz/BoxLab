@@ -1,0 +1,66 @@
+{
+  "release": ".1117",
+  "scope": "Synthetic Node CPU connected-extrusion owner, including fresh corner-wall planning and final edge enumeration. Clone/setup, render/cage/history, inference, browser/GPU and iPad excluded. Invalid .1116 geometry is not a performance baseline. No claim that invalid preview geometry caused the previous lag.",
+  "rows": [
+    {
+      "sourceVertices": 80,
+      "sourceFaces": 96,
+      "selectedFaces": 20,
+      "resultFaces": 176,
+      "samplesMs": [
+        9.222597999999977,
+        1.9243390000000034,
+        10.57546400000001,
+        2.3195070000000158,
+        4.070947999999987,
+        4.229043999999988,
+        2.3991359999999986,
+        2.0762140000000215,
+        1.2564729999999997,
+        1.382000000000005
+      ],
+      "medianMs": 2.3991359999999986,
+      "correctness": "Closed oriented result; independent overlap/winding checks in regression suite"
+    },
+    {
+      "sourceVertices": 160,
+      "sourceFaces": 196,
+      "selectedFaces": 40,
+      "resultFaces": 356,
+      "samplesMs": [
+        3.426657000000006,
+        2.4181150000000002,
+        3.1589589999999816,
+        2.549740999999983,
+        5.257916999999992,
+        2.301109999999994,
+        2.6114829999999927,
+        7.791934999999995,
+        2.4750399999999786,
+        9.06569300000001
+      ],
+      "medianMs": 3.1589589999999816,
+      "correctness": "Closed oriented result; independent overlap/winding checks in regression suite"
+    },
+    {
+      "sourceVertices": 480,
+      "sourceFaces": 596,
+      "selectedFaces": 120,
+      "resultFaces": 1076,
+      "samplesMs": [
+        7.159571999999969,
+        13.079375999999968,
+        11.984785000000045,
+        9.117691000000036,
+        9.22310699999997,
+        6.779546000000039,
+        16.274900000000002,
+        6.015255999999965,
+        5.180882999999994,
+        4.64841899999999
+      ],
+      "medianMs": 9.117691000000036,
+      "correctness": "Closed oriented result; independent overlap/winding checks in regression suite"
+    }
+  ]
+}
