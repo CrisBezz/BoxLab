@@ -1,0 +1,127 @@
+{
+  "release": ".1119",
+  "baseline": "Exact inference functions from .1118 commit8218a63b1a5594fd338e23601e8220b6dc0fb596",
+  "scope": "Synthetic grids, complete original physical pointer inference call with an Edge reference. Two warmups, ten alternating paired repetitions. Includes fresh projection array, edge enumeration and original nearest-reference maths. Stub bounds getter has no browser layout cost. Excludes render/history/event delivery/GPU/iPad; not a native speedup or capacity claim.",
+  "rows": [
+    {
+      "faces": 576,
+      "vertices": 625,
+      "edges": 1200,
+      "before": {
+        "bounds": 3025,
+        "projections": 3025,
+        "samplesMs": [
+          1.3279890000000023,
+          0.9309279999999944,
+          0.9403920000000028,
+          0.7315210000000008,
+          3.6205670000000083,
+          0.6877350000000035,
+          0.8128409999999917,
+          0.7176189999999991,
+          0.7794020000000046,
+          0.9262299999999897
+        ],
+        "medianMs": 0.9262299999999897
+      },
+      "after": {
+        "bounds": 1,
+        "projections": 625,
+        "samplesMs": [
+          1.318635999999998,
+          0.6976900000000086,
+          0.8294660000000107,
+          0.5394540000000063,
+          3.9980050000000062,
+          0.5263949999999937,
+          0.7793209999999959,
+          0.48839800000000366,
+          0.6832289999999972,
+          0.5292180000000002
+        ],
+        "medianMs": 0.6976900000000086
+      },
+      "correctness": "Exact reference type/index/point/distance match"
+    },
+    {
+      "faces": 2304,
+      "vertices": 2401,
+      "edges": 4704,
+      "before": {
+        "bounds": 11809,
+        "projections": 11809,
+        "samplesMs": [
+          3.2682410000000033,
+          3.7445519999999988,
+          3.7619069999999795,
+          3.1294850000000167,
+          3.100141000000008,
+          3.3896729999999877,
+          4.030388000000016,
+          3.6947680000000105,
+          4.3427429999999845,
+          3.813133999999991
+        ],
+        "medianMs": 3.7445519999999988
+      },
+      "after": {
+        "bounds": 1,
+        "projections": 2401,
+        "samplesMs": [
+          2.056746000000004,
+          2.4211189999999903,
+          2.1254980000000216,
+          2.1487830000000088,
+          1.9314889999999991,
+          2.0909369999999967,
+          3.5935260000000255,
+          2.323082999999997,
+          2.0454189999999812,
+          2.135794000000004
+        ],
+        "medianMs": 2.135794000000004
+      },
+      "correctness": "Exact reference type/index/point/distance match"
+    },
+    {
+      "faces": 9216,
+      "vertices": 9409,
+      "edges": 18624,
+      "before": {
+        "bounds": 46657,
+        "projections": 46657,
+        "samplesMs": [
+          20.201543000000015,
+          15.749826999999982,
+          17.326728000000003,
+          17.40553600000004,
+          18.429682000000014,
+          13.802495000000022,
+          16.38933099999997,
+          12.792660000000012,
+          13.19303599999995,
+          14.293476999999996
+        ],
+        "medianMs": 16.38933099999997
+      },
+      "after": {
+        "bounds": 1,
+        "projections": 9409,
+        "samplesMs": [
+          22.928604000000007,
+          11.379072000000008,
+          10.05901399999999,
+          9.709614000000045,
+          11.912437000000011,
+          9.917343000000017,
+          10.564137000000017,
+          10.420011999999986,
+          9.060795999999982,
+          8.966216000000031
+        ],
+        "medianMs": 10.420011999999986
+      },
+      "correctness": "Exact reference type/index/point/distance match"
+    }
+  ]
+}
