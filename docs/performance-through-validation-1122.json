@@ -1,0 +1,97 @@
+{
+  "release": ".1122",
+  "baseline": "Frozen exact .1121 validateThrough from ca97b49e",
+  "scope": "Complete validation of synthetic closed shared-index grid cubes: two warmups/five alternating paired repetitions. Includes foundation topology, winding, finite/area and bow-tie checks, fresh edge index and DFS. Counts instrument original owner edge-map traversal only. Excludes cutter clipping/assembly, render/history/events/browser/GPU/iPad. Not an end-to-end extrusion or native speedup/capacity claim. Temporary per-call index stores 2E edge-use references plus per-vertex arrays; no retained cache.",
+  "rows": [
+    {
+      "faces": 384,
+      "vertices": 386,
+      "edges": 768,
+      "before": {
+        "edgeMapVisits": 296448,
+        "edgeMapEnumerations": 386,
+        "samplesMs": [
+          3.3459720000000033,
+          4.104777999999996,
+          3.344795000000005,
+          2.5376720000000006,
+          2.710620000000006
+        ],
+        "medianMs": 3.344795000000005
+      },
+      "after": {
+        "edgeMapVisits": 768,
+        "edgeMapEnumerations": 1,
+        "samplesMs": [
+          1.1660870000000045,
+          1.4173920000000066,
+          1.1014320000000026,
+          0.8343230000000119,
+          1.046750000000003
+        ],
+        "medianMs": 1.1014320000000026
+      },
+      "correctness": "Exact valid result, unchanged mesh"
+    },
+    {
+      "faces": 1536,
+      "vertices": 1538,
+      "edges": 3072,
+      "before": {
+        "edgeMapVisits": 4724736,
+        "edgeMapEnumerations": 1538,
+        "samplesMs": [
+          37.997420999999974,
+          37.52060999999998,
+          36.72545399999996,
+          44.574216000000035,
+          36.35240799999997
+        ],
+        "medianMs": 37.52060999999998
+      },
+      "after": {
+        "edgeMapVisits": 3072,
+        "edgeMapEnumerations": 1,
+        "samplesMs": [
+          7.216168999999979,
+          6.005543999999986,
+          4.542412000000013,
+          6.30846600000001,
+          5.251619000000005
+        ],
+        "medianMs": 6.005543999999986
+      },
+      "correctness": "Exact valid result, unchanged mesh"
+    },
+    {
+      "faces": 6144,
+      "vertices": 6146,
+      "edges": 12288,
+      "before": {
+        "edgeMapVisits": 75522048,
+        "edgeMapEnumerations": 6146,
+        "samplesMs": [
+          479.78179799999975,
+          567.6660909999996,
+          496.0763869999996,
+          471.5985820000001,
+          469.95019500000035
+        ],
+        "medianMs": 479.78179799999975
+      },
+      "after": {
+        "edgeMapVisits": 12288,
+        "edgeMapEnumerations": 1,
+        "samplesMs": [
+          22.75254700000005,
+          20.837932999999794,
+          22.497171999999864,
+          23.063246000000163,
+          20.79769800000031
+        ],
+        "medianMs": 22.497171999999864
+      },
+      "correctness": "Exact valid result, unchanged mesh"
+    }
+  ]
+}

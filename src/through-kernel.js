@@ -139,7 +139,11 @@ export function validateThrough(m,eps=1e-7) {
   // face fan must be one connected cycle.
   const uses=edgeUses(m),incident=new Map();
   m.faces.forEach((f,fi)=>f.forEach(v=>{if(!incident.has(v))incident.set(v,new Set());incident.get(v).add(fi);}));
-  for(const [v,faces] of incident){const adjacency=new Map([...faces].map(fi=>[fi,[]]));for(const owners of uses.values()){if(owners[0].a!==v&&owners[0].b!==v)continue;const [a,b]=owners;adjacency.get(a.fi).push(b.fi);adjacency.get(b.fi).push(a.fi);}const seen=new Set(),stack=[faces.values().next().value];while(stack.length){const fi=stack.pop();if(seen.has(fi))continue;seen.add(fi);stack.push(...adjacency.get(fi).filter(x=>!seen.has(x)));}if(seen.size!==faces.size)return{ok:false,reason:'nonmanifold-vertex-fan',vertex:v};}
+  // Index edge uses once, in original order. The per-vertex validation below
+  // remains identical; no adjacency is retained across edits or history restores.
+  const incidentEdges=new Map([...incident.keys()].map(v=>[v,[]]));
+  for(const owners of uses.values())for(const v of [owners[0].a,owners[0].b])incidentEdges.get(v).push(owners);
+  for(const [v,faces] of incident){const adjacency=new Map([...faces].map(fi=>[fi,[]]));for(const owners of incidentEdges.get(v)){const [a,b]=owners;adjacency.get(a.fi).push(b.fi);adjacency.get(b.fi).push(a.fi);}const seen=new Set(),stack=[faces.values().next().value];while(stack.length){const fi=stack.pop();if(seen.has(fi))continue;seen.add(fi);stack.push(...adjacency.get(fi).filter(x=>!seen.has(x)));}if(seen.size!==faces.size)return{ok:false,reason:'nonmanifold-vertex-fan',vertex:v};}
   return {ok:true};
 }
 function context(m,fi) {
