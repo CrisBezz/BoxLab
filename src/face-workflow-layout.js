@@ -6,7 +6,7 @@ import './make-planar.js?v=0.36.18.93';
 import './orient-faces.js?v=0.36.18.94';
 import './orient-shell-outward.js?v=0.36.18.95';
 import './rotate-edge.js?v=0.36.18.337';
-import './select-sharp-edges.js?v=0.36.18.126';
+import './select-sharp-edges.js?v=0.36.18.1112';
 import './select-boundary-structure.js?v=0.36.18.131';
 import './select-tri-pairs.js?v=0.36.18.133';
 import './select-cleanable-verts.js?v=0.36.18.134';
@@ -34,7 +34,7 @@ import './backdrop-presets.js?v=0.36.18.190';
 import './studio-light-angle.js?v=0.36.18.199';
 import './cage-intensity.js?v=0.36.18.846';
 import './live-mesh-bridge.js?v=0.36.18.840';
-import './release-version.js?v=0.36.18.1111';
+import './release-version.js?v=0.36.18.1112';
 import './beta-runtime-guard.js?v=0.36.18.193';
 import './loop-cut-feedback.js?v=0.36.18.193';
 

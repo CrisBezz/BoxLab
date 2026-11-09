@@ -80,7 +80,7 @@ function inspect(m){
   const cut=limit(),sharp=[],smooth=[],creased=[],uncreased=[],interior=[],quadFlow=[],nonQuadAdjacent=[],quadTransition=[],nonQuadInternal=[];
   const edges=m.edges?.()||[];
   edges.forEach((edge,index)=>{
-    const crease=Number(m.edgeCrease?.(index)||0);
+    const crease=Number(m.creases?.get&&m.edgeKey?(m.creases.get(m.edgeKey(edge.a,edge.b))||0):(m.edgeCrease?.(index)||0));
     if(crease>.001)creased.push(index);else uncreased.push(index);
 
     const owners=(edge?.faces||[]).filter(fi=>Number.isInteger(fi)&&fi>=0&&fi<m.faces.length&&Array.isArray(m.faces[fi]));

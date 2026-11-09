@@ -1,3 +1,13 @@
+# .1112 — eliminate Edge Classification repeated edge builds — 9 November 2026
+
+User confirms continuous contact navigation is smooth; lifting/restarting and object-list actions lag, with Performance off and in Safari too. User requires preserving listeners and concave/quad correctness. Audit of release inspectors on a generated1000-quad grid measured ~1341ms total in Node, dominated by select-sharp-edges (~796ms), then vertex-valence/classification/cleanable (~140–150ms each). Harness omitted one unresolved dependency and one DOM-stub path; this is a source benchmark, not an iPad reproduction or complete release-handler profile.
+
+The sharp-edge inspect loop already holds m.edges(), but calls m.edgeCrease(index), which rebuilds the entire list on each edge. .1112 reads the SAME creases Map via the SAME edgeKey using the current enumerated edge; legacy fallback remains for external meshes without the native map API. One edge enumeration per inspection replaces E+1. All listeners, timers, sync/apply owners, crease threshold and face-angle/topology classification rules are retained. Concave selection and quad-cleanup source/pins unchanged. Protected Multi transform untouched. Remaining vertex inspection costs are separate future targets; iPad end-to-end gain unproven.
+
+Focused classification/release checks11/11 and full local suite3,243/3,243 pass; diff check clean. Repeated desktop harness: sharp-edge callback5.8ms versus796ms, measured aggregate551ms versus1341ms; remaining vertex inspectors dominate. These are synthetic source measurements, not native speedup claims. Hosted regression/publication pending. Device: compare lift/restart orbit→pan→pinch and Object Browser open/select/delete; check sharp/smooth/creased/uncreased selection after crease changes and Undo/Redo; confirm concave selection and quad cleanup still behave. Then reset Performance and capture report. Native1112 pending; prior PASSes retained.
+
+---
+
 # .1111 — callback and scheduler diagnosis — 9 November 2026
 
 User FAILs .1110 performance: possibly worse. Report records10 gaps/max3212ms and first-move event delivery1084ms; camera response remains0–2ms, texture decode15ms/display38ms and one29ms rebuild. No improvement or regression causality inferred from unmatched manual windows. .1110 copy-removal correctness remains covered, but performance gate is FAIL and latency cause OPEN.
