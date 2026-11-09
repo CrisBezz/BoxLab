@@ -223,7 +223,9 @@ export function buildNegativeExtrude(before,faceIndices,distance) {
       const surfaces=trial.faces.map(f=>surfaceTriangles(f.map(id=>trial.vertices[id]),eps));
       const ts=surfaces.flatMap(s=>s.parts).filter(t=>areaVector(t).length()>eps*eps),shellPlanes=[];
       for(const t of ts){const pl=plane(areaVector(t).normalize(),t[0]);if(!shellPlanes.some(q=>q.n.distanceTo(pl.n)<1e-8&&Math.abs(q.w-pl.w)<=eps))shellPlanes.push(pl);}
-      const end=source.map(p=>p.clone().addScaledVector(dir,depth)),planes=[...sides,plane(n,source[0].clone().addScaledVector(n,eps*32)),plane(dir,end[0])],polys=[],groups=[];
+      // Start exactly on the source plane. An outward epsilon slab can nick an
+      // adjacent corner wall outside the solid, leaving an unfillable open sliver.
+      const end=source.map(p=>p.clone().addScaledVector(dir,depth)),planes=[...sides,plane(n,source[0]),plane(dir,end[0])],polys=[],groups=[];
       const add=(p,g)=>{if(p.length){polys.push(p);groups.push(g);}};
       for(let fi=0;fi<trial.faces.length;fi++){
         const p=trial.faces[fi].map(id=>trial.vertices[id]),normal=areaVector(p).normalize();
