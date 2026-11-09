@@ -1,4 +1,4 @@
-import {filterPaintPixels} from '../evaluations/uv-paint/paint-core.js?v=0.36.18.1071';
+import {filterPaintPixels} from '../evaluations/uv-paint/paint-core.js?v=0.36.18.1123';
 
 export const PAINT_ADJUSTMENTS=Object.freeze([
  ['exposure','Exposure',-3,3,.05],['brilliance','Brilliance',-100,100,1],['highlights','Highlights',-100,100,1],['shadows','Shadows',-100,100,1],['contrast','Contrast',-100,100,1],['brightness','Brightness',-100,100,1],['blackPoint','Black point',-100,100,1],['saturation','Saturation',-100,100,1],['vibrance','Vibrance',-100,100,1],['warmth','Warmth',-100,100,1],['tint','Tint',-100,100,1],['blur','Blur',0,100,1],['sharpness','Sharpness',0,100,1],['definition','Definition',0,100,1]
@@ -13,10 +13,11 @@ export function paintAdjustmentSettings(value={}){
 export function createPaintAdjustments({pixels,size,filter}){
  if(!Number.isInteger(size)||size<16||size>1024||!(pixels instanceof Uint8Array)||pixels.length!==size*size*4)throw Error('Invalid adjustment source');
  const original=pixels.slice();let soft=null,fine=null;
- function spatial(amount){if(typeof filter!=='function')throw Error('Surface filter unavailable');return filterPaintPixels(original,size,filter(),{amount});}
+ function spatial(amount,precise=false){if(typeof filter!=='function')throw Error('Surface filter unavailable');return filterPaintPixels(original,size,filter(),{amount,precise});}
  return {render(value={}){
   const s=paintAdjustmentSettings(value);if(Object.values(s).every(v=>v===0))return original.slice();
-  if((s.blur||s.definition)&&!soft)soft=spatial(8);if(s.sharpness&&!fine)fine=spatial(1);
+  // Preserve sub-byte contrast until the final sharpened pixel is rounded.
+  if((s.blur||s.definition)&&!soft)soft=spatial(8);if(s.sharpness&&!fine)fine=spatial(1,true);
   const out=original.slice(),gain=2**s.exposure,lut=new Float64Array(256);
   for(let i=0;i<256;i++){const v=i/255,linear=v<=.04045?v/12.92:((v+.055)/1.055)**2.4,x=linear*gain;lut[i]=clamp(x<=.0031308?12.92*x:1.055*x**(1/2.4)-.055);}
   const colourActive=PAINT_ADJUSTMENTS.some(([key])=>!['blur','sharpness','definition'].includes(key)&&s[key]!==0);

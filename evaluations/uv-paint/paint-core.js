@@ -27,11 +27,12 @@ function blurSnapshot(bytes,size,domains,links,amount){
  }
  return source;
 }
-export function filterPaintPixels(bytes,size,filter,{amount=8,sharpen=0}={}){
- if(!Number.isInteger(size)||size<16||size>1024||!(bytes instanceof Uint8Array)||bytes.length!==size*size*4||!(filter?.domains instanceof Int32Array)||filter.domains.length!==size*size||!Number.isInteger(amount)||amount<1||amount>32||!Number.isFinite(sharpen)||sharpen<0||sharpen>4)throw Error('Invalid paint filter');
+// Layer sharpening needs the unrounded soft sample; existing callers retain byte output.
+export function filterPaintPixels(bytes,size,filter,{amount=8,sharpen=0,precise=false}={}){
+ if(!Number.isInteger(size)||size<16||size>1024||!(bytes instanceof Uint8Array)||bytes.length!==size*size*4||!(filter?.domains instanceof Int32Array)||filter.domains.length!==size*size||!Number.isInteger(amount)||amount<1||amount>32||!Number.isFinite(sharpen)||sharpen<0||sharpen>4||typeof precise!=='boolean')throw Error('Invalid paint filter');
  if(filter.neighbours!=null&&(!(filter.neighbours instanceof Int32Array)||filter.neighbours.length!==size*size*4||filter.neighbours.some(n=>n< -1||n>=size*size)))throw Error('Invalid paint filter neighbours');
- const target=blurSnapshot(bytes,size,filter.domains,filter.neighbours,amount),out=bytes.slice();
- for(let i=0;i<bytes.length;i+=4){if(filter.domains[i/4]<0||!bytes[i+3])continue;const a=target[i+3];for(let c=0;c<3;c++){const soft=a?target[i+c]/a:bytes[i+c];out[i+c]=Math.round(Math.max(0,Math.min(255,sharpen?bytes[i+c]+sharpen*(bytes[i+c]-soft):soft)));}}
+ const target=blurSnapshot(bytes,size,filter.domains,filter.neighbours,amount),out=precise?Float64Array.from(bytes):bytes.slice();
+ for(let i=0;i<bytes.length;i+=4){if(filter.domains[i/4]<0||!bytes[i+3])continue;const a=target[i+3];for(let c=0;c<3;c++){const soft=a?target[i+c]/a:bytes[i+c];const value=Math.max(0,Math.min(255,sharpen?bytes[i+c]+sharpen*(bytes[i+c]-soft):soft));out[i+c]=precise?value:Math.round(value);}}
  return out;
 }
 export function createPaintLayer(size=RESOLUTION,{transparent=false}={}){

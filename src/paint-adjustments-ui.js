@@ -1,4 +1,4 @@
-import {PAINT_ADJUSTMENTS,createPaintAdjustments} from './paint-adjustments.js?v=0.36.18.1072';
+import {PAINT_ADJUSTMENTS,createPaintAdjustments} from './paint-adjustments.js?v=0.36.18.1123';
 
 export function createPaintAdjustmentUI({document,button,painter,before=()=>{},changed=()=>{},say=()=>{}}){
  let dialog=null,source=null,engine=null,timer=null,inputs=null,report=null,apply=null,beforeInput=null;

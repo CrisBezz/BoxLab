@@ -1,4 +1,4 @@
-import {createPaintAdjustmentUI} from './paint-adjustments-ui.js?v=0.36.18.1072';
+import {createPaintAdjustmentUI} from './paint-adjustments-ui.js?v=0.36.18.1123';
 import {createPaintPaletteAnchor,placePaintPalette} from './paint-palette-layout.js?v=0.36.18.1061';
 import {paintBrushPreset} from './paint-brush-presets.js?v=0.36.18.1010';
 import {createBrushSizePreview} from './paint-brush-preview.js?v=0.36.18.1049';

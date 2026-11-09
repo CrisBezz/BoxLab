@@ -1,3 +1,13 @@
+# .1123 regression gate — 9 November 2026
+
+- Protected user PASS .1122: Through validation performance and accepted geometry, navigation and history.
+- Adjust layer: on low-contrast detail, Sharpness alone changes pixels and arms Apply after debounce without Brightness or another slider. Apply creates one Undo step; Undo/Redo restore exact pixels.
+- Before disables Apply; returning to preview restores it. Reset/Cancel restore original. Uniform/clipped/no-change output still refuses an empty commit.
+- Preserve all other adjustments, alpha/hidden RGB and UV-domain isolation, image-conversion-on-Apply semantics and ordinary Sharpen brush channels.
+- Automated: tests/paint-sharpness-alone-1123.test.mjs plus existing paint-adjustments-1071 tests. Native .1123 report pending.
+
+---
+
 # .1122 — linear edge indexing for Through vertex-fan validation; .1121 protected PASS — 9 November 2026
 
 User confirms1121 PASS and requests /nextbuild. Protect accepted four-quad back-face surrounds, matching front corner joins, actual topology budgets, inward/Through/Cancel/UndoRedo and earlier1118 outward corner/1116 preview/Loop/1119 inference behaviours. Native1121 acceptance is no longer pending. Earlier1120 remains provisional rather than retroactively recording PASS. Audit current mainca97b49e/release1121 and live1121; hosted1121 Topology42603073225 SUCCESS. Existing known shallow coplanar-rim refusal remains open, not bypassed.
