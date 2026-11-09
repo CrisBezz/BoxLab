@@ -1,0 +1,101 @@
+{
+  "release": ".1116",
+  "baselineCommit": "732cfb0c",
+  "scope": "Node CPU; Loop pending-key reader, and complete original Face pointer-move controller + real main selection bridge. Preview render workload includes body triangulation, real cage/pickers and Multi save/history observer from existing harness; excludes other scene hooks, browser event delivery, snapping (synthetic Exact pointer), GPU and iPad. No raw model, geometry, selection IDs or image committed.",
+  "rows": [
+    {
+      "workload": "synthetic-grid",
+      "vertices": 625,
+      "faces": 576,
+      "selectedBandFaces": 24,
+      "loopSamplesMs": {
+        "before": [
+          230.94700000000012,
+          219.01596599999903,
+          216.08466299999964,
+          217.68778700000075,
+          216.91266899999937
+        ],
+        "after": [
+          0.8131439999997383,
+          0.5857809999997698,
+          0.5604739999998856,
+          0.49884100000053877,
+          0.5077639999999519
+        ]
+      },
+      "loopMedianMs": {
+        "before": 217.68778700000075,
+        "after": 0.5604739999998856
+      },
+      "loopEdgeEnumerations": {
+        "before": 1200,
+        "after": 1
+      },
+      "previewSamplesMs": {
+        "before": [
+          65.11911999999938,
+          59.94833999999901,
+          70.5264960000004,
+          73.94781200000034,
+          77.61475900000005
+        ],
+        "after": [
+          36.43096500000138,
+          47.402930999998716,
+          29.501963999999134,
+          44.74190400000043,
+          32.22771600000124
+        ]
+      },
+      "previewMedianMs": {
+        "before": 70.5264960000004,
+        "after": 36.43096500000138
+      },
+      "sceneRebuildsPerPreview": {
+        "before": 2,
+        "after": 1
+      },
+      "correctness": "Exact key arrays and final rendered mesh snapshots match"
+    },
+    {
+      "workload": "private-upload-aggregate",
+      "vertices": 2426,
+      "faces": 2472,
+      "selectedBandFaces": 120,
+      "loopSamplesMs": {
+        "before": [
+          7168.9861
+        ],
+        "after": [
+          5.461526999999478
+        ]
+      },
+      "loopMedianMs": {
+        "before": 7168.9861,
+        "after": 5.461526999999478
+      },
+      "loopEdgeEnumerations": {
+        "before": 4896,
+        "after": 1
+      },
+      "previewSamplesMs": {
+        "before": [
+          264.32857499999955
+        ],
+        "after": [
+          164.83700800000224
+        ]
+      },
+      "previewMedianMs": {
+        "before": 264.32857499999955,
+        "after": 164.83700800000224
+      },
+      "sceneRebuildsPerPreview": {
+        "before": 2,
+        "after": 1
+      },
+      "correctness": "Exact key arrays and final rendered mesh snapshots match"
+    }
+  ]
+}

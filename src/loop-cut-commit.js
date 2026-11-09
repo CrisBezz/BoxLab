@@ -8,10 +8,10 @@ function state() { return globalThis.__boxlabBridgeState; }
 function currentYellowEdgeKeys() {
   const s = state(), mesh = s?.mesh;
   if (!mesh || !(s?.edgeObjects instanceof Map)) return [];
-  const keys = [];
+  const keys = [], edges = mesh.edges();
   for (const [index, object] of s.edgeObjects) {
     const color = (object?.userData?.cageMaterial || object?.material)?.color?.getHex?.();
-    const edge = mesh.edges()[index];
+    const edge = edges[index];
     if (color === YELLOW && edge) keys.push(mesh.edgeKey(edge.a, edge.b));
   }
   return [...new Set(keys)];
