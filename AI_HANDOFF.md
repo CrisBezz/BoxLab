@@ -1,3 +1,13 @@
+# .1116 protected PASS; concave-corner extrusion defect open — 9 November 2026
+
+User confirms .1116 PASS; protect Loop-cut navigation/pending refresh and one-publish Face previews, selection/Cancel/UndoRedo with prior PASSes. This does not accept concave-corner extrusion geometry. New screenshots show a38-face connected strip wrapping an L-shaped step: further extrusion displays apparent overlapping/back-facing side walls at the inside corner. Screenshots remain private; exact new mesh/selection not supplied, so intersection/winding cause is not yet reproduced.
+
+Source audit: multi-face-direct extrudeConnectedFaceSelection averages incident selected-face normals with miter scaling, then blindly emits one quad per region boundary edge. It has no positive-extrusion side-wall intersection/collapse check. Closed-edge topology gates alone do not prove geometric non-intersection. Likely failure is a folded/intersecting inside-corner offset as extrusion exceeds local small-face spacing; confirm with a segmented L-step fixture before coding. Do not merely flip normals, enable two-sided material, delete arbitrary faces or use Quad Clean as a substitute.
+
+Next topology fix should remain in this authoritative owner: reproduce progressive corner extrusion; detect side-wall collapse/intersections; implement valid corner-aware trim/reconstruction where supported and transactional refusal/last-valid preview where not. Preserve face winding, boundary ownership, labels/creases/UV eligibility, connected selection, exact distance/readback, history and .1116 CPU repairs. General large offsets may need topology changes or safe limits; no blanket auto-repair promise. No runtime change/new build in this acceptance/audit record. Current .1116 is published; no new hands-on test until a concrete corner repair build.
+
+---
+
 # .1116 — Loop pending refresh and Face preview CPU repairs — 9 November 2026
 
 User .1115 PASS is protected, including Loose Vertices correctness, but dense Loop Cut navigation and Face-band extrusion preview remain slow. New screenshot confirms .1115,2,426 vertices/2,424 faces; supplied GLB stays private and is not committed. Current import-owner harness yields2,426 vertices/2,472 reconstructed faces; representative120-face elevation band is a source workload, not a reproduction of the exact screenshot selection or native timing.
