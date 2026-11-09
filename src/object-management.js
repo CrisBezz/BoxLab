@@ -304,6 +304,8 @@ async function openBasicProject(file,output){
   multiEnabled=!!incoming.multi;
   selectedIds=new Set(incoming.selected.filter(id=>ids.has(id)));
   updateUI();
+  const nameInput=globalThis.document?.querySelector?.('#exportFileName');
+  if(nameInput)nameInput.value=file.name.replace(/\.boxlab$/i,'');
   output.textContent='Opened .boxlab · '+incoming.objects.length+' objects · Undo history reset.'+(incoming.objects.some(o=>o.colourPaint)?' Colour paint preserved; Studio / Solid / UV Image display requires matching Base UVs.':'')+(incoming.objects.some(o=>o.roughnessPaint)?' Roughness data preserved.':'')+(incoming.objects.some(o=>o.metalnessPaint)?' Metalness data preserved.':'')+(incoming.objects.some(o=>o.opacityPaint)?' Opacity data preserved.':'');
  }catch(error){output.textContent='Open refused · '+(error?.message||error);}
 }

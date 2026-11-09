@@ -1,3 +1,13 @@
+# .1113 — retain project filename on Open / Save — 9 November 2026
+
+User confirms .1112 PASS; protect its navigation, Object Browser and selection/cleanup behaviour. Pages42543352991 succeeded and live .1112 shell/module bytes matched main. No quantitative iPad speedup is inferred.
+
+Existing Save uses #exportFileName and already retains it across repeated saves. Successful Open now sets that SAME field from the selected file name, stripping the final .boxlab extension case-insensitively. Assignment follows validated scene replacement and UI restoration. Cancelled, malformed and refused opens retain the previous name. User edits still choose a different save name. Original filename sanitization, download mechanism, project codec, model/history owners and protected Multi transform are unchanged. Browser downloads may add a duplicate-file suffix; this does not grant direct overwrite access.
+
+Release .1113 markers, changed Object Management pin and existing release-version loader chain refreshed; unchanged sharp-edge owner retains .1112 pin. Prior PASSes retained. Native .1113 filename acceptance pending. Next: Open a named project, Save twice, edit File name and Save; cancel another Open and confirm the current name stays. Validation: 41 focused checks and final full local suite3,244/3,244 PASS; git diff --check clean. Initial cache-contract failures exposed the older drawer Object Management import; both runtime loader URLs now match .1113 and the reviewed contract. Protected Multi and sharp-edge sources unchanged. Publication pending verification.
+
+---
+
 # .1112 — eliminate Edge Classification repeated edge builds — 9 November 2026
 
 User confirms continuous contact navigation is smooth; lifting/restarting and object-list actions lag, with Performance off and in Safari too. User requires preserving listeners and concave/quad correctness. Audit of release inspectors on a generated1000-quad grid measured ~1341ms total in Node, dominated by select-sharp-edges (~796ms), then vertex-valence/classification/cleanable (~140–150ms each). Harness omitted one unresolved dependency and one DOM-stub path; this is a source benchmark, not an iPad reproduction or complete release-handler profile.

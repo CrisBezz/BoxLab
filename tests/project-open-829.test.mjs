@@ -41,8 +41,9 @@ import {EditableMesh} from '../src/mesh.js';
 const management=fs.readFileSync(new URL('../src/object-management.js',import.meta.url),'utf8');
 const openSource=management.slice(management.indexOf('async function openBasicProject('),management.indexOf('\nfunction installProjectAudit('));
 function openFixture(confirm=true){
- const calls=[];const c={encodeBoxlabScene,decodeBoxlabScene,EditableMesh,window:{confirm:()=>{calls.push('confirm');return confirm;}},manager:()=>({replaceBasicProjectScene:()=>{calls.push('replace');return true;}}),restoreGroupMetadata:()=>calls.push('groups'),updateUI:()=>calls.push('ui')};
- vm.createContext(c);vm.runInContext(openSource,c);return {c,calls};
+ const nameInput={value:"Previous project"};
+ const calls=[];const c={document:{querySelector:()=>nameInput},encodeBoxlabScene,decodeBoxlabScene,EditableMesh,window:{confirm:()=>{calls.push('confirm');return confirm;}},manager:()=>({replaceBasicProjectScene:()=>{calls.push('replace');return true;}}),restoreGroupMetadata:()=>calls.push('groups'),updateUI:()=>calls.push('ui')};
+ vm.createContext(c);vm.runInContext(openSource,c);return {c,calls,nameInput};
 }
 function project(){return encodeBoxlabScene({activeId:40,selected:[40],groups:{names:[],collapsed:[]},objects:[{id:40,name:'Cube',settings:{mirror:{},subd:false,subdLevel:1,cage:true},mesh:EditableMesh.cube(2)}]});}
 const file=data=>({name:'Scene.BOXLAB',size:100,text:async()=>JSON.stringify(data)});
@@ -123,4 +124,20 @@ test('832 actual Save validates linked scene before requesting download',()=>{
   const button={},out={};c.exportBasicProject(button,out);assert.equal(button.disabled,false);assert.match(out.textContent,valid?/download requested/:/Save refused/);
  }
  assert.deepEqual(files,['Linked.boxlab']);
+});
+
+test('1113 successful Open adopts the filename; cancellation, invalid files and replacement refusal retain the previous name',async()=>{
+ const data=project(),out={};
+ const accepted=openFixture();await accepted.c.openBasicProject({...file(data),name:'My House v2.BOXLAB'},out);
+ assert.equal(accepted.nameInput.value,'My House v2');
+ vm.runInContext(management.slice(management.indexOf('function projectFileName('),management.indexOf('function exportBasicProject(')),accepted.c);
+ assert.equal(accepted.c.projectFileName(),'My House v2.boxlab');
+ assert.equal(accepted.c.projectFileName(),'My House v2.boxlab');
+ accepted.nameInput.value='New name';assert.equal(accepted.c.projectFileName(),'New name.boxlab');
+ for(const kind of ['cancel','invalid','refused']){
+  const r=openFixture(kind!=='cancel');
+  if(kind==='refused')r.c.manager=()=>({replaceBasicProjectScene:()=>false});
+  await r.c.openBasicProject({...file(data),name:kind==='invalid'?'Wrong.obj':'Different.boxlab'},out);
+  assert.equal(r.nameInput.value,'Previous project',kind);
+ }
 });
