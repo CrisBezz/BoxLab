@@ -48,6 +48,22 @@ function liveVertexMarkers(){
 
 function distanceSq(a,b){const dx=a.x-b.x,dy=a.y-b.y,dz=a.z-b.z;return dx*dx+dy*dy+dz*dz;}
 
+function markerCandidates(markers,axis,toleranceSq){
+  // Fresh per inspection. Keep snapshot-to-live matching and its original tie order.
+  if(!Number.isFinite(toleranceSq)||markers.some(marker=>!Number.isFinite(marker[axis])))return()=>markers;
+  const sorted=markers.map((marker,order)=>({marker,order})).sort((a,b)=>a.marker[axis]-b.marker[axis]);
+  return point=>{
+    if(!Number.isFinite(point[axis]))return markers;
+    // Test the same squared component distance as distanceSq, avoiding rounded
+    // position +/- tolerance bounds at large offsets and at the tolerance edge.
+    let lo=0,hi=sorted.length;
+    while(lo<hi){const mid=(lo+hi)>>>1,delta=sorted[mid].marker[axis]-point[axis];if(delta<0&&delta*delta>toleranceSq)lo=mid+1;else hi=mid;}
+    const start=lo;hi=sorted.length;
+    while(lo<hi){const mid=(lo+hi)>>>1,delta=sorted[mid].marker[axis]-point[axis];if(delta>0&&delta*delta>toleranceSq)hi=mid;else lo=mid+1;}
+    return sorted.slice(start,lo).sort((a,b)=>a.order-b.order).map(item=>item.marker);
+  };
+}
+
 function inspect(m){
   if(!m)return{indices:[],all:[],faceUsed:[],count:0,vertices:0,faces:0,unmatchedFace:0};
   const markers=liveVertexMarkers();
@@ -58,6 +74,8 @@ function inspect(m){
   for(const p of markers){minX=Math.min(minX,p.x);minY=Math.min(minY,p.y);minZ=Math.min(minZ,p.z);maxX=Math.max(maxX,p.x);maxY=Math.max(maxY,p.y);maxZ=Math.max(maxZ,p.z);}
   const diagonal=Math.hypot(maxX-minX,maxY-minY,maxZ-minZ);
   const tolerance=Math.max(1e-7,diagonal*1e-5),toleranceSq=tolerance*tolerance;
+  const spans=[maxX-minX,maxY-minY,maxZ-minZ],axis=['x','y','z'][spans.indexOf(Math.max(...spans))]||'x';
+  const candidates=markerCandidates(markers,axis,toleranceSq);
 
   const snapshotFaceVertices=new Set();
   let realFaces=0;
@@ -72,7 +90,7 @@ function inspect(m){
   for(const snapshotIndex of snapshotFaceVertices){
     const p=m.vertices[snapshotIndex];
     let best=null,bestD=Infinity;
-    for(const marker of markers){
+    for(const marker of candidates(p)){
       if(usedLive.has(marker.index))continue;
       const d=distanceSq(p,marker);
       if(d<bestD){bestD=d;best=marker;}

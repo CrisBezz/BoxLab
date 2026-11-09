@@ -1,3 +1,19 @@
+# .1115 — bounded candidate search for Loose Vertices — 9 November 2026
+
+User confirms .1114 PASS and requests /nextbuild. Protect its navigation/Object Browser/vertex inspection/concave-selection/Quad Clean behaviour alongside .1113 filename and all earlier PASSes. Native .1114 acceptance is no longer pending; historical pending notes below are superseded.
+
+Audit found original Loose Vertices inspection matches each face-used snapshot vertex to every unused live marker, quadratic in dense Vertex-mode scenes. Preserve authoritative snapshot mapping: manager.objects/saveActive, marker traversal and original numeric live index ordering are unchanged. No direct-live index shortcut, persistence/link/history change or removed listener. Existing mesh snapshot synchronization can remain expensive and is outside this build.
+
+Original inspector now builds a fresh widest-axis sorted marker index once per call. Binary bounds compare the same squared axis distance to the existing tolerance squared; candidates are restored to original marker order before the unchanged nearest-unused distance loop. Any match accepted by the original full 3D distance must survive the axis bound. Equal-distance/duplicate-coordinate/index ties retain original order and used-index exclusion. No retained cache. Nonfinite axis positions or tolerance fall back to the original full search. Dense coincident/one-axis-degenerate distributions may retain quadratic worst case; this is not a guarantee for every mesh or Object-mode pauses without vertex markers.
+
+Frozen baseline tests/fixtures/performance/loose-vertices-1114.js is exact0ff80afde6c110c337ea657ec702257cfc623e15 source. Seven production-module cases compare complete reports, selection/status/title callbacks, compacted snapshot IDs, isolated/wire markers, tolerance edges, nearest misses, large coordinates, nonfinite/overflow data, duplicate ties, seeded random data and edits/restoration. Apply/sync/listener/timer and manager-reader tails remain byte-identical. No model mutation. Existing mesh kernels, selection/cleanup rules, .1114 lookup/inspectors and protected Multi transform are unchanged.
+
+Reproducible scripts/benchmark-loose-inspection-1115.mjs writes docs/performance-loose-inspection-1115.json; two warmups/five interleaved repeats, complete inspect including traversal/sorting/fresh index. 1,000 markers44.39→3.84ms (500,499→12,999 full-distance checks);4,096 markers807.45→24.48ms (8,390,655→133,119). Exact paired report parity. Synthetic Node CPU excludes unchanged manager snapshot/history synchronization, whole event chain, native iPad latency and GPU. No WASM, capacity or end-to-end performance PASS claimed.
+
+Release .1115 shell markers, Loose Vertices loader and existing release-version parent chain refreshed. Accepted .1114 inspector/shared-lookup pins and .1113 Object Management remain. Focused60/60 and full local suite3,264/3,264 pass; git diff --check clean. Publication pending verification. Native .1115 pending. Device: same dense model in Vertex mode, lift/restart orbit/pan/pinch and selection; Select Loose Vertices with some isolated/wire points; move a point/Undo/Redo and repeat selection; confirm Object Browser and accepted concave/Quad Clean behaviour. Then measure any remaining bottleneck before a WASM decision.
+
+---
+
 # .1114 — fresh vertex-face incidence removes repeated scans — 9 November 2026
 
 User authorizes next scoped performance build after protected .1112 and .1113 PASSes. Audit found valence/classification disconnectedFaceFan and Cleanable straightCandidate scanned every face for every vertex on each unchanged release/state listener. Reuse each original inspector; do not remove listeners or change topology rules.

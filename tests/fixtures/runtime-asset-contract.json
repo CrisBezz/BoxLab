@@ -161,9 +161,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1114",
+      "url": "./src/drawer-ui.js?v=0.36.18.1115",
       "target": "src/drawer-ui.js",
-      "sha256": "72a7150c599891ee1c1b57dddaaefd12dbf8af067323bd8a243eba1aa97f009e"
+      "sha256": "ab972a3d4b6854064118f5d589fa030e6b4cda8b70b7fe9efaa4b2a594c4b47c"
     },
     {
       "owner": "index.html",
@@ -378,7 +378,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1114",
+      "url": "./src/release-version.js?v=0.36.18.1115",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -864,9 +864,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1114",
+      "url": "./face-workflow-layout.js?v=0.36.18.1115",
       "target": "src/face-workflow-layout.js",
-      "sha256": "ba9acc60ad5ee4a837df3cb68c04440b4c396b05041397c8d0cf65b517971879"
+      "sha256": "e1f545a2cdff68fb3d99a17385f132464a73b6bf823498a913f20a13430af8bb"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1063,9 +1063,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./select-loose-vertices.js?v=0.36.18.56",
+      "url": "./select-loose-vertices.js?v=0.36.18.1115",
       "target": "src/select-loose-vertices.js",
-      "sha256": "ca7b662cd0ed8c35cf7feda949f1880527aac0565c37d486c9c5aef9ca6a94bf"
+      "sha256": "a5abed76d2911e92dadfe10519340399898538cd086cc0b906888f75a828f681"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1361,7 +1361,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1114",
+      "url": "./release-version.js?v=0.36.18.1115",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -3326,9 +3326,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1114",
+      "url": "./src/shell-comparison.js?v=0.36.18.1115",
       "target": "src/shell-comparison.js",
-      "sha256": "78940b3a244e3a409fc7cdd2e20270210916bc92605004f373db9908ce37d860"
+      "sha256": "ca94101110c2b4aa4f0c2fdce937924615c7bd6352bb1fe630add6352f99ae87"
     },
     {
       "owner": "src/main.js",

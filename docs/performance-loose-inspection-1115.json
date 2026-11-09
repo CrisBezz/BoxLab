@@ -1,0 +1,55 @@
+{
+  "release": ".1115",
+  "baselineCommit": "0ff80afde6c110c337ea657ec702257cfc623e15",
+  "scope": "Node CPU, complete original inspect calls including scene traversal, marker sorting and fresh axis index. Vertex-mode markers; manager snapshot/history synchronization unchanged and excluded. No full app, iPad latency, GPU, WASM or capacity claim. Dense coincident/one-axis-degenerate distributions can retain worst-case quadratic work.",
+  "warmups": 2,
+  "repeats": 5,
+  "rows": [
+    {
+      "markers": 1000,
+      "snapshotFaceVertices": 999,
+      "beforeMs": [
+        48.663489999999996,
+        45.928717999999975,
+        44.39480900000001,
+        44.35878500000001,
+        43.803607
+      ],
+      "afterMs": [
+        4.522570000000002,
+        4.069352999999978,
+        3.8438970000000268,
+        3.3062639999999988,
+        3.3137849999999958
+      ],
+      "beforeMedianMs": 44.39480900000001,
+      "afterMedianMs": 3.8438970000000268,
+      "beforeDistanceChecks": 500499,
+      "afterDistanceChecks": 12999,
+      "exactReportParity": true
+    },
+    {
+      "markers": 4096,
+      "snapshotFaceVertices": 4095,
+      "beforeMs": [
+        754.52541,
+        760.626573,
+        905.3385749999998,
+        807.4453960000001,
+        819.8203740000008
+      ],
+      "afterMs": [
+        24.07816700000012,
+        22.952095999999983,
+        36.30954600000041,
+        26.349978000000192,
+        24.481808999999885
+      ],
+      "beforeMedianMs": 807.4453960000001,
+      "afterMedianMs": 24.481808999999885,
+      "beforeDistanceChecks": 8390655,
+      "afterDistanceChecks": 133119,
+      "exactReportParity": true
+    }
+  ]
+}
