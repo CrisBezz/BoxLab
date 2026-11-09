@@ -4,7 +4,7 @@
 - Adjust layer: on low-contrast detail, Sharpness alone changes pixels and arms Apply after debounce without Brightness or another slider. Apply creates one Undo step; Undo/Redo restore exact pixels.
 - Before disables Apply; returning to preview restores it. Reset/Cancel restore original. Uniform/clipped/no-change output still refuses an empty commit.
 - Preserve all other adjustments, alpha/hidden RGB and UV-domain isolation, image-conversion-on-Apply semantics and ordinary Sharpen brush channels.
-- Automated: tests/paint-sharpness-alone-1123.test.mjs plus existing paint-adjustments-1071 tests. Native .1123 report pending.
+- Automated: tests/paint-sharpness-alone-1123.test.mjs plus existing paint-adjustments-1071 tests. Hosted .1123 Topology 42617412595 PASS 3,316 / 3,316; Pages 42617411588 succeeded and live sources match release 59195e151ff9056b2fbd418f1762ef1f12665830. Native .1123 report pending.
 
 ---
 
