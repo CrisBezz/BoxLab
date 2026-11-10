@@ -365,26 +365,26 @@ root.innerHTML=`
   <button type="button" class="tg-tool-sector" style="--a:90deg" data-tool-target="#bevelBtn">Bevel</button>
   <button type="button" class="tg-tool-sector" style="--a:135deg" data-tool-target="#knifeBtn">Knife</button>
   <button type="button" class="tg-tool-sector" style="--a:180deg" data-tool-target="#duplicateFacesBtn">Duplicate</button>
-  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:240.000deg;--r:230px" data-tool-target="#shellFacesBtn">Shell</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:225.000deg;--r:230px" data-tool-target="#shellFacesBtn">Shell</button>
   <button type="button" class="tg-tool-sector" style="--a:270deg" data-tool-target=".sweep-selection-launch[data-sweep-selection-mode='face']">Sweep</button>
   <button type="button" class="tg-tool-sector tg-tool-danger" style="--a:315deg" data-tool-target="#deleteFaceBtn">Delete</button>
   <div class="tg-face-outer-guide" aria-hidden="true"></div>
-  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:24.000deg;--r:230px" data-tool-target="#joinSelectedCoplanarFacesBtn">Join Coplanar</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:22.500deg;--r:230px" data-tool-target="#joinSelectedCoplanarFacesBtn">Join Coplanar</button>
   <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:0.000deg;--r:230px" data-tool-target="#componentCircleBtn">Circle</button>
-  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:48.000deg;--r:230px" data-tool-target="#pokeFacesBtn">Poke</button>
-  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:72.000deg;--r:230px" data-tool-target="#makePlanarBtn">Make Planar</button>
-  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:96.000deg;--r:230px" data-tool-target="#triangulateFacesBtn">Triangulate</button>
-  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:120.000deg;--r:230px" data-tool-target="#flipFacesBtn">Flip Faces</button>
-  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:144.000deg;--r:230px" data-tool-target="#orientFacesBtn">Orient Faces</button>
-  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:168.000deg;--r:230px" data-tool-target="#orientShellOutwardBtn">Orient Outward</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:45.000deg;--r:230px" data-tool-target="#pokeFacesBtn">Poke</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:67.500deg;--r:230px" data-tool-target="#makePlanarBtn">Make Planar</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:90.000deg;--r:230px" data-tool-target="#triangulateFacesBtn">Triangulate</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:112.500deg;--r:230px" data-tool-target="#flipFacesBtn">Flip Faces</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:135.000deg;--r:230px" data-tool-target="#orientFacesBtn">Orient Faces</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:157.500deg;--r:230px" data-tool-target="#orientShellOutwardBtn">Orient Outward</button>
   <button type="button" class="tg-tool-sector" style="--a:225deg" data-tool-target="#bridgeFacesBtn">Bridge</button>
-  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:216.000deg;--r:230px" data-tool-target="#closeHolesBtn">Close Holes</button>
-  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:192.000deg;--r:230px" data-tool-target="#quadPairCleanupBtn">Quad Cleanup</button>
-  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:264.000deg;--r:230px" data-tool-target="#quadifyNgonsBtn">Quadify N-gons</button>
-  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:288.000deg;--r:230px" data-tool-target="#cleanVerticesBtn">Clean Vertices</button>
-  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:312.000deg;--r:230px" data-tool-target="#mergeByDistanceBtn">Merge Dist</button>
-  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:336.000deg;--r:230px" data-tool-target="#extractFacesBtn">Extract</button>
-  <button type="button" class="tg-tool-sector tg-tool-mid" style="--a:330deg;--r:168px" data-tool-target="#facegroupOpenPaint">FACEGROUP</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:202.500deg;--r:230px" data-tool-target="#closeHolesBtn">Close Holes</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:180.000deg;--r:230px" data-tool-target="#quadPairCleanupBtn">Quad Cleanup</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:247.500deg;--r:230px" data-tool-target="#quadifyNgonsBtn">Quadify N-gons</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:270.000deg;--r:230px" data-tool-target="#cleanVerticesBtn">Clean Vertices</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:292.500deg;--r:230px" data-tool-target="#mergeByDistanceBtn">Merge Dist</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:337.500deg;--r:230px" data-tool-target="#extractFacesBtn">Extract</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:315.000deg;--r:230px" data-tool-target="#facegroupOpenPaint">FACEGROUP</button>
   <button type="button" class="tg-tool-center" aria-label="Close Face contextual tools" title="Close tools">×</button>
 </div>
 <div class="tg-tool-ring" data-ring-mode="edge" aria-label="Edge contextual tools">
@@ -398,7 +398,7 @@ root.innerHTML=`
   <button type="button" class="tg-tool-sector tg-tool-danger" style="--a:315deg" data-tool-target="#deleteEdgeBtn">Delete</button>
 <div class="tg-face-outer-guide" aria-hidden="true"></div>
   <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:0.000deg;--r:230px" data-tool-target="#componentCircleBtn">Circle</button>
-  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:24.000deg;--r:230px" data-tool-target="#joinCoplanarBtn">Join Coplanar</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:22.500deg;--r:230px" data-tool-target="#joinCoplanarBtn">Join Coplanar</button>
   <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:45.000deg;--r:230px" data-tool-target="#loopCutBtn">Loop</button>
   <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:67.500deg;--r:230px" data-tool-target="#cutUVEdgesBtn" title="Split existing UV islands at complete selected cuts; clear paint first">Cut UVs</button>
   <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:90.000deg;--r:230px" data-tool-target="#faceSplitBtn">Split</button>
@@ -426,8 +426,8 @@ root.innerHTML=`
   <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:0deg;--r:230px" data-tool-target="#componentCircleBtn">Circle</button>
   <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:72deg;--r:230px" data-tool-target="#mergeVerticesCenterBtn">Merge Center</button>
   <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:144deg;--r:230px" data-tool-target="#mergeVerticesFirstBtn">Merge First</button>
-  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:312deg;--r:230px" data-tool-target="#mergeByDistanceBtn">Merge Dist</button>
-  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:288deg;--r:230px" data-tool-target="#cleanVerticesBtn">Clean Vertices</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:292.500deg;--r:230px" data-tool-target="#mergeByDistanceBtn">Merge Dist</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:270.000deg;--r:230px" data-tool-target="#cleanVerticesBtn">Clean Vertices</button>
   <button type="button" class="tg-tool-center" aria-label="Close Vertex contextual tools" title="Close tools">×</button>
 </div>
 <div class="tg-tool-ring" data-ring-mode="object" aria-label="Object contextual tools">
@@ -1182,7 +1182,7 @@ function sync(){
   }
   // Fit the tool picker only; transform handles stay on the selected geometry.
   if(hubState==='tools'&&globalThis.__boxlabCompactLayout?.active){
-    const fit=globalThis.__boxlabCompactLayout.placeRadial(left,top,vr.width,vr.height);
+    const fit=globalThis.__boxlabCompactLayout.placeRadial(left,top,vr.width,vr.height,mode);
     left=fit.left;top=fit.top;
     root.style.setProperty('--compact-r',`${fit.radius}px`);
   }

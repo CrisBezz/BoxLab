@@ -1,4 +1,4 @@
-/* .1130: original artwork and angular slots, compact circular icon frames. */
+/* .1133: original artwork and angular slots, compact circular icon frames. */
 #totalGizmo .tg-tool-ring[data-ring-mode] .tg-tool-sector{
  box-sizing:border-box;width:52px;height:56px;min-height:56px;margin:-28px -26px;
  padding:0;gap:0;border:0;border-radius:0;background:transparent!important;box-shadow:none;
@@ -15,9 +15,13 @@
 #totalGizmo .tg-tool-ring[data-ring-mode] .tg-tool-active::before{background-color:#225b91;border-color:#86bfff}
 #totalGizmo .tg-tool-ring[data-ring-mode] .tg-tool-sector:focus-visible::before{outline:2px solid #a9ccff;outline-offset:2px}
 html:not(.boxlab-compact-ui) #totalGizmo .tg-tool-ring[data-ring-mode] .tg-tool-sector{transform:rotate(var(--a)) translateY(-80px) rotate(calc(-1 * var(--a)))}
-html:not(.boxlab-compact-ui) #totalGizmo .tg-tool-ring[data-ring-mode] .tg-tool-outer{transform:rotate(var(--a)) translateY(-194px) rotate(calc(-1 * var(--a)))}
+html:not(.boxlab-compact-ui) #totalGizmo .tg-tool-ring[data-ring-mode] .tg-tool-outer{transform:rotate(var(--a)) translateY(-176px) rotate(calc(-1 * var(--a)))}
 html:not(.boxlab-compact-ui) #totalGizmo .tg-tool-ring[data-ring-mode] .tg-tool-mid{transform:rotate(var(--a)) translateY(-134px) rotate(calc(-1 * var(--a)))}
-html:not(.boxlab-compact-ui) #totalGizmo [class$="-outer-guide"]{width:388px;height:388px;margin:0;border-radius:50%}
+html:not(.boxlab-compact-ui) #totalGizmo [class$="-outer-guide"]{width:352px;height:352px;margin:0;border-radius:50%}
+html:not(.boxlab-compact-ui) #totalGizmo .tg-tool-ring[data-ring-mode="vertex"] .tg-tool-outer,
+html:not(.boxlab-compact-ui) #totalGizmo .tg-tool-ring[data-ring-mode="object"] .tg-tool-outer{transform:rotate(var(--a)) translateY(-160px) rotate(calc(-1 * var(--a)))}
+html:not(.boxlab-compact-ui) #totalGizmo[data-mode="vertex"] [class$="-outer-guide"],
+html:not(.boxlab-compact-ui) #totalGizmo[data-mode="object"] [class$="-outer-guide"]{width:320px;height:320px}
 html.boxlab-compact-ui #totalGizmo .tg-tool-ring[data-ring-mode] .tg-tool-sector{width:44px;height:44px;min-height:44px;margin:-22px;padding:2px}
 html.boxlab-compact-ui #totalGizmo .tg-tool-ring[data-ring-mode] .radial-caption{display:none}
 #boxlabPaintRadial[data-state=tools]{width:292px;height:292px}

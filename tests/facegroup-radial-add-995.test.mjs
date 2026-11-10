@@ -77,7 +77,7 @@ test('Face radial delegates FACEGROUP directly to the original dock, never click
 test('Face radial has 24 original-owner targets, new button fits existing rings, protected inner slots and a three-colour cube',()=>{
  const ring=gizmo.slice(gizmo.indexOf('<div class="tg-tool-ring" data-ring-mode="face"'),gizmo.indexOf('<div class="tg-tool-ring" data-ring-mode="edge"'));
  const nodes=[...ring.matchAll(/class="tg-tool-sector([^\"]*)" style="--a:([\d.]+)deg(?:;--r:([\d.]+)px)?" data-tool-target="([^"]+)"/g)];assert.equal(nodes.length,24);
- const rects=nodes.map(m=>{const a=Number(m[2])*Math.PI/180,r=Number(m[3]||112);return {x:Math.sin(a)*r,y:-Math.cos(a)*r,w:m[1].includes('outer')?86:m[1].includes('mid')?74:76,h:60,target:m[4]};});
+ const rects=nodes.map(m=>{const a=Number(m[2])*Math.PI/180,r=m[1].includes('outer')?176:80;return {x:Math.sin(a)*r,y:-Math.cos(a)*r,w:52,h:56,target:m[4]};});
  const added=rects.find(r=>r.target==='#facegroupOpenPaint');
  for(const b of rects.filter(r=>r!==added)){const a=added;assert.ok(Math.abs(a.x-b.x)>=(a.w+b.w)/2||Math.abs(a.y-b.y)>=(a.h+b.h)/2,`${a.target}/${b.target} overlap`);}
  assert.match(ring,/--a:0deg" data-tool-target="#extrudeBtn"/);assert.match(ring,/--a:90deg" data-tool-target="#bevelBtn"/);

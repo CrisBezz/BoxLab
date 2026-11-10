@@ -42,8 +42,8 @@
   window.addEventListener('orientationchange',sync);
   window.addEventListener('pageshow',restore);
   window.addEventListener('pagehide',()=>observer.disconnect());
-  function placeRadial(left,top,width,height){
-    const radius=Math.max(70,Math.min(230,(width-68)/2,(height-160)/2));
+  function placeRadial(left,top,width,height,mode){
+    const radius=Math.max(70,Math.min(mode==='vertex'||mode==='object'?160:176,(width-68)/2,(height-160)/2));
     const halfWidth=width<=400?104:radius+26,halfHeight=width<=400?164:radius+26;
     const fit=(value,half,extent,reserve)=>Math.max(half+8,Math.min(value,extent-half-reserve));
     return{left:fit(left,halfWidth,width,8),top:fit(top,halfHeight,height,80),radius};

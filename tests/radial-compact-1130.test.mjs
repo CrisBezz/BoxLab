@@ -8,14 +8,14 @@ test('1130 all 72 modelling radial targets fit compact rings without intersectin
  for(const match of source.matchAll(/<div class="tg-tool-ring" data-ring-mode="([^"]+)"[^>]*>([\s\S]*?)(?=<div class="tg-tool-ring"|<div class="tg-hud")/g)){
   const [,mode,html]=match,buttons=[];
   for(const item of html.matchAll(/<button[^>]*class="([^"]*tg-tool-sector[^"]*)"[^>]*style="--a:([\d.]+)deg[^>]*data-tool-target="([^"]*)"/g)){
-   const [,classes,angle,target]=item,r=classes.includes('outer')?194:classes.includes('mid')?134:80,a=Number(angle)*Math.PI/180;
+   const [,classes,angle,target]=item,r=classes.includes('outer')?(['vertex','object'].includes(mode)?160:176):classes.includes('mid')?134:80,a=Number(angle)*Math.PI/180;
    buttons.push({target,x:r*Math.sin(a),y:-r*Math.cos(a)});
   }
   assert.equal(buttons.length,counts[mode]);total+=buttons.length;
   for(let i=0;i<buttons.length;i++)for(const b of buttons.slice(i+1)){const a=buttons[i];assert(Math.abs(a.x-b.x)>=52||Math.abs(a.y-b.y)>=56,mode+': '+a.target+' overlaps '+b.target);}
  }
- assert.equal(total,72);assert(2*194+52<.81*(2*230+86),'overall radial footprint reduces at least 19%');
- const css=read('radial-compact.css');for(const value of ['width:52px;height:56px','translateY(-80px)','translateY(-194px)','translateY(-134px)','border-radius:50%','background-size:28px 28px'])assert(css.includes(value));
+ assert.equal(total,72);assert(2*176+52<.93*(2*194+52),'overall radial diameter reduces at least 7% beyond .1130');
+ const css=read('radial-compact.css');for(const value of ['width:52px;height:56px','translateY(-80px)','translateY(-176px)','translateY(-134px)','border-radius:50%','background-size:28px 28px'])assert(css.includes(value));
 });
 test('1130 ten Paint circular targets fit the smaller 292px wheel and Material/centre remain original buttons',()=>{
  const s=read('src/viewport-paint.js');assert(s.includes('146+114*Math.sin(a)'));assert(s.includes('146-114*Math.cos(a)'));assert(s.includes('left:146px;top:146px'));
