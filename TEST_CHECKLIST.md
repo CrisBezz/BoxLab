@@ -5,7 +5,7 @@
 - DRAG defaults OFF and is Face-only. ON: Pencil/mouse adds from an already-selected seed, samples intervening/coalesced points, publishes once per event, preserves primary, and cannot start hold/scrub/orbit/gizmo/model edits. OFF: original directional/hold routing.
 - Lasso/tool/mode activation exits DRAG; busy tool/UV Paint refuses activation. Fingers remain navigation. Cancel/lost capture/secondary contact/lifecycle changes restore seed and exact controls only in the same context; fresh down recovers missed release. No geometry checkpoints or redo loss.
 - Front normal / three-face dashed-stroke SVGs share existing action panel; accepted baseline spacing retained plus exact two-button height, short-height rail scrolls.
-- Automated: front-drag-selection-1126 plus existing Face/Lasso/Pencil/toolbar/modeless/history/release checks. Full local 3,341/3,341 PASS; hosted/publication/browser proof to be recorded. Native .1126 pending.
+- Automated: front-drag-selection-1126 plus existing Face/Lasso/Pencil/toolbar/modeless/history/release checks. Full local 3,341/3,341 PASS. Corrected runtime 5c709bf8e6633c24591a17885240e4af462f2a2b, tested tree 52c99935e6324f13dd34524d4e9440e966c6e9b6. Pages 42752898193 SUCCESS; hosted Topology 42752898828 SUCCESS, 3,341/3,341 PASS. All 18 checked live shell/selection/UI/protected assets byte-match local source. Browser confirms .1126, FRONT on/DRAG off, white-on-blue active icon, 256px rail and 8px Snap gap. Contrast/release focused checks 37/37 PASS; final selection/toolbar smoke 17/17 PASS. Native 3D/Pencil acceptance remains pending because cloud WebGL is disabled. Native .1126 pending.
 
 ---
 
