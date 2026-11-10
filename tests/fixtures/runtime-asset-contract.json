@@ -539,9 +539,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/topbar-layout.js?v=0.36.18.1126",
+      "url": "./src/topbar-layout.js?v=0.36.18.1126.1",
       "target": "src/topbar-layout.js",
-      "sha256": "8f6152872dde6c89d568428c71560215c48c90b3e4a397d767d92f44ddcf0908"
+      "sha256": "0e21504610255e8684675f71ba3b7d249e8dd6fd703e92955d948c8397cd0e8d"
     },
     {
       "owner": "index.html",
@@ -2044,9 +2044,9 @@
     },
     {
       "owner": "src/topbar-layout.js",
-      "url": "./viewport-toolbar-controls.js?v=0.36.18.1126",
+      "url": "./viewport-toolbar-controls.js?v=0.36.18.1126.1",
       "target": "src/viewport-toolbar-controls.js",
-      "sha256": "a2cb7e23cf5bb529bdcdd9a166223fcd50eab4fb0d1de6b0ff62735c428c335f"
+      "sha256": "77d21adab01befa08e13d66a18601076b604dc360255bc8e0340f54f7e5452b3"
     },
     {
       "owner": "src/total-gizmo.js",

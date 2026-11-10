@@ -52,6 +52,7 @@ html.boxlab-focus-view #viewportSnapControls,html.boxlab-focus-view #viewportAct
 #viewportActionControls #viewportPaintBtn{order:2}
 #viewportActionControls #frontSelectBtn{order:3}
 #viewportActionControls #dragSelectBtn{order:4}
+#viewportActionControls #frontSelectBtn[aria-pressed=true],#viewportActionControls #dragSelectBtn[aria-pressed=true]{background:#225b91;color:#f3f7ff;border-color:#86bfff}
 #viewportActionControls #viewportPaintBtn[aria-pressed=true]{background:#1268b6;border-color:#60b5ff}
 #viewportWrap>.floating-panel.left-panel{bottom:132px!important}
 @media(max-width:900px){#viewportWrap{--viewport-action-bottom:calc(max(25px,env(safe-area-inset-bottom) + 21px) + 50px + 8px)}#viewportSnapControls,#viewportActionControls{left:max(8px,env(safe-area-inset-left))}#viewportActionControls{bottom:var(--viewport-action-bottom)}#viewportSnapControls{bottom:calc(var(--viewport-action-bottom) + 256px + 8px)}}
