@@ -26,7 +26,7 @@ test('1012 narrow pane remains opt-in, session choice works with denied storage 
 test('1012 late original Paint controls gain labels/compact coordinates without changing normal positions, routing text or handlers',()=>{
  const r=runtime(),attrs={},style={left:'175px',top:'43px',setProperty(k,v){this[k]=v;}},listener=()=>{};
  const item={nodeType:1,textContent:'Brush',style,listener,matches:()=>true,querySelectorAll:()=>[],getAttribute:k=>attrs[k],hasAttribute:k=>k in attrs,setAttribute:(k,v)=>attrs[k]=v,closest:()=>({})};
- r.added(item);assert.equal(attrs['aria-label'],'Brush');assert.equal(attrs.title,'Brush');assert.equal(item.textContent,'Brush');assert.equal(item.listener,listener);assert.equal(style.left,'175px');assert.equal(style.top,'43px');assert.equal(style['--compact-x'],'146px');assert.equal(style['--compact-y'],'40.39999999999999px');
+ r.added(item);assert.equal(attrs['aria-label'],'Brush');assert.equal(attrs.title,'Brush');assert.equal(item.textContent,'Brush');assert.equal(item.listener,listener);assert.equal(style.left,'175px');assert.equal(style.top,'43px');assert.equal(style['--compact-x'],'134px');assert.equal(style['--compact-y'],'28.39999999999999px');
 });
 test('1012 tool-picker fit bounds and actual sync move only picker; transform stays at selection',()=>{
  const layout=runtime().c.__boxlabCompactLayout;
@@ -48,9 +48,9 @@ test('1012 compact CSS preserves regular layout and labels while extra-narrow gr
 });
 
 
-test('1130 native compact Paint coordinates keep the new292 wheel centred without legacy double scaling',()=>{
- const r=runtime(),attrs={},style={left:'146px',top:'32px',setProperty(k,v){this[k]=v;}};
- const item={nodeType:1,textContent:'Brush',style,matches:()=>true,querySelectorAll:()=>[],getAttribute:k=>attrs[k],hasAttribute:k=>k in attrs,setAttribute:(k,v)=>attrs[k]=v,closest:s=>s==='.paint-tool-wheel'?{dataset:{layoutSize:'292'}}:{}};
- r.added(item);assert.equal(style['--compact-x'],'146px');assert.equal(style['--compact-y'],'32px');assert.equal(style.top,'32px');
+test('1130 native compact Paint coordinates keep the new268 wheel centred without legacy double scaling',()=>{
+ const r=runtime(),attrs={},style={left:'134px',top:'28px',setProperty(k,v){this[k]=v;}};
+ const item={nodeType:1,textContent:'Brush',style,matches:()=>true,querySelectorAll:()=>[],getAttribute:k=>attrs[k],hasAttribute:k=>k in attrs,setAttribute:(k,v)=>attrs[k]=v,closest:s=>s==='.paint-tool-wheel'?{dataset:{layoutSize:'268'}}:{}};
+ r.added(item);assert.equal(style['--compact-x'],'134px');assert.equal(style['--compact-y'],'28px');assert.equal(style.top,'28px');
  const css=read('radial-compact.css');assert(css.includes('@media(max-width:400px){html.boxlab-compact-ui #totalGizmo .tg-tool-ring[data-ring-mode] .tg-tool-sector{margin:0}}'));
 });

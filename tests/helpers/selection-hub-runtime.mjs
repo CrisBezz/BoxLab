@@ -1,3 +1,4 @@
+import {bindRadialMove} from '../../src/radial-move.js';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
@@ -19,6 +20,7 @@ export function selectionHubRuntime({mode='face',ids=[0],globals={}}={}){
  placeToolSessionPanel(){},floatPalette:{},cornerControls:{sync(){},position(){}},syncAxisVisuals(){},syncEdgeExtrudeConstraintVisuals(){},
  window:{addEventListener:(type,handler)=>handlers.set(type,handler)},activator:{addEventListener:(type,handler)=>puckHandlers.set(type,handler)},
  ...globals};
+ c.radialMove=bindRadialMove({addEventListener(){}},{active:()=>c.hubState==='tools',mode:()=>current,changed(){},window:{addEventListener(){}}});
  vm.createContext(c);
  vm.runInContext(section('function state(){','function centerOf(')+section('activator?.addEventListener(', '\n\n\ntoolCenters.forEach')+section("window.addEventListener('boxlab-selection-hub-session-complete'", "\nwindow.addEventListener('boxlab-bridge-state'")+section('function sync(){','\nsync();'),c);
  return{c,mesh,calls,sync:()=>c.sync(),mode:value=>current=value,select:next=>indices=[...next],

@@ -1,3 +1,4 @@
+import {bindRadialMove} from './radial-move.js?v=0.36.18.1134';
 import {bindDragSelectionPuck} from './drag-selection-puck.js?v=0.36.18.1130';
 import {compactRadialLabels} from './radial-compact-labels.js?v=0.36.18.1130';
 import { installLocalPivot } from './gizmo-local-pivot.js?v=0.36.18.1023';
@@ -449,6 +450,7 @@ root.innerHTML=`
   <button type="button" class="tg-tool-center" aria-label="Close Object contextual tools" title="Return to gizmo">×</button>
 </div>
 <div class="tg-edge-extrude-badge" hidden><strong>Extrude</strong><span>Plane ⟂ edge</span><small>Choose constraint • drag edge</small></div>
+<button type="button" class="tg-radial-move" aria-label="Move radial menu" title="Drag to move radial menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2v20M2 12h20M8 6l4-4 4 4M8 18l4 4 4-4M6 8l-4 4 4 4M18 8l4 4-4 4"/></svg></button>
 <div class="tg-hud" hidden><span class="tg-hud-text"></span></div>`;
 viewportWrap?.append(root);
 const activator=root.querySelector('.tg-activator');
@@ -462,6 +464,11 @@ const toolRings=[...root.querySelectorAll('.tg-tool-ring')];
 const toolCenters=[...root.querySelectorAll('.tg-tool-center')];
 const toolSectors=[...root.querySelectorAll('.tg-tool-sector')];
 const hud=root.querySelector('.tg-hud'),hudText=root.querySelector('.tg-hud-text');
+const radialMove=bindRadialMove(root.querySelector('.tg-radial-move'),{
+ active:()=>!root.hidden&&hubState==='tools',mode:currentMode,window,
+ changed:()=>{cancelAnimationFrame(raf);sync();}
+});
+
 const edgeExtrudeBadge=root.querySelector('.tg-edge-extrude-badge');
 installLocalPivot({root,canvas,status,getMode:currentMode});
 compactRadialLabels(toolSectors);
@@ -1180,11 +1187,17 @@ function sync(){
     const side=roomRight>offset+HALF+18?1:-1;
     left=selectionLeft+(offset*side);
   }
+  if(hubState==='tools'){const offset=radialMove.offset(mode);left+=offset.x;top+=offset.y;}
   // Fit the tool picker only; transform handles stay on the selected geometry.
   if(hubState==='tools'&&globalThis.__boxlabCompactLayout?.active){
     const fit=globalThis.__boxlabCompactLayout.placeRadial(left,top,vr.width,vr.height,mode);
     left=fit.left;top=fit.top;
     root.style.setProperty('--compact-r',`${fit.radius}px`);
+  }
+  if(hubState==='tools'&&!globalThis.__boxlabCompactLayout?.active){
+    const r=mode==='vertex'||mode==='object'?155:168;
+    const fit=(v,size)=>size<2*(r+34)?size/2:Math.max(r+34,Math.min(size-r-34,v));
+    left=fit(left,vr.width);top=fit(top,vr.height);
   }
   root.style.left=`${left}px`;
   root.style.top=`${top}px`;
