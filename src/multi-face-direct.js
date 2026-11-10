@@ -194,7 +194,9 @@ document.addEventListener('pointerdown',event=>{
     firstUnselected=hits.find(item=>Number.isInteger(item.index)&&!selected.has(item.index))?.index,
     sequentialValid=preferSequentialUnselected&&sequentialSelectionKey===faceSelectionKey(selectionBefore);
   let hit=primary;
-  if(synthetic&&selectionBefore.length){
+  if(!synthetic&&globalThis.__boxlabSelectionInput?.frontOnly?.()){
+    hit=primary;
+  }else if(synthetic&&selectionBefore.length){
     hit=selectionBefore[0];
   }else if(selectionBefore.length>1&&Number.isInteger(selectedHit)){
     hit=selectedHit;
@@ -456,6 +458,7 @@ function replayFaceOperation(tool,value,faceIndex){
 }
 
 globalThis.__boxlabFaceDirect={
+  disarmForSelection:()=>{if(drag||pendingFacePress)return false;armed=null;pendingSelection=null;pendingBackgroundPress=null;transformSuspendedTool=null;clearSequentialPreference();clearRefVisual();syncButtons();return true;},
   ownsClosedCuts:m=>armed==='extrude'&&topologySummary(m||mesh()).closed,
   active:()=>!!armed,
   tool:()=>armed,

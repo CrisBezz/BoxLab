@@ -1,3 +1,14 @@
+# .1126 FRONT / DRAG selection gate — 10 November 2026
+
+- User PASS .1125 protected; no cut-kernel, cache, seam, geometry-quality or history regression allowed.
+- FRONT defaults ON: nearest visible front-facing Face only for taps/pickHits/visible Lasso/DRAG. An occluding back-facing surface must not be skipped to a deeper face. FRONT OFF retains legacy depth and deliberate selected-hit paths. Existing selection/explicit topology-selection commands are retained.
+- DRAG defaults OFF and is Face-only. ON: Pencil/mouse adds from an already-selected seed, samples intervening/coalesced points, publishes once per event, preserves primary, and cannot start hold/scrub/orbit/gizmo/model edits. OFF: original directional/hold routing.
+- Lasso/tool/mode activation exits DRAG; busy tool/UV Paint refuses activation. Fingers remain navigation. Cancel/lost capture/secondary contact/lifecycle changes restore seed and exact controls only in the same context; fresh down recovers missed release. No geometry checkpoints or redo loss.
+- Front normal / three-face dashed-stroke SVGs share existing action panel; accepted baseline spacing retained plus exact two-button height, short-height rail scrolls.
+- Automated: front-drag-selection-1126 plus existing Face/Lasso/Pencil/toolbar/modeless/history/release checks. Full local 3,341/3,341 PASS; hosted/publication/browser proof to be recorded. Native .1126 pending.
+
+---
+
 # .1125 regression gate — 10 November 2026
 
 - User PASS .1124 protected: faster seam assembly, exact geometry/front-back quad joins, Cancel/Done/UndoRedo; earlier Paint/Loop/corner acceptance retained.

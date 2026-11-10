@@ -1121,10 +1121,18 @@ function syncAxisVisuals(center,camera){
   syncRotationRings(center,camera);
 }
 
+let faceDragHidden=false;
+window.addEventListener('boxlab-selection-input-change',()=>{
+  const hide=currentMode()==='face'&&!!globalThis.__boxlabSelectionInput?.dragFaces?.();
+  if(hide===faceDragHidden)return;faceDragHidden=hide;
+  if(hide){root.hidden=true;hideFloatInput();}
+  else{cancelAnimationFrame(raf);sync();}
+});
 function sync(){
   const perf=globalThis.__boxlabPerformance,start=perf?.start();try{
   raf=requestAnimationFrame(sync);
   const s=state(),mesh=s?.mesh,camera=s?.camera,mode=currentMode();
+  if(mode==='face'&&globalThis.__boxlabSelectionInput?.dragFaces?.()){root.hidden=true;hideFloatInput();return;}
   if(!canvas||!viewportWrap||!mesh?.vertices?.length||!camera||!selectionAvailable(mesh,mode)){
     if(edgeExtrudeConstraintSession&&mode==='edge'){
       edgeExtrudeConstraintSession=false;
@@ -1179,6 +1187,7 @@ function sync(){
   syncEdgeExtrudeConstraintVisuals();
   }finally{perf?.callback?.('gizmo',start);}
 }
+
 sync();
 
 globalThis.__boxlabTotalGizmo={

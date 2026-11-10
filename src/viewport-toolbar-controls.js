@@ -1,10 +1,11 @@
+import {installSelectionInputControls} from './selection-input-controls.js?v=0.36.18.1126';
 import {gizmoIcons} from './gizmo-corner-controls.js?v=0.36.18.1023';
 const svg=paths=>'<svg viewBox="0 0 24 24" aria-hidden="true">'+paths+'</svg>';
 export function installViewportToolbarControls(doc=document){
  const wrap=doc.querySelector('#viewportWrap'),modes=doc.querySelector('#selectionModes');
  if(!wrap||!modes)return;
  const snapBox=doc.createElement('div');snapBox.id='viewportSnapControls';snapBox.setAttribute('aria-label','Snapping');
- const actionBox=doc.createElement('div');actionBox.id='viewportActionControls';actionBox.setAttribute('aria-label','Lasso, selection and paint');
+ const actionBox=doc.createElement('div');actionBox.id='viewportActionControls';actionBox.setAttribute('aria-label','Lasso, selection, paint and face selection options');
  const label=doc.createElement('span');label.textContent='SNAP';snapBox.append(label);
  const paths={axis:'<path stroke="#ef6b72" d="M11 15h10m-3-3 3 3-3 3"/><path stroke="#71d984" d="M11 15V3m-3 3 3-3 3 3"/><path stroke="#719eef" d="m11 15-8 6m1-4-1 4 4-1"/>',geo:'<circle cx="3" cy="12" r="1.7" fill="currentColor" stroke="none"/><path d="m8 15 5-6"/><path d="M17 8h6v8h-6Z" fill="currentColor" fill-opacity=".22"/>',lasso:'<path stroke-dasharray="2 2" d="M17 17c5-2 5-10-1-12S3 5 3 11s7 10 12 7"/><path d="M16 15c-3 0-5 3-3 5s6 1 5-2l-4-2"/>'};
  for(const [id,icon,title] of [['axisSnapToggle','axis','Axis snap'],['inferenceSnapToggle','geo','GEO snap — vertices, edges and faces']]){
@@ -16,6 +17,7 @@ export function installViewportToolbarControls(doc=document){
  // Keep each compact rail as a direct viewport child. A viewport-sized wrapper
  // can create a competing compositing layer over the canvas and mode dock.
  wrap.append(snapBox,actionBox);
+ installSelectionInputControls(doc,actionBox,globalThis);
  const oldSnap=doc.querySelector('.quick-snap');if(oldSnap&&!oldSnap.querySelector('input'))oldSnap.remove();
  function decorate(){
   for(const [id,action,title] of [['undoBtn','undo','Undo'],['redoBtn','redo','Redo'],['frameAllBtn','frame','Frame all'],['focusViewBtn','focus','Focus view'],['objectBrowserBtn','objects','Object Browser']]){
@@ -32,7 +34,7 @@ export function installViewportToolbarControls(doc=document){
 #viewportWrap{--viewport-action-bottom:calc(max(27px,env(safe-area-inset-bottom) + 23px) + 52px + 8px)}
 #viewportSnapControls,#viewportActionControls{position:absolute;z-index:120;left:max(16px,env(safe-area-inset-left));box-sizing:border-box;width:58px;display:flex;flex-direction:column;align-items:stretch;gap:4px;padding:4px;border:1px solid rgba(255,255,255,.14);border-radius:11px;background:rgba(18,21,27,.94)}
 #viewportActionControls{bottom:var(--viewport-action-bottom)}
-#viewportSnapControls{bottom:calc(var(--viewport-action-bottom) + 156px + 8px)}
+#viewportSnapControls{bottom:calc(var(--viewport-action-bottom) + 256px + 8px)}
 html.boxlab-focus-view #viewportSnapControls,html.boxlab-focus-view #viewportActionControls{left:max(8px,env(safe-area-inset-left))}
 #paintSelectDepth{display:none!important}
 #viewportSnapControls>span{font-size:9px;letter-spacing:.06em;text-align:center;opacity:.72}
@@ -41,15 +43,18 @@ html.boxlab-focus-view #viewportSnapControls,html.boxlab-focus-view #viewportAct
 #viewportSnapControls label:has(input:checked),#viewportActionControls label:has(input:checked),#viewportActionControls button.active{background:rgba(130,170,235,.28)}
 #viewportSnapControls label:has(input:focus-visible),#viewportActionControls label:has(input:focus-visible){outline:2px solid #a9ccff}
 #viewportSnapControls label:has(input:disabled),#viewportActionControls label:has(input:disabled){opacity:.4;cursor:default}
-#viewportActionControls button{width:48px;height:46px;padding:3px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px}
+#viewportActionControls button{flex-shrink:0;width:48px;height:46px;padding:3px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px}
 #viewportActionControls button .toolbar-label{font-size:8px;line-height:1;letter-spacing:.02em}
 #viewportActionControls #viewportSelectionBtn{width:48px;min-width:48px;font-size:8px;letter-spacing:.02em}
 #viewportActionControls #viewportPaintBtn{width:48px;min-width:48px;font-size:8px;padding:3px}
 #viewportActionControls #lassoSelectBtn{order:0}
 #viewportActionControls #viewportSelectionBtn{order:1}
 #viewportActionControls #viewportPaintBtn{order:2}
+#viewportActionControls #frontSelectBtn{order:3}
+#viewportActionControls #dragSelectBtn{order:4}
 #viewportActionControls #viewportPaintBtn[aria-pressed=true]{background:#1268b6;border-color:#60b5ff}
 #viewportWrap>.floating-panel.left-panel{bottom:132px!important}
-@media(max-width:900px){#viewportWrap{--viewport-action-bottom:calc(max(25px,env(safe-area-inset-bottom) + 21px) + 50px + 8px)}#viewportSnapControls,#viewportActionControls{left:max(8px,env(safe-area-inset-left))}#viewportActionControls{bottom:var(--viewport-action-bottom)}#viewportSnapControls{bottom:calc(var(--viewport-action-bottom) + 156px + 8px)}}
+@media(max-width:900px){#viewportWrap{--viewport-action-bottom:calc(max(25px,env(safe-area-inset-bottom) + 21px) + 50px + 8px)}#viewportSnapControls,#viewportActionControls{left:max(8px,env(safe-area-inset-left))}#viewportActionControls{bottom:var(--viewport-action-bottom)}#viewportSnapControls{bottom:calc(var(--viewport-action-bottom) + 256px + 8px)}}
+@media(max-height:520px){#viewportSnapControls{top:8px;bottom:auto}#viewportActionControls{max-height:calc(100% - var(--viewport-action-bottom) - 128px);overflow-y:auto;overscroll-behavior:contain}}
 `;doc.head.append(style);
 }

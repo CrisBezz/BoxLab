@@ -22,13 +22,13 @@ function manager(){return globalThis.__boxlabObjectManager;}
 function objectSelection(){return globalThis.__boxlabObjectSelection;}
 function meshHit(event){return mode()==='edge'&&bridge()?.pick?.('edge',event)||manager()?.pickObject?.(event)||bridge()?.pickObject?.(event);}
 function mode(){return bridge()?.mode?.()||document.querySelector('#selectionModes button.active')?.dataset?.mode||'face';}
-function depth(){return document.querySelector('#paintSelectDepth [data-paint-depth].active')?.dataset?.paintDepth||'visible';}
+function depth(){if(mode()==='face'&&globalThis.__boxlabSelectionInput)return globalThis.__boxlabSelectionInput.frontOnly()?'visible':'through';return document.querySelector('#paintSelectDepth [data-paint-depth].active')?.dataset?.paintDepth||'visible';}
 function render(){document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));}
 function screenPoint(p){const camera=state()?.camera,r=canvas?.getBoundingClientRect();if(!camera||!r)return null;const q=p.clone().project(camera);return{x:r.left+(q.x*.5+.5)*r.width,y:r.top+(-q.y*.5+.5)*r.height,z:q.z};}
 function pointInPoly(p,poly){let inside=false;for(let i=0,j=poly.length-1;i<poly.length;j=i++){const a=poly[i],b=poly[j];if(((a.y>p.y)!==(b.y>p.y))&&(p.x<(b.x-a.x)*(p.y-a.y)/((b.y-a.y)||1e-12)+a.x))inside=!inside;}return inside;}
 function setRayAt(p){const r=canvas.getBoundingClientRect();ndc.set(((p.x-r.left)/r.width)*2-1,-(((p.y-r.top)/r.height)*2-1));raycaster.setFromCamera(ndc,state().camera);}
 function activeBodies(){const active=manager()?.activeId,out=[];state()?.scene?.traverse?.(o=>{if(!o?.visible)return;if(o.userData?.kind==='body')out.push(o);else if(o.userData?.kind==='boxlab-inactive-body'&&o.userData?.objectId===active)out.push(o);});return out;}
-function visibleWorldPoint(world,p,edge=false){const camera=state()?.camera,bodies=activeBodies();if(!camera||!bodies.length)return true;setRayAt(p);const hit=raycaster.intersectObjects(bodies,false)[0];if(!hit)return edge;const targetDistance=camera.position.distanceTo(world),tol=Math.max(1e-3,targetDistance*2e-4);return edge?hit.distance>=targetDistance-tol:Math.abs(hit.distance-targetDistance)<=tol;}
+function visibleWorldPoint(world,p,edge=false){const camera=state()?.camera,bodies=activeBodies();if(!camera||!bodies.length)return true;setRayAt(p);const hits=raycaster.intersectObjects(bodies,false),hit=(mode()==='face'?(globalThis.__boxlabSelectionInput?.filterFaceHits?.(hits,raycaster.ray.direction)||hits):hits)[0];if(!hit)return edge;const targetDistance=camera.position.distanceTo(world),tol=Math.max(1e-3,targetDistance*2e-4);return edge?hit.distance>=targetDistance-tol:Math.abs(hit.distance-targetDistance)<=tol;}
 function representativeWorld(type,index,m){if(type==='vertex')return m.vertices[index]?.clone()||null;if(type==='edge'){const e=m.edges()[index];return e?m.vertices[e.a].clone().lerp(m.vertices[e.b],.5):null;}if(type==='face'){const f=m.faces[index];if(!f?.length)return null;const c=new THREE.Vector3();f.forEach(id=>c.add(m.vertices[id]));return c.multiplyScalar(1/f.length);}return null;}
 function representative(type,index,m){const p=representativeWorld(type,index,m);return p&&screenPoint(p);}
 function componentHits(type,index,m,poly){if(type==='vertex'){const p=screenPoint(m.vertices[index]);return !!(p&&pointInPoly(p,poly));}if(type==='edge'){const p=representative(type,index,m);return !!(p&&pointInPoly(p,poly));}if(type==='face'){const p=representative(type,index,m);return !!(p&&pointInPoly(p,poly));}return false;}
@@ -46,6 +46,7 @@ function publish(){globalThis.__boxlabLasso={version:VERSION,armed,isArmed:()=>a
 function setArmed(next){
   next=!!next;
   if(next&&globalThis.__boxlabMainDirectTool?.busy?.())return;
+  if(next)globalThis.__boxlabSelectionInput?.setDrag?.(false);
   if(next)globalThis.__boxlabMainDirectTool?.disarmForSelection?.();
   if(next)globalThis.__boxlabTransformArming?.disarm?.();
   if(next&&globalThis.__boxlabAddVertex?.sessionActive?.())globalThis.__boxlabAddVertex.stop?.(false);

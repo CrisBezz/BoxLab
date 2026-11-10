@@ -161,9 +161,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1125",
+      "url": "./src/drawer-ui.js?v=0.36.18.1126",
       "target": "src/drawer-ui.js",
-      "sha256": "3588f65f6774a575d97c3968d7916f879b1896be4ebdee85bdf6cdd7d9f9255f"
+      "sha256": "8f2044be9a3f7b8dc6585ef33e5cc1e17b8319594a8655d89cf806f2987948e6"
     },
     {
       "owner": "index.html",
@@ -192,9 +192,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/edge-paint-select.js?v=0.36.18.986",
+      "url": "./src/edge-paint-select.js?v=0.36.18.1126",
       "target": "src/edge-paint-select.js",
-      "sha256": "5b9b5466501dd39056de1e0c935213449ca7882b60ec5e244b88d1554c048b5f"
+      "sha256": "99248572c86a4ee21d5f19d9b20fc74de0f11b713a6ca146e1fdb4d264321b46"
     },
     {
       "owner": "index.html",
@@ -297,9 +297,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/main.js?v=0.36.18.1111",
+      "url": "./src/main.js?v=0.36.18.1126",
       "target": "src/main.js",
-      "sha256": "7ad66447121f26c6bf1b592ce2491e9d3fd14613e32ea78469880e6325863475",
+      "sha256": "1b358aa605842dc8c88ba4f707580bcf08bd55e6305fc5511d621f3404dbb9a3",
       "sourceVersion": "0.35.1"
     },
     {
@@ -311,9 +311,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/multi-face-direct.js?v=0.36.18.1125",
+      "url": "./src/multi-face-direct.js?v=0.36.18.1126",
       "target": "src/multi-face-direct.js",
-      "sha256": "ea379ea890e39579756f9ad7d08c3d8407366ef19f629532c4e79219be609ac4"
+      "sha256": "e465c56776669813b54ffc29bf4de8616362b3aca9dcf8fa68e00cc289bb5bdf"
     },
     {
       "owner": "index.html",
@@ -378,7 +378,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1125",
+      "url": "./src/release-version.js?v=0.36.18.1126",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -539,15 +539,15 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/topbar-layout.js?v=0.36.18.1104",
+      "url": "./src/topbar-layout.js?v=0.36.18.1126",
       "target": "src/topbar-layout.js",
-      "sha256": "4fd5696cf9960ba1a14f3d44d9a7bf9bff33747372ead8c86331d6cfc22b6d6e"
+      "sha256": "8f6152872dde6c89d568428c71560215c48c90b3e4a397d767d92f44ddcf0908"
     },
     {
       "owner": "index.html",
-      "url": "./src/total-gizmo.js?v=0.36.18.1111",
+      "url": "./src/total-gizmo.js?v=0.36.18.1126",
       "target": "src/total-gizmo.js",
-      "sha256": "8c6feeb7481a6823f3b8d2a5d518a37763b38a6cd00a9fea30b4c32a6348aea7"
+      "sha256": "be5498887115bf5083bfdba902f05cd9a522944bc01a05d9209816c1de5862e4"
     },
     {
       "owner": "index.html",
@@ -864,9 +864,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1125",
+      "url": "./face-workflow-layout.js?v=0.36.18.1126",
       "target": "src/face-workflow-layout.js",
-      "sha256": "20e0e89dd96de041a762565abedf92393b11cdd483cdf043abe54c9df84e0d10"
+      "sha256": "a068c186e2716dd73f7ee32d8c94ab99a357f0bfe18e6d90e42d72abed599b0f"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -888,9 +888,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./lasso-select.js?v=0.36.18.808",
+      "url": "./lasso-select.js?v=0.36.18.1126",
       "target": "src/lasso-select.js",
-      "sha256": "25c991dde5b8780b941374e74c9da1d793703b8f392611bd7edba0f5a838e2a0",
+      "sha256": "4695735c2ec2b4795b7cb0edbd4fd72c88c4746913399a1f9f19c133cdd92956",
       "sourceVersion": "0.36.18.808"
     },
     {
@@ -1361,7 +1361,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1125",
+      "url": "./release-version.js?v=0.36.18.1126",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -2044,9 +2044,9 @@
     },
     {
       "owner": "src/topbar-layout.js",
-      "url": "./viewport-toolbar-controls.js?v=0.36.18.1104",
+      "url": "./viewport-toolbar-controls.js?v=0.36.18.1126",
       "target": "src/viewport-toolbar-controls.js",
-      "sha256": "102c2a2d9de64225ff9d6b08f76966b06557eca6d3650d2fb7643a350b1e63f7"
+      "sha256": "a2cb7e23cf5bb529bdcdd9a166223fcd50eab4fb0d1de6b0ff62735c428c335f"
     },
     {
       "owner": "src/total-gizmo.js",
@@ -3326,9 +3326,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1125",
+      "url": "./src/shell-comparison.js?v=0.36.18.1126",
       "target": "src/shell-comparison.js",
-      "sha256": "3334add1d7fa2c8e10dda6734831b54438b0a640757e2ebd0eef765f6f655dac"
+      "sha256": "907ecebdd2728748837d44c4f189628a0274c42f6f375339e45d022b9d3dd288"
     },
     {
       "owner": "src/main.js",
@@ -3683,6 +3683,12 @@
       "url": "./connected-extrude-corners.js?v=0.36.18.1118",
       "target": "src/connected-extrude-corners.js",
       "sha256": "81e694fcd4c270706a71a2e898e8e7189f3e59c68b1a8638fd8f779ce79b5d80"
+    },
+    {
+      "owner": "src/viewport-toolbar-controls.js",
+      "url": "./selection-input-controls.js?v=0.36.18.1126",
+      "target": "src/selection-input-controls.js",
+      "sha256": "6fc08fc1b961cd28266371c425b815cc87fbc719e5234af0691b8eabf1baf1c8"
     }
   ]
 }

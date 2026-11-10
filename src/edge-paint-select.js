@@ -30,19 +30,21 @@ function setPointer(event) {
 }
 
 function hitIndices(event, type) {
+  const depth=type==='face'&&globalThis.__boxlabSelectionInput?(globalThis.__boxlabSelectionInput.frontOnly()?'visible':'through'):paintDepth;
   // Share native Edge proximity ranking with taps and Pencil background classification.
-  if(type==='edge'&&selection()?.pickHits){
+  if((type==='edge'||type==='face')&&selection()?.pickHits){
     const indices=[...new Set(selection().pickHits(type,event).map(hit=>hit.index).filter(Number.isInteger))];
-    return paintDepth==='through'?indices:indices.slice(0,1);
+    return depth==='through'?indices:indices.slice(0,1);
   }
   const camera = state()?.camera;
   const objects = objectsFor(type).filter(Boolean);
   if (!camera || !objects.length) return [];
   setPointer(event);
   raycaster.setFromCamera(pointer, camera);
-  const hits = raycaster.intersectObjects(objects, false);
+  const raw = raycaster.intersectObjects(objects, false);
+  const hits=type==='face'?(globalThis.__boxlabSelectionInput?.filterFaceHits?.(raw,raycaster.ray.direction)||raw):raw;
   const indices = [...new Set(hits.map(hit => hit.object?.userData?.index).filter(Number.isInteger))];
-  return paintDepth === 'through' ? indices : indices.slice(0, 1);
+  return depth === 'through' ? indices : indices.slice(0, 1);
 }
 
 function addHits(event, type) {
@@ -52,8 +54,59 @@ function addHits(event, type) {
 
 depthButtons.forEach(button => button.addEventListener('click', () => {
   paintDepth = button.dataset.paintDepth;
+  globalThis.__boxlabSelectionInput?.setFront?.(paintDepth==='visible');
   depthButtons.forEach(item => item.classList.toggle('active', item === button));
 }));
+
+// Explicit Face DRAG uses this same paint-selection owner. Window capture
+// precedes document modelling/hold owners, so no scrub, transform or orbit starts.
+let faceDrag=null;
+function faceDragValid(g){return state()?.mesh===g.mesh&&mode()==='face'&&(globalThis.__boxlabObjectManager?.activeId??null)===g.objectId;}
+function finishFaceDrag(cancel=false){
+ const g=faceDrag;if(!g)return;faceDrag=null;
+ if(cancel&&faceDragValid(g))selection()?.set?.('face',g.seed);
+ if(g.controls)g.controls.enabled=g.enabled;
+ try{canvas.releasePointerCapture?.(g.id);}catch{}
+}
+function addFaceIndices(indices){
+ const b=selection(),old=b?.indices?.()||[],next=new Set(old);let primary=null;
+ for(const id of indices)if(!next.has(id)){next.add(id);primary=id;}
+ if(primary!==null)b?.set?.('face',[...next],primary);
+}
+function faceDragSample(event){
+ const g=faceDrag;if(!g||!faceDragValid(g)){finishFaceDrag(true);return;}
+ const coalesced=event.getCoalescedEvents?.()||[],points=coalesced.length?[...coalesced,event]:[event],hits=new Set();
+ for(const point of points){
+  const dx=point.clientX-g.x,dy=point.clientY-g.y,steps=Math.min(256,Math.max(1,Math.ceil(Math.hypot(dx,dy)/4)));
+  for(let i=1;i<=steps;i++)for(const id of hitIndices({clientX:g.x+dx*i/steps,clientY:g.y+dy*i/steps},'face'))hits.add(id);
+  g.x=point.clientX;g.y=point.clientY;
+ }
+ addFaceIndices(hits);
+}
+window.addEventListener('pointerdown',event=>{
+ if(faceDrag){const secondary=event.pointerId!==faceDrag.id;finishFaceDrag(true);if(secondary)return;}
+ if(!globalThis.__boxlabSelectionInput?.dragFaces?.()||mode()!=='face'||event.target!==canvas||!event.isPrimary||event.button>0||!['pen','mouse'].includes(event.pointerType))return;
+ if(event.pointerType==='pen'&&!(event.buttons&1)&&!(event.pressure>0))return;
+ if(globalThis.__boxlabViewportPaint?.active||globalThis.__boxlabToolSession?.isActive?.()||globalThis.__boxlabFaceDirect?.active?.()||globalThis.__boxlabMainDirectTool?.ownsModellingGesture?.()||globalThis.__boxlabActiveGizmoDrag||globalThis.__boxlabLasso?.isArmed?.()||globalThis.__boxlabFacegroupStroke?.armed)return;
+ const first=hitIndices(event,'face');if(!first.length)return;
+ finishFaceDrag(true);pendingPaint=null;paint=null;
+ const controls=state()?.controls;faceDrag={id:event.pointerId,mesh:state()?.mesh,objectId:globalThis.__boxlabObjectManager?.activeId??null,seed:[...(selection()?.indices?.()||[])],controls,enabled:controls?.enabled,x:event.clientX,y:event.clientY};
+ event.preventDefault();event.stopImmediatePropagation();
+ if(controls)controls.enabled=false;
+ try{canvas.setPointerCapture?.(event.pointerId);}catch{finishFaceDrag(true);return;}
+ addFaceIndices(first);
+},true);
+window.addEventListener('pointermove',event=>{
+ if(!faceDrag||event.pointerId!==faceDrag.id)return;event.preventDefault();event.stopImmediatePropagation();faceDragSample(event);
+},true);
+for(const type of ['pointerup','pointercancel'])window.addEventListener(type,event=>{
+ if(!faceDrag||event.pointerId!==faceDrag.id)return;event.preventDefault();event.stopImmediatePropagation();if(type==='pointerup')faceDragSample(event);finishFaceDrag(type==='pointercancel');
+},true);
+window.addEventListener('boxlab-selection-input-change',()=>finishFaceDrag(true));
+window.addEventListener('blur',()=>finishFaceDrag(true));
+window.addEventListener('pagehide',()=>finishFaceDrag(true));
+window.addEventListener('visibilitychange',()=>{if(document.hidden)finishFaceDrag(true);},true);
+canvas?.addEventListener('lostpointercapture',event=>{if(faceDrag?.id===event.pointerId)finishFaceDrag(true);});
 
 canvas?.addEventListener('pointerdown', event => {
   const groups=globalThis.__boxlabFacegroupStroke;
@@ -66,6 +119,7 @@ canvas?.addEventListener('pointerdown', event => {
   if(globalThis.__boxlabLasso?.isArmed?.()){pendingPaint=null;return;}
   if(globalThis.__boxlabFaceSplit?.isArmed?.()||globalThis.__boxlabOffsetLoop?.isArmed?.()) return;
   const type = mode();
+  if(type==='face'&&globalThis.__boxlabSelectionInput)return; // Explicit DRAG owns Face paint now.
   if(type==='face'&&globalThis.__boxlabFaceDirect?.active?.()) return;
   const bridge = selection();
   if (!event.isPrimary || !multiToggle?.checked || !['vertex', 'edge', 'face'].includes(type)) return;
@@ -149,7 +203,7 @@ window.addEventListener('boxlab-pencil-orbit-claim',event=>{
 
 globalThis.__boxlabPaintSelectDebug={
   pending:()=>pendingPaint?{pointerId:pendingPaint.pointerId,type:pendingPaint.type}:null,
-  active:()=>paint?{pointerId:paint.pointerId,type:paint.type}:null,
+  active:()=>faceDrag?{pointerId:faceDrag.id,type:'face'}:paint?{pointerId:paint.pointerId,type:paint.type}:null,
   depth:()=>paintDepth,
   multiEnabled:()=>!!multiToggle?.checked
 };
