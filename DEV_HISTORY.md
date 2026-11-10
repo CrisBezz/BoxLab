@@ -12,6 +12,10 @@ Cache closure only: through-kernel -> multi-face-direct and sequential-through-f
 
 Device test .1131: repeat screenshot inward band and inspect all four shoulder diagonals; vary inward depth and Cancel; Done then Undo/Redo; smoke accepted outward corners and Through exit frames. .1130 PASS remains protected. Native corner acceptance pending user feedback. Publication proof follows.
 
+
+.1131 publication verified: runtime 393d446c1d3ec14653a53c6b608c833285ef6a8c, tested tree e9ed438ec8026b18b7af5cf0769367963cb965b6. Pages42803411971 SUCCESS. All16 cache-busted live shell/kernel/loaders/protected files byte-match tested local source. Full final local3,366/3,366 PASS (0 failures/skips), focused release13/13 and corrected cache contract9/9 PASS, syntax and diff clean. Hosted Topology42803412136 still running at proof; no hosted PASS claimed. Exact screenshot project unavailable; generated band and hollow-collar fixtures plus inspected geometry comparison establish diagonal topology in this class, not native Safari/Pencil acceptance. User .1130 PASS protected. Build .1131 live and ready: same inward shoulder corners, vary depth/Cancel, Done/Undo/Redo, outward/Through smoke. Await user PASS/FAIL.
+
+
 ---
 
 # .1112 — eliminate Edge Classification repeated edge builds — 9 November 2026
