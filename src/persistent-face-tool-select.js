@@ -28,6 +28,7 @@ function setPointer(event){
   pointer.set((event.clientX-r.left)/r.width*2-1,-((event.clientY-r.top)/r.height*2-1));
 }
 function pickFace(event,m,camera){
+  if(globalThis.__boxlabSelectionInput?.frontOnly?.())return bridge()?.pick?.('face',event)?.index??null;
   setPointer(event);raycaster.setFromCamera(pointer,camera);
   const pickers=[];
   for(let fi=0;fi<(m?.faces?.length||0);fi++){

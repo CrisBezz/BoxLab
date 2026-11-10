@@ -28,6 +28,11 @@ export function installFaceTransform() {
   }
 
   function selectedFaceHit(event, mesh, faces, camera) {
+    // A selected-only ray can see a hidden face through an unselected surface.
+    if (globalThis.__boxlabSelectionInput?.frontOnly?.()) {
+      const hit = globalThis.__boxlabSelectionBridge?.pick?.('face', event);
+      return Number.isInteger(hit?.index) && faces.includes(hit.index);
+    }
     setPointer(event);
     raycaster.setFromCamera(pointer, camera);
     const pickers = [];

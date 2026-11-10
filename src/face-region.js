@@ -254,6 +254,10 @@ export function installFaceRegion(EditableMesh) {
     pointer.set((event.clientX - rect.left) / rect.width * 2 - 1, -((event.clientY - rect.top) / rect.height * 2 - 1));
   }
   function selectedFaceHit(event, mesh, faces, camera) {
+    if (globalThis.__boxlabSelectionInput?.frontOnly?.()) {
+      const hit = selectionBridge()?.pick?.('face', event);
+      return Number.isInteger(hit?.index) && faces.includes(hit.index) ? hit.index : null;
+    }
     if (!mesh || !camera || !faces.length) return null;
     setPointer(event);
     raycaster.setFromCamera(pointer, camera);

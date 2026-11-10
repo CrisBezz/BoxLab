@@ -1,3 +1,13 @@
+# .1127 FRONT regression gate — 10 November 2026
+
+- .1126 FRONT FAIL remains open for native retest; checks 2/3/4 PASS protected (DRAG / DRAG-off gestures / finger navigation). Icons accepted; no blanket .1126 PASS.
+- With FRONT on, a selected hidden face must not consume a Pencil down before an unselected visible face reaches main. Cover legacy transform with gizmo hidden, region fallback and persistent armed fallback. No rejected-hit through fallback. FRONT off retains original deliberate selected-only paths.
+- Keep both live bootstrap import paths on the same .1127 URL so old globally guarded listeners cannot win installation. No second selection or geometry owner.
+- Rail order Lasso / Select / FRONT / DRAG / Paint, existing artwork/spacing retained.
+- Native: tap/Lasso visible face; repeat after selecting an opposite face and orbiting it behind, with gizmo hidden and shown. DRAG and directional gestures/navigation smoke. Corrected focused run 60/60 PASS; final full local suite 3,346/3,346 PASS (0 failures/skips). Publication proof pending.
+
+---
+
 # .1126 FRONT / DRAG selection gate — 10 November 2026
 
 - User PASS .1125 protected; no cut-kernel, cache, seam, geometry-quality or history regression allowed.
