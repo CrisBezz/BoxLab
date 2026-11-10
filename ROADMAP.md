@@ -18,6 +18,10 @@ Device .1132: compare repeated inward and Through previews on the same many-face
 Final paired benchmark PASS:384/1536/3456-face cube complete-cut medians58.28/221.53/597.29ms ->47.81/221.18/488.58ms. Only3456-face fixture uses the index (3458 initial vertices):1.22x speedup,18.2% less time, exact distance predicates5,994,449 ->3,458. Smaller fixtures retain the original inline search and identical predicate counts76,241/1,189,649; their wall-time variation is not claimed as an optimization gain. Correctness, >=10x indexed distance-predicate reduction, >=1.1x indexed complete-cut timing and <=15% small-model regression gates all PASS. Initial full local3,372/3,372 PASS before final2048 cutoff; final full local3,372/3,372 PASS (0 failures/skips); JS syntax and git diff --check clean. Publication proof follows.
 
 
+
+.1132 publication verified: runtime 374c1dc0bd545fba38296214cdadfc37faf82fb2, tested tree 8a7eb8a0e47b67f52f54d01a582ecdbd7ff9adf9. Pages42810965560 SUCCESS. All17 cache-busted live shell/kernel/loaders/report/protected files byte-match tested local source. Final full local3,372/3,372 PASS (0 failures/skips), syntax and diff clean; paired benchmark PASS with18.2% less complete-cut time on the indexed3456-face fixture and exact geometry. Hosted Topology42810966491 still running at proof; no hosted result claimed. User .1131 PASS and earlier .1130/.1129/icon/cut protections recorded. No native performance or WASM/capacity claim. Ready .1132: same many-face inward/Through preview; corner/frame joins; Cancel and Done/UndoRedo; ordinary small cube cuts. Await native PASS/FAIL.
+
+
 ---
 
 # .1131 — inward rectangular-band shoulder corners — 10 November 2026
