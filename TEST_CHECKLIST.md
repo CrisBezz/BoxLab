@@ -4,7 +4,7 @@
 - Rail top-to-bottom Select / Lasso / Drag / Front / Paint. Keep original icons, button pitch, Snap clearance, short-height scroll and handlers.
 - Protect .1126 accepted DRAG / DRAG-off directional-hold gestures / finger orbit-pan-pinch and all earlier cut/Paint/history PASSes.
 - Node FRONT fixtures do not close native FAIL. No new backend modeling fixture needed for CSS order; existing sequence regression updated to current user direction.
-- Validation/publication pending.
+- Focused 40/40 PASS; full 3,345/3,346 with only an outdated order assertion in viewport-controls-718 failing. Corrected explicit order expectation retains all spacing/artwork/listener checks. Corrected focused 42/42 PASS. Runtime 3913c0ff published; Pages/hosted verification follows. FRONT remains native FAIL.
 
 ---
 
