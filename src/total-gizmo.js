@@ -1,6 +1,6 @@
 import {bindRadialMove} from './radial-move.js?v=0.36.18.1134';
 import {bindDragSelectionPuck} from './drag-selection-puck.js?v=0.36.18.1130';
-import {compactRadialLabels} from './radial-compact-labels.js?v=0.36.18.1130';
+import {compactRadialLabels} from './radial-compact-labels.js?v=0.36.18.1135';
 import { installLocalPivot } from './gizmo-local-pivot.js?v=0.36.18.1023';
 import { mountGizmoCornerControls } from './gizmo-corner-controls.js?v=0.36.18.1023';
 import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.732';
@@ -450,7 +450,7 @@ root.innerHTML=`
   <button type="button" class="tg-tool-center" aria-label="Close Object contextual tools" title="Return to gizmo">×</button>
 </div>
 <div class="tg-edge-extrude-badge" hidden><strong>Extrude</strong><span>Plane ⟂ edge</span><small>Choose constraint • drag edge</small></div>
-<button type="button" class="tg-radial-move" aria-label="Move radial menu" title="Drag to move radial menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2v20M2 12h20M8 6l4-4 4 4M8 18l4 4 4-4M6 8l-4 4 4 4M18 8l4 4-4 4"/></svg></button>
+<button type="button" class="tg-radial-move" aria-label="Move radial menu" title="Drag to move radial menu"><svg class="radial-move-ring" viewBox="0 0 112 112" aria-hidden="true"><path class="radial-drag-annulus" fill-rule="evenodd" d="M100 56a44 44 0 1 0-88 0a44 44 0 1 0 88 0M86 56a30 30 0 1 1-60 0a30 30 0 1 1 60 0"/><path class="radial-move-arrows" d="M56 13V3m-4 4 4-4 4 4M56 99v10m-4-4 4 4 4-4M13 56H3m4-4-4 4 4 4M99 56h10m-4-4 4 4-4 4"/></svg></button>
 <div class="tg-hud" hidden><span class="tg-hud-text"></span></div>`;
 viewportWrap?.append(root);
 const activator=root.querySelector('.tg-activator');
@@ -1195,7 +1195,7 @@ function sync(){
     root.style.setProperty('--compact-r',`${fit.radius}px`);
   }
   if(hubState==='tools'&&!globalThis.__boxlabCompactLayout?.active){
-    const r=mode==='vertex'||mode==='object'?155:168;
+    const r=140;
     const fit=(v,size)=>size<2*(r+34)?size/2:Math.max(r+34,Math.min(size-r-34,v));
     left=fit(left,vr.width);top=fit(top,vr.height);
   }

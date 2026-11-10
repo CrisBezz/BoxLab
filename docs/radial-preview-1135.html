@@ -1,0 +1,295 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>BoxLab .1135 radial presentation proof</title><style>
+#totalGizmo{position:absolute;z-index:115;width:196px;height:196px;transform:translate(-50%,-50%);pointer-events:none;touch-action:none}
+#totalGizmo[hidden]{display:none}
+#totalGizmo .tg-activator{position:absolute;left:50%;top:50%;width:26px;height:26px;transform:translate(-50%,-50%);border:1px solid rgba(238,242,247,.72);border-radius:50%;background:rgba(12,14,18,.78);box-shadow:0 2px 8px rgba(0,0,0,.35);pointer-events:auto;touch-action:none;padding:0;z-index:3}
+#totalGizmo .tg-activator span{position:absolute;left:50%;top:50%;width:6px;height:6px;transform:translate(-50%,-50%);border-radius:50%;background:#eef2f7;opacity:.92}
+#totalGizmo .tg-activator::before,#totalGizmo .tg-activator::after{content:'';position:absolute;left:50%;top:50%;background:rgba(238,242,247,.62);transform:translate(-50%,-50%)}
+#totalGizmo .tg-activator::before{width:14px;height:1px}
+#totalGizmo .tg-activator::after{width:1px;height:14px}
+#totalGizmo:not([data-hub-state="closed"]) .tg-activator{display:none}
+#totalGizmo[data-hub-state="closed"][data-mode="vertex"][data-single-component="true"] .tg-activator{transform:translate(calc(-50% + 34px),calc(-50% - 34px))}
+#totalGizmo:not([data-hub-state="transform"]) svg{display:none!important}
+#totalGizmo svg{width:100%;height:100%;overflow:visible}
+#totalGizmo>svg{overflow:hidden}
+#totalGizmo .tg-tool-ring{position:absolute;inset:0;display:none;pointer-events:none}
+#totalGizmo[data-hub-state="tools"][data-mode="face"] .tg-tool-ring[data-ring-mode="face"]{display:block}
+#totalGizmo[data-hub-state="tools"][data-mode="edge"] .tg-tool-ring[data-ring-mode="edge"]{display:block}
+#totalGizmo[data-hub-state="tools"][data-mode="vertex"] .tg-tool-ring[data-ring-mode="vertex"]{display:block}
+#totalGizmo[data-hub-state="tools"][data-mode="object"] .tg-tool-ring[data-ring-mode="object"]{display:block}
+#totalGizmo[data-mode="object"] .tg-tool-sector{width:86px;margin-left:-43px;white-space:normal;transform:rotate(var(--a)) translateY(-120px) rotate(calc(-1 * var(--a)))}
+#totalGizmo[data-mode="object"] .tg-tool-outer{transform:rotate(var(--a)) translateY(calc(-1 * var(--r))) rotate(calc(-1 * var(--a)))}
+.tg-object-outer-guide{position:absolute;width:460px;height:460px;left:50%;top:50%;transform:translate(-50%,-50%);border:1px solid rgba(255,255,255,.08);border-radius:50%;pointer-events:none}
+#totalGizmo .tg-tool-sector{position:absolute;left:50%;top:50%;width:68px;height:34px;margin:-17px -34px;padding:3px 5px;border:1px solid rgba(255,255,255,.22);border-radius:11px;background:rgba(18,21,27,.96);color:#eef2f7;font-size:10px;font-weight:700;line-height:1;white-space:nowrap;box-shadow:0 4px 12px rgba(0,0,0,.34);pointer-events:auto;touch-action:none;transform:rotate(var(--a)) translateY(-82px) rotate(calc(-1 * var(--a)))}
+#totalGizmo .tg-face-outer-guide{position:absolute;left:50%;top:50%;width:460px;height:460px;transform:translate(-50%,-50%);border:1px solid rgba(238,242,247,.15);border-radius:50%;pointer-events:none}
+#totalGizmo .tg-vertex-outer-guide{position:absolute;left:50%;top:50%;width:460px;height:460px;transform:translate(-50%,-50%);border:1px solid rgba(238,242,247,.15);border-radius:50%;pointer-events:none}
+#totalGizmo .tg-tool-outer{width:86px;margin-left:-43px;transform:rotate(var(--a)) translateY(calc(-1 * var(--r))) rotate(calc(-1 * var(--a)))}
+#totalGizmo .tg-tool-sector:active{background:rgba(238,242,247,.92);color:#111318}
+#totalGizmo .tg-tool-danger{border-color:rgba(255,110,110,.48)}
+#totalGizmo .tg-tool-center{position:absolute;left:50%;top:50%;width:30px;height:30px;min-height:30px;margin:0;padding:0;display:flex;align-items:center;justify-content:center;transform:translate(-50%,-50%);border:1px solid rgba(238,242,247,.7);border-radius:50%;background:rgba(12,14,18,.96);color:#eef2f7;font-size:18px;line-height:1;pointer-events:auto;touch-action:none}
+/* Pivot Edit previews the actual draft-aligned gizmo. Its existing handle owner
+   consumes input and permits only centre/Y turning, without transforming geometry. */
+#totalGizmo[data-pivot-edit="true"] .tg-center{fill:rgba(100,220,140,.25);stroke:#8fe3a5}
+#totalGizmo .tg-shortcut[aria-pressed="true"]{border-color:#8fe3a5;background:#234033}
+#totalGizmo .tg-handle{pointer-events:stroke;fill:none;stroke-width:1.15;vector-effect:non-scaling-stroke;transition:opacity .09s,stroke-width .09s,filter .09s}
+#totalGizmo .tg-axis{stroke-width:1.35;pointer-events:stroke}
+#totalGizmo .tg-head{pointer-events:none;opacity:.92}
+#totalGizmo .tg-x{stroke:#ff5d5d}.tg-x-fill{fill:#ff5d5d}
+#totalGizmo .tg-y{stroke:#65e67a}.tg-y-fill{fill:#65e67a}
+#totalGizmo .tg-z{stroke:#6f91ff}.tg-z-fill{fill:#6f91ff}
+#totalGizmo .tg-screen-ring{stroke:#eef2f7;stroke-width:1.05;opacity:.58}
+#totalGizmo .tg-scale-ring{stroke:#ff9a66;stroke-width:1.1;opacity:.66}
+#totalGizmo .tg-center{fill:rgba(238,242,247,.16);stroke:#f1f4f8;stroke-width:1.1;pointer-events:all}
+#totalGizmo .tg-center-dot{fill:#eef2f7;pointer-events:none}
+#totalGizmo .tg-corner{position:absolute;display:flex;gap:4px;transform:translate(-50%,-50%);pointer-events:auto}
+#totalGizmo .tg-corner-tl{left:calc(50% - 96px);top:calc(50% - 96px)}
+#totalGizmo .tg-corner-tr{left:calc(50% + 104px);top:calc(50% - 96px)}
+#totalGizmo .tg-corner-br{left:calc(50% + 104px);top:calc(50% + 96px)}
+#totalGizmo .tg-corner-bl{left:calc(50% - 96px);top:calc(50% + 96px)}
+#totalGizmo:not([data-hub-state="transform"]) .tg-corner,#totalGizmo .tg-corner[hidden]{display:none!important}
+#totalGizmo .tg-shortcut[hidden]{display:none!important}
+#totalGizmo .tg-shortcut{width:40px;height:40px;min-height:40px;padding:8px;border:1px solid #ffffff45;border-radius:10px;background:rgba(18,21,27,.92);color:#edf2f8;touch-action:none;box-shadow:0 3px 10px #0005}
+#totalGizmo .tg-shortcut svg{display:block!important;width:24px;height:24px;overflow:visible;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+#totalGizmo .tg-shortcut[aria-pressed="true"]{background:#edf2f8;color:#141820}
+#totalGizmo .tg-shortcut:disabled{opacity:.3}
+
+#totalGizmo .tg-scale-node{fill:rgba(17,19,24,.78);stroke-width:1.25;pointer-events:all}
+#totalGizmo .tg-plane{pointer-events:all;stroke-width:1;opacity:.5;transition:opacity .09s,stroke-width .09s,fill .09s,filter .09s}
+#totalGizmo .tg-plane-xy{stroke:#ffd86a;fill:rgba(255,216,106,.07)}
+#totalGizmo .tg-plane-xz{stroke:#d26eff;fill:rgba(210,110,255,.065)}
+#totalGizmo .tg-plane-yz{stroke:#62e6dd;fill:rgba(98,230,221,.065)}
+#totalGizmo .tg-plane:hover,#totalGizmo .tg-plane.active{opacity:1;stroke-width:2!important;fill:rgba(255,255,255,.16)}
+#totalGizmo .tg-hud{position:absolute;left:50%;top:-8px;transform:translate(-50%,-100%);padding:5px 8px;border:1px solid rgba(255,255,255,.16);border-radius:7px;background:rgba(12,14,18,.92);font-size:11px;font-weight:650;letter-spacing:.02em;white-space:nowrap;color:#f2f5fa;pointer-events:auto;box-shadow:0 5px 15px rgba(0,0,0,.28)}
+#totalGizmo .tg-hud[hidden]{display:none}
+#transformFloatInput{
+  position:absolute;
+  z-index:132;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  transform:translate(-50%,calc(-100% - 112px));
+  padding:6px 7px;
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:8px;
+  background:rgba(12,14,18,.96);
+  box-shadow:0 8px 22px rgba(0,0,0,.34);
+  pointer-events:auto;
+  touch-action:auto;
+  user-select:text;
+  -webkit-user-select:text;
+}
+#transformFloatInput[hidden]{display:none!important}
+#transformFloatInput .tfi-label{
+  font-size:11px;
+  font-weight:650;
+  white-space:nowrap;
+  color:#eef2f7;
+  pointer-events:none;
+}
+#transformFloatInput .tfi-input{
+  width:84px;
+  min-height:30px;
+  box-sizing:border-box;
+  padding:4px 7px;
+  border:1px solid rgba(255,255,255,.28);
+  border-radius:6px;
+  background:#080a0e;
+  color:#fff;
+  font-size:13px;
+  line-height:1;
+  outline:none;
+  pointer-events:auto;
+  touch-action:auto;
+  -webkit-user-select:text;
+  user-select:text;
+}
+#transformFloatInput .tfi-input:focus{border-color:rgba(255,255,255,.62)}
+#transformFloatInput .tfi-apply{
+  min-height:30px;
+  padding:4px 7px;
+  font-size:11px;
+  border-radius:6px;
+  pointer-events:auto;
+  touch-action:manipulation;
+}
+#totalGizmo .tg-handle::before{pointer-events:stroke}
+#totalGizmo .tg-arc{stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round;opacity:.9}
+#totalGizmo .tg-handle:hover,#totalGizmo .tg-handle.hover-proxy,#totalGizmo .tg-handle.active{stroke-width:3!important;opacity:1!important}
+#totalGizmo .tg-center:hover,#totalGizmo .tg-center.active{fill:rgba(255,255,255,.46)}
+#totalGizmo .tg-handle.muted{opacity:.16!important}
+#totalGizmo .tg-axis{stroke-linecap:round}
+#totalGizmo .tg-arc,#totalGizmo .tg-screen-ring,#totalGizmo .tg-scale-ring{pointer-events:stroke}
+#totalGizmo .tg-rotation-ball{pointer-events:all;fill:rgba(200,204,210,.025);stroke:#34373b;stroke-width:1.1;opacity:.9}
+#totalGizmo .tg-rotation-ball:hover,#totalGizmo .tg-rotation-ball.hover-proxy,#totalGizmo .tg-rotation-ball.active{fill:rgba(255,221,80,.055);stroke:#48483e;stroke-width:1.2!important;opacity:1!important}
+#totalGizmo .tg-handle{cursor:grab}
+#totalGizmo[data-dragging="true"] .tg-handle.active{cursor:grabbing}
+#totalGizmo .tg-handle{--tg-hit:14px}
+#totalGizmo .tg-axis{stroke-width:1.35}
+#totalGizmo .tg-hit{fill:none!important;stroke:transparent!important;stroke-width:16!important}
+@media(max-width:900px){#totalGizmo{width:184px;height:184px}}
+
+#totalGizmo .tg-tool-sector.tg-tool-unavailable{opacity:.28;filter:saturate(.25);cursor:not-allowed}
+#totalGizmo .tg-tool-sector.tg-tool-unavailable::after{content:'×';position:absolute;right:5px;top:3px;font-size:9px;opacity:.7}
+#totalGizmo .tg-tool-sector.tg-tool-active{box-shadow:inset 0 0 0 1px rgba(238,242,247,.8);background:rgba(238,242,247,.16)}
+
+
+#boxlabPaintRadial [data-paint=tool-sharpen] svg{display:block!important;width:32px;height:32px}#boxlabPaintRadial [data-paint=tool-sharpen]::before{display:none!important}
+
+#boxlabPaintRadial[hidden]{display:none!important}
+#boxlabPaintRadial{position:absolute;width:350px;height:350px;max-width:calc(100% - 16px);max-height:calc(100% - 16px);z-index:135;isolation:isolate;contain:layout paint;pointer-events:none}
+#boxlabPaintRadial .paint-tool-wheel{position:relative;width:350px;height:350px}
+#boxlabPaintRadial .paint-tool-wheel>button{position:absolute;transform:translate(-50%,-50%);box-sizing:border-box;width:64px;min-height:48px;padding:4px 3px;border:1px solid #a8c6e92c;border-radius:10px;background:#1b2431bd;color:#e9f3ff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:10px;pointer-events:auto;touch-action:manipulation;backdrop-filter:blur(8px)}
+#boxlabPaintRadial svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+#boxlabPaintRadial [aria-pressed=true]{background:#1268b6;border-color:#70c0ff}
+#boxlabPaintRadial .paint-radial-centre{border-radius:50%;width:56px;height:56px;background:#202c3bd9}
+#boxlabPaintRadial .paint-radial-handle{position:absolute;z-index:3;top:8px;right:8px;width:34px;height:28px;min-height:28px;padding:0;border:1px solid #a8c6e92c;border-radius:9px;background:#1b2431bd;color:#dce9f8;font-size:17px;line-height:1;pointer-events:auto;touch-action:none;user-select:none;cursor:move}
+#boxlabPaintRadial[data-state=controls],#boxlabPaintRadial[data-state=material]{width:min(360px,calc(100% - 16px));height:auto;max-height:calc(100% - 16px)}
+#boxlabPaintRadial .paint-quick-panel{position:relative;display:grid;gap:8px;width:100%;max-height:inherit;overflow:auto;padding:12px;border:1px solid #a8c6e94a;border-radius:16px;background:#18212de8;color:#edf4fd;backdrop-filter:blur(12px);pointer-events:auto;box-shadow:0 8px 24px #0003}
+#boxlabPaintRadial .paint-quick-panel[hidden]{display:none!important}
+#boxlabPaintRadial .paint-quick-panel>header{display:flex;align-items:center;gap:8px;min-height:30px;padding-right:34px}
+#boxlabPaintRadial .paint-quick-panel>header strong{flex:1;font-size:13px}
+#boxlabPaintRadial .paint-material-swatch{display:inline-block;width:27px;height:27px;flex:0 0 27px;border:1px solid #ffffffa0;border-radius:50%;background-color:rgba(var(--paint-rgb,227,75,55),var(--paint-alpha,1));background-image:linear-gradient(45deg,#ffffff70 25%,transparent 25%,transparent 75%,#ffffff70 75%),linear-gradient(45deg,#ffffff70 25%,transparent 25%,transparent 75%,#ffffff70 75%);background-position:0 0,5px 5px;background-size:10px 10px;box-shadow:inset 0 0 0 2px #1118}
+#boxlabPaintRadial .paint-tool-wheel [data-paint=open-material]{min-height:65px}
+#boxlabPaintRadial .paint-tool-wheel [data-paint=open-material] .paint-material-swatch{width:30px;height:30px;flex-basis:30px}
+#boxlabPaintRadial .paint-quick-panel>header [data-paint=header-material]{display:flex;align-items:center;gap:6px;min-height:36px;padding:3px 7px;font-variant-numeric:tabular-nums}
+#boxlabPaintRadial .paint-quick-panel [data-paint=material-body][hidden]{display:none!important}
+#boxlabPaintRadial .paint-quick-panel [data-paint=material-body]{display:grid;gap:8px;min-width:0}
+#boxlabPaintRadial .paint-quick-panel [data-paint=common-controls]{display:flex;gap:8px;align-items:center;justify-content:space-between;padding-bottom:7px;border-bottom:1px solid #ffffff26}
+#boxlabPaintRadial .paint-quick-panel .paint-lit-lock{font-size:10px;opacity:.75}
+#boxlabPaintRadial .paint-quick-panel [data-paint=quick-colour]{display:flex;align-items:center;justify-content:space-between;min-height:40px;padding:4px 8px;border:1px solid #a8c6e92c;border-radius:9px;background:#ffffff0a}
+#boxlabPaintRadial .paint-quick-panel [data-paint=quick-colour] input{width:54px;height:34px}
+#boxlabPaintRadial .paint-quick-panel [data-paint=roughness-controls],#boxlabPaintRadial .paint-quick-panel [data-paint=metalness-controls]{padding:5px 8px;border:1px solid #a8c6e92c;border-radius:9px;background:#ffffff08}
+#boxlabPaintRadial .paint-quick-panel [data-paint=roughness-controls][data-active=true],#boxlabPaintRadial .paint-quick-panel [data-paint=metalness-controls][data-active=true]{border-color:#7cbcff;background:#1671b51c}
+#boxlabPaintRadial .paint-quick-panel [data-paint=multi-channel-controls],#boxlabViewportPaint [data-paint=multi-channel-controls]{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:0;padding:7px 9px;border:1px solid #a8c6e92c;border-radius:9px;background:#ffffff08}
+#boxlabPaintRadial .paint-quick-panel [data-paint=multi-channel-controls] legend,#boxlabViewportPaint [data-paint=multi-channel-controls] legend{font-size:11px;font-weight:700;padding:0 4px}
+#boxlabPaintRadial .paint-quick-panel [data-paint=multi-channel-controls] label,#boxlabViewportPaint [data-paint=multi-channel-controls] label{display:flex;gap:5px;align-items:center}
+#boxlabPaintRadial .paint-quick-panel .paint-material-note{display:block;line-height:1.4;opacity:.72}
+#boxlabPaintRadial .paint-quick-panel [data-paint=tip-controls]{display:flex;justify-content:space-between;min-height:36px;padding:4px 8px;border:1px solid #a8c6e92c;border-radius:9px;background:#ffffff08}
+#boxlabPaintRadial .paint-quick-panel [data-paint=brush-settings],#boxlabPaintRadial .paint-quick-panel [data-paint=colour-details]{border:1px solid #ffffff20;border-radius:10px;padding:5px 9px}
+#boxlabPaintRadial .paint-quick-panel .paint-colour-controls input[type=number]{width:58px}
+#boxlabPaintRadial .paint-quick-panel [data-paint=hex]{width:92px}
+#boxlabPaintRadial .paint-quick-panel .paint-layer-tools{display:flex;gap:6px;margin-top:6px;padding-top:7px;border-top:1px solid #ffffff20}
+#boxlabPaintRadial .paint-quick-panel .paint-layer-tools button{flex:1}
+#boxlabPaintRadial .paint-quick-panel [data-paint=quick-help]{width:30px;min-width:30px;min-height:30px;padding:0;border-radius:50%;font-weight:800}
+#boxlabPaintRadial [data-paint=quick-help-popover]{position:absolute;z-index:4;top:46px;right:8px;width:min(270px,calc(100% - 24px));box-sizing:border-box;padding:10px 12px;border:1px solid #a8c6e980;border-radius:11px;background:#101722f5;color:#f2f6fb;box-shadow:0 8px 24px #0008;font-size:11px;line-height:1.45;pointer-events:none}
+#boxlabPaintRadial [data-paint=quick-help-popover][hidden]{display:none!important}
+#boxlabPaintRadial button{pointer-events:auto;touch-action:manipulation}
+#boxlabPaintRadial .paint-quick-panel button{position:static;transform:none;width:auto;min-height:36px;padding:6px 10px;border:1px solid #a8c6e940;border-radius:9px;background:#263344;color:#edf4fd;font-size:11px}
+#boxlabPaintRadial .paint-quick-panel [data-paint=common-controls]{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+#boxlabPaintRadial .paint-quick-panel [data-paint=quick-colour]{display:flex;justify-content:space-between;min-height:36px;padding:4px 8px;border:1px solid #a8c6e92c;border-radius:9px;background:#ffffff0a}
+#boxlabPaintRadial .paint-quick-panel [data-paint=quick-colour] input{width:44px;height:32px}
+#boxlabPaintRadial [data-paint=pressure-controls]{grid-column:1/-1}
+#boxlabPaintRadial .paint-quick-panel .paint-brush-row{display:grid;gap:7px}
+#boxlabPaintRadial .paint-quick-panel .paint-brush-row > label{display:grid;grid-template-columns:58px minmax(0,1fr) 4ch;gap:7px;width:100%;font-size:11px}
+#boxlabPaintRadial .paint-quick-panel .paint-brush-row input[type=range]{width:100%;min-width:60px;margin:0}
+#boxlabPaintRadial .paint-quick-panel output{font-variant-numeric:tabular-nums;text-align:right}
+#boxlabPaintRadial .paint-quick-panel [data-paint=quick-mask-value]{display:grid;grid-template-columns:auto minmax(70px,1fr) 4ch;gap:7px;align-items:center}
+#boxlabPaintRadial .paint-quick-panel .paint-scalar-controls{display:grid;gap:4px}
+#boxlabPaintRadial .paint-quick-panel .paint-scalar-row{display:grid;grid-template-columns:auto minmax(45px,1fr) auto 4ch;gap:5px;font-size:10px}
+#boxlabPaintRadial .paint-quick-panel .paint-scalar-row>span{white-space:nowrap;opacity:.78}
+#boxlabPaintRadial .paint-quick-panel [data-paint=fill-controls]{display:flex;gap:8px;align-items:center}
+#boxlabPaintRadial .paint-quick-panel [data-paint=fill-controls] select{max-width:190px}
+#boxlabViewportPaint .paint-context-head,#boxlabViewportPaint .paint-common-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+#boxlabViewportPaint .paint-context-head strong{flex:1}
+#boxlabViewportPaint .paint-page{display:none}
+#boxlabViewportPaint [data-paint-page=layers]{display:grid;grid-auto-rows:max-content;align-content:start;gap:5px;position:sticky;top:0;z-index:2;background:#16191f;max-height:42vh;overflow-y:auto;padding-bottom:5px;border-bottom:1px solid #ffffff20}
+#boxlabViewportPaint .paint-stack{grid-auto-rows:max-content;min-height:52px;max-height:200px;overflow-y:auto}
+#boxlabViewportPaint .paint-stack-row{min-height:52px}
+#viewportActionControls #viewportPaintBtn{width:48px;min-width:48px;font-size:8px;padding:3px}
+#viewportActionControls #viewportPaintBtn[aria-pressed=true]{background:#1268b6;border-color:#60b5ff}
+#boxlabViewportPaint .paint-footer{position:sticky;bottom:0;z-index:1}
+#boxlabViewportPaint[data-page=brush] [data-paint-page=brush],#boxlabViewportPaint[data-page=layers] [data-paint-page=layers],#boxlabViewportPaint[data-page=mask] [data-paint-page=mask],#boxlabViewportPaint[data-page=image] [data-paint-page=image],#boxlabViewportPaint[data-page=ao] [data-paint-page=ao],#boxlabViewportPaint[data-page=settings] [data-paint-page=settings]{display:grid;gap:5px}
+#boxlabViewportPaint .paint-brush-row{grid-template-columns:repeat(2,minmax(0,1fr))}
+#boxlabViewportPaint .paint-footer{position:sticky;bottom:0;grid-template-columns:repeat(3,minmax(0,1fr))!important}
+#boxlabViewportPaint .paint-hold-hint{font-size:9px}
+</style><link rel="stylesheet" href="../face-radial-icons.css"><link rel="stylesheet" href="../edge-radial-icons.css"><link rel="stylesheet" href="../vertex-radial-icons.css"><link rel="stylesheet" href="../object-radial-icons.css"><link rel="stylesheet" href="../paint-radial-icons.css"><link rel="stylesheet" href="../radial-compact.css?v=0.36.18.1135"><style>body{margin:0;background:#101318;color:#edf1f5;font:14px system-ui}header{padding:20px}nav{display:flex;gap:20px;padding:0 20px}a{color:#c7d6e8}main{position:relative;height:620px;max-width:1000px;margin:auto}#totalGizmo{left:50%;top:50%}#boxlabPaintRadial{left:50%;top:50%;transform:translate(-50%,-50%)}small{display:block;opacity:.65;margin-top:8px}</style></head><body><header>BoxLab .1135 • radial presentation proof<small>Original menu markup, icon artwork, base and final CSS, packed position owner. No WebGL, tool action or native-device acceptance implied.</small></header><nav><a href="?mode=face">FACE</a><a href="?mode=edge">EDGE</a><a href="?mode=vertex">VERTEX</a><a href="?mode=object">OBJECT</a><a href="?mode=paint">PAINT</a></nav><main><div id="totalGizmo" data-mode="edge" data-hub-state="tools"><div class="tg-tool-ring" data-ring-mode="face" aria-label="Face contextual tools">
+  <button type="button" class="tg-tool-sector" style="--a:0deg" data-tool-target="#extrudeBtn">Extrude</button>
+  <button type="button" class="tg-tool-sector" style="--a:45deg" data-tool-target="#insetBtn">Inset</button>
+  <button type="button" class="tg-tool-sector" style="--a:90deg" data-tool-target="#bevelBtn">Bevel</button>
+  <button type="button" class="tg-tool-sector" style="--a:135deg" data-tool-target="#knifeBtn">Knife</button>
+  <button type="button" class="tg-tool-sector" style="--a:180deg" data-tool-target="#duplicateFacesBtn">Duplicate</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:225.000deg;--r:230px" data-tool-target="#shellFacesBtn">Shell</button>
+  <button type="button" class="tg-tool-sector" style="--a:270deg" data-tool-target=".sweep-selection-launch[data-sweep-selection-mode='face']">Sweep</button>
+  <button type="button" class="tg-tool-sector tg-tool-danger" style="--a:315deg" data-tool-target="#deleteFaceBtn">Delete</button>
+  <div class="tg-face-outer-guide" aria-hidden="true"></div>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:22.500deg;--r:230px" data-tool-target="#joinSelectedCoplanarFacesBtn">Join Coplanar</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:0.000deg;--r:230px" data-tool-target="#componentCircleBtn">Circle</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:45.000deg;--r:230px" data-tool-target="#pokeFacesBtn">Poke</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:67.500deg;--r:230px" data-tool-target="#makePlanarBtn">Make Planar</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:90.000deg;--r:230px" data-tool-target="#triangulateFacesBtn">Triangulate</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:112.500deg;--r:230px" data-tool-target="#flipFacesBtn">Flip Faces</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:135.000deg;--r:230px" data-tool-target="#orientFacesBtn">Orient Faces</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:157.500deg;--r:230px" data-tool-target="#orientShellOutwardBtn">Orient Outward</button>
+  <button type="button" class="tg-tool-sector" style="--a:225deg" data-tool-target="#bridgeFacesBtn">Bridge</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:202.500deg;--r:230px" data-tool-target="#closeHolesBtn">Close Holes</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:180.000deg;--r:230px" data-tool-target="#quadPairCleanupBtn">Quad Cleanup</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:247.500deg;--r:230px" data-tool-target="#quadifyNgonsBtn">Quadify N-gons</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:270.000deg;--r:230px" data-tool-target="#cleanVerticesBtn">Clean Vertices</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:292.500deg;--r:230px" data-tool-target="#mergeByDistanceBtn">Merge Dist</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:337.500deg;--r:230px" data-tool-target="#extractFacesBtn">Extract</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:315.000deg;--r:230px" data-tool-target="#facegroupOpenPaint">FACEGROUP</button>
+  <button type="button" class="tg-tool-center" aria-label="Close Face contextual tools" title="Close tools">×</button>
+</div>
+<div class="tg-tool-ring" data-ring-mode="edge" aria-label="Edge contextual tools">
+  <button type="button" class="tg-tool-sector" style="--a:0deg" data-tool-target="#edgeExtrudeBtn">Extrude</button>
+  <button type="button" class="tg-tool-sector" style="--a:45deg" data-tool-target="#edgeSlideBtn">Slide</button>
+  <button type="button" class="tg-tool-sector" style="--a:90deg" data-tool-target="#bevelBtn">Bevel</button>
+  <button type="button" class="tg-tool-sector" style="--a:135deg" data-tool-target="#applyCreaseBtn">Crease</button>
+  <button type="button" class="tg-tool-sector" style="--a:180deg" data-tool-target="#offsetLoopBtn">Offset</button>
+  <button type="button" class="tg-tool-sector" style="--a:225deg" data-tool-target="#bridgeEdgesBtn">Bridge</button>
+  <button type="button" class="tg-tool-sector" style="--a:270deg" data-tool-target=".sweep-selection-launch[data-sweep-selection-mode='edge']">Sweep</button>
+  <button type="button" class="tg-tool-sector tg-tool-danger" style="--a:315deg" data-tool-target="#deleteEdgeBtn">Delete</button>
+<div class="tg-face-outer-guide" aria-hidden="true"></div>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:0.000deg;--r:230px" data-tool-target="#componentCircleBtn">Circle</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:22.500deg;--r:230px" data-tool-target="#joinCoplanarBtn">Join Coplanar</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:45.000deg;--r:230px" data-tool-target="#loopCutBtn">Loop</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:67.500deg;--r:230px" data-tool-target="#cutUVEdgesBtn" title="Split existing UV islands at complete selected cuts; clear paint first">Cut UVs</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:90.000deg;--r:230px" data-tool-target="#faceSplitBtn">Split</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:112.500deg;--r:230px" data-tool-target="#stitchUVEdgeBtn" title="Join two flat UV islands at one selected seam and repack; clear paint first">Stitch UVs</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:135.000deg;--r:230px" data-tool-target="#clearCreaseBtn">Uncrease</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:180.000deg;--r:230px" data-tool-target="#fillFaceBtn">Fill Face</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:225.000deg;--r:230px" data-tool-target="#gridFillBtn">Grid Fill</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:270.000deg;--r:230px" data-tool-target="#dissolveEdgeBtn">Dissolve</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:292.500deg;--r:230px" data-tool-target="#dissolveLoopBtn">Dissolve Loop</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:315.000deg;--r:230px" data-tool-target="#rotateEdgeBtn">Flip Edge</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:337.500deg;--r:230px" data-tool-target="#collapseEdgeBtn">Collapse</button>
+  <button type="button" class="tg-tool-center" aria-label="Close Edge contextual tools" title="Close tools">×</button>
+</div>
+<div class="tg-tool-ring" data-ring-mode="vertex" aria-label="Vertex contextual tools">
+  <button type="button" class="tg-tool-sector" style="--a:0deg" data-tool-target="#vertexExtrudeBtn">Extrude</button>
+  <button type="button" class="tg-tool-sector" style="--a:135deg" data-tool-target="#buildEdgeBtn">Build Edge</button>
+  <button type="button" class="tg-tool-sector" style="--a:90deg" data-tool-target="#vertexBevelBtn">Bevel</button>
+  <button type="button" class="tg-tool-sector" style="--a:45deg" data-tool-target="#vertexSlideBtn">Slide</button>
+  <button type="button" class="tg-tool-sector" style="--a:180deg" data-tool-target="#connectVertexBtn">Join</button>
+  <button type="button" class="tg-tool-sector" style="--a:225deg" data-tool-target="#weldVertexBtn">Weld</button>
+  <button type="button" class="tg-tool-sector" style="--a:270deg" data-tool-target="#createFaceFromVerticesBtn">Create Face</button>
+  <button type="button" class="tg-tool-sector tg-tool-danger" style="--a:315deg" data-tool-target="#deleteVertexBtn">Delete</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:216deg;--r:230px" data-tool-target="#addVertexBtn">Add</button>
+  <div class="tg-vertex-outer-guide" aria-hidden="true"></div>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:0deg;--r:230px" data-tool-target="#componentCircleBtn">Circle</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:72deg;--r:230px" data-tool-target="#mergeVerticesCenterBtn">Merge Center</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:144deg;--r:230px" data-tool-target="#mergeVerticesFirstBtn">Merge First</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:292.500deg;--r:230px" data-tool-target="#mergeByDistanceBtn">Merge Dist</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:270.000deg;--r:230px" data-tool-target="#cleanVerticesBtn">Clean Vertices</button>
+  <button type="button" class="tg-tool-center" aria-label="Close Vertex contextual tools" title="Close tools">×</button>
+</div>
+<div class="tg-tool-ring" data-ring-mode="object" aria-label="Object contextual tools">
+  <button type="button" class="tg-tool-sector" style="--a:0deg" data-tool-target="#surfaceTransformBtn">Transform</button>
+  <button type="button" class="tg-tool-sector" style="--a:45deg" data-tool-target="#surfaceInsertBtn">Insert</button>
+  <button type="button" class="tg-tool-sector" style="--a:90deg" data-tool-target="#solidifyBtn">Solidify</button>
+  <button type="button" class="tg-tool-sector" style="--a:135deg" data-tool-target="#linearArrayLaunchBtn">Array</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:180deg;--r:230px" data-tool-target="#booleanLaunchBtn">Boolean</button>
+  <button type="button" class="tg-tool-sector" style="--a:225deg" data-tool-target="#joinObjectsBtn">Join</button>
+  <button type="button" class="tg-tool-sector" style="--a:270deg" data-tool-target="#symmetryBisectBtn">Symmetry / Bisect</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:270deg;--r:230px" data-tool-target="#meshHealthBtn">Mesh Health</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:90deg;--r:230px" data-tool-target="#uvToolsBtn">UV</button>
+  <div class="tg-object-outer-guide" aria-hidden="true"></div>
+  <button type="button" class="tg-tool-sector" style="--a:180deg" data-tool-target="#outlinerDuplicateBtn">Duplicate</button>
+  <button type="button" class="tg-tool-sector tg-tool-danger" style="--a:315deg" data-tool-target="#outlinerDeleteBtn">Delete</button>
+
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:0deg;--r:230px" data-tool-target="#revolveProfileLaunchBtn">Revolve Profile</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:225deg;--r:230px" data-tool-target="#quadCleanBtn">Clean for SubD</button>
+  <button type="button" class="tg-tool-center" aria-label="Close Object contextual tools" title="Return to gizmo">×</button>
+</div>
+<div class="tg-edge-extrude-badge" hidden><strong>Extrude</strong><span>Plane ⟂ edge</span><small>Choose constraint • drag edge</small></div>
+<button type="button" class="tg-radial-move" aria-label="Move radial menu" title="Drag to move radial menu"><svg class="radial-move-ring" viewBox="0 0 112 112" aria-hidden="true"><path class="radial-drag-annulus" fill-rule="evenodd" d="M100 56a44 44 0 1 0-88 0a44 44 0 1 0 88 0M86 56a30 30 0 1 1-60 0a30 30 0 1 1 60 0"/><path class="radial-move-arrows" d="M56 13V3m-4 4 4-4 4 4M56 99v10m-4-4 4 4 4-4M13 56H3m4-4-4 4 4 4M99 56h10m-4-4 4 4-4 4"/></svg></button>
+</div><section id="boxlabPaintRadial" data-state="tools"><div data-paint="tool-picker" class="paint-tool-wheel" data-layout-size="252" role="group" aria-label="Paint tools"><button type="button" data-paint="tool-paint" style="left:126px;top:26px" aria-label="Brush" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19l3-1 12-12-3-3L5 15z M5 15l3 3"/></svg><span>Brush</span></button><button type="button" data-paint="tool-fill" style="left:184px;top:42px" aria-label="Fill" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12l8-8 8 8-8 8z M3 12h18"/></svg><span>Fill</span></button><button type="button" data-paint="tool-erase" style="left:222px;top:96px" aria-label="Eraser" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 14L14 4l7 7-10 10H8z M9 9l7 7"/></svg><span>Eraser</span></button><button type="button" data-paint="tool-smudge" style="left:222px;top:156px" aria-label="Smudge" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 18c10 0-2-12 8-12 M10 20c10 0-2-12 8-12"/></svg><span>Smudge</span></button><button type="button" data-paint="tool-blur" style="left:184px;top:210px" aria-label="Blur" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v2 M12 19v2 M3 12h2 M19 12h2 M6 6l1 1 M17 17l1 1 M6 18l1-1 M17 7l1-1 M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8"/></svg><span>Blur</span></button><button type="button" data-paint="tool-sharpen" style="left:126px;top:226px" aria-label="Sharpen" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19l7-15 7 15-7-4z M12 4v11"/></svg><span>Sharpen</span></button><button type="button" data-paint="page-layers" style="left:68px;top:210px" aria-label="Layers" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7l8-4 8 4-8 4z M4 12l8 4 8-4 M4 17l8 4 8-4"/></svg><span>Layers</span></button><button type="button" data-paint="page-mask" style="left:30px;top:156px" aria-label="Mask" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z M12 3v18"/></svg><span>Mask</span></button><button type="button" data-paint="page-image" style="left:30px;top:96px" aria-label="Image" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h18v16H3z M3 17l6-7 5 5 3-3 4 5 M15 8h2"/></svg><span>Image</span></button><button type="button" data-paint="open-material" style="left:68px;top:42px" aria-label="Material colour and paint values" aria-pressed="false"><span data-paint="radial-material-swatch" class="paint-material-swatch" aria-hidden="true"></span><span>Material</span></button><button type="button" data-paint="hide-tools" class="paint-radial-centre" style="left:126px;top:126px">Paint<br>↩</button></div><section data-paint="quick-panel" class="paint-quick-panel" hidden><header><strong data-paint="quick-title">Brush controls</strong><button data-paint="header-material" type="button" aria-label="Open material and paint values"><span data-paint="header-material-swatch" class="paint-material-swatch" aria-hidden="true"></span><span data-paint="material-readout">#E34B37 · 100%</span></button><button data-paint="quick-help" type="button" aria-label="Paint tool help" aria-expanded="false" aria-controls="paintQuickHelp">i</button><button data-paint="show-tools" type="button">Tools</button></header><div data-paint="quick-help-popover" id="paintQuickHelp" role="tooltip" hidden></div><div data-paint="quick-body"></div><div data-paint="material-body" hidden><fieldset data-paint="multi-channel-controls" title="Stroke opacity controls brush strength. Selected maps are painted with Colour on BoxLab UVs; imported object maps stay protected."><legend>Also paint</legend><label title="Paint Roughness in the same stroke as Colour">Roughness <input data-paint="multi-roughness" type="checkbox"></label><label title="Paint Metalness in the same stroke as Colour">Metalness <input data-paint="multi-metalness" type="checkbox"></label><label title="Paint Opacity in the same stroke as Colour">Opacity <input data-paint="multi-opacity" type="checkbox"></label></fieldset></div></section><button data-paint="drag-tools" type="button" class="paint-radial-handle" aria-label="Move Paint palette" title="Drag to move Paint palette"><svg class="radial-move-ring" viewBox="0 0 112 112" aria-hidden="true"><path class="radial-drag-annulus" fill-rule="evenodd" d="M100 56a44 44 0 1 0-88 0a44 44 0 1 0 88 0M86 56a30 30 0 1 1-60 0a30 30 0 1 1 60 0"/><path class="radial-move-arrows" d="M56 13V3m-4 4 4-4 4 4M56 99v10m-4-4 4 4 4-4M13 56H3m4-4-4 4 4 4M99 56h10m-4-4 4 4-4 4"/></svg></button><span data-paint="tool-summary" hidden>Brush tools · Brush</span></section></main><script type="module">import{compactRadialLabels}from'../src/radial-compact-labels.js?v=0.36.18.1135';const mode=new URLSearchParams(location.search).get('mode')||'edge',root=document.querySelector('#totalGizmo');root.dataset.mode=mode;root.hidden=mode==='paint';document.querySelector('#boxlabPaintRadial').hidden=mode!=='paint';compactRadialLabels(root.querySelectorAll('.tg-tool-sector'));</script></body></html>

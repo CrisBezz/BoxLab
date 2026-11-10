@@ -24,10 +24,10 @@
       if(!item.hasAttribute('aria-label'))item.setAttribute('aria-label',label);
       if(!item.hasAttribute('title'))item.setAttribute('title',label);
       if(item.closest('#boxlabPaintRadial')){
-        const x=parseFloat(item.style.left),y=parseFloat(item.style.top),size=Number(item.closest('.paint-tool-wheel')?.dataset?.layoutSize),native=Number.isFinite(size)&&size>0,centre=native?size/2:175,scale=native?268/size:.8;
+        const x=parseFloat(item.style.left),y=parseFloat(item.style.top),size=Number(item.closest('.paint-tool-wheel')?.dataset?.layoutSize),native=Number.isFinite(size)&&size>0,centre=native?size/2:175,scale=native?252/size:.8;
         if(Number.isFinite(x)&&Number.isFinite(y)){
-          item.style.setProperty('--compact-x',`${134+(x-centre)*scale}px`);
-          item.style.setProperty('--compact-y',`${134+(y-centre)*scale}px`);
+          item.style.setProperty('--compact-x',`${126+(x-centre)*scale}px`);
+          item.style.setProperty('--compact-y',`${126+(y-centre)*scale}px`);
         }
       }
     }
@@ -43,8 +43,8 @@
   window.addEventListener('pageshow',restore);
   window.addEventListener('pagehide',()=>observer.disconnect());
   function placeRadial(left,top,width,height,mode){
-    const radius=Math.max(70,Math.min(mode==='vertex'||mode==='object'?155:168,(width-68)/2,(height-160)/2));
-    const halfWidth=width<=400?104:radius+26,halfHeight=width<=400?202:radius+50;
+    const radius=140;
+    const halfWidth=width<=400?104:radius+26,halfHeight=width<=400?(mode==='face'||mode==='edge'?270:218):radius+26;
     const fit=(value,half,extent,reserve)=>Math.max(half+8,Math.min(value,extent-half-reserve));
     return{left:fit(left,halfWidth,width,8),top:fit(top,halfHeight,height,80),radius};
   }
