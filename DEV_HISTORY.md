@@ -10819,7 +10819,7 @@ corner controls, shell identity/cache graph and comparison migration. No native
 iPad visual acceptance inferred. Browser rendering unavailable in this environment;
 no new browser installation attempted for this CSS-only change.
 
-Status: .1018 validated; publication pending. .1017 alignment PASS
+Status: .1018 validated; runtime publication verified below. .1017 alignment PASS
 protected; NOM material/texture retention remains separately queued. Shell release,
 comparison and canonical release-loader pins updated; unchanged pivot/transform
 implementation and child cache keys retained. Next: publish after focused checks,
@@ -10884,7 +10884,7 @@ compares canonical scalar records because JSON normalizes -0 to0; no codec chang
 Validation:62 focused checks PASS/0FAIL/0skip; syntax/whitespace clean. Full local
 run is incomplete (stopped producing output in unchanged paint-resource checks);
 not claimed PASS. Hosted full regression will be tracked separately. Native iPad
-tactile/visual acceptance not inferred. Publication pending.
+tactile/visual acceptance not inferred. Runtime publication verified below.
 
 Reviewed1019 shell/recovery/comparison and TotalGizmo->pivot child cache closure;
 canonical release->face-layout->drawer pins updated. Other transform owners retain
@@ -13146,3 +13146,6 @@ Three new tests load the full actual component-tap owner at document capture wit
 Cache closure: component-tap-toggle -> direct-bevel -> shell at .1129; shell/release-version -> Face workflow -> drawer refreshed canonically. Accepted toolbar/topbar .1128 source/pins remain. Main, selection policy, Multi 0.36.1.0, Through .1125, corners .1118, Loop .1116, Paint .1123 unchanged. Opt-in comparison instructions updated, prior historical evidence retained. Reviewed asset hashes updated only for changed sources and loader keys.
 
 Focused 57/57 PASS; full local 3,349/3,349 PASS (0 failures/skips), syntax and git diff --check clean. Publication pending. Previous .1128 corrected hosted Topology 42771696247 and Pages 42771696753 both SUCCESS; .1128 icon-order user PASS remains protected. Native FRONT acceptance remains pending. Device: select cube face, orbit it behind opposite unselected face, tap front (both selected), tap front again (rear retained); DRAG and finger orbit/pan/pinch smoke. Next follows native feedback; accepted icon order and .1126 gesture/DRAG PASSes remain protected.
+
+
+.1129 publication verified: runtime 6a5e4fbdabb6d2520e3050a5646e9921fc08dd48, tested tree 1516b88dad0e3cbd63822dd69cf0f781bb8cfc69. Pages 42778402869 SUCCESS; all 11 cache-busted live shell/repaired/loader/presentation/protected files byte-match tested local source. Live .1129. Full local 3,349/3,349 PASS; focused 57/57 PASS; no failures/skips. Hosted Topology 42778404071 still running at proof, so no hosted result claimed. Native FRONT retest remains pending; user icon order PASS and previous DRAG/navigation PASSes protected. Ready: rear face selected, orbit behind unselected front, tap front adds it without removing rear, tap front again removes only front; DRAG/navigation smoke. Do not infer native acceptance from Node checks.

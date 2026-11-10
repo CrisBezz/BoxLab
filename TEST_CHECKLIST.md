@@ -4,7 +4,10 @@
 - FRONT on: selected rear + unselected visible front cube face, Pencil tap must add front and retain rear. A second tap removes only visible selected front. Cover all six cube viewpoints with actual document-capture component-tap-toggle installed before downstream selection.
 - Null/rejected main pick must not use selected-only fallback. FRONT off retains original deliberate behavior. Vertex/Edge and transform/direct-tool gates unchanged. No mesh/history/redo changes.
 - Regression mutation restores the old selected-only Face helper and must reproduce rear deselection. Private uploaded project not committed; generated standard cube matches geometry/topology.
-- Focused 57/57 PASS; full local 3,349/3,349 PASS (0 failures/skips), syntax and diff clean; publication pending. Native FRONT acceptance pending; prior DRAG/directional-hold/finger-navigation PASSes remain protected.
+- Focused 57/57 PASS; full local 3,349/3,349 PASS (0 failures/skips), syntax and diff clean; runtime publication verified below. Native FRONT acceptance pending; prior DRAG/directional-hold/finger-navigation PASSes remain protected.
+
+
+.1129 publication verified: runtime 6a5e4fbdabb6d2520e3050a5646e9921fc08dd48, tested tree 1516b88dad0e3cbd63822dd69cf0f781bb8cfc69. Pages 42778402869 SUCCESS; all 11 cache-busted live shell/repaired/loader/presentation/protected files byte-match tested local source. Live .1129. Full local 3,349/3,349 PASS; focused 57/57 PASS; no failures/skips. Hosted Topology 42778404071 still running at proof, so no hosted result claimed. Native FRONT retest remains pending; user icon order PASS and previous DRAG/navigation PASSes protected. Ready: rear face selected, orbit behind unselected front, tap front adds it without removing rear, tap front again removes only front; DRAG/navigation smoke. Do not infer native acceptance from Node checks.
 
 ---
 
