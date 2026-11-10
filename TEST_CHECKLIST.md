@@ -4,7 +4,7 @@
 - Per-assembly query reuse must match frozen .1124 vertices/indices/order/groups/creases/cap IDs/refusal and leave source untouched. Keep original first-ID-within-eps semantics, not nearest/exact-coordinate preference.
 - Never cache a canonical endpoint farther than eps: a later appended true match must win. Keep mutation sensitivity test active.
 - New previews/edits/transforms must create fresh lookup state. Retain .1124 seam/T-junction conformance and all topology gates/listeners.
-- Automated: through-vertex-reuse-performance-1125 plus all existing Through/negative/corner/history checks. Paired complete-cut benchmark gates PASS; full local 3,329/3,329 PASS, hosted/publication proof to be recorded. Native .1125 pending.
+- Automated: through-vertex-reuse-performance-1125 plus all existing Through/negative/corner/history checks. Paired complete-cut benchmark gates PASS; full local 3,329/3,329 PASS, hosted Topology 42745143904 also 3,329/3,329 PASS. Pages 42745143587 succeeded; all 12 checked live files match runtime 4c3b4d730eba7ec65b69e826fb10e176c1aa016b. Native .1125 pending.
 
 ---
 
