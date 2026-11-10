@@ -1,3 +1,13 @@
+# .1125 regression gate — 10 November 2026
+
+- User PASS .1124 protected: faster seam assembly, exact geometry/front-back quad joins, Cancel/Done/UndoRedo; earlier Paint/Loop/corner acceptance retained.
+- Per-assembly query reuse must match frozen .1124 vertices/indices/order/groups/creases/cap IDs/refusal and leave source untouched. Keep original first-ID-within-eps semantics, not nearest/exact-coordinate preference.
+- Never cache a canonical endpoint farther than eps: a later appended true match must win. Keep mutation sensitivity test active.
+- New previews/edits/transforms must create fresh lookup state. Retain .1124 seam/T-junction conformance and all topology gates/listeners.
+- Automated: through-vertex-reuse-performance-1125 plus all existing Through/negative/corner/history checks. Paired complete-cut benchmark gates PASS; full local 3,329/3,329 PASS, hosted/publication proof to be recorded. Native .1125 pending.
+
+---
+
 # .1124 regression gate — 10 November 2026
 
 - User PASS .1123 protected: Sharpness alone enables Apply for changed pixels, Before/Reset/Cancel, exact single-step layer Undo/Redo and previous Paint acceptance.

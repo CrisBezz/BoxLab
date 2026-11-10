@@ -202,9 +202,14 @@ function assemble(before,polys,eps,groups=null) {
   const m=Object.create(Object.getPrototypeOf(before));Object.assign(m,topology().cloneMeshState(before));
   // Prevent EditableMesh.edges()'s UI observer from publishing the private trial mesh.
   m.edges=()=>[];
-  function vertex(p){let id=m.vertices.findIndex(q=>q.distanceTo(p)<=eps);if(id>=0)return id;
-    for(const owners of edgeUses(m).values()){const {a,b}=owners[0],ab=m.vertices[b].clone().sub(m.vertices[a]),t=p.clone().sub(m.vertices[a]).dot(ab)/ab.lengthSq();if(t>0&&t<1&&m.vertices[a].clone().addScaledVector(ab,t).distanceTo(p)<=eps){const r=topology().canonicalEdgeSplit(m,a,b,p,{tolerance:eps});if(!r.ok)fail(r.reason);return r.vertex;}}
-    m.vertices.push(p.clone());return m.vertices.length-1;
+  // This private assembly only appends vertices; existing positions never move.
+  // Repeated coordinate queries therefore keep the same first matching ID.
+  const vertexQueries=new Map();
+  function vertex(p){const key=Number.isFinite(eps)&&eps>=0&&[p.x,p.y,p.z].every(Number.isFinite)?`${p.x}:${p.y}:${p.z}`:null;if(key!==null&&vertexQueries.has(key))return vertexQueries.get(key);
+    let id=m.vertices.findIndex(q=>q.distanceTo(p)<=eps);if(id>=0){if(key!==null)vertexQueries.set(key,id);return id;}
+    // The canonical t guard can reuse an endpoint beyond eps: never cache that non-match.
+    for(const owners of edgeUses(m).values()){const {a,b}=owners[0],ab=m.vertices[b].clone().sub(m.vertices[a]),t=p.clone().sub(m.vertices[a]).dot(ab)/ab.lengthSq();if(t>0&&t<1&&m.vertices[a].clone().addScaledVector(ab,t).distanceTo(p)<=eps){const r=topology().canonicalEdgeSplit(m,a,b,p,{tolerance:eps});if(!r.ok)fail(r.reason);if(key!==null&&m.vertices[r.vertex].distanceTo(p)<=eps)vertexQueries.set(key,r.vertex);return r.vertex;}}
+    m.vertices.push(p.clone());id=m.vertices.length-1;if(key!==null)vertexQueries.set(key,id);return id;
   }
   const faces=polys.map(p=>p.map(vertex));m.faces=faces;
   const used=[...new Set(faces.flat())],candidates=seamVertexCandidates(m.vertices,used,eps);

@@ -161,9 +161,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1124",
+      "url": "./src/drawer-ui.js?v=0.36.18.1125",
       "target": "src/drawer-ui.js",
-      "sha256": "38013b3c393111013638f1c3941dd2c3a77462685b3aa988cabac46c0f780926"
+      "sha256": "3588f65f6774a575d97c3968d7916f879b1896be4ebdee85bdf6cdd7d9f9255f"
     },
     {
       "owner": "index.html",
@@ -311,9 +311,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/multi-face-direct.js?v=0.36.18.1124",
+      "url": "./src/multi-face-direct.js?v=0.36.18.1125",
       "target": "src/multi-face-direct.js",
-      "sha256": "94c5abdbd7fec63164f5207842cf5cf5cc807b6c5cbbb8da110b257c28baa71b"
+      "sha256": "ea379ea890e39579756f9ad7d08c3d8407366ef19f629532c4e79219be609ac4"
     },
     {
       "owner": "index.html",
@@ -378,7 +378,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1124",
+      "url": "./src/release-version.js?v=0.36.18.1125",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -864,9 +864,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1124",
+      "url": "./face-workflow-layout.js?v=0.36.18.1125",
       "target": "src/face-workflow-layout.js",
-      "sha256": "19aca0e4c79ad2fcaede74250a9628d47e56b7b74990f061331cfd0aeeedb1c6"
+      "sha256": "20e0e89dd96de041a762565abedf92393b11cdd483cdf043abe54c9df84e0d10"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1135,9 +1135,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./sequential-through-fallback.js?v=0.36.18.1124",
+      "url": "./sequential-through-fallback.js?v=0.36.18.1125",
       "target": "src/sequential-through-fallback.js",
-      "sha256": "6f80ba1dfa703e97b303aa0a2dd25035798545d96e8e866282460e2ebd2a4322"
+      "sha256": "b975d65e8243c63869def5731c4773ca793a42f4a99716c3bef8510bc2c23f5f"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1361,7 +1361,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1124",
+      "url": "./release-version.js?v=0.36.18.1125",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -1785,9 +1785,9 @@
     },
     {
       "owner": "src/multi-face-direct.js",
-      "url": "./through-kernel.js?v=0.36.18.1124",
+      "url": "./through-kernel.js?v=0.36.18.1125",
       "target": "src/through-kernel.js",
-      "sha256": "0605982f1dfe3079f56eb9ae8d785f815df7dcd1a48e94973af46612a10b3729"
+      "sha256": "6706a97672f613d8cc35e6fefa4f5eff81d67ea6c73981c126031d386f3b86e6"
     },
     {
       "owner": "src/multi-face-direct.js",
@@ -1951,9 +1951,9 @@
     },
     {
       "owner": "src/sequential-through-fallback.js",
-      "url": "./through-kernel.js?v=0.36.18.1124",
+      "url": "./through-kernel.js?v=0.36.18.1125",
       "target": "src/through-kernel.js",
-      "sha256": "0605982f1dfe3079f56eb9ae8d785f815df7dcd1a48e94973af46612a10b3729"
+      "sha256": "6706a97672f613d8cc35e6fefa4f5eff81d67ea6c73981c126031d386f3b86e6"
     },
     {
       "owner": "src/sequential-through-fallback.js",
@@ -3326,9 +3326,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1124",
+      "url": "./src/shell-comparison.js?v=0.36.18.1125",
       "target": "src/shell-comparison.js",
-      "sha256": "0b1d13d3f8d44cd10fb1c242fc66ec8e546531c0e0022b4c8e1e0f30f6fa9415"
+      "sha256": "3334add1d7fa2c8e10dda6734831b54438b0a640757e2ebd0eef765f6f655dac"
     },
     {
       "owner": "src/main.js",

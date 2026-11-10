@@ -1,0 +1,241 @@
+{
+  "release": ".1125",
+  "baseline": "Exact .1124 assemble from 6b98b21cad01091a919f06d33c3d7d4a7d67b598; all other kernel code identical",
+  "scope": "Actual complete negative-cut kernel in Node VM on synthetic closed shared-index grid cubes. Includes clipping/classification/assembly/validation/compaction; excludes controller/contact planning, history/events/render/browser/GPU/iPad. Two warmups plus five alternating paired repetitions. Timed calls have NO per-distance or seam counters; linear-scan distance comparisons are counted in separate untimed calls and exclude cache-hit Map lookups and canonical-result distance verification. Per-call coordinate cache is discarded after assembly. No worst-case linearity, native speedup, memory-capacity or WASM claim.",
+  "gates": {
+    "correctness": "Exact output including vertices/face order/metadata/cap IDs and source unchanged",
+    "operations": "At least 3x fewer original linear-scan vertex distance comparisons",
+    "timing": "At least 1.1x complete-cut median improvement on each fixture; reported gate, not a CI timing assertion"
+  },
+  "rows": [
+    {
+      "faces": 384,
+      "vertices": 386,
+      "sourceFace": 36,
+      "distance": -0.25,
+      "before": {
+        "samples": [
+          {
+            "totalMs": 32.474402,
+            "vertexMs": 7.2701979999999935,
+            "seamMs": 10.777600000000007
+          },
+          {
+            "totalMs": 89.84188899999998,
+            "vertexMs": 17.743548999999916,
+            "seamMs": 39.073217
+          },
+          {
+            "totalMs": 35.36786799999993,
+            "vertexMs": 7.1058799999999565,
+            "seamMs": 11.329281000000037
+          },
+          {
+            "totalMs": 34.36379299999999,
+            "vertexMs": 7.813237000000072,
+            "seamMs": 11.179124999999999
+          },
+          {
+            "totalMs": 32.39985999999999,
+            "vertexMs": 6.834992000000057,
+            "seamMs": 11.01374599999997
+          }
+        ],
+        "medianTotalMs": 34.36379299999999,
+        "medianVertexMs": 7.2701979999999935,
+        "medianSeamMs": 11.179124999999999,
+        "linearScanDistanceTests": 302936
+      },
+      "after": {
+        "samples": [
+          {
+            "totalMs": 30.934037999999987,
+            "vertexMs": 5.2575219999999945,
+            "seamMs": 12.092953999999963
+          },
+          {
+            "totalMs": 34.38206100000002,
+            "vertexMs": 6.738906999999983,
+            "seamMs": 10.521574000000044
+          },
+          {
+            "totalMs": 28.533848000000035,
+            "vertexMs": 4.736915999999951,
+            "seamMs": 10.112255000000005
+          },
+          {
+            "totalMs": 29.562709999999925,
+            "vertexMs": 4.505006999999978,
+            "seamMs": 10.548444000000018
+          },
+          {
+            "totalMs": 30.248504000000025,
+            "vertexMs": 5.251411999999959,
+            "seamMs": 11.22802999999999
+          }
+        ],
+        "medianTotalMs": 30.248504000000025,
+        "medianVertexMs": 5.251411999999959,
+        "medianSeamMs": 10.548444000000018,
+        "linearScanDistanceTests": 76241
+      },
+      "correctness": "PASS",
+      "operations": "PASS",
+      "timing": "PASS",
+      "wholeCutSpeedup": 1.1360493398285072
+    },
+    {
+      "faces": 1536,
+      "vertices": 1538,
+      "sourceFace": 136,
+      "distance": -0.25,
+      "before": {
+        "samples": [
+          {
+            "totalMs": 178.58652400000005,
+            "vertexMs": 78.26437299999998,
+            "seamMs": 49.224132000000054
+          },
+          {
+            "totalMs": 202.52843299999995,
+            "vertexMs": 87.39218400000027,
+            "seamMs": 52.11492499999986
+          },
+          {
+            "totalMs": 390.02942600000006,
+            "vertexMs": 227.793134,
+            "seamMs": 97.85784300000023
+          },
+          {
+            "totalMs": 181.17487900000015,
+            "vertexMs": 82.68646100000024,
+            "seamMs": 48.702150000000074
+          },
+          {
+            "totalMs": 204.06730000000016,
+            "vertexMs": 90.44461700000011,
+            "seamMs": 60.815234000000146
+          }
+        ],
+        "medianTotalMs": 202.52843299999995,
+        "medianVertexMs": 87.39218400000027,
+        "medianSeamMs": 52.11492499999986,
+        "linearScanDistanceTests": 4750712
+      },
+      "after": {
+        "samples": [
+          {
+            "totalMs": 130.9040480000001,
+            "vertexMs": 33.001346999999896,
+            "seamMs": 50.72691899999995
+          },
+          {
+            "totalMs": 134.94234200000028,
+            "vertexMs": 32.580369999999675,
+            "seamMs": 50.6840830000001
+          },
+          {
+            "totalMs": 139.0765610000003,
+            "vertexMs": 34.99422700000014,
+            "seamMs": 50.55066399999987
+          },
+          {
+            "totalMs": 142.44141100000024,
+            "vertexMs": 37.18742599999996,
+            "seamMs": 51.937303000000156
+          },
+          {
+            "totalMs": 142.139361,
+            "vertexMs": 31.75593899999967,
+            "seamMs": 52.5063140000002
+          }
+        ],
+        "medianTotalMs": 139.0765610000003,
+        "medianVertexMs": 33.001346999999896,
+        "medianSeamMs": 50.72691899999995,
+        "linearScanDistanceTests": 1189649
+      },
+      "correctness": "PASS",
+      "operations": "PASS",
+      "timing": "PASS",
+      "wholeCutSpeedup": 1.4562369930904424
+    },
+    {
+      "faces": 3456,
+      "vertices": 3458,
+      "sourceFace": 300,
+      "distance": -0.25,
+      "before": {
+        "samples": [
+          {
+            "totalMs": 700.4779010000002,
+            "vertexMs": 414.5636279999999,
+            "seamMs": 145.25103800000034
+          },
+          {
+            "totalMs": 624.639118000001,
+            "vertexMs": 381.5375609999992,
+            "seamMs": 129.50663600000007
+          },
+          {
+            "totalMs": 625.6624350000002,
+            "vertexMs": 380.9617450000005,
+            "seamMs": 127.23251399999936
+          },
+          {
+            "totalMs": 663.4273259999991,
+            "vertexMs": 396.60005700000147,
+            "seamMs": 134.8937479999986
+          },
+          {
+            "totalMs": 614.1428989999986,
+            "vertexMs": 364.5179419999986,
+            "seamMs": 127.50961800000005
+          }
+        ],
+        "medianTotalMs": 625.6624350000002,
+        "medianVertexMs": 381.5375609999992,
+        "medianSeamMs": 129.50663600000007,
+        "linearScanDistanceTests": 23960216
+      },
+      "after": {
+        "samples": [
+          {
+            "totalMs": 451.90997700000025,
+            "vertexMs": 149.22280600000067,
+            "seamMs": 172.4241230000007
+          },
+          {
+            "totalMs": 391.3117659999998,
+            "vertexMs": 125.5481319999999,
+            "seamMs": 137.62051500000052
+          },
+          {
+            "totalMs": 417.1436909999993,
+            "vertexMs": 163.27999999999884,
+            "seamMs": 128.4093120000016
+          },
+          {
+            "totalMs": 370.7228360000008,
+            "vertexMs": 125.7264869999999,
+            "seamMs": 129.61889200000041
+          },
+          {
+            "totalMs": 372.426469,
+            "vertexMs": 135.47877799999878,
+            "seamMs": 123.07619400000112
+          }
+        ],
+        "medianTotalMs": 391.3117659999998,
+        "medianVertexMs": 135.47877799999878,
+        "medianSeamMs": 129.61889200000041,
+        "linearScanDistanceTests": 5994449
+      },
+      "correctness": "PASS",
+      "operations": "PASS",
+      "timing": "PASS",
+      "wholeCutSpeedup": 1.5988848007192313
+    }
+  ],
+  "result": "PASS"
+}

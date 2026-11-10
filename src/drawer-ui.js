@@ -70,7 +70,7 @@ import('./transform-state-fix.js?v=0.36.18.5').catch(error => console.warn('BoxL
 import('./persistent-face-tool-select.js?v=0.36.18.499').catch(error => console.warn('BoxLab persistent face tool selection failed to load', error));
 import('./precision-face.js?v=0.36.18.979').catch(error => console.warn('BoxLab Face precision failed to load', error));
 import('./repeat-face-previous.js?v=0.36.18.732').catch(error => console.warn('BoxLab Repeat Previous Face failed to load', error));
-import('./sequential-through-fallback.js?v=0.36.18.1124').catch(error => console.warn('BoxLab sequential Through fallback failed to load', error));
+import('./sequential-through-fallback.js?v=0.36.18.1125').catch(error => console.warn('BoxLab sequential Through fallback failed to load', error));
 import('./precision-transform.js?v=0.36.18.14').catch(error => console.warn('BoxLab precision Transform failed to load', error));
 import('./precision-bevel.js?v=0.36.18.710').catch(error => console.warn('BoxLab precision Bevel failed to load', error));
 import('./precision-edge-slide.js?v=0.36.18.672').catch(error => console.warn('BoxLab precision Edge Slide failed to load', error));
@@ -108,7 +108,7 @@ import('./select-coplanar-region.js?v=0.36.18.1004').catch(error => console.warn
 import('./join-selected-coplanar-faces.js?v=0.36.18.342').catch(error => console.warn('BoxLab Join Selected Coplanar Faces failed to load', error));
 import('./select-face-islands.js?v=0.36.18.72').catch(error => console.warn('BoxLab Select Face Islands failed to load', error));
 import('./select-connected-shell.js?v=0.36.18.73').catch(error => console.warn('BoxLab Select Connected Shell failed to load', error));
-import('./face-workflow-layout.js?v=0.36.18.1124').catch(error => console.warn('BoxLab Face workflow layout failed to load', error));
+import('./face-workflow-layout.js?v=0.36.18.1125').catch(error => console.warn('BoxLab Face workflow layout failed to load', error));
 import('./component-inspect-repair-drawers.js?v=0.36.18.627').catch(error => console.warn('BoxLab component Inspect/Repair drawers failed to load', error));
 import('./selection-workflow-polish.js?v=0.36.18.31').catch(error => console.warn('BoxLab selection workflow polish failed to load', error));
 import('./component-align.js?v=0.36.18.705').catch(error => console.warn('BoxLab component Align failed to load', error));
