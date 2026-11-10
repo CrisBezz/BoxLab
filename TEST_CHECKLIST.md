@@ -6,6 +6,9 @@
 - Node FRONT fixtures do not close native FAIL. No new backend modeling fixture needed for CSS order; existing sequence regression updated to current user direction.
 - Focused 40/40 PASS; full 3,345/3,346 with only an outdated order assertion in viewport-controls-718 failing. Corrected explicit order expectation retains all spacing/artwork/listener checks. Corrected focused 42/42 PASS. Runtime 3913c0ff published; Pages/hosted verification follows. FRONT remains native FAIL.
 
+
+.1128 publication proof: runtime 3913c0ffc8a5044022906adff5852615ab2db76c, validation correction 317c55f232aa9191a55c31cfece0600897e2d33c. Pages 42771576524 SUCCESS. Nine cache-busted live files (version, shell, topbar, toolbar, drawer, Face layout, comparison, main picker and protected Multi) byte-match tested local source. Live marker .1128. Corrected focused 42/42 PASS; initial full 3,345/3,346 with sole obsolete icon-order assertion corrected. Corrected hosted Topology 42771696247 still running and correction Pages 42771696753 waiting at proof; runtime assets are identical between those two commits. No native FRONT success or full corrected suite claimed. Ready to test only icon order and existing DRAG/navigation smoke. FRONT remains FAIL pending failing .boxlab and exact tap/tool/selection reproduction.
+
 ---
 
 # .1127 FRONT regression gate — 10 November 2026

@@ -8,6 +8,9 @@ Protect accepted .1126 DRAG, DRAG-off directional/hold and finger navigation che
 
 Validation: focused 40/40 PASS; full local 3,345/3,346 PASS with the sole failure a second legacy rail-order assertion in viewport-controls-718. Updated that assertion to the requested new order, retaining all spacing/listener/artwork assertions. Corrected focused 42/42 PASS. Runtime 3913c0ffc8a5044022906adff5852615ab2db76c, tree ad54cf2266fdc76187b6942af6e79cd13ead6275 published to main; Pages 42771576524 and hosted Topology 42771577290 initially running. No full corrected-suite/native FRONT PASS claimed. Next: use supplied project and exact tap/tool/selection state to reproduce FRONT; preserve independent selection owners and history. Do not add another competing pointer handler or speculative filtering layer.
 
+
+.1128 publication proof: runtime 3913c0ffc8a5044022906adff5852615ab2db76c, validation correction 317c55f232aa9191a55c31cfece0600897e2d33c. Pages 42771576524 SUCCESS. Nine cache-busted live files (version, shell, topbar, toolbar, drawer, Face layout, comparison, main picker and protected Multi) byte-match tested local source. Live marker .1128. Corrected focused 42/42 PASS; initial full 3,345/3,346 with sole obsolete icon-order assertion corrected. Corrected hosted Topology 42771696247 still running and correction Pages 42771696753 waiting at proof; runtime assets are identical between those two commits. No native FRONT success or full corrected suite claimed. Ready to test only icon order and existing DRAG/navigation smoke. FRONT remains FAIL pending failing .boxlab and exact tap/tool/selection reproduction.
+
 ---
 
 # .1127 — FRONT legacy-owner handoff and Paint rail order — 10 November 2026
