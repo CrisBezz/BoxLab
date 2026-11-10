@@ -12,6 +12,8 @@ Device .1134: inspect closer Vertex/Edge/Face/Object/Paint rings and captions; d
 
 Validation .1134: full local 3,374/3,374 PASS (0 failures/skips), focused73/73 PASS; final original-slot restoration and reviewed assets/routing checks41/41 PASS, final CSS/release8/8 PASS; JS syntax and diff clean. Earlier suite runs exposed test-slice initialization assumptions and stale reviewed pins; original bind placement/cache graph were corrected, with no geometry assertion removed. Previous .1133 hosted Topology42901626255 and Pages42901625348 both SUCCESS. Publication verification pending; native iPad visual/Pencil acceptance remains pending.
 
+Publication .1134 VERIFIED: runtime b13848847e5ae0bfc5545e36e7a6c3e1a331707e, tested tree3aa8472065e84620328e61cfac9086abbe6caa35. Pages42917728017 SUCCESS. All13 cache-busted live shell/changed/loading/protected files byte-match tested source (docs/publication-1134.json). Repository main release markers/pins explicitly verified; Multi0.36.1.0 preserved. Hosted Topology42917732567 remains in progress at this proof; no hosted PASS claimed. Full local3,374/3,374 PASS plus final focused checks recorded above. Build .1134 is complete, live and ready for device testing; native visual/Pencil acceptance remains pending.
+
 ---
 
 # .1133 — tighter modelling radial orbits; .1132 protected PASS — 11 November 2026

@@ -1,0 +1,80 @@
+{
+  "release": "0.36.18.1134",
+  "runtime_commit": "b13848847e5ae0bfc5545e36e7a6c3e1a331707e",
+  "tested_tree": "3aa8472065e84620328e61cfac9086abbe6caa35",
+  "pages_run": 42917728017,
+  "pages_conclusion": "success",
+  "local_tests": {
+    "pass": 3374,
+    "fail": 0,
+    "skip": 0
+  },
+  "live_files": [
+    {
+      "file": "version.json",
+      "match": true,
+      "sha256": "5eee0ab658f7eb3b2f126f3cc462c9d27d6cac5778551095cb0e58d8228e993c"
+    },
+    {
+      "file": "index.html",
+      "match": true,
+      "sha256": "8134c277af0531f965c05efb05c684c378d5f6f1ba64d3fb96b38751291dcb49"
+    },
+    {
+      "file": "radial-compact.css",
+      "match": true,
+      "sha256": "1a1fe10b659ddaf931eb159d69b19934035ef9d6725be9f2d09b09bfaf424fb0"
+    },
+    {
+      "file": "compact-layout.css",
+      "match": true,
+      "sha256": "dda63696bb29ae954632045ba4e116165f8de741e31033e682fa443ddd15f266"
+    },
+    {
+      "file": "src/compact-layout.js",
+      "match": true,
+      "sha256": "b02f9de38448e18115702ddb8eea8b52b8148f9d2ac42dc5668caa1e195ee218"
+    },
+    {
+      "file": "src/total-gizmo.js",
+      "match": true,
+      "sha256": "4c7d99360d8f531277f759f3ed19782f7cd3faa29f10de0f89c74900c4454839"
+    },
+    {
+      "file": "src/radial-move.js",
+      "match": true,
+      "sha256": "6781fb940a308a893c097eae91b882f41e513371a2b196a53264bef31a192229"
+    },
+    {
+      "file": "src/viewport-paint.js",
+      "match": true,
+      "sha256": "228ba395fc0052536ebc6906c708034d8174815b23a5a1c3c2da28466a6d20a1"
+    },
+    {
+      "file": "src/drawer-ui.js",
+      "match": true,
+      "sha256": "ab8bbe56f1e84baef4edf634d27abaf92474267f73a3821c92decd99a6bf8527"
+    },
+    {
+      "file": "src/face-workflow-layout.js",
+      "match": true,
+      "sha256": "fd554d38852d95506c79ccc685f7cc1b4368771bc7b0a692f40cd52884f79f9d"
+    },
+    {
+      "file": "src/release-version.js",
+      "match": true,
+      "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
+    },
+    {
+      "file": "src/shell-comparison.js",
+      "match": true,
+      "sha256": "a445df5f4c3c56aa2cc44115d0ed1586e1ec2893ebaa387471ad07102af22c28"
+    },
+    {
+      "file": "src/multi-object-transform.js",
+      "match": true,
+      "sha256": "024ec06122bb9ccfeaee53ab5da5bae520dc194db6201ba2479a376902380069"
+    }
+  ],
+  "native_acceptance": "pending"
+}
