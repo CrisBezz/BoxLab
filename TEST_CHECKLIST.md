@@ -1,3 +1,13 @@
+# .1129 FRONT tap gate — 10 November 2026
+
+- Protect user .1128 icon-order PASS: Select / Lasso / Drag / Front / Paint. No toolbar source changes.
+- FRONT on: selected rear + unselected visible front cube face, Pencil tap must add front and retain rear. A second tap removes only visible selected front. Cover all six cube viewpoints with actual document-capture component-tap-toggle installed before downstream selection.
+- Null/rejected main pick must not use selected-only fallback. FRONT off retains original deliberate behavior. Vertex/Edge and transform/direct-tool gates unchanged. No mesh/history/redo changes.
+- Regression mutation restores the old selected-only Face helper and must reproduce rear deselection. Private uploaded project not committed; generated standard cube matches geometry/topology.
+- Focused 57/57 PASS; full local 3,349/3,349 PASS (0 failures/skips), syntax and diff clean; publication pending. Native FRONT acceptance pending; prior DRAG/directional-hold/finger-navigation PASSes remain protected.
+
+---
+
 # .1128 gate — 10 November 2026
 
 - FRONT .1127 user FAIL on single Pencil taps remains OPEN; no selection repair claimed by .1128. Need failing project/tap context for reproduction.
