@@ -1,3 +1,13 @@
+# .1128 gate — 10 November 2026
+
+- FRONT .1127 user FAIL on single Pencil taps remains OPEN; no selection repair claimed by .1128. Need failing project/tap context for reproduction.
+- Rail top-to-bottom Select / Lasso / Drag / Front / Paint. Keep original icons, button pitch, Snap clearance, short-height scroll and handlers.
+- Protect .1126 accepted DRAG / DRAG-off directional-hold gestures / finger orbit-pan-pinch and all earlier cut/Paint/history PASSes.
+- Node FRONT fixtures do not close native FAIL. No new backend modeling fixture needed for CSS order; existing sequence regression updated to current user direction.
+- Validation/publication pending.
+
+---
+
 # .1127 FRONT regression gate — 10 November 2026
 
 - .1126 FRONT FAIL remains open for native retest; checks 2/3/4 PASS protected (DRAG / DRAG-off gestures / finger navigation). Icons accepted; no blanket .1126 PASS.

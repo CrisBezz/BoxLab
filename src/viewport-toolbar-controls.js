@@ -47,11 +47,11 @@ html.boxlab-focus-view #viewportSnapControls,html.boxlab-focus-view #viewportAct
 #viewportActionControls button .toolbar-label{font-size:8px;line-height:1;letter-spacing:.02em}
 #viewportActionControls #viewportSelectionBtn{width:48px;min-width:48px;font-size:8px;letter-spacing:.02em}
 #viewportActionControls #viewportPaintBtn{width:48px;min-width:48px;font-size:8px;padding:3px}
-#viewportActionControls #lassoSelectBtn{order:0}
-#viewportActionControls #viewportSelectionBtn{order:1}
+#viewportActionControls #lassoSelectBtn{order:1}
+#viewportActionControls #viewportSelectionBtn{order:0}
 #viewportActionControls #viewportPaintBtn{order:4}
-#viewportActionControls #frontSelectBtn{order:2}
-#viewportActionControls #dragSelectBtn{order:3}
+#viewportActionControls #frontSelectBtn{order:3}
+#viewportActionControls #dragSelectBtn{order:2}
 #viewportActionControls #frontSelectBtn[aria-pressed=true],#viewportActionControls #dragSelectBtn[aria-pressed=true]{background:#225b91;color:#f3f7ff;border-color:#86bfff}
 #viewportActionControls #viewportPaintBtn[aria-pressed=true]{background:#1268b6;border-color:#60b5ff}
 #viewportWrap>.floating-panel.left-panel{bottom:132px!important}

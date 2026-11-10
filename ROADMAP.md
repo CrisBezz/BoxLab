@@ -1,3 +1,15 @@
+# .1128 — requested icon order; FRONT still FAIL — 10 November 2026
+
+Current focus: reproduce native single-Pencil-tap through-selection before further picker changes. User explicitly reports .1127 FRONT FAIL and identifies single Pencil taps (not Lasso/DRAG). Do not treat previous Node fixture PASSes as native acceptance. Asked for the failing .boxlab project and useful tap/recording context; source model is not yet supplied. Existing nearest-hit main path and .1127 transform/region/persistent guards remain unchanged. Audit also checked armed Face controller, main tap completion, transform-upgrade, rotate, body/picker generation and scene object activation; no new reproduced root cause established. Do not claim a FRONT fix in this release.
+
+Only user-facing change: Select / Lasso / Drag / Front / Paint, top to bottom. Original artwork, dimensions, spacing and handlers retained. CSS order changed in existing toolbar owner; topbar loader refreshed. Shell release markers and canonical release-version loader chain refreshed to .1128; unchanged picker/bootstrap/modelling/Paint/Loop/Multi pins preserved. Existing rail-order regression now asserts the user's revised sequence; no behavior assertion removed. Opt-in comparison instructions no longer claim FRONT repaired.
+
+Protect accepted .1126 DRAG, DRAG-off directional/hold and finger navigation checks; icons accepted, new order awaits device check. .1125 and earlier cut/Paint PASSes remain protected. src/multi-object-transform.js?v=0.36.1.0 unchanged. .1127 hosted Topology 42758751675 is now SUCCESS, superseding its earlier pending status, but FRONT is explicitly native FAIL.
+
+Validation/publication: pending. Next: use supplied project and exact tap/tool/selection state to reproduce FRONT; preserve independent selection owners and history. Do not add another competing pointer handler or speculative filtering layer.
+
+---
+
 # .1127 — FRONT legacy-owner handoff and Paint rail order — 10 November 2026
 
 User reports .1126 check 1 FRONT FAIL (still selecting/retaining the through face instead of the front). Checks 2/3/4 PASS: explicit Pencil DRAG, DRAG-off directional/hold selection, finger orbit/pan/pinch are protected. Icons accepted. User requests Paint at the bottom. Do not record a blanket .1126 PASS.

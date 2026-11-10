@@ -161,9 +161,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1127",
+      "url": "./src/drawer-ui.js?v=0.36.18.1128",
       "target": "src/drawer-ui.js",
-      "sha256": "fe04dcda3794033f822f66c87e094361951cb985ecc9f34a934652ca519dc53c"
+      "sha256": "230952f2384365eebf9975b698ede8140f38345c9d6345199a91a73c48d7df9e"
     },
     {
       "owner": "index.html",
@@ -378,7 +378,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1127",
+      "url": "./src/release-version.js?v=0.36.18.1128",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -539,9 +539,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/topbar-layout.js?v=0.36.18.1127",
+      "url": "./src/topbar-layout.js?v=0.36.18.1128",
       "target": "src/topbar-layout.js",
-      "sha256": "981313f9acceded330673e37919cad286056af53521f9a645263f151df006963"
+      "sha256": "f575820c11d3d97d040da7029d315750c1c7eb67fbf04954cba8f8f430469a2e"
     },
     {
       "owner": "index.html",
@@ -864,9 +864,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1127",
+      "url": "./face-workflow-layout.js?v=0.36.18.1128",
       "target": "src/face-workflow-layout.js",
-      "sha256": "ada58058edf9d165446037ed47a22002dcd2e715ead455b2a6450b1692cc8aec"
+      "sha256": "ee774582257e9cb46427037beff3536002800d04be56fc06dae749a81bab4e63"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1361,7 +1361,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1127",
+      "url": "./release-version.js?v=0.36.18.1128",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -2044,9 +2044,9 @@
     },
     {
       "owner": "src/topbar-layout.js",
-      "url": "./viewport-toolbar-controls.js?v=0.36.18.1127",
+      "url": "./viewport-toolbar-controls.js?v=0.36.18.1128",
       "target": "src/viewport-toolbar-controls.js",
-      "sha256": "fdd75d3f9ce32e95b208bbb6f685e11b6770ff4b4a4553635a3567ae03c63c76"
+      "sha256": "bfc76382fb3f01a3bf5f3c4a910545dd13a4741a3fa448944d09020c71424032"
     },
     {
       "owner": "src/total-gizmo.js",
@@ -3326,9 +3326,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1127",
+      "url": "./src/shell-comparison.js?v=0.36.18.1128",
       "target": "src/shell-comparison.js",
-      "sha256": "825c6575574532923aa10474f105be902181f2f94c3eed0bb0dfac35ac0e475d"
+      "sha256": "7bdf3a9a4ad32e078cd7a90f1bb6644588fe7dec95f510d42bf424000ff58e56"
     },
     {
       "owner": "src/main.js",
