@@ -198,15 +198,35 @@ function seamVertexCandidates(vertices,used,eps){
     found.sort((a,b)=>a.rank-b.rank);return found.map(item=>item.id);
   };
 }
+// Invocation-local broad phase for the original first-ID distance lookup.
+// Canonical splits and direct appends only add vertices during this assembly.
+function assemblyVertexLookup(vertices,eps){
+  const axes=['x','y','z'],finite=p=>axes.every(k=>Number.isFinite(p[k]));
+  const linear=p=>vertices.findIndex(q=>q.distanceTo(p)<=eps);
+  if(vertices.length<2048||!(eps>0)||!Number.isFinite(eps)||vertices.some(p=>!finite(p)))return linear;
+  const bound=(list,value,upper=false)=>{let lo=0,hi=list.length;while(lo<hi){const mid=(lo+hi)>>>1;if(list[mid].value<value||(upper&&list[mid].value===value))lo=mid+1;else hi=mid;}return lo;};
+  const ordered=axes.map(axis=>vertices.map((p,id)=>({id,value:p[axis]})).sort((a,b)=>a.value-b.value||a.id-b.id));
+  let indexed=vertices.length,valid=true;
+  return p=>{
+    // Include every canonical split appended since the last uncached query.
+    while(valid&&indexed<vertices.length){const id=indexed++,v=vertices[id];if(!finite(v)){valid=false;break;}axes.forEach((axis,i)=>{const list=ordered[i],item={id,value:v[axis]};list.splice(bound(list,item.value,true),0,item);});}
+    if(!valid||!finite(p))return linear(p);
+    const ranges=axes.map((axis,i)=>{const pad=eps*2+Number.EPSILON*32*Math.max(1,Math.abs(p[axis])),min=p[axis]-pad,max=p[axis]+pad,list=ordered[i];return{axis,min,max,list,lo:bound(list,min),hi:bound(list,max,true)};});
+    if(ranges.some(r=>!Number.isFinite(r.min)||!Number.isFinite(r.max)))return linear(p);
+    const best=ranges.reduce((a,b)=>a.hi-a.lo<=b.hi-b.lo?a:b),[rx,ry,rz]=ranges,matches=q=>q.distanceTo(p)<=eps;let first=-1;
+    for(let i=best.lo;i<best.hi;i++){const {id}=best.list[i],q=vertices[id];if((first<0||id<first)&&q.x>=rx.min&&q.x<=rx.max&&q.y>=ry.min&&q.y<=ry.max&&q.z>=rz.min&&q.z<=rz.max&&matches(q))first=id;}
+    return first;
+  };
+}
 function assemble(before,polys,eps,groups=null) {
   const m=Object.create(Object.getPrototypeOf(before));Object.assign(m,topology().cloneMeshState(before));
   // Prevent EditableMesh.edges()'s UI observer from publishing the private trial mesh.
   m.edges=()=>[];
   // This private assembly only appends vertices; existing positions never move.
   // Repeated coordinate queries therefore keep the same first matching ID.
-  const vertexQueries=new Map();
+  const vertexQueries=new Map(),findVertex=m.vertices.length>=2048?assemblyVertexLookup(m.vertices,eps):null;
   function vertex(p){const key=Number.isFinite(eps)&&eps>=0&&[p.x,p.y,p.z].every(Number.isFinite)?`${p.x}:${p.y}:${p.z}`:null;if(key!==null&&vertexQueries.has(key))return vertexQueries.get(key);
-    let id=m.vertices.findIndex(q=>q.distanceTo(p)<=eps);if(id>=0){if(key!==null)vertexQueries.set(key,id);return id;}
+    let id=findVertex?findVertex(p):m.vertices.findIndex(q=>q.distanceTo(p)<=eps);if(id>=0){if(key!==null)vertexQueries.set(key,id);return id;}
     // The canonical t guard can reuse an endpoint beyond eps: never cache that non-match.
     for(const owners of edgeUses(m).values()){const {a,b}=owners[0],ab=m.vertices[b].clone().sub(m.vertices[a]),t=p.clone().sub(m.vertices[a]).dot(ab)/ab.lengthSq();if(t>0&&t<1&&m.vertices[a].clone().addScaledVector(ab,t).distanceTo(p)<=eps){const r=topology().canonicalEdgeSplit(m,a,b,p,{tolerance:eps});if(!r.ok)fail(r.reason);if(key!==null&&m.vertices[r.vertex].distanceTo(p)<=eps)vertexQueries.set(key,r.vertex);return r.vertex;}}
     m.vertices.push(p.clone());id=m.vertices.length-1;if(key!==null)vertexQueries.set(key,id);return id;
