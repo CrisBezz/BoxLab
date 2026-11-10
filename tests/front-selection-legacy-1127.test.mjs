@@ -1,4 +1,5 @@
 import test from 'node:test';
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
@@ -40,5 +41,5 @@ test('1127 every live bootstrap import uses the same refreshed module identity',
  assert(read('uniform-inset.js').includes("./loose-bootstrap.js?v=0.36.18.1127"));
  assert(read('multi-face-direct.js').includes("./uniform-inset.js?v=0.36.18.1127"));
  assert(read('loose-bootstrap.js').includes("./face-transform.js?v=0.36.18.1127"));
- const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');assert(index.includes('src/loose-bootstrap.js?v=0.36.18.1127'));assert(index.includes('src/multi-face-direct.js?v=0.36.18.1127'));
+ const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');assert(index.includes('src/loose-bootstrap.js?v=0.36.18.1127'));assertAssetReference(index,'multi-face-direct.js');
 });

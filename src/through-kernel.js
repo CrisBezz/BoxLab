@@ -236,6 +236,12 @@ function quadExitFrame(p,source,n,dir,depth,eps){
   const travel=normal.dot(p[0].clone().sub(source[0]))/normal.dot(dir);
   if(travel<=eps*32||travel>depth+eps*4)return null;
   const inner=source.map(v=>v.clone().addScaledVector(dir,travel)).reverse();
+  return quadAnnulusFrame(p,inner,eps);
+}
+// Shared frame planner for exit holes and coplanar inward-band wall patches.
+// It only connects existing boundary points; it never offsets a surface.
+function quadAnnulusFrame(p,inner,eps){
+  const normal=areaVector(p).normalize();
   if(p.some(v=>Math.abs(normal.dot(v.clone().sub(p[0])))>eps)||inner.some(v=>Math.abs(normal.dot(v.clone().sub(p[0])))>eps))return null;
   const turn=(a,b,c)=>b.clone().sub(a).cross(c.clone().sub(b)).dot(normal);
   if(p.some((a,i)=>turn(a,p[(i+1)%4],p[(i+2)%4])<=eps*eps))return null;
@@ -248,6 +254,83 @@ function quadExitFrame(p,source,n,dir,depth,eps){
     candidates.push({faces,cost:p.reduce((sum,v,i)=>sum+v.distanceToSquared(hole[i]),0)});
   }
   candidates.sort((a,b)=>a.cost-b.cost);return candidates[0]?.faces||null;
+}
+// Directed boundaries of an already conformed manifold face patch.
+function patchLoops(faces){
+  const uses=new Map();
+  for(const f of faces)for(let i=0;i<f.length;i++){const a=f[i],b=f[(i+1)%f.length],key=topology().edgeKey(a,b);if(!uses.has(key))uses.set(key,[]);uses.get(key).push({a,b});}
+  if([...uses.values()].some(u=>u.length>2))return null;
+  const next=new Map(),incoming=new Set();
+  for(const u of uses.values())if(u.length===1){const {a,b}=u[0];if(next.has(a)||incoming.has(b))return null;next.set(a,b);incoming.add(b);}
+  const unseen=new Set(next.keys()),loops=[];
+  while(unseen.size){const start=unseen.values().next().value,loop=[];let id=start;
+    do{if(!unseen.delete(id))return null;loop.push(id);id=next.get(id);}while(id!==start);
+    if(loop.length<3)return null;loops.push(loop);
+  }
+  return loops;
+}
+function straightAt(vertices,f,i,eps){
+  const p=vertices[f[(i+f.length-1)%f.length]],q=vertices[f[i]],r=vertices[f[(i+1)%f.length]],a=q.clone().sub(p),b=r.clone().sub(q);
+  return a.dot(b)>0&&a.clone().cross(b).length()<=eps*(a.length()+b.length());
+}
+// Retopologize only a proven convex four-corner annulus around a one-row band.
+// Concave/unequal boundaries, authored internal creases and mixed wall groups
+// keep the original cut. The clipping/classification and solid volume never change.
+function rebuildInwardBandFrames(before,trial,ids,eps){
+  if(ids.length<4||ids.some(i=>before.faces[i].length!==4))return trial;
+  const sourceLoops=patchLoops(ids.map(i=>before.faces[i]));if(sourceLoops?.length!==2)return trial;
+  const sourceVertices=new Set(ids.flatMap(i=>before.faces[i]));
+  if(sourceLoops.flat().length!==sourceVertices.size)return trial;
+  const normals=sourceLoops.map(loop=>areaVector(loop.map(i=>before.vertices[i])).normalize());
+  if(Math.abs(normals[0].dot(normals[1]))<.999999||Math.abs(before.vertices[sourceLoops[0][0]].clone().sub(before.vertices[sourceLoops[1][0]]).dot(normals[0]))<=eps*4)return trial;
+  const first=new Set(sourceLoops[0]);
+  if(ids.some(fi=>{const f=before.faces[fi];return f.filter(i=>first.has(i)).length!==2||f.some((a,i)=>{const b=f[(i+1)%4];return first.has(a)!==first.has(b)&&before.vertices[b].clone().sub(before.vertices[a]).cross(normals[0]).length()>eps*4;});}))return trial;
+  const creaseVertices=new Set([...trial.creases].filter(([,v])=>v>0).flatMap(([key])=>key.split(':').map(Number))),plans=[];
+  for(let side=0;side<2;side++){
+    const loop=sourceLoops[side],normal=normals[side],origin=before.vertices[loop[0]],corners=loop.filter((_,i)=>!straightAt(before.vertices,loop,i,eps));
+    if(corners.length!==4||loop.some(i=>Math.abs(before.vertices[i].clone().sub(origin).dot(normal))>eps*4))continue;
+    const outer=corners.map(i=>before.vertices[i]);
+    if(outer.some((a,i)=>outer[(i+1)%4].clone().sub(a).cross(outer[(i+2)%4].clone().sub(outer[(i+1)%4])).dot(normal)<=eps*eps))continue;
+    const within=p=>outer.every((a,i)=>outer[(i+1)%4].clone().sub(a).cross(p.clone().sub(a)).dot(normal)>=-eps*outer[(i+1)%4].distanceTo(a)*4);
+    // Do not rewrite pre-existing coplanar faces/cuts at a band endpoint.
+    if(before.faces.some(f=>{const p=f.map(i=>before.vertices[i]);return p.every(v=>Math.abs(v.clone().sub(origin).dot(normal))<=eps*4)&&within(center(p));}))continue;
+    const patch=[];
+    trial.faces.forEach((f,fi)=>{const p=f.map(i=>trial.vertices[i]);if(areaVector(p).normalize().dot(normal)>.999999&&p.every(v=>Math.abs(v.clone().sub(origin).dot(normal))<=eps*4&&within(v)))patch.push(fi);});
+    if(!patch.length)continue;const patchSet=new Set(patch),group=trial.faceGroups?.[patch[0]]??null;
+    if(patch.some(i=>(trial.faceGroups?.[i]??null)!==group))continue;
+    const boundaries=patchLoops(patch.map(i=>trial.faces[i]));if(boundaries?.length!==2)continue;
+    const outside=boundaries.find(f=>areaVector(f.map(i=>trial.vertices[i])).dot(normal)>0),inside=boundaries.find(f=>areaVector(f.map(i=>trial.vertices[i])).dot(normal)<0);
+    if(!outside||!inside)continue;
+    // Keep original cage vertices, creases, and every real seam into a neighbour.
+    const keep=new Set([...creaseVertices,...Array.from({length:before.vertices.length},(_,i)=>i)]);
+    trial.faces.forEach((f,fi)=>{if(patchSet.has(fi))return;const p=f.map(i=>trial.vertices[i]),n=areaVector(p).normalize(),warped=p.some(v=>Math.abs(v.clone().sub(p[0]).dot(n))>eps*4);f.forEach((id,i)=>{if(warped||!straightAt(trial.vertices,f,i,eps))keep.add(id);});});
+    const retain=f=>f.filter((id,i)=>keep.has(id)||!straightAt(trial.vertices,f,i,eps));
+    const A=retain(outside),B=retain([...inside].reverse()),ac=A.filter((_,i)=>!straightAt(trial.vertices,A,i,eps)),bc=B.filter((_,i)=>!straightAt(trial.vertices,B,i,eps));
+    if(ac.length!==4||bc.length!==4||ac.some(i=>!outer.some(p=>p.distanceTo(trial.vertices[i])<=eps*4)))continue;
+    const frames=quadAnnulusFrame(ac.map(i=>trial.vertices[i]),bc.map(i=>trial.vertices[i]),eps);if(!frames)continue;
+    const inner=frames.map(f=>B.find(id=>trial.vertices[id].distanceTo(f[3])<=eps)),pieces=[];
+    const run=(f,a,b)=>{const out=[a];for(let i=(f.indexOf(a)+1)%f.length;i!==f.indexOf(b);i=(i+1)%f.length){if(out.length>f.length)return null;out.push(f[i]);}out.push(b);return out;};
+    let good=inner.every(Number.isInteger);
+    for(let i=0;good&&i<4;i++){const a=run(A,ac[i],ac[(i+1)%4]),b=run(B,inner[i],inner[(i+1)%4]);if(!a||!b||a.length!==b.length){good=false;break;}for(let j=0;j<a.length-1;j++)pieces.push([a[j],a[j+1],b[j+1],b[j]]);}
+    if(!good||pieces.some(f=>f.some((id,i)=>trial.vertices[f[(i+1)%4]].clone().sub(trial.vertices[id]).cross(trial.vertices[f[(i+2)%4]].clone().sub(trial.vertices[f[(i+1)%4]])).dot(normal)<=eps*eps)))continue;
+    const oldArea=patch.reduce((n,i)=>n+areaVector(trial.faces[i].map(id=>trial.vertices[id])).length(),0),newArea=pieces.reduce((n,f)=>n+areaVector(f.map(id=>trial.vertices[id])).length(),0);
+    if(Math.abs(oldArea-newArea)>Math.max(eps*eps*32,oldArea*1e-7))continue;
+    const boundariesKeys=new Set(boundaries.flatMap(f=>f.map((a,i)=>topology().edgeKey(a,f[(i+1)%f.length]))));
+    if([...edgeUses({faces:patch.map(i=>trial.faces[i])})].some(([key])=>!boundariesKeys.has(key)&&(trial.creases.get(key)||0)>0))continue;
+    if(plans.some(p=>p.patch.some(i=>patchSet.has(i))))continue;
+    plans.push({patch,pieces,group});
+  }
+  if(!plans.length)return trial;
+  const removed=new Set(plans.flatMap(p=>p.patch)),starts=new Map(plans.map(p=>[p.patch[0],p])),faces=[],groups=[];
+  trial.faces.forEach((f,fi)=>{const p=starts.get(fi);if(p)for(const piece of p.pieces){faces.push(piece);groups.push(p.group);}if(!removed.has(fi)){faces.push([...f]);groups.push(trial.faceGroups?.[fi]??null);}});
+  // Only erase newly introduced straight partition points; never authored cage
+  // vertices, a crease endpoint, or a warped polygon's displayed fan anchor.
+  const removable=new Set(faces.flat().filter(id=>id>=before.vertices.length&&!creaseVertices.has(id)));
+  for(const f of faces){const p=f.map(i=>trial.vertices[i]),n=areaVector(p).normalize(),warped=p.some(v=>Math.abs(v.clone().sub(p[0]).dot(n))>eps*4);f.forEach((id,i)=>{if(warped||!straightAt(trial.vertices,f,i,eps))removable.delete(id);});}
+  const polys=faces.map(f=>f.filter(id=>!removable.has(id)).map(id=>trial.vertices[id]));
+  if(polys.some(p=>p.length<3))return trial;
+  try{const candidate=assemble(trial,polys,eps,groups),valid=validateThrough(candidate,eps);delete candidate.edges;return valid.ok?candidate:trial;}
+  catch{return trial;} // Optional retopology must not turn a valid cut into a refusal.
 }
 // Finite inward prism subtraction. Reuse Through's clipping, solid classification
 // and canonical seam assembly; private trials never publish into the live scene.
@@ -298,6 +381,7 @@ export function buildNegativeExtrude(before,faceIndices,distance) {
       if(!trial.faces.length)fail('entire-solid-removal');
       delete trial.edges;
     }
+    trial=rebuildInwardBandFrames(before,trial,ids,eps);
     trial.compactUnusedVertices?.({preserveLoose:true});
     // Identify surviving recessed caps geometrically, after every cutter has run.
     const faceIndicesOut=[];
