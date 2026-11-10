@@ -1,3 +1,5 @@
+import {bindDragSelectionPuck} from './drag-selection-puck.js?v=0.36.18.1130';
+import {compactRadialLabels} from './radial-compact-labels.js?v=0.36.18.1130';
 import { installLocalPivot } from './gizmo-local-pivot.js?v=0.36.18.1023';
 import { mountGizmoCornerControls } from './gizmo-corner-controls.js?v=0.36.18.1023';
 import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.732';
@@ -462,6 +464,16 @@ const toolSectors=[...root.querySelectorAll('.tg-tool-sector')];
 const hud=root.querySelector('.tg-hud'),hudText=root.querySelector('.tg-hud-text');
 const edgeExtrudeBadge=root.querySelector('.tg-edge-extrude-badge');
 installLocalPivot({root,canvas,status,getMode:currentMode});
+compactRadialLabels(toolSectors);
+bindDragSelectionPuck(activator,{
+ input:()=>globalThis.__boxlabSelectionInput,
+ ready:()=>currentMode()==='face'&&globalThis.__boxlabSelectionInput?.dragPuck?.(),
+ onFinish:anchor=>{
+  root.__dragToolAnchor=anchor;
+  lastSelectionKey=selectionKey(state()?.mesh,currentMode());hubSuppressedKey='';
+  setHubState('tools',{reason:'drag-selection-puck'});syncContextToolAvailability();cancelAnimationFrame(raf);sync();
+ }
+});
 
 const edgeExtrudeStyle=document.createElement('style');
 edgeExtrudeStyle.textContent=`
@@ -528,7 +540,7 @@ function syncContextToolAvailability(){
     }else if(active){
       sector.title=`${sector.textContent?.trim()||'Tool'} active`;
     }else{
-      sector.removeAttribute('title');
+      sector.setAttribute('title',sector.dataset.radialTitle||sector.textContent.trim());
     }
   }
 }
@@ -1121,19 +1133,21 @@ function syncAxisVisuals(center,camera){
   syncRotationRings(center,camera);
 }
 
-let faceDragHidden=false;
-window.addEventListener('boxlab-selection-input-change',()=>{
-  const hide=currentMode()==='face'&&!!globalThis.__boxlabSelectionInput?.dragFaces?.();
-  if(hide===faceDragHidden)return;faceDragHidden=hide;
-  if(hide){root.hidden=true;hideFloatInput();}
-  else{cancelAnimationFrame(raf);sync();}
-});
+window.addEventListener('boxlab-selection-input-change',()=>{cancelAnimationFrame(raf);sync();});
 function sync(){
   const perf=globalThis.__boxlabPerformance,start=perf?.start();try{
   raf=requestAnimationFrame(sync);
   const s=state(),mesh=s?.mesh,camera=s?.camera,mode=currentMode();
-  if(mode==='face'&&globalThis.__boxlabSelectionInput?.dragFaces?.()){root.hidden=true;hideFloatInput();return;}
-  if(!canvas||!viewportWrap||!mesh?.vertices?.length||!camera||!selectionAvailable(mesh,mode)){
+  const dragSelecting=mode==='face'&&!!globalThis.__boxlabSelectionInput?.dragFaces?.();
+  const dragPuck=dragSelecting?globalThis.__boxlabSelectionInput?.dragPuck?.():null;
+  root.dataset.dragSelection=String(dragSelecting);
+  if(dragSelecting&&!dragPuck){root.hidden=true;hideFloatInput();return;}
+  if(dragSelecting){hubState='closed';expanded=false;hideFloatInput();}
+  const hasSelection=mesh&&selectionAvailable(mesh,mode);
+  const anchor=root.__dragToolAnchor,anchorValid=anchor?.mesh===mesh&&anchor?.objectId===(globalThis.__boxlabObjectManager?.activeId??null);
+  const fallback=dragPuck||(mode==='face'&&hubState==='tools'&&anchorValid?anchor:null);
+  if(mode!=='face'||hasSelection||!anchorValid)root.__dragToolAnchor=null;
+  if(!canvas||!viewportWrap||!mesh?.vertices?.length||!camera||(!hasSelection&&!fallback)){
     if(edgeExtrudeConstraintSession&&mode==='edge'){
       edgeExtrudeConstraintSession=false;
       syncEdgeExtrudeConstraintVisuals?.();
@@ -1148,7 +1162,7 @@ function sync(){
     lastSelectionKey=key;
     hubSuppressedKey='';
     if(mode==='object')objectTransformDismissed=false;
-    setHubState((edgeExtrudeConstraintSession&&mode==='edge')||vertexExtrudeConstraintSession()?'transform':(mode==='object'?'transform':'closed'),{reason:'selection-change'});
+    if(!fallback)setHubState((edgeExtrudeConstraintSession&&mode==='edge')||vertexExtrudeConstraintSession()?'transform':(mode==='object'?'transform':'closed'),{reason:'selection-change'});
   }else if(mode==='object'&&!objectTransformDismissed&&hubState!=='transform'&&hubState!=='tools'){
     setHubState('transform',{reason:'object-mode'});
   }
@@ -1157,7 +1171,7 @@ function sync(){
   // animation-frame owner. Refresh the camera matrices before projecting the
   // gizmo anchor so an orbit frame cannot use the previous view transform.
   camera.updateMatrixWorld?.(true);
-  const c=centerOf(mesh,mode),p=screenPoint(c,camera),cr=canvas.getBoundingClientRect(),vr=viewportWrap.getBoundingClientRect();
+  const c=hasSelection?centerOf(mesh,mode):null,p=hasSelection?screenPoint(c,camera):{x:fallback.clientX-canvas.getBoundingClientRect().left,y:fallback.clientY-canvas.getBoundingClientRect().top},cr=canvas.getBoundingClientRect(),vr=viewportWrap.getBoundingClientRect();
   const selectionLeft=cr.left-vr.left+p.x,selectionTop=cr.top-vr.top+p.y;
   let left=selectionLeft,top=selectionTop;
   if((edgeExtrudeConstraintSession&&mode==='edge')||vertexExtrudeConstraintSession()){

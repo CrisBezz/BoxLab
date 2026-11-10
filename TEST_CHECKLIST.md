@@ -1,3 +1,14 @@
+# .1130 refinement gate — 10 November 2026
+
+- .1129 FRONT user PASS and .1128 icon order PASS protected. No geometry/topology/Multi/Paint-data regressions allowed.
+- Painted-face selection: original overlay uses polygon offset and no depth writes; retains depth testing against hidden faces. Check native selected painted faces while orbiting.
+- DRAG stroke operation is fixed by first hit: unselected adds, selected removes; re-crossing does not toggle. FRONT on/off, cancellation/redo/controls/primary/batching and context-change guards retained.
+- After a completed moving stroke the original puck appears; DRAG stays active. Puck drag/cancel/lost capture must not exit; tap does exit and opens original tools. Empty selection uses last stroke anchor; old mesh/object puck cannot leak. Preserve ordinary component puck/transform workflow.
+- 72 original modelling targets retain IDs/angles/owners, circular frames and captions/full titles; 52x56 boxes do not overlap at radii80/134/194. Paint ten original targets fit292px; Material swatch/centre/drag handle and advanced controls retain owners. Compact mode retains adaptive placement.
+- Focused 111 checks and final release/selection53 PASS; initial full3,357 PASS, corrected compact18 PASS, final full3,358/3,358 PASS with0 failures/skips; hosted visual/publication pending. Native tests listed in handoff. Accepted FRONT, icon order, DRAG-off directional gestures and finger navigation remain protected.
+
+---
+
 # .1129 FRONT tap gate — 10 November 2026
 
 - Protect user .1128 icon-order PASS: Select / Lasso / Drag / Front / Paint. No toolbar source changes.

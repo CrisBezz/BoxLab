@@ -161,9 +161,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1129",
+      "url": "./src/drawer-ui.js?v=0.36.18.1130",
       "target": "src/drawer-ui.js",
-      "sha256": "6dcd904717f1c28d7a7f1b56f5f5398382367e5257988b2f4782b62287f9c956"
+      "sha256": "8b43e3d751d01df10add1b7ef7d7e312b8a8ba9b23a596923ef7548cf3ef483b"
     },
     {
       "owner": "index.html",
@@ -192,9 +192,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/edge-paint-select.js?v=0.36.18.1126",
+      "url": "./src/edge-paint-select.js?v=0.36.18.1130",
       "target": "src/edge-paint-select.js",
-      "sha256": "99248572c86a4ee21d5f19d9b20fc74de0f11b713a6ca146e1fdb4d264321b46"
+      "sha256": "38daf9d7d3e34dea64607a0acd87fb784698642595bcaec7c30883a20999be49"
     },
     {
       "owner": "index.html",
@@ -297,9 +297,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/main.js?v=0.36.18.1126",
+      "url": "./src/main.js?v=0.36.18.1130",
       "target": "src/main.js",
-      "sha256": "1b358aa605842dc8c88ba4f707580bcf08bd55e6305fc5511d621f3404dbb9a3",
+      "sha256": "59ee65a7752065c124ddd7a2a20fe6ba8d31a3c3464651b504eed53f8063935e",
       "sourceVersion": "0.35.1"
     },
     {
@@ -378,7 +378,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1129",
+      "url": "./src/release-version.js?v=0.36.18.1130",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -539,15 +539,15 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/topbar-layout.js?v=0.36.18.1128",
+      "url": "./src/topbar-layout.js?v=0.36.18.1130",
       "target": "src/topbar-layout.js",
-      "sha256": "f575820c11d3d97d040da7029d315750c1c7eb67fbf04954cba8f8f430469a2e"
+      "sha256": "dcee8205b16ddbd505ea15aeacb7487aca6cf0a824849d48049fb4315d9cbd9f"
     },
     {
       "owner": "index.html",
-      "url": "./src/total-gizmo.js?v=0.36.18.1126",
+      "url": "./src/total-gizmo.js?v=0.36.18.1130",
       "target": "src/total-gizmo.js",
-      "sha256": "be5498887115bf5083bfdba902f05cd9a522944bc01a05d9209816c1de5862e4"
+      "sha256": "07195206f4eb2971be305adeec6d70628d3d1fcc37c707a894d47567b0509171"
     },
     {
       "owner": "index.html",
@@ -864,9 +864,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1129",
+      "url": "./face-workflow-layout.js?v=0.36.18.1130",
       "target": "src/face-workflow-layout.js",
-      "sha256": "dea6cc0c62b2c77a07c682ec48aee6f33cb89787b59e02911057903552e6e921"
+      "sha256": "a95e8b19302bd048199710f7ee065be3eb6a2982a859374640b83e4318fe3e18"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1361,7 +1361,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1129",
+      "url": "./release-version.js?v=0.36.18.1130",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -2044,9 +2044,9 @@
     },
     {
       "owner": "src/topbar-layout.js",
-      "url": "./viewport-toolbar-controls.js?v=0.36.18.1128",
+      "url": "./viewport-toolbar-controls.js?v=0.36.18.1130",
       "target": "src/viewport-toolbar-controls.js",
-      "sha256": "bfc76382fb3f01a3bf5f3c4a910545dd13a4741a3fa448944d09020c71424032"
+      "sha256": "db3d31adc67cd770c9e51e1ebc85eb2d273e620cfc359f8dff65d0693e216f16"
     },
     {
       "owner": "src/total-gizmo.js",
@@ -2456,9 +2456,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/viewport-paint.js?v=0.36.18.1123",
+      "url": "./src/viewport-paint.js?v=0.36.18.1130",
       "target": "src/viewport-paint.js",
-      "sha256": "f02f307983f1e68ed4c98d3c1bc67395b22f688c8649211a171ff1b7354844a2"
+      "sha256": "025c1bd7027d70e6ef9f3a24b312bd8f8b1abeb068cca56567378e6ad2925c38"
     },
     {
       "owner": "src/viewport-paint.js",
@@ -3326,9 +3326,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1129",
+      "url": "./src/shell-comparison.js?v=0.36.18.1130",
       "target": "src/shell-comparison.js",
-      "sha256": "5ae024064a9cbc3ed87c055718411210f3eb44397fbe3353477256c90d617139"
+      "sha256": "6fca25e1dc5c614c1da7c0855fbd3062dc152e5a28119f6da02fff82eb9201a2"
     },
     {
       "owner": "src/main.js",
@@ -3368,9 +3368,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/compact-layout.js?v=0.36.18.1012",
+      "url": "./src/compact-layout.js?v=0.36.18.1130",
       "target": "src/compact-layout.js",
-      "sha256": "8d64220a1f00c9b7ad4280d43eb63c87e7516e3df456fca130557fc32def5fcb"
+      "sha256": "c5cb24415bcceb6317758a0db20cbc725ad99ea6686d904cb8ba85495875e570"
     },
     {
       "owner": "index.html",
@@ -3686,9 +3686,27 @@
     },
     {
       "owner": "src/viewport-toolbar-controls.js",
-      "url": "./selection-input-controls.js?v=0.36.18.1126",
+      "url": "./selection-input-controls.js?v=0.36.18.1130",
       "target": "src/selection-input-controls.js",
-      "sha256": "6fc08fc1b961cd28266371c425b815cc87fbc719e5234af0691b8eabf1baf1c8"
+      "sha256": "454f94d3ca871fdd9b316b06aebbf8669abc600a1067dae6f5e92f79a219277c"
+    },
+    {
+      "owner": "index.html",
+      "url": "./radial-compact.css?v=0.36.18.1130",
+      "target": "radial-compact.css",
+      "sha256": "888e27fd8c0c9db49bec091c4b4c685b5e0b31a3841a23d20a724b64465ddb55"
+    },
+    {
+      "owner": "src/total-gizmo.js",
+      "url": "./drag-selection-puck.js?v=0.36.18.1130",
+      "target": "src/drag-selection-puck.js",
+      "sha256": "880b431141dbab2806fd25daeb34e2d432dc81ecc41db27cf046e35bb2bbed9f"
+    },
+    {
+      "owner": "src/total-gizmo.js",
+      "url": "./radial-compact-labels.js?v=0.36.18.1130",
+      "target": "src/radial-compact-labels.js",
+      "sha256": "4c850c35a36cd01d6d40587ae596b7a19cca999b2a1d515852c7d1c7741748b3"
     }
   ]
 }

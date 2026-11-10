@@ -24,10 +24,10 @@
       if(!item.hasAttribute('aria-label'))item.setAttribute('aria-label',label);
       if(!item.hasAttribute('title'))item.setAttribute('title',label);
       if(item.closest('#boxlabPaintRadial')){
-        const x=parseFloat(item.style.left),y=parseFloat(item.style.top);
+        const x=parseFloat(item.style.left),y=parseFloat(item.style.top),size=Number(item.closest('.paint-tool-wheel')?.dataset?.layoutSize),native=Number.isFinite(size)&&size>0,centre=native?size/2:175,scale=native?292/size:.8;
         if(Number.isFinite(x)&&Number.isFinite(y)){
-          item.style.setProperty('--compact-x',`${146+(x-175)*.8}px`);
-          item.style.setProperty('--compact-y',`${146+(y-175)*.8}px`);
+          item.style.setProperty('--compact-x',`${146+(x-centre)*scale}px`);
+          item.style.setProperty('--compact-y',`${146+(y-centre)*scale}px`);
         }
       }
     }

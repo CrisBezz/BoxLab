@@ -66,17 +66,20 @@ function finishFaceDrag(cancel=false){
  const g=faceDrag;if(!g)return;faceDrag=null;
  if(cancel&&faceDragValid(g))selection()?.set?.('face',g.seed);
  if(g.controls)g.controls.enabled=g.enabled;
+ if(!cancel&&g.moved&&faceDragValid(g))globalThis.__boxlabSelectionInput?.showDragPuck?.({clientX:g.x,clientY:g.y});
  try{canvas.releasePointerCapture?.(g.id);}catch{}
 }
 function addFaceIndices(indices){
  const b=selection(),old=b?.indices?.()||[],next=new Set(old);let primary=null;
- for(const id of indices)if(!next.has(id)){next.add(id);primary=id;}
- if(primary!==null)b?.set?.('face',[...next],primary);
+ let changed=false;
+ for(const id of indices){if(faceDrag?.remove){if(next.delete(id))changed=true;}else if(!next.has(id)){next.add(id);primary=id;changed=true;}}
+ if(changed)b?.set?.('face',[...next],primary);
 }
 function faceDragSample(event){
  const g=faceDrag;if(!g||!faceDragValid(g)){finishFaceDrag(true);return;}
  const coalesced=event.getCoalescedEvents?.()||[],points=coalesced.length?[...coalesced,event]:[event],hits=new Set();
  for(const point of points){
+  g.moved ||= Math.hypot(point.clientX-g.startX,point.clientY-g.startY)>=4;
   const dx=point.clientX-g.x,dy=point.clientY-g.y,steps=Math.min(256,Math.max(1,Math.ceil(Math.hypot(dx,dy)/4)));
   for(let i=1;i<=steps;i++)for(const id of hitIndices({clientX:g.x+dx*i/steps,clientY:g.y+dy*i/steps},'face'))hits.add(id);
   g.x=point.clientX;g.y=point.clientY;
@@ -90,7 +93,7 @@ window.addEventListener('pointerdown',event=>{
  if(globalThis.__boxlabViewportPaint?.active||globalThis.__boxlabToolSession?.isActive?.()||globalThis.__boxlabFaceDirect?.active?.()||globalThis.__boxlabMainDirectTool?.ownsModellingGesture?.()||globalThis.__boxlabActiveGizmoDrag||globalThis.__boxlabLasso?.isArmed?.()||globalThis.__boxlabFacegroupStroke?.armed)return;
  const first=hitIndices(event,'face');if(!first.length)return;
  finishFaceDrag(true);pendingPaint=null;paint=null;
- const controls=state()?.controls;faceDrag={id:event.pointerId,mesh:state()?.mesh,objectId:globalThis.__boxlabObjectManager?.activeId??null,seed:[...(selection()?.indices?.()||[])],controls,enabled:controls?.enabled,x:event.clientX,y:event.clientY};
+ const controls=state()?.controls;faceDrag={id:event.pointerId,mesh:state()?.mesh,objectId:globalThis.__boxlabObjectManager?.activeId??null,seed:[...(selection()?.indices?.()||[])],controls,enabled:controls?.enabled,x:event.clientX,y:event.clientY,startX:event.clientX,startY:event.clientY,moved:false,remove:(selection()?.indices?.()||[]).includes(first[0])};
  event.preventDefault();event.stopImmediatePropagation();
  if(controls)controls.enabled=false;
  try{canvas.setPointerCapture?.(event.pointerId);}catch{finishFaceDrag(true);return;}

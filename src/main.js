@@ -35,7 +35,7 @@ let subdEnabled=false,subdLevel=1,showCage=true,activeLoopSlides=[],activeLoopSl
 const mirrorAxes={x:false,y:false,z:false},history=new History(60),root=new THREE.Group();scene.add(root);
 const baseMaterial=new THREE.MeshStandardMaterial({color:0x9daabd,roughness:.78,metalness:0,side:THREE.DoubleSide,polygonOffset:true,polygonOffsetFactor:1,polygonOffsetUnits:1});
 const subdMaterial=new THREE.MeshStandardMaterial({color:0xbac5d4,roughness:.72,metalness:0,side:THREE.DoubleSide});
-const selectedMaterial=new THREE.MeshBasicMaterial({color:0xff615f,transparent:true,opacity:.78,side:THREE.DoubleSide,depthTest:true});
+const selectedMaterial=new THREE.MeshBasicMaterial({color:0xff615f,transparent:true,opacity:.78,side:THREE.DoubleSide,depthTest:true,depthWrite:false,polygonOffset:true,polygonOffsetFactor:-2,polygonOffsetUnits:-2});
 const vertexMaterial=new THREE.MeshBasicMaterial({color:0xf2f5fa}),selectedVertexMaterial=new THREE.MeshBasicMaterial({color:0xff615f}),edgeMaterial=new THREE.LineBasicMaterial({color:0xd5deeb,transparent:true,opacity:.9});
 const axisLineMaterials={x:new THREE.LineBasicMaterial({color:0xff4a45,depthTest:false}),y:new THREE.LineBasicMaterial({color:0x55d66b,depthTest:false}),z:new THREE.LineBasicMaterial({color:0x4f86ff,depthTest:false}),neutral:new THREE.LineBasicMaterial({color:0xffffff,depthTest:false})};
 const axisOverlayMaterials={x:new THREE.MeshBasicMaterial({color:0xff4a45,depthTest:false}),y:new THREE.MeshBasicMaterial({color:0x55d66b,depthTest:false}),z:new THREE.MeshBasicMaterial({color:0x4f86ff,depthTest:false}),neutral:new THREE.MeshBasicMaterial({color:0xffffff,depthTest:false})};

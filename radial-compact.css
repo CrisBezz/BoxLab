@@ -1,0 +1,41 @@
+/* .1130: original artwork and angular slots, compact circular icon frames. */
+#totalGizmo .tg-tool-ring[data-ring-mode] .tg-tool-sector{
+ box-sizing:border-box;width:52px;height:56px;min-height:56px;margin:-28px -26px;
+ padding:0;gap:0;border:0;border-radius:0;background:transparent!important;box-shadow:none;
+ display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
+ font-size:8px;line-height:8px;text-align:center;white-space:normal;
+}
+#totalGizmo .tg-tool-ring[data-ring-mode] .tg-tool-sector::before{
+ box-sizing:border-box;content:"";width:40px;height:40px;flex:none;border:1px solid #ffffff38;
+ border-radius:50%;background-color:#18212ff5;background-size:28px 28px;
+ background-position:center;background-repeat:no-repeat;
+}
+#totalGizmo .tg-tool-ring[data-ring-mode] .radial-caption{display:block;width:52px;height:16px;overflow:hidden;line-height:8px;font-size:8px;overflow-wrap:normal}
+#totalGizmo .tg-tool-ring[data-ring-mode] .tg-tool-danger::before{border-color:#dc747a88}
+#totalGizmo .tg-tool-ring[data-ring-mode] .tg-tool-active::before{background-color:#225b91;border-color:#86bfff}
+#totalGizmo .tg-tool-ring[data-ring-mode] .tg-tool-sector:focus-visible::before{outline:2px solid #a9ccff;outline-offset:2px}
+html:not(.boxlab-compact-ui) #totalGizmo .tg-tool-ring[data-ring-mode] .tg-tool-sector{transform:rotate(var(--a)) translateY(-80px) rotate(calc(-1 * var(--a)))}
+html:not(.boxlab-compact-ui) #totalGizmo .tg-tool-ring[data-ring-mode] .tg-tool-outer{transform:rotate(var(--a)) translateY(-194px) rotate(calc(-1 * var(--a)))}
+html:not(.boxlab-compact-ui) #totalGizmo .tg-tool-ring[data-ring-mode] .tg-tool-mid{transform:rotate(var(--a)) translateY(-134px) rotate(calc(-1 * var(--a)))}
+html:not(.boxlab-compact-ui) #totalGizmo [class$="-outer-guide"]{width:388px;height:388px;margin:0;border-radius:50%}
+html.boxlab-compact-ui #totalGizmo .tg-tool-ring[data-ring-mode] .tg-tool-sector{width:44px;height:44px;min-height:44px;margin:-22px;padding:2px}
+html.boxlab-compact-ui #totalGizmo .tg-tool-ring[data-ring-mode] .radial-caption{display:none}
+#boxlabPaintRadial[data-state=tools]{width:292px;height:292px}
+#boxlabPaintRadial[data-state=tools] .paint-tool-wheel{width:292px;height:292px}
+#boxlabPaintRadial .paint-tool-wheel>button[data-paint]:not(.paint-radial-centre){
+ width:52px;height:56px;min-height:56px;padding:0;gap:0;border:0;border-radius:0;
+ background:transparent;box-shadow:none;font-size:8px;line-height:8px;justify-content:flex-start;
+}
+#boxlabPaintRadial .paint-tool-wheel>button[data-paint]::before,
+#boxlabPaintRadial .paint-tool-wheel>button[data-paint]>[data-paint=radial-material-swatch]{
+ box-sizing:border-box;width:40px;height:40px;flex:none;border:1px solid #ffffff38;border-radius:50%;
+ background-color:#18212ff5;background-size:28px 28px;background-position:center;background-repeat:no-repeat;
+}
+#boxlabPaintRadial .paint-tool-wheel>button[data-paint]>span:last-child{width:52px;line-height:8px;font-size:8px;max-height:16px;overflow:hidden}
+#boxlabPaintRadial .paint-tool-wheel>button[aria-pressed=true]::before{background-color:#225b91;border-color:#86bfff}
+#boxlabPaintRadial .paint-tool-wheel>button:focus-visible{outline:2px solid #a9ccff;outline-offset:2px}
+/* During Face DRAG the original puck is the only interactive gizmo surface. */
+#totalGizmo[data-drag-selection=true]>*:not(.tg-activator){display:none!important;pointer-events:none!important}
+
+@media(max-width:400px){html.boxlab-compact-ui #totalGizmo .tg-tool-ring[data-ring-mode] .tg-tool-sector{margin:0}}
+html.boxlab-compact-ui #boxlabPaintRadial .paint-tool-wheel>button>[data-paint=radial-material-swatch]{display:block}

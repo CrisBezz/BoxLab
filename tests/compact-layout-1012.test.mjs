@@ -46,3 +46,11 @@ test('1012 compact CSS preserves regular layout and labels while extra-narrow gr
  assert(!css.includes('.tg-tool-ring:not([hidden])'));
  assert(!read('src/compact-layout.js').match(/dispatchEvent|requestAnimationFrame|setInterval|__boxlabHistory|__boxlabBridgeState/));
 });
+
+
+test('1130 native compact Paint coordinates keep the new292 wheel centred without legacy double scaling',()=>{
+ const r=runtime(),attrs={},style={left:'146px',top:'32px',setProperty(k,v){this[k]=v;}};
+ const item={nodeType:1,textContent:'Brush',style,matches:()=>true,querySelectorAll:()=>[],getAttribute:k=>attrs[k],hasAttribute:k=>k in attrs,setAttribute:(k,v)=>attrs[k]=v,closest:s=>s==='.paint-tool-wheel'?{dataset:{layoutSize:'292'}}:{}};
+ r.added(item);assert.equal(style['--compact-x'],'146px');assert.equal(style['--compact-y'],'32px');assert.equal(style.top,'32px');
+ const css=read('radial-compact.css');assert(css.includes('@media(max-width:400px){html.boxlab-compact-ui #totalGizmo .tg-tool-ring[data-ring-mode] .tg-tool-sector{margin:0}}'));
+});

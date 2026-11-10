@@ -3,11 +3,13 @@ import * as THREE from 'three';
 // One session-level preference owner. Picking and stroke events stay with their
 // existing main/Lasso/paint owners; this module only supplies policy and controls.
 export function createSelectionInputOptions(scope=globalThis){
- let front=true,drag=false;const listeners=new Set();
+ let front=true,drag=false,puck=null;const listeners=new Set();
  const notify=()=>{for(const fn of listeners)fn();if(scope.window?.dispatchEvent&&scope.CustomEvent)scope.window.dispatchEvent(new scope.CustomEvent('boxlab-selection-input-change'));};
  return {frontOnly:()=>front,dragFaces:()=>drag,
+  dragPuck:()=>puck&&puck.mesh===scope.__boxlabBridgeState?.mesh&&puck.objectId===(scope.__boxlabObjectManager?.activeId??null)?puck:null,
+  showDragPuck(point){puck={...point,mesh:scope.__boxlabBridgeState?.mesh,objectId:scope.__boxlabObjectManager?.activeId??null};notify();},
   setFront(value){front=!!value;notify();return true;},
-  setDrag(value){drag=!!value;notify();return true;},
+  setDrag(value){drag=!!value;puck=null;notify();return true;},
   subscribe(fn){listeners.add(fn);return()=>listeners.delete(fn);},
   filterFaceHits(hits,direction){
    if(!front)return hits;if(!hits.length)return [];
@@ -24,7 +26,7 @@ export function installSelectionInputControls(doc,bar,scope=globalThis){
  const icons={front:'<path d="m3 15 4-7 11 3-4 8Z"/><circle cx="10.5" cy="13" r="1"/><path d="m10.5 13 5-10m-4 2 4-2 1 4"/>',drag:'<path d="M2 12h6v7H2zM9 8h6v7H9zM16 4h6v7h-6z"/><path stroke-dasharray="1.5 2" d="M1 17c6-12 10 5 22-13"/>'};
  const mode=()=>scope.__boxlabSelectionBridge?.mode?.()||doc.querySelector('#selectionModes button.active')?.dataset?.mode||'face';
  const buttons={};
- for(const [key,id,label,title]of [['front','frontSelectBtn','FRONT','FRONT — nearest visible front-facing face only; off permits depth selection'],['drag','dragSelectBtn','DRAG','DRAG — add faces by dragging Pencil or mouse; off retains hold and directional selection gestures']]){
+ for(const [key,id,label,title]of [['front','frontSelectBtn','FRONT','FRONT — nearest visible front-facing face only; off permits depth selection'],['drag','dragSelectBtn','DRAG','DRAG — start on an unselected face to add, a selected face to remove; tap puck when finished']]){
   const b=doc.createElement('button');b.id=id;b.type='button';b.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true">'+icons[key]+'</svg><span class="toolbar-label">'+label+'</span>';b.title=title;b.setAttribute('aria-label',title);bar.append(b);buttons[key]=b;
  }
  function sync(){for(const key of ['front','drag']){const b=buttons[key],on=key==='front'?input.frontOnly():input.dragFaces();b.setAttribute('aria-pressed',String(on));b.classList?.toggle?.('active',on);b.disabled=mode()!=='face';}}
