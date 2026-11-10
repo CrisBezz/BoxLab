@@ -1,0 +1,109 @@
+{
+  "release": "0.36.18.1135",
+  "runtime_commit": "72c06e22c4b7e6f3e0d17878933c342b2678aa59",
+  "tested_tree": "f7c3f061412966b6245eb1b34aa57956359bc9d0",
+  "pages_run": 42926256122,
+  "pages_conclusion": "success",
+  "local_tests": {
+    "pass": 3377,
+    "fail": 0,
+    "skip": 0
+  },
+  "live_files": [
+    {
+      "file": "version.json",
+      "match": true,
+      "sha256": "b31c304fcd2fe9da55a7b990574503d656d19673c2880d41533cbb7309b02cbf"
+    },
+    {
+      "file": "index.html",
+      "match": true,
+      "sha256": "1fdec550d2b4f0de6f8d20f1fcbf868d31d57f2eeb7ecea05b6c94ac3fe191d8"
+    },
+    {
+      "file": "radial-compact.css",
+      "match": true,
+      "sha256": "50118d5035934f2b140a02a4ffbb67efbe4e1ad6c34f497c355d2d2180da8920"
+    },
+    {
+      "file": "compact-layout.css",
+      "match": true,
+      "sha256": "67dc911eecb7945464043d2d67becf8a1bec5c81ce9da5e2d84af93fe5c23a8d"
+    },
+    {
+      "file": "src/compact-layout.js",
+      "match": true,
+      "sha256": "04dfec1361ca3160d674d67ec4a22444a28847bb4f2b32e9775016ddcec82509"
+    },
+    {
+      "file": "src/total-gizmo.js",
+      "match": true,
+      "sha256": "3219a06f094a317465f78a2e7e5e64d3b49f97c8e6b05523e2122e995a810ea7"
+    },
+    {
+      "file": "src/radial-compact-labels.js",
+      "match": true,
+      "sha256": "7d4dcc6df90f9aea506a4cbbfcc3c51be9e197fbe2907801cbe8debe189464bb"
+    },
+    {
+      "file": "src/radial-move.js",
+      "match": true,
+      "sha256": "6781fb940a308a893c097eae91b882f41e513371a2b196a53264bef31a192229"
+    },
+    {
+      "file": "src/viewport-paint.js",
+      "match": true,
+      "sha256": "bee6c4c2fec926640bf7dab09a54c6436e92201047b336ec6e0900e56a0bf162"
+    },
+    {
+      "file": "src/drawer-ui.js",
+      "match": true,
+      "sha256": "7d96542f1a773fe4c6842847435ebf8e7b4cf136e5d7ab5467e9c202b848d70f"
+    },
+    {
+      "file": "src/face-workflow-layout.js",
+      "match": true,
+      "sha256": "bcb196b1751766dff13e61c3dec749433aaba135a803d3ab58d892f6dbd49a91"
+    },
+    {
+      "file": "src/release-version.js",
+      "match": true,
+      "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
+    },
+    {
+      "file": "src/shell-comparison.js",
+      "match": true,
+      "sha256": "2d4b55b156fc14cb62ad3138ed7f336d1c4c08a560651560b684600607c97987"
+    },
+    {
+      "file": "src/multi-object-transform.js",
+      "match": true,
+      "sha256": "024ec06122bb9ccfeaee53ab5da5bae520dc194db6201ba2479a376902380069"
+    },
+    {
+      "file": "docs/radial-preview-1135.html",
+      "match": true,
+      "sha256": "757cf23047f84527684a1da54d3fb0389f786cf7770390ff40dea129487dbac0"
+    }
+  ],
+  "browser_presentation": {
+    "modes": [
+      "edge",
+      "face",
+      "vertex",
+      "object",
+      "paint"
+    ],
+    "annulus_hit_checks": {
+      "edge": 8,
+      "paint": 8
+    },
+    "centre_hit_checks": [
+      "Close Edge contextual tools",
+      "hide-tools"
+    ],
+    "full_app_webgl": "unavailable in cloud browser"
+  },
+  "native_acceptance": "pending",
+  "protected_acceptance": ".1134 user PASS"
+}
