@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#111318">
-  <title>BoxLab subdivision benchmark .1036</title>
-  <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.179.1/build/three.module.js"}}</script>
+  <title>BoxLab subdivision benchmark .1147</title>
+  <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.179.1/build/three.module.js","../src/mesh.js":"../src/mesh.js?v=0.12.1140"}}</script>
   <style>
     :root{color-scheme:dark;font:16px/1.45 system-ui,-apple-system,sans-serif;background:#191c22;color:#eef1f7}
     *{box-sizing:border-box}body{margin:0;padding:18px;max-width:760px;margin-inline:auto}
@@ -20,12 +20,12 @@
   </style>
 </head>
 <body>
-  <h1>Subdivision timing · BoxLab .1036</h1>
-  <p>This page calls BoxLab’s existing Catmull–Clark subdivision function on regular quad grids. It does not touch your open project.</p>
+  <h1>Subdivision timing · BoxLab .1147</h1>
+  <p>This page profiles BoxLab’s existing Catmull–Clark subdivision owner on regular quad grids. Reports split cloning, edge construction, face/edge/vertex points, adjacency and output assembly. It does not touch your open project.</p>
   <section class="card">
-    <p><strong>Bound:</strong> 16, 64 and 256 source faces; subdivision levels 1–3; at most 16,384 generated faces (about 16,641 vertices). Each case gets one warm-up and three timed runs. If one run exceeds 1.2 seconds, larger cases stop.</p>
+    <p><strong>Bound:</strong> 16, 64 and 256 source faces; subdivision levels 1–3; at most 16,384 generated faces (about 16,641 vertices). Each case gets two warm-ups and five timed runs. If one run exceeds 1.2 seconds, larger cases stop.</p>
     <p class="muted">This measures mesh creation only. It does not include UV interpolation, displacement image decode/sampling, GPU upload/rendering, actual device memory, or frame-time impact. A quick timing result cannot qualify displacement preview by itself.</p>
-    <div class="actions"><button id="run" type="button">Run benchmark</button><button id="copy" type="button" disabled>Copy report</button></div>
+    <div class="actions"><button id="run" type="button">Run benchmark</button><button id="cancel" type="button" disabled>Cancel</button><button id="download" type="button" disabled>Download JSON</button><button id="copy" type="button" disabled>Copy report</button></div>
     <p id="progress" role="status" aria-live="polite">Ready. Keep the browser open and BoxLab orientation/resolution unchanged while it runs.</p>
     <table aria-label="Subdivision timing results">
       <thead><tr><th>Source faces</th><th>Level</th><th>Output faces</th><th>Output vertices</th><th>Median</th></tr></thead>
@@ -33,17 +33,19 @@
     </table>
     <textarea id="report" readonly hidden aria-label="Benchmark report"></textarea>
   </section>
-  <p class="muted">To open from BoxLab: File → Screen comparison / test list → Subdivision timing. This is an investigation tool; no displacement deformation ships in .1036.</p>
+  <p class="muted">To open from BoxLab: File → Screen comparison / test list → Subdivision timing. Also available from VIEW → Diagnostics → Performance Lab. This profiles the existing subdivision owner; no WASM promotion or modelling change ships in .1147.</p>
   <script type="module">
     import * as THREE from 'three';
     import { EditableMesh } from '../src/mesh.js';
-    import { subdivide } from '../src/subdivision.js';
+    import { subdivide, profileSubdivide } from '../src/subdivision.js?v=0.36.18.1147';
 
     const presets = [4, 8, 16];
     const maxFaces = 16384;
     const stopMs = 1200;
-    const samples = 3;
+    const samples = 5;
     const runButton = document.querySelector('#run');
+    const cancelButton=document.querySelector('#cancel'),downloadButton=document.querySelector('#download');
+    let cancelled=false;
     const copyButton = document.querySelector('#copy');
     const progress = document.querySelector('#progress');
     const body = document.querySelector('#results');
@@ -74,43 +76,65 @@
     }
 
     runButton.addEventListener('click', async () => {
+      cancelled=false;cancelButton.disabled=false;downloadButton.disabled=true;reportData=null;
       runButton.disabled = true; copyButton.disabled = true; body.replaceChildren(); report.hidden = true;
       const started = new Date().toISOString();
       const results = [];
       let stopped = false;
+      try{
       for (const side of presets) {
         const sourceFaces = side * side;
         const source = gridMesh(side);
         for (let level = 1; level <= 3; level++) {
           const expectedFaces = sourceFaces * (4 ** level);
+          if (cancelled||document.visibilityState==='hidden')throw Error('Cancelled; no partial report saved');
           if (expectedFaces > maxFaces || stopped) continue;
           progress.textContent = `Measuring ${sourceFaces} faces at level ${level}…`;
           await nextFrame();
-          let mesh = subdivide(source, level); // warm-up
+          let mesh;
+          for(let warm=0;warm<2;warm++){
+            const start=performance.now();mesh=subdivide(source,level);
+            if(performance.now()-start>stopMs){stopped=true;break;}
+            await nextFrame();
+            if(cancelled||document.visibilityState==='hidden')throw Error('Cancelled; no partial report saved');
+          }
+          if(stopped){addRow(sourceFaces,level,mesh,0,`Stopped after >${stopMs} ms`);continue;}
+          const sourceBefore=JSON.stringify(source);const phaseSamples=[];
           let durations = [];
           for (let sample = 0; sample < samples; sample++) {
             await nextFrame();
+            if(cancelled||document.visibilityState==='hidden')throw Error('Cancelled; no partial report saved');
+            const phases={};
             const before = performance.now();
-            mesh = subdivide(source, level);
+            mesh = profileSubdivide(source, level,{record:(name,ms)=>{phases[name]=(phases[name]||0)+ms;}});
             const elapsed = performance.now() - before;
             if (elapsed > stopMs) { stopped = true; break; }
-            durations.push(elapsed);
+            durations.push(elapsed);phaseSamples.push(phases);
           }
           if (durations.length === samples) {
-            durations.sort((a, b) => a - b);
-            const median = durations[1];
-            const item = { sourceFaces, level, outputFaces: mesh.faces.length, outputVertices: mesh.vertices.length, medianMs: Number(median.toFixed(2)), samplesMs: durations.map(v => Number(v.toFixed(2))) };
+            if(JSON.stringify(source)!==sourceBefore)throw Error('Source changed');
+            if(mesh.faces.length!==expectedFaces)throw Error('Unexpected subdivision face count');
+            const reference=subdivide(source,level);
+            if(JSON.stringify(mesh)!==JSON.stringify(reference))throw Error('Profile output differs from production');
+            const ordered=[...durations].sort((a,b)=>a-b);
+            const median=ordered[Math.floor(ordered.length/2)];
+            const item = { sourceFaces, level, outputFaces: mesh.faces.length, outputVertices: mesh.vertices.length, medianMs: Number(median.toFixed(2)), samplesMs: durations, phaseSamplesMs:phaseSamples, correctness:{sourceUnchanged:true,outputMatchesProduction:true} };
             results.push(item); addRow(sourceFaces, level, mesh, median);
           } else addRow(sourceFaces, level, mesh, 0, `Stopped after >${stopMs} ms`);
           mesh = null;
         }
       }
       const ended = new Date().toISOString();
-      reportData = { benchmark: 'BoxLab subdivision timing .1036', started, ended, userAgent: navigator.userAgent, devicePixelRatio: window.devicePixelRatio, source: 'src/subdivision.js · subdivide', sourceFaceCases: presets.map(side => side * side), levels: [1, 2, 3], outputFaceCap: maxFaces, stopAfterSingleRunMs: stopMs, timedSamplesPerCase: samples, results, stoppedEarly: stopped, scope: 'CPU mesh generation only; excludes UV interpolation, image decode/sampling, GPU work, actual memory and frame time.' };
+      reportData = { benchmark: 'BoxLab subdivision phase profile .1147', release:'0.36.18.1147', protocol:'subdivision-phases-v1', decision:'BASELINE_ONLY', warmup:2, started, ended, userAgent: navigator.userAgent, devicePixelRatio: window.devicePixelRatio, source: 'src/subdivision.js · profileSubdivide uses same catmullClarkStep as subdivide', sourceFaceCases: presets.map(side => side * side), levels: [1, 2, 3], outputFaceCap: maxFaces, stopAfterSingleRunMs: stopMs, timedSamplesPerCase: samples, results, stoppedEarly: stopped, scope: 'Instrumented CPU subdivision baseline only, with per-phase clock/observer overhead. Phase wall times include allocation/GC within each span; not arithmetic-only cost. No WASM candidate, speed improvement, gesture lag or editable-capacity result. Excludes UV interpolation, GPU, complete rebuild and total memory. Millisecond timer quantization may produce zero spans; do not infer zero cost or sum phase medians.' };
       progress.textContent = stopped ? 'Benchmark stopped at the 1.2-second guard. Copy the partial results if useful.' : `Done · ${results.length} cases measured. Copy the report and share it.`;
       copyButton.disabled = results.length === 0; runButton.disabled = false;
-      report.value = JSON.stringify(reportData, null, 2);
+      report.value = JSON.stringify(reportData, null, 2);downloadButton.disabled=results.length===0;
+      }catch(error){reportData=null;progress.textContent=error.message;}
+      finally{runButton.disabled=false;cancelButton.disabled=true;}
     });
+
+    cancelButton.addEventListener('click',()=>{cancelled=true;cancelButton.disabled=true;});
+    downloadButton.addEventListener('click',()=>{if(!reportData)return;const url=URL.createObjectURL(new Blob([JSON.stringify(reportData,null,2)],{type:'application/json'}));const link=document.createElement('a');link.href=url;link.download='BoxLab-subdivision-profile-1147.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
 
     copyButton.addEventListener('click', async () => {
       if (!reportData) return;

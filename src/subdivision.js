@@ -88,9 +88,13 @@ function subdivideCornerUVs(faces,edges,cornerUVs,creases){
   return childUVs;
 }
 
-function catmullClarkStep(input,cornerUVs=null){
+function catmullClarkStep(input,cornerUVs=null,profile=null){
+  let phaseStart=profile?profile.now():0;
+  const mark=profile?name=>{const end=profile.now();profile.record(name,end-phaseStart);phaseStart=end;}:null;
   const mesh=input.clone();
+  mark?.('clone');
   const oldVerts=mesh.vertices, oldFaces=mesh.faces, edges=mesh.edges();
+  mark?.('edges');
   const childCornerUVs=cornerUVs?subdivideCornerUVs(oldFaces,edges,cornerUVs,mesh.creases):null;
   const facePoints=oldFaces.map(face=>{
     const p=new THREE.Vector3();
@@ -98,6 +102,7 @@ function catmullClarkStep(input,cornerUVs=null){
     return p.multiplyScalar(1/face.length);
   });
 
+  mark?.('face-points');
   const edgePointMap=new Map();
   edges.forEach(edge=>{
     const key=edgeKey(edge.a,edge.b);
@@ -114,10 +119,12 @@ function catmullClarkStep(input,cornerUVs=null){
     edgePointMap.set(key,smooth.lerp(midpoint,w));
   });
 
+  mark?.('edge-points');
   const vertexFaces=oldVerts.map(()=>[]),vertexEdges=oldVerts.map(()=>[]);
   oldFaces.forEach((face,fi)=>face.forEach(vi=>vertexFaces[vi].push(fi)));
   edges.forEach(edge=>{vertexEdges[edge.a].push(edge);vertexEdges[edge.b].push(edge);});
 
+  mark?.('adjacency');
   const newVertexPositions=oldVerts.map((P,vi)=>{
     const connectedEdges=vertexEdges[vi],connectedFaces=vertexFaces[vi];
     const boundaryEdges=connectedEdges.filter(e=>e.faces.length===1);
@@ -169,6 +176,7 @@ function catmullClarkStep(input,cornerUVs=null){
     return smooth.lerp(P.clone(),cornerWeight);
   });
 
+  mark?.('vertex-points');
   const resultVertices=newVertexPositions.map(v=>v.clone());
   const edgeIndexMap=new Map(),faceIndexMap=new Map();
   edges.forEach(edge=>{
@@ -202,7 +210,9 @@ function catmullClarkStep(input,cornerUVs=null){
     nextCreases.set(edgeKey(ep,edge.b),w);
   });
 
-  return {mesh:new EditableMesh(resultVertices,newFaces,nextCreases,newFaceGroups),cornerUVs:nextCornerUVs};
+  const result={mesh:new EditableMesh(resultVertices,newFaces,nextCreases,newFaceGroups),cornerUVs:nextCornerUVs};
+  mark?.('assembly');
+  return result;
 }
 
 export function catmullClark(input){return catmullClarkStep(input).mesh;}
@@ -228,4 +238,11 @@ export function subdivideWithCornerUVs(mesh,cornerUVs,levels=1){
     const step=catmullClarkStep(out,outUVs);out=step.mesh;outUVs=step.cornerUVs;
   }
   return {mesh:out,cornerUVs:outUVs};
+}
+
+// Diagnostic observer only: same owner, no alternate topology or position maths.
+export function profileSubdivide(mesh,levels=1,{now=()=>performance.now(),record=()=>{}}={}){
+  const start=now();let out=mesh.clone();record('initial-clone',now()-start);
+  for(let i=0;i<levels;i++)out=catmullClarkStep(out,null,{now,record}).mesh;
+  return out;
 }

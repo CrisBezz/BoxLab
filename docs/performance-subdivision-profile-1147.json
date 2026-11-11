@@ -1,0 +1,659 @@
+{
+  "benchmark": "BoxLab subdivision phase profile .1147",
+  "release": "0.36.18.1147",
+  "protocol": "subdivision-phases-v1",
+  "decision": "BASELINE_ONLY",
+  "warmup": 2,
+  "started": "2026-11-11T23:16:50.272Z",
+  "ended": "2026-11-11T23:16:51.221Z",
+  "userAgent": "Desktop Node v24.22.1; not iPad acceptance",
+  "devicePixelRatio": 1,
+  "source": "src/subdivision.js · profileSubdivide uses same catmullClarkStep as subdivide",
+  "sourceFaceCases": [
+    16,
+    64,
+    256
+  ],
+  "levels": [
+    1,
+    2,
+    3
+  ],
+  "outputFaceCap": 16384,
+  "stopAfterSingleRunMs": 1200,
+  "timedSamplesPerCase": 5,
+  "results": [
+    {
+      "sourceFaces": 16,
+      "level": 1,
+      "outputFaces": 64,
+      "outputVertices": 81,
+      "medianMs": 0.26,
+      "samplesMs": [
+        0.5268590000000017,
+        0.26124099999998407,
+        0.37496699999999805,
+        0.1907640000000015,
+        0.18580099999999788
+      ],
+      "phaseSamplesMs": [
+        {
+          "initial-clone": 0.013909000000012384,
+          "clone": 0.04191699999998377,
+          "edges": 0.03284000000002152,
+          "face-points": 0.010542999999984204,
+          "edge-points": 0.029061000000012882,
+          "adjacency": 0.01168400000000247,
+          "vertex-points": 0.035790999999989026,
+          "assembly": 0.10014000000001033
+        },
+        {
+          "initial-clone": 0.00784100000001331,
+          "clone": 0.0040370000000109485,
+          "edges": 0.02588000000000079,
+          "face-points": 0.026709999999980027,
+          "edge-points": 0.028266999999999598,
+          "adjacency": 0.01051600000002395,
+          "vertex-points": 0.07356299999997873,
+          "assembly": 0.0739460000000065
+        },
+        {
+          "initial-clone": 0.024974000000014485,
+          "clone": 0.004227999999983467,
+          "edges": 0.024202999999999975,
+          "face-points": 0.005974000000009028,
+          "edge-points": 0.12177099999999541,
+          "adjacency": 0.01128900000000499,
+          "vertex-points": 0.0473660000000109,
+          "assembly": 0.12500499999998738
+        },
+        {
+          "initial-clone": 0.0048120000000153595,
+          "clone": 0.003281999999984464,
+          "edges": 0.023538000000002057,
+          "face-points": 0.0056179999999983465,
+          "edge-points": 0.022722000000015896,
+          "adjacency": 0.009812999999979866,
+          "vertex-points": 0.029848000000015418,
+          "assembly": 0.08196599999999421
+        },
+        {
+          "initial-clone": 0.0034919999999942775,
+          "clone": 0.005175000000008367,
+          "edges": 0.05732099999997331,
+          "face-points": 0.005114000000020269,
+          "edge-points": 0.021276000000000295,
+          "adjacency": 0.0081119999999828,
+          "vertex-points": 0.03419500000001108,
+          "assembly": 0.045669000000003734
+        }
+      ],
+      "correctness": {
+        "sourceUnchanged": true,
+        "outputMatchesProduction": true
+      }
+    },
+    {
+      "sourceFaces": 16,
+      "level": 2,
+      "outputFaces": 256,
+      "outputVertices": 289,
+      "medianMs": 1.17,
+      "samplesMs": [
+        2.1608529999999746,
+        1.9990689999999915,
+        0.6490550000000042,
+        0.5277399999999943,
+        1.1708550000000173
+      ],
+      "phaseSamplesMs": [
+        {
+          "initial-clone": 0.019180000000005748,
+          "clone": 0.04460600000001591,
+          "edges": 0.3048159999999882,
+          "face-points": 0.04866799999999216,
+          "edge-points": 0.3104150000000061,
+          "adjacency": 0.12907200000000785,
+          "vertex-points": 0.4153970000000129,
+          "assembly": 0.8518589999999904
+        },
+        {
+          "initial-clone": 0.016239999999982047,
+          "clone": 0.05424100000001886,
+          "edges": 0.3134720000000186,
+          "face-points": 0.08480399999999122,
+          "edge-points": 0.18812299999999027,
+          "adjacency": 0.14299600000001078,
+          "vertex-points": 0.32373300000000427,
+          "assembly": 0.8490569999999877
+        },
+        {
+          "initial-clone": 0.006458000000009179,
+          "clone": 0.007912999999973636,
+          "edges": 0.07266000000001327,
+          "face-points": 0.014297999999996591,
+          "edge-points": 0.03311700000000428,
+          "adjacency": 0.019042999999982158,
+          "vertex-points": 0.0815070000000162,
+          "assembly": 0.3987940000000094
+        },
+        {
+          "initial-clone": 0.004234999999994216,
+          "clone": 0.00812300000001187,
+          "edges": 0.07407799999998588,
+          "face-points": 0.013571000000041522,
+          "edge-points": 0.032325999999983424,
+          "adjacency": 0.021041999999994232,
+          "vertex-points": 0.20456300000000738,
+          "assembly": 0.15894099999999867
+        },
+        {
+          "initial-clone": 0.00630099999997924,
+          "clone": 0.00702599999996778,
+          "edges": 0.04668900000001486,
+          "face-points": 0.03905900000000884,
+          "edge-points": 0.03550300000000561,
+          "adjacency": 0.03650899999999524,
+          "vertex-points": 0.20150499999999738,
+          "assembly": 0.7846409999999935
+        }
+      ],
+      "correctness": {
+        "sourceUnchanged": true,
+        "outputMatchesProduction": true
+      }
+    },
+    {
+      "sourceFaces": 16,
+      "level": 3,
+      "outputFaces": 1024,
+      "outputVertices": 1089,
+      "medianMs": 1.25,
+      "samplesMs": [
+        1.2077529999999967,
+        1.9204179999999837,
+        1.1754489999999862,
+        1.245521999999994,
+        2.1148859999999843
+      ],
+      "phaseSamplesMs": [
+        {
+          "initial-clone": 0.005757999999985941,
+          "clone": 0.024809000000033166,
+          "edges": 0.19346399999997743,
+          "face-points": 0.01809000000002925,
+          "edge-points": 0.17060099999997647,
+          "adjacency": 0.05025000000000546,
+          "vertex-points": 0.1782750000000135,
+          "assembly": 0.5482269999999971
+        },
+        {
+          "initial-clone": 0.0034819999999911033,
+          "clone": 0.02446199999997134,
+          "edges": 0.21099900000001526,
+          "face-points": 0.025018999999986136,
+          "edge-points": 0.12586600000000203,
+          "adjacency": 0.048357000000009975,
+          "vertex-points": 0.2358470000000068,
+          "assembly": 1.229173000000003
+        },
+        {
+          "initial-clone": 0.004767000000015287,
+          "clone": 0.026127999999971507,
+          "edges": 0.19856599999999958,
+          "face-points": 0.022902000000016187,
+          "edge-points": 0.12501500000001897,
+          "adjacency": 0.05031699999997841,
+          "vertex-points": 0.17733400000000188,
+          "assembly": 0.5572140000000161
+        },
+        {
+          "initial-clone": 0.005035999999989826,
+          "clone": 0.023292999999995345,
+          "edges": 0.17983800000001793,
+          "face-points": 0.019084999999961383,
+          "edge-points": 0.11979100000002063,
+          "adjacency": 0.07685499999999479,
+          "vertex-points": 0.2671519999999816,
+          "assembly": 0.5393720000000144
+        },
+        {
+          "initial-clone": 0.004299000000003161,
+          "clone": 0.021640999999988253,
+          "edges": 0.25136100000003125,
+          "face-points": 0.020668000000000575,
+          "edge-points": 0.12155500000000075,
+          "adjacency": 0.04516299999997386,
+          "vertex-points": 0.17726600000000303,
+          "assembly": 1.4553070000000048
+        }
+      ],
+      "correctness": {
+        "sourceUnchanged": true,
+        "outputMatchesProduction": true
+      }
+    },
+    {
+      "sourceFaces": 64,
+      "level": 1,
+      "outputFaces": 256,
+      "outputVertices": 289,
+      "medianMs": 0.21,
+      "samplesMs": [
+        0.30186300000002575,
+        0.21966199999999958,
+        0.2064799999999991,
+        0.20700100000001953,
+        0.21149900000000343
+      ],
+      "phaseSamplesMs": [
+        {
+          "initial-clone": 0.008658999999994421,
+          "clone": 0.006070000000022446,
+          "edges": 0.03245399999997289,
+          "face-points": 0.005056000000024596,
+          "edge-points": 0.025459999999981164,
+          "adjacency": 0.009540000000015425,
+          "vertex-points": 0.08266599999998903,
+          "assembly": 0.0983799999999917
+        },
+        {
+          "initial-clone": 0.00765200000000732,
+          "clone": 0.00543700000000058,
+          "edges": 0.03294199999999137,
+          "face-points": 0.004617999999993572,
+          "edge-points": 0.023921000000001413,
+          "adjacency": 0.010792000000009239,
+          "vertex-points": 0.031667999999996255,
+          "assembly": 0.0948500000000081
+        },
+        {
+          "initial-clone": 0.005986000000007152,
+          "clone": 0.006048999999990201,
+          "edges": 0.03210500000000138,
+          "face-points": 0.005104999999986148,
+          "edge-points": 0.02381100000002334,
+          "adjacency": 0.010459999999994807,
+          "vertex-points": 0.032184999999998354,
+          "assembly": 0.0887119999999868
+        },
+        {
+          "initial-clone": 0.007591999999988275,
+          "clone": 0.00562400000001162,
+          "edges": 0.030364999999989095,
+          "face-points": 0.003734000000008564,
+          "edge-points": 0.021612000000004628,
+          "adjacency": 0.011197999999978947,
+          "vertex-points": 0.03486300000000142,
+          "assembly": 0.08950400000000514
+        },
+        {
+          "initial-clone": 0.006613000000015745,
+          "clone": 0.005496999999991203,
+          "edges": 0.039856000000014546,
+          "face-points": 0.004476000000011027,
+          "edge-points": 0.02372599999998215,
+          "adjacency": 0.010273000000012189,
+          "vertex-points": 0.032692999999994754,
+          "assembly": 0.08602799999999888
+        }
+      ],
+      "correctness": {
+        "sourceUnchanged": true,
+        "outputMatchesProduction": true
+      }
+    },
+    {
+      "sourceFaces": 64,
+      "level": 2,
+      "outputFaces": 1024,
+      "outputVertices": 1089,
+      "medianMs": 3.07,
+      "samplesMs": [
+        3.066790999999995,
+        2.983132000000012,
+        7.696799999999996,
+        2.621270999999979,
+        7.324432000000002
+      ],
+      "phaseSamplesMs": [
+        {
+          "initial-clone": 0.014477999999996882,
+          "clone": 0.09277100000002747,
+          "edges": 0.3729719999999759,
+          "face-points": 0.09972700000000145,
+          "edge-points": 0.32027900000002774,
+          "adjacency": 0.15141699999998082,
+          "vertex-points": 0.9220320000000015,
+          "assembly": 1.0744149999999877
+        },
+        {
+          "initial-clone": 0.009742999999986068,
+          "clone": 0.02845999999999549,
+          "edges": 0.3812629999999899,
+          "face-points": 0.06658600000000092,
+          "edge-points": 0.2852589999999964,
+          "adjacency": 0.09110100000000898,
+          "vertex-points": 0.3110499999999945,
+          "assembly": 1.7985589999999831
+        },
+        {
+          "initial-clone": 0.0433179999999993,
+          "clone": 0.498045999999988,
+          "edges": 1.2419479999999794,
+          "face-points": 0.38081499999998414,
+          "edge-points": 0.8957810000000563,
+          "adjacency": 0.48903000000001384,
+          "vertex-points": 1.338869999999929,
+          "assembly": 2.7960110000000213
+        },
+        {
+          "initial-clone": 0.009742000000017015,
+          "clone": 0.024525000000039654,
+          "edges": 0.3458049999999844,
+          "face-points": 0.06737400000002935,
+          "edge-points": 0.11879900000002408,
+          "adjacency": 0.08539400000000796,
+          "vertex-points": 0.2847279999999728,
+          "assembly": 1.6753089999999702
+        },
+        {
+          "initial-clone": 0.04210199999999986,
+          "clone": 0.17524499999996124,
+          "edges": 1.2173690000000192,
+          "face-points": 0.24196499999999332,
+          "edge-points": 0.6996120000000019,
+          "adjacency": 0.4869969999999739,
+          "vertex-points": 1.2622920000000022,
+          "assembly": 3.187859000000003
+        }
+      ],
+      "correctness": {
+        "sourceUnchanged": true,
+        "outputMatchesProduction": true
+      }
+    },
+    {
+      "sourceFaces": 64,
+      "level": 3,
+      "outputFaces": 4096,
+      "outputVertices": 4225,
+      "medianMs": 9.97,
+      "samplesMs": [
+        26.611392000000023,
+        9.969230000000039,
+        25.397537,
+        5.797859000000017,
+        5.354822000000013
+      ],
+      "phaseSamplesMs": [
+        {
+          "initial-clone": 0.00997499999999718,
+          "clone": 0.7850270000000137,
+          "edges": 3.2176490000000513,
+          "face-points": 0.9354390000000308,
+          "edge-points": 3.0446529999999257,
+          "adjacency": 2.066143000000011,
+          "vertex-points": 5.13163400000002,
+          "assembly": 11.391755999999987
+        },
+        {
+          "initial-clone": 0.012655999999992673,
+          "clone": 0.106249000000048,
+          "edges": 0.6845039999999472,
+          "face-points": 0.12967700000001514,
+          "edge-points": 0.6400500000000306,
+          "adjacency": 0.29460499999999,
+          "vertex-points": 1.2540670000000205,
+          "assembly": 6.825785999999994
+        },
+        {
+          "initial-clone": 0.04746299999999337,
+          "clone": 1.0862789999999336,
+          "edges": 3.684037000000046,
+          "face-points": 0.7771509999999466,
+          "edge-points": 3.019779000000028,
+          "adjacency": 1.7523860000000013,
+          "vertex-points": 6.554827999999986,
+          "assembly": 8.438955000000021
+        },
+        {
+          "initial-clone": 0.010292999999990116,
+          "clone": 0.1007600000000366,
+          "edges": 0.6882400000000075,
+          "face-points": 0.08286099999997987,
+          "edge-points": 0.4844060000000354,
+          "adjacency": 0.5229509999999209,
+          "vertex-points": 1.4915680000000293,
+          "assembly": 2.3993370000000027
+        },
+        {
+          "initial-clone": 0.011644000000046617,
+          "clone": 0.09325199999994993,
+          "edges": 0.622284000000036,
+          "face-points": 0.0765540000000442,
+          "edge-points": 0.47139699999996765,
+          "adjacency": 0.2862920000000031,
+          "vertex-points": 1.3757779999999684,
+          "assembly": 2.3985530000000495
+        }
+      ],
+      "correctness": {
+        "sourceUnchanged": true,
+        "outputMatchesProduction": true
+      }
+    },
+    {
+      "sourceFaces": 256,
+      "level": 1,
+      "outputFaces": 1024,
+      "outputVertices": 1089,
+      "medianMs": 1.02,
+      "samplesMs": [
+        0.8923500000000217,
+        0.9125589999999875,
+        1.2599680000000149,
+        1.4957949999999869,
+        1.023631000000023
+      ],
+      "phaseSamplesMs": [
+        {
+          "initial-clone": 0.02594099999998889,
+          "clone": 0.01736199999999144,
+          "edges": 0.11995600000000195,
+          "face-points": 0.014441000000033455,
+          "edge-points": 0.07658299999997098,
+          "adjacency": 0.03329100000001972,
+          "vertex-points": 0.21141999999997552,
+          "assembly": 0.3838630000000194
+        },
+        {
+          "initial-clone": 0.028364000000010492,
+          "clone": 0.022673999999994976,
+          "edges": 0.12179099999997334,
+          "face-points": 0.013689999999996871,
+          "edge-points": 0.07978600000001279,
+          "adjacency": 0.033278999999993175,
+          "vertex-points": 0.21234199999997827,
+          "assembly": 0.39436600000004773
+        },
+        {
+          "initial-clone": 0.028507999999987987,
+          "clone": 0.01640399999996589,
+          "edges": 0.11774600000001101,
+          "face-points": 0.012247999999999593,
+          "edge-points": 0.09264100000001463,
+          "adjacency": 0.0715099999999893,
+          "vertex-points": 0.22149799999999686,
+          "assembly": 0.6907860000000028
+        },
+        {
+          "initial-clone": 0.026215999999976702,
+          "clone": 0.016853000000025986,
+          "edges": 0.5419989999999757,
+          "face-points": 0.028047000000015032,
+          "edge-points": 0.08801799999997684,
+          "adjacency": 0.03383000000002312,
+          "vertex-points": 0.2191450000000259,
+          "assembly": 0.39366300000000365
+        },
+        {
+          "initial-clone": 0.02458200000000943,
+          "clone": 0.016800999999986743,
+          "edges": 0.11602099999998927,
+          "face-points": 0.012484000000029027,
+          "edge-points": 0.08141000000000531,
+          "adjacency": 0.11611899999996922,
+          "vertex-points": 0.26195699999999533,
+          "assembly": 0.3867400000000316
+        }
+      ],
+      "correctness": {
+        "sourceUnchanged": true,
+        "outputMatchesProduction": true
+      }
+    },
+    {
+      "sourceFaces": 256,
+      "level": 2,
+      "outputFaces": 4096,
+      "outputVertices": 4225,
+      "medianMs": 4.71,
+      "samplesMs": [
+        6.099488000000008,
+        4.709859999999992,
+        4.628020000000049,
+        11.313739999999996,
+        4.426695999999993
+      ],
+      "phaseSamplesMs": [
+        {
+          "initial-clone": 0.024310999999954674,
+          "clone": 0.09731399999998303,
+          "edges": 0.5688489999999433,
+          "face-points": 0.06240300000001753,
+          "edge-points": 0.5017610000000445,
+          "adjacency": 0.17631099999999833,
+          "vertex-points": 0.807679999999948,
+          "assembly": 3.846452000000056
+        },
+        {
+          "initial-clone": 0.05039900000002717,
+          "clone": 0.09466700000001538,
+          "edges": 0.6045989999999506,
+          "face-points": 0.08027400000003126,
+          "edge-points": 0.41625699999997323,
+          "adjacency": 0.23046700000003284,
+          "vertex-points": 0.8639329999999745,
+          "assembly": 2.3573310000000447
+        },
+        {
+          "initial-clone": 0.031093999999995958,
+          "clone": 0.09029899999995905,
+          "edges": 0.6644300000000385,
+          "face-points": 0.061418999999943935,
+          "edge-points": 0.4350000000000591,
+          "adjacency": 0.24703899999997248,
+          "vertex-points": 1.0738570000000323,
+          "assembly": 2.013294999999971
+        },
+        {
+          "initial-clone": 0.03027300000002242,
+          "clone": 0.1239479999999844,
+          "edges": 0.5951890000000049,
+          "face-points": 0.0636259999999993,
+          "edge-points": 0.4007209999999759,
+          "adjacency": 0.16686099999998305,
+          "vertex-points": 0.7197820000000092,
+          "assembly": 9.197784000000013
+        },
+        {
+          "initial-clone": 0.03132900000002792,
+          "clone": 0.0926499999999919,
+          "edges": 0.630958000000021,
+          "face-points": 0.07124199999998382,
+          "edge-points": 0.40462800000000243,
+          "adjacency": 0.14843200000007073,
+          "vertex-points": 0.7481789999999933,
+          "assembly": 2.285727999999949
+        }
+      ],
+      "correctness": {
+        "sourceUnchanged": true,
+        "outputMatchesProduction": true
+      }
+    },
+    {
+      "sourceFaces": 256,
+      "level": 3,
+      "outputFaces": 16384,
+      "outputVertices": 16641,
+      "medianMs": 74.73,
+      "samplesMs": [
+        38.895151000000055,
+        74.72990900000002,
+        56.380785999999944,
+        102.18940199999997,
+        95.01309700000002
+      ],
+      "phaseSamplesMs": [
+        {
+          "initial-clone": 0.028158999999959633,
+          "clone": 0.39427900000009686,
+          "edges": 3.26643399999989,
+          "face-points": 0.2676400000000285,
+          "edge-points": 2.4676979999999276,
+          "adjacency": 0.7177769999999555,
+          "vertex-points": 3.7406190000001516,
+          "assembly": 27.975614999999948
+        },
+        {
+          "initial-clone": 0.08502399999997579,
+          "clone": 1.9169769999999744,
+          "edges": 8.604911000000016,
+          "face-points": 1.5360309999998663,
+          "edge-points": 8.938976000000139,
+          "adjacency": 2.8499239999999872,
+          "vertex-points": 17.175033999999982,
+          "assembly": 33.5894780000001
+        },
+        {
+          "initial-clone": 0.036241000000018175,
+          "clone": 0.5102799999999661,
+          "edges": 6.256067999999914,
+          "face-points": 0.8467240000001084,
+          "edge-points": 6.691382999999973,
+          "adjacency": 1.5289350000000468,
+          "vertex-points": 5.018351999999936,
+          "assembly": 35.42683199999999
+        },
+        {
+          "initial-clone": 0.21646399999997357,
+          "clone": 2.5914759999999433,
+          "edges": 15.28069100000016,
+          "face-points": 3.592360999999869,
+          "edge-points": 15.692748000000051,
+          "adjacency": 8.72317499999997,
+          "vertex-points": 21.515934000000016,
+          "assembly": 34.539371999999844
+        },
+        {
+          "initial-clone": 0.035750000000007276,
+          "clone": 2.520477999999912,
+          "edges": 13.61705900000004,
+          "face-points": 2.537779000000114,
+          "edge-points": 10.314511999999922,
+          "adjacency": 6.349098000000026,
+          "vertex-points": 20.559033,
+          "assembly": 39.041332999999895
+        }
+      ],
+      "correctness": {
+        "sourceUnchanged": true,
+        "outputMatchesProduction": true
+      }
+    }
+  ],
+  "stoppedEarly": false,
+  "scope": "Instrumented CPU subdivision baseline only, with per-phase clock/observer overhead. Phase wall times include allocation/GC within each span; not arithmetic-only cost. No WASM candidate, speed improvement, gesture lag or editable-capacity result. Excludes UV interpolation, GPU, complete rebuild and total memory. Millisecond timer quantization may produce zero spans; do not infer zero cost or sum phase medians."
+}

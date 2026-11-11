@@ -17,7 +17,7 @@ function grid(side){
 }
 
 test('.1036 browser benchmark calls the existing subdivision owner and keeps a bounded workload',()=>{
- assert.match(page,/import \{ subdivide \} from '\.\.\/src\/subdivision\.js'/);
+ assert.match(page,/import \{ subdivide, profileSubdivide \} from '\.\.\/src\/subdivision\.js\?v=0\.36\.18\.1147'/);
  assert.match(page,/const presets = \[4, 8, 16\]/);
  assert.match(page,/const maxFaces = 16384/);
  assert.match(page,/const stopMs = 1200/);

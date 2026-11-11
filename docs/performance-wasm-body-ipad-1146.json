@@ -1,0 +1,426 @@
+{
+  "decision": "FAIL",
+  "scope": "User supplied iPad reports: packing candidate rejected for promotion; correctness PASS only. No blanket rejection of WASM. ~1ms timing granularity; percentages not precise.",
+  "reports": [
+    {
+      "schemaVersion": 1,
+      "protocol": "wasm-body-v1",
+      "release": "0.36.18.1146",
+      "timestamp": "2026-11-11T22:13:02.867Z",
+      "environment": {
+        "userAgent": "Mozilla/5.0 (iPad; CPU OS 27_2_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/157.0.8103.37 Mobile/15E148 Safari/604.1",
+        "dpr": 2,
+        "width": 1366,
+        "height": 886,
+        "visibility": "visible",
+        "standalone": false,
+        "powerThermal": "unknown"
+      },
+      "fixture": {
+        "triangles": 10000,
+        "hash": "b5ae5c54"
+      },
+      "warmup": 2,
+      "repeats": 7,
+      "orders": [
+        [
+          "js",
+          "wasm"
+        ],
+        [
+          "wasm",
+          "js"
+        ],
+        [
+          "js",
+          "wasm"
+        ],
+        [
+          "wasm",
+          "js"
+        ],
+        [
+          "js",
+          "wasm"
+        ],
+        [
+          "wasm",
+          "js"
+        ],
+        [
+          "js",
+          "wasm"
+        ]
+      ],
+      "samplesMs": {
+        "js": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "wasm": [
+          2,
+          1,
+          3,
+          1,
+          2,
+          1,
+          2
+        ]
+      },
+      "metrics": {
+        "js": {
+          "medianMs": 1,
+          "p95Ms": 1,
+          "minMs": 1,
+          "maxMs": 1
+        },
+        "wasm": {
+          "medianMs": 2,
+          "p95Ms": 3,
+          "minMs": 1,
+          "maxMs": 3
+        },
+        "medianReductionPercent": -100
+      },
+      "stages": [
+        {
+          "packAllocateMs": 1,
+          "kernelMs": 0,
+          "copyBackMs": 0
+        },
+        {
+          "packAllocateMs": 0,
+          "kernelMs": 0,
+          "copyBackMs": 0
+        },
+        {
+          "packAllocateMs": 2,
+          "kernelMs": 0,
+          "copyBackMs": 0
+        },
+        {
+          "packAllocateMs": 0,
+          "kernelMs": 0,
+          "copyBackMs": 0
+        },
+        {
+          "packAllocateMs": 1,
+          "kernelMs": 0,
+          "copyBackMs": 0
+        },
+        {
+          "packAllocateMs": 0,
+          "kernelMs": 0,
+          "copyBackMs": 0
+        },
+        {
+          "packAllocateMs": 1,
+          "kernelMs": 0,
+          "copyBackMs": 0
+        }
+      ],
+      "initialization": {
+        "binaryBytes": 133,
+        "milliseconds": 5,
+        "scope": "Fetch (browser cache may apply), compile and instantiate; excluded from warm samples"
+      },
+      "correctness": {
+        "passed": true,
+        "scope": "Byte-exact positions and normals every pair; source unchanged"
+      },
+      "memory": {
+        "renderAttributeBytes": 720000,
+        "wasmCommittedBytes": 655360,
+        "wasmRequiredBytes": 603624,
+        "scope": "Extra retained WASM linear memory plus independently owned output arrays. Excludes JS mesh, engine heap, GPU and total Safari RAM"
+      },
+      "decision": "FAIL",
+      "notes": "Lab only. >=25% complete CPU body construction gain is review eligible; 10\u201324% conditional; <10% reject. Memory and target iPad gates still required. Includes fresh input conversion/allocation, copies, kernel, independent output and original Three normals. Excludes scene rebuild, cage, GPU, gestures and editable capacity. No production migration."
+    },
+    {
+      "schemaVersion": 1,
+      "protocol": "wasm-body-v1",
+      "release": "0.36.18.1146",
+      "timestamp": "2026-11-11T22:13:20.330Z",
+      "environment": {
+        "userAgent": "Mozilla/5.0 (iPad; CPU OS 27_2_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/157.0.8103.37 Mobile/15E148 Safari/604.1",
+        "dpr": 2,
+        "width": 1366,
+        "height": 886,
+        "visibility": "visible",
+        "standalone": false,
+        "powerThermal": "unknown"
+      },
+      "fixture": {
+        "triangles": 50000,
+        "hash": "7d06dcd0"
+      },
+      "warmup": 2,
+      "repeats": 7,
+      "orders": [
+        [
+          "js",
+          "wasm"
+        ],
+        [
+          "wasm",
+          "js"
+        ],
+        [
+          "js",
+          "wasm"
+        ],
+        [
+          "wasm",
+          "js"
+        ],
+        [
+          "js",
+          "wasm"
+        ],
+        [
+          "wasm",
+          "js"
+        ],
+        [
+          "js",
+          "wasm"
+        ]
+      ],
+      "samplesMs": {
+        "js": [
+          4,
+          2,
+          5,
+          1,
+          2,
+          2,
+          2
+        ],
+        "wasm": [
+          4,
+          3,
+          2,
+          2,
+          1,
+          2,
+          2
+        ]
+      },
+      "metrics": {
+        "js": {
+          "medianMs": 2,
+          "p95Ms": 5,
+          "minMs": 1,
+          "maxMs": 5
+        },
+        "wasm": {
+          "medianMs": 2,
+          "p95Ms": 4,
+          "minMs": 1,
+          "maxMs": 4
+        },
+        "medianReductionPercent": 0
+      },
+      "stages": [
+        {
+          "packAllocateMs": 1,
+          "kernelMs": 0,
+          "copyBackMs": 0
+        },
+        {
+          "packAllocateMs": 2,
+          "kernelMs": 0,
+          "copyBackMs": 0
+        },
+        {
+          "packAllocateMs": 1,
+          "kernelMs": 0,
+          "copyBackMs": 0
+        },
+        {
+          "packAllocateMs": 1,
+          "kernelMs": 0,
+          "copyBackMs": 0
+        },
+        {
+          "packAllocateMs": 0,
+          "kernelMs": 1,
+          "copyBackMs": 0
+        },
+        {
+          "packAllocateMs": 1,
+          "kernelMs": 0,
+          "copyBackMs": 0
+        },
+        {
+          "packAllocateMs": 1,
+          "kernelMs": 0,
+          "copyBackMs": 0
+        }
+      ],
+      "initialization": {
+        "binaryBytes": 133,
+        "milliseconds": 6,
+        "scope": "Fetch (browser cache may apply), compile and instantiate; excluded from warm samples"
+      },
+      "correctness": {
+        "passed": true,
+        "scope": "Byte-exact positions and normals every pair; source unchanged"
+      },
+      "memory": {
+        "renderAttributeBytes": 3600000,
+        "wasmCommittedBytes": 3014656,
+        "wasmRequiredBytes": 3008424,
+        "scope": "Extra retained WASM linear memory plus independently owned output arrays. Excludes JS mesh, engine heap, GPU and total Safari RAM"
+      },
+      "decision": "FAIL",
+      "notes": "Lab only. >=25% complete CPU body construction gain is review eligible; 10\u201324% conditional; <10% reject. Memory and target iPad gates still required. Includes fresh input conversion/allocation, copies, kernel, independent output and original Three normals. Excludes scene rebuild, cage, GPU, gestures and editable capacity. No production migration."
+    },
+    {
+      "schemaVersion": 1,
+      "protocol": "wasm-body-v1",
+      "release": "0.36.18.1146",
+      "timestamp": "2026-11-11T22:13:34.724Z",
+      "environment": {
+        "userAgent": "Mozilla/5.0 (iPad; CPU OS 27_2_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/157.0.8103.37 Mobile/15E148 Safari/604.1",
+        "dpr": 2,
+        "width": 1366,
+        "height": 886,
+        "visibility": "visible",
+        "standalone": false,
+        "powerThermal": "unknown"
+      },
+      "fixture": {
+        "triangles": 100000,
+        "hash": "089663f7"
+      },
+      "warmup": 2,
+      "repeats": 7,
+      "orders": [
+        [
+          "js",
+          "wasm"
+        ],
+        [
+          "wasm",
+          "js"
+        ],
+        [
+          "js",
+          "wasm"
+        ],
+        [
+          "wasm",
+          "js"
+        ],
+        [
+          "js",
+          "wasm"
+        ],
+        [
+          "wasm",
+          "js"
+        ],
+        [
+          "js",
+          "wasm"
+        ]
+      ],
+      "samplesMs": {
+        "js": [
+          4,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "wasm": [
+          4,
+          4,
+          4,
+          4,
+          4,
+          4,
+          4
+        ]
+      },
+      "metrics": {
+        "js": {
+          "medianMs": 3,
+          "p95Ms": 4,
+          "minMs": 3,
+          "maxMs": 4
+        },
+        "wasm": {
+          "medianMs": 4,
+          "p95Ms": 4,
+          "minMs": 4,
+          "maxMs": 4
+        },
+        "medianReductionPercent": -33.333333333333336
+      },
+      "stages": [
+        {
+          "packAllocateMs": 2,
+          "kernelMs": 0,
+          "copyBackMs": 0
+        },
+        {
+          "packAllocateMs": 2,
+          "kernelMs": 0,
+          "copyBackMs": 0
+        },
+        {
+          "packAllocateMs": 2,
+          "kernelMs": 0,
+          "copyBackMs": 0
+        },
+        {
+          "packAllocateMs": 2,
+          "kernelMs": 0,
+          "copyBackMs": 0
+        },
+        {
+          "packAllocateMs": 2,
+          "kernelMs": 0,
+          "copyBackMs": 1
+        },
+        {
+          "packAllocateMs": 2,
+          "kernelMs": 0,
+          "copyBackMs": 0
+        },
+        {
+          "packAllocateMs": 2,
+          "kernelMs": 1,
+          "copyBackMs": 0
+        }
+      ],
+      "initialization": {
+        "binaryBytes": 133,
+        "milliseconds": 6,
+        "scope": "Fetch (browser cache may apply), compile and instantiate; excluded from warm samples"
+      },
+      "correctness": {
+        "passed": true,
+        "scope": "Byte-exact positions and normals every pair; source unchanged"
+      },
+      "memory": {
+        "renderAttributeBytes": 7200000,
+        "wasmCommittedBytes": 6029312,
+        "wasmRequiredBytes": 6014424,
+        "scope": "Extra retained WASM linear memory plus independently owned output arrays. Excludes JS mesh, engine heap, GPU and total Safari RAM"
+      },
+      "decision": "FAIL",
+      "notes": "Lab only. >=25% complete CPU body construction gain is review eligible; 10\u201324% conditional; <10% reject. Memory and target iPad gates still required. Includes fresh input conversion/allocation, copies, kernel, independent output and original Three normals. Excludes scene rebuild, cage, GPU, gestures and editable capacity. No production migration."
+    }
+  ]
+}
