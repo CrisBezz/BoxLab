@@ -1,0 +1,103 @@
+{
+  "release": "0.36.18.1138",
+  "runtime_commit": "b6da7f2085983782166de1ce6336c1800b4d0f6e",
+  "tested_tree": "02f7ab356e7834f2e1abe2d519153fba9e5640a7",
+  "pages_run": 42951845471,
+  "pages_conclusion": "success",
+  "local_tests": {
+    "pass": 3388,
+    "fail": 0,
+    "skip": 0
+  },
+  "focused_tests": [
+    36,
+    32
+  ],
+  "benchmark": "docs/performance-cage-selection-1138.json",
+  "benchmark_result": "PASS",
+  "live_files": [
+    {
+      "file": "version.json",
+      "match": true,
+      "sha256": "4503c0b94da22c3e8446947d50fe1bbf3a88c5daa1d3c5c8154793837db262ba"
+    },
+    {
+      "file": "index.html",
+      "match": true,
+      "sha256": "c26890ff4d59f3d6057f3d7d456c86ec1ba52c5e616c7d28b021669053237543"
+    },
+    {
+      "file": "src/main.js",
+      "match": true,
+      "sha256": "e22168c5c42eb623f4498acb177be4036d6d477cc3fc16d1e3cd386b26839f57"
+    },
+    {
+      "file": "src/viewport-paint.js",
+      "match": true,
+      "sha256": "2578bdeddbe3d6256949f2363570eab79f2291ca4ec011f1d2a601e0019b25ba"
+    },
+    {
+      "file": "src/drawer-ui.js",
+      "match": true,
+      "sha256": "75bbebf6816350f4d9132c6b54ba74792305e5a378438444a7d2045001ce9147"
+    },
+    {
+      "file": "src/face-workflow-layout.js",
+      "match": true,
+      "sha256": "e632010ae6548d9e0a14db43d7ee467cd94319fd3d1960a501a10120e1e4fe25"
+    },
+    {
+      "file": "src/release-version.js",
+      "match": true,
+      "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
+    },
+    {
+      "file": "src/shell-comparison.js",
+      "match": true,
+      "sha256": "1d8ea34e8bae1295af474507a128419e2aa33d5c1c5a51e25768ff7de33bbea6"
+    },
+    {
+      "file": "radial-compact.css",
+      "match": true,
+      "sha256": "50118d5035934f2b140a02a4ffbb67efbe4e1ad6c34f497c355d2d2180da8920"
+    },
+    {
+      "file": "src/total-gizmo.js",
+      "match": true,
+      "sha256": "3219a06f094a317465f78a2e7e5e64d3b49f97c8e6b05523e2122e995a810ea7"
+    },
+    {
+      "file": "src/radial-compact-labels.js",
+      "match": true,
+      "sha256": "7d4dcc6df90f9aea506a4cbbfcc3c51be9e197fbe2907801cbe8debe189464bb"
+    },
+    {
+      "file": "src/radial-move.js",
+      "match": true,
+      "sha256": "6781fb940a308a893c097eae91b882f41e513371a2b196a53264bef31a192229"
+    },
+    {
+      "file": "src/multi-object-transform.js",
+      "match": true,
+      "sha256": "024ec06122bb9ccfeaee53ab5da5bae520dc194db6201ba2479a376902380069"
+    },
+    {
+      "file": "src/through-kernel.js",
+      "match": true,
+      "sha256": "5cf48e4b55309663b3db7faa8b077b51e1457b568329c85b2a0deba057ad8f99"
+    },
+    {
+      "file": "src/mesh.js",
+      "match": true,
+      "sha256": "70511061a5e8701124616a387ced43d0bd1297ecf130afc1fbc74c3b3b010e24"
+    },
+    {
+      "file": "docs/performance-cage-selection-1138.json",
+      "match": true,
+      "sha256": "5fc477c61ce42a5cea32c564805a2d1d48606489f0459c61a3330cd0fcfb4baf"
+    }
+  ],
+  "protected_acceptance": ".1137 user PASS",
+  "native_acceptance": "pending",
+  "scope": "One per-call selection membership Set in original addCage; no topology, listeners, styles or Paint changes. CPU benchmark excludes selected-edge overlay geometry and GPU."
+}
