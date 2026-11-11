@@ -1,0 +1,361 @@
+{
+  "release": ".1138",
+  "baseline": "Exact addCage from .1137 main376bf45a933ecb361ec6589176cda89eab0bcf2b; all other functions identical",
+  "scope": "Node VM CPU: original body-add Multi save/history observer + complete original cage/proxy/batch reconstruction and original Face pickers. Original selectionIndices/selectionHas are executed. Setup, correctness snapshots, disposal, renderer/GPU/native input, other scene hooks, selected-edge overlay geometry and real axis styling are excluded; existing harness uses neutral axis styling and no-op selected-edge overlay callback. No native iPad, whole-preview, general navigation latency, editable capacity or WASM claim. Three warmups, nine alternating paired samples; counters in separate untimed calls.",
+  "gates": {
+    "correctness": "Exact proxy/batch positions, flags, order and visibility plus identical save/history clone counts and unchanged source mesh",
+    "operations": "Exactly one selectionIndices array per selected Edge/Vertex cage versus one per corresponding proxy in baseline; zero in unselected controls",
+    "timing": "At least1.2x complete measured cage-build median for dense selected fixtures; <=15% regression for unselected Face/Object/Vertex controls. Timings are reported gates, not CI assertions."
+  },
+  "rows": [
+    {
+      "faces": 1024,
+      "vertices": 1089,
+      "mode": "vertex",
+      "selected": 816,
+      "samplesMs": {
+        "before": [
+          99.96296200000006,
+          75.3335320000001,
+          131.17211700000007,
+          77.5299829999999,
+          108.62376799999993,
+          86.29969200000005,
+          112.19123599999966,
+          85.97347899999977,
+          104.51748099999986
+        ],
+        "after": [
+          54.95748200000003,
+          52.62323700000002,
+          35.26187600000003,
+          49.28310599999986,
+          39.3709429999999,
+          38.08962500000007,
+          35.75958500000024,
+          35.93685499999992,
+          36.090623999999934
+        ]
+      },
+      "medianMs": {
+        "before": 99.96296200000006,
+        "after": 38.08962500000007
+      },
+      "speedup": 2.6244144435656658,
+      "reductionPercent": 61.89626213757047,
+      "operationCounts": [
+        {
+          "arrays": 1089,
+          "entries": 888624
+        },
+        {
+          "arrays": 1,
+          "entries": 816
+        }
+      ],
+      "correctness": "PASS",
+      "operations": "PASS",
+      "timing": "PASS"
+    },
+    {
+      "faces": 1024,
+      "vertices": 1089,
+      "mode": "edge",
+      "selected": 1584,
+      "samplesMs": {
+        "before": [
+          191.46639199999981,
+          354.0719199999994,
+          152.75524099999984,
+          148.10864700000002,
+          183.40187499999956,
+          170.94901800000025,
+          191.9514939999999,
+          173.0080510000007,
+          190.46964800000023
+        ],
+        "after": [
+          35.23440399999981,
+          38.64817799999946,
+          33.75129800000013,
+          32.37325399999918,
+          37.443420999999944,
+          40.55869999999959,
+          33.41089499999998,
+          34.9335659999997,
+          43.909615999999914
+        ]
+      },
+      "medianMs": {
+        "before": 183.40187499999956,
+        "after": 35.23440399999981
+      },
+      "speedup": 5.205193055060631,
+      "reductionPercent": 80.78841669421324,
+      "operationCounts": [
+        {
+          "arrays": 2112,
+          "entries": 3345408
+        },
+        {
+          "arrays": 1,
+          "entries": 1584
+        }
+      ],
+      "correctness": "PASS",
+      "operations": "PASS",
+      "timing": "PASS"
+    },
+    {
+      "faces": 4096,
+      "vertices": 4225,
+      "mode": "vertex",
+      "selected": 3168,
+      "samplesMs": {
+        "before": [
+          658.4849579999991,
+          614.1067370000001,
+          620.8620019999998,
+          616.0622349999994,
+          684.4124200000006,
+          641.8771130000005,
+          711.7966109999998,
+          671.7660289999985,
+          667.4114800000025
+        ],
+        "after": [
+          150.68843600000037,
+          131.82290600000124,
+          146.2760359999993,
+          123.66282500000125,
+          648.463631999999,
+          155.99603000000025,
+          164.4069789999994,
+          173.54105100000015,
+          183.0181760000014
+        ]
+      },
+      "medianMs": {
+        "before": 658.4849579999991,
+        "after": 155.99603000000025
+      },
+      "speedup": 4.2211648463105,
+      "reductionPercent": 76.30985672416826,
+      "operationCounts": [
+        {
+          "arrays": 4225,
+          "entries": 13384800
+        },
+        {
+          "arrays": 1,
+          "entries": 3168
+        }
+      ],
+      "correctness": "PASS",
+      "operations": "PASS",
+      "timing": "PASS"
+    },
+    {
+      "faces": 4096,
+      "vertices": 4225,
+      "mode": "edge",
+      "selected": 6240,
+      "samplesMs": {
+        "before": [
+          2129.2551590000003,
+          2022.487860000001,
+          2081.893784,
+          2638.717801000006,
+          1970.6871820000015,
+          2078.250804000003,
+          1968.4129979999998,
+          2114.661091999995,
+          2151.798139999999
+        ],
+        "after": [
+          165.88000399999873,
+          207.4881720000012,
+          162.93781699999818,
+          149.73210100000142,
+          151.02353700000094,
+          146.50548300000082,
+          153.68195800000103,
+          257.2139449999959,
+          158.40009000000282
+        ]
+      },
+      "medianMs": {
+        "before": 2081.893784,
+        "after": 158.40009000000282
+      },
+      "speedup": 13.143261370621461,
+      "reductionPercent": 92.39153835717477,
+      "operationCounts": [
+        {
+          "arrays": 8320,
+          "entries": 51916800
+        },
+        {
+          "arrays": 1,
+          "entries": 6240
+        }
+      ],
+      "correctness": "PASS",
+      "operations": "PASS",
+      "timing": "PASS"
+    },
+    {
+      "faces": 2304,
+      "vertices": 2401,
+      "mode": "vertex",
+      "selected": 0,
+      "samplesMs": {
+        "before": [
+          106.7162060000046,
+          102.27938700000232,
+          127.3785429999989,
+          91.36074699999881,
+          99.2067459999962,
+          121.47323399999732,
+          119.93677700000262,
+          146.18281299999944,
+          117.73925800000143
+        ],
+        "after": [
+          106.20118300000468,
+          115.83183599999757,
+          107.33498999999574,
+          102.83562200000597,
+          202.77657099999487,
+          96.5131029999975,
+          118.99154300000373,
+          120.98977300000115,
+          116.41890299999795
+        ]
+      },
+      "medianMs": {
+        "before": 117.73925800000143,
+        "after": 115.83183599999757
+      },
+      "speedup": 1.0164671653827873,
+      "reductionPercent": 1.6200390867112813,
+      "operationCounts": [
+        {
+          "arrays": 0,
+          "entries": 0
+        },
+        {
+          "arrays": 0,
+          "entries": 0
+        }
+      ],
+      "correctness": "PASS",
+      "operations": "PASS",
+      "timing": "PASS"
+    },
+    {
+      "faces": 2304,
+      "vertices": 2401,
+      "mode": "face",
+      "selected": 0,
+      "samplesMs": {
+        "before": [
+          216.77572099999816,
+          161.8373369999972,
+          192.9294050000026,
+          155.17462000000523,
+          211.66474500000186,
+          182.16452099999879,
+          182.50603300000512,
+          554.4182020000007,
+          147.56469000000652
+        ],
+        "after": [
+          214.35520499999984,
+          273.3145860000004,
+          118.42419399999926,
+          161.76870699999563,
+          132.4802920000002,
+          152.25789399999485,
+          116.97535600000265,
+          147.2220180000004,
+          105.73973100000148
+        ]
+      },
+      "medianMs": {
+        "before": 182.50603300000512,
+        "after": 147.2220180000004
+      },
+      "speedup": 1.2396653400037259,
+      "reductionPercent": 19.33306774576802,
+      "operationCounts": [
+        {
+          "arrays": 0,
+          "entries": 0
+        },
+        {
+          "arrays": 0,
+          "entries": 0
+        }
+      ],
+      "correctness": "PASS",
+      "operations": "PASS",
+      "timing": "PASS"
+    },
+    {
+      "faces": 2304,
+      "vertices": 2401,
+      "mode": "object",
+      "selected": 0,
+      "samplesMs": {
+        "before": [
+          77.76994600000035,
+          77.74908899999718,
+          102.70973399999639,
+          75.93275300000096,
+          76.28353300000163,
+          462.86093499999697,
+          65.15458500000386,
+          78.39289999999892,
+          75.05082099999709
+        ],
+        "after": [
+          75.48605500000122,
+          77.1504550000027,
+          79.31363599999895,
+          85.13400299999921,
+          79.57357399999455,
+          68.28317199999583,
+          97.62639399999898,
+          75.80129400000442,
+          74.95845199999894
+        ]
+      },
+      "medianMs": {
+        "before": 77.74908899999718,
+        "after": 77.1504550000027
+      },
+      "speedup": 1.0077593061504884,
+      "reductionPercent": 0.7699562884839872,
+      "operationCounts": [
+        {
+          "arrays": 0,
+          "entries": 0
+        },
+        {
+          "arrays": 0,
+          "entries": 0
+        }
+      ],
+      "correctness": "PASS",
+      "operations": "PASS",
+      "timing": "PASS"
+    }
+  ],
+  "result": "PASS",
+  "environment": {
+    "runtime": "v24.22.1",
+    "platform": "linux",
+    "architecture": "x64"
+  }
+}

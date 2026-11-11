@@ -15,9 +15,9 @@ function runtime(mesh,legacy=false,mode='edge',loop=true){
  const root=new THREE.Group(),materials=Object.fromEntries(['x','y','z','neutral','edge','crease','vertex','selectedVertex','loop','currentLoop'].map(k=>[k,k==='vertex'||k==='selectedVertex'?new THREE.MeshBasicMaterial():new THREE.LineBasicMaterial()]));
  for(const [k,m] of Object.entries(materials))m.name=k;
  const group=[{vertex:0},{vertex:1}],overlays=[];
- const c={THREE,createCageBatch,updateCageBatches,addMirrorCageBatch,mesh,root,activeLoopSlides:loop?[group]:[],activeLoopSlide:loop?group:null,selection:{type:mode},selectionMode:mode,directTool:null,selectionHas:(type,i)=>type===mode&&[2,3].includes(i),edgeAxis:()=> 'x',axisLineMaterials:materials,creaseEdgeMaterial:materials.crease,edgeMaterial:materials.edge,selectedVertexMaterial:materials.selectedVertex,vertexMaterial:materials.vertex,activeLoopMaterial:materials.loop,currentLoopMaterial:materials.currentLoop,addSelectedEdgeOverlay:(a,b,axis)=>overlays.push([a,b,axis]),addFacePickers:()=>{},camera:new THREE.PerspectiveCamera(42,1,.01,100),renderer:{domElement:{clientHeight:800}}};
+ const c={THREE,createCageBatch,updateCageBatches,addMirrorCageBatch,mesh,root,activeLoopSlides:loop?[group]:[],activeLoopSlide:loop?group:null,selection:{type:mode,index:3,indices:[2,3]},selectionMode:mode,directTool:null,selectionHas:(type,i)=>type===mode&&[2,3].includes(i),edgeAxis:()=> 'x',axisLineMaterials:materials,creaseEdgeMaterial:materials.crease,edgeMaterial:materials.edge,selectedVertexMaterial:materials.selectedVertex,vertexMaterial:materials.vertex,activeLoopMaterial:materials.loop,currentLoopMaterial:materials.currentLoop,addSelectedEdgeOverlay:(a,b,axis)=>overlays.push([a,b,axis]),addFacePickers:()=>{},camera:new THREE.PerspectiveCamera(42,1,.01,100),renderer:{domElement:{clientHeight:800}}};
  c.camera.position.set(2,2,4);c.camera.lookAt(0,0,0);c.camera.updateMatrixWorld(true);
- vm.createContext(c);vm.runInContext((legacy?original:line('addCage'))+'\n'+line('updateScreenSpaceSelection')+'\n'+line('clearGroup'),c);c.addCage();c.updateScreenSpaceSelection();root.updateMatrixWorld(true);
+ vm.createContext(c);vm.runInContext(line('selectionIndices')+'\n'+(legacy?original:line('addCage'))+'\n'+line('updateScreenSpaceSelection')+'\n'+line('clearGroup'),c);c.addCage();c.updateScreenSpaceSelection();root.updateMatrixWorld(true);
  return {c,root,materials,overlays,dispose(){c.clearGroup(root);Object.values(materials).forEach(m=>m.dispose());}};
 }
 function mesh(){const m=EditableMesh.cube(1);m.addLooseEdge(0,6);m.addLooseVertex(new THREE.Vector3(1,1,1));m.creases.set('0:6',1);m.creases.set('0:1',.6);return m;}
@@ -97,7 +97,7 @@ test('810 existing rendered-marker Vertex assist and Lasso return the same indic
 test('851 native mode rebuilds show dots only in Vertex while retaining indexed picking proxies and selection materials',()=>{
  const r=runtime(mesh(),false,'face',false),c=r.c;
  for(const mode of ['face','vertex','edge','vertex','object','face']){
-  c.clearGroup(r.root);c.selectionMode=mode;c.selection={type:mode};c.selectionHas=(type,i)=>type===mode&&i===2;c.addCage();c.updateScreenSpaceSelection();r.root.updateMatrixWorld(true);
+  c.clearGroup(r.root);c.selectionMode=mode;c.selection={type:mode,index:2,indices:[2]};c.selectionHas=(type,i)=>type===mode&&i===2;c.addCage();c.updateScreenSpaceSelection();r.root.updateMatrixWorld(true);
   const proxies=r.root.children.filter(o=>o.userData.kind==='vertex'),batches=r.root.children.filter(o=>o.userData.kind==='cage-vertex-batch');
   assert.equal(proxies.length,c.mesh.vertices.length);assert.equal(batches.length,mode==='vertex'?2:0);
   proxies.forEach((o,i)=>{assert.equal(o.userData.index,i);assert.equal(o.material.visible,false);assert.equal(o.userData.selected,mode==='vertex'&&i===2);});
