@@ -1,0 +1,139 @@
+{
+  "release": "0.36.18.1140",
+  "runtime_commit": "e9becf7594873b9829e0a34dd02865ed65542242",
+  "tested_tree": "2fe9048f05bf6e72337b38a534bad38d2ab85c7e",
+  "pages_run": 42964788923,
+  "pages_conclusion": "success",
+  "local_tests": {
+    "pass": 3394,
+    "fail": 0,
+    "skip": 0
+  },
+  "focused_tests": 27,
+  "benchmark": "docs/performance-body-packing-1140.json",
+  "benchmark_result": "PASS: body-construction CPU only",
+  "live_files": [
+    {
+      "file": "version.json",
+      "url": "version.json",
+      "match": true,
+      "sha256": "9d886ed192e309af12650dde48ed3be393b04338d0987a74d71be0c76031c678"
+    },
+    {
+      "file": "index.html",
+      "url": "index.html",
+      "match": true,
+      "sha256": "c4f91e53db60136956354cff887f40e0a3f4d5025d8db81663ced0ae8cdea3a6"
+    },
+    {
+      "file": "src/main.js",
+      "url": "src/main.js",
+      "match": true,
+      "sha256": "b02d4545950edfeec625599f7099cd7c929860481453b1193635db26f201beae"
+    },
+    {
+      "file": "src/viewport-paint.js",
+      "url": "src/viewport-paint.js",
+      "match": true,
+      "sha256": "2578bdeddbe3d6256949f2363570eab79f2291ca4ec011f1d2a601e0019b25ba"
+    },
+    {
+      "file": "src/drawer-ui.js",
+      "url": "src/drawer-ui.js",
+      "match": true,
+      "sha256": "d6a8affdaab31518d9f28eb3f030b650a19fc41ffe4a227469877df69dde95f3"
+    },
+    {
+      "file": "src/face-workflow-layout.js",
+      "url": "src/face-workflow-layout.js",
+      "match": true,
+      "sha256": "8d209530e3a16e20893358a7c2fb4b8ebdbaa2d1abfa2bc44045a413123fdcee"
+    },
+    {
+      "file": "src/release-version.js",
+      "url": "src/release-version.js",
+      "match": true,
+      "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
+    },
+    {
+      "file": "src/shell-comparison.js",
+      "url": "src/shell-comparison.js",
+      "match": true,
+      "sha256": "286d740a01e14af3326ade1adf1a7b8dcd5d9d3dab0fe702dd2016119942ef80"
+    },
+    {
+      "file": "radial-compact.css",
+      "url": "radial-compact.css",
+      "match": true,
+      "sha256": "50118d5035934f2b140a02a4ffbb67efbe4e1ad6c34f497c355d2d2180da8920"
+    },
+    {
+      "file": "src/total-gizmo.js",
+      "url": "src/total-gizmo.js",
+      "match": true,
+      "sha256": "3219a06f094a317465f78a2e7e5e64d3b49f97c8e6b05523e2122e995a810ea7"
+    },
+    {
+      "file": "src/radial-compact-labels.js",
+      "url": "src/radial-compact-labels.js",
+      "match": true,
+      "sha256": "7d4dcc6df90f9aea506a4cbbfcc3c51be9e197fbe2907801cbe8debe189464bb"
+    },
+    {
+      "file": "src/radial-move.js",
+      "url": "src/radial-move.js",
+      "match": true,
+      "sha256": "6781fb940a308a893c097eae91b882f41e513371a2b196a53264bef31a192229"
+    },
+    {
+      "file": "src/multi-object-transform.js",
+      "url": "src/multi-object-transform.js",
+      "match": true,
+      "sha256": "024ec06122bb9ccfeaee53ab5da5bae520dc194db6201ba2479a376902380069"
+    },
+    {
+      "file": "src/through-kernel.js",
+      "url": "src/through-kernel.js",
+      "match": true,
+      "sha256": "5cf48e4b55309663b3db7faa8b077b51e1457b568329c85b2a0deba057ad8f99"
+    },
+    {
+      "file": "src/mesh.js",
+      "url": "src/mesh.js",
+      "match": true,
+      "sha256": "ad561a54f87f87446c26a1d8ac864f0d3d7e5554e547df1f39c5c01be458a09c"
+    },
+    {
+      "file": "docs/performance-body-packing-1140.json",
+      "url": "docs/performance-body-packing-1140.json",
+      "match": true,
+      "sha256": "58206bb30272c98e675537576f9b499b7a924258dbd4e4c82b0d02ecbe508bdd"
+    },
+    {
+      "file": "src/mesh.js",
+      "url": "src/mesh.js?v=0.12.1140",
+      "match": true,
+      "sha256": "ad561a54f87f87446c26a1d8ac864f0d3d7e5554e547df1f39c5c01be458a09c"
+    },
+    {
+      "file": "src/mesh.js",
+      "url": "src/mesh.js?v=0.21.2.1140",
+      "match": true,
+      "sha256": "ad561a54f87f87446c26a1d8ac864f0d3d7e5554e547df1f39c5c01be458a09c"
+    },
+    {
+      "file": "src/cage-render-batches.js",
+      "url": "src/cage-render-batches.js",
+      "match": true,
+      "sha256": "a343a8626f4378a4bccab6f754015612eb1beb84bc674ea4b561c239a33b017c"
+    }
+  ],
+  "hosted_topology": {
+    "id": 42964789178,
+    "status": "in_progress",
+    "conclusion": null
+  },
+  "protected_acceptance": ".1139 native multi-edge PASS: user confirms quicker; exact addCage unchanged. .1138 remains rejected.",
+  "native_acceptance": "PENDING .1140 device tests; no full-app/native speedup claimed",
+  "scope": "Direct exact-sized position packing in original EditableMesh.triangulatedGeometry. Original fan order, winding and Three normals retained. Two original module identities separately cache-refreshed through shell import map. No marker cache or selection change."
+}
