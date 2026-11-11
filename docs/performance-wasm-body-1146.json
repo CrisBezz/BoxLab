@@ -1,0 +1,413 @@
+{
+  "scope": "Opt-in pilot only; no production migration or iPad/capacity acceptance",
+  "reports": [
+    {
+      "schemaVersion": 1,
+      "protocol": "wasm-body-v1",
+      "release": "0.36.18.1146",
+      "timestamp": "2026-11-11T12:47:49.243Z",
+      "environment": {
+        "runtime": "v24.22.1",
+        "platform": "linux",
+        "scope": "Desktop Node; not target iPad acceptance"
+      },
+      "fixture": {
+        "triangles": 10000,
+        "hash": "b5ae5c54"
+      },
+      "warmup": 2,
+      "repeats": 7,
+      "orders": [
+        [
+          "js",
+          "wasm"
+        ],
+        [
+          "wasm",
+          "js"
+        ],
+        [
+          "js",
+          "wasm"
+        ],
+        [
+          "wasm",
+          "js"
+        ],
+        [
+          "js",
+          "wasm"
+        ],
+        [
+          "wasm",
+          "js"
+        ],
+        [
+          "js",
+          "wasm"
+        ]
+      ],
+      "samplesMs": {
+        "js": [
+          2.5206819999999936,
+          3.8494790000000023,
+          2.2036830000000123,
+          2.6482149999999933,
+          2.3787920000000042,
+          2.5723979999999926,
+          1.337980999999985
+        ],
+        "wasm": [
+          2.870960999999994,
+          3.5560250000000053,
+          4.309911,
+          1.0782570000000078,
+          2.8576509999999757,
+          2.7637419999999793,
+          0.9092060000000117
+        ]
+      },
+      "metrics": {
+        "js": {
+          "medianMs": 2.5206819999999936,
+          "p95Ms": 3.8494790000000023,
+          "minMs": 1.337980999999985,
+          "maxMs": 3.8494790000000023
+        },
+        "wasm": {
+          "medianMs": 2.8576509999999757,
+          "p95Ms": 4.309911,
+          "minMs": 0.9092060000000117,
+          "maxMs": 4.309911
+        },
+        "medianReductionPercent": -13.368167821247699
+      },
+      "stages": [
+        {
+          "packAllocateMs": 0.4253400000000056,
+          "kernelMs": 0.1625009999999918,
+          "copyBackMs": 0.03102599999999711
+        },
+        {
+          "packAllocateMs": 0.7814970000000017,
+          "kernelMs": 0.19166400000000294,
+          "copyBackMs": 0.18194900000000302
+        },
+        {
+          "packAllocateMs": 0.15875500000001352,
+          "kernelMs": 0.03734499999998775,
+          "copyBackMs": 1.4145550000000071
+        },
+        {
+          "packAllocateMs": 0.19592000000000098,
+          "kernelMs": 0.03122600000000375,
+          "copyBackMs": 0.028783000000004222
+        },
+        {
+          "packAllocateMs": 0.18561499999998432,
+          "kernelMs": 0.03754499999999439,
+          "copyBackMs": 1.0377870000000087
+        },
+        {
+          "packAllocateMs": 0.18497399999998265,
+          "kernelMs": 0.030365000000017517,
+          "copyBackMs": 1.0413619999999923
+        },
+        {
+          "packAllocateMs": 0.15343699999999671,
+          "kernelMs": 0.03933800000001497,
+          "copyBackMs": 0.029493999999999687
+        }
+      ],
+      "initialization": {
+        "binaryBytes": 133,
+        "milliseconds": 1.7129660000000086,
+        "scope": "Fetch (browser cache may apply), compile and instantiate; excluded from warm samples"
+      },
+      "correctness": {
+        "passed": true,
+        "scope": "Byte-exact positions and normals every pair; source unchanged"
+      },
+      "memory": {
+        "renderAttributeBytes": 720000,
+        "wasmCommittedBytes": 655360,
+        "wasmRequiredBytes": 603624,
+        "scope": "Extra retained WASM linear memory plus independently owned output arrays. Excludes JS mesh, engine heap, GPU and total Safari RAM"
+      },
+      "decision": "FAIL",
+      "notes": "Lab only. >=25% complete CPU body construction gain is review eligible; 10–24% conditional; <10% reject. Memory and target iPad gates still required. Includes fresh input conversion/allocation, copies, kernel, independent output and original Three normals. Excludes scene rebuild, cage, GPU, gestures and editable capacity. No production migration."
+    },
+    {
+      "schemaVersion": 1,
+      "protocol": "wasm-body-v1",
+      "release": "0.36.18.1146",
+      "timestamp": "2026-11-11T12:47:49.925Z",
+      "environment": {
+        "runtime": "v24.22.1",
+        "platform": "linux",
+        "scope": "Desktop Node; not target iPad acceptance"
+      },
+      "fixture": {
+        "triangles": 50000,
+        "hash": "7d06dcd0"
+      },
+      "warmup": 2,
+      "repeats": 7,
+      "orders": [
+        [
+          "js",
+          "wasm"
+        ],
+        [
+          "wasm",
+          "js"
+        ],
+        [
+          "js",
+          "wasm"
+        ],
+        [
+          "wasm",
+          "js"
+        ],
+        [
+          "js",
+          "wasm"
+        ],
+        [
+          "wasm",
+          "js"
+        ],
+        [
+          "js",
+          "wasm"
+        ]
+      ],
+      "samplesMs": {
+        "js": [
+          9.70109500000001,
+          12.441151000000104,
+          16.12737900000002,
+          8.933158000000049,
+          6.302993000000015,
+          12.883024999999975,
+          12.704110000000014
+        ],
+        "wasm": [
+          13.911367000000041,
+          9.141264000000092,
+          14.15602899999999,
+          14.763539000000037,
+          13.810746999999992,
+          13.599055000000021,
+          15.051705999999967
+        ]
+      },
+      "metrics": {
+        "js": {
+          "medianMs": 12.441151000000104,
+          "p95Ms": 16.12737900000002,
+          "minMs": 6.302993000000015,
+          "maxMs": 16.12737900000002
+        },
+        "wasm": {
+          "medianMs": 13.911367000000041,
+          "p95Ms": 15.051705999999967,
+          "minMs": 9.141264000000092,
+          "maxMs": 15.051705999999967
+        },
+        "medianReductionPercent": -11.81736320055857
+      },
+      "stages": [
+        {
+          "packAllocateMs": 1.0760930000000144,
+          "kernelMs": 0.17565000000001874,
+          "copyBackMs": 5.397191000000021
+        },
+        {
+          "packAllocateMs": 1.3179220000000669,
+          "kernelMs": 0.31937199999993027,
+          "copyBackMs": 3.8437410000000227
+        },
+        {
+          "packAllocateMs": 1.0497139999999945,
+          "kernelMs": 0.2590330000000449,
+          "copyBackMs": 3.793015999999966
+        },
+        {
+          "packAllocateMs": 1.0073720000000321,
+          "kernelMs": 0.2995029999999588,
+          "copyBackMs": 5.43254300000001
+        },
+        {
+          "packAllocateMs": 1.0961730000000216,
+          "kernelMs": 0.17395699999997305,
+          "copyBackMs": 4.772146000000021
+        },
+        {
+          "packAllocateMs": 1.03296899999998,
+          "kernelMs": 0.17378800000005867,
+          "copyBackMs": 3.925551999999925
+        },
+        {
+          "packAllocateMs": 0.9154359999999997,
+          "kernelMs": 0.17762299999992592,
+          "copyBackMs": 5.149935000000028
+        }
+      ],
+      "initialization": {
+        "binaryBytes": 133,
+        "milliseconds": 0.9794360000000211,
+        "scope": "Fetch (browser cache may apply), compile and instantiate; excluded from warm samples"
+      },
+      "correctness": {
+        "passed": true,
+        "scope": "Byte-exact positions and normals every pair; source unchanged"
+      },
+      "memory": {
+        "renderAttributeBytes": 3600000,
+        "wasmCommittedBytes": 3014656,
+        "wasmRequiredBytes": 3008424,
+        "scope": "Extra retained WASM linear memory plus independently owned output arrays. Excludes JS mesh, engine heap, GPU and total Safari RAM"
+      },
+      "decision": "FAIL",
+      "notes": "Lab only. >=25% complete CPU body construction gain is review eligible; 10–24% conditional; <10% reject. Memory and target iPad gates still required. Includes fresh input conversion/allocation, copies, kernel, independent output and original Three normals. Excludes scene rebuild, cage, GPU, gestures and editable capacity. No production migration."
+    },
+    {
+      "schemaVersion": 1,
+      "protocol": "wasm-body-v1",
+      "release": "0.36.18.1146",
+      "timestamp": "2026-11-11T12:47:51.153Z",
+      "environment": {
+        "runtime": "v24.22.1",
+        "platform": "linux",
+        "scope": "Desktop Node; not target iPad acceptance"
+      },
+      "fixture": {
+        "triangles": 100000,
+        "hash": "089663f7"
+      },
+      "warmup": 2,
+      "repeats": 7,
+      "orders": [
+        [
+          "js",
+          "wasm"
+        ],
+        [
+          "wasm",
+          "js"
+        ],
+        [
+          "js",
+          "wasm"
+        ],
+        [
+          "wasm",
+          "js"
+        ],
+        [
+          "js",
+          "wasm"
+        ],
+        [
+          "wasm",
+          "js"
+        ],
+        [
+          "js",
+          "wasm"
+        ]
+      ],
+      "samplesMs": {
+        "js": [
+          24.547606000000087,
+          10.173142999999982,
+          25.06805600000007,
+          27.626313999999866,
+          8.427787999999964,
+          8.675354999999854,
+          8.74089200000003
+        ],
+        "wasm": [
+          85.92951900000003,
+          27.016620999999986,
+          40.76067000000012,
+          43.40759000000003,
+          9.860439999999926,
+          9.811167000000069,
+          24.424834000000146
+        ]
+      },
+      "metrics": {
+        "js": {
+          "medianMs": 10.173142999999982,
+          "p95Ms": 27.626313999999866,
+          "minMs": 8.427787999999964,
+          "maxMs": 27.626313999999866
+        },
+        "wasm": {
+          "medianMs": 27.016620999999986,
+          "p95Ms": 85.92951900000003,
+          "minMs": 9.811167000000069,
+          "maxMs": 85.92951900000003
+        },
+        "medianReductionPercent": -165.5680845142945
+      },
+      "stages": [
+        {
+          "packAllocateMs": 58.380728999999974,
+          "kernelMs": 0.4404019999999491,
+          "copyBackMs": 9.0296400000002
+        },
+        {
+          "packAllocateMs": 16.787435999999843,
+          "kernelMs": 0.38020300000016505,
+          "copyBackMs": 1.4512680000000273
+        },
+        {
+          "packAllocateMs": 13.651071000000002,
+          "kernelMs": 0.39623699999992823,
+          "copyBackMs": 9.821912999999995
+        },
+        {
+          "packAllocateMs": 14.000530000000026,
+          "kernelMs": 0.3802530000000388,
+          "copyBackMs": 10.220070999999962
+        },
+        {
+          "packAllocateMs": 2.1607199999998556,
+          "kernelMs": 0.41881000000012136,
+          "copyBackMs": 0.20634500000005573
+        },
+        {
+          "packAllocateMs": 2.7729360000000725,
+          "kernelMs": 0.4062219999998433,
+          "copyBackMs": 0.2086690000000999
+        },
+        {
+          "packAllocateMs": 2.067600999999968,
+          "kernelMs": 0.4027459999999792,
+          "copyBackMs": 12.661707999999862
+        }
+      ],
+      "initialization": {
+        "binaryBytes": 133,
+        "milliseconds": 0.8713699999999562,
+        "scope": "Fetch (browser cache may apply), compile and instantiate; excluded from warm samples"
+      },
+      "correctness": {
+        "passed": true,
+        "scope": "Byte-exact positions and normals every pair; source unchanged"
+      },
+      "memory": {
+        "renderAttributeBytes": 7200000,
+        "wasmCommittedBytes": 6029312,
+        "wasmRequiredBytes": 6014424,
+        "scope": "Extra retained WASM linear memory plus independently owned output arrays. Excludes JS mesh, engine heap, GPU and total Safari RAM"
+      },
+      "decision": "FAIL",
+      "notes": "Lab only. >=25% complete CPU body construction gain is review eligible; 10–24% conditional; <10% reject. Memory and target iPad gates still required. Includes fresh input conversion/allocation, copies, kernel, independent output and original Three normals. Excludes scene rebuild, cage, GPU, gestures and editable capacity. No production migration."
+    }
+  ]
+}
