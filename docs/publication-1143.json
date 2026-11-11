@@ -1,0 +1,157 @@
+{
+  "release": "0.36.18.1143",
+  "runtime_commit": "8757cfca86143ab381fc262364d58604d26ac3c5",
+  "tested_tree": "f88b39236113c59e0d5cef7990df4ada67a8839c",
+  "pages_run": 43011578191,
+  "pages_conclusion": "success",
+  "local_tests": {
+    "pass": 3403,
+    "fail": 0,
+    "cancelled": 0,
+    "skip": 0,
+    "duration_ms": 171924.642231
+  },
+  "focused_tests": 43,
+  "benchmark": {
+    "report": "docs/performance-edge-first-hit-1143.json",
+    "result": "PASS all6 rows; WARM complete shared picker CPU only",
+    "largest_median_ms": {
+      "before": 73.06505799999923,
+      "after": 19.17265000000043
+    },
+    "largest_speedup": 3.8109003189437862,
+    "failed_trial": "docs/performance-edge-first-hit-trial-1143.json",
+    "limitation": "Initial two-warmup small-hit case failed <=20% gate; equal25 warmups stabilize warm measurement. No cold-start/native/full-app/capacity/WASM claim."
+  },
+  "live_files": [
+    {
+      "file": "version.json",
+      "url": "version.json",
+      "match": true,
+      "sha256": "9c55f4c0bcf40707890e20fc12b502a7d5d0916a8a6758b7f0fe53ef248a3592"
+    },
+    {
+      "file": "index.html",
+      "url": "index.html",
+      "match": true,
+      "sha256": "51a21b84677f56bed1ac9ef53a9920261e7f29ac0bf2b8c902cea2e4dbf67e3d"
+    },
+    {
+      "file": "src/main.js",
+      "url": "src/main.js?v=0.36.18.1143",
+      "match": true,
+      "sha256": "fe2cbf05e60ed27e449f727b5190f3848e1b1500982782893de6425416f2afc2"
+    },
+    {
+      "file": "src/edge-screen-picking.js",
+      "url": "src/edge-screen-picking.js?v=0.36.18.1143",
+      "match": true,
+      "sha256": "2d5d8245d577fe384e4d8098467472e7546489d6bfcf16bb9df5bb5a56d7e504"
+    },
+    {
+      "file": "src/drawer-ui.js",
+      "url": "src/drawer-ui.js?v=0.36.18.1143",
+      "match": true,
+      "sha256": "82d4eb100a24784bf89f913a1ae5d33f9f5e750d630d5ebb56466e8916fd2f0f"
+    },
+    {
+      "file": "src/face-workflow-layout.js",
+      "url": "src/face-workflow-layout.js?v=0.36.18.1143",
+      "match": true,
+      "sha256": "6427ff8c452a97541ce063fb9809f44b7eb97539f1f0f462aca4580a8513f548"
+    },
+    {
+      "file": "src/release-version.js",
+      "url": "src/release-version.js?v=0.36.18.1143",
+      "match": true,
+      "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
+    },
+    {
+      "file": "src/shell-comparison.js",
+      "url": "src/shell-comparison.js?v=0.36.18.1143",
+      "match": true,
+      "sha256": "b84cc0b347b4858c4880463466842251da7fbb89a4210afa496ec3a5f10c9887"
+    },
+    {
+      "file": "src/total-gizmo.js",
+      "url": "src/total-gizmo.js?v=0.36.18.1142",
+      "match": true,
+      "sha256": "2afe27bf65f05922713671c2dc4df1fa22dfcbe97240327238dc2152198034da"
+    },
+    {
+      "file": "src/drag-selection-puck.js",
+      "url": "src/drag-selection-puck.js?v=0.36.18.1130",
+      "match": true,
+      "sha256": "880b431141dbab2806fd25daeb34e2d432dc81ecc41db27cf046e35bb2bbed9f"
+    },
+    {
+      "file": "src/edge-paint-select.js",
+      "url": "src/edge-paint-select.js?v=0.36.18.1141",
+      "match": true,
+      "sha256": "7f425cec3c5b00b4d5a057dfb6eaaaaa57a2321fca60695a259cfe8a3d70474c"
+    },
+    {
+      "file": "src/mesh.js",
+      "url": "src/mesh.js?v=0.12.1140",
+      "match": true,
+      "sha256": "ad561a54f87f87446c26a1d8ac864f0d3d7e5554e547df1f39c5c01be458a09c"
+    },
+    {
+      "file": "src/mesh.js",
+      "url": "src/mesh.js?v=0.21.2.1140",
+      "match": true,
+      "sha256": "ad561a54f87f87446c26a1d8ac864f0d3d7e5554e547df1f39c5c01be458a09c"
+    },
+    {
+      "file": "src/cage-render-batches.js",
+      "url": "src/cage-render-batches.js?v=0.36.18.930",
+      "match": true,
+      "sha256": "a343a8626f4378a4bccab6f754015612eb1beb84bc674ea4b561c239a33b017c"
+    },
+    {
+      "file": "src/multi-object-transform.js",
+      "url": "src/multi-object-transform.js?v=0.36.1.0",
+      "match": true,
+      "sha256": "024ec06122bb9ccfeaee53ab5da5bae520dc194db6201ba2479a376902380069"
+    },
+    {
+      "file": "src/viewport-paint.js",
+      "url": "src/viewport-paint.js?v=0.36.18.1137",
+      "match": true,
+      "sha256": "2578bdeddbe3d6256949f2363570eab79f2291ca4ec011f1d2a601e0019b25ba"
+    },
+    {
+      "file": "radial-compact.css",
+      "url": "radial-compact.css?v=0.36.18.1135",
+      "match": true,
+      "sha256": "50118d5035934f2b140a02a4ffbb67efbe4e1ad6c34f497c355d2d2180da8920"
+    },
+    {
+      "file": "src/through-kernel.js",
+      "url": "src/through-kernel.js",
+      "match": true,
+      "sha256": "5cf48e4b55309663b3db7faa8b077b51e1457b568329c85b2a0deba057ad8f99"
+    },
+    {
+      "file": "docs/performance-edge-first-hit-1143.json",
+      "url": "docs/performance-edge-first-hit-1143.json",
+      "match": true,
+      "sha256": "b3f7c43942f80f2b653e6385a980c8f4c14dff671bcd9fea3d8dd30e680f978b"
+    },
+    {
+      "file": "docs/performance-edge-first-hit-trial-1143.json",
+      "url": "docs/performance-edge-first-hit-trial-1143.json",
+      "match": true,
+      "sha256": "8ad46dfd05128deba90dbc90609041bbaf0016a283ab6a77b25f91dd75ddbd5f"
+    }
+  ],
+  "hosted_topology": {
+    "id": 43011579520,
+    "job_id": 130492224135,
+    "status": "in_progress",
+    "conclusion": null
+  },
+  "protected_acceptance": ".1142 Face DRAG puck -> transform gizmo PASS; .1141 concave targeting and .1139 multi-edge responsiveness retained.",
+  "native_acceptance": "PENDING .1143 first/repeated Edge taps and preserved concave targeting/selection checks.",
+  "scope": "Only original shared picker ordered visibility evaluation and firstOnly request in original main single-hit caller. Full stacks/Through retain exact accepted results. No cage/listener/topology/history changes."
+}
