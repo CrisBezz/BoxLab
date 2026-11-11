@@ -1,0 +1,83 @@
+{
+  "release": "0.36.18.1137",
+  "runtime_commit": "f64e59f61373970fe106937dbb0ae4c288a2e9cb",
+  "tested_tree": "e95b44999c788cade45cc61aa7ad0670178c301b",
+  "pages_run": 42947844211,
+  "pages_conclusion": "success",
+  "local_tests": {
+    "pass": 3384,
+    "fail": 0,
+    "skip": 0
+  },
+  "focused_tests": 38,
+  "live_files": [
+    {
+      "file": "version.json",
+      "match": true,
+      "sha256": "e216afcde39716be847f88055c75d42e5e6b774c6f7c87cadd96e3644c783982"
+    },
+    {
+      "file": "index.html",
+      "match": true,
+      "sha256": "8ac2fdbf02ed474d03a9b552e4fa62245292d92a581996e2f2ee1c0cf2a9c2e8"
+    },
+    {
+      "file": "src/main.js",
+      "match": true,
+      "sha256": "b02d4545950edfeec625599f7099cd7c929860481453b1193635db26f201beae"
+    },
+    {
+      "file": "src/viewport-paint.js",
+      "match": true,
+      "sha256": "2578bdeddbe3d6256949f2363570eab79f2291ca4ec011f1d2a601e0019b25ba"
+    },
+    {
+      "file": "src/drawer-ui.js",
+      "match": true,
+      "sha256": "26bd6c66b090e95bd1cd80da85fb161f3f0d72220b305437a09fd500365badad"
+    },
+    {
+      "file": "src/face-workflow-layout.js",
+      "match": true,
+      "sha256": "e5415b1654edb2d95283107c3f2267901294b85d9a02fbf752b7a4cca0a8a47b"
+    },
+    {
+      "file": "src/release-version.js",
+      "match": true,
+      "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
+    },
+    {
+      "file": "src/shell-comparison.js",
+      "match": true,
+      "sha256": "a8797202f7147f34ab8144bbe48479b4f9f0b36873a5f526bda7e20cfcf16ccf"
+    },
+    {
+      "file": "radial-compact.css",
+      "match": true,
+      "sha256": "50118d5035934f2b140a02a4ffbb67efbe4e1ad6c34f497c355d2d2180da8920"
+    },
+    {
+      "file": "src/total-gizmo.js",
+      "match": true,
+      "sha256": "3219a06f094a317465f78a2e7e5e64d3b49f97c8e6b05523e2122e995a810ea7"
+    },
+    {
+      "file": "src/radial-compact-labels.js",
+      "match": true,
+      "sha256": "7d4dcc6df90f9aea506a4cbbfcc3c51be9e197fbe2907801cbe8debe189464bb"
+    },
+    {
+      "file": "src/radial-move.js",
+      "match": true,
+      "sha256": "6781fb940a308a893c097eae91b882f41e513371a2b196a53264bef31a192229"
+    },
+    {
+      "file": "src/multi-object-transform.js",
+      "match": true,
+      "sha256": "024ec06122bb9ccfeaee53ab5da5bae520dc194db6201ba2479a376902380069"
+    }
+  ],
+  "protected_acceptance": ".1136 user PASS",
+  "native_acceptance": "pending",
+  "change": "Locked Paint background tap reopens radial using original window-capture owner; surface strokes still hide radial."
+}
