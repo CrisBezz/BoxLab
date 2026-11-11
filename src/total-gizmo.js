@@ -478,7 +478,7 @@ bindDragSelectionPuck(activator,{
  onFinish:anchor=>{
   root.__dragToolAnchor=anchor;
   lastSelectionKey=selectionKey(state()?.mesh,currentMode());hubSuppressedKey='';
-  setHubState('tools',{reason:'drag-selection-puck'});syncContextToolAvailability();cancelAnimationFrame(raf);sync();
+  setHubState('transform',{reason:'drag-selection-puck'});cancelAnimationFrame(raf);sync();
  }
 });
 
