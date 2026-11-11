@@ -1,3 +1,11 @@
+# .1137 user PASS; next recommendation: measured large-mesh performance — 11 November 2026
+
+User confirms .1137 PASS. Protect background-tap Paint radial reopening, repeated tap/paint/hide loop, persistent locked Paint session and existing navigation/Undo/Redo/Done behaviour. Together with .1135/.1136 PASSes, the packed grey-ring menus, relative movement and interruption recovery are accepted. Runtime stays .1137; this is documentation only, not a new build or a performance claim.
+
+User asks what is next, without requesting another /nextbuild yet. Recommend returning to large-mesh performance, beginning with remaining dense preview/rebuild/controller cost using existing benchmark and profiling owners. General gesture-onset/Object Browser lag was never claimed solved by cut-specific .1122-.1132 gains. Audit current main, benchmark same fixture before/after, choose one confirmed expensive owner and preserve exact topology, metadata, selection/history and listener behaviour. Ship a performance change only with measured benefit and correctness gates; WASM is a candidate for a proven CPU hotspot, not an assumed fix for browser memory or every interaction delay. Do not add another menu redesign or diagnostic UI as the default next task. Await user direction /nextbuild for implementation.
+
+---
+
 # .1137 — tap background to reopen Paint tools; .1136 protected PASS — 11 November 2026
 
 User .1136 PASS protected, alongside .1135 packed grey-ring UI and original locked Paint workflow. User explicitly replaces Paint background LONG PRESS with a simple background click/tap: select tool -> paint hides radial -> background tap restores radial -> keep painting, remain in Paint until Done (existing explicit bottom-mode exits retained). Audit baseline main8a5064f34a442aee0584421ca7c032e07da701c1, runtime7dad7694, release1136; original main window-capture background owner, Pencil semantic gate, Paint surface/tool/session owners and .965/.1094 tests inspected. Do not add parallel raw click or pointer listeners.
