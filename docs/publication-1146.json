@@ -1,0 +1,66 @@
+{
+  "release": "0.36.18.1146",
+  "runtimeCommit": "9d340e55bfbf40f4b3ff6fbc33025e2f41eb8a9e",
+  "testedTree": "d3a44bbc9732eff19f7287dd02a8cecae9908da8",
+  "localFocused": {
+    "tests": 75,
+    "pass": 75,
+    "fail": 0,
+    "skipped": 0
+  },
+  "localFull": {
+    "tests": 3420,
+    "pass": 3420,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "durationMs": 170077.195733
+  },
+  "pages": {
+    "run": 43023878707,
+    "buildJob": 130533558603,
+    "deployJob": 130533784772,
+    "conclusion": "success"
+  },
+  "liveByteMatches": [
+    {
+      "path": "version.json",
+      "sha256": "3b82c946916b46201eb8308c1311b2c51b6ae943073dadc103510d307aeb7ad4"
+    },
+    {
+      "path": "index.html",
+      "sha256": "5a3e6ff4900989ee2e629a4e4416f33f8800b63d6b2e93da61592519dd73b602"
+    },
+    {
+      "path": "src/performance-monitor.js",
+      "sha256": "fbc312872aa14665a86e2ccf0c8c8d297eb81ae98fbd095db475260b89e88c2b"
+    },
+    {
+      "path": "src/performance-lab-ui.js",
+      "sha256": "801d4a6ff76beace91ac3278e5636944d43ec943b440a179671bbe3bd2f1e85b"
+    },
+    {
+      "path": "src/performance-wasm.js",
+      "sha256": "9ee31b6059dbc366161a53cf4c7990ec8d4d895c49a5ffcd49d624b3a1ca1077"
+    },
+    {
+      "path": "src/wasm/body-pack.wasm",
+      "sha256": "9b4e548f8dc7f1946faebd70d333f04738c674713a42b063f224f0b2ffa3f90a"
+    }
+  ],
+  "hostedRegression": {
+    "run": 43023879760,
+    "job": 130533555072,
+    "status": "completed",
+    "conclusion": "success",
+    "checkedOutCommit": "9d340e55bfbf40f4b3ff6fbc33025e2f41eb8a9e",
+    "tests": 3420,
+    "pass": 3420,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "durationMs": 293403.285036,
+    "evidence": "Decoded job log checkout SHA and exact final TAP totals inspected"
+  },
+  "scope": "Opt-in real WASM body packing pilot only. All three desktop measured speed gates FAIL; no production replacement or iPad/memory/capacity acceptance. .1145 user PASS protected."
+}
