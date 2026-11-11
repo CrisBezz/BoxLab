@@ -1,0 +1,659 @@
+{
+  "benchmark": "BoxLab subdivision phase profile .1147",
+  "release": "0.36.18.1147",
+  "protocol": "subdivision-phases-v1",
+  "decision": "BASELINE_ONLY",
+  "warmup": 2,
+  "started": "2026-11-11T23:36:37.290Z",
+  "ended": "2026-11-11T23:36:38.511Z",
+  "userAgent": "Mozilla/5.0 (iPad; CPU OS 27_2_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/157.0.8103.37 Mobile/15E148 Safari/604.1",
+  "devicePixelRatio": 2,
+  "source": "src/subdivision.js · profileSubdivide uses same catmullClarkStep as subdivide",
+  "sourceFaceCases": [
+    16,
+    64,
+    256
+  ],
+  "levels": [
+    1,
+    2,
+    3
+  ],
+  "outputFaceCap": 16384,
+  "stopAfterSingleRunMs": 1200,
+  "timedSamplesPerCase": 5,
+  "results": [
+    {
+      "sourceFaces": 16,
+      "level": 1,
+      "outputFaces": 64,
+      "outputVertices": 81,
+      "medianMs": 1,
+      "samplesMs": [
+        1,
+        1,
+        0,
+        0,
+        1
+      ],
+      "phaseSamplesMs": [
+        {
+          "initial-clone": 0,
+          "clone": 0,
+          "edges": 0,
+          "face-points": 0,
+          "edge-points": 0,
+          "adjacency": 0,
+          "vertex-points": 1,
+          "assembly": 0
+        },
+        {
+          "initial-clone": 0,
+          "clone": 0,
+          "edges": 0,
+          "face-points": 0,
+          "edge-points": 0,
+          "adjacency": 0,
+          "vertex-points": 1,
+          "assembly": 0
+        },
+        {
+          "initial-clone": 0,
+          "clone": 0,
+          "edges": 0,
+          "face-points": 0,
+          "edge-points": 0,
+          "adjacency": 0,
+          "vertex-points": 0,
+          "assembly": 0
+        },
+        {
+          "initial-clone": 0,
+          "clone": 0,
+          "edges": 0,
+          "face-points": 0,
+          "edge-points": 0,
+          "adjacency": 0,
+          "vertex-points": 0,
+          "assembly": 0
+        },
+        {
+          "initial-clone": 0,
+          "clone": 0,
+          "edges": 0,
+          "face-points": 0,
+          "edge-points": 0,
+          "adjacency": 0,
+          "vertex-points": 1,
+          "assembly": 0
+        }
+      ],
+      "correctness": {
+        "sourceUnchanged": true,
+        "outputMatchesProduction": true
+      }
+    },
+    {
+      "sourceFaces": 16,
+      "level": 2,
+      "outputFaces": 256,
+      "outputVertices": 289,
+      "medianMs": 2,
+      "samplesMs": [
+        1,
+        2,
+        2,
+        1,
+        2
+      ],
+      "phaseSamplesMs": [
+        {
+          "initial-clone": 0,
+          "clone": 0,
+          "edges": 1,
+          "face-points": 0,
+          "edge-points": 0,
+          "adjacency": 0,
+          "vertex-points": 0,
+          "assembly": 0
+        },
+        {
+          "initial-clone": 0,
+          "clone": 0,
+          "edges": 1,
+          "face-points": 0,
+          "edge-points": 0,
+          "adjacency": 0,
+          "vertex-points": 0,
+          "assembly": 1
+        },
+        {
+          "initial-clone": 0,
+          "clone": 0,
+          "edges": 0,
+          "face-points": 0,
+          "edge-points": 0,
+          "adjacency": 0,
+          "vertex-points": 1,
+          "assembly": 1
+        },
+        {
+          "initial-clone": 0,
+          "clone": 0,
+          "edges": 0,
+          "face-points": 0,
+          "edge-points": 1,
+          "adjacency": 0,
+          "vertex-points": 0,
+          "assembly": 0
+        },
+        {
+          "initial-clone": 0,
+          "clone": 1,
+          "edges": 0,
+          "face-points": 0,
+          "edge-points": 0,
+          "adjacency": 0,
+          "vertex-points": 0,
+          "assembly": 1
+        }
+      ],
+      "correctness": {
+        "sourceUnchanged": true,
+        "outputMatchesProduction": true
+      }
+    },
+    {
+      "sourceFaces": 16,
+      "level": 3,
+      "outputFaces": 1024,
+      "outputVertices": 1089,
+      "medianMs": 3,
+      "samplesMs": [
+        4,
+        3,
+        2,
+        3,
+        3
+      ],
+      "phaseSamplesMs": [
+        {
+          "initial-clone": 0,
+          "clone": 0,
+          "edges": 1,
+          "face-points": 0,
+          "edge-points": 0,
+          "adjacency": 0,
+          "vertex-points": 2,
+          "assembly": 1
+        },
+        {
+          "initial-clone": 0,
+          "clone": 0,
+          "edges": 0,
+          "face-points": 0,
+          "edge-points": 1,
+          "adjacency": 0,
+          "vertex-points": 1,
+          "assembly": 1
+        },
+        {
+          "initial-clone": 0,
+          "clone": 0,
+          "edges": 1,
+          "face-points": 0,
+          "edge-points": 0,
+          "adjacency": 0,
+          "vertex-points": 1,
+          "assembly": 0
+        },
+        {
+          "initial-clone": 0,
+          "clone": 0,
+          "edges": 0,
+          "face-points": 1,
+          "edge-points": 0,
+          "adjacency": 0,
+          "vertex-points": 1,
+          "assembly": 1
+        },
+        {
+          "initial-clone": 0,
+          "clone": 0,
+          "edges": 0,
+          "face-points": 0,
+          "edge-points": 0,
+          "adjacency": 0,
+          "vertex-points": 1,
+          "assembly": 2
+        }
+      ],
+      "correctness": {
+        "sourceUnchanged": true,
+        "outputMatchesProduction": true
+      }
+    },
+    {
+      "sourceFaces": 64,
+      "level": 1,
+      "outputFaces": 256,
+      "outputVertices": 289,
+      "medianMs": 1,
+      "samplesMs": [
+        0,
+        1,
+        1,
+        0,
+        1
+      ],
+      "phaseSamplesMs": [
+        {
+          "initial-clone": 0,
+          "clone": 0,
+          "edges": 0,
+          "face-points": 0,
+          "edge-points": 0,
+          "adjacency": 0,
+          "vertex-points": 0,
+          "assembly": 0
+        },
+        {
+          "initial-clone": 0,
+          "clone": 0,
+          "edges": 0,
+          "face-points": 0,
+          "edge-points": 1,
+          "adjacency": 0,
+          "vertex-points": 0,
+          "assembly": 0
+        },
+        {
+          "initial-clone": 0,
+          "clone": 0,
+          "edges": 0,
+          "face-points": 0,
+          "edge-points": 0,
+          "adjacency": 0,
+          "vertex-points": 1,
+          "assembly": 0
+        },
+        {
+          "initial-clone": 0,
+          "clone": 0,
+          "edges": 0,
+          "face-points": 0,
+          "edge-points": 0,
+          "adjacency": 0,
+          "vertex-points": 0,
+          "assembly": 0
+        },
+        {
+          "initial-clone": 0,
+          "clone": 0,
+          "edges": 0,
+          "face-points": 0,
+          "edge-points": 0,
+          "adjacency": 1,
+          "vertex-points": 0,
+          "assembly": 0
+        }
+      ],
+      "correctness": {
+        "sourceUnchanged": true,
+        "outputMatchesProduction": true
+      }
+    },
+    {
+      "sourceFaces": 64,
+      "level": 2,
+      "outputFaces": 1024,
+      "outputVertices": 1089,
+      "medianMs": 2,
+      "samplesMs": [
+        2,
+        2,
+        3,
+        3,
+        2
+      ],
+      "phaseSamplesMs": [
+        {
+          "initial-clone": 0,
+          "clone": 0,
+          "edges": 1,
+          "face-points": 0,
+          "edge-points": 0,
+          "adjacency": 0,
+          "vertex-points": 0,
+          "assembly": 1
+        },
+        {
+          "initial-clone": 0,
+          "clone": 0,
+          "edges": 1,
+          "face-points": 0,
+          "edge-points": 0,
+          "adjacency": 0,
+          "vertex-points": 0,
+          "assembly": 1
+        },
+        {
+          "initial-clone": 0,
+          "clone": 0,
+          "edges": 1,
+          "face-points": 0,
+          "edge-points": 1,
+          "adjacency": 0,
+          "vertex-points": 0,
+          "assembly": 1
+        },
+        {
+          "initial-clone": 0,
+          "clone": 0,
+          "edges": 0,
+          "face-points": 0,
+          "edge-points": 0,
+          "adjacency": 0,
+          "vertex-points": 1,
+          "assembly": 2
+        },
+        {
+          "initial-clone": 0,
+          "clone": 0,
+          "edges": 1,
+          "face-points": 0,
+          "edge-points": 0,
+          "adjacency": 0,
+          "vertex-points": 0,
+          "assembly": 1
+        }
+      ],
+      "correctness": {
+        "sourceUnchanged": true,
+        "outputMatchesProduction": true
+      }
+    },
+    {
+      "sourceFaces": 64,
+      "level": 3,
+      "outputFaces": 4096,
+      "outputVertices": 4225,
+      "medianMs": 4,
+      "samplesMs": [
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "phaseSamplesMs": [
+        {
+          "initial-clone": 0,
+          "clone": 0,
+          "edges": 1,
+          "face-points": 0,
+          "edge-points": 0,
+          "adjacency": 0,
+          "vertex-points": 1,
+          "assembly": 2
+        },
+        {
+          "initial-clone": 0,
+          "clone": 0,
+          "edges": 2,
+          "face-points": 0,
+          "edge-points": 0,
+          "adjacency": 0,
+          "vertex-points": 0,
+          "assembly": 2
+        },
+        {
+          "initial-clone": 0,
+          "clone": 0,
+          "edges": 0,
+          "face-points": 1,
+          "edge-points": 0,
+          "adjacency": 0,
+          "vertex-points": 1,
+          "assembly": 2
+        },
+        {
+          "initial-clone": 0,
+          "clone": 0,
+          "edges": 1,
+          "face-points": 0,
+          "edge-points": 0,
+          "adjacency": 0,
+          "vertex-points": 1,
+          "assembly": 2
+        },
+        {
+          "initial-clone": 0,
+          "clone": 0,
+          "edges": 2,
+          "face-points": 0,
+          "edge-points": 0,
+          "adjacency": 0,
+          "vertex-points": 1,
+          "assembly": 1
+        }
+      ],
+      "correctness": {
+        "sourceUnchanged": true,
+        "outputMatchesProduction": true
+      }
+    },
+    {
+      "sourceFaces": 256,
+      "level": 1,
+      "outputFaces": 1024,
+      "outputVertices": 1089,
+      "medianMs": 1,
+      "samplesMs": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "phaseSamplesMs": [
+        {
+          "initial-clone": 0,
+          "clone": 0,
+          "edges": 0,
+          "face-points": 0,
+          "edge-points": 0,
+          "adjacency": 0,
+          "vertex-points": 0,
+          "assembly": 1
+        },
+        {
+          "initial-clone": 0,
+          "clone": 0,
+          "edges": 1,
+          "face-points": 0,
+          "edge-points": 0,
+          "adjacency": 0,
+          "vertex-points": 0,
+          "assembly": 0
+        },
+        {
+          "initial-clone": 0,
+          "clone": 0,
+          "edges": 0,
+          "face-points": 0,
+          "edge-points": 0,
+          "adjacency": 1,
+          "vertex-points": 0,
+          "assembly": 0
+        },
+        {
+          "initial-clone": 0,
+          "clone": 0,
+          "edges": 0,
+          "face-points": 0,
+          "edge-points": 0,
+          "adjacency": 0,
+          "vertex-points": 1,
+          "assembly": 0
+        },
+        {
+          "initial-clone": 0,
+          "clone": 0,
+          "edges": 0,
+          "face-points": 0,
+          "edge-points": 0,
+          "adjacency": 0,
+          "vertex-points": 1,
+          "assembly": 0
+        }
+      ],
+      "correctness": {
+        "sourceUnchanged": true,
+        "outputMatchesProduction": true
+      }
+    },
+    {
+      "sourceFaces": 256,
+      "level": 2,
+      "outputFaces": 4096,
+      "outputVertices": 4225,
+      "medianMs": 6,
+      "samplesMs": [
+        7,
+        6,
+        6,
+        6,
+        5
+      ],
+      "phaseSamplesMs": [
+        {
+          "initial-clone": 0,
+          "clone": 0,
+          "edges": 2,
+          "face-points": 0,
+          "edge-points": 1,
+          "adjacency": 0,
+          "vertex-points": 1,
+          "assembly": 3
+        },
+        {
+          "initial-clone": 0,
+          "clone": 0,
+          "edges": 1,
+          "face-points": 0,
+          "edge-points": 1,
+          "adjacency": 0,
+          "vertex-points": 2,
+          "assembly": 2
+        },
+        {
+          "initial-clone": 0,
+          "clone": 0,
+          "edges": 1,
+          "face-points": 0,
+          "edge-points": 0,
+          "adjacency": 1,
+          "vertex-points": 1,
+          "assembly": 3
+        },
+        {
+          "initial-clone": 0,
+          "clone": 0,
+          "edges": 1,
+          "face-points": 1,
+          "edge-points": 0,
+          "adjacency": 0,
+          "vertex-points": 1,
+          "assembly": 3
+        },
+        {
+          "initial-clone": 0,
+          "clone": 0,
+          "edges": 1,
+          "face-points": 0,
+          "edge-points": 1,
+          "adjacency": 1,
+          "vertex-points": 1,
+          "assembly": 1
+        }
+      ],
+      "correctness": {
+        "sourceUnchanged": true,
+        "outputMatchesProduction": true
+      }
+    },
+    {
+      "sourceFaces": 256,
+      "level": 3,
+      "outputFaces": 16384,
+      "outputVertices": 16641,
+      "medianMs": 12,
+      "samplesMs": [
+        12,
+        12,
+        11,
+        10,
+        13
+      ],
+      "phaseSamplesMs": [
+        {
+          "initial-clone": 0,
+          "clone": 0,
+          "edges": 2,
+          "face-points": 1,
+          "edge-points": 1,
+          "adjacency": 0,
+          "vertex-points": 2,
+          "assembly": 6
+        },
+        {
+          "initial-clone": 0,
+          "clone": 0,
+          "edges": 1,
+          "face-points": 1,
+          "edge-points": 2,
+          "adjacency": 1,
+          "vertex-points": 2,
+          "assembly": 5
+        },
+        {
+          "initial-clone": 0,
+          "clone": 1,
+          "edges": 1,
+          "face-points": 0,
+          "edge-points": 1,
+          "adjacency": 0,
+          "vertex-points": 3,
+          "assembly": 5
+        },
+        {
+          "initial-clone": 0,
+          "clone": 0,
+          "edges": 2,
+          "face-points": 1,
+          "edge-points": 1,
+          "adjacency": 0,
+          "vertex-points": 2,
+          "assembly": 4
+        },
+        {
+          "initial-clone": 0,
+          "clone": 1,
+          "edges": 1,
+          "face-points": 0,
+          "edge-points": 1,
+          "adjacency": 0,
+          "vertex-points": 5,
+          "assembly": 5
+        }
+      ],
+      "correctness": {
+        "sourceUnchanged": true,
+        "outputMatchesProduction": true
+      }
+    }
+  ],
+  "stoppedEarly": false,
+  "scope": "Instrumented CPU subdivision baseline only, with per-phase clock/observer overhead. Phase wall times include allocation/GC within each span; not arithmetic-only cost. No WASM candidate, speed improvement, gesture lag or editable-capacity result. Excludes UV interpolation, GPU, complete rebuild and total memory. Millisecond timer quantization may produce zero spans; do not infer zero cost or sum phase medians."
+}
