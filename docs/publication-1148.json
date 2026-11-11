@@ -1,0 +1,82 @@
+{
+  "release": "0.36.18.1148",
+  "runtimeCommit": "d90e98a1633ee48a52af64c3df4a10daeffcfba2",
+  "testedTree": "060c56e95301c6e194171b89969685bbdd576198",
+  "localFocused": {
+    "tests": 84,
+    "pass": 84,
+    "fail": 0,
+    "skipped": 0
+  },
+  "localFull": {
+    "tests": 3428,
+    "pass": 3428,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "durationMs": 110040.739853
+  },
+  "hostedRegression": {
+    "run": 43123361515,
+    "job": 130869137926,
+    "status": "completed",
+    "conclusion": "success",
+    "checkedOutCommit": "d90e98a1633ee48a52af64c3df4a10daeffcfba2",
+    "tests": 3428,
+    "pass": 3428,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "durationMs": 260633.792318,
+    "evidence": "Decoded job log runtime checkout SHA and final TAP totals inspected"
+  },
+  "pages": {
+    "run": 43123360382,
+    "buildJob": 130869138330,
+    "deployJob": 130869342489,
+    "conclusion": "success"
+  },
+  "liveByteMatches": [
+    {
+      "path": "version.json",
+      "matches": true,
+      "sha256": "8307f99ed45dfc23fcbdeb1d564b533d143d6545005d1f6471916188151dee06"
+    },
+    {
+      "path": "index.html",
+      "matches": true,
+      "sha256": "4d32426c089219f8a2a9a5b3f982397ea1f0cf33a9346270ae24551310015e84"
+    },
+    {
+      "path": "src/performance-monitor.js",
+      "matches": true,
+      "sha256": "9ba6b39baeeb4b9b487720056ccd2081ae901de1da22842b5b9537f7f58aea85"
+    },
+    {
+      "path": "src/performance-lab-ui.js",
+      "matches": true,
+      "sha256": "7331ea6d6ba5a2277ca9128fc99253ff45fae1d4843739ed3b15ac88da090c86"
+    },
+    {
+      "path": "docs/subdivision-benchmark-1036.html",
+      "matches": true,
+      "sha256": "23e180d3305f69a754cd97100e8deaba95d4b31c5afd700053e384e06b0342cb"
+    },
+    {
+      "path": "src/subdivision-wasm-lab.js",
+      "matches": true,
+      "sha256": "fad3220b194ee6410b55591b095ece3c6abb302bf6b923208748a35a562dbf69"
+    },
+    {
+      "path": "src/wasm/subdivision-step.wasm",
+      "matches": true,
+      "sha256": "54df9d79add511230bd7dfb1d11ed31eb57f5eac64fbd6f7f00de9d09aa316ba"
+    },
+    {
+      "path": "src/subdivision.js",
+      "matches": true,
+      "sha256": "800b106071706b359d97cf9266c008c7801a5e704ebdad025e58df604a8362a4"
+    }
+  ],
+  "scope": "Opt-in bounded complete subdivision JS/WASM comparison only. JS remains authoritative for live modelling. Desktop mixed/largest FAIL; native iPad speed/memory/reliability pending. No UV, full scene, gesture or editable-capacity claim. Pre-fix loading contract failure resolved without weakening test; final full suites pass."
+}
