@@ -1,0 +1,86 @@
+{
+  "release": "0.36.18.1145",
+  "runtime_commit": "61ad928196c8a131281eee03e151feba1f680f0b",
+  "tested_tree": "1b4eb8021319971fa447a21935e28fda94a2379e",
+  "pages_run": 43020923245,
+  "pages_conclusion": "success",
+  "pages_deploy_job": 130523871850,
+  "local_tests": {
+    "focused": {
+      "pass": 56,
+      "fail": 0
+    },
+    "full": {
+      "status": "completion_unconfirmed",
+      "reason": "Workspace exec transport disconnected after full run started; final local totals unavailable. No full local PASS claimed."
+    }
+  },
+  "hosted_tests": {
+    "run": 43020923451,
+    "job": 130523627342,
+    "status": "completed",
+    "conclusion": "success",
+    "checked_out_commit": "61ad928196c8a131281eee03e151feba1f680f0b",
+    "pass": 3415,
+    "fail": 0,
+    "cancelled": 0,
+    "skip": 0,
+    "duration_ms": 188653.869053,
+    "log_summary": [
+      "2026-11-11T12:33:44.2902854Z # tests 3415",
+      "2026-11-11T12:33:44.2903215Z # pass 3415",
+      "2026-11-11T12:33:44.2903374Z # fail 0",
+      "2026-11-11T12:33:44.2903555Z # cancelled 0",
+      "2026-11-11T12:33:44.2903727Z # skipped 0",
+      "2026-11-11T12:33:44.2904213Z # duration_ms 188653.869053"
+    ]
+  },
+  "benchmark": {
+    "report": "docs/performance-edge-sweep-1145.json",
+    "result": "PASS all5 rows; warm complete Visible Edge selection-sampler CPU only",
+    "largest_median_ms": {
+      "before": 94.56906699999945,
+      "after": 16.30781400000069
+    },
+    "largest_speedup": 5.799003287626131,
+    "body_raycasts": {
+      "before": 41,
+      "after": 1
+    },
+    "rejected_sampler_trial": "docs/performance-edge-sweep-trial-1145.json",
+    "rejected_navigation_experiment": "docs/performance-pencil-background-rejected-1145.json",
+    "scope": "Includes actual hitIndices/main bridge/shared picker and real body rays; excludes gesture delivery, mutation/rebuild/render/GPU. No full stroke, background-navigation, capacity or WASM claim."
+  },
+  "repository_verification": [
+    {
+      "path": "version.json",
+      "blob_sha": "a1d6bfddc04d77f5eddf6b01e24215b051a6da96",
+      "expected_from_prepublication_upload": "a1d6bfddc04d77f5eddf6b01e24215b051a6da96",
+      "markers": "0.36.18.1145"
+    },
+    {
+      "path": "index.html",
+      "blob_sha": "5d76db87b86ac59eb1995b398d290b92a00195f2",
+      "expected_from_prepublication_upload": "5d76db87b86ac59eb1995b398d290b92a00195f2",
+      "markers": "title/data/visible0.36.18.1145; Edge paint pin1145; main1144/gizmo1142/original Pencil gate1100 retained"
+    },
+    {
+      "path": "src/edge-paint-select.js",
+      "blob_sha": "ce28353312afa1eb93b6420d111106d24fd6f324",
+      "expected_from_prepublication_upload": "ce28353312afa1eb93b6420d111106d24fd6f324"
+    },
+    {
+      "path": "src/pencil-orbit-gate.js",
+      "blob_sha": "9e6716f171c270f70eb0a261e72d72b0fed9e13b",
+      "expected_from_prepublication_upload": "unchanged inherited accepted1144 blob"
+    }
+  ],
+  "direct_live_byte_verification": {
+    "performed": false,
+    "reason": "Workspace unavailable after push; public Pages fetch unavailable through alternative tools. Successful Pages deployment and current-main source/pins verified, not CDN byte identity."
+  },
+  "protected_acceptance": ".1144 PASS; .1141/.1143 concave/first-visible picking and .1142 Face DRAG puck -> gizmo retained.",
+  "native_acceptance": "PENDING .1145 Visible Edge Pencil sweep-selection and normal navigation/Face DRAG smoke.",
+  "scope": "Only original Edge paint sampler requests firstOnly:true for Visible Edge. Through and Face keep original calls. Runtime Pencil navigation gate restored exactly to accepted1144.",
+  "workspace_handoff": "Current remote main is authoritative; local final scratch synchronization could not be completed after transport loss."
+}
