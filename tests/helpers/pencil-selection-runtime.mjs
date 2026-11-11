@@ -7,9 +7,9 @@ import {vertexRuntime} from './vertex-extrude-runtime.mjs';
 
 // Shared original .760/.766 whole gate/paint/Lasso fixture, real Three raycasts.
 // Orbit callbacks and canvas selection-down adapter remain controlled doubles.
-export function pencilSelectionRuntime(mesh=null,{paintActive=false}={}){
+export function pencilSelectionRuntime(mesh=null,{paintActive=false,gateSource=null}={}){
  const m=mesh||new EditableMesh([[-1,0,0],[1,0,0],[-1,1,0],[1,1,0]],[]);if(!mesh){m.addLooseEdge(0,1);m.addLooseEdge(2,3);}
- const f=vertexRuntime(m,[]),c=f.context,logs=[];f.setMode('edge');let orbitDown=0,orbitMove=0;
+ const f=vertexRuntime(m,[],{sourceTransform:(source,name)=>gateSource&&name==='pencil-orbit-gate.js'?gateSource:source}),c=f.context,logs=[];f.setMode('edge');let orbitDown=0,orbitMove=0;
  c.appendStrokePoint=appendStrokePoint;
  c.__boxlabViewportPaint={get active(){return paintActive;}};
  c.__boxlabGestureDebug={log:(stage,detail)=>logs.push({stage,detail})};

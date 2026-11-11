@@ -1,0 +1,224 @@
+{
+  "release": ".1145",
+  "baseline": "Exact hitIndices sampler from accepted .1144 main67914ac; SAME accepted .1144 picker/main bridge in both owners",
+  "environment": {
+    "runtime": "v24.22.1",
+    "platform": "linux",
+    "architecture": "x64"
+  },
+  "scope": "Complete actual Edge sweep-selection hitIndices call + original native bridge/shared picker projection/clipping/ranking/real body raycasts/unique ID filtering.25 warmups,9 alternating paired samples. Excludes source setup, input gesture dispatch, selection mutation/rebuild, GPU and native delivery. Warm Edge selection-sample CPU only; no finger-navigation/full-app/capacity/WASM claim.",
+  "gates": {
+    "correctness": "Exact Visible/Through/background ID arrays and unchanged source",
+    "operations": "Visible uses first accepted edge; Through retains entire original list and original bypass",
+    "timing": "Largest Visible sample>=1.2x; all smaller/control cases<=20% regression"
+  },
+  "rows": [
+    {
+      "grid": 32,
+      "faces": 1024,
+      "edges": 2112,
+      "kind": "visible",
+      "medianMs": {
+        "before": 3.3744970000000194,
+        "after": 2.8792550000000574
+      },
+      "speedup": 1.1720035217443234,
+      "bodyRaycasts": {
+        "before": 7,
+        "after": 1
+      },
+      "samplesMs": [
+        [
+          4.377399000000082,
+          7.113804999999957,
+          5.10434100000009,
+          3.054510999999934,
+          2.759781999999973,
+          6.747861999999941,
+          1.1886049999999386,
+          3.3744970000000194,
+          2.688820000000078
+        ],
+        [
+          3.349260000000072,
+          1.226585,
+          0.49839799999995194,
+          6.239224999999919,
+          2.8792550000000574,
+          1.1990559999999277,
+          3.154126999999903,
+          1.4194199999999455,
+          4.034868000000074
+        ]
+      ],
+      "correctness": "PASS",
+      "timing": "PASS"
+    },
+    {
+      "grid": 64,
+      "faces": 4096,
+      "edges": 8320,
+      "kind": "visible",
+      "medianMs": {
+        "before": 14.606915999999728,
+        "after": 5.67761900000005
+      },
+      "speedup": 2.572718599116919,
+      "bodyRaycasts": {
+        "before": 17,
+        "after": 1
+      },
+      "samplesMs": [
+        [
+          14.320352000000184,
+          14.142871000000014,
+          22.719047000000046,
+          17.16649499999994,
+          14.356448,
+          14.988687000000027,
+          15.970014999999876,
+          14.606915999999728,
+          11.182154000000082
+        ],
+        [
+          6.569334999999683,
+          8.431761999999708,
+          9.630962000000181,
+          6.777446999999938,
+          3.9647170000002916,
+          5.67761900000005,
+          4.084280000000035,
+          4.453196999999818,
+          3.79707499999995
+        ]
+      ],
+      "correctness": "PASS",
+      "timing": "PASS"
+    },
+    {
+      "grid": 128,
+      "faces": 16384,
+      "edges": 33024,
+      "kind": "visible",
+      "medianMs": {
+        "before": 106.92628800000057,
+        "after": 17.641177999999854
+      },
+      "speedup": 6.0611761867604,
+      "bodyRaycasts": {
+        "before": 41,
+        "after": 1
+      },
+      "samplesMs": [
+        [
+          96.92844100000002,
+          149.1166259999991,
+          110.51727299999948,
+          106.92628800000057,
+          103.41106899999977,
+          114.26684399999976,
+          116.50847100000101,
+          97.77795300000071,
+          99.98457400000007
+        ],
+        [
+          39.118132000001424,
+          17.971443999998883,
+          17.641177999999854,
+          17.425687000000835,
+          15.827750000000378,
+          17.333324000001085,
+          20.87207800000033,
+          18.945881999999983,
+          13.488240999999107
+        ]
+      ],
+      "correctness": "PASS",
+      "timing": "PASS"
+    },
+    {
+      "grid": 64,
+      "faces": 4096,
+      "edges": 8320,
+      "kind": "background",
+      "medianMs": {
+        "before": 1.8900809999995545,
+        "after": 1.85423499999888
+      },
+      "speedup": 1.0193319616988656,
+      "bodyRaycasts": {
+        "before": 0,
+        "after": 0
+      },
+      "samplesMs": [
+        [
+          2.2239129999998113,
+          2.0470449999993434,
+          2.01263999999901,
+          1.7756179999996675,
+          1.6720550000009098,
+          1.614888999998584,
+          1.7878309999996418,
+          1.8900809999995545,
+          1.947718999999779
+        ],
+        [
+          2.395683000000645,
+          2.2877320000006875,
+          1.8375339999984135,
+          1.907493999999133,
+          1.6720449999993434,
+          1.5928979999989679,
+          1.9601320000001579,
+          1.6136569999998756,
+          1.85423499999888
+        ]
+      ],
+      "correctness": "PASS",
+      "timing": "PASS"
+    },
+    {
+      "grid": 64,
+      "faces": 4096,
+      "edges": 8320,
+      "kind": "through",
+      "medianMs": {
+        "before": 3.120413999999073,
+        "after": 4.375097999998616
+      },
+      "speedup": 0.7132215095524855,
+      "bodyRaycasts": {
+        "before": 0,
+        "after": 0
+      },
+      "samplesMs": [
+        [
+          2.6987689999987197,
+          3.6421060000011494,
+          7.837772999999288,
+          3.5092679999997927,
+          7.402733000000808,
+          2.522870000000694,
+          2.810656999999992,
+          2.312850000000253,
+          3.120413999999073
+        ],
+        [
+          3.0216999999993277,
+          4.375097999998616,
+          4.3648619999985385,
+          3.783629999999903,
+          4.64893099999972,
+          7.406049000001076,
+          5.5532359999997425,
+          12.750340000000506,
+          3.4371639999990293
+        ]
+      ],
+      "correctness": "PASS",
+      "timing": "FAIL"
+    }
+  ],
+  "result": "FAIL",
+  "runtimeStatus": "REJECTED initial sampler call shape: firstOnly:false also passed for Through/Face. Through CPU control failed<=20% gate. Original timings retained. Final code requests firstOnly only in Visible Edge branch and keeps exact original call/options in Through/Face paths."
+}

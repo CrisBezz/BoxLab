@@ -1,0 +1,223 @@
+{
+  "release": ".1145",
+  "baseline": "Exact hitIndices sampler from accepted .1144 main67914ac; SAME accepted .1144 picker/main bridge in both owners",
+  "environment": {
+    "runtime": "v24.22.1",
+    "platform": "linux",
+    "architecture": "x64"
+  },
+  "scope": "Complete actual Edge sweep-selection hitIndices call + original native bridge/shared picker projection/clipping/ranking/real body raycasts/unique ID filtering.25 warmups,9 alternating paired samples. Excludes source setup, input gesture dispatch, selection mutation/rebuild, GPU and native delivery. Warm Edge selection-sample CPU only; no finger-navigation/full-app/capacity/WASM claim.",
+  "gates": {
+    "correctness": "Exact Visible/Through/background ID arrays and unchanged source",
+    "operations": "Visible uses first accepted edge; Through retains entire original list and original bypass",
+    "timing": "Largest Visible sample>=1.2x; all smaller/control cases<=20% regression"
+  },
+  "rows": [
+    {
+      "grid": 32,
+      "faces": 1024,
+      "edges": 2112,
+      "kind": "visible",
+      "medianMs": {
+        "before": 1.502038999999968,
+        "after": 0.5044599999999946
+      },
+      "speedup": 2.9775185346707054,
+      "bodyRaycasts": {
+        "before": 7,
+        "after": 1
+      },
+      "samplesMs": [
+        [
+          1.8263019999999983,
+          1.6668650000000298,
+          1.502038999999968,
+          1.5463010000000281,
+          1.409516999999994,
+          1.5711969999999837,
+          1.1340929999999503,
+          1.0742720000000077,
+          1.0648240000000442
+        ],
+        [
+          0.7088909999999942,
+          0.7079590000000167,
+          0.7012760000000071,
+          0.47454400000003716,
+          0.49673500000000104,
+          0.5044599999999946,
+          0.5763540000000376,
+          0.4729510000000232,
+          0.43631200000004355
+        ]
+      ],
+      "correctness": "PASS",
+      "timing": "PASS"
+    },
+    {
+      "grid": 64,
+      "faces": 4096,
+      "edges": 8320,
+      "kind": "visible",
+      "medianMs": {
+        "before": 10.657748000000083,
+        "after": 3.245826999999963
+      },
+      "speedup": 3.283523120610003,
+      "bodyRaycasts": {
+        "before": 17,
+        "after": 1
+      },
+      "samplesMs": [
+        [
+          9.474101000000019,
+          10.657748000000083,
+          10.022694000000001,
+          11.69411799999989,
+          11.032445000000052,
+          9.840253999999959,
+          9.923599000000195,
+          11.421188999999913,
+          10.718370999999934
+        ],
+        [
+          11.205146999999897,
+          3.0787359999999353,
+          3.3537579999999707,
+          6.527792999999974,
+          3.245826999999963,
+          3.149067000000059,
+          3.5561660000000757,
+          3.1602080000000115,
+          2.9383940000000166
+        ]
+      ],
+      "correctness": "PASS",
+      "timing": "PASS"
+    },
+    {
+      "grid": 128,
+      "faces": 16384,
+      "edges": 33024,
+      "kind": "visible",
+      "medianMs": {
+        "before": 94.56906699999945,
+        "after": 16.30781400000069
+      },
+      "speedup": 5.799003287626131,
+      "bodyRaycasts": {
+        "before": 41,
+        "after": 1
+      },
+      "samplesMs": [
+        [
+          88.04968000000008,
+          91.51983500000006,
+          94.56906699999945,
+          91.99362800000017,
+          88.85033100000055,
+          104.83347099999992,
+          111.94865800000025,
+          108.08909600000061,
+          106.52298799999971
+        ],
+        [
+          16.681258999999955,
+          16.767722000000504,
+          16.30781400000069,
+          14.289131999999881,
+          19.254962999999407,
+          15.987127000000328,
+          15.012851999999839,
+          21.51525599999968,
+          16.180616999999984
+        ]
+      ],
+      "correctness": "PASS",
+      "timing": "PASS"
+    },
+    {
+      "grid": 64,
+      "faces": 4096,
+      "edges": 8320,
+      "kind": "background",
+      "medianMs": {
+        "before": 2.427173000000039,
+        "after": 2.6882489999998143
+      },
+      "speedup": 0.9028825082796298,
+      "bodyRaycasts": {
+        "before": 0,
+        "after": 0
+      },
+      "samplesMs": [
+        [
+          3.0715829999999187,
+          2.565770000000157,
+          2.3293800000001283,
+          2.3411120000000665,
+          2.2002689999999347,
+          2.1021059999993668,
+          7.275249999999687,
+          3.0715020000006916,
+          2.427173000000039
+        ],
+        [
+          4.165200999999797,
+          2.442610999999488,
+          2.5784939999994094,
+          3.1319949999997334,
+          2.302329999999529,
+          2.0733430000000226,
+          18.921190000000024,
+          6.555401999999958,
+          2.6882489999998143
+        ]
+      ],
+      "correctness": "PASS",
+      "timing": "PASS"
+    },
+    {
+      "grid": 64,
+      "faces": 4096,
+      "edges": 8320,
+      "kind": "through",
+      "medianMs": {
+        "before": 2.861109999999826,
+        "after": 2.4339340000005905
+      },
+      "speedup": 1.175508456679241,
+      "bodyRaycasts": {
+        "before": 0,
+        "after": 0
+      },
+      "samplesMs": [
+        [
+          3.008404999999584,
+          2.861109999999826,
+          2.652331000000231,
+          2.0125789999992776,
+          3.0038359999998647,
+          2.6175860000003013,
+          2.8914669999994658,
+          3.410413999999946,
+          2.2699190000003
+        ],
+        [
+          2.1758230000004914,
+          2.108578999999736,
+          4.624627000000146,
+          5.134586000000127,
+          2.4940370000003895,
+          2.346392000000378,
+          2.6420629999993253,
+          2.4043689999998605,
+          2.4339340000005905
+        ]
+      ],
+      "correctness": "PASS",
+      "timing": "PASS"
+    }
+  ],
+  "result": "PASS"
+}

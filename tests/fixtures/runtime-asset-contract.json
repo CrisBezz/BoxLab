@@ -161,9 +161,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1144",
+      "url": "./src/drawer-ui.js?v=0.36.18.1145",
       "target": "src/drawer-ui.js",
-      "sha256": "d9ccb41939b9526a43ff1e3e410a5f777583a3da3c5fec7e04248656eca0eedc"
+      "sha256": "f374b3a5483a7860f1c344cddedc99065840708d46f615006b5ca94e1955c08a"
     },
     {
       "owner": "index.html",
@@ -192,9 +192,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/edge-paint-select.js?v=0.36.18.1141",
+      "url": "./src/edge-paint-select.js?v=0.36.18.1145",
       "target": "src/edge-paint-select.js",
-      "sha256": "7f425cec3c5b00b4d5a057dfb6eaaaaa57a2321fca60695a259cfe8a3d70474c"
+      "sha256": "447d0450095312a8a5ee22449e8f05b314fb58c6ec7b42bd944c3b9d082c5efb"
     },
     {
       "owner": "index.html",
@@ -378,7 +378,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1144",
+      "url": "./src/release-version.js?v=0.36.18.1145",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -864,9 +864,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1144",
+      "url": "./face-workflow-layout.js?v=0.36.18.1145",
       "target": "src/face-workflow-layout.js",
-      "sha256": "0d619dd448e9839f050b9a38b84e177a570c1c6567b62d4f946a8beb095b4225"
+      "sha256": "569be652a9e3cc4a68bedc7796e6e116423e8135f2e26ac670c720791361eb36"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1361,7 +1361,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1144",
+      "url": "./release-version.js?v=0.36.18.1145",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -3326,9 +3326,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1144",
+      "url": "./src/shell-comparison.js?v=0.36.18.1145",
       "target": "src/shell-comparison.js",
-      "sha256": "5a343b99075421531ad43bc239bcde31ae6fe424cfae3ba0c4fae5dc3dfbe1b7"
+      "sha256": "494135f78b0d6673b68a72d19f38e7aa052980ee1b6770cb8b1656cb43e0704f"
     },
     {
       "owner": "src/main.js",

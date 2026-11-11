@@ -1,0 +1,1567 @@
+{
+  "release": ".1145",
+  "status": "REJECTED experiment; NOT shipped",
+  "reason": "Final conservative bounds guard still fails <=20% on-model regression gate:100K surface30.944653->37.210469ms (+20.25%). Background miss speedup does not justify worsening model contacts. Original runtime gate restored exactly.",
+  "candidate_fixture": "tests/fixtures/performance/pencil-bounds-rejected-1145.js",
+  "reports": {
+    "performance-pencil-background-harness-trial-1145.json": {
+      "release": ".1145",
+      "baseline": "Exact pencilHitsEditableMesh from accepted .1144 main67914ac; same existing gate, original source geometry and double-sided Three raycast",
+      "environment": {
+        "runtime": "v24.22.1",
+        "platform": "linux",
+        "architecture": "x64"
+      },
+      "scope": "Complete Pencil model/background classifier CPU, including fresh bounds/index checks and original geometry/normal construction/raycast/disposal when needed.25 warmups,9 alternating paired samples. Excludes other event handlers, native delivery, navigation controllers/rebuild/GPU. No finger-navigation/full-app/capacity/WASM claim.",
+      "gates": {
+        "correctness": "Identical booleans and unchanged source",
+        "operations": "Obvious background misses build0 geometries instead of1; surface hits retain1",
+        "timing": "Largest miss >=1.2x; all hit and orthographic controls <=20% regression"
+      },
+      "rows": [
+        {
+          "triangles": 10000,
+          "kind": "background",
+          "orthographic": false,
+          "medianMs": {
+            "before": 2.4587910000000193,
+            "after": 15.846494000000007
+          },
+          "speedup": 0.15516309159616115,
+          "geometryBuilds": {
+            "before": 1,
+            "after": 0
+          },
+          "samplesMs": [
+            [
+              2.777082999999948,
+              2.889733999999976,
+              2.4587910000000193,
+              2.04266599999994,
+              2.20751400000006,
+              2.1683499999999185,
+              5.994547999999895,
+              6.279539999999997,
+              2.199108000000024
+            ],
+            [
+              14.650216,
+              16.131134999999972,
+              15.846494000000007,
+              14.991120000000024,
+              14.354263999999944,
+              16.016811000000075,
+              33.136946999999964,
+              50.93304399999988,
+              12.427433999999948
+            ]
+          ],
+          "correctness": "PASS",
+          "timing": "FAIL"
+        },
+        {
+          "triangles": 10000,
+          "kind": "surface",
+          "orthographic": false,
+          "medianMs": {
+            "before": 3.187749000000167,
+            "after": 21.62995899999987
+          },
+          "speedup": 0.14737656229492557,
+          "geometryBuilds": {
+            "before": 1,
+            "after": 1
+          },
+          "samplesMs": [
+            [
+              4.4775620000000345,
+              4.145162999999911,
+              4.39934699999958,
+              3.187749000000167,
+              2.4801000000002205,
+              2.8979099999996834,
+              2.2560130000001664,
+              3.003045999999813,
+              4.382355000000189
+            ],
+            [
+              24.22361100000012,
+              155.96588399999996,
+              22.98494400000004,
+              21.62995899999987,
+              19.30983699999979,
+              19.545696000000135,
+              19.015147999999954,
+              20.40599899999961,
+              24.872980000000098
+            ]
+          ],
+          "correctness": "PASS",
+          "timing": "FAIL"
+        },
+        {
+          "triangles": 50000,
+          "kind": "background",
+          "orthographic": false,
+          "medianMs": {
+            "before": 15.711551000000327,
+            "after": 81.51166999999987
+          },
+          "speedup": 0.19275216665295108,
+          "geometryBuilds": {
+            "before": 1,
+            "after": 0
+          },
+          "samplesMs": [
+            [
+              12.14445699999942,
+              15.711551000000327,
+              9.285480000000462,
+              13.507276000000275,
+              24.97342899999967,
+              21.950756999999612,
+              8.512810999999601,
+              19.27520100000038,
+              60.782404999999926
+            ],
+            [
+              70.77305199999955,
+              81.51166999999987,
+              86.1110779999999,
+              88.00202900000022,
+              78.46047199999975,
+              148.98957900000005,
+              200.11866099999952,
+              69.56538699999965,
+              71.52260599999954
+            ]
+          ],
+          "correctness": "PASS",
+          "timing": "FAIL"
+        },
+        {
+          "triangles": 50000,
+          "kind": "surface",
+          "orthographic": false,
+          "medianMs": {
+            "before": 14.481510999999955,
+            "after": 96.26614100000006
+          },
+          "speedup": 0.15043202988681084,
+          "geometryBuilds": {
+            "before": 1,
+            "after": 1
+          },
+          "samplesMs": [
+            [
+              17.17338699999891,
+              14.481510999999955,
+              16.752411999999822,
+              13.620417000000089,
+              11.705529999999271,
+              12.577112999999372,
+              13.428710000000137,
+              15.988799000000654,
+              15.499127999999473
+            ],
+            [
+              101.46442399999978,
+              92.85665100000006,
+              108.23124100000132,
+              98.95627199999944,
+              88.59764200000063,
+              93.85893400000168,
+              116.65449199999966,
+              96.26614100000006,
+              86.39518800000042
+            ]
+          ],
+          "correctness": "PASS",
+          "timing": "FAIL"
+        },
+        {
+          "triangles": 100000,
+          "kind": "background",
+          "orthographic": false,
+          "medianMs": {
+            "before": 24.135347999999794,
+            "after": 158.8383329999997
+          },
+          "speedup": 0.1519491393806043,
+          "geometryBuilds": {
+            "before": 1,
+            "after": 0
+          },
+          "samplesMs": [
+            [
+              19.35583300000144,
+              24.135347999999794,
+              19.472600999997667,
+              20.709975000001577,
+              55.691681999996945,
+              51.93532399999822,
+              20.817966999999044,
+              26.83650100000159,
+              29.23601200000121
+            ],
+            [
+              155.73092299999917,
+              141.30892099999983,
+              151.89277100000254,
+              158.8383329999997,
+              156.59059400000115,
+              164.37698199999795,
+              168.3618830000014,
+              161.24617800000124,
+              176.1430659999969
+            ]
+          ],
+          "correctness": "PASS",
+          "timing": "FAIL"
+        },
+        {
+          "triangles": 100000,
+          "kind": "surface",
+          "orthographic": false,
+          "medianMs": {
+            "before": 37.41853700000138,
+            "after": 196.41054299999814
+          },
+          "speedup": 0.19051185556776212,
+          "geometryBuilds": {
+            "before": 1,
+            "after": 1
+          },
+          "samplesMs": [
+            [
+              26.10465699999986,
+              58.8286569999982,
+              57.91448700000183,
+              28.86562099999719,
+              29.201578000000154,
+              31.724599000001035,
+              59.333912000001874,
+              37.41853700000138,
+              37.91022800000064
+            ],
+            [
+              176.11493999999948,
+              172.63138799999797,
+              170.79112099999838,
+              194.92830999999933,
+              196.41054299999814,
+              232.94640599999912,
+              339.65014299999893,
+              215.67225300000064,
+              196.83790000000226
+            ]
+          ],
+          "correctness": "PASS",
+          "timing": "FAIL"
+        },
+        {
+          "triangles": 10000,
+          "kind": "background",
+          "orthographic": true,
+          "medianMs": {
+            "before": 2.3672609999994165,
+            "after": 16.27925099999993
+          },
+          "speedup": 0.14541584253473497,
+          "geometryBuilds": {
+            "before": 1,
+            "after": 0
+          },
+          "samplesMs": [
+            [
+              1.8524409999990894,
+              1.7821309999999357,
+              3.2040799999995215,
+              2.3672609999994165,
+              2.093741000000591,
+              3.5905499999971653,
+              2.1046619999979157,
+              3.4121369999993476,
+              3.1039139999993495
+            ],
+            [
+              15.459493000002112,
+              16.89687099999719,
+              17.421476999999868,
+              23.371546999998827,
+              16.27925099999993,
+              16.24192100000073,
+              23.149771000000328,
+              15.251246000003448,
+              14.879371999999421
+            ]
+          ],
+          "correctness": "PASS",
+          "timing": "FAIL"
+        },
+        {
+          "triangles": 10000,
+          "kind": "surface",
+          "orthographic": true,
+          "medianMs": {
+            "before": 6.885520000003453,
+            "after": 42.410759000002145
+          },
+          "speedup": 0.1623531425128021,
+          "geometryBuilds": {
+            "before": 1,
+            "after": 1
+          },
+          "samplesMs": [
+            [
+              2.76174600000013,
+              2.6075090000013006,
+              8.584202999998524,
+              10.019768999998632,
+              11.980400999997073,
+              8.849937999999383,
+              4.87146600000051,
+              6.885520000003453,
+              4.122681000000739
+            ],
+            [
+              15.842687000000296,
+              19.110144999998738,
+              31.377918999998656,
+              46.352270999999746,
+              42.410759000002145,
+              48.41400099999737,
+              49.792851999998675,
+              36.625018000002456,
+              45.03591900000174
+            ]
+          ],
+          "correctness": "PASS",
+          "timing": "FAIL"
+        }
+      ],
+      "result": "FAIL",
+      "runtimeStatus": "INCONCLUSIVE harness trial, not a native/browser or shipping result. Actual classifier ran through vm global proxies while original mesh methods ran native, disproportionately penalizing added Number/Array loops. Raw FAIL timings/booleans/build counts retained. Controlled exact-source native-versus-vm audit is docs/performance-pencil-harness-1145.json; final matched benchmark uses native compiled actual source for BOTH owners with state injection only."
+    },
+    "performance-pencil-harness-1145.json": {
+      "scope": "Controlled harness audit only: EXACT same classifier source/fixture/input across native-function and vm global-proxy realms. Not browser/native-device timing.",
+      "rows": [
+        {
+          "isolatedVM": true,
+          "legacy": true,
+          "samplesMs": [
+            6.35240600000003,
+            6.121986000000049,
+            6.4250019999999495,
+            9.42229599999996,
+            7.572938999999963,
+            3.3111390000000256,
+            2.5783230000000117,
+            5.211791000000005,
+            2.4328629999999976
+          ],
+          "medianMs": 6.121986000000049
+        },
+        {
+          "isolatedVM": true,
+          "legacy": false,
+          "samplesMs": [
+            16.076352999999926,
+            20.787011000000007,
+            20.44576399999994,
+            14.256362999999965,
+            14.908647999999971,
+            13.196517999999969,
+            13.894068000000061,
+            14.161925999999994,
+            15.006520000000023
+          ],
+          "medianMs": 14.908647999999971
+        },
+        {
+          "isolatedVM": false,
+          "legacy": true,
+          "samplesMs": [
+            2.25883900000008,
+            4.9476490000000695,
+            6.562898000000018,
+            2.598932999999988,
+            2.4425410000000056,
+            2.1966320000000223,
+            2.963702000000012,
+            5.239471999999978,
+            4.796065999999996
+          ],
+          "medianMs": 2.963702000000012
+        },
+        {
+          "isolatedVM": false,
+          "legacy": false,
+          "samplesMs": [
+            2.6865060000000085,
+            1.516354999999976,
+            1.714183999999932,
+            2.0135510000000068,
+            1.564324000000056,
+            1.9579080000000886,
+            3.4019879999999603,
+            2.6259430000000066,
+            2.273616000000061
+          ],
+          "medianMs": 2.0135510000000068
+        }
+      ]
+    },
+    "performance-pencil-background-trial-1145.json": {
+      "release": ".1145",
+      "baseline": "Exact pencilHitsEditableMesh from accepted .1144 main67914ac; same existing gate, original source geometry and double-sided Three raycast",
+      "harness": "Native compiled exact source function with injected state; no vm global proxies in timed loops",
+      "environment": {
+        "runtime": "v24.22.1",
+        "platform": "linux",
+        "architecture": "x64"
+      },
+      "scope": "Complete Pencil model/background classifier CPU, including fresh bounds/index checks and original geometry/normal construction/raycast/disposal when needed.25 warmups,9 alternating paired samples. Excludes other event handlers, native delivery, navigation controllers/rebuild/GPU. No finger-navigation/full-app/capacity/WASM claim.",
+      "gates": {
+        "correctness": "Identical booleans and unchanged source",
+        "operations": "Obvious background misses build0 geometries instead of1; surface hits retain1",
+        "timing": "Largest miss >=1.2x; all hit and orthographic controls <=20% regression"
+      },
+      "rows": [
+        {
+          "triangles": 10000,
+          "kind": "background",
+          "orthographic": false,
+          "medianMs": {
+            "before": 4.58094600000004,
+            "after": 0.6358849999999165
+          },
+          "speedup": 7.204047901744248,
+          "geometryBuilds": {
+            "before": 1,
+            "after": 0
+          },
+          "samplesMs": [
+            [
+              4.58094600000004,
+              6.218387000000007,
+              2.992676000000074,
+              7.915208000000007,
+              5.181455000000028,
+              5.186864000000014,
+              3.591342000000054,
+              2.5278500000000577,
+              2.47830799999997
+            ],
+            [
+              0.9859770000000481,
+              1.2409719999999425,
+              1.3571889999999485,
+              4.076636000000008,
+              0.2695720000000392,
+              0.5318009999999731,
+              0.5848999999999478,
+              0.23142199999995228,
+              0.6358849999999165
+            ]
+          ],
+          "correctness": "PASS",
+          "timing": "PASS"
+        },
+        {
+          "triangles": 10000,
+          "kind": "surface",
+          "orthographic": false,
+          "medianMs": {
+            "before": 5.794757000000118,
+            "after": 6.386719999999968
+          },
+          "speedup": 0.9073134566726185,
+          "geometryBuilds": {
+            "before": 1,
+            "after": 1
+          },
+          "samplesMs": [
+            [
+              6.238603999999896,
+              5.794757000000118,
+              5.667139000000134,
+              5.650988999999981,
+              5.255603000000065,
+              5.612316999999848,
+              6.757179999999835,
+              8.88204699999983,
+              7.424223999999867
+            ],
+            [
+              5.910632999999962,
+              5.661829000000125,
+              5.029802000000018,
+              8.621564000000035,
+              6.386719999999968,
+              6.401168000000098,
+              5.752758999999969,
+              7.855628000000024,
+              7.866558000000168
+            ]
+          ],
+          "correctness": "PASS",
+          "timing": "PASS"
+        },
+        {
+          "triangles": 50000,
+          "kind": "background",
+          "orthographic": false,
+          "medianMs": {
+            "before": 12.743915000000015,
+            "after": 2.016027000000122
+          },
+          "speedup": 6.32130174843851,
+          "geometryBuilds": {
+            "before": 1,
+            "after": 0
+          },
+          "samplesMs": [
+            [
+              13.285104000000047,
+              16.41562699999986,
+              11.215879000000314,
+              10.278671999999915,
+              13.55077799999981,
+              12.267237000000023,
+              12.99474199999986,
+              12.743915000000015,
+              9.982350000000224
+            ],
+            [
+              2.0208660000002965,
+              3.004837999999836,
+              1.7927609999997003,
+              2.154605000000174,
+              1.4131529999999657,
+              2.0753270000000157,
+              1.2931390000003375,
+              1.7970789999999397,
+              2.016027000000122
+            ]
+          ],
+          "correctness": "PASS",
+          "timing": "PASS"
+        },
+        {
+          "triangles": 50000,
+          "kind": "surface",
+          "orthographic": false,
+          "medianMs": {
+            "before": 18.000120000000607,
+            "after": 25.35384200000044
+          },
+          "speedup": 0.7099563056360568,
+          "geometryBuilds": {
+            "before": 1,
+            "after": 1
+          },
+          "samplesMs": [
+            [
+              17.75926100000015,
+              29.31604500000003,
+              24.652280000000246,
+              39.411677000000054,
+              15.586201999999503,
+              14.95378299999993,
+              18.000120000000607,
+              17.603039999999964,
+              18.124572000000626
+            ],
+            [
+              19.118633000000045,
+              27.648873999999978,
+              25.35384200000044,
+              47.009509000000435,
+              26.41102899999987,
+              23.163982000000033,
+              31.05331600000045,
+              16.192190999999184,
+              19.33639900000071
+            ]
+          ],
+          "correctness": "PASS",
+          "timing": "FAIL"
+        },
+        {
+          "triangles": 100000,
+          "kind": "background",
+          "orthographic": false,
+          "medianMs": {
+            "before": 32.01310000000012,
+            "after": 7.402462999999443
+          },
+          "speedup": 4.32465518571353,
+          "geometryBuilds": {
+            "before": 1,
+            "after": 0
+          },
+          "samplesMs": [
+            [
+              28.489474999999402,
+              24.209914000000026,
+              27.727374000000054,
+              31.716648000000532,
+              38.78095099999973,
+              32.01310000000012,
+              62.189948999999615,
+              39.6023009999999,
+              34.972085000000334
+            ],
+            [
+              6.735012000000097,
+              5.113548000000264,
+              6.736683000000085,
+              7.764749999999367,
+              4.200827000000572,
+              8.818130000000565,
+              7.402462999999443,
+              9.164487000000008,
+              8.711492000000362
+            ]
+          ],
+          "correctness": "PASS",
+          "timing": "PASS"
+        },
+        {
+          "triangles": 100000,
+          "kind": "surface",
+          "orthographic": false,
+          "medianMs": {
+            "before": 39.71482400000059,
+            "after": 37.951225000000704
+          },
+          "speedup": 1.046470146879313,
+          "geometryBuilds": {
+            "before": 1,
+            "after": 1
+          },
+          "samplesMs": [
+            [
+              39.71482400000059,
+              37.40442699999949,
+              64.59128400000009,
+              38.365216000000146,
+              30.64894599999934,
+              31.163227000000916,
+              47.08824900000036,
+              96.71186800000032,
+              40.51318900000115
+            ],
+            [
+              37.951225000000704,
+              54.733713999999964,
+              51.93910500000129,
+              59.503403999999136,
+              32.529685999999856,
+              32.19819499999903,
+              36.02590699999928,
+              69.39223899999888,
+              37.38100300000042
+            ]
+          ],
+          "correctness": "PASS",
+          "timing": "PASS"
+        },
+        {
+          "triangles": 10000,
+          "kind": "background",
+          "orthographic": true,
+          "medianMs": {
+            "before": 1.9080429999994521,
+            "after": 0.21314699999857112
+          },
+          "speedup": 8.951770374493861,
+          "geometryBuilds": {
+            "before": 1,
+            "after": 0
+          },
+          "samplesMs": [
+            [
+              1.990128999999797,
+              1.9132649999992282,
+              1.9043380000002799,
+              2.0820500000008906,
+              1.6599330000008194,
+              1.7813889999997627,
+              2.109881000000314,
+              1.9080429999994521,
+              1.7820710000014515
+            ],
+            [
+              0.21353799999997136,
+              0.35889899999892805,
+              0.20375000000058208,
+              0.2054630000002362,
+              0.23941600000034668,
+              0.20482199999969453,
+              0.24138999999922817,
+              0.21314699999857112,
+              0.2030479999993986
+            ]
+          ],
+          "correctness": "PASS",
+          "timing": "PASS"
+        },
+        {
+          "triangles": 10000,
+          "kind": "surface",
+          "orthographic": true,
+          "medianMs": {
+            "before": 2.7209600000005594,
+            "after": 3.3753390000001673
+          },
+          "speedup": 0.8061293991508481,
+          "geometryBuilds": {
+            "before": 1,
+            "after": 1
+          },
+          "samplesMs": [
+            [
+              2.42950700000074,
+              2.345389999998588,
+              2.895184999999401,
+              2.462648000000627,
+              3.4379959999987477,
+              2.7209600000005594,
+              2.386467000000266,
+              2.90691599999991,
+              3.2248689999996714
+            ],
+            [
+              3.0075640000013664,
+              3.1524239999998827,
+              3.434009000000515,
+              3.3753390000001673,
+              2.889654000000519,
+              3.4851939999989554,
+              4.163418000000092,
+              2.3161250000011933,
+              3.905105999998341
+            ]
+          ],
+          "correctness": "PASS",
+          "timing": "FAIL"
+        }
+      ],
+      "result": "FAIL",
+      "runtimeStatus": "REJECTED initial native-realm bounds candidate: per-vertex finite checks plus unconditional face-index validation. Surface controls failed<=20% regression gate (50K perspective and10K orthographic). Raw result/samples retained. Final candidate validates indices only after proven bounds miss and checks aggregate bounds finiteness."
+    },
+    "performance-pencil-background-lazy-trial-1145.json": {
+      "release": ".1145",
+      "baseline": "Exact pencilHitsEditableMesh from accepted .1144 main67914ac; same existing gate, original source geometry and double-sided Three raycast",
+      "harness": "Native compiled exact source function with injected state; no vm global proxies in timed loops",
+      "environment": {
+        "runtime": "v24.22.1",
+        "platform": "linux",
+        "architecture": "x64"
+      },
+      "scope": "Complete Pencil model/background classifier CPU, including fresh bounds/index checks and original geometry/normal construction/raycast/disposal when needed.25 warmups,9 alternating paired samples. Excludes other event handlers, native delivery, navigation controllers/rebuild/GPU. No finger-navigation/full-app/capacity/WASM claim.",
+      "gates": {
+        "correctness": "Identical booleans and unchanged source",
+        "operations": "Obvious background misses build0 geometries instead of1; surface hits retain1",
+        "timing": "Largest miss >=1.2x; all hit and orthographic controls <=20% regression"
+      },
+      "rows": [
+        {
+          "triangles": 10000,
+          "kind": "background",
+          "orthographic": false,
+          "medianMs": {
+            "before": 2.5747269999999958,
+            "after": 0.4271159999999554
+          },
+          "speedup": 6.02816799183422,
+          "geometryBuilds": {
+            "before": 1,
+            "after": 0
+          },
+          "samplesMs": [
+            [
+              3.8768230000000017,
+              2.023068999999964,
+              2.5747269999999958,
+              3.231250999999986,
+              2.3963940000000434,
+              1.963357999999971,
+              2.5812589999999886,
+              4.647888999999964,
+              2.5715719999999465
+            ],
+            [
+              0.40437400000001844,
+              0.43590299999999615,
+              0.3931729999999902,
+              0.4011069999999677,
+              0.4271159999999554,
+              0.6771620000000098,
+              0.7716780000000085,
+              1.3594529999999736,
+              0.21738499999997885
+            ]
+          ],
+          "correctness": "PASS",
+          "timing": "PASS"
+        },
+        {
+          "triangles": 10000,
+          "kind": "surface",
+          "orthographic": false,
+          "medianMs": {
+            "before": 3.659528000000023,
+            "after": 3.539215000000013
+          },
+          "speedup": 1.0339942614393332,
+          "geometryBuilds": {
+            "before": 1,
+            "after": 1
+          },
+          "samplesMs": [
+            [
+              6.353197000000023,
+              6.329473000000007,
+              2.7065320000000384,
+              17.119326,
+              2.3778299999999035,
+              3.202988000000005,
+              5.82696599999997,
+              3.659528000000023,
+              2.7277420000000347
+            ],
+            [
+              6.959056000000032,
+              4.791526999999974,
+              3.322991000000002,
+              14.010212000000024,
+              3.539215000000013,
+              2.477997000000073,
+              4.322895000000017,
+              2.747589000000062,
+              2.8369849999999133
+            ]
+          ],
+          "correctness": "PASS",
+          "timing": "PASS"
+        },
+        {
+          "triangles": 50000,
+          "kind": "background",
+          "orthographic": false,
+          "medianMs": {
+            "before": 12.105514999999968,
+            "after": 1.921109000000115
+          },
+          "speedup": 6.301316062752943,
+          "geometryBuilds": {
+            "before": 1,
+            "after": 0
+          },
+          "samplesMs": [
+            [
+              9.185654999999997,
+              12.105514999999968,
+              23.211066000000073,
+              9.456439000000046,
+              13.76470600000016,
+              13.616151999999829,
+              11.215655999999854,
+              14.428228999999874,
+              10.627199999999903
+            ],
+            [
+              1.8525019999999586,
+              6.057025000000067,
+              1.333603999999923,
+              1.7162080000000515,
+              2.3301410000001397,
+              1.5243400000001657,
+              5.431389999999965,
+              2.1311510000000453,
+              1.921109000000115
+            ]
+          ],
+          "correctness": "PASS",
+          "timing": "PASS"
+        },
+        {
+          "triangles": 50000,
+          "kind": "surface",
+          "orthographic": false,
+          "medianMs": {
+            "before": 14.779276000000209,
+            "after": 16.369638000000123
+          },
+          "speedup": 0.9028468436504276,
+          "geometryBuilds": {
+            "before": 1,
+            "after": 1
+          },
+          "samplesMs": [
+            [
+              14.647461000000021,
+              13.605909999999767,
+              14.149413000000095,
+              14.405951000000186,
+              19.53969700000016,
+              17.141298000000006,
+              16.662877000000208,
+              17.539048999999977,
+              14.779276000000209
+            ],
+            [
+              12.688051000000087,
+              13.542904000000362,
+              12.812523000000056,
+              59.02563000000009,
+              16.369638000000123,
+              17.487122,
+              16.561608000000433,
+              18.15200199999981,
+              12.081850999999915
+            ]
+          ],
+          "correctness": "PASS",
+          "timing": "PASS"
+        },
+        {
+          "triangles": 100000,
+          "kind": "background",
+          "orthographic": false,
+          "medianMs": {
+            "before": 21.69339900000068,
+            "after": 3.2080869999999777
+          },
+          "speedup": 6.7620980977139435,
+          "geometryBuilds": {
+            "before": 1,
+            "after": 0
+          },
+          "samplesMs": [
+            [
+              31.88284399999975,
+              38.05107700000008,
+              18.417867000000115,
+              21.69339900000068,
+              15.783507999999529,
+              17.568953999999394,
+              27.8175310000006,
+              21.007801000000654,
+              81.0541430000003
+            ],
+            [
+              3.1268360000003668,
+              4.768575000000055,
+              2.7691899999999805,
+              3.38216199999988,
+              3.2067449999995006,
+              3.7563010000003487,
+              3.127226999999948,
+              3.2080869999999777,
+              3.382752999999866
+            ]
+          ],
+          "correctness": "PASS",
+          "timing": "PASS"
+        },
+        {
+          "triangles": 100000,
+          "kind": "surface",
+          "orthographic": false,
+          "medianMs": {
+            "before": 29.68598799999927,
+            "after": 46.04561600000034
+          },
+          "speedup": 0.644708238890735,
+          "geometryBuilds": {
+            "before": 1,
+            "after": 1
+          },
+          "samplesMs": [
+            [
+              35.96395500000017,
+              28.974959000000126,
+              31.809925999999905,
+              59.56645000000026,
+              29.63670600000023,
+              29.68598799999927,
+              31.5820819999999,
+              29.65641400000004,
+              27.264516999999614
+            ],
+            [
+              40.73347199999989,
+              37.75730599999952,
+              47.661229000000276,
+              37.5853560000005,
+              47.692317,
+              46.04561600000034,
+              55.6834859999999,
+              39.14123500000005,
+              46.08178700000008
+            ]
+          ],
+          "correctness": "PASS",
+          "timing": "FAIL"
+        },
+        {
+          "triangles": 10000,
+          "kind": "background",
+          "orthographic": true,
+          "medianMs": {
+            "before": 1.8828770000000077,
+            "after": 0.23148099999980332
+          },
+          "speedup": 8.134045558821708,
+          "geometryBuilds": {
+            "before": 1,
+            "after": 0
+          },
+          "samplesMs": [
+            [
+              1.5569510000004811,
+              1.7448809999996229,
+              2.069996000000174,
+              1.8828770000000077,
+              1.8206120000004375,
+              2.2682560000002923,
+              2.4407680000003893,
+              1.847762999999759,
+              2.122474000000693
+            ],
+            [
+              0.2197489999998652,
+              0.23392599999988306,
+              0.20636500000000524,
+              0.20600400000057562,
+              0.22567100000014761,
+              0.2787299999999959,
+              0.23148099999980332,
+              0.25903199999993376,
+              0.3602709999995568
+            ]
+          ],
+          "correctness": "PASS",
+          "timing": "PASS"
+        },
+        {
+          "triangles": 10000,
+          "kind": "surface",
+          "orthographic": true,
+          "medianMs": {
+            "before": 3.487597999999707,
+            "after": 3.8042680000016844
+          },
+          "speedup": 0.9167592819428502,
+          "geometryBuilds": {
+            "before": 1,
+            "after": 1
+          },
+          "samplesMs": [
+            [
+              3.0108189999991737,
+              3.487597999999707,
+              3.5724559999998746,
+              2.5980510000008508,
+              4.111028999999689,
+              2.611163999999917,
+              3.5267210000001796,
+              2.8084119999984978,
+              4.205515999999989
+            ],
+            [
+              5.181162999999287,
+              3.8451940000013565,
+              3.7058349999988422,
+              4.894209000000046,
+              4.665071999999782,
+              3.5438329999997222,
+              3.8042680000016844,
+              3.367824999999357,
+              3.3681649999998626
+            ]
+          ],
+          "correctness": "PASS",
+          "timing": "PASS"
+        }
+      ],
+      "result": "FAIL",
+      "runtimeStatus": "REJECTED second native-realm candidate: lazy face-index checks, Box3.expandByPoint per vertex.100K surface control failed<=20% gate. Original timing data retained; phase audit in docs/performance-pencil-phase-trial-1145.json identifies added bounds prefix cost and geometry/raycast variance. Final candidate uses scalar min/max accumulation."
+    },
+    "performance-pencil-phase-trial-1145.json": {
+      "scope": "Diagnostic phase audit of exact same actual Pencil classifier and native geometry method.100K triangle surface hit,25 warmup9 paired samples; not device timing.",
+      "summary": [
+        {
+          "prefixMs": 0.013163999999960652,
+          "geometryMs": 17.952949999999873,
+          "raycastAndDisposeMs": 12.4427740000001,
+          "totalMs": 29.945876000000226
+        },
+        {
+          "prefixMs": 1.5649359999997614,
+          "geometryMs": 20.447128000000248,
+          "raycastAndDisposeMs": 12.967591000000084,
+          "totalMs": 37.383644000000004
+        }
+      ],
+      "rows": [
+        [
+          {
+            "prefixMs": 0.013003999999909865,
+            "geometryMs": 15.256095000000187,
+            "raycastAndDisposeMs": 13.620567999999821,
+            "totalMs": 28.889666999999918
+          },
+          {
+            "prefixMs": 0.01323499999989508,
+            "geometryMs": 17.952949999999873,
+            "raycastAndDisposeMs": 11.287642000000233,
+            "totalMs": 29.253827
+          },
+          {
+            "prefixMs": 0.013405000000147993,
+            "geometryMs": 18.082932000000255,
+            "raycastAndDisposeMs": 11.287230999999792,
+            "totalMs": 29.383568000000196
+          },
+          {
+            "prefixMs": 0.01143099999990227,
+            "geometryMs": 21.492334999999912,
+            "raycastAndDisposeMs": 12.4427740000001,
+            "totalMs": 33.946539999999914
+          },
+          {
+            "prefixMs": 0.013003999999909865,
+            "geometryMs": 21.243992000000162,
+            "raycastAndDisposeMs": 15.313591999999971,
+            "totalMs": 36.57058800000004
+          },
+          {
+            "prefixMs": 0.01414599999998245,
+            "geometryMs": 20.55821500000002,
+            "raycastAndDisposeMs": 12.20834700000023,
+            "totalMs": 32.78070800000023
+          },
+          {
+            "prefixMs": 0.012112999999772,
+            "geometryMs": 17.407524000000194,
+            "raycastAndDisposeMs": 13.988312999999835,
+            "totalMs": 31.4079499999998
+          },
+          {
+            "prefixMs": 0.013163999999960652,
+            "geometryMs": 14.512660999999753,
+            "raycastAndDisposeMs": 11.640859000000091,
+            "totalMs": 26.166683999999805
+          },
+          {
+            "prefixMs": 0.013365000000248983,
+            "geometryMs": 17.358161999999993,
+            "raycastAndDisposeMs": 12.574348999999984,
+            "totalMs": 29.945876000000226
+          }
+        ],
+        [
+          {
+            "prefixMs": 0.9293619999998555,
+            "geometryMs": 16.432706999999937,
+            "raycastAndDisposeMs": 12.150119000000359,
+            "totalMs": 29.51218800000015
+          },
+          {
+            "prefixMs": 1.0859629999999925,
+            "geometryMs": 20.447128000000248,
+            "raycastAndDisposeMs": 15.850552999999763,
+            "totalMs": 37.383644000000004
+          },
+          {
+            "prefixMs": 1.320470000000114,
+            "geometryMs": 18.214738000000125,
+            "raycastAndDisposeMs": 23.86469599999964,
+            "totalMs": 43.39990399999988
+          },
+          {
+            "prefixMs": 1.5649359999997614,
+            "geometryMs": 23.75969000000032,
+            "raycastAndDisposeMs": 14.995498999999654,
+            "totalMs": 40.320124999999734
+          },
+          {
+            "prefixMs": 1.6562260000000606,
+            "geometryMs": 49.6591870000002,
+            "raycastAndDisposeMs": 10.829577999999856,
+            "totalMs": 62.14499100000012
+          },
+          {
+            "prefixMs": 1.962456000000202,
+            "geometryMs": 20.77491800000007,
+            "raycastAndDisposeMs": 11.701562999999624,
+            "totalMs": 34.438936999999896
+          },
+          {
+            "prefixMs": 1.038014000000203,
+            "geometryMs": 15.026828000000023,
+            "raycastAndDisposeMs": 12.967591000000084,
+            "totalMs": 29.03243300000031
+          },
+          {
+            "prefixMs": 1.6272109999999884,
+            "geometryMs": 48.20205900000019,
+            "raycastAndDisposeMs": 19.68999699999995,
+            "totalMs": 69.51926700000013
+          },
+          {
+            "prefixMs": 2.566762000000381,
+            "geometryMs": 18.337196999999833,
+            "raycastAndDisposeMs": 12.48077400000011,
+            "totalMs": 33.384733000000324
+          }
+        ]
+      ]
+    },
+    "performance-pencil-background-1145.json": {
+      "release": ".1145",
+      "baseline": "Exact pencilHitsEditableMesh from accepted .1144 main67914ac; same existing gate, original source geometry and double-sided Three raycast",
+      "harness": "Native compiled exact source function with injected state; no vm global proxies in timed loops",
+      "environment": {
+        "runtime": "v24.22.1",
+        "platform": "linux",
+        "architecture": "x64"
+      },
+      "scope": "Complete Pencil model/background classifier CPU, including fresh bounds/index checks and original geometry/normal construction/raycast/disposal when needed.25 warmups,9 alternating paired samples. Excludes other event handlers, native delivery, navigation controllers/rebuild/GPU. No finger-navigation/full-app/capacity/WASM claim.",
+      "gates": {
+        "correctness": "Identical booleans and unchanged source",
+        "operations": "Obvious background misses build0 geometries instead of1; surface hits retain1",
+        "timing": "Largest miss >=1.2x; all hit and orthographic controls <=20% regression"
+      },
+      "rows": [
+        {
+          "triangles": 10000,
+          "kind": "background",
+          "orthographic": false,
+          "medianMs": {
+            "before": 2.4076160000000186,
+            "after": 0.27725700000002007
+          },
+          "speedup": 8.68369779662856,
+          "geometryBuilds": {
+            "before": 1,
+            "after": 0
+          },
+          "samplesMs": [
+            [
+              1.9598219999999742,
+              2.4225430000000188,
+              2.0301019999999994,
+              2.4581000000000017,
+              2.442299999999989,
+              2.0974480000000426,
+              1.882547000000045,
+              2.4076160000000186,
+              2.4423400000000015
+            ],
+            [
+              0.27725700000002007,
+              0.3284219999999891,
+              0.17052799999999024,
+              0.47754000000003316,
+              0.17751100000003817,
+              0.31081899999998086,
+              0.1683140000000094,
+              0.3081540000000018,
+              0.1655890000000113
+            ]
+          ],
+          "correctness": "PASS",
+          "timing": "PASS"
+        },
+        {
+          "triangles": 10000,
+          "kind": "surface",
+          "orthographic": false,
+          "medianMs": {
+            "before": 4.8705549999999675,
+            "after": 5.054456999999957
+          },
+          "speedup": 0.9636158740691649,
+          "geometryBuilds": {
+            "before": 1,
+            "after": 1
+          },
+          "samplesMs": [
+            [
+              4.862850999999978,
+              4.913174000000026,
+              4.670072000000005,
+              5.373120999999969,
+              4.484586000000036,
+              4.787490000000048,
+              4.8705549999999675,
+              5.594708999999966,
+              5.187004999999999
+            ],
+            [
+              5.558426000000054,
+              4.95827799999995,
+              4.822234999999978,
+              5.054456999999957,
+              5.267645000000016,
+              4.866947999999979,
+              5.3684729999999945,
+              5.713415999999938,
+              4.926468999999997
+            ]
+          ],
+          "correctness": "PASS",
+          "timing": "PASS"
+        },
+        {
+          "triangles": 50000,
+          "kind": "background",
+          "orthographic": false,
+          "medianMs": {
+            "before": 18.57394700000009,
+            "after": 1.6173329999999169
+          },
+          "speedup": 11.484305953072772,
+          "geometryBuilds": {
+            "before": 1,
+            "after": 0
+          },
+          "samplesMs": [
+            [
+              32.28577499999983,
+              17.41211199999998,
+              9.611377999999831,
+              20.314940999999862,
+              22.111898999999994,
+              23.78113899999994,
+              13.193662000000131,
+              14.851901999999882,
+              18.57394700000009
+            ],
+            [
+              3.345152999999982,
+              1.4492299999999432,
+              1.3092490000001362,
+              1.2653479999999035,
+              1.0839099999998325,
+              6.783809999999903,
+              6.992136999999957,
+              4.154610000000048,
+              1.6173329999999169
+            ]
+          ],
+          "correctness": "PASS",
+          "timing": "PASS"
+        },
+        {
+          "triangles": 50000,
+          "kind": "surface",
+          "orthographic": false,
+          "medianMs": {
+            "before": 13.227395999999771,
+            "after": 15.709260000000086
+          },
+          "speedup": 0.8420126727802392,
+          "geometryBuilds": {
+            "before": 1,
+            "after": 1
+          },
+          "samplesMs": [
+            [
+              11.80722999999989,
+              11.766603999999916,
+              22.033470000000307,
+              14.097287000000051,
+              13.227395999999771,
+              22.652035999999953,
+              11.77301499999976,
+              12.266977000000225,
+              13.949692000000141
+            ],
+            [
+              11.775740999999925,
+              12.110745999999835,
+              16.67411099999981,
+              15.540363999999954,
+              20.01245800000015,
+              19.64157699999987,
+              13.324237000000267,
+              15.709260000000086,
+              15.801569999999629
+            ]
+          ],
+          "correctness": "PASS",
+          "timing": "PASS"
+        },
+        {
+          "triangles": 100000,
+          "kind": "background",
+          "orthographic": false,
+          "medianMs": {
+            "before": 25.54327899999953,
+            "after": 2.140668000000005
+          },
+          "speedup": 11.93238699321869,
+          "geometryBuilds": {
+            "before": 1,
+            "after": 0
+          },
+          "samplesMs": [
+            [
+              64.21412700000019,
+              108.3148140000003,
+              21.006749999999556,
+              25.54327899999953,
+              26.413072999999713,
+              33.0175390000004,
+              21.54349099999945,
+              20.88134700000046,
+              21.377371000000494
+            ],
+            [
+              2.549579999999878,
+              1.517797999999857,
+              1.5539559999997437,
+              2.140668000000005,
+              2.3166360000004715,
+              2.863325000000259,
+              1.7155860000002576,
+              1.7218379999994795,
+              2.223211999999876
+            ]
+          ],
+          "correctness": "PASS",
+          "timing": "PASS"
+        },
+        {
+          "triangles": 100000,
+          "kind": "surface",
+          "orthographic": false,
+          "medianMs": {
+            "before": 30.94465300000047,
+            "after": 37.21046900000056
+          },
+          "speedup": 0.8316114747169676,
+          "geometryBuilds": {
+            "before": 1,
+            "after": 1
+          },
+          "samplesMs": [
+            [
+              30.94465300000047,
+              28.874157000000196,
+              30.637831999999435,
+              29.404774999999972,
+              26.708580999999867,
+              32.92989200000011,
+              55.393825000000106,
+              33.806956000000355,
+              41.77583299999969
+            ],
+            [
+              43.64162000000033,
+              32.62628599999971,
+              37.21046900000056,
+              43.75656400000025,
+              74.17441299999973,
+              28.001710999999887,
+              29.294027999999344,
+              48.038462999999865,
+              30.74481999999989
+            ]
+          ],
+          "correctness": "PASS",
+          "timing": "FAIL"
+        },
+        {
+          "triangles": 10000,
+          "kind": "background",
+          "orthographic": true,
+          "medianMs": {
+            "before": 2.1796610000001237,
+            "after": 0.5655729999998584
+          },
+          "speedup": 3.8538986125587136,
+          "geometryBuilds": {
+            "before": 1,
+            "after": 0
+          },
+          "samplesMs": [
+            [
+              2.1885369999999966,
+              1.913445000000138,
+              1.8436650000003283,
+              1.9509449999995923,
+              3.1164169999992737,
+              2.740995999999541,
+              2.1796610000001237,
+              2.152589999999691,
+              2.609653000000435
+            ],
+            [
+              0.7705249999999069,
+              0.4444979999998395,
+              0.16587900000013178,
+              0.8567359999997279,
+              0.27071499999965454,
+              0.6437189999996917,
+              0.6431680000005144,
+              0.43589199999951234,
+              0.5655729999998584
+            ]
+          ],
+          "correctness": "PASS",
+          "timing": "PASS"
+        },
+        {
+          "triangles": 10000,
+          "kind": "surface",
+          "orthographic": true,
+          "medianMs": {
+            "before": 3.330275000000256,
+            "after": 3.0465860000003886
+          },
+          "speedup": 1.0931170168837614,
+          "geometryBuilds": {
+            "before": 1,
+            "after": 1
+          },
+          "samplesMs": [
+            [
+              8.721969000000172,
+              5.216528999999355,
+              4.392163000000437,
+              3.227113000000827,
+              2.110102000000552,
+              4.536401999999725,
+              3.330275000000256,
+              2.569126000000324,
+              3.1065079999989393
+            ],
+            [
+              3.0465860000003886,
+              15.8411640000013,
+              2.7462869999999384,
+              5.356339999998454,
+              2.8575029999992694,
+              3.4228170000005775,
+              3.128077999999732,
+              2.6646749999999884,
+              2.4645419999997102
+            ]
+          ],
+          "correctness": "PASS",
+          "timing": "PASS"
+        }
+      ],
+      "result": "FAIL"
+    }
+  },
+  "archive_note": "Original standalone filenames are retained as keys under reports. Nested trial filenames identify historical report sections, not current standalone artifacts. All raw measurements retained; final runtime gate is exact accepted1144."
+}

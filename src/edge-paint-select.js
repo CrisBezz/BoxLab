@@ -33,7 +33,10 @@ function hitIndices(event, type) {
   const depth=type==='face'&&globalThis.__boxlabSelectionInput?(globalThis.__boxlabSelectionInput.frontOnly()?'visible':'through'):paintDepth;
   // Share native Edge proximity ranking with taps and Pencil background classification.
   if((type==='edge'||type==='face')&&selection()?.pickHits){
-    const indices=[...new Set(selection().pickHits(type,event,{through:depth==='through'}).map(hit=>hit.index).filter(Number.isInteger))];
+    const hits=type==='edge'&&depth!=='through'
+      ?selection().pickHits(type,event,{through:false,firstOnly:true})
+      :selection().pickHits(type,event,{through:depth==='through'});
+    const indices=[...new Set(hits.map(hit=>hit.index).filter(Number.isInteger))];
     return depth==='through'?indices:indices.slice(0,1);
   }
   const camera = state()?.camera;
