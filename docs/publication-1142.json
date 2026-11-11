@@ -1,0 +1,134 @@
+{
+  "release": "0.36.18.1142",
+  "runtime_commit": "10a83e6a16c08ad27cdc7a91743703b75dd2d1a4",
+  "tested_tree": "a6be0a9e4ff080cf37d6e62a44ab2780287cefe9",
+  "pages_run": 43002753452,
+  "pages_conclusion": "success",
+  "local_tests": {
+    "pass": 3399,
+    "fail": 0,
+    "cancelled": 0,
+    "skip": 0,
+    "duration_ms": 147999.406316
+  },
+  "focused_tests": 33,
+  "live_files": [
+    {
+      "file": "version.json",
+      "url": "version.json",
+      "match": true,
+      "sha256": "6b211d2016056829cf9dad5943d941d30e6307043bb6db56cc70cdf0b7d98c0f"
+    },
+    {
+      "file": "index.html",
+      "url": "index.html",
+      "match": true,
+      "sha256": "c53d237fc15e8a79075f15d87b7994b0a86496383d6dcbb7d0f0bf9acf1e5d6e"
+    },
+    {
+      "file": "src/total-gizmo.js",
+      "url": "src/total-gizmo.js?v=0.36.18.1142",
+      "match": true,
+      "sha256": "2afe27bf65f05922713671c2dc4df1fa22dfcbe97240327238dc2152198034da"
+    },
+    {
+      "file": "src/drag-selection-puck.js",
+      "url": "src/drag-selection-puck.js?v=0.36.18.1130",
+      "match": true,
+      "sha256": "880b431141dbab2806fd25daeb34e2d432dc81ecc41db27cf046e35bb2bbed9f"
+    },
+    {
+      "file": "src/drawer-ui.js",
+      "url": "src/drawer-ui.js?v=0.36.18.1142",
+      "match": true,
+      "sha256": "7bbbfd7bcfc4be18973e92ea9443b632b05b5c01062816efbdd17da96ca95be1"
+    },
+    {
+      "file": "src/face-workflow-layout.js",
+      "url": "src/face-workflow-layout.js?v=0.36.18.1142",
+      "match": true,
+      "sha256": "17471f91da181fbb763b1f9501ae07101844fbcc4ab1fda1acb4b4c4203142fd"
+    },
+    {
+      "file": "src/release-version.js",
+      "url": "src/release-version.js?v=0.36.18.1142",
+      "match": true,
+      "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
+    },
+    {
+      "file": "src/shell-comparison.js",
+      "url": "src/shell-comparison.js?v=0.36.18.1142",
+      "match": true,
+      "sha256": "f824d1f04281c8e09bbc1520ab5b1e4018e2d32a14538b1b1db67dddbb42d5d4"
+    },
+    {
+      "file": "src/main.js",
+      "url": "src/main.js?v=0.36.18.1141",
+      "match": true,
+      "sha256": "0b743ed144bcede6cc5b728f399a7842eb5a6db10981498bb968e1c90db48188"
+    },
+    {
+      "file": "src/edge-paint-select.js",
+      "url": "src/edge-paint-select.js?v=0.36.18.1141",
+      "match": true,
+      "sha256": "7f425cec3c5b00b4d5a057dfb6eaaaaa57a2321fca60695a259cfe8a3d70474c"
+    },
+    {
+      "file": "src/edge-screen-picking.js",
+      "url": "src/edge-screen-picking.js?v=0.36.18.1141",
+      "match": true,
+      "sha256": "4bcb0edeea2c1435d0c859ebdfc4eab25000ecf1d609a1ea5e4015bac2942102"
+    },
+    {
+      "file": "src/mesh.js",
+      "url": "src/mesh.js?v=0.12.1140",
+      "match": true,
+      "sha256": "ad561a54f87f87446c26a1d8ac864f0d3d7e5554e547df1f39c5c01be458a09c"
+    },
+    {
+      "file": "src/mesh.js",
+      "url": "src/mesh.js?v=0.21.2.1140",
+      "match": true,
+      "sha256": "ad561a54f87f87446c26a1d8ac864f0d3d7e5554e547df1f39c5c01be458a09c"
+    },
+    {
+      "file": "src/cage-render-batches.js",
+      "url": "src/cage-render-batches.js?v=0.36.18.930",
+      "match": true,
+      "sha256": "a343a8626f4378a4bccab6f754015612eb1beb84bc674ea4b561c239a33b017c"
+    },
+    {
+      "file": "src/multi-object-transform.js",
+      "url": "src/multi-object-transform.js?v=0.36.1.0",
+      "match": true,
+      "sha256": "024ec06122bb9ccfeaee53ab5da5bae520dc194db6201ba2479a376902380069"
+    },
+    {
+      "file": "src/viewport-paint.js",
+      "url": "src/viewport-paint.js?v=0.36.18.1137",
+      "match": true,
+      "sha256": "2578bdeddbe3d6256949f2363570eab79f2291ca4ec011f1d2a601e0019b25ba"
+    },
+    {
+      "file": "radial-compact.css",
+      "url": "radial-compact.css?v=0.36.18.1135",
+      "match": true,
+      "sha256": "50118d5035934f2b140a02a4ffbb67efbe4e1ad6c34f497c355d2d2180da8920"
+    },
+    {
+      "file": "src/through-kernel.js",
+      "url": "src/through-kernel.js",
+      "match": true,
+      "sha256": "5cf48e4b55309663b3db7faa8b077b51e1457b568329c85b2a0deba057ad8f99"
+    }
+  ],
+  "hosted_topology": {
+    "id": 43002753942,
+    "job_id": 130462649442,
+    "status": "in_progress",
+    "conclusion": null
+  },
+  "protected_acceptance": ".1141 PASS including concave targeting; earlier multi-edge responsiveness and Paint/radial workflow retained.",
+  "native_acceptance": "PENDING .1142 Face DRAG -> tap puck -> transform gizmo retest.",
+  "scope": "One existing Total Gizmo onFinish transition: transform instead of tools. Original tap-only gesture helper/input/selection/history/transform owners retained. Empty selection exits DRAG without showing an unusable gizmo."
+}
