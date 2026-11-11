@@ -377,12 +377,20 @@ export class EditableMesh {
   }
 
   triangulatedGeometry(){
-    const positions=[];
-    this.faces.forEach(face=>{
-      for(let i=1;i<face.length-1;i++) [face[0],face[i],face[i+1]].forEach(vi=>{const v=this.vertices[vi];positions.push(v.x,v.y,v.z);});
-    });
+    let triangles=0;
+    for(const face of this.faces)triangles+=Math.max(0,face.length-2);
+    const positions=new Float32Array(triangles*9);
+    let offset=0;
+    for(const face of this.faces){
+      for(let i=1;i<face.length-1;i++){
+        const a=this.vertices[face[0]],b=this.vertices[face[i]],c=this.vertices[face[i+1]];
+        positions[offset++]=a.x;positions[offset++]=a.y;positions[offset++]=a.z;
+        positions[offset++]=b.x;positions[offset++]=b.y;positions[offset++]=b.z;
+        positions[offset++]=c.x;positions[offset++]=c.y;positions[offset++]=c.z;
+      }
+    }
     const geometry=new THREE.BufferGeometry();
-    geometry.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));
+    geometry.setAttribute('position',new THREE.BufferAttribute(positions,3));
     geometry.computeVertexNormals();
     return geometry;
   }

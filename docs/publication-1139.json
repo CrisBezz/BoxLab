@@ -97,6 +97,6 @@
     "status": "in_progress",
     "conclusion": null
   },
-  "native_acceptance": "PENDING same-model multi-edge comparison; .1138 user FAIL",
+  "native_acceptance": "PASS: user confirms selecting multiple edges is much quicker in .1139 (11 November 2026). Protected baseline; .1138 remains rejected.",
   "scope": "Exact rollback of addCage to .1137. No native speedup or root-cause fix claimed. Accepted Paint/radial owners preserved."
 }

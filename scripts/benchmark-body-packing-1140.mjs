@@ -1,0 +1,12 @@
+import fs from 'node:fs';import assert from 'node:assert/strict';
+import {EditableMesh} from '../src/mesh.js';
+import {denseFixture,LAB_SIZES} from '../src/performance-lab-core.js';
+import {prior} from '../tests/fixtures/performance/body-geometry-1139.mjs';
+const median=a=>[...a].sort((x,y)=>x-y)[a.length>>1],current=EditableMesh.prototype.triangulatedGeometry;
+const report={release:'.1140',environment:{runtime:process.version,platform:process.platform,architecture:process.arch},baseline:'Exact EditableMesh.triangulatedGeometry from accepted .1139 f21befb0',scope:'Matched actual production body-construction CPU only, including allocation, position packing and original Three normals. Two warmups, nine alternating paired samples. Excludes setup, disposal, cage/selected-edge overlays, controllers, renderer/GPU/native input. No full-selection/navigation/capacity or WASM claim.',gates:{correctness:'Byte-identical positions and normals, same nonindexed triangle order/winding, independent resources and unchanged source',timing:'At least1.2x body-construction median on largest fixture; no fixture regresses >15%'},rows:[]};
+for(const triangles of LAB_SIZES){const mesh=denseFixture(triangles),beforeSource=JSON.stringify(mesh),samples=[[],[]];let expected;
+ for(const fn of [prior,current]){const g=fn.call(mesh);const data=['position','normal'].map(k=>Buffer.from(g.attributes[k].array.buffer));if(expected)for(let i=0;i<data.length;i++)assert.deepEqual(data[i],expected[i]);else expected=data.map(b=>Buffer.from(b));assert.equal(g.index,null);g.dispose();}assert.equal(JSON.stringify(mesh),beforeSource);
+ for(let i=0;i<11;i++)for(const j of i%2?[1,0]:[0,1]){const start=performance.now(),g=(j?current:prior).call(mesh),ms=performance.now()-start;if(i>=2)samples[j].push(ms);g.dispose();}
+ const before=median(samples[0]),after=median(samples[1]),row={triangles,medianMs:{before,after},speedup:before/after,samplesMs:samples,correctness:'PASS',timing:(triangles===100000?before>=1.2*after:after<=1.15*before)?'PASS':'FAIL',positionBytes:triangles*9*4,packing:'One exact-sized Float32 position buffer; no growable JS position array, per-triangle index arrays/callbacks, or Float32BufferAttribute copy'};report.rows.push(row);console.log(JSON.stringify(row));
+}
+report.result=report.rows.every(r=>r.timing==='PASS')?'PASS':'FAIL';fs.writeFileSync(new URL('../docs/performance-body-packing-1140.json',import.meta.url),JSON.stringify(report,null,2)+'\n');console.log('Result: '+report.result);

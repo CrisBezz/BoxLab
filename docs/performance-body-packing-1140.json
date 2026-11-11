@@ -1,0 +1,125 @@
+{
+  "release": ".1140",
+  "environment": {
+    "runtime": "v24.22.1",
+    "platform": "linux",
+    "architecture": "x64"
+  },
+  "baseline": "Exact EditableMesh.triangulatedGeometry from accepted .1139 f21befb0",
+  "scope": "Matched actual production body-construction CPU only, including allocation, position packing and original Three normals. Two warmups, nine alternating paired samples. Excludes setup, disposal, cage/selected-edge overlays, controllers, renderer/GPU/native input. No full-selection/navigation/capacity or WASM claim.",
+  "gates": {
+    "correctness": "Byte-identical positions and normals, same nonindexed triangle order/winding, independent resources and unchanged source",
+    "timing": "At least1.2x body-construction median on largest fixture; no fixture regresses >15%"
+  },
+  "rows": [
+    {
+      "triangles": 10000,
+      "medianMs": {
+        "before": 6.622521000000006,
+        "after": 1.5987549999999828
+      },
+      "speedup": 4.142298851293711,
+      "samplesMs": [
+        [
+          13.18569500000001,
+          12.891458,
+          7.871366999999992,
+          3.055942000000016,
+          3.177601999999979,
+          12.94507699999997,
+          2.6388509999999883,
+          6.297278000000006,
+          6.622521000000006
+        ],
+        [
+          2.63293299999998,
+          2.6010860000000093,
+          1.9482250000000079,
+          3.3561970000000088,
+          1.1665140000000065,
+          1.5056680000000142,
+          0.8463580000000093,
+          0.851726000000042,
+          1.5987549999999828
+        ]
+      ],
+      "correctness": "PASS",
+      "timing": "PASS",
+      "positionBytes": 360000,
+      "packing": "One exact-sized Float32 position buffer; no growable JS position array, per-triangle index arrays/callbacks, or Float32BufferAttribute copy"
+    },
+    {
+      "triangles": 50000,
+      "medianMs": {
+        "before": 16.284619999999904,
+        "after": 5.146728999999937
+      },
+      "speedup": 3.1640717822912583,
+      "samplesMs": [
+        [
+          13.307114999999953,
+          51.757506000000035,
+          16.284619999999904,
+          18.0639349999999,
+          12.015014999999948,
+          23.201197999999977,
+          12.882273999999938,
+          24.60569600000008,
+          12.809746000000018
+        ],
+        [
+          5.330831999999987,
+          9.334040999999957,
+          6.032073999999966,
+          5.098486999999977,
+          6.75663099999997,
+          5.146728999999937,
+          5.015934000000016,
+          4.3841449999999895,
+          4.618582999999944
+        ]
+      ],
+      "correctness": "PASS",
+      "timing": "PASS",
+      "positionBytes": 1800000,
+      "packing": "One exact-sized Float32 position buffer; no growable JS position array, per-triangle index arrays/callbacks, or Float32BufferAttribute copy"
+    },
+    {
+      "triangles": 100000,
+      "medianMs": {
+        "before": 23.63762799999995,
+        "after": 9.330957000000126
+      },
+      "speedup": 2.533247983031069,
+      "samplesMs": [
+        [
+          29.372990999999956,
+          34.76075700000001,
+          23.05005499999993,
+          24.173414000000093,
+          22.302983999999924,
+          26.89047100000016,
+          23.63762799999995,
+          23.426973999999973,
+          22.36421499999983
+        ],
+        [
+          11.350779000000102,
+          14.793674999999894,
+          9.186521000000084,
+          9.04665399999999,
+          9.330957000000126,
+          9.685692999999901,
+          9.075237000000016,
+          9.29322100000013,
+          9.391876999999795
+        ]
+      ],
+      "correctness": "PASS",
+      "timing": "PASS",
+      "positionBytes": 3600000,
+      "packing": "One exact-sized Float32 position buffer; no growable JS position array, per-triangle index arrays/callbacks, or Float32BufferAttribute copy"
+    }
+  ],
+  "result": "PASS"
+}

@@ -161,9 +161,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1139",
+      "url": "./src/drawer-ui.js?v=0.36.18.1140",
       "target": "src/drawer-ui.js",
-      "sha256": "4ed5fbbf1a837cb74230d048a2b999e77d8397a411145b7f4e9c379dcb85000e"
+      "sha256": "d6a8affdaab31518d9f28eb3f030b650a19fc41ffe4a227469877df69dde95f3"
     },
     {
       "owner": "index.html",
@@ -297,7 +297,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/main.js?v=0.36.18.1139",
+      "url": "./src/main.js?v=0.36.18.1140",
       "target": "src/main.js",
       "sha256": "b02d4545950edfeec625599f7099cd7c929860481453b1193635db26f201beae",
       "sourceVersion": "0.35.1"
@@ -378,7 +378,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1139",
+      "url": "./src/release-version.js?v=0.36.18.1140",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -793,7 +793,7 @@
       "owner": "src/dissolve-bootstrap.js",
       "url": "./mesh.js?v=0.12",
       "target": "src/mesh.js",
-      "sha256": "70511061a5e8701124616a387ced43d0bd1297ecf130afc1fbc74c3b3b010e24"
+      "sha256": "ad561a54f87f87446c26a1d8ac864f0d3d7e5554e547df1f39c5c01be458a09c"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -864,9 +864,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1139",
+      "url": "./face-workflow-layout.js?v=0.36.18.1140",
       "target": "src/face-workflow-layout.js",
-      "sha256": "af8e882addf401e7f391fe15be7cb9fb42e0f6d07336e4f77c8a5cc9e6fcb054"
+      "sha256": "8d209530e3a16e20893358a7c2fb4b8ebdbaa2d1abfa2bc44045a413123fdcee"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1191,7 +1191,7 @@
       "owner": "src/extrude-through-viability.js",
       "url": "./mesh.js?v=0.12",
       "target": "src/mesh.js",
-      "sha256": "70511061a5e8701124616a387ced43d0bd1297ecf130afc1fbc74c3b3b010e24"
+      "sha256": "ad561a54f87f87446c26a1d8ac864f0d3d7e5554e547df1f39c5c01be458a09c"
     },
     {
       "owner": "src/face-align-viewport.js",
@@ -1361,7 +1361,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1139",
+      "url": "./release-version.js?v=0.36.18.1140",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -1476,7 +1476,7 @@
       "owner": "src/import-mesh.js",
       "url": "./mesh.js?v=0.21.2",
       "target": "src/mesh.js",
-      "sha256": "70511061a5e8701124616a387ced43d0bd1297ecf130afc1fbc74c3b3b010e24"
+      "sha256": "ad561a54f87f87446c26a1d8ac864f0d3d7e5554e547df1f39c5c01be458a09c"
     },
     {
       "owner": "src/import-mesh.js",
@@ -1500,19 +1500,19 @@
       "owner": "src/live-mesh-bridge.js",
       "url": "./mesh.js?v=0.12",
       "target": "src/mesh.js",
-      "sha256": "70511061a5e8701124616a387ced43d0bd1297ecf130afc1fbc74c3b3b010e24"
+      "sha256": "ad561a54f87f87446c26a1d8ac864f0d3d7e5554e547df1f39c5c01be458a09c"
     },
     {
       "owner": "src/loop-cut-added-vertex.js",
       "url": "./mesh.js?v=0.12",
       "target": "src/mesh.js",
-      "sha256": "70511061a5e8701124616a387ced43d0bd1297ecf130afc1fbc74c3b3b010e24"
+      "sha256": "ad561a54f87f87446c26a1d8ac864f0d3d7e5554e547df1f39c5c01be458a09c"
     },
     {
       "owner": "src/loop-cut-feedback.js",
       "url": "./mesh.js?v=0.12",
       "target": "src/mesh.js",
-      "sha256": "70511061a5e8701124616a387ced43d0bd1297ecf130afc1fbc74c3b3b010e24"
+      "sha256": "ad561a54f87f87446c26a1d8ac864f0d3d7e5554e547df1f39c5c01be458a09c"
     },
     {
       "owner": "src/loose-bootstrap.js",
@@ -1634,7 +1634,7 @@
       "owner": "src/loose-bootstrap.js",
       "url": "./mesh.js?v=0.12",
       "target": "src/mesh.js",
-      "sha256": "70511061a5e8701124616a387ced43d0bd1297ecf130afc1fbc74c3b3b010e24"
+      "sha256": "ad561a54f87f87446c26a1d8ac864f0d3d7e5554e547df1f39c5c01be458a09c"
     },
     {
       "owner": "src/loose-bootstrap.js",
@@ -1700,7 +1700,7 @@
       "owner": "src/main.js",
       "url": "./mesh.js?v=0.12",
       "target": "src/mesh.js",
-      "sha256": "70511061a5e8701124616a387ced43d0bd1297ecf130afc1fbc74c3b3b010e24"
+      "sha256": "ad561a54f87f87446c26a1d8ac864f0d3d7e5554e547df1f39c5c01be458a09c"
     },
     {
       "owner": "src/main.js",
@@ -1824,7 +1824,7 @@
       "owner": "src/obj-facegroups-core.js",
       "url": "./mesh.js?v=0.21.2",
       "target": "src/mesh.js",
-      "sha256": "70511061a5e8701124616a387ced43d0bd1297ecf130afc1fbc74c3b3b010e24"
+      "sha256": "ad561a54f87f87446c26a1d8ac864f0d3d7e5554e547df1f39c5c01be458a09c"
     },
     {
       "owner": "src/primitive-ui.js",
@@ -2788,7 +2788,7 @@
       "owner": "index.html",
       "url": "./src/mesh.js?v=0.12",
       "target": "src/mesh.js",
-      "sha256": "70511061a5e8701124616a387ced43d0bd1297ecf130afc1fbc74c3b3b010e24"
+      "sha256": "ad561a54f87f87446c26a1d8ac864f0d3d7e5554e547df1f39c5c01be458a09c"
     },
     {
       "owner": "index.html",
@@ -3326,9 +3326,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1139",
+      "url": "./src/shell-comparison.js?v=0.36.18.1140",
       "target": "src/shell-comparison.js",
-      "sha256": "a53d9d7f5b3b224de8a2f08383be2b1113411403fd4dbd876fb673a13a025ced"
+      "sha256": "286d740a01e14af3326ade1adf1a7b8dcd5d9d3dab0fe702dd2016119942ef80"
     },
     {
       "owner": "src/main.js",
@@ -3388,7 +3388,7 @@
       "owner": "src/nomad-import-core.js",
       "url": "./mesh.js?v=0.21.2",
       "target": "src/mesh.js",
-      "sha256": "70511061a5e8701124616a387ced43d0bd1297ecf130afc1fbc74c3b3b010e24"
+      "sha256": "ad561a54f87f87446c26a1d8ac864f0d3d7e5554e547df1f39c5c01be458a09c"
     },
     {
       "owner": "src/nomad-import-core.js",
@@ -3640,7 +3640,7 @@
       "owner": "src/performance-lab-core.js",
       "url": "./mesh.js?v=0.12",
       "target": "src/mesh.js",
-      "sha256": "70511061a5e8701124616a387ced43d0bd1297ecf130afc1fbc74c3b3b010e24"
+      "sha256": "ad561a54f87f87446c26a1d8ac864f0d3d7e5554e547df1f39c5c01be458a09c"
     },
     {
       "owner": "index.html",
@@ -3713,6 +3713,18 @@
       "url": "./radial-move.js?v=0.36.18.1134",
       "target": "src/radial-move.js",
       "sha256": "6781fb940a308a893c097eae91b882f41e513371a2b196a53264bef31a192229"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/mesh.js?v=0.12.1140",
+      "target": "src/mesh.js",
+      "sha256": "ad561a54f87f87446c26a1d8ac864f0d3d7e5554e547df1f39c5c01be458a09c"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/mesh.js?v=0.21.2.1140",
+      "target": "src/mesh.js",
+      "sha256": "ad561a54f87f87446c26a1d8ac864f0d3d7e5554e547df1f39c5c01be458a09c"
     }
   ]
 }
