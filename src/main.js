@@ -479,7 +479,8 @@ function beginBackgroundTap(event){
   if(!event.isPrimary||(globalThis.__boxlabDirectBevel?.faceActive?.()&&!globalThis.__boxlabToolBackgroundExit?.active?.()))return;
   if(globalThis.__boxlabViewportPaint?.active){
     if(!globalThis.__boxlabViewportPaint.isBackgroundPoint?.(event)){backgroundTap=null;backgroundSelectionTap.reset('paint-surface');return;}
-    backgroundTap={pointerId:event.pointerId,startX:event.clientX,startY:event.clientY,startedAt:event.timeStamp,moved:false,cancelled:false};beginBackgroundHold(event);return;
+    cancelBackgroundHold('paint-tap');backgroundHold=null;
+    backgroundTap={pointerId:event.pointerId,startX:event.clientX,startY:event.clientY,startedAt:event.timeStamp,moved:false,cancelled:false,paint:globalThis.__boxlabViewportPaint,paintSession:globalThis.__boxlabViewportPaint.sessionKey,context:backgroundSelectionContext(),mesh};return;
   }
   if(globalThis.__boxlabToolBackgroundExit?.ownsPoint?.(event)){backgroundTap=null;return;}
   if(selectionMode==='vertex'&&globalThis.__boxlabVertexPickAssist?.pick?.(event)){backgroundSelectionTap.reset('vertex-assist-hit');backgroundTap=null;return;}
@@ -596,7 +597,7 @@ function finishVertexHold(event){
 window.addEventListener('pointerup',event=>{finishVertexHold(event);finishFaceHold(event);finishEdgeHold(event);},true);
 window.addEventListener('pointercancel',event=>{finishVertexHold(event);finishFaceHold(event);finishEdgeHold(event);},true);
 // Existing background owner manages tap-clear and hold-invert; no tap pairing.
-const backgroundSelectionTap={reset:reason=>cancelBackgroundHold(reason||'cancel')};
+const backgroundSelectionTap={reset:reason=>{if(backgroundTap?.paint)backgroundTap.cancelled=true;cancelBackgroundHold(reason||'cancel');}};
 let backgroundHold=null;
 function cancelBackgroundHold(reason){
   if(!backgroundHold)return;
@@ -605,19 +606,18 @@ function cancelBackgroundHold(reason){
 }
 function backgroundSelectionContext(){return selectionMode+':'+(globalThis.__boxlabObjectManager?.activeId||'active');}
 function readBackgroundSelection(){return selectionMode==='object'?[...(globalThis.__boxlabObjectSelection?.ids||[])]:selectionIndices();}
-function backgroundHoldBlocked(){if(globalThis.__boxlabViewportPaint?.active)return !globalThis.__boxlabViewportPaint.backgroundHoldAllowed?.();return !!directTool||(!!globalThis.__boxlabToolSession?.isActive?.()&&!globalThis.__boxlabViewportPaint?.backgroundHoldAllowed?.())||!!globalThis.__boxlabFaceValueViewportSession?.active?.()||!!globalThis.__boxlabEdgeViewportSession?.loopActive?.()||!!globalThis.__boxlabBevelViewportSession?.edgeActive?.()||!!globalThis.__boxlabSlideViewportSession?.active?.()||!!globalThis.__boxlabToolBackgroundExit?.active?.();}
+function backgroundHoldBlocked(){if(globalThis.__boxlabViewportPaint?.active)return true;return !!directTool||(!!globalThis.__boxlabToolSession?.isActive?.()&&!globalThis.__boxlabViewportPaint?.backgroundHoldAllowed?.())||!!globalThis.__boxlabFaceValueViewportSession?.active?.()||!!globalThis.__boxlabEdgeViewportSession?.loopActive?.()||!!globalThis.__boxlabBevelViewportSession?.edgeActive?.()||!!globalThis.__boxlabSlideViewportSession?.active?.()||!!globalThis.__boxlabToolBackgroundExit?.active?.();}
 function beginBackgroundHold(event){
   if(backgroundHold)clearTimeout(backgroundHold.timer);
   backgroundHold=null;
   if(event.pointerType==='pen'&&!(event.buttons&1)&&!(event.pressure>0))return;
   if(backgroundHoldBlocked()||!globalThis.__boxlabViewportPaint?.active&&(globalThis.__boxlabObjectManager?.pickObject?.(event)||globalThis.__boxlabSelectionBridge?.pickObject?.(event)))return;
-  const hold={pointerId:event.pointerId,context:backgroundSelectionContext(),mesh,seed:[...readBackgroundSelection()],paint:!!globalThis.__boxlabViewportPaint?.active,point:{clientX:event.clientX,clientY:event.clientY},fired:false,cancelled:false,timer:null};
+  const hold={pointerId:event.pointerId,context:backgroundSelectionContext(),mesh,seed:[...readBackgroundSelection()],fired:false,cancelled:false,timer:null};
   backgroundHold=hold;
   hold.timer=setTimeout(()=>{
     if(backgroundHold!==hold||hold.cancelled||backgroundTap?.pointerId!==hold.pointerId||backgroundTap.moved||backgroundTap.cancelled)return;
-    if(backgroundHoldBlocked()||hold.paint!==!!globalThis.__boxlabViewportPaint?.active||hold.context!==backgroundSelectionContext()||hold.mesh!==mesh||JSON.stringify(hold.seed)!==JSON.stringify(readBackgroundSelection())){cancelBackgroundHold('context-selection-session');return;}
+    if(backgroundHoldBlocked()||hold.context!==backgroundSelectionContext()||hold.mesh!==mesh||JSON.stringify(hold.seed)!==JSON.stringify(readBackgroundSelection())){cancelBackgroundHold('context-selection-session');return;}
     hold.fired=true;
-    if(hold.paint){globalThis.__boxlabViewportPaint?.showTools?.(hold.point);return;}
     resetEdgeHoldCycle();
     if(selectionMode==='object')globalThis.__boxlabObjectSelection?.invert?.(hold.seed);
     else globalThis.__boxlabSelectionSetPolish?.invert?.(hold.seed);
@@ -629,6 +629,7 @@ let completedBackgroundRelease=null;
 window.addEventListener('boxlab-background-tap-cancelled',()=>backgroundSelectionTap.reset('object-activation-navigation'));
 window.addEventListener('blur',()=>backgroundSelectionTap.reset('window-blur'));
 function completeBackgroundSelectionTap(point){
+  if(globalThis.__boxlabViewportPaint?.active)return;
   if(completedBackgroundRelease?.pointerId===point.pointerId&&completedBackgroundRelease.timeStamp===point.timeStamp)return;
   if(backgroundHold?.pointerId===point.pointerId){
     clearTimeout(backgroundHold.timer);
@@ -660,6 +661,12 @@ window.addEventListener('pointerup',event=>{
   if(!backgroundTap||backgroundTap.pointerId!==event.pointerId)return;
   const tap=backgroundTap;backgroundTap=null;
   const moved=tap.moved||Math.hypot(event.clientX-tap.startX,event.clientY-tap.startY)>=EDIT_DRAG_THRESHOLD;
+  if(tap.paint){
+    completedBackgroundRelease={pointerId:event.pointerId,timeStamp:event.timeStamp};
+    const paint=globalThis.__boxlabViewportPaint;
+    if(!tap.cancelled&&!moved&&paint===tap.paint&&paint.active&&paint.sessionKey===tap.paintSession&&tap.mesh===mesh&&tap.context===backgroundSelectionContext()&&paint.isBackgroundPoint?.(event))paint.showTools?.(event);
+    return;
+  }
   if(!tap.cancelled&&!moved&&(!Number.isFinite(tap.startedAt)||event.timeStamp-tap.startedAt<=TAP_MAX_MS)){
     if(globalThis.__boxlabFaceValueViewportSession?.active?.()||globalThis.__boxlabEdgeViewportSession?.loopActive?.()||globalThis.__boxlabBevelViewportSession?.edgeActive?.()||globalThis.__boxlabSlideViewportSession?.active?.()||globalThis.__boxlabToolBackgroundExit?.active?.()){
       completedBackgroundRelease={pointerId:event.pointerId,timeStamp:event.timeStamp};
@@ -670,6 +677,7 @@ window.addEventListener('pointerup',event=>{
 window.addEventListener('pointercancel',event=>{if(backgroundHold?.pointerId===event.pointerId){clearTimeout(backgroundHold.timer);backgroundHold=null;}if(backgroundTap?.pointerId===event.pointerId)backgroundTap=null;backgroundSelectionTap.reset('pointer-cancel');},true);
 // Pencil orbit owner already distinguishes taps from navigation drags.
 window.addEventListener('boxlab-pencil-background-tap',event=>{
+  if(globalThis.__boxlabViewportPaint?.active)return; // Paint uses the original window-capture tap completion above.
   if(globalThis.__boxlabToolBackgroundExit?.ownsPoint?.(event.detail))return;
   if(completedBackgroundRelease?.pointerId===event.detail?.pointerId&&completedBackgroundRelease.timeStamp===event.detail?.timeStamp)return;
   if(!globalThis.__boxlabFaceValueViewportSession?.active?.()&&!globalThis.__boxlabEdgeViewportSession?.loopActive?.()&&!globalThis.__boxlabBevelViewportSession?.edgeActive?.()&&!globalThis.__boxlabSlideViewportSession?.active?.()&&!globalThis.__boxlabToolBackgroundExit?.active?.()){backgroundTap=null;completeBackgroundSelectionTap(event.detail||{});return;}
