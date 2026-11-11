@@ -98,6 +98,7 @@
     }
   ],
   "protected_acceptance": ".1137 user PASS",
-  "native_acceptance": "pending",
-  "scope": "One per-call selection membership Set in original addCage; no topology, listeners, styles or Paint changes. CPU benchmark excludes selected-edge overlay geometry and GPU."
+  "native_acceptance": "FAIL: user reports multi-edge selection very slow",
+  "scope": "One per-call selection membership Set in original addCage; no topology, listeners, styles or Paint changes. CPU benchmark excludes selected-edge overlay geometry and GPU.",
+  "shipping_decision": ".1138 cage optimisation reverted in .1139; CPU-stage benchmark is not native acceptance"
 }

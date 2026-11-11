@@ -2,7 +2,7 @@
 // Move the original canvas once; no second renderer, input owner or live profile swap.
 (() => {
  'use strict';
- const RELEASE='0.36.18.1138',KEY='boxlab.shell-comparison.v1',LIMIT=30;
+ const RELEASE='0.36.18.1139',KEY='boxlab.shell-comparison.v1',LIMIT=30;
  const url=new URL(window.location.href),choice=url.searchParams.get('shellTest');
  const active=choice==='current'||choice==='separated',mode=active?choice:'current';
  const doc=document,app=doc.querySelector('#app'),wrap=doc.querySelector('#viewportWrap'),canvas=doc.querySelector('#viewport');
@@ -57,10 +57,10 @@
  function el(tag,text){const n=doc.createElement(tag);if(text!==undefined)n.textContent=text;return n;}
  function button(text,action){const b=el('button',text);b.type='button';b.addEventListener('click',action);return b;}
  const header=el('div');header.className='shell-test-header';
- const title=el('strong',active?(mode==='current'?'A · Current · .1138':'B · Separated · .1138'):'Screen comparison · .1138');
+ const title=el('strong',active?(mode==='current'?'A · Current · .1139':'B · Separated · .1139'):'Screen comparison · .1139');
  const body=el('div');body.className='shell-test-body';
  const collapse=button('Collapse',()=>{body.hidden=!body.hidden;collapse.textContent=body.hidden?'Test list':'Collapse';});
- const launcher=button('TEST LIST · .1138',showPanel);launcher.id='shellTestReopen';launcher.hidden=true;
+ const launcher=button('TEST LIST · .1139',showPanel);launcher.id='shellTestReopen';launcher.hidden=true;
  launcher.style.cssText='display:none;position:fixed;left:8px;top:50dvh;z-index:100003;min-height:40px;';
  const hide=button('Hide list',()=>{panel.hidden=true;launcher.hidden=false;launcher.style.display='block';stopDock();});
  header.append(title,collapse,hide);panel.append(header,body);
@@ -84,7 +84,7 @@
  body.append(el('p','Build .1035 repair: Import original NOM_COLOUR_ALPHA_1029.nom. In Studio and Solid, right cube must be solid cyan WITHOUT black squares; left retains checker transparency, middle combined colour-alpha and opacity. Switch VIEW modes and reopen. Check original NOM_SEVEN_OBJECTS_1032.nom Colour cube is cyan; .1033 standalone map sample still works. Move/Undo/Redo, Save/Open and export NOM retain images. .1035 is user-PASS protected.'));
  const benchmark=el('a','Open subdivision timing benchmark · .1036');benchmark.href='./docs/subdivision-benchmark-1036.html';benchmark.target='_blank';benchmark.rel='noopener';benchmark.style.cssText='display:inline-flex;align-items:center;min-height:42px;margin:0 0 12px;padding:8px 12px;border-radius:9px;background:#d9e2f2;color:#111328;font-weight:700;text-decoration:none';body.append(benchmark);
  const uvBenchmark=el('a','Open UV subdivision timing benchmark · .1038');uvBenchmark.href='./docs/subdivision-uv-benchmark-1038.html';uvBenchmark.target='_blank';uvBenchmark.rel='noopener';uvBenchmark.style.cssText=benchmark.style.cssText;body.append(uvBenchmark);
- body.append(el('p','Build .1138: Large Edge and Vertex selections rebuild their cage using one selection snapshot. Select many components and compare editing response; change selection, transform, Undo/Redo. Paint background-tap and accepted radial UI retained. CPU benchmark evidence is in docs/performance-cage-selection-1138.json; native speed remains a device check.'));
+ body.append(el('p','Build .1139: Restore the .1137 cage implementation after native multi-edge selection FAIL on .1138. Compare the same model and selection workflow; no speedup is claimed. Paint background tap and accepted radial layout remain. The .1138 CPU experiment is historical and rejected for shipping.'));
  const displacementBenchmark=el('a','Open displacement feasibility gate · .1041');displacementBenchmark.href='./docs/displacement-preview-gate-1041.html?v=0.36.18.1041';displacementBenchmark.target='_blank';displacementBenchmark.rel='noopener';displacementBenchmark.style.cssText=benchmark.style.cssText;body.append(displacementBenchmark);
  const heightBenchmark=el('a','Open native height decode benchmark · .1064');heightBenchmark.href='./docs/native-height-benchmark-1064.html?v=0.36.18.1064';heightBenchmark.target='_blank';heightBenchmark.rel='noopener';heightBenchmark.style.cssText=benchmark.style.cssText;body.append(heightBenchmark);
  const rows=[];

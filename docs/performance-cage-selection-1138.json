@@ -352,10 +352,13 @@
       "timing": "PASS"
     }
   ],
-  "result": "PASS",
+  "result": "REJECTED",
   "environment": {
     "runtime": "v24.22.1",
     "platform": "linux",
     "architecture": "x64"
-  }
+  },
+  "cpuResult": "PASS",
+  "nativeAcceptance": "FAIL: user reports multi-edge selection very slow on .1138",
+  "shippingDecision": "REJECTED; runtime cage path restored to .1137 in .1139"
 }
