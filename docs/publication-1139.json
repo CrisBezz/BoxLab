@@ -1,0 +1,102 @@
+{
+  "release": "0.36.18.1139",
+  "runtime_commit": "f3f07506c53f72f40a64b1ff63fddee3b595b444",
+  "tested_tree": "38b15cdceb165da2efa9180b519ec7167dc3976c",
+  "pages_run": 42960220419,
+  "pages_conclusion": "success",
+  "local_tests": {
+    "pass": 3390,
+    "fail": 0,
+    "skip": 0
+  },
+  "focused_tests": 31,
+  "live_files": [
+    {
+      "file": "version.json",
+      "match": true,
+      "sha256": "9a17a0f32c96b97b41f0724d96cd05f72fcc38eb2d79d32563c71a3938a7854f"
+    },
+    {
+      "file": "index.html",
+      "match": true,
+      "sha256": "7d7fb0997e419dff013c9b00d568cecbd7d96f50d50c98bd00f726fe8ecff554"
+    },
+    {
+      "file": "src/main.js",
+      "match": true,
+      "sha256": "b02d4545950edfeec625599f7099cd7c929860481453b1193635db26f201beae"
+    },
+    {
+      "file": "src/viewport-paint.js",
+      "match": true,
+      "sha256": "2578bdeddbe3d6256949f2363570eab79f2291ca4ec011f1d2a601e0019b25ba"
+    },
+    {
+      "file": "src/drawer-ui.js",
+      "match": true,
+      "sha256": "4ed5fbbf1a837cb74230d048a2b999e77d8397a411145b7f4e9c379dcb85000e"
+    },
+    {
+      "file": "src/face-workflow-layout.js",
+      "match": true,
+      "sha256": "af8e882addf401e7f391fe15be7cb9fb42e0f6d07336e4f77c8a5cc9e6fcb054"
+    },
+    {
+      "file": "src/release-version.js",
+      "match": true,
+      "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
+    },
+    {
+      "file": "src/shell-comparison.js",
+      "match": true,
+      "sha256": "a53d9d7f5b3b224de8a2f08383be2b1113411403fd4dbd876fb673a13a025ced"
+    },
+    {
+      "file": "radial-compact.css",
+      "match": true,
+      "sha256": "50118d5035934f2b140a02a4ffbb67efbe4e1ad6c34f497c355d2d2180da8920"
+    },
+    {
+      "file": "src/total-gizmo.js",
+      "match": true,
+      "sha256": "3219a06f094a317465f78a2e7e5e64d3b49f97c8e6b05523e2122e995a810ea7"
+    },
+    {
+      "file": "src/radial-compact-labels.js",
+      "match": true,
+      "sha256": "7d4dcc6df90f9aea506a4cbbfcc3c51be9e197fbe2907801cbe8debe189464bb"
+    },
+    {
+      "file": "src/radial-move.js",
+      "match": true,
+      "sha256": "6781fb940a308a893c097eae91b882f41e513371a2b196a53264bef31a192229"
+    },
+    {
+      "file": "src/multi-object-transform.js",
+      "match": true,
+      "sha256": "024ec06122bb9ccfeaee53ab5da5bae520dc194db6201ba2479a376902380069"
+    },
+    {
+      "file": "src/through-kernel.js",
+      "match": true,
+      "sha256": "5cf48e4b55309663b3db7faa8b077b51e1457b568329c85b2a0deba057ad8f99"
+    },
+    {
+      "file": "src/mesh.js",
+      "match": true,
+      "sha256": "70511061a5e8701124616a387ced43d0bd1297ecf130afc1fbc74c3b3b010e24"
+    },
+    {
+      "file": "docs/performance-cage-selection-1138.json",
+      "match": true,
+      "sha256": "6baf9f2ae0f005e97be8a08d53919f9f9aa6ea897bb5770f616157c6caf1cb63"
+    }
+  ],
+  "hosted_topology": {
+    "id": 42960221112,
+    "status": "in_progress",
+    "conclusion": null
+  },
+  "native_acceptance": "PENDING same-model multi-edge comparison; .1138 user FAIL",
+  "scope": "Exact rollback of addCage to .1137. No native speedup or root-cause fix claimed. Accepted Paint/radial owners preserved."
+}
