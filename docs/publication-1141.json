@@ -1,0 +1,138 @@
+{
+  "release": "0.36.18.1141",
+  "runtime_commit": "a8d2a4362a5179e2aa1b98bccad15f9c9849a874",
+  "tested_tree": "17e5adb2dee8bc3d1f13a8987d869a1dcec9634f",
+  "pages_run": 43000370589,
+  "pages_conclusion": "success",
+  "initial_full_tests": {
+    "pass": 3398,
+    "fail": 1,
+    "reason": "One obsolete .494 two-argument source-signature assertion; corrected for optional policy forwarding. No runtime changes after this run."
+  },
+  "focused_tests": {
+    "main": 36,
+    "corrected_face_bridge_picker": 17,
+    "strengthened_picker": 5,
+    "all_pass": true
+  },
+  "final_full_tests": {
+    "status": "completed",
+    "pass": 3399,
+    "fail": 0,
+    "cancelled": 0,
+    "skip": 0,
+    "duration_ms": 304382.947514
+  },
+  "live_files": [
+    {
+      "file": "version.json",
+      "url": "version.json",
+      "match": true,
+      "sha256": "315ef9fe957e53247d05717b26db1100523519256e80e1fc1765c3772bcf0cdb"
+    },
+    {
+      "file": "index.html",
+      "url": "index.html",
+      "match": true,
+      "sha256": "88be8c715e0cc8d4c3dfd8f54d8601dbc50a3f0832c46d48dfe1220d552e0878"
+    },
+    {
+      "file": "src/main.js",
+      "url": "src/main.js?v=0.36.18.1141",
+      "match": true,
+      "sha256": "0b743ed144bcede6cc5b728f399a7842eb5a6db10981498bb968e1c90db48188"
+    },
+    {
+      "file": "src/edge-screen-picking.js",
+      "url": "src/edge-screen-picking.js?v=0.36.18.1141",
+      "match": true,
+      "sha256": "4bcb0edeea2c1435d0c859ebdfc4eab25000ecf1d609a1ea5e4015bac2942102"
+    },
+    {
+      "file": "src/edge-paint-select.js",
+      "url": "src/edge-paint-select.js?v=0.36.18.1141",
+      "match": true,
+      "sha256": "7f425cec3c5b00b4d5a057dfb6eaaaaa57a2321fca60695a259cfe8a3d70474c"
+    },
+    {
+      "file": "src/drawer-ui.js",
+      "url": "src/drawer-ui.js?v=0.36.18.1141",
+      "match": true,
+      "sha256": "f8e8c78682da805f3c4139a37b70ac5581e266dc480db3d2b590ace37198368c"
+    },
+    {
+      "file": "src/face-workflow-layout.js",
+      "url": "src/face-workflow-layout.js?v=0.36.18.1141",
+      "match": true,
+      "sha256": "3dba7dcce1e8ca33eaf14a34f234b30f66976ac37e851bdd1b2722e785f3b22d"
+    },
+    {
+      "file": "src/release-version.js",
+      "url": "src/release-version.js?v=0.36.18.1141",
+      "match": true,
+      "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
+    },
+    {
+      "file": "src/shell-comparison.js",
+      "url": "src/shell-comparison.js?v=0.36.18.1141",
+      "match": true,
+      "sha256": "688d89193fc05296b05dc44fe7ed4bb4db0e4429e1ee2a6b84b810bf674b47d4"
+    },
+    {
+      "file": "src/mesh.js",
+      "url": "src/mesh.js?v=0.12.1140",
+      "match": true,
+      "sha256": "ad561a54f87f87446c26a1d8ac864f0d3d7e5554e547df1f39c5c01be458a09c"
+    },
+    {
+      "file": "src/mesh.js",
+      "url": "src/mesh.js?v=0.21.2.1140",
+      "match": true,
+      "sha256": "ad561a54f87f87446c26a1d8ac864f0d3d7e5554e547df1f39c5c01be458a09c"
+    },
+    {
+      "file": "src/cage-render-batches.js",
+      "url": "src/cage-render-batches.js?v=0.36.18.930",
+      "match": true,
+      "sha256": "a343a8626f4378a4bccab6f754015612eb1beb84bc674ea4b561c239a33b017c"
+    },
+    {
+      "file": "src/multi-object-transform.js",
+      "url": "src/multi-object-transform.js?v=0.36.1.0",
+      "match": true,
+      "sha256": "024ec06122bb9ccfeaee53ab5da5bae520dc194db6201ba2479a376902380069"
+    },
+    {
+      "file": "src/viewport-paint.js",
+      "url": "src/viewport-paint.js?v=0.36.18.1137",
+      "match": true,
+      "sha256": "2578bdeddbe3d6256949f2363570eab79f2291ca4ec011f1d2a601e0019b25ba"
+    },
+    {
+      "file": "src/total-gizmo.js",
+      "url": "src/total-gizmo.js?v=0.36.18.1135",
+      "match": true,
+      "sha256": "3219a06f094a317465f78a2e7e5e64d3b49f97c8e6b05523e2122e995a810ea7"
+    },
+    {
+      "file": "radial-compact.css",
+      "url": "radial-compact.css?v=0.36.18.1135",
+      "match": true,
+      "sha256": "50118d5035934f2b140a02a4ffbb67efbe4e1ad6c34f497c355d2d2180da8920"
+    },
+    {
+      "file": "src/through-kernel.js",
+      "url": "src/through-kernel.js",
+      "match": true,
+      "sha256": "5cf48e4b55309663b3db7faa8b077b51e1457b568329c85b2a0deba057ad8f99"
+    }
+  ],
+  "hosted_topology": {
+    "id": 43000370358,
+    "status": "in_progress",
+    "conclusion": null
+  },
+  "protected_acceptance": ".1140 user PASS, with concave targeting reported separately; .1139 multi-edge responsiveness and prior Paint/radial behaviour protected.",
+  "native_acceptance": "PENDING .1141 same-model concave edge retest; no native targeting or performance PASS inferred.",
+  "scope": "Occlusion at closest edge point inside original CSS-pixel picker. Existing native bridge/Edge paint policy forwarding; explicit Through preserved. No cage/body/topology/history/gesture owner changes."
+}
