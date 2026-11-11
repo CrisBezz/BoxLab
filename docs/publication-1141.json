@@ -129,8 +129,9 @@
   ],
   "hosted_topology": {
     "id": 43000370358,
-    "status": "in_progress",
-    "conclusion": null
+    "job_id": 130454708478,
+    "status": "completed",
+    "conclusion": "success"
   },
   "protected_acceptance": ".1140 user PASS, with concave targeting reported separately; .1139 multi-edge responsiveness and prior Paint/radial behaviour protected.",
   "native_acceptance": "PENDING .1141 same-model concave edge retest; no native targeting or performance PASS inferred.",
