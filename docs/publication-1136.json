@@ -1,0 +1,77 @@
+{
+  "release": "0.36.18.1136",
+  "runtime_commit": "7dad7694b2208aeac92d8aec2e447d85da39a520",
+  "tested_tree": "7da1bd833e937652e25521bfc3c5dad746791d46",
+  "pages_run": 42929335601,
+  "pages_conclusion": "success",
+  "local_tests": {
+    "pass": 3380,
+    "fail": 0,
+    "skip": 0
+  },
+  "live_files": [
+    {
+      "file": "version.json",
+      "match": true,
+      "sha256": "f5a23de309ae5afc94263be685cf76a5aaf64c3f9f529304a640e4d92b24d66b"
+    },
+    {
+      "file": "index.html",
+      "match": true,
+      "sha256": "806d254ac621f6cd05054e3b28a8b1655cb0342022ece779822176b54f5c16cd"
+    },
+    {
+      "file": "src/viewport-paint.js",
+      "match": true,
+      "sha256": "4728cd8f94b33c51f3dd1c80cfb4f0dd5ac6a6d856830b83e59dfcd5e8d1f8b9"
+    },
+    {
+      "file": "src/drawer-ui.js",
+      "match": true,
+      "sha256": "19188215b333c798363300e72befb39a993c9045e1b8266210b16860e3b5353a"
+    },
+    {
+      "file": "src/face-workflow-layout.js",
+      "match": true,
+      "sha256": "7ad480cd85371cb60f00a06904fc2be5d7fa08100244d93f7ba9a491ef1d786b"
+    },
+    {
+      "file": "src/release-version.js",
+      "match": true,
+      "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
+    },
+    {
+      "file": "src/shell-comparison.js",
+      "match": true,
+      "sha256": "c995284080f0920da1d0056db68d95ee46c9fe699f3600df8e441fd4e7ceef17"
+    },
+    {
+      "file": "radial-compact.css",
+      "match": true,
+      "sha256": "50118d5035934f2b140a02a4ffbb67efbe4e1ad6c34f497c355d2d2180da8920"
+    },
+    {
+      "file": "src/total-gizmo.js",
+      "match": true,
+      "sha256": "3219a06f094a317465f78a2e7e5e64d3b49f97c8e6b05523e2122e995a810ea7"
+    },
+    {
+      "file": "src/radial-compact-labels.js",
+      "match": true,
+      "sha256": "7d4dcc6df90f9aea506a4cbbfcc3c51be9e197fbe2907801cbe8debe189464bb"
+    },
+    {
+      "file": "src/radial-move.js",
+      "match": true,
+      "sha256": "6781fb940a308a893c097eae91b882f41e513371a2b196a53264bef31a192229"
+    },
+    {
+      "file": "src/multi-object-transform.js",
+      "match": true,
+      "sha256": "024ec06122bb9ccfeaee53ab5da5bae520dc194db6201ba2479a376902380069"
+    }
+  ],
+  "protected_acceptance": ".1135 user PASS",
+  "native_acceptance": "pending",
+  "presentation": "unchanged from accepted .1135"
+}

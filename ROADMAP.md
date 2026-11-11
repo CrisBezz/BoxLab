@@ -14,6 +14,8 @@ Previous .1135 hosted Topology42926256151 is now SUCCESS, superseding its older 
 
 Validation .1136: full local3,380/3,380 PASS (0 failures/skips), focused recovery/placement/stroke7/7 and release/comparison/annulus/recovery25/25 PASS. Three new recovery cases failed against the unchanged .1135 owner before repair. Final syntax and git diff --check clean. Protected .1135 visual owners and accepted modelling radial helper unchanged. Publication proof pending below; native .1136 interruption behaviour remains to be checked on device.
 
+Publication .1136 VERIFIED: runtime7dad7694b2208aeac92d8aec2e447d85da39a520, tested tree7da1bd833e937652e25521bfc3c5dad746791d46. Pages42929335601 SUCCESS. All12 cache-busted live shell/changed/loading/protected files byte-match tested source; main markers and Paint1136 pin verified, accepted Total Gizmo/CSS1135 and Multi0.36.1.0 retained. See docs/publication-1136.json. Full local3,380/3,380 plus focused recovery/stroke/release checks PASS. Hosted Topology42929336726 in progress at proof; no hosted PASS claimed. Build .1136 complete/live/ready for short device checks. .1135 user PASS protected. No new visual acceptance claim needed for unchanged UI; native interruption delivery remains device-specific.
+
 ---
 
 # .1135 — sketch-led packed radials and shaded centre drag rings — 11 November 2026
