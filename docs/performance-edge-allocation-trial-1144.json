@@ -1,0 +1,265 @@
+{
+  "release": ".1144",
+  "baseline": "Exact accepted .1143 shared picker from main aa593ca76f5f7f236ce7193b8db4269a7384d6a1; same firstOnly/Through/full-stack policy in both owners",
+  "environment": {
+    "runtime": "v24.22.1",
+    "platform": "linux",
+    "architecture": "x64"
+  },
+  "scope": "Complete shared CPU picker: all proxy projection/clipping/ranking and real rendered-body Three raycasts. Setup, correctness/counters, render/rebuild/controller/selection mutation, GPU and native event delivery excluded. Twenty-five warmups, nine alternating matched samples. Warm CPU only, not cold-start latency. No full-app/navigation/capacity/WASM claim.",
+  "gates": {
+    "correctness": "Same first result as original full stack; default full stack remains exactly equal; source immutable",
+    "timing": "Largest single-hit fixture >=1.2x; all smaller fixtures and background/Through/full-stack controls <=20% regression",
+    "operations": "Identical body raycasts in both owners; fixed clipping table and scalar finite checks remove per-edge temporary arrays only"
+  },
+  "rows": [
+    {
+      "grid": 32,
+      "faces": 1024,
+      "edges": 2112,
+      "kind": "hit",
+      "medianMs": {
+        "before": 2.9689200000000255,
+        "after": 3.011500999999953
+      },
+      "speedup": 0.9858605393124797,
+      "bodyRaycasts": {
+        "before": 1,
+        "after": 1
+      },
+      "samplesMs": [
+        [
+          1.7080029999999624,
+          1.4783739999998033,
+          2.258427999999867,
+          2.9689200000000255,
+          4.495907000000216,
+          11.623969999999872,
+          5.699429999999893,
+          4.358621000000085,
+          1.826513999999861
+        ],
+        [
+          4.673878999999943,
+          2.3653670000001057,
+          5.23990300000014,
+          1.2611100000001443,
+          6.273910999999998,
+          3.011500999999953,
+          5.235955999999987,
+          2.9475609999999506,
+          2.1834479999999985
+        ]
+      ],
+      "correctness": "PASS",
+      "timing": "PASS"
+    },
+    {
+      "grid": 64,
+      "faces": 4096,
+      "edges": 8320,
+      "kind": "hit",
+      "medianMs": {
+        "before": 6.33461299999999,
+        "after": 6.51776400000017
+      },
+      "speedup": 0.9718997189833546,
+      "bodyRaycasts": {
+        "before": 1,
+        "after": 1
+      },
+      "samplesMs": [
+        [
+          9.658616000000166,
+          16.166643000000022,
+          6.38750200000004,
+          6.1353110000000015,
+          6.126866000000064,
+          6.0053700000000845,
+          6.735550000000103,
+          6.09121899999991,
+          6.33461299999999
+        ],
+        [
+          8.964281999999912,
+          8.081809000000021,
+          5.783425999999963,
+          6.135502000000088,
+          6.441681999999901,
+          6.677541999999903,
+          6.732824999999821,
+          6.087130999999999,
+          6.51776400000017
+        ]
+      ],
+      "correctness": "PASS",
+      "timing": "PASS"
+    },
+    {
+      "grid": 128,
+      "faces": 16384,
+      "edges": 33024,
+      "kind": "hit",
+      "medianMs": {
+        "before": 34.651794000000336,
+        "after": 31.11898199999996
+      },
+      "speedup": 1.1135259501740893,
+      "bodyRaycasts": {
+        "before": 1,
+        "after": 1
+      },
+      "samplesMs": [
+        [
+          33.93410700000004,
+          39.76673500000015,
+          45.10298799999964,
+          43.96032899999955,
+          31.28363899999931,
+          41.11797200000001,
+          34.651794000000336,
+          22.664749999999913,
+          22.18084799999997
+        ],
+        [
+          31.138267999999698,
+          30.52313200000026,
+          29.04289400000016,
+          43.0358640000004,
+          31.11898199999996,
+          35.660775000000285,
+          34.159466999999495,
+          25.05243900000005,
+          20.86379399999987
+        ]
+      ],
+      "correctness": "PASS",
+      "timing": "FAIL"
+    },
+    {
+      "grid": 64,
+      "faces": 4096,
+      "edges": 8320,
+      "kind": "background",
+      "medianMs": {
+        "before": 6.948346000000129,
+        "after": 7.08850799999982
+      },
+      "speedup": 0.9802268686161185,
+      "bodyRaycasts": {
+        "before": 0,
+        "after": 0
+      },
+      "samplesMs": [
+        [
+          5.300857999999607,
+          6.5382620000000315,
+          6.951082000000497,
+          8.34390600000006,
+          7.47095999999965,
+          7.216935999999805,
+          6.885369000000537,
+          6.948346000000129,
+          6.1426250000004075
+        ],
+        [
+          8.332314999999653,
+          17.375393999999687,
+          8.178969999999936,
+          7.08850799999982,
+          6.037708999999268,
+          6.107319000000643,
+          7.754909999999654,
+          5.282222000000729,
+          5.944075999999768
+        ]
+      ],
+      "correctness": "PASS",
+      "timing": "PASS"
+    },
+    {
+      "grid": 64,
+      "faces": 4096,
+      "edges": 8320,
+      "kind": "through",
+      "medianMs": {
+        "before": 6.29231400000026,
+        "after": 6.4304510000001756
+      },
+      "speedup": 0.9785183029930697,
+      "bodyRaycasts": {
+        "before": 0,
+        "after": 0
+      },
+      "samplesMs": [
+        [
+          8.080025000000205,
+          18.706054000000222,
+          4.948189000000639,
+          5.195901000000049,
+          6.29231400000026,
+          5.06288399999994,
+          6.9876890000005005,
+          5.362522000000354,
+          6.535537999999178
+        ],
+        [
+          6.4304510000001756,
+          29.59486399999969,
+          8.86551799999961,
+          5.34085099999993,
+          4.825299999999515,
+          7.58037400000012,
+          7.336139000000003,
+          6.007783999999447,
+          5.072852000000239
+        ]
+      ],
+      "correctness": "PASS",
+      "timing": "PASS"
+    },
+    {
+      "grid": 64,
+      "faces": 4096,
+      "edges": 8320,
+      "kind": "full-stack",
+      "medianMs": {
+        "before": 16.473355000000083,
+        "after": 17.436689000000115
+      },
+      "speedup": 0.9447524699213237,
+      "bodyRaycasts": {
+        "before": 17,
+        "after": 17
+      },
+      "samplesMs": [
+        [
+          16.473355000000083,
+          15.444116000000577,
+          15.12351899999976,
+          16.363839000000553,
+          21.15208100000018,
+          16.845546999999897,
+          17.155525000000125,
+          14.350147000000106,
+          16.94128600000022
+        ],
+        [
+          14.218281999999817,
+          19.950222000000394,
+          18.14122100000077,
+          17.795356999999967,
+          14.305053999999473,
+          17.436689000000115,
+          16.380027000000155,
+          14.802670999999464,
+          18.003263999999945
+        ]
+      ],
+      "correctness": "PASS",
+      "timing": "PASS"
+    }
+  ],
+  "result": "FAIL",
+  "runtimeStatus": "REJECTED trial only: scalar finite checks plus frozen six-plane array. Largest whole-picker gain1.11x failed>=1.2x gate; replaced before shipping. Original timing samples/results retained."
+}

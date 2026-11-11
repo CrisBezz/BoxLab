@@ -11,25 +11,28 @@ export function pickScreenEdges(event,camera,canvas,objects,{through=false,first
  const visible=object=>{for(let p=object;p;p=p.parent)if(p.visible===false)return false;return true;};
  const bodies=through?[]:objects.filter(object=>object.userData?.kind==='body'&&object.isMesh&&visible(object));
  const visibilityRay=bodies.length?new THREE.Raycaster():null;
+ // Invocation-local scratch only; retained hit points below are independent.
+ const a=new THREE.Vector3(),b=new THREE.Vector3(),ca=new THREE.Vector4(),cb=new THREE.Vector4(),x=new THREE.Vector4(),y=new THREE.Vector4();
  for(const object of objects){
   if(object.userData?.kind!=='edge'||!object.isLine||!Number.isInteger(object.userData.index))continue;
   let hidden=false;for(let p=object;p;p=p.parent)if(p.visible===false){hidden=true;break;}if(hidden)continue;
   // material.visible=false is intentional for batched cage picking proxies.
   const position=object.geometry?.getAttribute('position');if(position?.count!==2)continue;
-  const a=new THREE.Vector3().fromBufferAttribute(position,0).applyMatrix4(object.matrixWorld),b=new THREE.Vector3().fromBufferAttribute(position,1).applyMatrix4(object.matrixWorld);
-  const ca=new THREE.Vector4(a.x,a.y,a.z,1).applyMatrix4(projection),cb=new THREE.Vector4(b.x,b.y,b.z,1).applyMatrix4(projection);
-  if(![...ca.toArray(),...cb.toArray()].every(Number.isFinite))continue;
+  a.fromBufferAttribute(position,0).applyMatrix4(object.matrixWorld);b.fromBufferAttribute(position,1).applyMatrix4(object.matrixWorld);
+  ca.set(a.x,a.y,a.z,1).applyMatrix4(projection);cb.set(b.x,b.y,b.z,1).applyMatrix4(projection);
+  if(!Number.isFinite(ca.x)||!Number.isFinite(ca.y)||!Number.isFinite(ca.z)||!Number.isFinite(ca.w)||!Number.isFinite(cb.x)||!Number.isFinite(cb.y)||!Number.isFinite(cb.z)||!Number.isFinite(cb.w))continue;
   // Clip in homogeneous coordinates before division: behind/near-plane edges
   // cannot acquire a mirrored screen target; crossing segments remain pickable.
   let lo=0,hi=1,rejected=false;
-  for(const [axis,sign] of [[0,1],[0,-1],[1,1],[1,-1],[2,1],[2,-1]]){
+  for(let plane=0;plane<6;plane++){
+   const axis=plane>>1,sign=plane&1?-1:1;
    const av=ca.w+sign*ca.getComponent(axis),bv=cb.w+sign*cb.getComponent(axis);
    if(av<0&&bv<0){rejected=true;break;}
    if(av<0)lo=Math.max(lo,av/(av-bv));
    if(bv<0)hi=Math.min(hi,av/(av-bv));
   }
   if(rejected||lo>hi)continue;
-  const x=ca.clone().lerp(cb,lo),y=ca.clone().lerp(cb,hi);if(x.w<=0||y.w<=0)continue;
+  x.copy(ca).lerp(cb,lo);y.copy(ca).lerp(cb,hi);if(x.w<=0||y.w<=0)continue;
   const ax=(x.x/x.w*.5+.5)*rect.width,ay=(-x.y/x.w*.5+.5)*rect.height,bx=(y.x/y.w*.5+.5)*rect.width,by=(-y.y/y.w*.5+.5)*rect.height;
   const dx=bx-ax,dy=by-ay,length=dx*dx+dy*dy,t=length?THREE.MathUtils.clamp(((px-ax)*dx+(py-ay)*dy)/length,0,1):0;
   const pixels=Math.hypot(px-ax-t*dx,py-ay-t*dy);if(!Number.isFinite(pixels)||pixels>12)continue;
