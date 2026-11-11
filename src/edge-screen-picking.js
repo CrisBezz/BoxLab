@@ -2,7 +2,7 @@ import * as THREE from 'three';
 
 // Rank the original rendered, indexed cage proxies in CSS pixels. No input,
 // selection, geometry or history owner: main keeps the sole native tap route.
-export function pickScreenEdges(event,camera,canvas,objects,{through=false}={}){
+export function pickScreenEdges(event,camera,canvas,objects,{through=false,firstOnly=false}={}){
  const rect=canvas.getBoundingClientRect();
  if(!camera||!rect.width||!rect.height||![event.clientX,event.clientY].every(Number.isFinite))return [];
  const px=event.clientX-rect.left,py=event.clientY-rect.top,hits=[];
@@ -38,20 +38,24 @@ export function pickScreenEdges(event,camera,canvas,objects,{through=false}={}){
   const world=a.clone().lerp(b,lo+(hi-lo)*s),view=world.clone().applyMatrix4(camera.matrixWorldInverse);
   const distance=camera.isOrthographicCamera?-view.z:view.length();
   if(!Number.isFinite(distance)||distance<0)continue;
-  // Test at the closest point ON this edge, not at the offset Pencil contact.
-  // Otherwise a near rim can hide a visible recessed edge within the tap radius.
-  // Keep the original body's material/raycast policy; overlays and invisible
-  // face-picking proxies must never act as occluders. Loose scaffolds still work.
-  if(visibilityRay){
-   visibilityRay.setFromCamera(new THREE.Vector2((ax+t*dx)/rect.width*2-1,-(ay+t*dy)/rect.height*2+1),camera);
-   const edgeDistance=visibilityRay.ray.origin.distanceTo(world);
-   visibilityRay.far=Math.max(0,edgeDistance-Math.max(1e-7,edgeDistance*1e-5));
-   if(visibilityRay.intersectObjects(bodies,false).length)continue;
-  }
-  hits.push({type:'edge',index:object.userData.index,distance,pixels});
+  hits.push({type:'edge',index:object.userData.index,distance,pixels,world,screen:new THREE.Vector2((ax+t*dx)/rect.width*2-1,-(ay+t*dy)/rect.height*2+1)});
  }
  // Quantized subpixel ties make depth ordering deterministic without a
  // non-transitive tolerance comparator. Distinct visible lines rank by proximity.
  hits.sort((a,b)=>Math.round(a.pixels*4)-Math.round(b.pixels*4)||a.distance-b.distance||a.index-b.index);
- return hits.map(({pixels,...hit})=>hit);
+ // Single-hit callers need only the first visible candidate in this SAME order.
+ // Full hit stacks keep every accepted hit; Through keeps its original bypass.
+ const chosen=[];
+ for(const {pixels,world,screen,...hit} of hits){
+  // Visibility still samples the closest point ON the edge, never the contact.
+  if(visibilityRay){
+   visibilityRay.setFromCamera(screen,camera);
+   const edgeDistance=visibilityRay.ray.origin.distanceTo(world);
+   visibilityRay.far=Math.max(0,edgeDistance-Math.max(1e-7,edgeDistance*1e-5));
+   if(visibilityRay.intersectObjects(bodies,false).length)continue;
+  }
+  chosen.push(hit);
+  if(firstOnly)break;
+ }
+ return chosen;
 }

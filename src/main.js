@@ -1,6 +1,6 @@
 import {bindViewportSizing} from './viewport-sizing.js?v=0.36.18.1005';
 import * as THREE from 'three';
-import {pickScreenEdges} from './edge-screen-picking.js?v=0.36.18.1141';
+import {pickScreenEdges} from './edge-screen-picking.js?v=0.36.18.1143';
 import {createCageBatch,updateCageBatches,addMirrorCageBatch} from './cage-render-batches.js?v=0.36.18.930';
 import { scaffoldLoopCandidates } from './scaffold-loop-candidates.js?v=0.36.18.761';
 import { FreeOrbitControls as OrbitControls } from './free-orbit-controls.js?v=0.36.18.1011';
@@ -398,7 +398,7 @@ function resize(w=wrap.clientWidth,h=wrap.clientHeight,dpr=Math.min(window.devic
 }
 function setPointer(event){const r=canvas.getBoundingClientRect();pointer.x=((event.clientX-r.left)/r.width)*2-1;pointer.y=-((event.clientY-r.top)/r.height)*2+1;}
 function pickKindHits(event,kind,options){setPointer(event);if(kind==='edge'&&root.children.some(o=>o.userData.kind==='edge'&&o.isLine))return pickScreenEdges(event,camera,canvas,root.children,options);raycaster.setFromCamera(pointer,camera);const hits=raycaster.intersectObjects(root.children.filter(o=>o.userData.kind===kind),false),chosen=kind==='face'?(globalThis.__boxlabSelectionInput?.filterFaceHits?.(hits,raycaster.ray.direction)||hits):hits;return chosen.map(hit=>({type:kind,index:hit.object.userData.index,distance:hit.distance}));}
-function pickKind(event,kind){const hits=pickKindHits(event,kind);return hits.length?{type:kind,index:hits[0].index}:null;}
+function pickKind(event,kind){const hits=pickKindHits(event,kind,{firstOnly:true});return hits.length?{type:kind,index:hits[0].index}:null;}
 function pickObject(event){setPointer(event);raycaster.setFromCamera(pointer,camera);const hits=raycaster.intersectObjects(root.children.filter(o=>o.userData.kind==='body'),false);return hits.length?{type:'object',index:0,distance:hits[0].distance}:null;}
 function pick(event){if(selectionMode==='object')return pickObject(event);return pickKind(event,selectionMode);}
 function edgeTapFraction(edgeIndex,event){const e=mesh.edges()[edgeIndex];if(!e)return.5;const a=worldToScreen(mesh.vertices[e.a]),b=worldToScreen(mesh.vertices[e.b]),ab=b.clone().sub(a),lenSq=ab.lengthSq();if(lenSq<1)return.5;return THREE.MathUtils.clamp(new THREE.Vector2(event.clientX,event.clientY).sub(a).dot(ab)/lenSq,.05,.95);}

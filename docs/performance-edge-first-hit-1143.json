@@ -1,0 +1,265 @@
+{
+  "release": ".1143",
+  "baseline": "Exact shared picker from accepted .1142 main b57e44857747ecab666e008412166f5f4888d5e2; normal pick consumes only first result",
+  "environment": {
+    "runtime": "v24.22.1",
+    "platform": "linux",
+    "architecture": "x64"
+  },
+  "scope": "Complete shared CPU picker: all proxy projection/clipping/ranking and real rendered-body Three raycasts. Setup, correctness/counters, render/rebuild/controller/selection mutation, GPU and native event delivery excluded. Twenty-five warmups, nine alternating matched samples. Warm CPU only, not cold-start latency. No full-app/navigation/capacity/WASM claim.",
+  "warmupRevision": "Initial two-warmup trial failed the small-hit <=20% gate with samples still dropping from ~3ms to ~0.8ms; exact trial retained in docs/performance-edge-first-hit-trial-1143.json. Increase equal warmup for both owners; gates unchanged. Cold/native acceptance remains pending.",
+  "gates": {
+    "correctness": "Same first result as original full stack; default full stack remains exactly equal; source immutable",
+    "timing": "Largest single-hit fixture >=1.2x; all smaller fixtures and background/Through/full-stack controls <=20% regression",
+    "operations": "Single visible hit stops after first accepted candidate; full hit stacks and Through retain original semantics"
+  },
+  "rows": [
+    {
+      "grid": 32,
+      "faces": 1024,
+      "edges": 2112,
+      "kind": "hit",
+      "medianMs": {
+        "before": 1.5254239999999868,
+        "after": 0.8958489999999983
+      },
+      "speedup": 1.7027691050612208,
+      "bodyRaycasts": {
+        "before": 7,
+        "after": 1
+      },
+      "samplesMs": [
+        [
+          1.853589999999997,
+          1.4551890000000185,
+          1.3052169999999705,
+          1.5254239999999868,
+          1.7000230000000442,
+          1.3295930000000453,
+          1.3522270000000276,
+          1.983504000000039,
+          1.6183520000000158
+        ],
+        [
+          0.8796459999999797,
+          0.8958489999999983,
+          0.9146269999999959,
+          0.7666479999999751,
+          0.9116429999999696,
+          0.991281000000015,
+          0.8445729999999685,
+          0.8909519999999702,
+          0.995256999999981
+        ]
+      ],
+      "correctness": "PASS",
+      "timing": "PASS"
+    },
+    {
+      "grid": 64,
+      "faces": 4096,
+      "edges": 8320,
+      "kind": "hit",
+      "medianMs": {
+        "before": 9.58133799999996,
+        "after": 4.47195499999998
+      },
+      "speedup": 2.142539001398718,
+      "bodyRaycasts": {
+        "before": 17,
+        "after": 1
+      },
+      "samplesMs": [
+        [
+          10.46873400000004,
+          10.574621999999863,
+          9.960269000000153,
+          9.438936000000012,
+          9.061255999999958,
+          9.58133799999996,
+          9.091641000000209,
+          9.476020999999946,
+          10.26908800000001
+        ],
+        [
+          5.013979999999947,
+          5.211823000000095,
+          4.753974999999855,
+          3.9676070000000436,
+          4.112111999999797,
+          3.9914929999999913,
+          4.47195499999998,
+          4.743458000000146,
+          3.6668610000001536
+        ]
+      ],
+      "correctness": "PASS",
+      "timing": "PASS"
+    },
+    {
+      "grid": 128,
+      "faces": 16384,
+      "edges": 33024,
+      "kind": "hit",
+      "medianMs": {
+        "before": 73.06505799999923,
+        "after": 19.17265000000043
+      },
+      "speedup": 3.8109003189437862,
+      "bodyRaycasts": {
+        "before": 41,
+        "after": 1
+      },
+      "samplesMs": [
+        [
+          71.97378899999967,
+          73.06505799999923,
+          73.08459800000037,
+          70.61467200000061,
+          73.82578799999919,
+          73.22949299999982,
+          72.97252099999969,
+          73.73546299999998,
+          72.5238360000003
+        ],
+        [
+          19.17265000000043,
+          19.88756000000012,
+          19.086813000000802,
+          19.340559000000212,
+          18.080308999999943,
+          19.924794999999904,
+          18.21613999999954,
+          18.541893999999957,
+          20.11055099999976
+        ]
+      ],
+      "correctness": "PASS",
+      "timing": "PASS"
+    },
+    {
+      "grid": 64,
+      "faces": 4096,
+      "edges": 8320,
+      "kind": "background",
+      "medianMs": {
+        "before": 3.1686220000001413,
+        "after": 2.889248999999836
+      },
+      "speedup": 1.0966939851844963,
+      "bodyRaycasts": {
+        "before": 0,
+        "after": 0
+      },
+      "samplesMs": [
+        [
+          2.9791119999999864,
+          3.334096999999929,
+          3.1686220000001413,
+          3.2356620000000476,
+          3.4097600000004604,
+          2.7924849999999424,
+          2.880955999999969,
+          3.8153500000007625,
+          2.972922999999355
+        ],
+        [
+          3.300618000000213,
+          2.9343660000004093,
+          3.053160999999818,
+          2.784794000000147,
+          2.6884509999999864,
+          2.862108000000262,
+          2.7627309999998033,
+          3.243833999999879,
+          2.889248999999836
+        ]
+      ],
+      "correctness": "PASS",
+      "timing": "PASS"
+    },
+    {
+      "grid": 64,
+      "faces": 4096,
+      "edges": 8320,
+      "kind": "through",
+      "medianMs": {
+        "before": 3.1135119999999006,
+        "after": 2.8755089999995107
+      },
+      "speedup": 1.0827689984626827,
+      "bodyRaycasts": {
+        "before": 0,
+        "after": 0
+      },
+      "samplesMs": [
+        [
+          3.1135119999999006,
+          3.360697000000073,
+          3.1843849999995655,
+          3.1421030000001338,
+          2.7548699999997552,
+          2.7538889999996172,
+          2.933555000000524,
+          2.919554000000062,
+          3.1892539999998917
+        ],
+        [
+          2.6173859999998967,
+          3.0699469999999565,
+          2.8755089999995107,
+          3.17597300000034,
+          2.823902999999518,
+          2.6648859999995693,
+          3.2918540000000576,
+          3.055224000000635,
+          2.8362400000005437
+        ]
+      ],
+      "correctness": "PASS",
+      "timing": "PASS"
+    },
+    {
+      "grid": 64,
+      "faces": 4096,
+      "edges": 8320,
+      "kind": "full-stack",
+      "medianMs": {
+        "before": 9.348124000000098,
+        "after": 9.192423999999846
+      },
+      "speedup": 1.0169378610038282,
+      "bodyRaycasts": {
+        "before": 17,
+        "after": 17
+      },
+      "samplesMs": [
+        [
+          9.242787999999564,
+          9.348124000000098,
+          9.364317999999912,
+          9.394803999999567,
+          9.393731000000116,
+          8.80291699999998,
+          9.336075999999593,
+          9.099215999999615,
+          9.97716599999967
+        ],
+        [
+          9.955482999999731,
+          8.877748000000793,
+          9.192423999999846,
+          8.814272999999957,
+          9.080759000000398,
+          9.113898000000518,
+          9.257160000000113,
+          9.618985999999495,
+          9.40952500000003
+        ]
+      ],
+      "correctness": "PASS",
+      "timing": "PASS"
+    }
+  ],
+  "result": "PASS"
+}

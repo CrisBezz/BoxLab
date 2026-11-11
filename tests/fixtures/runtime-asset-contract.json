@@ -161,9 +161,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1142",
+      "url": "./src/drawer-ui.js?v=0.36.18.1143",
       "target": "src/drawer-ui.js",
-      "sha256": "7bbbfd7bcfc4be18973e92ea9443b632b05b5c01062816efbdd17da96ca95be1"
+      "sha256": "82d4eb100a24784bf89f913a1ae5d33f9f5e750d630d5ebb56466e8916fd2f0f"
     },
     {
       "owner": "index.html",
@@ -297,9 +297,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/main.js?v=0.36.18.1141",
+      "url": "./src/main.js?v=0.36.18.1143",
       "target": "src/main.js",
-      "sha256": "0b743ed144bcede6cc5b728f399a7842eb5a6db10981498bb968e1c90db48188",
+      "sha256": "fe2cbf05e60ed27e449f727b5190f3848e1b1500982782893de6425416f2afc2",
       "sourceVersion": "0.35.1"
     },
     {
@@ -378,7 +378,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1142",
+      "url": "./src/release-version.js?v=0.36.18.1143",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -864,9 +864,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1142",
+      "url": "./face-workflow-layout.js?v=0.36.18.1143",
       "target": "src/face-workflow-layout.js",
-      "sha256": "17471f91da181fbb763b1f9501ae07101844fbcc4ab1fda1acb4b4c4203142fd"
+      "sha256": "6427ff8c452a97541ce063fb9809f44b7eb97539f1f0f462aca4580a8513f548"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1361,7 +1361,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1142",
+      "url": "./release-version.js?v=0.36.18.1143",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -3086,9 +3086,9 @@
     },
     {
       "owner": "src/main.js",
-      "url": "./edge-screen-picking.js?v=0.36.18.1141",
+      "url": "./edge-screen-picking.js?v=0.36.18.1143",
       "target": "src/edge-screen-picking.js",
-      "sha256": "4bcb0edeea2c1435d0c859ebdfc4eab25000ecf1d609a1ea5e4015bac2942102"
+      "sha256": "2d5d8245d577fe384e4d8098467472e7546489d6bfcf16bb9df5bb5a56d7e504"
     },
     {
       "owner": "src/main.js",
@@ -3326,9 +3326,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1142",
+      "url": "./src/shell-comparison.js?v=0.36.18.1143",
       "target": "src/shell-comparison.js",
-      "sha256": "f824d1f04281c8e09bbc1520ab5b1e4018e2d32a14538b1b1db67dddbb42d5d4"
+      "sha256": "b84cc0b347b4858c4880463466842251da7fbb89a4210afa496ec3a5f10c9887"
     },
     {
       "owner": "src/main.js",
