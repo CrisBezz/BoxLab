@@ -1,0 +1,72 @@
+{
+  "release": "0.36.18.1147",
+  "runtimeCommit": "6e691aca8167db11e8ca6116cecb8461494931e2",
+  "testedTree": "5b662aab11e3a2251ddefa46962b3933fa2c5458",
+  "localFocused": {
+    "tests": 74,
+    "pass": 74,
+    "fail": 0,
+    "skipped": 0
+  },
+  "localFull": {
+    "tests": 3422,
+    "pass": 3422,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "durationMs": 267111.847375
+  },
+  "hostedRegression": {
+    "run": 43118911555,
+    "job": 130854029567,
+    "status": "completed",
+    "conclusion": "success",
+    "checkedOutCommit": "6e691aca8167db11e8ca6116cecb8461494931e2",
+    "tests": 3422,
+    "pass": 3422,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "durationMs": 259051.811143,
+    "evidence": "Decoded job log checkout SHA and exact TAP totals inspected"
+  },
+  "pages": {
+    "run": 43118910661,
+    "buildJob": 130854033271,
+    "deployJob": 130854247009,
+    "conclusion": "success"
+  },
+  "liveByteMatches": [
+    {
+      "path": "version.json",
+      "matches": true,
+      "sha256": "046eb0d8c4a333f6d9b99162718c97e5125e2d41f31a848d683013390318a45e"
+    },
+    {
+      "path": "index.html",
+      "matches": true,
+      "sha256": "e2895e92ea807d0215a83644b81d3af5939b6af7340fcc4d906481cbcebd9f75"
+    },
+    {
+      "path": "src/performance-monitor.js",
+      "matches": true,
+      "sha256": "2871ab0a6b1e447be04b1166adf123151c1de6cda29a2cbd298f9548f18c4f0a"
+    },
+    {
+      "path": "src/performance-lab-ui.js",
+      "matches": true,
+      "sha256": "959c06fcdf58c281726ab3c6dacad140241c7be991c9ce323e7b5a879f8a4a6e"
+    },
+    {
+      "path": "src/subdivision.js",
+      "matches": true,
+      "sha256": "800b106071706b359d97cf9266c008c7801a5e704ebdad025e58df604a8362a4"
+    },
+    {
+      "path": "docs/subdivision-benchmark-1036.html",
+      "matches": true,
+      "sha256": "f975082e4153213a83269711cbfaa6ed6d36f2b860b5d802981b5db4154c864d"
+    }
+  ],
+  "scope": "Existing bounded subdivision benchmark upgraded to optional phase baseline using original production owner. No WASM promotion or speed gain/capacity claim. User iPad1146 packing FAIL preserved; native subdivision profiling pending."
+}
