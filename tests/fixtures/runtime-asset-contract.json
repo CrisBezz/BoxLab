@@ -161,9 +161,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1140",
+      "url": "./src/drawer-ui.js?v=0.36.18.1141",
       "target": "src/drawer-ui.js",
-      "sha256": "d6a8affdaab31518d9f28eb3f030b650a19fc41ffe4a227469877df69dde95f3"
+      "sha256": "f8e8c78682da805f3c4139a37b70ac5581e266dc480db3d2b590ace37198368c"
     },
     {
       "owner": "index.html",
@@ -192,9 +192,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/edge-paint-select.js?v=0.36.18.1130",
+      "url": "./src/edge-paint-select.js?v=0.36.18.1141",
       "target": "src/edge-paint-select.js",
-      "sha256": "38daf9d7d3e34dea64607a0acd87fb784698642595bcaec7c30883a20999be49"
+      "sha256": "7f425cec3c5b00b4d5a057dfb6eaaaaa57a2321fca60695a259cfe8a3d70474c"
     },
     {
       "owner": "index.html",
@@ -297,9 +297,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/main.js?v=0.36.18.1140",
+      "url": "./src/main.js?v=0.36.18.1141",
       "target": "src/main.js",
-      "sha256": "b02d4545950edfeec625599f7099cd7c929860481453b1193635db26f201beae",
+      "sha256": "0b743ed144bcede6cc5b728f399a7842eb5a6db10981498bb968e1c90db48188",
       "sourceVersion": "0.35.1"
     },
     {
@@ -378,7 +378,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1140",
+      "url": "./src/release-version.js?v=0.36.18.1141",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -864,9 +864,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1140",
+      "url": "./face-workflow-layout.js?v=0.36.18.1141",
       "target": "src/face-workflow-layout.js",
-      "sha256": "8d209530e3a16e20893358a7c2fb4b8ebdbaa2d1abfa2bc44045a413123fdcee"
+      "sha256": "3dba7dcce1e8ca33eaf14a34f234b30f66976ac37e851bdd1b2722e785f3b22d"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1361,7 +1361,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1140",
+      "url": "./release-version.js?v=0.36.18.1141",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -3086,9 +3086,9 @@
     },
     {
       "owner": "src/main.js",
-      "url": "./edge-screen-picking.js?v=0.36.18.954",
+      "url": "./edge-screen-picking.js?v=0.36.18.1141",
       "target": "src/edge-screen-picking.js",
-      "sha256": "f33deb2304b073b41761071541a8a20b66b2f44a0f2ce9135e5df1c3fa1ae3f3"
+      "sha256": "4bcb0edeea2c1435d0c859ebdfc4eab25000ecf1d609a1ea5e4015bac2942102"
     },
     {
       "owner": "src/main.js",
@@ -3326,9 +3326,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1140",
+      "url": "./src/shell-comparison.js?v=0.36.18.1141",
       "target": "src/shell-comparison.js",
-      "sha256": "286d740a01e14af3326ade1adf1a7b8dcd5d9d3dab0fe702dd2016119942ef80"
+      "sha256": "688d89193fc05296b05dc44fe7ed4bb4db0e4429e1ee2a6b84b810bf674b47d4"
     },
     {
       "owner": "src/main.js",

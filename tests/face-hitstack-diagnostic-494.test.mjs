@@ -8,8 +8,8 @@ const main=fs.readFileSync(new URL('../src/main.js',import.meta.url),'utf8');
 const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
 
 test('494 native picker can expose ordered hit stack',()=>{
-  assert.match(main,/function pickKindHits\(event,kind\)/);
-  assert.match(main,/pickHits:\(type,event\)=>pickKindHits\(event,type\)/);
+  assert.match(main,/function pickKindHits\(event,kind,options\)/);
+  assert.match(main,/pickHits:\(type,event,options\)=>pickKindHits\(event,type,options\)/);
 });
 
 test('494 current semantic press reports chosen Face and working selection',()=>{
