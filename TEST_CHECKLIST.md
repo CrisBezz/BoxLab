@@ -7,7 +7,8 @@
 - [x] Focused34/34 PASS; one desktop run retained, mixed/noisy. No repeated run or performance promotion claim.
 - [x] Full local Node regression3432/3432 PASS (130.025s); syntax, diff and protected-byte checks PASS.
 - [x] Hosted Topology `43201001744` passed3,432/3,432 (227.044s); Pages `43201001018` succeeded; nine changed live assets byte-match runtime commit `3d83610e0288bed03efafefe87607b6b70ff547d`.
-- [ ] Native .1150 comparison and short modelling smoke.
+- [x] User PASS protects native .1150 comparison workflow and SubD/Move/UndoRedo/edge DRAG -> puck -> gizmo smoke. All nine workload pairs report exact parity.
+- [x] Keep performance outcome distinct: overall `LAB_ONLY`; most small workloads FAIL/INCONCLUSIVE, larger workloads REVIEW/CONDITIONAL. No production promotion.
 
 ---
 
