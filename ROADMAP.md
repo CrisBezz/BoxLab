@@ -1,3 +1,11 @@
+# Current focus — .1151 validation and device acceptance — 12 November 2026
+
+.1151 addresses the screenshot-reproduced inward-extrusion shoulder issue using the existing guarded `through-kernel.js` planner, independently for eligible selected-face components. Local and hosted regression both pass 3,434/3,434; final Pages deploy and 11 live byte checks pass. Next decision is the user's hands-on result; retain the .1131 single-region acceptance and conservative fallback for ineligible topology.
+
+The subdivision WASM lab now compares one additional 1,024-face, level-2 input under the existing 16,384-face output cap. This is an evaluation workload only: no new kernel/binary, live WASM route, production promotion or capacity claim. Keep JavaScript authoritative until complete-operation device speed, memory and reliability gates support a change. Preserve .1150 comparison workflow PASS and keep raw user reports private.
+
+---
+
 # Current direction — .1150 native validation
 
 The user supplied a mixed native .1149 comparison; its raw report remains private. Build .1150 removes two flattened JS input arrays from the lab bridge by writing edge fields and face-edge IDs into existing candidate memory. Exact parity is covered, focused checks pass34/34, and full local regression passes3432/3432. The single desktop comparison run is noisy and inconclusive despite parity. Production JavaScript remains authoritative. Hosted Topology `43201001744` and Pages `43201001018` succeeded for runtime commit `3d83610e0288bed03efafefe87607b6b70ff547d`; nine changed live assets byte-match. Native .1150 comparison and short modelling smoke now PASS and are protected. All nine workload pairs report exact parity, but the report remains `LAB_ONLY`: timing does not meet the promotion gate across the workload set. Keep the WASM trial isolated and production subdivision in JavaScript. Do not repeat the same benchmark; the next build should follow a separately measured bottleneck, with performance, memory and reliability gates intact.
@@ -11022,10 +11030,3 @@ Regression executes the UI with missed pointerup, synchronous lostpointercapture
 ## .1085 native Paint acceptance — 6 November 2026
 
 User PASS confirms clean Pencil stroke starts without blobs, normal size under steady pressure, working taps and Undo/Redo, and Colour/Roughness/Metalness/Opacity in one stroke. Protect this device result along with earlier Paint PASSes. Current release remains live at `.1085`; proceed to the next user-requested build from current main.
-# Current focus — .1151 validation and device acceptance — 12 November 2026
-
-.1151 addresses the screenshot-reproduced inward-extrusion shoulder issue using the existing guarded `through-kernel.js` planner, independently for eligible selected-face components. Next decision is the user's hands-on result; retain the .1131 single-region acceptance and conservative fallback for ineligible topology.
-
-The subdivision WASM lab now compares one additional 1,024-face, level-2 input under the existing 16,384-face output cap. This is an evaluation workload only: no new kernel/binary, live WASM route, production promotion or capacity claim. Keep JavaScript authoritative until complete-operation device speed, memory and reliability gates support a change. Preserve .1150 comparison workflow PASS and keep raw user reports private.
-
----

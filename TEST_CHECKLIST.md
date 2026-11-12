@@ -1,3 +1,15 @@
+# .1151 — four-region inward corners and bounded high-input comparison — 12 November 2026
+
+- [x] Existing .1131 single-band inward corner behavior remains protected; new four-disconnected-band regression verifies diagonal shoulder joins, source immutability, valid topology and preserved volume.
+- [x] Comparison page adds 1,024 source faces at level 2 (16,384 outputs); original nine comparisons and phase-profile run remain unchanged. Candidate stays .1150, binary .1148 and production subdivision JavaScript.
+- [x] Focused tests 19/19 PASS, including release pins, legacy nine-case parity/binary, new high-input exact parity, and both inward corner suites.
+- [x] Full local suite 3,434/3,434 PASS (86.804s), zero failures/cancelled/skips after updating current release/cache expectations and the intentionally expanded comparison page.
+- [x] Hosted Topology run `43216291191` passes 3,434/3,434 (324.024s); Pages build/deploy run `43216644179` succeeds; 11 live release/cache-busted assets byte-match source.
+- [ ] Device: repeat the inward four-region setup and verify each eligible shoulder has diagonals; verify single-region inward extrusion; optional new comparison row reaches exact parity.
+- [ ] User PASS/FAIL pending. Keep any native comparison JSON private.
+
+---
+
 # .1150 — direct WASM input-span population — 12 November 2026
 
 - [x] Existing .1148 compiled-kernel exact parity, creases, n-gons, groups, limits, cancellation, zero-median and binary reproducibility regressions remain active.
@@ -13934,13 +13946,3 @@ Regression executes the UI with missed pointerup, synchronous lostpointercapture
 - [x] Colour, Roughness, Metalness and Opacity paint in the same stroke.
 
 User confirms `.1085` PASS. Protect this acceptance and the existing `.1077` menu/four-channel, `.1076` two-sided opacity, `.1075` opacity authoring and `.1074` brush-controls PASSes. `.1085` local suite: 3,166 PASS / 0 FAIL. Published app remains `0.36.18.1085`.
-# .1151 — four-region inward corners and bounded high-input comparison — 12 November 2026
-
-- [x] Existing .1131 single-band inward corner behavior remains protected; new four-disconnected-band regression verifies diagonal shoulder joins, source immutability, valid topology and preserved volume.
-- [x] Comparison page adds 1,024 source faces at level 2 (16,384 outputs); original nine comparisons and phase-profile run remain unchanged. Candidate stays .1150, binary .1148 and production subdivision JavaScript.
-- [x] Focused tests 19/19 PASS, including release pins, legacy nine-case parity/binary, new high-input exact parity, and both inward corner suites.
-- [x] Full local suite 3,434/3,434 PASS (86.804s), zero failures/cancelled/skips after updating current release/cache expectations and the intentionally expanded comparison page.
-- [ ] Device: repeat the inward four-region setup and verify each eligible shoulder has diagonals; verify single-region inward extrusion; optional new comparison row reaches exact parity.
-- [ ] User PASS/FAIL pending. Keep any native comparison JSON private.
-
----
