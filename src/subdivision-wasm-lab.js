@@ -19,17 +19,21 @@ export function wasmSubdivisionStep(mesh,kernel,now=()=>performance.now()){
  if(nv>20000||nf>MAX_FACES)throw Error('Lab source size cap exceeded');
  let corners=0;for(const f of mesh.faces){if(f.length<3)throw Error('Lab requires polygon faces');corners+=f.length;}
  if(corners>MAX_FACES)throw Error('Lab output face cap exceeded');
- const edges=mesh.edges(),ne=edges.length,ve=Array.from({length:nv},()=>[]),vf=Array.from({length:nv},()=>[]),edgeIds=new Map(),edgeData=[];
+ const edges=mesh.edges(),ne=edges.length,ve=Array.from({length:nv},()=>[]),vf=Array.from({length:nv},()=>[]),edgeIds=new Map();
  for(const v of mesh.vertices)if(!Number.isFinite(v.x)||!Number.isFinite(v.y)||!Number.isFinite(v.z))throw Error('Invalid lab coordinate');
- edges.forEach((e,i)=>{const w=mesh.creases.get(key(e.a,e.b))||0;if(!Number.isFinite(w))throw Error('Invalid crease');edgeIds.set(key(e.a,e.b),i);ve[e.a]?.push(i);ve[e.b]?.push(i);edgeData.push(e.a,e.b,e.faces.length,e.faces[0]??0,e.faces[1]??0,w);});
- const faceEdges=[];
- mesh.faces.forEach((face,fi)=>face.forEach((vi,i)=>{if(!Number.isInteger(vi)||vi<0||vi>=nv)throw Error('Invalid vertex index');vf[vi].push(fi);faceEdges.push(edgeIds.get(key(vi,face[(i+1)%face.length])));}));
+ edges.forEach((e,i)=>{const w=mesh.creases.get(key(e.a,e.b))||0;if(!Number.isFinite(w))throw Error('Invalid crease');edgeIds.set(key(e.a,e.b),i);ve[e.a]?.push(i);ve[e.b]?.push(i);});
+ mesh.faces.forEach((face,fi)=>face.forEach(vi=>{if(!Number.isInteger(vi)||vi<0||vi>=nv)throw Error('Invalid vertex index');vf[vi].push(fi);}));
  const fcsr=csr(mesh.faces),vecsr=csr(ve),vfcsr=csr(vf),arrays=[];let size=0;
  const reserve=(Type,data)=>{size=Math.ceil(size/8)*8;const pointer=size;size+=(typeof data==='number'?data:data.length)*Type.BYTES_PER_ELEMENT;arrays.push({Type,data,pointer});return pointer;};
- const v=reserve(Float64Array,nv*3),fo=reserve(Uint32Array,fcsr.offsets),fi=reserve(Uint32Array,fcsr.indices),e=reserve(Float64Array,edgeData),veo=reserve(Uint32Array,vecsr.offsets),vei=reserve(Uint32Array,vecsr.indices),vfo=reserve(Uint32Array,vfcsr.offsets),vfi=reserve(Uint32Array,vfcsr.indices),fe=reserve(Uint32Array,faceEdges),out=reserve(Float64Array,(nv+ne+nf)*3),q=reserve(Uint32Array,corners*4);
+ const v=reserve(Float64Array,nv*3),fo=reserve(Uint32Array,fcsr.offsets),fi=reserve(Uint32Array,fcsr.indices),e=reserve(Float64Array,ne*6),veo=reserve(Uint32Array,vecsr.offsets),vei=reserve(Uint32Array,vecsr.indices),vfo=reserve(Uint32Array,vfcsr.offsets),vfi=reserve(Uint32Array,vfcsr.indices),fe=reserve(Uint32Array,corners),out=reserve(Float64Array,(nv+ne+nf)*3),q=reserve(Uint32Array,corners*4);
  if(size>MAX_BYTES)throw Error('Lab WASM memory budget exceeded');const memory=kernel.memory;
  if(memory.buffer.byteLength<size)memory.grow(Math.ceil((size-memory.buffer.byteLength)/65536));
  for(const a of arrays)if(typeof a.data!=='number')new a.Type(memory.buffer,a.pointer,a.data.length).set(a.data);
+ // Edge fields and face-edge IDs go straight into their final WASM spans instead
+ // of passing through growable JS arrays that are discarded after the bulk copy.
+ const edgeInput=new Float64Array(memory.buffer,e,ne*6),faceEdgeInput=new Uint32Array(memory.buffer,fe,corners);
+ edges.forEach((edge,i)=>{const offset=i*6;edgeInput[offset]=edge.a;edgeInput[offset+1]=edge.b;edgeInput[offset+2]=edge.faces.length;edgeInput[offset+3]=edge.faces[0]??0;edgeInput[offset+4]=edge.faces[1]??0;edgeInput[offset+5]=mesh.creases.get(key(edge.a,edge.b))||0;});
+ let corner=0;mesh.faces.forEach(face=>face.forEach((vi,i)=>{faceEdgeInput[corner++]=edgeIds.get(key(vi,face[(i+1)%face.length]));}));
  // Write coordinates once into their final input span; no growable JS staging array.
  const inputPositions=new Float64Array(memory.buffer,v,nv*3);
  for(let i=0;i<nv;i++){const p=mesh.vertices[i],offset=i*3;inputPositions[offset]=p.x;inputPositions[offset+1]=p.y;inputPositions[offset+2]=p.z;}

@@ -1,3 +1,16 @@
+# .1150 — direct WASM input-span population — 12 November 2026
+
+- [x] Existing .1148 compiled-kernel exact parity, creases, n-gons, groups, limits, cancellation, zero-median and binary reproducibility regressions remain active.
+- [x] .1149 direct output/source/memory ownership checks remain active.
+- [x] .1150 captured canonical edge fields and face-edge IDs directly from WASM spans; verified original order, non-manifold/n-gon indices and exact production JS parity.
+- [x] Existing .1150 comparison page has versioned candidate import, report release, download name, completion/cancel/unavailable paths.
+- [x] Focused34/34 PASS; one desktop run retained, mixed/noisy. No repeated run or performance promotion claim.
+- [x] Full local Node regression3432/3432 PASS (130.025s); syntax, diff and protected-byte checks PASS.
+- [ ] Hosted regression, Pages deployment and live byte evidence.
+- [ ] Native .1150 comparison; then concise SubD/Move/UndoRedo/edge DRAG/puck smoke. Prior user .1149 report remains private; no overall app PASS inferred.
+
+---
+
 # .1149 — reduce subdivision bridge coordinate allocations — 12 November 2026
 
 - [x] Existing bounded nine-case irregular geometry/creases/groups parity and source immutability coverage remains active; original WAT binary reproducibility unchanged.

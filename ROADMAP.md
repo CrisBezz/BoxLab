@@ -1,3 +1,9 @@
+# Current direction — .1150 native validation
+
+The user supplied a mixed native .1149 comparison; its raw report remains private. Build .1150 removes two flattened JS input arrays from the lab bridge by writing edge fields and face-edge IDs into existing candidate memory. Exact parity is covered, focused checks pass34/34, and full local regression passes3432/3432. The single desktop comparison run is noisy and inconclusive despite parity. Production JavaScript remains authoritative. Next verify hosted regression, Pages and live bytes, then ask for one bounded native .1150 comparison to decide whether this bridge merits further work; stop if repeatable end-to-end gains miss the existing gate or memory/reliability constraints.
+
+---
+
 # .1149 — reduce subdivision bridge coordinate allocations — 12 November 2026
 
 Publication: runtime `b995e595`, Pages43186272095 SUCCESS; nine live assets byte-match source, local3,430/3,430 PASS. Hosted regression43186273655 SUCCESS:3,430/3,430 PASS; native1149 benchmark remains the next gate.
