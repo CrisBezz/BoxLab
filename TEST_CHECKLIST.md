@@ -3,7 +3,7 @@
 - [x] Existing save owner keeps its encoded JSON content, in-memory round-trip validation and requested `.boxlab` name; Blob MIME changes to `application/octet-stream` to avoid Safari `.json` suffix inference.
 - [x] Existing Open owner accepts both `.boxlab` and legacy Safari `.boxlab.json`; saved project name strips either suffix.
 - [x] Focused save/open and release/cache pin checks 30/30 PASS; syntax and diff checks PASS.
-- [x] Full local suite 3,435/3,435 PASS (79.436s), zero failures/cancelled/skips. Hosted publication pending.
+- [x] Full local suite 3,435/3,435 PASS (79.436s), zero failures/cancelled/skips. Hosted Topology `43322391711` passes 3,435/3,435 (223.126s); Pages `43322391266` succeeds; six changed live assets byte-match.
 - [ ] Manual Safari: Save .boxlab, confirm filename ends in `.boxlab` only, then reopen it in BoxLab. Optional: reopen an existing `.boxlab.json` file. Chrome regression is covered by filename/payload assertions; iPad Safari needs the physical browser.
 
 ---

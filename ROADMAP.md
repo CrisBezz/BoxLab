@@ -1,6 +1,6 @@
 # Current focus — .1153 Safari project-file suffix — 13 November 2026
 
-Fix the observed iOS Safari filename `BoxLab_Model.boxlab.json` by keeping the existing JSON codec/payload and changing only the downloaded Blob MIME to `application/octet-stream`. Open retains compatibility with already-suffixed `.boxlab.json` files. Focused save/open + release checks pass30/30. Full local suite passes 3,435/3,435 (79.436s); hosted release validation and physical Safari check remain pending. Manual Safari filename/open check remains necessary because automated CI cannot access the user's physical iPad; no further benchmark rerun is needed. .1152 native results remain LAB_ONLY, with production subdivision in JavaScript.
+Fix the observed iOS Safari filename `BoxLab_Model.boxlab.json` by keeping the existing JSON codec/payload and changing only the downloaded Blob MIME to `application/octet-stream`. Open retains compatibility with already-suffixed `.boxlab.json` files. Focused save/open + release checks pass30/30. Full local suite passes 3,435/3,435 (79.436s); hosted Topology `43322391711` passes 3,435/3,435 (223.126s), Pages `43322391266` succeeds, and six changed live assets byte-match. Physical Safari filename/open check remains pending. Manual Safari filename/open check remains necessary because automated CI cannot access the user's physical iPad; no further benchmark rerun is needed. .1152 native results remain LAB_ONLY, with production subdivision in JavaScript.
 
 ---
 
