@@ -1,6 +1,6 @@
 # Current focus — .1152 compare larger input at the same output cap — 12 November 2026
 
-User .1151 PASS is protected for disconnected inward-corner diagonals and the existing single-region repair. .1152 adds a bounded 4,096-source-face, level-1 comparison beside 1,024-source-face, level-2; both stop at 16,384 outputs. This measures a different source-topology size while keeping output work fixed. Existing WASM candidate and binary remain .1150/.1148; production subdivision remains JavaScript. Focused tests pass22/22; full local suite passes3,435/3,435 (245.152s); hosted release validation pending. Next device check is the new comparison row, with exact parity and bounds; do not infer performance/capacity or promote WASM from this case.
+User .1151 PASS is protected for disconnected inward-corner diagonals and the existing single-region repair. .1152 adds a bounded 4,096-source-face, level-1 comparison beside 1,024-source-face, level-2; both stop at 16,384 outputs. This measures a different source-topology size while keeping output work fixed. Existing WASM candidate and binary remain .1150/.1148; production subdivision remains JavaScript. Focused tests pass22/22; full local suite passes3,435/3,435 (245.152s); hosted Topology run `43223351459` passes3,435/3,435 (261.364s) and Pages `43223344279` succeeds; eight changed live assets byte-match. Next device check is the new comparison row, with exact parity and bounds; do not infer performance/capacity or promote WASM from this case.
 
 ---
 

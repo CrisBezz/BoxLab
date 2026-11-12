@@ -3,7 +3,7 @@
 - [x] Preserve .1151 user-PASS inward shoulder corner repair and single-region behavior.
 - [x] Add 4,096 source faces at level 1, exactly 16,384 output faces, alongside 1,024 source faces at level 2; original nine workloads and phase-profile run remain unchanged.
 - [x] Compiled candidate test verifies exact JS output parity, 5 samples, source immutability, 16MiB linear memory cap and source/output bounds.
-- [x] Focused release/comparison checks 22/22 PASS. Full local suite 3,435/3,435 PASS (245.152s); hosted validation pending.
+- [x] Focused release/comparison checks 22/22 PASS. Full local suite 3,435/3,435 PASS (245.152s); hosted Topology run `43223351459` passes 3,435/3,435 (261.364s); Pages run `43223344279` succeeds; eight changed live assets byte-match source.
 - [ ] Device: Performance Lab > Profile subdivision > Compare JS / WASM; verify new 4,096/level-1 row completes with exact parity; optional compare 1,024/level-2 row. No timing reruns to chase green.
 - [ ] User PASS/FAIL pending; keep raw device report private.
 
