@@ -6,8 +6,8 @@
 - [x] Existing .1150 comparison page has versioned candidate import, report release, download name, completion/cancel/unavailable paths.
 - [x] Focused34/34 PASS; one desktop run retained, mixed/noisy. No repeated run or performance promotion claim.
 - [x] Full local Node regression3432/3432 PASS (130.025s); syntax, diff and protected-byte checks PASS.
-- [ ] Hosted regression, Pages deployment and live byte evidence.
-- [ ] Native .1150 comparison; then concise SubD/Move/UndoRedo/edge DRAG/puck smoke. Prior user .1149 report remains private; no overall app PASS inferred.
+- [x] Hosted Topology `43201001744` passed3,432/3,432 (227.044s); Pages `43201001018` succeeded; nine changed live assets byte-match runtime commit `3d83610e0288bed03efafefe87607b6b70ff547d`.
+- [ ] Native .1150 comparison and short modelling smoke.
 
 ---
 
