@@ -2705,6 +2705,8327 @@ closer than12px safely rebase rather than undefined angle/zero dolly. Native can
 lift returns to one-finger state;disabled controls refuse moves. Original tap threshold
 continues2fingerUndo/3fingerRedo;1010 three-finger commands untouched.
 
-Changes narrow:main default/importÛ½´ÛÆòµë(š+myÔ&ööÆVâ6ö×7B&Vf–æVÖVçB(	Bãs` ¢ãsR&WVBVFvR6W76–öç252&÷FV7FVBâ&ÇVRf6R&WfVÂ&VæFW"÷fW&Æ’æ÷rW†6ÇVFW0§Væ6†ævVBöÇ–vöç2ö÷F†W"6†VÆÇ3²÷&–v–æÂ6æF–FFRæB†—7F÷'’&VÖ–âVæ6†ævVBà¤&ööÆVâGvò×&÷r÷W&æG2ö÷W&F–öç2v—F‚6Æ÷6R&–v‡BÂ÷&–v–æÂ6öçG&öÇ2&WF–æVBà£SF&vWFVB53²æòæWrgVÆÂ×7V—FRf–ÇW&RæÖW2âæW‡Bãsbf—7VÂ÷F7F–ÆR6†V6·2à  ¢222ö&¦V7B×VÇF’v—¦Öòò&ööÆVâ66W72(	Bãsp ¥&W6VçFF–öâæ6†÷"W6W2V&Æ–W7B7W'f—f–ærf—6–&ÆR6VÆV7FVBö&¦V7Bg&öÒF†R7GVÀ§6VÆV7F–öâ6WBâ66VæR–6¶W"6†&VBv—F‚7F—fF–öâ&WfVçG2–æ7F—fRö&¦V7BF0¦g&öÒF—6Ö—76–ærv—¦ÖòÂ–æ6ÇVF–ærVæ6–Â6VÖçF–2wV&BâvVçV–æR&6¶w&÷VæBF—6Ö—76À¦æBW†—7F–ær×VÇF’G&ç6f÷&×2÷—f÷G2&W6W'fVC²&÷FV7FVBG&ç6f÷&ÓãVçF÷V6†VBà£32F&vWFVB53²gVÆÃ#ó“#bó#ƒBÂæòæWrf–ÇW&RæÖW2âãsbf—7VÇ2&VÖ–âVæF–ærà¤æW‡Bãsr•B×VÇF’ô&ööÆVâ66W726†V6·2ÂF†Vâ&F–Â&Vf–æVÖVçBà  ¢2226öÖ&–æVBf–Ww÷'BT’&Vf–æVÖVçB(	Bãs€ ¥f–Ww÷'B×VÇF’&W—"7F—2–â7GVÂV&Ç’7F—fF–öâ÷væW#²÷&–v–æÂG&ç6f÷&Ð¦f–ÆSãVæ6†ævVBâF÷–6öç26†&Rv—¦Öò6†W2Âd”Ur&WF–æVC²÷&–v–æÂ6æôÆ76ð¦6öçG&öÇ2&÷fRÖöFR'WGFöç2â6öæf—&ÖVBF÷V&ÆRÖ&6¶w&÷VæBF–çfW'G2÷&–v–æÂ6W@§F‡&÷Vv‚6VÆV7F–öâ÷væW'2v—F‚6öçFW‡BwV&G2âcF&vWFVB53²æòæWrf–ÇW&W2à¤Ö–æ–ÖÂÖG&vW"VF—B–â†æFöfc¢ÖöF–f–W'2Â6VÆV7F–öâFWF‚öf–ÇFW'2ö'VÆ²6öçG&öÇ2æ@¤ö&¦V7BÆ—7B66W72v—F‚V×G’6VÆV7F–öâ&VÖ–ââ¶VWG&vW"f–Æ&ÆS²W6W"6†ö÷6W0§&VÖ–æ–ær†öÖW2gFW"ãs‚†æG2ÖöâÂæòVç6öÆ–6—FVB&F–Â6VÆV7F–öâ—FV×2à ¢222Æ76òò–çfW'B6ö×ÆWF–öâ&Vf–æVÖVçB(	Bãs ¤föÆÆ÷r×WFòãsƒ¢7FF–öæ'’&6¶w&÷VæBFVæG2Æ76òF‡&÷Vv‚—G2÷&–v–æÂ÷væW ¦æBW†—7F–ærÖ–â6ö×ÆWF–öã²6VÖçF–2ö6çf2FVÆ—fW'’—2FVGWÆ–6FVBW"&VÆV6Rà¤æòæWr&r×ö–çFW"÷væW"÷"ÖöFVÆÆ–ærö†—7F÷'’6†ævW2âgVÆÂ&Vw&W76–öâ†2–FVçF–6À£#ƒ2f–ÇW&RæÖW2Fòãs‚ƒ#’ó“3bó#ƒ2’âæW‡B•BÆ76òô–çfW'Bô×VÇF’öæf–vF–öà¦6öæf—&ÖF–öâæBVæF–ærãsbòãs26†V6·3²&WF–âG&vW"fÆÆ&6·2à ¢222VFvRÆ76òòF÷V&ÆRÖ&6¶w&÷VæBF–Ö–ær&Vf–æVÖVçB(	Bãs#  ¢ãs’VFvRôÆ76òæBF–Ö–ærd”Â&V6÷&FVBâW†—7F–ærVFvR–çB––VÆG2FòÆ76ó°¦Ö–â&6¶w&÷VæB÷væW"W6W2V&Ç’v–æF÷r6GW&S²æF—fR&VÆV6RF–ÖW7F×2&WÆ6P¥6f&’F–ÖW"Ö&6VBFVGWÆ–6F–öâæBG&—fSS×2–çfW'BâæòæWrvW7GW&R÷væW"÷ ¦ÖöFVÆÆ–ær¶W&æVÂâ6WfVâæWr&Vw&W76–öç2Ã3‚F&vWFVB53²gVÆÃ##bó“C2ó#ƒ2Â6ÖP¦f–ÇW&RæÖW22ãs’âæW‡B•BVFvRôÆ76òô–çfW'Böæf–vF–öâ6öæf—&ÖF–öã²W6P¤vW7GW&RFV'Vr–b7F–ÆÂf–Æ–ærâ¶VWG&vW"æB&–÷"VæF–ær6†V6·2à ¢222ö&¦V7BÆ—7BÖöF–f–W'2òF÷V&ÆR×FF–væ÷6—2(	Bãs# ¢ãs#Æ76ò6æ6VÆÆF–öâöG&v–æröf–ævW"æf–vF–öâ76VBæB&÷FV7FVBâ6Æ–v‡@¤Æ76ò6VÆV7F–öâF–v‡FVæ–ærW‡Æ–6—FÇ’FVfW'&VBÕT4‚ÄDU"Fòf–æÂW&fV7F–öâà¤F÷V&ÆRÖ&6¶w&÷VæB–çfW'B7F–ÆÂd”Ââãs#W‡÷6W2÷&–v–æÂ6öÆÆ6VBÖöF–f–W'0¦&VÆ÷rö&¦V7G2–âfö7W2ö&¦V7BÆ—7C²÷&–v–æÂ6öçG&öÇ2æBF—66Æ÷7W&R&W7F÷&F–öâà¤W†—7F–ær–çfW'BÖF6†W"v–ç2F–væ÷7F–2ÖöæÇ’&V6öâ÷F–Ö–ærö6÷VçBÆöw3²&V†f–÷ §Væ6†ævVBVæF–æröâÖFWf–6RvW7GW&RFV'Vr67&VVç6†÷B&Vf÷&RgW'F†W"vW7GW&Rf—†W2à£#F&vWFVB53²gVÆÃ##‚ó“CRó#ƒ2Â6ÖRf–ÇW&RæÖW2âæW‡BÖöF–f–W'2†æB6†V6·0¦æBF÷V&ÆR×FFV'Vr6GW&Râ¶VW÷F†W"VæF–ær6†V6·2öG&vW"fÆÆ&6·2à  ¢222&VF&ÆR&6¶w&÷VæB×FWf–FVæ6R(	Bãs#  ¢ãs#67&VVç6†÷BfÆööFVB'’Væ6–Â†÷fW"öÖ÷fVÖVçC²æò–çfW'BFV6—6–öâf—6–&ÆRà¥–âÆ7B6—‚$4´u$õTäBF–væ÷7F–72æBV–WB&WWF—F—fRÆöw2Âv—F†÷WBvW7GW&P¦6†ævW2â‚F&vWFVB53²gVÆÃ#3ó“C‚ó#ƒ2Â6ÖRf–ÇW&W2âæW‡BöæRÖf–ævW"F†Và¥Væ6–ÂF÷V&ÆRÖ&6¶w&÷VæBG&6S²–çfW'BæBÖöF–f–W'2FWf–6R6†V6·27F–ÆÂVæF–ærà  ¢222‡—6–6ÂF÷V&ÆR×FWf–FVæ6R(	Bãs#0 ¢ãs#"67&VVç6†÷G2Fòæ÷B–FVçF–g’6V6öæBÖ6öçF7Bf–ÇW&Râ&W6W'fR&VBÖöæÇ§‡—6–6ÂF÷vâ÷Wö6æ6VÂWf–FVæ6RÆöæw6–FR6VÖçF–2FV6—6–öç3²æòvW7GW&R6†ævRà£F&vWFVB53²gVÆÃ#32ó“Só#ƒ2Â6ÖRf–ÇW&W2â–çfW'BæBÖöF–f–W'2FWf–6P¦6†V6·2VæF–ærâÖ–âõVæ6–ÂÖ÷fVÖVçBF‡&W6†öÆG2&÷Fƒ‡ƒ²Fòæ÷B&WVBÖ—6ÖF6‚6Æ–Òà  ¢222&6¶w&÷VæB†öÆB&WÆ6W2F÷V&ÆR×F–çfW'B(	Bãs#@ ¥W6W"6†÷6SS×27FF–öæ'’&6¶w&÷VæB†öÆBf÷"7W'&VçB×6VÆV7F–öâ–çfW'C²6†÷'BF ¦6ÆV'2öW†—G2Æ76òÂ†öÆB&WF–ç2Æ76òæB7W'f—fW2&VÆV6RâW†—7F–ær÷væW"æ@¦÷&–v–æÂ6VÆV7F–öâ—2ÂwV&FVBv–ç7Bæf–vF–öâö×VÇF—ÆR6öçF7Bö6öçFW‡B÷6W76–öà¦6†ævW2âF÷V&ÆR×F&WF—&VBã#BF&vWFVB53²gVÆÃ#3ró“SBó#ƒ2Â6ÖRf–ÇW&W2âæW‡@¦•B†öÆB÷F÷&VÆV6RôÆ76òöæf–vF–öâFW7G2ÂF†VâVæF–ærÖöF–f–W'2÷&F–Â&Vf–æVÖVçBà  ¢222&WFbG&vW"66W72(	Bãs#` ¥d”Urö&¦V7BÆ—7B6Æ÷6W2V×G’×6VÆV7F–öâö†–FFVâÖv—¦Öòfö7W266W72v'’&WW6–æp¦÷&–v–æÂÖöFRöÆ—7B÷væW'2â÷&–v–æÂ6öÆÆ6VBÖöF–f–W'2–æ6ÇVFVC²'W7’FööÇ2wV&FVBà£"F&vWFVB53²gVÆÃ#Có“Sró#ƒ2Â6ÖRf–ÇW&W2âæW‡B•BÆ—7BôÖöF–f–W'26†V6·2À§&VÖ–æ–ær6VÆV7F–öâÖFWF‚öf–ÇFW"ö'VÆ²ö&¦V7B66W72VF—BÂ6öÖ&–æVB&F–Â÷6W76–öà§&Vw&W76–öâ&Vf÷&R&WFbg&VW¦Râ¶VWG&vW"fÆÆ&6²æB76VBãs#B–çFW&7F–öç2à  ¢222&WFbf–Ww÷'B6VÆV7F–öâFWF‚(	Bãs#p ¢ãs#bö&¦V7BÆ—7B66W72W6W"52âÖ÷fR÷&–v–æÂf—6–&ÆRõF‡&÷Vv‚FWF‚6öçG&öÇ2Fð§f–Ww÷'B7G&—f÷"æ÷&ÖÂôfö7W266W72â÷&–v–æÂ÷væW'2öÆ—7FVæW'2æBvVöÖWG'’ÖF€§&WF–æVBã#rF&vWFVB53²ãs#bgVÆÂ&6VÆ–æS#Có“Sró#ƒ2&WF–æVBâæW‡B•BFWF‚ð¦Æ–÷WB6æ—G’6†V6²Â&VÖ–æ–ærGfæ6VBf–ÇFW'2ö'VÆ²ö&¦V7BVF—BæB&VÆV6R&Vw&W76–öâà  ¢222ãs#‚&WFbw&÷WVB'V–ÆB&öw&W70¥6VÆV7F–öâÖ66W72&F6‚–×ÆVÖVçFVC¢f–Ww÷'B4TÄT5BW‡÷6W26ö×ÆWFR÷&–v–æÂ6ö×öæVçBf–ÇFW'2ö6öÖÖæG2æB6öçFW‡GVÂö&¦V7B'VÆ²6öçG&öÇ3²ÖçVÂfÆ–FF–öâVæF–ærâæW‡B&F6ƒ¢&F–Â÷6W76–öâöÆ—6‚7&÷72ÆÂÖöFW2ÂF†Vâ&VÆV6RÖ6æF–FFRæf–vF–öâ÷G&ç6f÷&Òô×VÇF’ô&ööÆVâö†—7F÷'’öö&¦V7Böf–ÆRôæöÖB&Vw&W76–öç2ÂF†Vâ&WFbg&VW¦RâÆ76òF–v‡FVæ–ær&VÖ–ç2FVfW'&VBVçF–Âf–æÂöÆ—6‚à  ¢222ãs#’&WFbw&÷WVB&F–Â÷6W76–öâVF—@¤&F6ƒ"–×ÆVÖVçFVBæBWFöÖFVC¢ÆÂÖöFW2r÷&–v–æÂ–çfVçF÷'’öf–Æ&–Æ—G’÷6WGF–æw2öÆ–fV7–6ÆR&Wf–WvVC²f—†VBf6RG&rwV&G2ÂVFvR6öçFW‡B÷VWVVBW†—G2æBV6²7W&W76–öâÂ7&V6R6–ævÆRVæFò÷væW'6†—Â&V¦V7FVBÆVæ6†W2÷&VBÖöæÇ’7F–öç2æB6†&VBv–FR×æVÂ76–ærö†–FFVâ7FvW2âFWf–6R66WFæ6RVæF–ærâæW‡BöæW‡F'V–ÆB3¢&VÆV6RÖ6æF–FFR&Vw&W76–öâ7&÷72æf–vF–öâ÷G&ç6f÷&×2÷G—RÖ–âô×VÇF’ô&ööÆVâö†—7F÷'’öö&¦V7BÖævVÖVçBöf–ÆW2ôæöÖC²F†Vâ6öÖ&–æVB76W2æB&WFbg&VW¦Râãs#‚ÖçVÂ66WFæ6R7F–ÆÂVæF–æs²Æ76òF–v‡FVæ–ærFVfW'&VBà  ¢222ãs3&WFb&VÆV6RÖ6æF–FFRVF—Bò6ö×7BT¥W6W"7WW'6VFW2f—†VB×v–GF‚÷÷WG2æB&VÖ÷fW2f—6–&ÆRõF‡&÷Vv‚T’‡&WF–âÆ76òõ4TÄT5B’â6ö×7B6öçFVçB×6—¦VBæVÇ2–×ÆVÖVçFVC²$2VF—B&W7F÷&W2Ö—76–ærW‡G&7B6Æ÷6–ær'&6RÂfÆ–FFW3#s’6÷W&6RÖöGVÆW2æB7GVÂG&ç6f÷&ÒöW‡÷'BôW‡G&7B÷væW'2ãS2fö7W6VB53²gVÆÃ#cRó“ƒ"ó#ƒ2v—F‚–FVçF–6ÂW†—7F–ærf–ÇW&W2âFWf–6RõvV$tÂôf–ÆW2ôæöÖB6†V6·27F–ÆÂVæF–æs²6VR$UDóeõ$TÄT4Uô4„T4´Ä•5BæÖBâæW‡Bw&÷WVB•B6Öö¶RFW7BæB—77VR&Wf–WrÂF†Vâ&WFbg&VW¦Röæ÷FW2âæò&WFb&VÆV6R6Æ–ÖVB–WBà  ¢222ãs3V–6²&RÖf–æÆ—¦F–öâ&Vf–æVÖVçB(	BFWf–6R6†V6·2VæF–æp ¥7vVWf6RôVFvRW6W2öæR÷&–v–æÂ7FvVBf–Ww÷'BFö6³²VFvR6Æ–FRW'6—7G2VçF–À¤FöæRö&6¶w&÷VæC²VFvRõfW'FW‚÷W&ÇVR&WfVÂ&Wf–WrFFVBF‡&÷Vv‚÷&–v–æÂ÷væW'2À§&WF–æ–ærf–Ww÷'BG&r&WfVÂâƒbfö7W6VB53²æòæWrgVÆÂ×7V—FRf–ÇW&RæÖW2à¤6öçF–çVRãs3òãs3w&÷WVB•B6†V6·2æBf–ÆW2ôæöÖBW‡÷'B66WFæ6S²g&VW¦R&WF`¦öæÇ’gFW"W6W"fVVF&6²æB&Æö6¶W"&Wf–Wrâ6Æ–v‡BÆ76òF–v‡FVæ–ærFVfW'&VBà ¢22##bÓÓR(	B&WFb&VÆV6V@ ¤66WFVBãs3bg&÷¦VâBö&WFÓbòâæòÖ÷&RfVGW&Rv÷&²–âF†—26æ6†÷Bà¤æW‡C¢f–æÂg&÷¦VâÖÆ–æ²FWf–6R6Öö¶RÂF†Vâ6†ö÷6R÷7BÔ&WFbv÷&²6W&FVÇ’à ¢22##bÓÓR(	B÷7BÔ&WFb&VÆ–&–Æ—G’F€ ¥W6W"&÷fW2&VÆ–&–Æ—G’VF—Bâ6ö×ÆWFR&W÷'Bö–çfVçF÷'’–âFö72âæW‡B&F6€§&W—'2FW7B6öçG&7G2æBf—6–&–Æ—G’v—F†÷WB6†æv–ær66WFVB'VçF–ÖRög&÷¦Væ&WF°§F†Vâ4’vFRö6÷fW&vRÂf&–VB&WfVÂô¶æ–f^(i$Æö÷Â66VæR†—7F÷'’æBæöÖB†æFöfbà£#srf–ÇW&W2&R6†V6²&W7VÇG2Âæ÷B6öæf—&ÖVB'Vw3²æò&Ææ¶WBV&çF–æRà ¢22##bÓÓR(	Bãs3r&VÆ–&–Æ—G’&F6ƒ ¥&VÆV6Rö66†R6öçG&7G2æB†—7F÷&–6Ç66÷R&V6öæ6–ÆVC³332æÖVB67&—F6†V6·2À¦gVÆÃcóC“"ó‚ó6¶—âÖöFVÆÆW"ög&÷¦Væ&WF2Væ6†ævVBâæW‡B7W'&VçG6VÆV7F–öâð¤v—¦Öò÷FööÂÆ–fV7–6ÆR6VÖçF–2f—‡GW&W2æBô$¦w&÷W2&Vf÷&RÆv÷&—F†×3²4’&VÆV6P¦vFRföÆÆ÷w2vVçV–æRFW7B&V6öæ6–Æ–F–öââ6VRFö72÷&VÆ–&–Æ—G’Ö'V–ÆBÓs3ræÖBà  ¢222ãss2V&Æ–6F–öâfW&–f–6F–öâ(	B##bÓÓ ¥V&Æ—6†VC3&Cs&#&Ss3S#66#6#cc3ƒvS3&CCC3s“cS²G&VSƒfF#c“Ss“S“3s–3##SSF3F3vCvcCRW†7FÇ’ÖF6†W2FW7FVB6†V6¶÷WBà¤7GVÂæöFS#"F÷öÆöw“3s“33Sƒcrö¦ö#3ƒ#ƒ#3sc#C£#SFW7G2ó“cE52óƒdd”Âó6¶—°¦ÆÃƒbf–ÇW&RæÖW2ÖF6‚Æö6ÂâvW33s“33SSB7V66W72âÆ—fR6†VÆÂ÷fW'6–öâÀ§Væ6†ævVBv—¦ÖòæBg&÷¦Vä&WFbfW'6–öâ'—FRÖÖF6‚FW7FVB6†V6¶÷WBâfö7W6VCsE52à¥W6W"ãss"52&V6÷&FVC²ãss2FWf–6R6æ—G’VæF–ærâ'VçF–ÖR6÷W&6RVæ6†ævVBà ¢22ãss‚V&Æ–6F–öâfW&–f–6F–öâ(	B##bÓÓ  ¥&VÆV6R6öÖÖ—BC&fS–VFVSCV#fƒ&cC#36C3v#cƒC–SVfÂG&VP¦c#3FSC“vVcSSƒfCfffS“S–FCS#–SS–fÖF6†W2FW7FVB6†V6¶÷WBà¤7GVÂæöFS#"F÷öÆöw’'Vã3ƒS#sCƒ3’ö¦ö#Cs#SSs3s£#SWFW7G2ó#52óSTd”Âð£6¶—²ÆÃSRf–ÇW&RæÖW2W†7FÇ’ÖF6‚Æö6Â–çfVçF÷'’âvW33ƒS#sCSs‚7V66VVFVBà¤g&W6‚Æ—fR–æFW‚æ‡FÖÂ÷fW'6–öâæ§6öâÂVæ6†ævVBf6RöÖ–â÷væW'2æBg&÷¦Vä&WF`§fW'6–öâ'—FRÖÖF6‚&W÷6—F÷'’âfö7W6VCcU52âW6W"ãssr52&V6÷&FVC²ãss‚FWf–6P§6æ—G’VæF–ærâ'VçF–ÖRög&÷¦Vä&WFVæ6†ævVBà ¢22ãss’V&Æ–6F–öâfW&–f–6F–öâ(	B##bÓÓ  ¥&VÆV6R6öÖÖ—BV##F3vc“#3“#ƒfV6SFC““CvCf6cs–Ff#SSC&ÂG&VP¦vf3s6Vc“sC–3SvV33“s#Fc3ƒSCfcƒC“VÖF6†W2FW7FVB6†V6¶÷WBà¤7GVÂæöFS#"F÷öÆöw’'Vã3ƒcc“s"ö¦ö#CscscS“ƒs£#c‡FW7G2ó#552óSTd”Âð£6¶—²ÆÃSRf–ÇW&RæÖW2W†7FÇ’ÖF6‚Æö6Â–çfVçF÷'’æCss‚âvW33ƒccƒcƒp§7V66VVFVBâg&W6‚Æ—fR–æFW‚÷fW'6–öâö¶W&æVÂôf6R–×÷'B÷væW"ÂVæ6†ævVBÖ–âæ@¦g&÷¦Vä&WFbfW'6–öâ'—FRÖÖF6‚&W÷6—F÷'’ãƒFfö7W6VE52âW6W"ãss‚52&V6÷&FVC°¢ãss’7WÆ–VBÖÖöFVÂFWf–6R66WFæ6RVæF–ærà ¢22ãsƒV&Æ–6F–öâfW&–f–6F–öâ(	B##bÓÓ  ¥&VÆV6R6öÖÖ—B&c#3f&V3ƒfVV&3Cs3Cc““C““#6SCc36SFÂG&VP¦fcVCFf3#s–3VSs“s6#“&Cs“ƒCc&3“–##†fÖF6†W2FW7FVB6†V6¶÷WBà¤7GVÂæöFS#"F÷öÆöw’'Vã3ƒs3scScö¦ö#Cs“ss3ss£#sFW7G2ó#•52óS$d”Âð£6¶—²ÆÃS"f–ÇW&RæÖW2W†7FÇ’ÖF6‚Æö6Â–çfVçF÷'’âvW33ƒs3scC#7V66VVFVBà¤g&W6‚Æ—fR–æFW‚÷fW'6–öâÂVæ6†ævVBÖ–âö66WFVBF‡&÷Vvƒss’æBg&÷¦Vä&WFbfW'6–öà¦'—FRÖÖF6‚&W÷6—F÷'’ã#fö7W6VE52âW6W"ãss’52&V6÷&FVC²ãsƒFWf–6R6æ—G§VæF–ærâ'VçF–ÖRög&÷¦Vä&WFVæ6†ævVBà ¢22ãsƒV&Æ–6F–öâfW&–f–6F–öâ(	B##bÓÓ  ¥&VÆV6R6öÖÖ—B3C–cSv3CS#ƒ#3c3C633ƒcs33ƒc†F3S#f3ƒ&†ÂG&VP¦cCSS#6C#6#sc†cs&6“633“C“vcF6f663&ÖF6†W2FW7FVB6†V6¶÷WBà¤7GVÂæöFS#"F÷öÆöw’'Vã3ƒ“#s32ö¦ö#CƒS#3cC£#s'FW7G2ó##U52óCtd”Âð£6¶—²ÆÃCrf–ÇW&RæÖW2W†7FÇ’ÖF6‚Æö6Â–çfVçF÷'’âvW33ƒ“#s"7V66VVFVBà¤g&W6‚Æ—fR–æFW‚÷fW'6–öâÂVæ6†ævVBÖ–âôf6Sss’æBg&÷¦Vä&WFbfW'6–öâ'—FRÖÖF6€§&W÷6—F÷'’ãV6ÆVâÖfö7W6VE53²F&vWBw&÷W•52óW†—7F–ærF–væ÷7F–2d”Âà¥W6W"ãsƒ52&V6÷&FVC²ãsƒFWf–6R6æ—G’VæF–ærâ'VçF–ÖRög&÷¦Vä&WFVæ6†ævVBà ¢22ãsƒ"V&Æ–6F–öâfW&–f–6F–öâ(	B##bÓÓ  ¥&VÆV6R6öÖÖ—B†#sF#†3vCVF3ss†66VfFFCSƒSsÂG&VP¦c–CSsƒ“#3C†Sc33fCv&&fSf#“3“3–cƒ3F6ÖF6†W2FW7FVB6†V6¶÷WBà¤7GVÂæöFS#"F÷öÆöw’'Vã3ƒ3ƒƒcRö¦ö#C““Ccƒc3£#s7FW7G2ó#3552óCd”Âð£6¶—²ÆÃCf–ÇW&RæÖW2W†7FÇ’ÖF6‚Æö6Â–çfVçF÷'’âvW33ƒ3ƒC“7V66VVFVBà¤g&W6‚Æ—fR–æFW‚÷fW'6–öâÂVæ6†ævVB6VçG&ÂFV'Vrôf6Sss’æBg&÷¦Vä&WFbfW'6–öà¦'—FRÖÖF6‚&W÷6—F÷'’ã#6fö7W6VE53²ÆÂf—fR÷&–v–æÂãs#"FW7B&öF–W2'—FRÖ–FVçF–6Âà¥W6W"ãsƒ52&V6÷&FVC²ãsƒ"FWf–6R6æ—G’VæF–ærâ'VçF–ÖRög&÷¦Vä&WFVæ6†ævVBà  ¢222ãsƒ2V&Æ–6F–öâfW&–f–6F–öâ(	B##bÓÓ  ¥V&Æ—6†VB&VÆV6R6öÖÖ—B3S&–ccSs##&V#F##vf#“c6cCƒfF3&cvFÂG&VP¦–Vc–3sV#cf3#CScs6C3“ƒCSFfcCC“#ƒ3F&câvW2'Vâ3ƒSSSs“S6 ¦6ö×ÆWFVB7V66W76gVÆÇ’âF÷öÆöw’4’'Vâ3ƒSSSƒ3S–Â¦ö"CC“#ƒ“FÀ¦6ö×ÆWFVBv—F‚F†RW‡V7FVB7F—fR–çfVçF÷'“¢#sBFW7G2ò#3‚52ò3bd”Âð£6¶—VBâÆÂ3bf–ÇW&R–FVçF—F–W2ÖF6‚Fö72÷&VÆ–&–Æ—G’Ö'V–ÆBÓsƒ2æ§6öæ°¦f÷W"ãsƒ"f–ÇW&W2&VÖ÷fVBæBæòæWrf–ÇW&W2âfö7W6VBfÆ–FF–öã¢352à¤g&W6‚Æ—fR–æFW‚æ‡FÖÆÂfW'6–öâæ§6öæÂ7&2öÖ–âæ§6À¦7&2ö×VÇF’Öf6RÖF—&V7Bæ§6ÂæB&WFÓb÷fW'6–öâæ§6öæÖF6‚&W÷6—F÷'’'—FW2à¥'VçF–ÖR÷væW'2æB&÷FV7FVB–ç2Væ6†ævVBâW6W"66WFVBãsƒ#²ãsƒ2FWf–6P§6æ—G’&VÖ–ç2VæF–ærà  ¢222ãsƒBV&Æ–6F–öâfW&–f–6F–öâ(	B##bÓÓ  ¥&VÆV6R6öÖÖ—BVC#ƒsƒf3“CcƒFfcƒ†fV6F#“SVcVcFF63ÂG&VP¦cVCV&c“ƒ“c–6#SC6#cVS#v3cCƒ##vc†W†7FÇ’ÖF6†W2FW7FVB6†V6¶÷WBà¤7GVÂæöFS#"F÷öÆöw’'Vã3ƒs“Cƒ’ö¦ö#C“““Cs3ƒ£#sgFW7G2ó#C52ó3Td”Âð£6¶—²ÆÃ3Vf–ÇW&R–FVçF—F–W2W†7FÇ’ÖF6‚Fö72÷&VÆ–&–Æ—G’Ö'V–ÆBÓsƒBæ§6öâà¥vW2'Vã3ƒs“3Ccb6ö×ÆWFVB7V66W76gVÆÇ’ã“vfö7W6VE52â'VçF–ÖRæBg&÷¦Vä&WF§Væ6†ævVC²ãsƒ2W6W"52&÷FV7FVC²ãsƒBFWf–6R6æ—G’VæF–ærà¤g&W6‚Æ—fR–æFW‚æ‡FÖÂ÷fW'6–öâæ§6öâ'—FRÖÖF6‚ãsƒB&W÷6—F÷'’âVæ6†ævVBÖ–ãsc"À¤f6Sss’æBg&÷¦Vä&WFbfW'6–öâÇ6ò'—FRÖÖF6‚Æ—fRâ6†VÆÂÖ&¶W'2÷&V6÷fW'“sƒ@¦6ö†W&VçC²&Wf–WvVB'VçF–ÖR–ç2æB†6†W2&WF–æVBà  ¢222ãsƒRV&Æ–6F–öâfW&–f–6F–öâ(	B##bÓÓ  ¥&VÆV6R6öÖÖ—BCC3vV6#F#–Sƒ##3#c#“#c6VS3#scs3&ÂG&VP¦SVFc“#VfS–#3–cSvC–c3#ƒ“–#F#c†c#6W†7FÇ’ÖF6†W2FW7FVB6†V6¶÷WBà¤7GVÂæöFS#"F÷öÆöw’'Vã3ƒƒ33#S‚ö¦ö#C3S3sccS£#swFW7G2ó#CU52ó3$d”Âð£6¶—²ÆÃ3&f–ÇW&R–FVçF—F–W2W†7FÇ’ÖF6‚Fö72÷&VÆ–&–Æ—G’Ö'V–ÆBÓsƒRæ§6öâà¥vW2'Vã3ƒƒ33#Cc’7V66VVFVBâg&W6‚Æ—fR–æFW‚æ‡FÖÂ÷fW'6–öâæ§6öâ'—FRÖÖF6ƒsƒS°§Væ6†ævVBÖ–ãsc"ôf6Sss’æBg&÷¦Vä&WFbfW'6–öâÇ6òÖF6‚Æ—fR&W÷6—F÷'’'—FW2à£fö7W6VE53²6÷W&6Rög&÷¦Vä&WFVæ6†ævVBâãsƒBW6W"52&÷FV7FVC²ãsƒRFWf–6P§6æ—G’VæF–ærâ6†VÆÂÖ&¶W'2÷&V6÷fW'“sƒR6ö†W&VçBÂ÷&–v–æÂÖöFVÆÆ–ær–ç2&WF–æVBà  ¢222ãsƒbV&Æ–6F–öâfW&–f–6F–öâ(	B##bÓÓ  ¥&VÆV6R6öÖÖ—BC&VcCcsCcf3cfSƒC36SC#cƒf3“–3ƒCs6cFÂG&VP¦&V3–c#Cƒ33f6CFVc6#“3Cs3&f3vS“W†7FÇ’ÖF6†W2FW7FVB6†V6¶÷WBà¤7GVÂæöFS#"F÷öÆöw’'Vã3ƒ“3##s#ö¦ö#CcSc3#£#ƒFW7G2ó#C•52ó3$d”Âð£6¶—²ÆÃ3&f–ÇW&R–FVçF—F–W2W†7FÇ’ÖF6‚Fö72÷&VÆ–&–Æ—G’Ö'V–ÆBÓsƒbæ§6öâà¥vW2'Vã3ƒ“3##s#‚7V66VVFVBâg&W6‚Æ—fR–æFW‚÷fW'6–öâæB6†ævVBÖ–ãsƒbð¤f6SsƒbõfW'FW‚76—7Csƒb'—FRÖÖF6‚&W÷6—F÷'’âF‡&÷Vvƒss’Â&÷FV7FVB×VÇF“ãæ@¦g&÷¦Vä&WFbfW'6–öâÇ6òÖF6‚Æ—fR&W÷6—F÷'’'—FW2ã#cv6ÆVâÖfö7W6VE53²'&öFW £SCróS3e52óW†—7F–ætd”Â&WF–æVBâãsƒRFWf–6Rd”ÂæBVFvR66WFæ6R&V6÷&FVC°¢ãsƒbW6W"&WFW7BVæF–ærâ6†VÆÂ÷&V6÷fW'’æB&Wf–WvVB'VçF–ÖRÖöGVÆR–ç2fW&–f–VBà  ¢222ãs“V&Æ–6F–öâfW&–f–6F–öâ(	B##bÓÓ  ¥&VÆV6R6öÖÖ—BcC3FSsss#fSƒ†Ff–Sf“cCCƒ“FCƒƒS6S†ÂG&VP¦ƒ–&V33cƒVSfSV6c–sƒFSVS“cFccvCc†SS–W†7FÇ’ÖF6†W2FW7FVB6†V6¶÷WBà¤7GVÂæöFS#"F÷öÆöw’'Vã3ƒ3#Sƒƒ#ö¦ö#CSCƒƒ3#S£#FW7G2ó#ƒ52ó”d”Âð£6¶—²ÆÃ–f–ÇW&R–FVçF—F–W2W†7FÇ’ÖF6‚Fö72÷&VÆ–&–Æ—G’Ö'V–ÆBÓs“æ§6öâà¥vW2'Vã3ƒ3#Sƒsc‚7V66VVFVBâg&W6‚Æ—fR–æFW‚÷fW'6–öâ÷6†&VBT“s“'—FRÖÖF6€§&W÷6—F÷'“²66WFVBÖ–âôf6RõfW'FWƒsƒbÂ7vVWsƒ’õ&WföÇfSsƒ‚ÂF‡&÷Vvƒss’Â&÷FV7FV@¤×VÇF“ãæBg&÷¦Vä&WFbfW'6–öâ'—FRÖÖF6‚Væ6†ævVB&W÷6—F÷'’'—FW2ã#Ffö7W6V@¥52âãs“W6W"52&÷FV7FVC²ãs“f6RT’ö†—7F÷'’6æ—G’VæF–ærâ6†&VBT¦66†R–âö†6‚æB6†VÆÂ÷&V6÷fW'“s“&Wf–WvVC²æò¶W&æVÂ÷"g&÷¦Vä&WF6†ævW2à  ¢222ãs“"V&Æ–6F–öâfW&–f–6F–öâ(	B##bÓÓ  ¥&VÆV6R6öÖÖ—BS3s&3–63&33s–V#†Fc#cf6s#ƒSv#3ƒSSÂG&VP¦3ƒvF3FFc6S&##“CfV36S–3#SC“#S–CfW†7FÇ’ÖF6†W2FW7FVB6†V6¶÷WBà¤7GVÂæöFS#"F÷öÆöw’'Vã3ƒ333ƒ#C2ö¦ö#CSƒSCccƒ#£#GFW7G2ó#ƒu52ótd”Âð£6¶—²ÆÃvf–ÇW&R–FVçF—F–W2W†7FÇ’ÖF6‚Fö72÷&VÆ–&–Æ—G’Ö'V–ÆBÓs“"æ§6öâà¥vW2'Vã3ƒ333ƒ3ƒR7V66VVFVBâg&W6‚Æ—fR–æFW‚÷fW'6–öâ'—FRÖÖF6ƒs“"âVæ6†ævV@¥6†VÆÂõ6öÆ–F–g’6÷&W2Â6†&VBT“s“öÖ–âôf6RõfW'FWƒsƒbÂ7vVWsƒ’õ&WföÇfSsƒ‚ÂF‡&÷Vvƒss’À§&÷FV7FVB×VÇF“ãæBg&÷¦Vä&WFbfW'6–öâÆÂ'—FRÖÖF6‚&W÷6—F÷'’ãsfö7W6VE52à¤æò'VçF–ÖRög&÷¦Vä&WF6†ævW2âãs“W6W"52&÷FV7FVC²ãs“"6†VÆÂõ6öÆ–F–g’FWf–6P§6æ—G’VæF–ærâ6†VÆÂÖ&¶W'2÷&V6÷fW'“s“"6ö†W&VçC²W†7FÇ’Gvò&Wf–WvVB&V6÷fW'¥U$Ç26†ævVBv—F‚WfW'’'VçF–ÖR†6‚&WF–æVBà  ¢222ãs“2V&Æ–6F–öâfW&–f–6F–öâ(	B##bÓÓ  ¥&VÆV6R6öÖÖ—Bc“ƒSƒf&cv3&6cVVV###vCƒ&6CC†&S#“C#3CsFÂG&VP¦c†c6ƒV&f63cF6–#S6cSv6C6S–C&Cs6f#“S†W†7FÇ’ÖF6†W2FW7FVB6†V6¶÷WBà¤7GVÂæöFS#"F÷öÆöw’'Vã3ƒ3C“ccö¦ö#Cc3#CCcS£#‡FW7G2ó#“E52óDd”Âð£6¶—²ÆÃFf–ÇW&R–FVçF—F–W2W†7FÇ’ÖF6‚Fö72÷&VÆ–&–Æ—G’Ö'V–ÆBÓs“2æ§6öâà¥vW2'Vã3ƒ3C“cs“R7V66VVFVBâg&W6‚Æ—fR–æFW‚÷fW'6–öâ'—FRÖÖF6ƒs“2âVæ6†ævV@§&VæFW"÷væW#Sc‚ö6öÆ÷W"6÷&SSCrÂ6†&VBT“s“öÖ–âôf6RõfW'FWƒsƒbÂ7vVWsƒ’õ&WföÇfSsƒ‚À¥F‡&÷Vvƒss’Â&÷FV7FVB×VÇF“ãæBg&÷¦Vä&WFbfW'6–öâÆÂ'—FRÖÖF6‚&W÷6—F÷'’à£C&fö7W6VE52âãs“"W6W"52&÷FV7FVC²ãs“2f6Vw&÷W2FWf–6R6æ—G’VæF–ærà¤æò'VçF–ÖRög&÷¦Vä&WF6†ævW2â6†VÆÂ÷&V6÷fW'“s“26ö†W&VçC²W†7FÇ’Gvò&Wf–WvV@§&V6÷fW'’U$Ç26†ævVBÂÆÂ'VçF–ÖR†6†W2&WF–æVBà  ¢222ãs“BV&Æ–6F–öâfW&–f–6F–öâ(	B##bÓÓ  ¥&VÆV6R6öÖÖ—BFSSCs–f3ƒSVc#FSƒ##FSCFf#ƒ3ss333#&ÂG&VP¦FFcScFf6S3Fc3C#S#VfF63ƒƒcƒ#VV&SffC&W†7FÇ’ÖF6†W2FW7FVB6†V6¶÷WBà¤7GVÂæöFS#"F÷öÆöw’'Vã3ƒ3c#ƒ“bö¦ö#Ccs3“scs£#'FW7G2ó#52ód”Âð£6¶—²ÆÃf–ÇW&R–FVçF—F–W2W†7FÇ’ÖF6‚Fö72÷&VÆ–&–Æ—G’Ö'V–ÆBÓs“Bæ§6öâà¥vW2'Vã3ƒ3c#ss#7V66VVFVBâg&W6‚Æ—fR–æFW‚÷fW'6–öâ'—FRÖÖF6ƒs“BâVæ6†ævV@§7G–ÆW2÷F÷&#s3Bõd”Uss3"Â6†&VBT“s“öÖ–âôf6RõfW'FWƒsƒbÂ7vVWsƒ’õ&WföÇfSsƒ‚À¥F‡&÷Vvƒss’Â&÷FV7FVB×VÇF“ãæBg&÷¦Vä&WFbfW'6–öâ'—FRÖÖF6‚&W÷6—F÷'’à£C†fö7W6VE52âãs“2W6W"52&÷FV7FVC²ãs“BÖVçW2öÖöFW2FWf–6R6æ—G’VæF–ærà¤æò'VçF–ÖRög&÷¦Vä&WF6†ævW3²6†VÆÂ÷&V6÷fW'“s“B6ö†W&VçBæBW†7FÇ’Gvò&Wf–WvV@§&V6÷fW'’U$Ç26†ævVBÂÆÂ'VçF–ÖR†6†W2&WF–æVBà  ¢22ãƒS’Æö6ÂfÆ–FF–öâ(	B##bÓÓ@ ¤gVÆÂæF—fRæöFR&Vw&W76–öã£#352ód”Âó6¶—Â–æ6ÇVF–ærF‡&VRæWrGWÆ–6FR×&W6÷W&6P¦6†V6·2â&Wf–WvVB&VÆV6Rö66†R6öçG&7B76W3²&÷FV7FVB×VÇF“ãæBg&÷¦Vâ&WF0§Væ6†ævVBâFWf–6SƒS’GWÆ–6F^(i'&ö¦V7N(i$æöÖBvFRVæF–ærâV&Æ–6F–öâ&ööbföÆÆ÷w0¦–â•ô„äDôdbôDUeô„•5Dõ%’gFW"Ö–âô4’õvW2öÆ—fRfW&–f–6F–öâà  ¢22ãƒS’V&Æ–6F–öâ7FGW2(	B##bÓÓ@ ¤6ö×ÆWFRÆö6Â'V–ÆC6F#366³#352ód”Âó6¶—âWFöÖF–2&÷fÂ&Wf–Wr&V¦V7FV@§W6‚FòÖ–âFW7—FR&V6÷&FVB&W÷6—F÷'’7FæF–ær&÷fÃ²F—&V7BWF†÷&—¦F–öâf÷ §V&Æ–6F–öâ—2æ÷r&WV—&VB'’F†R&Wf–Wrâ&VÖ÷FRöÆ—fR&VÖ–ãƒS‚ãƒS’4’õvW2öÆ—fP§fW&–f–6F–öâæBFWf–6RvFRVæF–ærâ6VR•ô„äDôdbV&Æ–6F–öâ&Æö6³²Fòæ÷B6Æ–ÓƒS§V&Æ—6†VB÷"&÷WFR&÷VæB&V¦V7F–öâF‡&÷Vv‚æ÷F†W"FööÂà  ¢22ãƒcÆö6ÂfÆ–FF–öâ(	B##bÓÓ@ ¤gVÆÂæF—fRæöFR&Vw&W76–öã£#3552ód”Âó6¶—Â–æ6ÇVF–ærF‡&VRæWrÆ—fR'&¦GWÆ–6FRFW7G2æB&WF–æVCƒS’&W6÷W&6R6÷fW&vRâ&Wf–WvVB6†VÆÂö66†R6öçG&7B76W2à¥&÷FV7FVB×VÇF“ãög&÷¦Vâ&WF2Væ6†ævVC²FWf–6SƒcvFRæB&÷fVâ&–÷"ff–æR×F–À§&÷VæFöfb&VÖ–â6W&FRâV&Æ–6F–öâfW&–f–6F–öâVæF–ærà  ¢22ãƒcV&Æ–6F–öâfW&–f–VB(	B##bÓÓ@ ¥&VÆV6SCcc3†F#s36Ffc†#s“Cc–SƒƒS3SVS63s#²FW7FVBG&VP£“#V&f&vcvS#C†v363S†SS#vVSc“6S63c†#rW†7FÇ’ÖF6†W2Æö6Âà¤æöFS#"4“3ƒSC“ƒcsƒ"ö¦ö#Sssƒss#25T44U53#3552ód”Âó6¶—°¥vW33ƒSC“ƒSƒ“b'V–ÆBöFWÆ÷’5T44U52âg&W6‚Æ—fR6†VÆÂöÖæ–fW7BöÖævW#ƒcð¦ÖævVÖVçCƒcöG&vW#ƒcÂ&÷FV7FVB×VÇF“ãæBg&÷¦Vä&WFrfW'6–öâ'—FRÖÖF6‚à¤6öææV7FVBv—BFFV&Æ–6F–öâW6W2W‡V7FVBÖÖ–â4„æBfW&–f–VBf–ÆR÷G&VR†6†W2à¤FWf–6SƒcGWÆ–6FR÷6÷W&6Röf–ÆRvFRVæF–æs³ƒS’–×÷'FVBÖGWÆ–6FRôæöÖBvFP¦æ÷B–WB66WFVBâæW‡B&÷fVâ÷&–v–æÂÖ'&’ff–æR×F–Â&÷VæF–ær&W—"&VÖ–ç2VWVVBà  ¢22ãƒcV&Æ–6F–öâfW&–f–VB(	B##bÓÓ@ ¥&VÆV6Vc3f##f–3#s&#FScFcss3#s“SsƒSƒc“†6##²FW7FVBG&VP¦3“Ff&SVCFFCƒV#s–6S3fFcSC–3“cƒ“3#&c6W†7FÇ’ÖF6†W2fWF6†VBÖ–âà¤æöFS#"4“3ƒSScSs“c’ö¦ö#Sƒ#sƒ’5T44U53#3e52ód”Âó6¶—à¥vW33ƒSScScC““‚'V–ÆBöFWÆ÷’5T44U52âg&W6‚÷7FFWÆ÷–ÖVçBÆ—fR6†VÆÂöÖæ–fW7BÀ¦6÷&Sƒcô'&“ƒc÷6÷W&6RÖ6÷&Sƒc÷6÷W&6RÖVF—F÷#ƒcö6öFV3ƒcöÖævVÖVçCƒcöG&vW#ƒcÀ§&÷FV7FVB×VÇF“ãæBg&÷¦Vä&WFrfW'6–öâ'—FRÖÖF6‚&W÷6—F÷'’â–æ—F–Â76WB&VG0§&V6VFVB6ö×ÆWFVBFWÆ÷–ÖVçC²6ö×ÆWFR÷7FFWÆ÷–ÖVçBfW&–f–6F–öâÖF6†W3ƒcà¤ÆÂf÷W"†æFöfbf–ÆW27W'&VçC²FWf–6SƒcvFRVæF–ærÃƒcGWÆ–6FRæCƒS’–×÷'FV@§&W6÷W&6RôæöÖBvFW2&VÖ–â6W&FVÇ’VæF–ærâæòæWrW6W"52–æfW'&VBà  ¢22ãƒc"V&Æ–6F–öâfW&–f–VB(	B##bÓÓP ¥&VÆV6SCsscvC3&F6#SFS#3C“6f&SFCF3CS“sS“&33²FW7FVBG&VP¦SfS&“Fv&S“c†cCvfcCƒvSF3cf3Cƒ#cRW†7FÇ’ÖF6†W2fWF6†VBÖ–âà¤æöFS#"4“3ƒcSƒS#sC‚ö¦ö#cs3“SsB5T44U53#352ód”Âó6¶—à¥vW33ƒcSƒS#CB'V–ÆBöFWÆ÷’5T44U52âg&W6‚Æ—fR6†VÆÂöÖæ–fW7BÂÖW6„†VÇFƒƒc"ð¦–ç7V7F–öãƒc"æB&÷FV7FVB×VÇF“ãög&÷¦Vä&WFrfW'6–öâ'—FRÖÖF6‚&W÷6—F÷'’à£ƒcW6W"52&÷FV7FVC³ƒc"•BÆ–÷WBõUb÷7FÆRÕVæFò÷&ö¦V7B6†V6·2VæF–ærâ6W&FP£ƒcGWÆ–6FRæCƒS’æöÖB÷&W6÷W&6RvFW2æ÷B–æfW'&VBâf÷W"†æFöfbf–ÆW27W'&VçBà  ¢22ãƒc2V&Æ–6F–öâfW&–f–VB(	B##bÓÓP ¥&VÆV6SCf6fCc3v6–#6SVV66cvfFC3CS“Ss–6S²FW7FVBG&VP£6†##3c&c&3V3ƒf36#6VFC“3SscV3Cc“c"W†7FÇ’ÖF6†W2fWF6†VBÖ–âà¤æöFS#"4“3ƒcc#ƒcscC2ö¦ö#cƒs“sS#5T44U53#3E52ód”Âó6¶—à¥vW33ƒcc#ƒcsC2'V–ÆBöFWÆ÷’5T44U52âg&W6‚Æ—fR6†VÆÂöÖæ–fW7BÂÖW6„†VÇFƒƒc2ð¦–ç7V7F–öãƒc2æB&÷FV7FVB×VÇF“ãög&÷¦Vä&WFrfW'6–öâ'—FRÖÖF6‚&W÷6—F÷'’à£ƒc"W6W"52&÷FV7FVC³ƒc2•B—6ÆæB÷6VÒö6ö÷&F–æFR×g2×F÷öÆöw’õVæFò÷&ö¦V7BvFP§VæF–ærâ6W&FSƒcGWÆ–6FRæCƒS’&W6÷W&6RôæöÖBvFW2æ÷B–æfW'&VBâÆÂf÷W ¦†æFöfbf–ÆW27W'&VçC²æòæWrWF†÷&–ærö6†ææVÂö¶W&æVÂö†—7F÷'’÷væW"à  ¢22ãƒcBV&Æ–6F–öâfW&–f–VB(	B##bÓÓP ¥&VÆV6V3ƒF#V3#Cƒ3F&SvSS“sCS–3–3#sfSfCSFcFCs²FW7FVBG&VP£SS3S†3vSƒS3#†SsCCFf&#S&cs3VS“FCbW†7FÇ’ÖF6†W2fWF6†VBÖ–âà¤æöFS#"4“3ƒccC3c#s“rö¦ö#c“#s3“Ss"5T44U53#3…52ód”Âó6¶—à¥vW33ƒccC3cƒs25T44U52â÷7FFWÆ÷–ÖVçBÆ—fR6†VÆÂöÖæ–fW7BôÖW6„†VÇFƒƒcBöVF—CƒcBÀ§Væ6†ævVB–ç7V7F÷#ƒc2æB&÷FV7FVB×VÇF“ãög&÷¦Vä&WFrfW'6–öâ'—FRÖÖF6‚&W÷6—F÷'’à¤–æ—F–Â&VG2&V6VFVBFWÆ÷–ÖVçC²f–æÂ6ö×ÆWFRw&‚ÖF6†W3ƒcBãƒc2W6W"50§&÷FV7FVC³ƒcB•B&÷FF–öâö†—7F÷'’÷&ö¦V7Bô&6TtÄ.(i$æöÖBvFRVæF–ærâ6W&FSƒcóƒS¦vFW2æ÷B–æfW'&VC²ÆÂf÷W"†æFöfbf–ÆW27W'&VçBâæòvVöÖWG'’ö¶W&æVÂ÷66†VÖ6†ævW2à  ¢22ãƒcRV&Æ–6F–öâfW&–f–VB(	B##bÓÓP ¥&VÆV6V#ƒ3ƒ6#FS“#F3cf#3Fcc6F33ƒ3FFS²FW7FVBG&VP¦CSC†SF3&fc&cscS“366&V33&–#SSfcS"W†7FÇ’ÖF6†W2fWF6†VBÖ–âà¤æöFS#"4“3ƒccSƒSƒ2ö¦ö#c“s3“Ss“r5T44U53#3#%52ód”Âó6¶—à¥vW33ƒccSƒs2'V–ÆBöFWÆ÷’5T44U52â÷7FFWÆ÷–ÖVçBÆ—fR6†VÆÂöÖæ–fW7BöW‡÷'B×æVÃƒcRð¦æF—fRÖ6÷&SƒcRæB&÷FV7FVB×VÇF“ãög&÷¦Vä&WFrfW'6–öâ'—FRÖÖF6‚&W÷6—F÷'’à¤–æ—F–Â&VG2&V6VFVBFWÆ÷–ÖVçC²f–æÂ6ö×ÆWFRw&‚ÖF6†W3ƒcRâæF—fRæöÖBU`¦Æ–÷WB÷6VÒFWf–6RvFRVæF–æs³ƒcBd”Â&V6÷&FVB7V6–f–6ÆÇ’öâf–ÆRäôÔBãƒc250§&WF–æVC²æòæF—fRFW‡GW&RöÖFW&–Â6Æ–Ò÷"æWrFWf–6R66WFæ6R–æfW'&VBâf÷W ¦†æFöfbf–ÆW27W'&VçC²g&÷¦VâFöæ÷"÷&÷FV7FVBvVöÖWG'’÷væW'2Væ6†ævVBà  ¢22ãƒcbV&Æ–6F–öâfW&–f–VB(	B##bÓÓP ¥&VÆV6Sƒƒf&cCSc“&VC–#s6C†F#cS3633fVFV33C²FW7FVBG&VP¦6#3–c#†fFVcCC–#6#†&VS&SsCv6c6F#cBW†7FÇ’ÖF6†W2fWF6†VBÖ–âà¤æöFS#"4“3ƒcsc3#sbö¦ö#c#33cƒcr5T44U53#3#e52ód”Âó6¶—à¥vW33ƒcsc3#b5T44U52â÷7FFWÆ÷–ÖVçBÆ—fR6†VÆÂöÖæ–fW7BôÖW6„†VÇFƒƒcböVF—CƒcbÀ§Væ6†ævVB–ç7V7F÷#ƒc2öW‡÷'B×æVÃƒcRöæF—fRÖ6÷&SƒcRæB&÷FV7FVB×VÇF“ãög&÷¦Và¤&WFrfW'6–öâ'—FRÖÖF6‚&W÷6—F÷'’ãƒcRæF—fRUb&÷VæGG&—W6W"52&÷FV7FVC³ƒc`¦fÆ—ö†—7F÷'’÷&ö¦V7BöæF—fRÖW‡÷'BFWf–6RvFRVæF–ærâÆÂf÷W"†æFöfbf–ÆW27W'&VçC°¦æòæWrFWf–6R52–æfW'&VBæBæòæF—fR66†VÖöW‡÷'FW"övVöÖWG'’6†ævW2à ¢22ãƒc‚V&Æ–6F–öâfW&–f–VB(	B##bÓÓP ¥&VÆV6S“ƒF333#cV&33†V#“sƒ#F3“s3v3†3#s&3²FW7FVBG&VP¦VV&ff3“css&#6f#ƒss6SFC–fSSSCf&VW†7FÇ’ÖF6†W2fWF6†VBÖ–âà¤æöFS#"4“3ƒc“cCsƒ“bö¦ö#c#“C“s3#‚5T44U53#33u52ód”Âó6¶—°¥vW33ƒc“cCssS“’5T44U52âÆ—fR6†VÆÂ÷fW'6–öâôÖW6„†VÇF‚÷v÷&·76Röæf–vF–öâð¦–ç7V7F÷"öVF—Cƒc‚ÂVæ6†ævVBæF—fSƒcRÂ&÷FV7FVB×VÇF“ãæBg&÷¦Vä&WFrÖ&¶W ¦'—FRÖÖF6‚&W÷6—F÷'’âW6W#ƒcr52&÷FV7FVC³ƒc‚—6ÆæB6VÆV7F–öâFWf–6RvFP§VæF–ærâæò6VÆV7FVBÖ—6ÆæBG&ç6f÷&×2÷"æWrUbö†—7F÷'’÷&W6÷W&6RöW‡÷'B66†VÖà ¢222ãƒc’f–æÂ66÷RÖÆ&VÂ6÷'&V7F–öà ¤f–æÂ6÷W&6R&Wf–Wr6Vv‡BFW‡B&WÆ6VÖVçBÇ6ò6†æv–ærF†Ræò×6VÆV7F–öâÆ&VÃ°§v†öÆRÖÆ–÷WBÖF‡27F–VB6÷'&V7Bâ&W7F÷&RW‡Æ–6—Bv†öÆRÖÆ–÷WBÆ&VÂv†Vâ6ÆV&VBÀ¦FB7GVÂv÷&·76R76W'F–öç2B÷Vâö6ÆV"æB&Vg&W6‚öæÇ’ÖW6„†VÇF‚÷v÷&·76P¦66†R¶W—2Fóƒc’ã‡6†VÆÂ÷fW'6–öãƒc“²–çFW&æÂÖW6„†VÇF‚7F×ƒc’’âæòæWrW6W"52à ¢22ãƒc’V&Æ–6F–öâfW&–f–VB(	B##bÓÓP ¤f–æÂ&VÆV6S3&S3C“V&CSƒ&F6CcC#ƒ3V&6csvVc“6SsC²FW7FVBG&VP¦#s&cƒ&3CFc6f&ccCcƒfSFF&c–6Vc†csC“sÖF6†W2fWF6†VBÖ–ââæöFS#"4£3ƒs#Cc#CRö¦ö#c3ƒs#ƒCCƒ5T44U53#3C52ód”Âó6¶—²vW33ƒs#Cc#33¥5T44U52âÆ—fR6†VÆÂ÷fW'6–öãƒc’ÂÖW6„†VÇF‚÷v÷&·76Sƒc’ãÂVF—Bö–ç7V7F÷#ƒc’À¦æcƒc‚öæF—fSƒcR÷&÷FV7FVB×VÇF“ãög&÷¦Vä&WFrÖ&¶W"'—FRÖÖF6‚&W÷6—F÷'’à¤f–æÂÆ&VÂ6÷'&V7F–öâ–æ6ÇVFVC³ƒc‚W6W"52&÷FV7FVBãƒc’6VÆV7FVBÖ—6ÆæBVF—BÀ¥VæFõ&VFòæB&ö¦V7BöæF—fRæöÖBFWf–6RvFRVæF–ærâ&WVFVBöæW‡F'V–ÆBGW&–æp§V&Æ–6F–öâ6öçF–çVVBF†R7F—fR&VÆV6S²æóƒc’52÷"ÆFW"'V–ÆB—2–æfW'&VBà ¢22ãƒsV&Æ–6F–öâfW&–f–VB(	B##bÓÓ` ¥&VÆV6R&#“c3vVS#cfC“Scc&#V3#s6c–V####C²FW7FVBG&VP£vCfV#ƒSFFV##–#–Cƒ–6C#V3V&&6fV#CW†7FÇ’ÖF6†W2fWF6†VBÖ–âà¤7GVÂæöFS#"4“3ƒƒƒ#s3S2ö¦ö#cssƒ#3s‚5T44U53#3C•52ód”Âó6¶—°¥vW33ƒƒƒ#c“#‚'V–ÆBöFWÆ÷’5T44U52â÷7FFWÆ÷–ÖVçBÆ—fR6†VÆÂöÖæ–fW7BÀ¤ÖW6„†VÇFƒƒs÷v÷&·76SƒsöVF—Cƒsö–ç7V7F÷#ƒsÂVæ6†ævVBæf–vF–öãƒc‚À§&÷FV7FVB×VÇF“ãæBg&÷¦Vä&WFrfW'6–öâ'—FRÖÖF6‚&W÷6—F÷'’â–æ—F–ÂÆ—fR&VG0§&V6VFVBFWÆ÷–ÖVçBæB&WGW&æVCƒs²f–æÂ6ö×ÆWFRw&‚ÖF6†W3ƒsâÆÂf÷W ¦†æFöfbf–ÆW27W'&VçBâW6W#ƒs52&÷FV7FVC³ƒsVæ6–ÂfVVÂöæf–vF–öâö†—7F÷'’ð§&ö¦V7BöæF—fRÖW‡÷'BFWf–6RvFRVæF–ærâ66ÆR&VÖ–ç2çVÖW&–2VæFW"W†7C°¥Væ6–Â66ÆRõ&÷FFRföÆÆ÷rfVVF&6²ÂæóƒsW6W"52–æfW'&VBà ¢22ãƒs"V&Æ–6F–öâfW&–f–VB(	B##bÓÓ` ¥&VÆV6R&&#†VfFf#f663s3C–c3c33–fF#3ƒƒ†c²FW7FVBG&VP£–Fc&f3†VfcCs&S“ffF3#Fc&F3fV‚W†7FÇ’ÖF6†W2fWF6†VBÖ–âà¤7GVÂæöFS#"4“3ƒƒ#3“cCCrö¦ö#cs#c“#“3c‚5T44U53#3S552ód”Âó6¶—°¥vW33ƒƒ#3“c#ƒC'V–ÆBöFWÆ÷’5T44U52â÷7FFWÆ÷–ÖVçBÆ—fR6†VÆÂöÖæ–fW7BÀ¤ÖW6„†VÇFƒƒs"÷v÷&·76Sƒs"öVF—Cƒs"ö–ç7V7F÷#ƒs"ÂVæ6†ævVBæf–vF–öãƒc‚À§&÷FV7FVB×VÇF“ãæBg&÷¦Vä&WFrfW'6–öâ'—FRÖÖF6‚&W÷6—F÷'’â–æ—F–ÂÆ—fR&VG0§&V6VFVBFWÆ÷–ÖVçBæB&WGW&æVCƒs²f–æÂ6ö×ÆWFRw&‚ÖF6†W3ƒs"âW6W#ƒs50§&÷FV7FVC³ƒs"Væ6–Â66ÆRöæf–vF–öâö†—7F÷'’÷&ö¦V7BöæF—fRÖW‡÷'BFWf–6RvFP§VæF–ærâÆÂf÷W"†æFöfbf–ÆW27W'&VçC²Væ6–Â&÷FFRæW‡BgFW"fVVF&6²à ¢22ãƒs2V&Æ–6F–öâfW&–f–VB(	B##bÓÓ` ¥&VÆV6RƒvC&6&S6C†fCCSƒcc–V&Cƒ“3cCcc†SF“²FW7FVBG&VP£V#fFff##63“S6–3“#Ff3–f3c3““#rW†7FÇ’ÖF6†W2fWF6†VBÖ–âà¤7GVÂæöFS#"4“3ƒƒ#c“3#S"ö¦ö#cs3cCCSS5T44U53#3Su52ód”Âó6¶—°¥vW33ƒƒ#c“3#Cr'V–ÆBöFWÆ÷’5T44U52â÷7FFWÆ÷–ÖVçBÆ—fR6†VÆÂöÖæ–fW7BÀ¤ÖW6„†VÇFƒƒs2÷v÷&·76Sƒs2öVF—Cƒs2ö–ç7V7F÷#ƒs2ÂVæ6†ævVBæf–vF–öãƒc‚À§&÷FV7FVB×VÇF“ãæBg&÷¦Vä&WFrfW'6–öâ'—FRÖÖF6‚&W÷6—F÷'’â–æ—F–ÂÆ—fR&VG0§&V6VFVBFWÆ÷–ÖVçBæB&WGW&æVCƒs#²f–æÂ6ö×ÆWFRw&‚ÖF6†W3ƒs2âW6W#ƒs"50§&÷FV7FVC³ƒs2Væ6–Â&÷FFRöæf–vF–öâö†—7F÷'’÷&ö¦V7BöæF—fRÖW‡÷'BFWf–6RvFP§VæF–ærâÆÂf÷W"†æFöfbf–ÆW27W'&VçC²æW‡BUbÖWF†÷&–ær7FvRæVVG2÷væW"VF—@¦æCƒs2fVVF&6²âæòæWrVçw&öæWrÖÖW6‚6†ææVÇ2÷–çF–ær÷"FWf–6R52–æfW'&VBà ¢22ãƒsBV&Æ–6F–öâfW&–f–VB(	B##bÓÓ` ¥&VÆV6RS“FFS6S“V&#C–F663ƒCƒF&S“#3cfCƒfS–Cv²FW7FVBG&VP£Cf3ƒc†6sƒVc–F3ƒCsCCcfc33CVfC&&V6CCƒ3’W†7FÇ’ÖF6†W2fWF6†VBÖ–âà¤7GVÂæöFS#"4“3ƒƒS#cCSCRö¦ö#cƒsc#cc5T44U53#3c52ód”Âó6¶—°¥vW33ƒƒS#cCC#ƒ2'V–ÆBöFWÆ÷’5T44U52â÷7FFWÆ÷–ÖVçBÆ—fR6†VÆÂöÖæ–fW7BÀ¤ÖW6„†VÇFƒƒsB÷v÷&·76SƒsBöVF—CƒsBö–ç7V7F÷#ƒsBÂVæ6†ævVBæf–vF–öãƒc‚À§&÷FV7FVB×VÇF“ãæBg&÷¦Vä&WFrfW'6–öâ'—FRÖÖF6‚&W÷6—F÷'’â–æ—F–ÂÆ—fR&VG0§&V6VFVBFWÆ÷–ÖVçBæB&WGW&æVCƒs3²f–æÂ6ö×ÆWFRw&‚ÖF6†W3ƒsBâW6W#ƒs250§&÷FV7FVC³ƒsBf—Bö7V7Bö—6öÆF–öâö†—7F÷'’öæf–vF–öâ÷&ö¦V7BöæF—fRÖW‡÷'BFWf–6P¦vFRVæF–ærâÆÂf÷W"†æFöfbf–ÆW27W'&VçC²æW‡BæF—fRUbÖ6†ææVÂ÷&ö¦V7F–öâ7FvP§&WV—&W2÷væW"VF—BæCƒsBfVVF&6²â6VÆV7FVBf—BFöW2æ÷B6²×VÇF—ÆR—6ÆæG2à ¢22ãƒsRV&Æ–6F–öâfW&–f–VB(	B##bÓÓ` ¥&VÆV6Rc#s#sCS“3sC–3Sƒv3F6VS6SfC&fFC²FW7FVBG&VP£cffCƒfc“3c#s3#3C–Fcf&#SfSSƒ†ƒ#V#SRW†7FÇ’ÖF6†W2fWF6†VBÖ–âà¤7GVÂæöFS#"4“3ƒƒSs#3ƒƒ’ö¦ö#cƒ333##C5T44U53#3c…52ód”Âó6¶—°¥vW33ƒƒSs#33“’'V–ÆBöFWÆ÷’5T44U52â÷7FFWÆ÷–ÖVçBÆ—fR6†VÆÂöÖæ–fW7BÀ¤ÖW6„†VÇF‚öVF—BöÖævW"ö6öFV2÷&W6÷W&6RöÖævVÖVçBöG&vW#ƒsRÂVæ6†ævVBv÷&·76SƒsBÀ¤tÄ"öæF—fRW‡÷'FW'3ƒcRÂ&÷FV7FVB×VÇF“ãæBg&÷¦Vä&WFrfW'6–öâ'—FRÖÖF6€§&W÷6—F÷'’â–æ—F–ÂÆ—fR&VG2&V6VFVBFWÆ÷–ÖVçBæB&WGW&æVCƒsC²f–æÂ6ö×ÆWFP§V&Æ—6†VBw&‚ÖF6†W3ƒsRâW6W#ƒsB52&÷FV7FVC³ƒsRæF—fRÆæ"öVF—F÷"ö†—7F÷'’ð§&ö¦V7BöæF—fRæöÖBFWf–6RvFRVæF–ærâÆÂf÷W"†æFöfbf–ÆW27W'&VçBâæF—fP§&W6÷W&6Rc2÷6÷W&6V&÷†Æ"—2W‡Æ–6—C²æò6VÒVçw&÷–çF–æröWfÇVFVBUb6Æ–Òà ¢22ãƒsbV&Æ–6F–öâfW&–f–VB(	B##bÓÓ` ¥&VÆV6RSSVcF6F666S“scVVC633ƒCcƒ#–3S#FV#sC²FW7FVBG&VP£ƒ†fSVc3†SF3cCƒS3sS&3f#“#vV63SCS“cVbW†7FÇ’ÖF6†W2fWF6†VBÖ–âà¤7GVÂæöFS#"4“3ƒƒc“3CCs"ö¦ö#cƒCS“Sƒ#R5T44U53#3s552ód”Âó6¶—°¥vW33ƒƒc“3C3‚'V–ÆBöFWÆ÷’5T44U52âg&W6‚Æ—fR6†VÆÂöÖæ–fW7BÂÖW6„†VÇF‚öVF—CƒsbÀ§Væ6†ævVBv÷&·76SƒsBôtÄ"¶æF—fRW‡÷'FW'3ƒcR÷&÷FV7FVB×VÇF“ãög&÷¦Vä&WFrfW'6–öà¦'—FRÖÖF6‚&W÷6—F÷'’âÖævW"ö6öFV2÷&W6÷W&6W3ƒsRæBÆÂ&÷FV7FVBög&÷¦Vâ÷væW'0§Væ6†ævVBâW6W#ƒsR52&÷FV7FVC³ƒsb&÷‚æVÇ2÷6VÆV7FVBVF—G2ö†—7F÷'’÷&ö¦V7Bð¤äôÔB&6RFWf–6RvFRVæF–ærâÆÂf÷W"†æFöfbf–ÆW27W'&VçBâæòvVæW&Â6VÐ§Vçw&ö÷F–ÖÂ6¶–ær÷–çF–æröWfÇVFVBUb6Æ–Ó²F—&V7F–öæÂF6†W2Ö’÷fW&Æà ¢22ãƒsrV&Æ–6F–öâfW&–f–VB(	B##bÓÓ` ¥'VçF–ÖR&VÆV6RSCV66ffC3“C#“ƒ&Fc#VC“Cc6FS–#sCfSVSF²FW7FVBG&VR3ƒs&V3cCvc†sƒ†c##vCC†3f6f3SCS“#3vC3#†ÖF6†VBfWF6†VBÖ–âW†7FÇ’â7GVÂæöFR#"F÷öÆöw’4’'Vâ3ƒƒcS“““bò¦ö"cƒSƒƒ3Sc37V66VVFVC¢¢£#3s‚52òd”Âò6¶—VB¢¢âvW2'Vâ3ƒƒcS““s2'V–ÆBæBFWÆ÷’7V66VVFVBâg&W6‚Æ—fR6†VÆÂÂÖæ–fW7BÂÖW6‚†VÇF‚öVF—BôtÄ"æVÂãƒsrÂVæ6†ævVBUbv÷&·76RãƒsBÂæF—fRäôÒ6÷&RãƒcRÂ&÷FV7FVB×VÇF’ããÂæBg&÷¦Vâ&WFÓrfW'6–öâÆÂ'—FRÖÖF6†VB&W÷6—F÷'’f–ÆW2à ¥W6W"ãƒsb52&VÖ–ç2&÷FV7FVBâF†RãƒsrFWf–6RvFR&VÖ–ç2VæF–æs¢W&–v‡B&÷VæBv÷&ÆBÕ’7–Æ–æFW"Ug2Â–æFWVæFVçBVæ6–ÂVF—G2ÂVæFòõ&VFòÂ&ö¦V7BW'6—7FVæ6RÂäôÔB&6RæBæF—fRtÄ"6VÒ6†V6·2âæòvVæW&ÂVçw&ÂVÆÆ—F–2Ö–ærÂ–çF–ærÂ÷"WfÇVFVBÖÖöF–f–W"Ub6Æ–ÒâÆÂf÷W"6öçF–çV—G’Fö7VÖVçG2&R7W'&VçBà ¢22ãƒs‚V&Æ–6F–öâfW&–f–VB(	B##bÓÓ` ¥&VÆV6Rv#v6c#sSS3s“S“C3vfCc3“3cs#vcFF²FW7FVBG&VRVc–Sv#cScfc63fS3†V#“3ƒ3“c6ccS6S3fW†7FÇ’ÖF6†W2fWF6†VBÖ–ââ7GVÂæöFS#"4“3ƒƒcsC#s’ö¦ö#cƒc3#“Cc#5T44U52¢£#3ƒ52òd”Âò6¶—VB¢£²vW33ƒƒcsCƒƒ'V–ÆBöFWÆ÷’5T44U52âg&W6‚Æ—fR6†VÆÂöÖæ–fW7BÂÖW6„†VÇF‚÷v÷&·76Rö–ç7V7F÷"öVF—Cƒs‚ÂVæ6†ævVBtÄ"æVÃƒsr÷&÷FV7FVB×VÇF“ãög&÷¦Vä&WFrfW'6–öâ'—FRÖÖF6‚&W÷6—F÷'’âæF—fRäôÓƒcRÂÖævW"ö6öFV2÷&W6÷W&6W3ƒsRöæcƒc‚æB&÷FV7FVBÖöFVÆÆ–ær÷væW'2Væ6†ævVBâÆÂf÷W"6öçF–çV—G’Fö7VÖVçG27W'&VçBâW6W#ƒsr52&÷FV7FVC³ƒs‚6†V6¶W"&VF&–Æ—G’öæf–vF–öâõVæ6–Âö†—7F÷'’÷&V÷VâFWf–6RvFRVæF–ærâF†—26†V6¶W"—2$B&VfW&Væ6RöæÇ“²4BFW‡GW&R÷7G&WF6‚–ç7V7F–öâ&VÖ–ç2F†RæW‡BVF—FVB7FvRà ¢22ãƒs’V&Æ–6F–öâfW&–f–VB(	B##bÓÓ` ¥&VÆV6Rf##33“3––V&Sv#“ƒCvfF3ƒ3F#ScVfC&²FW7FVBG&VRs“CƒcV#ƒSVFc33sc6S“3fSSC##C“33Sc“SvW†7FÇ’ÖF6†W2fWF6†VBÖ–ââ7GVÂæöFS#"4“3ƒƒs33Rö¦ö#cƒs“SSS"5T44U52¢£#3ƒb52òd”Âò6¶—VB¢£²vW33ƒƒs#Cƒ'V–ÆBöFWÆ÷’5T44U52âf–æÂg&W6‚Æ—fR6†VÆÂöÖæ–fW7B÷&VæFW"Ö÷væW"÷&Wf–WrÖ6†–ÆBöW‡÷'B×æVÃƒs’ÂVæ6†ævVBv÷&·76Sƒs‚öæF—fRäôÓƒcR÷&÷FV7FVB×VÇF“ãög&÷¦Vä&WFrfW'6–öâ'—FRÖÖF6‚&W÷6—F÷'’â–æ—F–Â&VG2&V6VFVBFWÆ÷–ÖVçB†öÆCƒs‚ö6†–ÆCCB“²f–æÂgVÆÂw&‚ÖF6†W3ƒs’âÆÂf÷W"6öçF–çV—G’Fö727W'&VçBâW6W#ƒs‚52&÷FV7FVC³ƒs’7W&f6R6†V6¶W"öæf–vF–öâõUbVF—N(i'6W76–öâÖW†—Bö†—7F÷'’öÆöö²×&W7F÷&F–öâFWf–6RvFRVæF–ærâ7F÷&VB&6RUg2öæÇ“²Vç7W÷'FVB÷7FÆRö÷fW##²Ö6÷&æW"ö&¦V7G2W6R6öÆ–C²æò–çF–æröWfÇVFVBUb&÷vF–öâ6Æ–Òà ¢22ãƒ“V&Æ–6F–öâfW&–f–VB(	B##bÓÓp ¥'VçF–ÖS†c#SfVcSC“c#S3##VC“6#F#3#S3#sCc²FW7FVBG&VP¦3vc6fC“ccc–#ƒf&&S#3sv63ƒCcCfc†6VCCrW†7FÇ’ÖF6†W2fWF6†VBÖ–âà¤7GVÂæöFS#"ã#2ã24“3ƒ“ƒSƒS“sö¦ö#s#Ss##ss5T44U53#CC52ód”Âó6¶—°¥vW33ƒ“ƒSƒSƒsB'V–ÆBöFWÆ÷’5T44U52âg&W6‚Æ—fR6†VÆÂöÖæ–fW7B÷&V6÷fW'’öW‡÷'B×æVÂð§6¶VBÖ6†–ÆBöæF—fRÖ6÷&Sƒ“ÂVæ6†ævVB66Æ#ƒƒ’öF—7Æ6VÖVçCƒƒ‚÷&÷FV7FVB×VÇF“ã ¦æBg&÷¦Vä&WFrÖ&¶W"ÆÂ'—FRÖÖF6‚&W÷6—F÷'’â–æ—F–Â&VG2&V6VFVBFWÆ÷–ÖVçC°¦f–æÂw&‚ÖF6†W3ƒ“âÆÂf÷W"6öçF–çV—G’f–ÆW27W'&VçC²&ööb6†ævW2Fö72öæÇ’à¥W6W#ƒƒ’52&÷FV7FVC³ƒ“GvòÖ–æFWVæFVçBÖ–×÷'BõUb÷&ö¦V7BæF—fRFWf–6RvFRTäD”ärà ¢22ãƒ“V&Æ–6F–öâfW&–f–VB(	B##bÓÓp ¥'VçF–ÖS#s†#C&#FƒVSscV6cc–VFC#Cc#ƒc&Scc“²FW7FVBG&VP¦fFcCF#ƒfS–fCsFfS#sƒVSFs&3BW†7FÇ’ÖF6†W2fWF6†VBÖ–âà¤7GVÂæöFS#"ã#2ã24“3ƒ“ƒsScc“2ö¦ö#s#c#CssS5T44U53#CC552ód”Âó6¶—°¥vW33ƒ“ƒsSccc#B'V–ÆBöFWÆ÷’5T44U52âg&W6‚Æ—fR6†VÆÂöÖæ–fW7B÷&V6÷fW'’ôÖW6„†VÇF‚ð§v÷&·76R÷&Wf–Wr÷7W&f6R÷&VæFW"öW‡÷'BöæF—fR×&VçBw&ƒƒ“Â66Æ#ƒƒ’Â&÷FV7FV@¤×VÇF“ãæBg&÷¦Vä&WFrÖ&¶W"ÆÂ'—FRÖÖF6‚&W÷6—F÷'’â–æ—F–Â&VG2&V6VFV@¦FWÆ÷–ÖVçC²f–æÂ6ö×ÆWFRw&‚ÖF6†W3ƒ“âÆÂf÷W"6öçF–çV—G’f–ÆW27W'&VçBà¥W6W#ƒ“52&÷FV7FVC³ƒ“Ubæ÷&ÖÂôVÖ—76—fRõVæ6–Â÷&ö¦V7BöæF—fRFWf–6RvFRTäD”ärà¥&ööb—2Fö7VÖVçFF–öâÖöæÇ“²FW7FVB'VçF–ÖR'—FW2Væ6†ævVBà ¢22ãƒ“"V&Æ–6F–öâfW&–f–VB(	B##bÓÓp ¥'VçF–ÖSc†VS&F#cF&cv#6&Cf&#FFcsC33CfVcC†F#CFcs²FW7FVBG&VP¦6Sf3#3fCC““#VVCSSvCC““vVF&#Vf&S#ƒ’W†7FÇ’ÖF6†W2fWF6†VBÖ–âà¤7GVÂæöFS#"ã#2ã24“3ƒ““ƒCS“’ö¦ö#s#sSs#“b5T44U53#CCu52ód”Âó6¶—°¥vW33ƒ““ƒCC’'V–ÆBöFWÆ÷’5T44U52âg&W6‚Æ—fR6†VÆÂöÖæ–fW7B÷&V6÷fW'’ôÖW6„†VÇF‚ð§v÷&·76R÷&Wf–Wr÷7W&f6R÷&VæFW"öW‡÷'BöæF—fR×&VçBw&ƒƒ“"Â66Æ#ƒƒ’Â&÷FV7FV@¤×VÇF“ãæBg&÷¦Vä&WFrÖ&¶W"ÆÂ'—FRÖÖF6‚&W÷6—F÷'’âÆÂf÷W"6öçF–çV—G’f–ÆW0¦7W'&VçBâW6W#ƒ“52&÷FV7FVC³ƒ“"w&—66ÆRõVæ6–Â÷&ö¦V7BöæF—fRFWf–6RvFRTäD”ärà¥&ööb—2Fö7VÖVçFF–öâÖöæÇ“²FW7FVB'VçF–ÖR'—FW2Væ6†ævVBà ¢22ãƒ“2V&Æ–6F–öâfW&–f–VB(	B##bÓÓp ¥'VçF–ÖV&&3SF##CSVCvf&3–f6F#F3##f6S²FW7FVBG&VP¦VfCƒ&FfFSCc&V6fSS6SvVCcc#6C†&cC33&F3†"W†7FÇ’ÖF6†W2fWF6†VBÖ–âà¤7GVÂæöFS#"ã#2ã24“3“3“ƒƒö¦ö#s3#SC“cSr5T44U53#CS%52ód”Âó6¶—°¥vW33“3“ƒ#R'V–ÆBöFWÆ÷’5T44U52âg&W6‚Æ—fR6†VÆÂöÖæ–fW7B÷&V6÷fW'’ôÖW6„†VÇF‚ð§v÷&·76RöVF—Cƒ“2ÂVæ6†ævVB–ç7V7F÷#ƒƒ÷&Wf–Wr÷&VæFW"öæF—fSƒ“"Â&÷FV7FVB×VÇF“ã ¦æBg&÷¦Vä&WFrÖ&¶W"ÆÂ'—FRÖÖF6‚&W÷6—F÷'’âÆÂf÷W"6öçF–çV—G’f–ÆW27W'&VçBà¥W6W#ƒ“"52&÷FV7FVC³ƒ“26²ÆÂög&Ö–ærö†—7F÷'’÷&ö¦V7BöæF—fRUbFWf–6RvFRTäD”ärà¥&ööb—2Fö7VÖVçFF–öâÖöæÇ“²FW7FVB'VçF–ÖR'—FW2Væ6†ævVBà ¢22ãƒ“BV&Æ–6F–öâfW&–f–VB(	B##bÓÓp ¥'VçF–ÖS#cƒvfccs“F6SCcs3CfC3fFCƒSC3“s†6FcFC3²FW7FVBG&VP£c#–6“S–cf#3SF&cscfVVSƒ##S3“VFW†7FÇ’ÖF6†W2fWF6†VBÖ–âà¤7GVÂæöFS#"ã#2ã24“3“Sƒƒsö¦ö#s3c“33Sb5T44U53#CSu52ód”Âó6¶—°¥vW33“SƒƒC#B'V–ÆBöFWÆ÷’5T44U52âg&W6‚÷7FFWÆ÷–ÖVçBÆ—fR6†VÆÂöÖæ–fW7Bð§&V6÷fW'’ôÖW6„†VÇFƒƒ“BöVF—Cƒ“BÂVæ6†ævVBv÷&·76Sƒ“2ö–ç7V7F÷#ƒƒ÷&VæFW#ƒ“"À§&÷FV7FVB×VÇF“ãæBg&÷¦Vä&WFrÖ&¶W"ÆÂ'—FRÖÖF6‚&W÷6—F÷'’â–æ—F–Â&VG0§&V6VFVBFWÆ÷–ÖVçC²f–æÂ6ö×ÆWFRw&‚ÖF6†W3ƒ“BâÆÂf÷W"6öçF–çV—G’f–ÆW0¦7W'&VçBâW6W#ƒ“252&÷FV7FVC³ƒ“B7†W&RÆ–÷WBõVæ6–Âö†—7F÷'’÷&ö¦V7BöæF—fRU`¦FWf–6RvFRTäD”ärâ&ööb—2Fö7VÖVçFF–öâÖöæÇ“²FW7FVB'VçF–ÖR'—FW2Væ6†ævVBà ¢22ãƒ“RV&Æ–6F–öâfW&–f–VB(	B##bÓÓp ¥'VçF–ÖSf#S33#FSVSƒƒ6C†cCc#VSc–&33ffFSs²FW7FVBG&VP¦C“s&fFS#†&6#ƒVC66Fs†3Fc36fSV“vs#v2W†7FÇ’ÖF6†W2fWF6†VBÖ–âà¤7GVÂæöFS#"ã#2ã24“3“Sƒ““ö¦ö#s3s“3“B5T44U53#Cc%52ód”Âó6¶—°¥vW33“Sƒƒs#B'V–ÆBöFWÆ÷’5T44U52âg&W6‚Æ—fR6†VÆÂöÖæ–fW7B÷&V6÷fW'’ð¤ÖW6„†VÇFƒƒ“R÷v÷&·76Sƒ“RöVF—Cƒ“RÂVæ6†ævVB–ç7V7F÷#ƒƒ÷&VæFW#ƒ“"À§&÷FV7FVB×VÇF“ãæBg&÷¦Vä&WFrÖ&¶W"ÆÂ'—FRÖÖF6‚&W÷6—F÷'’âÆÂf÷W ¦6öçF–çV—G’f–ÆW27W'&VçBâW6W#ƒ“B52&÷FV7FVC³ƒ“RFVç6—G’õ6²õVæ6–Âö†—7F÷'’ð§&ö¦V7BöæF—fRUbFWf–6RvFRTäD”ärâ&ööb6†ævW2Fö7VÖVçFF–öâöæÇ“²FW7FV@§'VçF–ÖR'—FW2Væ6†ævVBà ¢22FW‡GW&U–çBWfÇVF–öâV&Æ–6F–öâfW&–f–VB(	B##bÓÓp ¤WfÇVF–öâ6öÖÖ—BV3vCccccfv#ss6&V6Sv3c6VS“sfV##c3C²FW7FVBG&VP¦c&CCc3“f#“†cƒƒ66##s–6#s#†&&3fCS&3SbW†7FÇ’ÖF6†W2fWF6†VBÖ–âà¤æöFS#"ã#2ã24“3“csCƒ3ö¦ö#s3#cSƒs#b5T44U53#Ccu52ód”Âó6¶—°¥vW33“csCsccR'V–ÆBöFWÆ÷’5T44U52âg&W6‚Æ—fRG&–Â–æFW‚ö6öçG&öÆÆW"öFFW"À¦'—FRÖW†7BW7G&VÒ6÷W&6RöÆ–6Væ6RæBWfÇVF–öâ&W÷'BÖF6‚&W÷6—F÷'’âÖ–à¦–æFW‚÷fW'6–öâ&VÖ–â'—FRÖ–FVçF–6Âãƒ“Râ&VæFW&VB'&÷w6W"fW&–f–6F–öâF–Bæ÷@¦6ö×ÆWFS²•BVæ6–Âöæf–vF–öâ÷6VÒõärFW7G2&VÖ–âVæF–ærÂæòFWf–6R52–æfW'&VBà¤ÆÂf÷W"6öçF–çV—G’Fö727W'&VçBâæW‡B—2†æG2ÖöâG&–ÂfVVF&6²&Vf÷&R&öGV7F–öà§–çB&W6÷W&6Rö†—7F÷'’övW7GW&R–çFVw&F–öââ&ööb—2Fö7VÖVçFF–öâÖöæÇ’à ¢22ãƒ“bV&Æ–6F–öâfW&–f–VB(	B##bÓÓp ¥'VçF–ÖSƒƒsS“ƒ“sCv&VVc33sc“Fƒccf6SV3²FW7FVBG&VP£#C“ƒ3cs6CCVCC6f3CC†cC3C“FFfF"ÖF6†W2fWF6†VBÖ–âöÆö6ÂW†7FÇ’à¤æöFS#"F÷öÆöw’4“3“scs3ƒC2ö¦ö#s3S33C3’5T44U53#CsE52ód”Âó6¶—°¥vW33“scs3Cc"'V–ÆCs3S3Csƒ"öFWÆ÷“s3S3“C35T44U52à¤g&W6‚Æ—fR6†VÆÂ÷fW'6–öâæBÆÃ’Æ"6÷W&6R÷fVæF÷"76WG2'—FRÖÖF6‚&W÷6—F÷'’à¤Ö–â&÷FV7FVBÖöFVÆÆ–ærô×VÇF’ög&÷¦Vâ&WF'—FW2æB÷&–v–æÂFW‡GW&U–çBG&–ÂVæ6†ævVBà¤6Æ÷VB6‡&öÖRÆöG2Æ"ÖöGVÆW2õT’'WBvV$tÂ6öçFW‡B7&VF–öâf–Ç3²Væ6†ævVB÷&–v–æÀ¥FW‡GW&U–çBvRf–Ç2–FVçF–6ÆÇ’âF‡W2&VæFW&VB7W&f6RõVæ6–Âöæf–vF–öâõärFWf–6P¦66WFæ6R&VÖ–ç2VæF–ærÂæ÷B76VB'’'&÷w6W"–ç7V7F–öâ÷"æöFRFFW'2âæò6Æ–Ð¦öbâ•BvV$tÂf–ÇW&S²F†—2—2F†Rö'6W'fVB6Æ÷VBÖ'&÷w6W"Æ–Ö—FF–öââæóƒ“bW6W"52à¤Fö7VÖVçFF–öâ&ööb6†ævW2æòFW7FVB'VçF–ÖR'—FW2âæW‡C¢W6W"—&VBÖ''W6‚6ö×&—6öâÀ§F†Vâ6VÆV7FVB&Vf–æVÖVçB÷&W6÷W&6Rö6öFV2övÆö&ÂÖ†—7F÷'’v÷&²W"Fö72÷Wb×–çBÖÆ"Óƒ“bæÖBà ¢22ãƒ“rV&Æ–6F–öâfW&–f–VB(	B##bÓÓp ¥'VçF–ÖSF#Ssc–#“ƒƒ†SfcfC3V6&FFS“c†ffC#vf#C²FW7FVBG&VP£C–f3#cƒS#F63†&#fFff6c6CS“3Cf#ƒs#Cvf2ÖF6†W2fWF6†VBÖ–âöÆö6ÂW†7FÇ’à¤æöFS#"ã#2ã2F÷öÆöw’4“3“ƒƒs3ƒ’ö¦ö#s3ScC“S“s5T44U53#Csu52ód”Âó6¶—°¥vW33“ƒƒs33C'V–ÆCs3ScC“cƒ“2öFWÆ÷“s3ScS“c325T44U52à¥÷7FFWÆ÷–ÖVçBÆ—fR6†VÆÂ÷fW'6–öâöW‡÷'B×&VçCƒ“ræBÆ"–æFW‚ö6öçG&öÆÆW"÷6×ÆSƒ“p¦'—FRÖÖF6‚&W÷6—F÷'“²&÷FV7FVB×VÇF“ãög&÷¦Vä&WFrÖ&¶W"Væ6†ævVBâ–æ—F–ÂÆ—fP§&VG2&V6VFVB6ö×ÆWFVBFWÆ÷–ÖVçBæB6W'fVCƒ“c²f–æÂ÷7FFWÆ÷–ÖVçBw&‚ÖF6†W3ƒ“rà¥W6W#ƒ“e52&÷FV7G2''W6‚v÷&¶fÆ÷rv—F‚&W÷'FVBv–æF–ærW†6WF–öã³ƒ“rf—†W2&Wf–Wp¦÷&–VçFF–öâöæÇ’ÂFWf–6R&WFW7BVæF–ærâæóƒ“u52–æfW'&VBâ&–÷"6Æ÷VBvV$tÂÆ–Ö—FF–öà§&VÖ–ç26W&FRg&öÒF†—27GVÂF‡&VRvVöÖWG'’÷&–67B÷6÷W&6R×v–æF–ærFW7BWf–FVæ6Rà¥F†—2fW&–f–6F–öâWFFW2Fö7VÖVçFF–öâöæÇ“²FW7FVB'VçF–ÖR'—FW2&WF–æVBâæW‡C §W6W"÷&&—B÷–çB7†W&RæB7V&RÆÂ6–FW2ÂÆæR÷—&VB†—7F÷'’6æ—G“²F†Vâ–ç@§&W6÷W&6Rö6öFV2ô4õrövÆö&ÂÖ†—7F÷'’FW6–vâW"7W'&VçB&öFÖâ÷&F–æ'’f–ÆRÖW‡÷'@§v–æF–ær&VÖ–ç26W&FRVF—B—FVÓ²æòWFöÖF–2vVæW&Â÷WGv&B×&W—"&öÖ—6Rà ¢22ãƒ“‚V&Æ–6F–öâfW&–f–VB(	B##bÓÓp ¥'VçF–ÖSc#ƒC–Csƒ&CCscvc33Fcs“3CF3v#ƒC6&c†3C²FW7FVBG&VP£CCvcfC3V6SCSFScV6Sƒ“vcfFF&#ƒ#BÖF6†W2fWF6†VBÖ–âöÆö6ÂW†7FÇ’à¤æöFS#"ã#2ã2F÷öÆöw’4“3“#S#S3sS2ö¦ö#s3sCƒcSC‚5T44U53#Cƒ552ód”Âó6¶—°¥vW33“#S#S33s"'V–ÆCs3sCƒcs#2öFWÆ÷“s3sC“S“Cƒ‚5T44U52à¥÷7FFWÆ÷–ÖVçB6†VÆÂ÷fW'6–öâæBW†7BÆ#ƒ“‚–æFW‚ö6öçG&öÆÆW"÷6×ÆR÷6W76–öâÇW0§–çB×&W6÷W&6Sƒ“‚'—FRÖÖF6‚&W÷6—F÷'’â–æ—F–Â&VFWÆ÷–ÖVçB&VG26W'fVCƒ“róCC°¦f–æÂ6ö×ÆWFR6†ævVBw&‚ÖF6†W3ƒ“‚âÖ–â6öFV2öæF—fR&W6÷W&6W2öW‡÷'Bö''W6‚6÷&Rð§v–æF–ær÷&÷FV7FVBÖöFVÆÆ–æræBg&÷¦Vâ&WF'—FW2&WF–æVBâW6W#ƒ“u52&÷FV7FVBà¤Fö7VÖVçFF–öâ&ööb6†ævW2æòFW7FVB'VçF–ÖR'—FW3³ƒ“‚f–ÆW–6¶W"öF÷væÆöB÷&VÆöBð¤÷VâõVæ6–Â6öçF–çVF–öâvFRVæF–ærÂæóƒ“‚FWf–6R52–æfW'&VBâæòæWr6Æ÷VBvV$tÀ¦÷"6f&’&VæFW&–ær&ööbâæ&÷‡–çB—2Æ"6W76–öâÂæ÷BÖ–âæ&÷†Æ"ôæöÖB–çBà¤æW‡C¢6fR–çN(i%&W6WB÷&VÆöN(i$÷Vâ–çBg&öÒF÷væÆöG2Â6ö×&R&÷F‚&W7VÇG2÷6WGF–æw2ð§f–WræB6öçF–çVVBVæFõ&VFó²F†Vâ÷&–v–æÂ66VæR×&W6÷W&6Rö6öFV2ô4õrö†—7F÷'’–çFVw&F–öâà ¢22ãƒ“’(	B&ö¦V7B6öÆ÷W"&W6÷W&6R&W6W'fF–öã²ãƒ“‚W6W"52(	B##bÓÓp ¥W6W#ƒ“…52&÷FV7G2æ&÷‡–çB6fRô÷Vâö6öçF–çVVB''W6‚ö†—7F÷'’÷6WGF–æw2÷f–Ws³ƒ“P¦æ÷B–æfW'&VBâVF—C3v3sv#R7–æ6‡&öæ÷W26öFV2ö7GVÂ†—7F÷'’öÖævW"öGWÆ–6FW3¢æð¦6öÆ÷W"&W6÷W&6Rf÷'v&F–ærW†—7FVBâ6W&FR6öÆ÷W%–çB÷væW"Â÷&–v–æÂ66VæP§6æ6†÷B÷&W7F÷&Rö÷&F–æ'’6–ævÆR´×VÇF’GWÆ–6FR6†&R6öÖÖ—GFVB&VBÖöæÇ’'VffW'3°§&WÆ6R&W6÷W&6Rf÷"4õrVF—G2â÷&–v–æÂæ&÷†Æ"6fRô÷Vâ†æFÆW2W‡Æ–6—B66VæWc §–çBööÂ÷&VbVçfVÆ÷W7cW6–ærW†—7F–ær6æöæ–6Â&–æ'’G&ç7÷'BÃ„Ö”"Væ—VR&p¦'VFvWC²Æ–â&ö¦V7G2&WF–âcW†7FÇ’âæF—fRUgc2&VÖ–ç27G&–7FÇ’UbÖöæÇ’à¤÷væVBFV6öFR÷ööÂ6†&–ærö6öçFVçB¶–FVçF—G’FVGW²ÖÆf÷&ÖVB÷Væ¶æ÷vâöÇ†÷&Vbö'VFvWBð¦Æ–æ¶VB÷&ö6VGW&Â÷&VfW&Væ6R÷væW'2&VgW6Râ÷&–v–æÂW†7B&÷VæGG&—öFöÖ–2÷VâÀ§&VæFW"Öf–ÇW&R&öÆÆ&6²ö†—7F÷'’&W6WB&WF–æVBâf÷W"FW7G2²gVÆÃ#Cƒu52ód”Âó6¶—°¦fö7W6VCE52–æ6ÇVFW2FFVBf–ÆVB×&VæFW"&öÆÆ&6²76W'F–öç2âæò&VæFW&VBö•B6Æ–Òà¤&–æF–ær÷VRÂæò&ö¦V7B4„ö7W'&VçBUbfÆ–F—G’6Æ–Ó²æ&÷‡–çB4„Væ6†ævVBà¤Ö–â÷Vâ6—26öÆ÷W"&W6W'fVB'WBF—7Æ’öVF—F–ærVæf–Æ&ÆRâæòWF†÷&–ær÷G&ç6fW ¥T’öÖ–â–çBöÆ–W'2õUb&÷vF–öâôtÄ"ôæöÖB–çBW‡÷'B–WBâ&V@¢Fö72÷&ö¦V7B×–çB×&W6÷W&6W2Óƒ“’æÖBâæW‡B&÷VæFVB6VÆV7FVBÖö&¦V7B'&–FvRF‡&÷Vv€¦÷&–v–æÂ&Wf–Wr÷6VÆV7F–öâö†—7F÷'’ÂW‡Æ–6—BfÆ–F—G’÷&V&–æF–æröÆ–fWF–ÖR÷&VgW6Ç2à¥6†VÆÂ÷&V6÷fW'’æB6†ævVB÷væW"w&ƒƒ““²÷&–v–æÂ6×ÆR÷&W6÷W&6Sƒ“‚Â''W6ƒƒ“bÀ§&Wf–Wsƒ“ræB&÷FV7FVBÖöFVÆÆ–ærög&÷¦Vâ'—FW2&WF–æVBâV&Æ–6F–öâ&ööbföÆÆ÷w2à ¢22ãƒ“’V&Æ–6F–öâfW&–f–VB(	B##bÓÓp ¥'VçF–ÖSCs3cs3–3ccvV6F#CCƒ–6fS†#sS3ss3cƒ²FW7FVBG&VP¦Fvc–S“ƒscfFfc““†csScCfFV##“CvF3c“&SÖF6†W2fWF6†VBÖ–âöÆö6ÂW†7FÇ’à¤æöFS#"ã#2ã2F÷öÆöw’4“3“#ƒCc3#‚ö¦ö#s3ƒ3ƒscc#‚5T44U53#Cƒu52ód”Âó6¶—°¥vW33“#ƒCS“"'V–ÆCs3ƒ3ƒssCcRöFWÆ÷“s3ƒ3“S3“sb5T44U52à¥÷7FFWÆ÷–ÖVçBW†7BÆ—fR6†VÆÂ÷fW'6–öâÂÆ#ƒ“’–æFW‚ö6öçG&öÆÆW"÷6W76–öâæB6†ævV@¦ÖævW"öÖævVÖVçBöG&vW"ö6öFV2÷&ö¦V7BÔtÄ"öæWr–çBÖ6öFV2w&ƒƒ“’'—FRÖÖF6‚&W÷6—F÷'“°§Væ6†ævVB&W6÷W&6Sƒ“‚æB&V6÷fW'’ÆöFW#ƒ“’w&‚Ç6òÖF6‚â&÷FV7FVB×VÇF’×G&ç6f÷&Òð¦g&÷¦VâöÖöFVÆÆ–ærö''W6‚÷&Wf–Wr'—FW2&WF–æVBâW6W#ƒ“…52&÷FV7FVC³ƒ“’æV&'’Æ"öÖ–à§&ö¦V7BFWf–6R6æ—G’VæF–ærâæòæWr&VæFW&VBõVæ6–Â&ööb÷"Ö–â–çBWF†÷&–ær6Æ–Òà¤Fö7VÖVçFF–öâ&ööb6†ævW2æòFW7FVB'VçF–ÖR'—FW2âæW‡B&÷VæFVB÷&–v–æÂÖ÷væW §6VÆV7FVBÖö&¦V7B–çB'&–FvR&WV—&W2fÆ–F—G’÷&V&–æF–æröÆ–fWF–ÖR÷&VgW6Â'VÆW2&Vf÷&RT’à ¢22ã“(	BÖ–âf–Ww÷'BUb–çC²ãƒ“’W6W"52(	B##bÓÓp ¤VF—C&3SfC36b÷&–v–æÂæF—fRUb&Wf–Wr÷&7FW"÷66VæR†—7F÷'’÷&W6÷W&6R÷&VæFW"ö–çW@¦÷væW'2âf–ÆR–çB6VÆV7FVBö&¦V7BÂ7GVÂÖ–âf–Ww÷'BÂöæRÆ–âæF—fRUbö&¦V7BÀ¥7V$BôÖ—'&÷"öfn(šC#²6÷&æW'2â÷&–v–æÂF÷Ö6VçG&RFööÂ6W76–öâ÷G&ç6f÷&ÒF—6&Ò÷&F–À¦Æ–fV7–6ÆRâ&WW6Sƒ“b&7FW"²&÷F‚6×ÆW'2Væ6†ævVC²÷VSS,+"ÂVæ6–Â–çG2öf–ævW'0¦æf–vFRÂö66ÇW6–öâ÷7W&f6R&—2ÂöæRF—'G’WÆöBög&ÖRâ6†ævVB7G&ö¶R6†V6·ö–çG0¦÷&–v–æÂ66VæRF†Vâ4õr&W6÷W&6S²VæFõ&VFò÷&–v–æÂöW†—G2–çBâ7–æ2UbÖVçfVÆ÷R&–æF–æp§W6W2÷&–v–æÂ6öFV2÷6–væGW&S²÷&F–æ'’Ö÷fVÖVçBöFVf÷&ÖF–öâföÆÆ÷w2Væ6†ævVBUg2À¥Ub÷F÷öÆöw’6†ævW2†–FR÷&VgW6R7FÆRâ&Wf–Wrö&öG’ö6öçFW‡BöF—7÷6Âö6GW&Rö6öçG&öÇ2ð§ÆÒö–çFW''WF–öâwV&G2â÷&–v–æÂ&VæFW"÷væW"7F—fRöÆ—fR²–æ7F—fRöÆö6¶VBF—7Æ¦–â7GVF–òõ6öÆ–BõUb–ÖvRâÖ–âæ&÷†Æ"c"W'6—7FVæ6RF‡&÷Vvƒƒ“’â÷&–v–æÂW‡÷'B&W6öÇfW ¦æ÷r&VgW6W2–çFVBô$¢ôtÄ"ôäôÒ&F†W"F†âG&÷–ær–çC²V–6²ô$¢6F6†W3²¦ö–à§&VgW6W2VæF–ær&W6÷W&6R&÷vF–öââæò%"öÆ–W'2ö–×÷'FVB–çB&6R÷6VÒ×6fRöW‡÷'@§–çB6Æ–Òâ6WfVâæWrFW7G3²gVÆÃ#C“E52ód”Âó6¶—Âæò'&÷w6W"õVæ6–Â&ööb–æfW'&VBà¤†—7F÷&–6ÃsC–âFW7BW6W2&Wf–WvVB6öçG&7BæB&WF–ç26†VÆÂöG–æÖ–2WVÆ—G’à¥&VBFö72÷f–Ww÷'B×–çBÓ“æÖBâW6W#ƒ“•52&÷FV7FVC³“FWf–6RvFRVæF–ærà¤æW‡B†æG2Ööâ7GVÂ–çBÂF†VâfÆGFVæVB6öÆ÷W"W‡÷'BF‡&÷Vv‚÷&–v–æÂ÷væW'2à¥V&Æ–6F–öâ&ööbföÆÆ÷w3²&÷FV7FVB×VÇF“ãög&÷¦VâöÖöFVÆÆ–ærö''W6‚'—FW2&WF–æVBà ¢22ã“V&Æ–6F–öâfW&–f–VB(	B##bÓÓp ¥'VçF–ÖVV##f#““CcFS6svCc–fSSS“ƒƒsƒƒFCvS²FW7FVBG&VP¦#cƒvc&#&c3ccVc3ƒ–ccvS&F#Scv&c““#Cƒv&bÖF6†W2fWF6†VBÖ–âöÆö6ÂW†7FÇ’à¤æöFS#"ã#2ã2F÷öÆöw’4“3“3ƒCƒö¦ö#s3“c“3SR5T44U53#C“E52ód”Âó6¶—°¥vW33“3ƒ3cs"'V–ÆCs3“c“3ƒCRöFWÆ÷“s3“s“ƒ3b5T44U52à¥÷7FFWÆ÷–ÖVçBW†7B6†VÆÂ÷fW'6–öâÂÖ–âf–Ww÷'B–çB÷F&vWBö6÷&R÷&VæFW"÷&F–Âð¦ÖævW"öÖævVÖVçBöG&vW"öW‡÷'B÷&VgW6Â&VçBw&ƒ“ÇW2Æ#“–æFW‚ö6öçG&öÆÆW ¦æBVæ6†ævVB66WFVB&7FW"÷7G&ö¶Sƒ“b'—FRÖÖF6‚&W÷6—F÷'’â&V6÷fW'““ÖF6†W2à¥&÷FV7FVB×VÇF’×G&ç6f÷&Óãög&÷¦VâöÖöFVÆÆ–ærÆv÷&—F†×2ö''W6‚'—FW2&WF–æVBâW6W#ƒ“¥52&÷FV7FVC³“7GVÂf–Ww÷'BõVæ6–Âöæf–vF–öâ÷&ö¦V7BFWf–6RvFRVæF–ærà¤æò&VæFW&VBö•B&ööb–æfW'&VBg&öÒæöFRFFW'2÷"&Wf–÷W26Æ÷VBvV$tÂÆ–Ö—FF–öâà¤Fö7VÖVçFF–öâ&ööb6†ævW2æòFW7FVB'VçF–ÖRâæW‡C¢FWf–6RfVVF&6²ÂF†VâfÆGFVæV@§–çBW‡÷'BF‡&÷Vv‚÷&–v–æÂtÄ"ôäôÒ÷væW'3²–çFVBW‡÷'B&VgW6Â&VÖ–ç2ÖVçv†–ÆRà ¢22ã“(	B–çFVBæF—fRæöÖBòtÄ"W‡÷'C²ã“W6W"52(	B##bÓÓp ¤VF—CS&6F#&¢÷&–v–æÂæF—fR–ÖvRöÖFW&–ÂõUbö6öçF–æW"w&—FW"æBtÄ"F6‚Ç&VG§7WÇ’†æFöfc²FBW‡÷'BÖÆö6ÃS,+"6öÆ÷W"F‡&÷Vv‚F†VÒâæWr–çBÖW‡÷'B6GW&Rð¥Ub&–æF–ærwV&B÷&—fFR&W&VB6æ6†÷B76ö6–F–öâÂ÷væVBvVöÖWG'’õUb÷—†VÇ2&Vf÷&P¦v—C²æòf¶R–×÷'FVB&÷fVææ6R÷7F÷&VBæF—fUUbÖFW&–Â×WFF–öââW†—7F–ærär÷væW ¦FG2Æ÷76ÆW75$t#‚÷5$t"æB&WW6W25$2÷¦Æ–#²66Æ"&VÖ–ç2Væ6†ævVBâ&÷w2föÆÆ÷ræF—fRð¦vÅDbUb×cÖf—'7B6öçfVçF–öâÂæòÆ"‡VÖâärfÆ—âæF—fRv†—FRÖf7F÷"6öÆ÷W"–ÖvRÀ¦÷&–v–æÂ–æFWVæFVçBUb÷öÇ–vöâ'VffW'2ö–ÖvRööÃ#DÖ”"öFVGWööfg6WBö†VFW"âtÄ"VÖ&VFFV@¥äröæWWG&ÂÖFW&–Âö6Æ×6×ÆW"ö÷&–v–æÂw&÷W2÷6V×2öÆöFW"fW&–f–6F–öã²–çFV@§F‚Væ&ÆW2W†—7F–ær6÷W&6R×v–æF–ærfÆröæÇ’âæöç–çFVBF‚&WF–æVBâ–çFVBô$¢ð¤¦ö–â÷&rVç&W&VB7–æ2W‡÷'B7F–ÆÂ&VgW6S²æ&÷†Æ"&VÖ–ç2VF—F&ÆR–çB&ö¦V7Bà¥6—‚fö7W6VBFW7G253¢W†7BärõUböÖFW&–ÂövVöÖWG'’öFVGW÷v–æF–ær÷6æ6†÷G2÷&VgW6Ç0¦æB&÷F‚&VÂf–ÆRF÷væÆöB7F–öç2âgVÆÂæöFS#B#S52ód”Âó6¶—²V&Æ–6F–öâ&ööbföÆÆ÷w2âW6W#“50§&÷FV7G2f–Ww÷'BõVæ6–Âö†—7F÷'’÷W'6—7FVæ6Rô4õs²æòæWræöÖBöFWf–6R66WFæ6R–æfW'&VBà¥&VBFö72÷–çBÖW‡÷'BÓ“æÖBâæW‡BW‡÷'BfVVF&6²ÂF†VâÆ–W"ö6ö×÷6—F÷"&W6÷W&6RÆà§F‡&÷Vv‚÷&–v–æÂ÷væW'2âæò&VæFW&VBõ%"÷6VÒ×6fRö–×÷'FVB–çBÖ&6RôäôÒ–×÷'B6Æ–Òà ¢22ã“V&Æ–6F–öâfW&–f–VB(	B##bÓÓp ¥'VçF–ÖS3&6633†f36&6Cƒƒ“Ff#–c3vVC–Cs3##3²FW7FVBG&VP£Ssƒ“3c“6cC&cFCs##†CCƒ#ƒ–cF6C#BÖF6†W2fWF6†VBÖ–âöÆö6ÂW†7FÇ’à¤æöFS#"ã#2ã2F÷öÆöw’4“3“3c“3ƒCbö¦ö#sCƒSs3csb5T44U53#S52ód”Âó6¶—°¥vW33“3c“3ss‚'V–ÆCsCƒSsS#’öFWÆ÷“sCƒcƒ#S25T44U52à¥÷7FFWÆ÷–ÖVçBW†7BÆ—fR6†VÆÂ÷fW'6–öâæBW‡÷'B×æVÂöæF—fRÖ6÷&R÷6¶VB×&VçBð¥äröæWr–çBÖW‡÷'Bw&ƒ“ÇW2Æ#“–æFW‚ö6öçG&öÆÆW"'—FRÖÖF6‚&W÷6—F÷'’à¥Væ6†ævVBÖ–â–çBö&–æF–æs“æB&V6÷fW'““ÖF6‚â&÷FV7FVB×VÇF“ãög&÷¦Vâð¦ÖöFVÆÆ–ær÷&7FW"ö–çWB'—FW2&WF–æVBâW6W#“52&÷FV7FVC³“W‡FW&æÂæöÖBæ@¤tÄ"6öÆ÷W"ö÷&–VçFF–öâ÷Æ6VÖVçBFWf–6RvFRVæF–ærÂæò&VæFW&VB&ööb–æfW'&VBà¤Fö7VÖVçFF–öâ&ööb6†ævW2æòFW7FVB'VçF–ÖRâæW‡BFWf–6RW‡÷'BfVVF&6²ÂF†VâÆ–W"ð¦6ö×÷6—F÷"FW6–vâF‡&÷Vv‚÷&–v–æÂ÷væW'3²æ&÷†Æ"&VÖ–ç2VF—F&ÆR–çB&ö¦V7Bà  ¢22ã“"(	BÆ–W"ö6ö×÷6—F÷"f÷VæFF–öã²ã“W6W"52(	B##bÓÓ€ ¥W6W#“52&÷FV7G2–çFVBäôÔBôtÄ"Æ6VÖVçBö÷&–VçFF–öâö6öÆ÷W"Â–æFWVæFVç@§–çFVBGWÆ–6FW2æB6öçF–çVVB–çF–ærõVæFòòæ&÷†Æ"âVF—BÖ–ã&f#cƒ“¢&7FW#ƒ“`§w&—FW2÷VR'—FW2Â&W6÷W&6Sƒ“‚÷&ö¦V7Cƒ“’öW‡÷'C“†fRæòVF—F&ÆRÆ–W"7F6²à¤æWr—6öÆFVB–çBÖÆ–W"×7F6²“¢W†—7F–ær÷VR&6R²WFó27G&–v‡BÖÇ†£S,+"÷fW&Æ—2Â&÷VæFVB”G2öæÖW2Âf—6–&ÆRö÷6—G’Â÷væVB6GW&RöVæB÷&WÆ6RÀ¦'—FR×76R6÷W&6RÖ÷fW"æBfÆGFVæVB&W6÷W&6Rf–õ$”t”äÂ6GW&T6öÆ÷W%&W6÷W&6Rà¤æòæWr†—7F÷'’ö–çWBö¶W&æVÂ÷"v—&–ærâ7G&–7B66†VÖ2ö'VFvWG3²G—VB'VffW'0§&VBÖöæÇ’'’6öçfVçF–öââ7W'&VçB6÷’ÖÆÂ’†2æò7'6Rô4õr÷W&f÷&Öæ6R6Æ–Òà¤f—fRfö7W6VB6†V6·253¢W†7B&ÆVæF–ærö÷&FW"÷f—6–&–Æ—G’ö÷6—G’÷&÷w2Â–çWBöVF—Bð¦÷WGWB—6öÆF–öâÂ&VgW6Âö'VFvWG2öÖ‚7F6²Â7GVÂ÷&–v–æÂ&ö¦V7B²æF—fRäp¦fÆGFVæVB†æFöfc²VF—F&ÆR7F6²7F–ÆÂ&VgW6W22&ö¦V7B6öÆ÷W%–çBà¥&VBFö72÷–çBÖÆ–W"×7F6²Ó“"æÖBâæòÆ–W"T’÷G&ç7&VçB''W6‚öVF—F&ÆRÆ–W"6fP¦6Æ–ÒâæòæWr†æG2ÖöâFW7C²W†—7F–ær–çBöW‡÷'BVæ6†ævVBâ6†VÆÂ÷&V6÷fW'““#°¦Ö–â–çC“öW‡÷'C“÷&W6÷W&6Sƒ“‚÷&ö¦V7Cƒ“’öÆ#“÷&÷FV7FVBög&÷¦Vâ'—FW2&WF–æVBà¤æW‡B6W&FRÆ–W&VB66VæR&W6÷W&6R÷&ö¦V7B6öFV2²FöÖ–2÷Vâö†—7F÷'’öGWÆ–6FP¦–çFVw&F–öâÂF†VâG&ç7&VçB&7FW"õT’F‡&÷Vv‚7W'&VçBf–Ww÷'B÷væW"âV&Æ–6F–öà¦æBgVÆÂ×7V—FRWf–FVæ6RföÆÆ÷s²æó“"FWf–6R52–æfW'&VBà ¢ã“"Æö6ÂfÆ–FF–öã¢æöFS#Bã’ãgVÆÂ7V—FR¢£#SR52òd”Âò6¶—VB¢£°¦f—fRæWrfö7W6VB6ö×÷6—F÷"6†V6·252âæòæWrFWf–6R÷&VæFW&VBÆ–W"&ööbà  ¢22ã“2(	BÖ6·2ö&ÆVæBf÷VæFF–öâæBÖFW&–ÂF—&V7F–öâ(	B##bÓÓ€ ¥W6W"&WVW7G27W&f6R–ÖvRÆ6VÖVçBõ&ö¦V7Bg&öÒf–WrÂ–ç6W'BÖ÷f^(i%&÷FF^(i%66ÆRF ¦7–6ÆRÂÖ6·2ö&ÆVæBÖöFW2æBæöÖB×7G–ÆRÖFW&–Â6Æ÷G2v—F‚F—7Æ6VÖVçBÆ6V†öÆFW"à¥&VBFö72÷–çBÖÖFW&–ÂÖF—&V7F–öâæÖBf÷"&WV—&VÖVçG2Â6WVVæ6–æræBÆ–Ö—FF–öç2à¤VF—Csƒv6f6#“£“"6ö×÷6—F÷"æ÷&ÖÂÖöæÇ“³“–çBóƒ“’&ö¦V7Bó“W‡÷'B÷VRà¤W‡FVæB4ÔR—6öÆFVB7F6²÷væW"Fòc"v—F‚÷væVBW"Ö÷fW&Æ“‚Ö&—B6÷fW&vRÖ6·2À¦Væ&ÆRö–çfW'BæC#b6öÆ÷W"&ÆVæBÖöFW2–â–çBÖ&ÆVæBÖÖöFW3“2âcæ÷&ÖÂWw&FP¦'—FRÖ–FVçF–6Ã²7G&–7BVæ¶æ÷vâf–VÆG2ö–çfÆ–BÖöFW2öÖ6·2æB7'6R'&—2&VgW6Rà¤Ç†9v÷6—Gœ9vÖ6²vFW2&ÆVæFVB$t#²æ÷&ÖÂW†7C“#²7FæF&Bs426öÆ÷W"f÷&×VÆ2À¦W‡G&ÖöFW2W‡Æ–6—FÇ’FVf–æVB–âFö72÷–çBÖÆ–W'2Ó“2æÖBâæ÷BæöÖB&—B×&—G’÷ ¦æ÷&ÖÂ×fV7F÷"÷66Æ"õ%"&ÆVæF–ærâ'VffW'2&VBÖöæÇ’'’6öçfVçF–öã²ÖƒBãsTÖ”"7F6°§ÇW26÷–W2öfÆB÷WGWG2ÂæòÖV7W&VBW&f÷&Öæ6R6Æ–Òà¥6WfVâfö7W6VC“26†V6·253²W†—7F–æs“"6VÖçF–26†V6·2&WF–æVB‡Væ¶æ÷vâÖÖöFP§&VgW6Â7WW'6VFW2—G2ö'6öÆWFR×VÇF—Ç’&VgW6Â’â7GVÂ÷VR&ö¦V7BöæF—fRäp¦†æFöfb&WF–æVBâæòöÆ"Æ–W"T’ÂÖ6²G&v–ærÂ–ÖvR&ö¦V7F–öâ÷"VF—F&ÆP¦Æ–W"W'6—7FVæ6R–WBâÖ–â&W6÷W&6R÷&ö¦V7BöW‡÷'B6öçF–çVR&VgW6–ærVF—F&ÆR7F6²à¥6†VÆÂ÷&V6÷fW'““2Â—6öÆFVB6†–ÆC“3²Ö–ã“öW‡÷'C“öÆ#“ö''W6ƒƒ“b÷&÷FV7FV@¤×VÇF“ãög&÷¦VâöÖöFVÆÆ–ær÷væW'2Væ6†ævVBâæòæWr†æG2ÖöâFW7B÷"W6W#“552à¤æW‡BW‡Æ–6—BÆ–W&VB66VæR÷&ö¦V7BööÂF‡&÷Vv‚÷&–v–æÂ6öFV2ö†—7F÷'’öGWÆ–6FP¦÷væW'2ÂF†VâG&ç7&VçB''W6‚¶Æ–W"öÖ6²T“²–ÖvR&ö¦V7F–öâô–ç6W'BÖ7–6ÆRföÆÆ÷w2à¤gVÆÂ7V—FR÷V&Æ–6F–öâ&ööbföÆÆ÷w3³“W6W%52&VÖ–ç2ÆFW7B66WFVBFWf–6RvFRà ¢ã“2Æö6ÂfÆ–FF–öã¢æöFS#Bã’ãgVÆÂ¢£#S"52òd”Âò6¶—VB¢£°§6WfVâæWrfö7W6VB6†V6·2²W†—7F–æs“"FW7G252âæò&VæFW&VBöFWf–6RvFR–æfW'&VBà  ¢22ã“B(	BVF—F&ÆRÆ–W&VB&ö¦V7Bö†—7F÷'’&W6÷W&6W2(	B##bÓÓ€ ¤VF—CVVfF3vC“¢W†—7F–ær6öÆ÷W%–çB†—7F÷'’ö÷&F–æ'’GWÆ–6FRÇ&VG’6†&R&VBÖöæÇ§&W6÷W&6W2âæWr–çBÖÆ–W"×&W6÷W&6R÷væW"7F÷&W2W‡Æ–6—BÆ–W&VB&W6÷W&6Wc"–â4ÔP¦6öÆ÷W%–çBf–VÆC¢fÆ–FFVB÷VR&Wf–Wr²÷væVC“27F6²v—F‚W†7BÖ6·2öÖöFW2à¤÷&–v–æÂ6öÆ÷W%–çEööÂVçG'—c"æB66VæW&ö¦V7Gc2G&ç7÷'BÆÂ'VffW'2F‡&÷Vv€¦÷&–v–æÂ6æöæ–6Â'—FW2Âv†öÆR×&W6÷W&6RFVGW³„Ö”"vw&VvFR$Tdõ$RFV6öFR–æ6ÇVFW0¦fÆBö&6Rö÷fW&Æ—2öÖ6·2âÆ–çcö÷VWc"Væ6†ævVC²7G&–7Bf–VÆB÷fW'6–öâ÷&Vbö66†Rð¦'VFvWB÷Vç7W÷'FVB÷væW"wV&G2â÷&–v–æÂæF—fUUgc2&VÖ–ç2UbÖöæÇ’à¥6ÖR†—7F÷'’ö6†V6·ö–çB÷6–ævÆR´×VÇF’GWÆ–6FRöFöÖ–2÷Vâ÷væW'2Væ6†ævVBâ÷&–v–æÀ§7W&f6RF—7Æ’&VG2fÆ–FFVBfÆB6öÆ÷W#²W‡÷'BFFW"fÆ–FFW2ö6GW&W2÷væV@¦fÆGc$Tdõ$Rv—BæBW6W2W†—7F–æräôÒôtÄ"w&—FW'2âVF—F&ÆRÆ–W'2W'6—7BöæÇ¦–âæ&÷†Æ"âW†—7F–ær÷VR–çFW"&VgW6W2Æ–W&VB&W6÷W&6RVçF–Â6öçG&öÇ2ÆæBÀ§&WfVçF–ærFW7G'V7F—fRfÆGFVæ–ærâæòæWrÆ–W"T’ö–ÖvR6÷W&6W2öÖFW&–ÂWF†÷&–ærà¥6WfVâfö7W6VC“B6†V6·253¢W†7B&W6÷W&6R÷&ö¦V7B÷ööÂÂ&VÂ†—7F÷'’öGWÆ–6FW2À¤f–ÆR6fRô÷Vâö6÷''WB–çWB÷&VæFW"&öÆÆ&6²Â7GVÂäôÒôtÄ"¶7–æ26æ6†÷Bæ@¦6öÖÖ—GFVBF—7Æ’÷–çFW"wV&BâæöFRG&ç7÷'BFFW'2&Ræ÷B&VæFW&VBö•B&ööbà¥&VBFö72÷–çBÖÆ–W"×&W6÷W&6W2Ó“BæÖBâ6†ævVB6öFV2öW‡÷'Bö&–æF–ær÷–çB÷&VæFW"°§&VçBÆöFW"w&ƒ“C²Ö–âÖöFVÆÆ–ærô×VÇF“ãög&÷¦Vâö''W6‚Æv÷&—F†×2Væ6†ævVBà¤æòW‡G&“"ó“2ó“BFWf–6U52–æfW'&VC³“W6W%52&VÖ–ç2&÷FV7FVBà¤æW‡B$TÂÆ–W"T’÷G&ç7&VçB''W6‚F‡&÷Vv‚÷&–v–æÂf–Ww÷'Bö†—7F÷'’æBF†—0§&W6÷W&6S²Fòæ÷BFB&ÆÆVÂ–çDÆ–W'2&÷W'G’÷"†—7F÷'’âgVÆÂ7V—FRæ@§V&Æ–6F–öâ&ööbföÆÆ÷râÖçVÃ“C¢W†—7F–ær–çB÷6fR÷&V÷VâõVæFòôGWÆ–6FRöW‡÷'@§&Vw&W76–öâöæÇ“²æWrÆ–W&VBf—‡GW&W2WFöÖFVBÂæ÷BW6W"F6·2à ¢ã“BÆö6ÂfÆ–FF–öã¢æöFS#Bã’ãgVÆÂ¢£#S’52òd”Âò6¶—VB¢£°§6WfVâæWr&W6÷W&6Rö†—7F÷'’ö6öFV2öW‡÷'B6†V6·252âæòFWf–6R66WFæ6R–æfW'&VBà  ¢22ã“R(	Bf—6–&ÆRÖ–âf–Ww÷'B6öÆ÷W"Æ–W'3²ã“B52(	B##bÓÓ€ ¥W6W#“E52&÷FV7G2–çB6fRô÷VâõVæFòôGWÆ–6FRôäôÒôtÄ"&Vw&W76–öââVF—CC#Ccs3S ¦6öææV7BW†—7F–æs“–çFW"ó“27F6²³#b&ÆVæG2ó“B&W6÷W&6RæB÷&–v–æÂ66VæR†—7F÷'’à¤Æ–W'2æVÃ¢6VÆV7B÷F÷Öf—'7BÂ²Æ–W"†Öƒ2’Â&VæÖR÷&V÷&FW"öFVÆWFRÂf—6–&–Æ—G’À¦Æ–W"÷6—G’æC#bÖöFW2â&6R–çF&ÆRö÷VS²W†—7F–ærc6öçfW'G2öæÇ’öâ²Æ–W"à¥6ÖR&7FW"v–ç2÷F–öæÂ7G&–v‡BÖÇ†Æ–W"ÖöFRv—F‚&W6W'fVB÷VRFVfVÇBÀ§&W77W&Rö†&FæW72÷W"×7G&ö¶R6ö6æ6VÃ²6ÖR7G&ö¶Rö–çWB÷&–67Böæf–vF–öâ÷væW'2à¥6W&FR×WF&ÆRÆ–W"ö6ö×÷6—FR&Wf–Ws²÷&–v–æÂöæRF—'G’WÆöBög&ÖS²æòÖV7W&V@¤Ó"W&f÷&Öæ6R6Æ–Òâv†öÆR×7F6²6÷–W2÷&VfÆ–v‡B&VÖ–âÂæ÷B7'6R÷F–Ö—¦F–öâà¤WfW'’6†ævVB7G&ö¶RöÖWFFF÷W&F–öâ6†V6·ö–çG2÷&–v–æÂ66VæRæB4õr&WÆ6W0§&W6÷W&6S²6VÆV7F–öâöæòÖ÷7&VFW2æò†—7F÷'’âgVÆÂ×66VæS„Ö”"ööÂ6†V6¶VB$Tdõ$P¦6†V6·ö–çC²–çfÆ–Bö'VFvWBö6†V6·ö–çBf–ÇW&R&W7F÷&W2÷&–v–æÂ&W6÷W&6R÷&Wf–Wrà¥7F÷&VBÖ6·2W'6—7C²æòÖ6²ö–ÖvRöÖFW&–ÂT’6Æ–Òâ6fRô÷Vçc2æBfÆBäôÒôtÄ"W6P¦÷&–v–æÃ“B÷væW'2â†–FFVâ÷¦W&ò÷6—G’Æ–W"&VgW6W27G&ö¶W2v†–ÆRæVÂ7F—2÷Vâà¥6WfVâfö7W6VC“R6†V6·253²ÆÂ÷&–v–æÃ“76W'F–öç2&WF–æVB–âW‡G&7FVB6†&V@§'VçF–ÖRã“B&VgW6Â76W'F–öâ7WW'6VFVB'’&VÂÆ–W&VB÷Væ–æröVF—F&ÆR×F‚FW7G2à¥&VBFö72÷–çBÖÆ–W"×V’Ó“RæÖBâ6†ævVB–çFW"÷6†&VB&7FW"æBÆ"ÆöFW"w&ƒ“S°¦6ö×÷6—F÷#“2÷&W6÷W&6R·&ö¦V7B¶W‡÷'C“B÷7G&ö¶Sƒ“b÷&÷FV7FVBög&÷¦Vâ÷væW'2&WF–æVBà¤æW‡BDUd”4RÆ–W"õVæ6–Âöæf–vF–öâ÷W'6—7FVæ6RfVVF&6²ÂF†VâÖ6²–çBõT’F‡&÷Vv€§6ÖR÷væW'2ÂföÆÆ÷vVB'’–ÖvR&ö¦V7F–öâô–ç6W'B7–6ÆRöÖFW&–ÂÆââgVÆÂ7V—FRæ@§V&Æ–6F–öâ&ööbföÆÆ÷râæó“RW6W%52÷"&VæFW&VB'&÷w6W"Wf–FVæ6R–æfW'&VBà ¢ã“RÆö6ÂfÆ–FF–öã¢æöFS#Bã’ãgVÆÂ¢£#S#b52òd”Âò6¶—VB¢£°§6WfVâæWrÆ–W"÷&7FW"õT’6†V6·252Â÷&–v–æÂ6VÖçF–26†V6·2&WF–æVBâ•BvFRVæF–ærà  ¢22ã“b(	BÖ–âf–Ww÷'BÆ–W"Ö6²–çF–æs²ã“R52(	B##bÓÓ€ ¥W6W#“U53¢Æ–W'2v÷&²vVÆÃ²T’õU‚öÆ—6‚gFW"fVGW&RfÆ÷w2&R&W6VçBâVF—@¦Ö–æcƒCSS#3böÆö6ÂfW&–f–VC“RG&VVf#“##sC¢&WW6S“2Ö6·2ö6ö×÷6—F÷"Ã“B&W6÷W&6Rð§&ö¦V7Bö†—7F÷'’öW‡÷'BæC“R&7FW"ö–çWBâFBÖ6²6VÆV7G2Ö6²–çBF&vWC²6ÖP¦÷VR&7FW"VF—G2&rw&W’6÷fW&vRÂ#‚6öÖÖ—GFVBÂ6÷W&6R6öÆ÷W"—†VÇ2Væ6†ævVBà¤†–FRõ&WfVÂôw&W’''W6‚&W6WG266÷VçBf÷"–çfW'6–öã²&rfÇVS(	3#SR6Æ–FW"Â6—¦Rð¦†&FæW72÷&W77W&Rö÷6—G’æB&÷F‚6×ÆW'2&WF–æVBâ6öÆ÷W"–6¶W"&W6W'fVBöF—6&ÆV@¦–âÖ6²ÖöFRâÆ–W"7v—F6‚÷&V÷Vâ7F'G26öÆ÷W#²&6R†2æòÖ6²âVæ&ÆVBö–çfW'Bð§&VÖ÷fRW6R4õr²÷&–v–æÂ6†V6·ö–çG3²6VÆV7F–öâ÷&W6WBöæòÖ÷Fòæ÷B7&VFR†—7F÷'’à¤6æ6VÂ÷6WGF–æw2÷F&vWBöÆ–W"ö&öG’ÖÆ÷72&W7F÷&RÖ6²÷&Wf–Wröæf–vF–öââ&VçBÆ–W ¦×W7B6†÷röæöç¦W&ò÷6—G’æBÖ6²Væ&ÆVBFò–çBâ÷&–v–æÃ„Ö”"&VfÆ–v‡B÷&öÆÆ&6°§&W6W'fVBâ6ÖR&W6÷W&6Wc"÷&ö¦V7Gc2öfÆBäôÒ´tÄ"ÂæòæWr66†VÖö†—7F÷'’ö¶W&æVÂà¥6WfVâfö7W6VC“bFW7G252–æ6Â7GVÂT’ö6÷&R÷6÷W&6R&W6W'fF–öâÂfÆw2õVæFõ&VFòÀ¦–çFW''WF–öâö–çfÆ–Bö'VFvWBö6†V6·ö–çB&öÆÆ&6²ÂW†7B6fRô÷Vâ÷&RÖVF—BæBæF—fP¦W‡÷'BâgVÆÂ7V—FR÷V&Æ–6F–öâ&ööbföÆÆ÷w3²æò&VæFW&VBö•B66WFæ6R–æfW'&VBà¥&VBFö72÷–çBÖÖ6²×V’Ó“bæÖBâöæÇ’Ö–â–çFW"²6†VÆÂ÷&V6÷fW'““c²&7FW"ôÆ#“RÀ¦6ö×÷6—F÷#“2÷&W6÷W&6R·&ö¦V7B¶W‡÷'C“BæB&÷FV7FVBÖöFVÆÆ–ærô×VÇF’ög&÷¦VâVçF÷V6†VBà¤æW‡BDUd”4RÖ6²vFRÂF†VâVF—F&ÆR–ÖvR6÷W&6W2õ&ö¦V7Bg&öÒf–WrF‡&÷Vv‚÷&–v–æÀ¥UbövVöÖWG'’æB–ç6W'B7–6ÆRâæòÖFW&–Â÷6—G’öF—7Æ6VÖVçB÷"'&öBT’&VFW6–và¦6Æ–Òâ&öGV7BF—&V7F–öâ&VÖ–ç2Fö72÷–çBÖÖFW&–ÂÖF—&V7F–öâæÖBà ¢ã“bÆö6ÂfÆ–FF–öã¢æöFS#Bã’ãgVÆÂ¢£#S3252òd”Âò6¶—VB¢£°§6WfVâæWrÖ6²T’ö6÷&RFW7G252âFWf–6S“bVæF–æs²æò&VæFW&VB&ööb–æfW'&VBà  ¢22ã“r(	BVF—F&ÆR–ÖvR6÷W&6RæBÆ6VÖVçBf÷VæFF–öã²ã“b52(	B##bÓÓ€ ¥W6W#“e52&÷FV7G2Ö6²õVæ6–Âöæf–vF–öâö†—7F÷'’÷&ö¦V7B&V†f–÷W"âVF—B&VÖ÷FP£CssƒScv2æBW†—7F–ær&VBÖöæÇ’Ub–ÖvSƒ“"ô–ç6W'CC3r÷væW'2âæWr—6öÆFVB–ÖvP§6÷W&6R–×÷'FW"&WF–ç2÷&–v–æÂVæ6öFVBärô¥Tr²÷væVBFV6öFVB$t$Â&VfÆ–v‡@£$Ö”"ó#L+"&Vf÷&R&—FÖFV6öFRÂW†7BF–ÖVç6–öç2Â7–æ26æ6†÷BæB6ÆVçWà¤6ÖW&Æ6VÖVçB6æ6†÷G2÷&–v–æÂF‡&VRÖG&–6W2ÇW2äD26VçG&R÷6—¦R÷&÷FF–öã°§&ö¦V7F÷"6Æ—26ÖW&ö–ÖvR&÷VæG2Â&WGW&ç2F÷Öf—'7BUg2â÷&–v–æÂ–ç6W'B7–6ÆP§&RÖW‡÷'FVBfW&&F–Ó²æòæWrö–çFW"öÖW6‚ö†—7F÷'’÷væW"â6—‚fö7W6VBFW7G252à¥&VBFö72÷–çBÖ–ÖvR×6÷W&6RÓ“ræÖBf÷"'&÷w6W"6öÆ÷W"öÇ†ôU„”bæBÖVÖ÷'’Æ–Ö—G2à¤äõB6öææV7FVBFò–çFW"ÂÆ–W"÷&ö¦V7B66†VÖ÷"T’–WBâ6ö÷&F–æFR&ö¦V7F–öà¦FöW2äõBVæf÷&6Rf6–æröævÆR÷66VæRö66ÇW6–öã²W†—7F–ær–çFW"×W7BFò6ò&Vf÷&P§&7FW&—¦F–öââæò&ö¦V7Bg&öÒf–Wr÷7W&f6RÆ6VÖVçBöÖçVÂFWf–6R6Æ–Òà¤Ö–â–çC“b÷&W6÷W&6S“Bö6ö×÷6—F÷#“2÷&÷FV7FVB×VÇF“ãög&÷¦VâVæ6†ævVBà¤æW‡BW‡Æ–6—B–ÖvR6÷W&6R·Æ6VÖVçB&W6÷W&6R÷ööÂfW'6–öæ–æræB÷&–v–æÂ†—7F÷'’ð§&ö¦V7BöW‡÷'B–çFVw&F–öâÂF†Vâ–6¶W"ö÷fW&Æ’÷f—6–&ÆRÖg&öçB&ö¦V7F–öâT’à¤æòæWr†æG2ÖöâvFRF†—2f÷VæFF–öâ'V–ÆC²ã“b52—2&÷FV7FVBÂæ÷C“r–ÖvRT’à ¢ã“rÆö6ÂfÆ–FF–öã¢æöFS#Bã’ãgVÆÂ¢£#S3’52òd”Âò6¶—VB¢£²6—‚æWp¦fö7W6VB–ÖvR6÷W&6R÷Æ6VÖVçB6†V6·252âæòæWr–ÖvRT’÷"FWf–6RvFRà  ¢22ã“‚(	B&WF–æVB–ÖvRÆ–W'2–â÷&–v–æÂ&W6÷W&6R÷&ö¦V7B÷væW'2(	B##bÓÓ€ ¤VF—Ffƒc6C£“r–çWB÷Æ6VÖVçB—6öÆFVC³“2ó“B7G&–7B&7FW"ÖöæÇ’7F÷&vRâW‡FVæ@¥4ÔR7F6²÷&W6÷W&6R÷ööÂFòW‡Æ–6—Gc2æB66VæW&ö¦V7GcBâ–ÖvR&V6—R&WF–ç2÷&–v–æÀ¦Væ6öFVB¶FV6öFVB6÷W&6RÂÆ6VÖVçBæBff–æR6GW&Rg&ÖRÂ6W&FR7W&f6R&7FW"à¥—&VB–ÖvR·&Wf–WrVæB÷&WÆ6R—3²vVæW&–26öÆ÷W"—†VÂVF—G2&VgW6R–ÖvW2à¤ÆÂ6÷W&6Rö66†RöÖ6²öfÆBö&6R'—FW26†&vVBFòW†—7F–æs„Ö”"ööÂ$Tdõ$RFV6öFS°¦ÆVv7’&ö¦V7G2æBæF—fUUgc2Væ6†ævVBâ÷&–v–æÂ66VæR†—7F÷'’õVæFò÷6–ævÆR´×VÇF¤GWÆ–6FRöFöÖ–2f–ÆR÷VâæBfÆGFVæVBäôÒôtÄ"&WF–æVBâW†—7F–ær–çFW"7W÷'G0§c26öçG&öÇ2öÖ6·2v—F‚–ÖvRÆ&VÂæB6öÆ÷W"×7G&ö¶RwV&BÂæò–×Æ–6—B&¶Rà¤V–v‡Bfö7W6VB7GVÂ6öFV2ö†—7F÷'’ôf–ÆR÷–çFW"õT’öW‡÷'B6†V6·252âæòæWr–ÖvP§–6¶W"õ&ö¦V7BT’Âf6–æröö66ÇW6–öâ&7FW&—¦W"÷"&VæFW&VBöFWf–6R6Æ–Ò–WBà¥6÷W&6R·Æ6VÖVçC“rö''W6ƒ“Rö&ÆVæC“2ô–ç6W'CC3r÷&÷FV7FVBÖöFVÆÆ–ærô×VÇF’ög&÷¦Vâ&WF–æVC°¦6†ævVB÷væW'2æB&VçBôÆ"ÆöFW"w&ƒ“‚â&VBFö72÷–çBÖ–ÖvR×&W6÷W&6W2Ó“‚æÖBà¤æW‡Bf—6–&ÆR–6¶W"ö÷fW&Æ’õ&ö¦V7Bf–÷&–v–æÂUbvVöÖWG'’æB7W'&VçBf–Ww÷'B–çWBÀ¦g&öçBöævÆR÷66VæR÷6VÆbÖö66ÇW6–öâ&Vf÷&RFW†VÂ66WFæ6RÂFöÖ–2&V6—R·&7FW"6öÖÖ—Bà¤ÖçVÃ¢W†—7F–ær–çBöÖ6·26fRô÷Vâö6öçF–çVRÂVæFõ&VFòÂGWÆ–6FRöW‡÷'B6æ—G’à¤ÆFW7BW6W#“e52&÷FV7FVC²æó“ró“‚FWf–6U52–æfW'&VBà ¢ã“‚Æö6ÂfÆ–FF–öã¢æöFS#Bã’ãgVÆÂ¢£#SCr52òd”Âò6¶—VB¢£²V–v‡BæWp¦–ÖvR&W6÷W&6Rö†—7F÷'’÷&ö¦V7BõT’öW‡÷'B6†V6·252âFWf–6RvFR&VÖ–ç26W&FRà  ¢22ã“’(	BGWÆ–6FR–çB&VÆV6Rf—ƒ²ã“‚W6W"d”Â(	B##bÓÓ€ ¥W6W#¢GWÆ–6FR–çBF—6V'2öâVæ6–Â&VÆV6Râ&W&öGV6VB÷&–v–æÂGWÆ–6FR°¦7GVÂT’Ã6Æ–W'3¢v†öÆR×&W6÷W&6RV÷FF÷V&ÆRÖ6†&vW2Væ6†ævVB&6RöÆ–W'2öfÆBæ@§&VgW6W3„Ö”"6öÖÖ—BâW†—7F–ærF—&V7BÖ76–væÖVçBGWÆ–6FRFW7G2Ö—76VB7GVÂ&VÆV6Rà¥&W—"4ÔR–çBööÃ¢W†7B6æöæ–6Â'VffW"Ö6öçFVçBFVGWÃ„Ö”"Væ—VRódÖ” ¦W‡æFVB&W6÷W&6R6âW‡Æ–6—B66VæWcR6†&VBÖ'—FRG&ç7÷'BöæÇ’v†Vâ–æÆ–æSã„Ö”#°¦öÆB66VæWc(	3BVæ6öF–ær&WF–æVB&VÆ÷rÆ–Ö—BÂ6ö×ÆWFR&VFV6öFR÷66†VÖ÷&VbwV&G2à¤÷&–v–æÂ†—7F÷'’õVæFòôGWÆ–6FRöFöÖ–2f–ÆR÷VâæBfÆBäôÒôtÄ"Væ6†ævVBâÆÂ–ç@¦6öÖÖ—G2&VfÆ–v‡B6ÖRööÂÂ–æ6ÇVF–ær÷VS²f–ÆVB6öÖÖ—B&W7F÷&W2'VffW'2æ@¦¶VW2–çBæVÂ÷Vââf—fRæWr&Vw&W76–öç26÷fW"&VÂ6–ævÆR´×VÇF’6÷’–çB÷&VÆV6RÀ¦6öÖÖ—GFVBF—7Æ’ö†—7F÷'’ö7GVÂ6fT÷Vâ÷&RÖVF—BÂ6÷''WBööÂ¶&÷F‚'VFvWG2öFöÖ–0§&öÆÆ&6²ÂvVçV–æRÆ–Ö—G2÷7FvVBFBæB&V6÷fW&&ÆRT’&VgW6Âã“b'VFvWBf—‡GW&P¦æ÷rW6W2vVçV–æVÇ’F—7F–æ7BFF²V÷F÷&öÆÆ&6²76W'F–öç2&WF–æVBâ6VP¦Fö72÷–çBÖGWÆ–6FRÓ“’æÖBâ6†ævVB÷væW'2÷&VçBôÆ"66†S““²7F6²ö–ÖvS“‚À§6÷W&6S“rö''W6ƒ“Rö&ÆVæC“2ô–ç6W'CC3r÷&÷FV7FVB×VÇF’ög&÷¦VâöÖöFVÆÆ–ær&WF–æVBà¤ÆFW7BFWf–6U53“c³“‚GWÆ–6FTd”Â&V6÷&FVC³“’FWf–6R&WFW7BVæF–ærà¤æW‡BFWf–6RGWÆ–6FR&VÆV6RôFöæRõ6fT÷VâõVæFòÂF†Vâ&W7VÖR&ö¦V7Bg&öÒf–WrT’à ¢ã“’Æö6ÂfÆ–FF–öã¢æöFS#Bã’ãgVÆÂ¢£#SS"52òd”Âò6¶—VB¢£²f—fRæWp¦7GVÂGWÆ–6FR÷ööÂ÷&V6÷fW'’&Vw&W76–öç252âFWf–6R&VÆV6R&WFW7BVæF–ærà  ¢22ã“(	BæF—fR–çBFW‡GW&RÖæÖR6öÆÆ—6–öç3²ã“’f–Ww÷'B52(	B##bÓÓ€ ¥W6W#“•52&÷FV7G2GWÆ–6FR–çB&VÆV6RôFöæRõ6fT÷VâõVæFó²äôÔBW†6WF–öã ¦6÷’F÷G2÷&–v–æÂ–çBâ67&VVç6†÷G26†÷s“’öw&VVâ6÷’7G&ö¶W2–â&÷„Æ"Â'6Vç@¦–âæöÖBâVF—F3#3SS¢&W&VBäw2öÖFW&–Â¶–ÖvR–æF–6W2Ç&VG’F—7F–æ7BÂ'WBÆÀ§–çBFW‡GW&W2æÖVD&÷„Æ"–çBçærâ&W—"WF†÷&—FF—fRæF—fRw&—FW"æÖR&Vv—7G'“ ¤äd2ö66RÖföÆFVB6öÆÆ—6–öâæÖW2vWBçVÖW&–27Vff—‚f÷"D”ddU$TåB–ÖvR–æF–6W3²WVÀ¦–ÖvW2¶VW6†&–ærÂVæ—VRæÖW2æBW†—7F–ærÆ–6W2&WF–æVBâW‡÷'BÖÆö6ÂöæÇ“°§6÷W&6R'—FW2öæÖW2Ãƒ“W†7B–ÖvRFVGWÂf7F÷'2õUbööfg6WG2ó#DÖ”"'VFvWBVæ6†ævVBà¤f÷W"7GVÂäôÒôf–ÆRõ6fT÷Vâö7–æ2öFVGWöÖ—†VBÖæÖR&Vw&W76–öâFW7G252â6öç7VÖW ¦æÖR66†–ær—2â–æfW&Væ6S²7GVÂæöÖBFWf–6R&WFW7B&VÖ–ç2&WV—&VBâ&V@¦Fö72÷–çBÖæöÖBÖGWÆ–6FRÓ“æÖBâæF—fRôf–ÆRôÆ"ÆöFW"w&ƒ“²f–Ww÷'B÷&W6÷W&6Rð¦†—7F÷'’÷ööÃ“’æB&÷FV7FVB×VÇF’öÖöFVÆÆ–ærög&÷¦VâVæ6†ævVBà¤æW‡BDUd”4R&RÖW‡÷'B÷&–v–æÂ¶w&VVâ6÷’g&öÓ“²6öæf—&ÒF—7F–æ7B–çB–âæöÖBÀ§F†Vâ6V6öæBW‡÷'BgFW"gW'F†W"6÷’–çF–ærâ–bW'6—7FVçB–ç7V7B7GVÂäôÒ'—FW3°¦æò–çfVçFVBæF—fRf–VÆG2âF†Vâ&W7VÖR÷&–v–æÂ–ÖvR&ö¦V7F–öâT’Æâà ¢ã“Æö6ÂfÆ–FF–öã¢æöFS#Bã’ãgVÆÂ¢£#SSb52òd”Âò6¶—VB¢£²f÷W"æWp¦æF—fR–çBöW‡÷'BöæÖR&Vw&W76–öç252â7GVÂæöÖB&WFW7B&VÖ–ç2VæF–ærà  ¢22ã“(	B&WF–æVB–ÖvR&ö¦V7Bg&öÒf–Ws²ã“W6W"52(	B##bÓÓ€ ¥W6W#“52&÷FV7G2–æFWVæFVçBGWÆ–6FR–çB–âæöÖBÂ6ÆV&–ærW‡FW&æÂvFRà¤VF—B#fC–ƒ¢6÷W&6R÷Æ6VÖVçC“r²&WF–æVB–ÖvR7F6³“‚÷ööÃ“’Ç&VG’&W6VçC°¦Ö—76–ær&VÂ–6¶W"ö÷fW&Æ’÷f—6–&ÆRÖg&öçB&7FW"â6öææV7B4ÔR–çFW"ö–çWBö†—7F÷'’à¢²–ÖvRärô¥Tr(šC#L+"ó$Ö”#³cRR67&VVâwV–FRÂVæ6–ÂÖ÷f^(i%&÷FF^(i%66ÆRF7–6ÆRW6W0¦÷&–v–æÂ–ç6W'CC3rgVæ7F–öã²f–ævW'2æf–vFR&V†–æB–ÖvRâ&ö¦V7B6GW&W27W'&Vç@¦6ÖW&ö&öG’g&ÖS²÷&–v–æÂUbG&–ævÆW2õF‡&VR&—2Væf÷&6Ss\+g&öçBæB66VæR÷6VÆ`¦ö66ÇW6–öâ$Tdõ$RFW†VÇ2â&VgW6R6×ÆVB÷fW&Æ–ærö7&÷72×F–ÆRUg2æB&÷VæFVBv÷&²à¥—&VC“‚–ÖvR&V6—R·&7FW"VæB÷&WÆ6RÂ÷&–v–æÂ&VfÆ–v‡Bö6†V6·ö–çBô4õs²VF—@¦–ÖvR&W&ö¦V7G2&WF–æVB6÷W&6Re$ôÒ5U%$TåBd”UrÂ&WF–ç2Ö6²ö&ÆVæBöæÖRö÷&FW"à¤6æ6VÂöÆ–W"6†ævRö6Æ÷6R÷7FÆR7–æ2&W6W'fW26öÖÖ—GFVBv÷&²Â÷&–v–æÂVæFòW†—G0¥–çBâ6ÖRæ&÷†Æ"6öFV2÷6÷W&6RW'6—7FVæ6RöfÆBäôÒ´tÄ#²æòæWr66†VÖö†—7F÷'’ö¶W&æVÂà¥67&VVâ×&ö¦V7F÷"vW7GW&W2&Ræ÷BFævVçBÖföÆÆ÷v–ær7W&f6RFV6Ç2âF‡&VR÷fW&Æ—2À£„Ö”"Væ—VRódÖ”"W‡æFVB&WF–æVC²6ö×ÆW‚66VæW2Ö’&VgW6S²æò6VÒ×6fR÷W&f÷&Öæ6P¦6Æ–Òâ&VBFö72÷–çBÖ–ÖvR×&ö¦V7BÓ“æÖBâ6WfVâfö7W6VB7GVÂ&7FW"õT’÷W'6—7FVæ6Rð¦W‡÷'BFW7G253²æöFS#Bã’ãgVÆÂ¢£#Sc252òd”Âò6¶—VB¢¢âV&Æ–6F–öà§fW&–f–6F–öâföÆÆ÷w2â6†ævVB–çFW"ö6÷&R¶æWr&ö¦V7F÷"ð¦÷fW&Æ’w&ƒ“³“ró“‚ó“’7F÷&vRÃ“æF—fRW‡÷'FW"æB&÷FV7FVBÖöFVÆÆ–ærô×VÇF’ð¦g&÷¦Vâ&WF–æVBâFWf–6S“vFRVæF–ærâæW‡B†æG2Ööâ&ö¦V7BfVVF&6²F†Vâ7W&f6RÐ§&VÆF—fRÆ6VÖVçC²ÖFW&–Â6Æ÷G2õT’öÆ—6‚föÆÆ÷r&öGV7BF—&V7F–öâà  ¢22ã“V&Æ–6F–öâfW&–f–VB(	B##bÓÓ€ ¥'VçF–ÖR6cƒf#FSƒVCc#C&6#3vc3vv–S3cs²FW7FVBG&VP£c&#C3CV3##CV33“&fCƒfC“cv3–fCs–BâÆÃBWÆöFVB&Æö"†6†W2æB7&VFV@§G&VRÖF6‚FW7FVBÆö6Â6÷W&6RâfWF6†VB÷&–v–âöÖ–â†2W†7FÇ’F†R6ÖRG&VS°§&VÖ÷FRÖæ–fW7B÷F—FÆRöFF÷f—6–&ÆRÆ&VÂæB&Wf–WvVB–çFW#“w&‚fW&–f–VBà¤Æö6ÂæöFS#Bã’ãgVÆÃ#Sc552ód”Âó6¶—²æöFS#"F÷öÆöw’4“3“#sccC’ð¦¦ö#sc##C#“25T44U52âvW33“#sc‚'V–ÆCsc##CS3"ð¦FWÆ÷“sc33Scb5T44U52âÆÃB6†V6¶VB÷7FFWÆ÷–ÖVçBÆ—fR6†VÆÂ÷fW'6–öâð§–çFW"ö6÷&R÷&ö¦V7F÷"ö÷fW&Æ’÷6÷W&6R÷Æ6VÖVçBö–ÖvR÷7F6²÷ööÂöæF—fRw&—FW"ð§&V6÷fW'’f–ÆW2'—FRÖÖF6‚&W÷6—F÷'’â–æ—F–ÂÆ—fRÖæ–fW7B6W'fVC“&Vf÷&RFWÆ÷“°¦f–æÂ6ö×ÆWFR6†V6¶VBw&‚ÖF6†W3“â&÷FV7FVB×VÇF“ãöÖöFVÆÆ–ærög&÷¦VâVæ6†ævVBà¤ÆÂf÷W"6öçF–çV—G’Fö7VÖVçG2WFFVBâF†—2&ööb—2Fö7VÖVçFF–öâÖöæÇ“²FW7FV@§'VçF–ÖR'—FW2&WF–æVBâW6W#“52&V6÷&FVC³“7GVÂ6f&’õVæ6–Âö–ÖvR–6¶W"ð¦ÆFVæ7’ög&öçBÖöæÇ’V&æ6RvFR&VÖ–ç2VæF–ærâæò&VæFW&VB66WFæ6R–æfW'&V@¦g&öÒæöFR6çf2FFW'2÷"'—FRfW&–f–6F–öââæW‡BÖçVÂ&ö¦V7B6†V6¶Æ—7B–à§–çBÖ–ÖvR×&ö¦V7BÓ“æÖBÂF†Vâ7W&f6R×&VÆF—fRÆ6VÖVçBg&öÒ÷&–v–æÂ–ç6W'Bà  ¢22ã“"(	B7W&f6R×&VÆF—fR&WF–æVB–ÖvW3²ã“W6W"52(	B##bÓÓ€ ¥W6W#“52&÷FV7G2&ö¦V7Bg&öÒf–Wr÷–6¶W"õVæ6–Âöæf–vF–öâ÷W'6—7FVæ6Rö†—7F÷'’à¤VF—BcCvC†c¢&WW6S“&ö¦V7F÷"æC“‚ó“’7F÷&vR÷ööÃ²æWr7W&f6Rg&ÖRW6W27GVÀ¤–ç6W'CC3rÆ–væÖVçBö7–6ÆRæC“r÷'F†öw&†–26ÖW&6GW&RÂæòæWrvVöÖWG'’¶W&æVÂà¢²–ÖvRôVF—B–ÖvR(i"öâ7W&f6R(i"–6²6VÆV7FVBÖW6‚âf—'7BFÆ6W3²F†VâFÖ7–6ÆP¤Ö÷fRõ&÷FFRõ66ÆRÂÖ÷fRföÆÆ÷w2÷&–v–æÂ†—B÷G&–ævÆRæ÷&ÖÂâÆæ#cRR6öçF7BwV–FS°¦Æ–gB&VvVæW&FW2W†7BUbÖW6‚&Wf–WrÂÇ’6öÖÖ—G2ôäR÷&–v–æÂ66VæR6†V6·ö–çBà¥&Wf–WræWfW"76–vç2ö&¦V7B6öÆ÷W%–çB÷"VçFW'26fRö†—7F÷'“²÷&–v–æÂ&VfÆ–v‡BÀ¦6öÖÖ—Bô4õröW‡÷'BæBã“g&öçBöö66ÇW6–öâõUb÷v÷&²Æ–Ö—G2&WF–æVBâ6æ6VÂö6Æ÷6RöÆ–W"ð¦&öG’Æ÷72&W7F÷&W26öÖÖ—GFVBv÷&²æB6öçG&öÇ2ÂwV–FRF—7÷6VBâ&6²Fòf–Wr&W6W'fW0¦66WFVBã“F‚âVF—Bòöâ7W&f6R7F'G2g&W6‚æ6†÷"öFVfVÇB6—¦S²W'6—7FVB6÷W&6Rð§&ö¦V7F–öâög&ÖRö66†R7W÷'B&R×Æ6VÖVçBÂæ÷BWFöÖF–2öÆBæ6†÷"÷7–â÷66ÆR&W7VÖRà¥6ÖR66VæR÷&ö¦V7B66†VÖæBfÆBæF—fR†æFöfbâæò6öçF–çV÷W27W'fVB&7FW"v†–ÆP¦6öçF7BÂ6VÒ×6fRw&–ærÂÆ&vW"'VFvWG2÷"•BW&f÷&Öæ6R6Æ–Òâ&V@¦Fö72÷–çBÖ–ÖvR×7W&f6RÓ“"æÖBâ6WfVâfö7W6VBæWr6†V6·26÷fW"7GVÂg&ÖRöwV–FRð§&Wf–WrõT’ö†—7F÷'’öÆ–Ö—G2ö7W'fVB7†W&RUbµ6fRöæF—fRärâæöFS#Bã’ãgVÆÀ¢¢£#Ss52òd”Âò6¶—VB¢£²V&Æ–6F–öâfW&–f–6F–öâföÆÆ÷w2à¤6†ævVB–çFW"ö6÷&RöæWr†VÇW"w&ƒ“#²&ö¦V7F÷#“÷6÷W&6S“r÷7F6³“‚÷ööÃ“’öæF—fP§w&—FW#“ô–ç6W'CC3ræB&÷FV7FVBÖöFVÆÆ–ærô×VÇF’ög&÷¦Vâ&WF–æVBâFWf–6S“"vFRVæF–ærà¤æW‡B7W&f6R–çFW&7F–öâfVVF&6²ÂF†VâVF—BÖFW&–ÂÖ6†ææVÂ6Æ÷G2÷Æ6V†öÆFW"Æâà  ¢22ã“"V&Æ–6F–öâfW&–f–VB(	B##bÓÓ€ ¥'VçF–ÖSv3S&C#cc#“ff#sƒsFFcSssC#Sc3ƒC#²FW7FVBG&VP£“#cCcS6Vf6&&fc“VC“3“3“ƒv&#3“6CScƒâÆÃ2WÆöFVB&Æö'2æB7&VFVBG&VP¦ÖF6‚FW7FVBÆö6Â6÷W&6S²fWF6†VB÷&–v–âöÖ–â†2–FVçF–6ÂG&VRâÖ–âfW'6–öâð§6†VÆÂ÷–çFW#“"–âfW&–f–VBâæöFS#Bã’ãÆö6ÂgVÆÃ#Ss52ód”Âó6¶—°¤æöFS#"F÷öÆöw’4“3“33ssƒSBö¦ö#scCCS#R5T44U52âvW33“33ssc“"ð¦'V–ÆCscCCs“2öFWÆ÷“scC3cr5T44U52âÆÃR6†V6¶VB÷7FFWÆ÷–ÖVçBÆ—fP§6†VÆÂ÷fW'6–öâ÷–çFW"ö6÷&R÷7W&f6R÷&ö¦V7F÷"ö÷fW&Æ’÷6÷W&6R÷Æ6VÖVçB÷7F6²÷ööÂð¦æF—fRw&—FW"ô–ç6W'BÆ–væÖVçB÷&V6÷fW'’f–ÆW2'—FRÖÖF6‚&W÷6—F÷'’â&÷FV7FV@¤×VÇF“ãöÖöFVÆÆ–ærög&÷¦VâVæ6†ævVBâÆÂf÷W"6öçF–çV—G’f–ÆW27W'&VçC²F†—2&öö`¦6†ævW2Fö7VÖVçFF–öâöæÇ’æB&WF–ç2FW7FVB'VçF–ÖR'—FW2âW6W#“52&÷FV7FVC°£“"6f&’õVæ6–ÂöwV–FRV&æ6R÷&VÆV6R×&Wf–WrÆFVæ7’vFRVæF–ærÂæò&VæFW&V@¦÷"Ó"W&f÷&Öæ6R66WFæ6R–æfW'&VBâæW‡Böâ7W&f6RÖçVÂvFRÂF†VâÖFW&–Âð¦6†ææVÂ÷væW"VF—BW"&öGV7BF—&V7F–öââ÷&–v–æÂ67&VVâ&ö¦V7B&VÖ–ç2f–Æ&ÆRà  ¢22ã“2(	B&WVFVB7W&f6R–ÖvRV÷F&W—#²ã“"'F–Â52(	B##bÓÓ€ ¥W6W#“%52f—'7B7W&f6R–ÖvS²W‡Æ–6—B6V6öæBÖFBf–ÇW&Râ7GVÃ“"T’&W&öGV6VC £g‚6V6öæB–ÖvRv÷&·3²6V6öæC#L+"6÷W&6Rf–Ç3„Ö”"&VfÆ–v‡B†FV6öFVB6÷W&6SDÖ” ¦ÆöæR’âæòW6W"w2f–ÆR7WÆ–VC²V÷FW‡ÆæF–öâfW&–f–VBÂFWf–6R&WFW7B&WV—&VBà¥6ÖR7F6²÷&W6÷W&6R÷ööÂ÷væW'26VÆV7B&÷VæFVB–ÖvRÖ6&ÆWc2&öf–ÆS#DÖ”"Væ—VRð£C„Ö”"W‡æFVC²&7FW"ÖöæÇ“‚ób&WF–æVBâF‡&VS#L+"6÷W&6W2¶Væ6öFVB¶66†R¶&6RöfÆBð¦Ö6·2f—N(šC#2ãsTÖ”"&W6÷W&6Râ÷&–v–æÂ6÷W&6RF–ÖVç6–öç2ö'—FW2ÃS,+"Ö2ÇF‡&VRÖ÷fW&Æ¦æC3$Ö”"f–ÆRÆ–Ö—G2Væ6†ævVC²æòF÷vç6—¦–ærÂæWr66†VÖö†—7F÷'’ö¶W&æVÂ÷"W&f÷&Öæ6P¦6Æ–Òâ÷&–v–æÃ„Ö”"G&ç7÷'BF‡&W6†öÆB&WF–æVC¢Æ&vW"–ÖvW2W6RU„•5D”är66VæWcP§6†&VBÖ'—FR6öFV3²7G&–7BW"×&W6÷W&6R÷&Vbö6æöæ–6Â÷&VFV6öFRöFöÖ–2&VgW6Â&WF–æVBà¤f–ÆVBööÂWw&FW26ææ÷BV&Æ—6‚'VffW'2÷"&—6RÆÆ÷væ6Râ–ÖvRW'&÷'2æ÷rÇ6ð¦V"–ç6–FR7F—fRæVÂâ&VBFö72÷–çBÖ–ÖvR×&WVBÓ“2æÖBâf÷W"æWrfö7W6VB&VÀ¥T’÷6ÖR¶F–ffW&VçC#L+"ôf–ÆRö6öFV2öæF—fR÷V÷F6†V6·2FFVBã“‚ó“"–ÖvR'VFvWBf—‡GW&W0§WFFVBFòvVçV–æS#DÖ”"÷fW&fÆ÷s²ÆÂ&7FW"ÖöæÇ“‚ób76W'F–öç2&WF–æVBâÆö6À¤æöFS#Bã’ãgVÆÂ¢£#SsB52òd”Âò6¶—VB¢£²V&Æ–6F–öâfW&–f–6F–öâföÆÆ÷w2â&W6÷W&6R÷ööÂæB&VçBôÆ"w&ƒ“3²7W&f6S“"÷&ö¦V7F÷#“ð§6÷W&6S“rô–ç6W'CC3rö''W6‚÷&÷FV7FVBÖöFVÆÆ–ærô×VÇF’ög&÷¦Vâ&WF–æVBâæF—fRw&—FW"öæÇ§&VçB–çBÖW‡÷'B–â6†ævVBâæW‡BDUd”4RGvò÷F‡&VRFG2–â6ÖR6W76–öâÂVF—B6V6öæBÀ¥VæFõ&VFòõ6fT÷Vã²ÖFW&–Âv÷&²föÆÆ÷w266WFæ6RÂæ÷Bâ–æfW'&VB&Ææ¶WC“%52à  ¢22ã“2V&Æ–6F–öâfW&–f–VB(	B##bÓÓ€ ¥'VçF–ÖV#CƒC–3c“3ƒ#C336F6&6Ssƒ#†#†cCƒc–s#²FW7FVBG&VP£†ƒS–6cF#C3#“vf33C†FC–Vf6FF“SBâÆÃ3WÆöFVB&Æö"†6†W2ö7&VFVBG&VP¦ÖF6‚Æö6ÂFW7FVB6÷W&6S²fWF6†VB÷&–v–âöÖ–â–FVçF–6ÂâÖ–ã“26†VÆÂöÖæ–fW7Bð§–çFW"–âfW&–f–VBâÆö6ÂæöFS#Bã’ãgVÆÃ#SsE52ód”Âó6¶—²æöFS#"F÷öÆöw¤4“3“Sƒs‚ö¦ö#sc“3SCs#‚5T44U52âvW33“Sƒ“bð¦'V–ÆCsc“3Sccƒ’öFWÆ÷“sc“CC#cc’5T44U52âÆÃ#b÷7FFWÆ÷–ÖVçBÆ—fR6†VÆÂð§fW'6–öâ÷&W6÷W&6R÷ööÂöæWr'VFvWBõT’÷&VçBôÆ"÷&V6÷fW'’ÇW2Væ6†ævVB7W&f6Rð§&ö¦V7F÷"÷6÷W&6Rf–ÆW2'—FRÖÖF6‚6÷W&6Râ–æ—F–Â&VG2GW&–ærFWÆ÷–ÖVçBÖ—†VC“ ¦æBæWrf–ÆW2öæWr'VFvWCCC²f–æÂg&W6‚6ö×ÆWFRw&ƒ#bó#bÖF6†W3“2â&÷FV7FV@¤×VÇF“ãög&÷¦VâöÖöFVÆÆ–ærö''W6‚ô–ç6W'BÆv÷&—F†×2&WF–æVC²æF—fRw&—FW"öæÇ’ÆöFW §–â6†ævW2âÆÂf÷W"6öçF–çV—G’f–ÆW27W'&VçBâF†—2&ööb6†ævW2Fö72öæÇ“²FW7FV@§'VçF–ÖR'—FW2&WF–æVBâW6W#“"f—'7B×Æ6VÖVçB52&÷FV7FVC²&WVFVBÖ–ÖvRFWf–6P¦W†6WF–öâ&VÖ–ç2VæF–æs“2&WFW7Bâæò7GVÂW6W"6÷W&6Rf–ÆRÂ6f&’ÆFVæ7’÷ ¤Ó"$Ò66WFæ6R–æfW'&VBg&öÒæöFR÷6÷W&6RÖ'—FR6†V6·2âæW‡B&WVBÖFB4ÔR6W76–öâÀ§fW&–g’f—'7B&W6W'fVBÂVF—B6V6öæBõVæFõ&VFòõ6fT÷Vã²ÖFW&–Âv÷&²7F—2VWVVBà  ¢22ã“B(	B7–Æ–æFW"Ug2f÷"6öæW2æBW&–v‡B&WföÇfW2(	B##bÓÓ€ ¥W6W"&WVW7FVB7–Æ–æFW"Ug2f÷"&WföÇfRö7–Æ–æFW'2ö6öæW2æB6ö×ÆWF–öâWFòF†P¦æW‡BÖçVÂvFR&Vf÷&RW6–ær÷fW&æ–v‡BâVF—C¢Æ–VB&WföÇfR†2&WföÇfU&öf–ÆP¢†æ÷B7W'fU&öf–ÆR’ÂÇ&VG’VÆ–v–&ÆR–âÖW6‚†VÇFƒ²6öç7FçB×&F—W2ö†—2×6–FP¦6†V6·2–âF†R÷&–v–æÂ7–Æ–æFW"ÖW"vW&RF†R&VgW6ÂâW‡FVæBD„BÖW"öæÇ“ ¦÷&F–æ'’7–Æ–æFW'2&WF–âW†7BÖV7W&VBÖVFvR7G&—÷GvòÖ6Æ–÷WC²fÆÆ&6²&V6÷fW'0§&VwVÆ"6öæ6VçG&–2v÷&ÆBÕ’&–æw2æBF†V—"6–ævÆR&öf–ÆR6†–âg&öÒ&6RF÷öÆöw’à¤æwVÆ"6VÒÇW2ÖV7W&VB&F—W2ö†V–v‡B&öf–ÆRF—7Fæ6R7W÷'G2FW"Âö–çFV@¦VæG2Â6†÷VÆFW'2æB&WGW&âvÆÇ2âöÆRR7Æ—G2W"f6RvVFvS²âÖvöâ627F’Ææ"à¤æòvVöÖWG'’Â&V6—RÂÖöFVÆÆ–ærövW7GW&Rö†—7F÷'’öW‡÷'B¶W&æVÂ6†ævW2â6ÖRæF—fP¦6÷&æW"–ÆöBÂ6öÖÖ—BÂ÷&–v–æÂUbVF—G2Â6fRô÷VâæBtÄ"ôäôÒw&—FW'2âT’W‡Æ–ç0§W&–v‡B7–Æ–æFW"ö6öæRõ&WföÇfR66÷RâF–ÇFVBöVÆÆ—F–6Â÷Gv—7FVBö'&æ6†–æröÖÆf÷&ÖV@¦æB&ö6VGW&ÂöÖöF–f–W"ö–×÷'FVB6öçFW‡G27F–ÆÂ&VgW6RFöÖ–6ÆÇ’âæ÷B&&—G&'’Ö†—0§&ö¦V7F–öâÂ&VÖW6†–ærÂWFòÖ&¶RÂ¦W&òÖF—7F÷'F–öâ÷"WFöÖF–26¶–ærâ6Æ÷6VB&öf–ÆP¦Æö÷2&RVç7W÷'FVBâf÷W"æWrFW7G26÷fW"æF—fR6öæS>(	3cB6–FW2ö×VÇF—ÆR&æG2À¦‡VvR÷F–ç’66ÆRÂ÷&–v–æÂ&WföÇfR÷væW"÷WGWBv—F‚öÆW2÷FW"÷6†÷VÆFW'2÷&WGW&âvÆÇ2À¦æòvVöÖWG'’öÖWFFF×WFF–öâÂöæRVæFòõ&VFòö–FV×÷FVæ6RÂUbVF—G2ö6öFV2ö7GVÂæF—fP¦æBtÄ"fÇVW2ÂFöÖ–2&VgW6ÂæB&WF–æVB÷&–v–æÂ7–Æ–æFW"Æ–÷WBâVçF—&R6†ævV@¥Ub÷&VçBôÆ"w&‚æB6†VÆÂ÷&V6÷fW'’¶W—3“C²÷F†W"ÖöGVÆR–ç2&WF–æVBà ¤æW‡BDUd”4S¢FB²7–Æ–æFW"æB6öæR(i"ÖW6‚†VÇF‚(i"Ug2(i"7–Æ–æFW"Ug2…’’Â–ç7V7@¥UbVF—F÷#²Ç’W&–v‡B&WföÇfRæB&WVC²VæFòõ&VFòæB6fRô÷VâÂ–çBöW‡÷'@¦2FW6—&VBâÇ6ò&WFW7C“2Gvò–ÖvW2–â4ÔRöâ7W&f6R6W76–öâÂf—'7B&W6W'fVBÀ§6V6öæB–æFWVæFVçBâæòæWr52–æfW'&VC²f—'7C“"Æ6VÖVçB&VÖ–ç2&÷FV7FVBà¤ÖFW&–ÂÖ6†ææVÂv÷&²7F—2VWVVB&V†–æBF†W6RÖçVÂvFW2âW6W"W6–ær÷fW&æ–v‡C°¦6öçF–çVRg&öÒ&W÷6—F÷'’FöÖ÷'&÷rÂæògW'F†W"WFöÖF–2'V–ÆBæVVFVBFöæ–v‡Bà ¤Æö6ÂæöFS#Bã’ã6ö×ÆWFR&Vw&W76–öã¢¢£#Ss‚52òd”Âò6¶—VB¢¢à¥&Wf–WvVB6†VÆÂ6†ævW2öæÇ’ÖW6‚†VÇF‚æB&÷F‚&V6÷fW'’U$Ç3²Ub6†–ÆBæBÆ §&VçB6†–ã“Bâ÷&–v–æÃ“2–çFW"÷&W6÷W&6R'VFvWB&WF–æVBââ–æ—F–ÂÆö6À¦66†RÖ6öçG&7B'Vâ6Vv‡Bâ÷fW&'&öB6†VÆÂ–â&WÆ6VÖVçBGW&–ær&W&F–öã°§&W7F÷&VBVç&VÆFVC“2–ç2&Vf÷&Rd”äÂgVÆÃ#Ss…52'VââæòV&Æ—6†VB&Bw&‚à¥V&Æ–6F–öâWf–FVæ6RFòföÆÆ÷s²ÖçVÂFWf–6RvFW2&VÖ–âVæF–ærà  ¢22ã“BV&Æ–6F–öâfW&–f–VB(	B##bÓÓ€ ¥'VçF–ÖSƒƒ3S#“FF##–“Cf6S†6VcCƒ“f3CC–3cfS“²FW7FVBG&VP¢CVF6fcCv&VCƒfC6#3Fcv&c“S#C#&6f#&RâWÆöFVC2W†7B6÷W&6R&Æö'2÷G&VRÀ¦fWF6†VBÖ–âæBÆ–væVBÆö6ÂWV—fÆVçBG&VRâÆö6ÄæöFS#Bã’ãæB†÷7FVDæöFS# ¦gVÆÃ#Ss…52ód”Âó6¶—âF÷öÆöw”4“3“#3C3C“’ö¦ö#scc3SC“#S5T44U53°¥vW33“#3C#“““Bö'V–ÆCscc3SSC3öFWÆ÷“scc3cSS35T44U52âÆÃ"6†V6¶V@¦Æ—fR6†VÆÂöÖæ–fW7BõUb÷væW"ôÖW6‚†VÇF‚ôÆ"&VçG2÷&V6÷fW'’ô×VÇF’÷–çFW"ö'VFvW@¦f–ÆW2'—FRÖÖF6‚6÷W&6RgFW"FWÆ÷–ÖVçBâ–æ—F–ÂV&Æ–2&÷‡’F–ÖV÷WG2ööÆC“0¦Öæ–fW7B&W6öÇfVBöâ&WG&–VBfW'6–öæVBfWF6ƒ²f–æÃ"ó"ÖF6ƒ“BâW‡G&VçfW'6–öæV@¦Öæ–fW7B&WVW7BF–ÖVB÷WBB&÷‡“²æòWf–FVæ6Röb&Vw&W76–öââ&÷FV7FV@¤×VÇF“ãög&÷¦VâöÖöFVÆÆ–ær÷–çB¶W&æVÇ2æBVç&VÆFVC“2–ç2&WF–æVBâÆÂf÷W ¦6öçF–çV—G’f–ÆW27W'&VçC²&ööb6†ævW2Fö72öæÇ’âæòFWf–6R52–æfW'&VBà¥7F÷BÖçVÂvFS¢FöÖ÷'&÷s“B7–Æ–æFW"ô6öæR÷W&–v‡B&WföÇfRUg2³“2&WVBÖ–ÖvP§&WF¶S²f—'7C“"–ÖvRÆ6VÖVçB52&÷FV7FVBâÖFW&–ÂÖ6†ææVÂv÷&²7F—2VWVVBà  ¢22ã“R(	B&V6—6R–çB$t"ò…4"ò†Wƒ²ã“BW6W"52(	B##bÓÓ ¥W6W#“E5266WG2&V6VF–ær7–Æ–æFW"ô6öæR÷W&–v‡B&WföÇfRUg2ÂUbVF—F÷"ö†—7F÷'’ð¥6fT÷VâæB&WVFVBöâ7W&f6R–ÖvW2ÖçVÂÆ—7Bâ&÷FV7C“BUb³“2&WVBÖF@¦&V†f–÷W"æBV&Æ–W"7W&f6RÆ6VÖVçBÂÖ6·2öÆ–W'2÷–çBöæF—fRW‡÷'G2âVF—@£v&3#¢&öGV7F–öâ–çB†2öæÇ’'&÷w6W"7vF6‚ÂæòçVÖW&–2$t"ô…4"VF—F÷"à¤æWr6ÖÆÂ–çBÖ6öÆ÷W"Ö6öçG&öÇ2&–æG2õ$”t”äÂ–çWBÂ5$t#(	3#SRò…5b‡VS(	33cÀ§6GW&F–öâ¶'&–v‡FæW73(	3RÂ†W‚÷F–öæÂ3²6†÷'F†æBöæÇ’6öÖÖ—G2öâ6†ævRà¤‡VR7W'f—fW2w&W’Â6GW&F–öâ7W'f—fW2&Æ6³²–çfÆ–B÷'F–Â÷&ævRVçG&–W2æWfW §V&Æ—6‚æB&WfW'Böâ6öÖÖ—Bâ6ÖR7vF6‚–çWBWfVçB÷vç27G&ö¶R6æ6VÂ÷&öÆÆ&6³°¦æòö–çFW"ö†—7F÷'’÷–çB¶W&æVÂ÷"&W6÷W&6Rö6öFV2öW‡÷'B6†ævRâçVÖW&–26öçG&öÇ0¦föÆÆ÷r÷&–v–æÂÖ6²ö–ÖvRF—6&ÆVB7FFRâ6öÆÆ6VBföÆF÷WBÂ÷&–v–æÂ7vF6‚&WF–æVBà¤''W6‚&VfW&Væ6W2&R6W76–öâT’öæÇ’Âæ÷Bö&¦V7B÷6fRÖWFFFâF‡&VRfö7W6VB7GVÀ¥T’÷—†VÂö†—7F÷'’÷&ö¦V7BöæF—fRFW7G2FFVC²gVÆÂ7V—FR÷V&Æ–6F–öâföÆÆ÷w2à¤öæÇ’–çFW"T’öæWr†VÇW"æB6†VÆÂ÷&V6÷fW'’¶W—3“S²6÷&Rö'VFvWG3“2õUc“Bög&÷¦Vâð¤×VÇF“ã&VÖ–â–ææVBâ&VBFö72÷–çBÖ6öÆ÷W"Ö6öçG&öÇ2Ó“RæÖBf÷"÷væW"VF—Bà¤æW‡BDUd”4R6WE$t"ô…4"ö†W‚Â–çBÂ–6¶W"7–æ2æBw&Wž(i&6öÆ÷W"ö&Æ6¾(i&6öÆ÷W#²Ö6°¦6öÆ÷W"6öçG&öÇ2F—6&ÆVC²†—7F÷'’ö–ÖvRÆ6VÖVçB&VÖ–ç266WFVBâF†Vâ–æFWVæFVç@§&÷Vv†æW72DD×&W6÷W&6R²W‡Æ–6—B66VæRG&ç7÷'Bf÷VæFF–öâF‡&÷Vv‚WF†÷&—FF—fP¦÷væW'2ÂföÆÆ÷vVB'’f—6–&ÆR6öçG&öÇ2÷&Wf–Ws²æò5$t"&ÆVæG2f÷"FFöæ÷&ÖÂÖ2À¦æò&&—G&'’æF—fRÕUbÖFW&–ÂÖWFFF÷"æWrw&—FW"â÷F†W"ÖFW&–Â6Æ÷G2VWVVBà ¤Æö6ÂæöFS#Bã’ãgVÆÂ&Vw&W76–öâ¢£#Sƒ52òd”Âò6¶—VB¢£²W†—7F–æs“Ró“`¦æV&'“E52æBæWs“Rfö7W6VC552â÷&–v–æÂ6öÆ÷W"''W6‚÷&W6÷W&6Rö†—7F÷'’õUbð¦–ÖvRöW‡÷'Bô×VÇF’ög&÷¦Vâ÷væW'2Væ6†ævVBâV&Æ–6F–öâfW&–f–6F–öâföÆÆ÷w2à  ¢22ã“RV&Æ–6F–öâfW&–f–VB(	B’ö7Fö&W"##b„'&—6&æR ¥'VçF–ÖSf3“FSƒCC†F&&33#CCfcc#s–#SSƒcSc²FW7FVBG&VP¢SCFcS3&Sv3&SS†CSƒVCSV3S#sc–3s“vc“RâWÆöFVC2W†7B&Æö'2æB–FVçF–6À§FW7FVBG&VS²Ö–âfWF6†VBöÆö6ÂWV—fÆVçBG&VRÆ–væVBâæöFS#BÆö6Â²æöFS# ¦†÷7FVBgVÆÃ#Sƒ52ód”Âó6¶—âF÷öÆöw”4“3“csSSBö¦ö#ss“3SSƒS5T44U53°¥vW33“csSSSSrö'V–ÆCss“3SS“SƒRöFWÆ÷“ss“3c“C’5T44U52âf–æÃ"ó"6†V6¶V@¦Æ—fR6†VÆÂöÖæ–fW7B÷–çFW"öæWr6öÆ÷W"†VÇW"÷&V6÷fW'’ö6÷&RõUbô×VÇF’ö'VFvWB÷7W&f6P¦f–ÆW2'—FRÖÖF6‚6÷W&6Râ–æ—F–Â–âÖfÆ–v‡B&VG26W'fVC“BæB†VÇW#CBv—F‚&÷‡§F–ÖV÷WC²g&W6‚÷7FFWÆ÷–ÖVçB6ö×ÆWFRw&‚ÖF6†W3“RâöæÇ’–çFW"öæWr†VÇW"À§F‡&VR6†VÆÂ66†R¶W—2æB&Wf–WvVBf—‡GW&R6†ævVC²ÆÂ÷F†W"Æv÷&—F†Ò–ç2&WF–æVBà¤ÆÂf÷W"6öçF–çV—G’f–ÆW27W'&VçBÂW6W#“E52&÷FV7FVBâF†—2&ööb—2Fö72öæÇ“°£“RFWf–6R6öÆ÷W"÷–6¶W"öw&W’Ö&Æ6²&V6÷fW'’÷–çBvFRVæF–ærâæW‡B–æFWVæFVç@§&÷Vv†æW72FF×&W6÷W&6R÷G&ç7÷'Bf÷VæFF–öâW"Fö72÷–çBÖ6öÆ÷W"Ö6öçG&öÇ2Ó“RæÖC°¦æòW‡G&ÖFW&–ÂÖ6†ææVÂ&—G’÷"•BW&f÷&Öæ6R6Æ–Ò–æfW'&VBà  ¢22ã“b(	B6ö×7BÆVgB–çB²ö&¦V7B&F–ÂUc²ã“R52(	B##bÓÓ ¥W6W#“U52&÷FV7G2Æ–æ¶VE$t"ô…4"ö†W‚æB&–÷"–çBõUbâW6W"W‡Æ–6—FÇ’&WVW7G0¥–çBÆVgB÷F–G’&V6W6R'VÆ·’T’ö'7G'V7G2ÖW6‚ÂÇW2FVF–6FVEUb–âö&¦V7B&F–Âà¥F†—2W6W"F—&V7F–öâF¶W2&–÷&—G’÷fW"&÷Vv†æW72v÷&³²VF—BöæÇ’Âæò&÷Vv†æW70§&W6÷W&6R÷66†VÖ6†ævW2ÖFRâ6ÖRFööÂ×6W76–öâ×V’÷væW"7V6–ÂÖ66W7Wb×–çB0¦ÆVgC‡‚÷F÷'‚ó#s'‚&÷VæFVB67&öÆÆ–ærFö6²Â¶VW2÷&–v–æÂfö÷FW"ö'WGFöç2–çF7BÀ§6¶—2v–FR7F–öâ&W&VçF–æs²æW‡BFööÂ6ÆV'2v–GF‚æB÷&–v–æÂ6VçG&VBÆ6VÖVç@§&WGW&ç2â6†&VB÷6—F–öæW"÷v–FRÖÆ–÷WCs3"Væ6†ævVBâ–çFW"&RÖw&÷W24ÔR6öçG&öÇ3 ¦6öÆ÷W"÷6—¦Rö÷6—G’öÆ–W"ôFBW‡÷6VC²''W6‚õ$t$…4"öÆ–W"6WGF–æw2öÖ6·26öÆÆ6VBÀ¦–ÖvR6öçG&öÇ27FvVBöæÇ“²7F–6·’VæFõ&VFôFöæRâæòö–çFW"ö''W6‚÷&W6÷W&6R6†ævW2à¥Ub÷WFW#“+ó#3‚FFVB&W6W'f–ær÷F†W"ö&¦V7B6V7F÷'3²æWwWeFööÇ4'FâÆVæ6†W24ÔP¤ÖW6‚†VÇF‚Ub÷væW"–çWb×FööÇ26W76–öâÂF—FÆUUbæBF–væ÷7F–2æöFW2†–FFVââ&ö¦V7F–öâð§v÷&·76Rö†—7F÷'’÷–ÆöBô6Æ÷6R÷væW'2Væ6†ævVC²&Vg&W6‚7F—2f—6–&ÆRâÖW6‚†VÇF€¦ÖöFR†–FW2Ug2æB&WF–ç2&W—'2âUbÖöæÇ’&W÷'G26¶—†VÇF‚æÇ—6—2æB&Vg&W6€¦öâ6öçFW‡Bö†—7F÷'’6†ævW2â6Æ÷6RöÆBÖöFR&Vf÷&R7v—F6†–ær”G3²÷&–v–æÂ&F–Âð¦&6¶w&÷VæB6Æ÷6RFFW'2–æ6ÇVFWWb×FööÇ2âæò6V6öæBVF—F÷"ö¶W&æVÂö†—7F÷'’à¥GvòæWr–çFVw&F–öâ6†V6·2²WFFVB÷&–v–æÂ&F–Â÷v÷&·76R†&æW72&WF–â6VÖçF–0¦6†V6·3²gVÆÂ7V—FR÷V&Æ–6F–öâföÆÆ÷râÆÃb6†ævVB÷væW'2·6†VÆÂ÷&V6÷fW'““c²Væ6†ævV@§–çB6÷&Rö'VFvWG3“2ö6öÆ÷W#“RõUbÖW#“Bô×VÇF’ög&÷¦VâöÖöFVÆÆ–ær÷6†&VBÆ–÷WG2&WF–æVBà¥&VBFö72÷–çB×WbÖÆ–÷WBÓ“bæÖBâæW‡BDUd”4RÆVgBFö6²fö÷G&–çB÷6V7F–öç2Â–çBöÖ6²ð¦–ÖvRÆ6VÖVçC²ö&¦V7EUb&ö¦V7BöVF—F÷"ô&6²ô6Æ÷6RæBÖW6‚†VÇF‚&W—"&Vw&W76–öâà¥F†Vâ&W7VÖR–æFWVæFVçB&÷Vv†æW72FF×&W6÷W&6RöW‡Æ–6—BG&ç7÷'Bf÷VæFF–öâà ¤Æö6ÂæöFS#Bã’ãf–æÂgVÆÂ¢£#Sƒ252òd”Âò6¶—VB¢¢â–æ—F–ÂgVÆÂ'Và¦6Vv‡BGvò÷WFFFVBFW7BFFW'3£C3’W‡V7FVBÆ—FW&Âf—†VBÖW6‚†VÇF‚”BÃs3¥7vVW†÷7BöÖ—GFVB&VÂDôÒ7G–ÆR&÷W'G’âWFFVBf—‡GW&W2FòGVÂ”BæB7GVÀ¦†÷7B6†S²¶WBÆÂ6VÖçF–2÷&VBÖöæÇ’õ7vVW76W'F–öç2âfö7W6VC•52Âf–æÂgVÆÀ£#Sƒ553²æò'VçF–ÖR7vVW÷"6†&VB÷6—F–öæW"6†ævW2âV&Æ–6F–öâ÷f—7VÂ&ööbföÆÆ÷w2à  ¢22ã“bV&Æ–6F–öâfW&–f–VB(	B’ö7Fö&W"##b„'&—6&æR ¥'VçF–ÖS3#“S3&6&&Cƒ–6cv3FvFS6#ƒscSfCscVf6C&c²FW7FVBG&VP£V&SƒSSScs36#†#ƒ#“FSCSƒ#CfcVS&#“sS’âÆÃ#WÆöFVB&Æö'2÷G&VRÖF6‚FW7FV@¦Æö6Â6÷W&6S²fWF6†VBÖ–âöÆö6ÂWV—fÆVçBG&VRÆ–væVBâÆö6ÄæöFS#B²†÷7FVDæöFS# ¦gVÆÃ#Sƒ552ód”Âó6¶—âF÷öÆöw”4“3“s3cC“c"ö¦ö#sƒ““ƒcCcB5T44U53°¥vW33“s3cCCƒbö'V–ÆCsƒ““ƒƒƒböFWÆ÷“sƒƒ3#‚5T44U52âÆ—fS2óR6†V6¶V@¦f–ÆW2'—FRÖÖF6‚Â–æ6ÇVF–ær6†VÆÂöÖæ–fW7BæBÄÃb6†ævVB'VçF–ÖR÷væW'2Â&V6÷fW'§fW'6–öâ÷v–FRÆ–÷WBô×VÇF’ö6öÆ÷W"õUbÖW"âGvòTä4„ätTBf–ÆW2‡&VÆV6RÖ&ö÷G7G&À§6†&VB÷6—F–öæW#s3"’&WVFVFÇ’&÷‡’×F–ÖVBÖ÷WBöâ…EE&V6†V6³²&W÷6—F÷'’W†7@¦'—FW2÷–ç2&WF–æVBæB&Wf–÷W6Ç’fW&–f–VBâæò6Æ–ÒF†÷6RGvòvW&RfWF6†VC“bà¤6Æ÷VB'&÷w6W"ÆöFVBf—6–&ÆS“b6†VÆÂ'WBvV$tÂ6öçFW‡B7&VF–öâf–ÆVB–âVæ6†ævV@¦Ö–ãƒSBõF‡&VR&VæFW&W#²F†W&Vf÷&RæòÖW6‚÷&F–Âõ–çB&VæFW&VB66WFæ6R6Æ–ÖVBà¤—6öÆFVBFW7BF"6Æ÷6VC²æò67&VVç6†÷Böb&Ææ²ÖW6‚&WGW&æVB2Æ–÷WB&ööbà¤7GVÂ6W76–öâõUb÷væW"6VÖçF–72æBæF—fR–çBö–ÖvRfÆ÷w2&VÖ–âFW7FVB'’æöFS°¦•BÆVgBÖFö6²÷6V7F–öâ÷67&öÆÂæBUbæf–vF–öâÖçVÂvFR&VÖ–ç2VæF–æs“bà¤ÆÂf÷W"6öçF–çV—G’f–ÆW2²v÷&¶fÆ÷rW6W"W†6WF–öâWFFVBâW6W#“U52&÷FV7FVC°§F†—2&ööb6†ævW2Fö72öæÇ’â&÷Vv†æW72VF—B&VBÖöæÇ’Â–×ÆVÖVçFF–öâFVfW'&VBà  ¢22ã“r(	B&÷Vv†æW72FFò&ö¦V7Bf÷VæFF–öã²ã“bW6W"52(	B##bÓÓ ¥W6W#“e52&÷FV7G26ö×7BÄTeB–çB÷6V7F–öç2ôFöæRÂ6öÆ÷W"ö–ÖvRVæ6–Â7–6ÆRÀ¤ö&¦V7B&F–ÅUb&ö¦V7F–öâöVF—F÷"öW†—BæBÖW6‚†VÇF‚&W—"&6VÆ–æRâVF—B7W'&Vç@¦FFc#Ccc¢öæÇ’5$t"6öÆ÷W"&W6÷W&6W2W†—7C²–×÷'FVB66Æ"w&—FW'2Ç&VG’÷vâÖ ¦W‡÷'BâFB6W&FR#‡&÷Vv†æW72&W6÷W&6Sn(	3S"†W2ÂÆ–æV"FFõUb×cÖf—'7Bö&–æF–ærÀ¦÷væVB6GW&RöVæ6öFRöFV6öFRÂ6öÖÖ—GFVB&VBÖöæÇ’6†&–ær6öçfVçF–öââW†7B66†VÖÀ¦6æöæ–6Â÷&–v–æÂ&ö¦V7B'—FW2ÂFVGWDÖ”"Væ—VRó„Ö”"W‡æFVBæB&VFV6öFR'VFvWBð§&VbfÆ–FF–öââ66VæWcbôäÅ’v—F‚&÷Vv†æW73²ÖæFF÷'–6öÆ÷W%–çEfW'6–öâFVÆVvFW0¦÷&–v–æÂ6öÆ÷W'c(	3RVçfVÆ÷RFòVæ6†ævVB÷væW'2âv—F†÷WB&÷Vv†æW72W†7BÆVv7”¥4ôâð§fW'6–öâ&WF–æVBâUbVçfVÆ÷R7F—2UbÖöæÇ“²÷&–v–æÃ3$Ö”"f–ÆR²6öÆ÷W"'VFvWG27F’à¤÷&–v–æÂ66VæR6æ6†÷B÷&W7F÷&RöFDÖW6‚÷6–ævÆR´×VÇF’GWÆ–6FR6†&R&W6÷W&6RÂVF—G0§&WÆ6S²FöÖ–2÷Vâ6÷''WF–öâæB&VæFW"f–ÇW&R&WF–â66VæR÷&W6÷W&6W2ö†—7F÷'’à¤¦ö–â&VgW6W266Æ"ÖöæÇ’–çC²Æ–æ¶VBæF—fUUbwV&B&WF–æVBâ6†&VBW‡÷'BÖW6€§&W6öÇfW"&VgW6W2&÷Vv†æW72Ö&V&–ærô$¢ôtÄ"ôäôÒ†–æ6ÇVF–ærÆöæw6–FR6öÆ÷W"’–ç7FV@¦öb6–ÆVçFÇ’G&÷–ærVç7W÷'FVB6†ææVÂâæòw&—FW"÷&÷fVææ6RövVöÖWG'’ö''W6‚õT¦¶W&æVÂFFVBâ6—‚æWr–çFVw&F–öâFW7G26÷fW"FF'—FW2ÂÆÂÆVv7’6öÆ÷W"G&ç7÷'G2À§V÷F2÷&Vg2÷&VFV6öFRö÷væW'6†—Â7GVÂ†—7F÷'’ôGWÆ–6FRôf–ÆRô÷Vâ÷&öÆÆ&6²æBw&—FW"ð¤¦ö–â&VgW6Ç2âgVÆÂ7V—FR÷V&Æ–6F–öâföÆÆ÷râFö73¢&÷Vv†æW72×&W6÷W&6RÓ“ræÖBà¤7GVÂ&W6÷W&6Rö6öFV2öÖWFFFöwV&B²6ö×ÆWFR&VçBôÆ"w&ƒ“s²–çFW"T’öæÇ§&VçB–âÂ&WF–ç266WFVC“bÆVgBFö6²õUb66W72â×VÇF“ãög&÷¦VâõUc“Bö6öÆ÷W#“Rð¦''W6‚÷&ö¦V7F–öâöÆ–÷WBöÖöFVÆÆ–ær¶W&æVÇ2Væ6†ævVBâæò&÷Vv†æW726öçG&öÇ2÷&VæFW"ð¦W‡÷'BöÆ–W'2öF—7Æ6VÖVçB&—G’6Æ–ÒâæòæWrFWf–6R&÷Vv†æW72FW7B÷76–&ÆR–WBà¤æW‡B÷&–v–æÂ66Æ%är²äôÒôtÄ"ÖFW&–ÂW‡÷'BFFF–öâv—F‚7–æ26GW&Rö&–æF–ærð¦6öÖ&–æVBÖFW&–Â–FVçF—G’FW7G2ÂF†Vâf—6–&ÆR6†ææVÂ÷&Wf–WrF‡&÷Vv‚÷&–v–æÂ–çFW"à¤ÖçVÂæV&'“¢W†—7F–ær6öÆ÷W"–çB6fT÷VâôGWÆ–6FS²Fòæ÷B6²7–çF†WF–2#‚f—‡GW&W2à ¤Æö6ÂæöFS#Bã’ãgVÆÂ¢£#Sƒ’52òd”Âò6¶—VB¢£²6—‚æWs“r6†V6·2æ@¦ÆÂW†—7F–ær6öÆ÷W"õUböÆVgBÖFö6²÷–çBö–ÖvRöæF—fR&Vw&W76–öç272â&Wf–WvVB6ö×ÆWFP§&VçBôÆ"66†Rw&‚Â6÷W&6R7F×2&WF–æVBÂ&÷FV7FVB×VÇF’ög&÷¦VâVæ6†ævVBà¥V&Æ–6F–öâWf–FVæ6RföÆÆ÷w3²æòæWr&÷Vv†æW72FWf–6RT’÷"&VæFW"6Æ–Òà  ¢222'V–ÆBã“rV&Æ–6F–öâfW&–f–6F–öà ¥'VçF–ÖR6öÖÖ—B3c3““scƒ†#&cSFcSCSVC#VVc3“ss&ÂFW7FVBG&VR#FF3SCCc33““#3&3f6FFFf#SCSƒScvV#cC6Â—2V&Æ—6†VBâ†÷7FVBæöFR#"&Vw&W76–öâ'Vâ3““CsƒSƒ3‚†¦ö"sƒsSƒCƒB’76VBÆÂ"ÃSƒ’FW7G2Âv—F‚¦W&òf–ÇW&W2÷"6¶—2âvW2'Vâ3““CsƒSSc6ö×ÆWFVB7V66W76gVÆÇ’†FWÆ÷’¦ö"sƒsS#cS3b’âÆÂ#R6†V6¶VBÆ—fR'VçF–ÖRÂÆ"Â&VÆV6RæB&÷FV7FVB×VÇF’f–ÆW2ÖF6†VB&W÷6—F÷'’'—FW2â&÷FV7FVBã“bW6W"52&VÖ–ç2–âf÷&6S²æò&VæFW&VB&÷Vv†æW72T’66WFæ6R—26Æ–ÖVBà ¤†æG2Ööâã“r6†V6·3¢–çBF—7F–æ7F—fRÖ&²Â6fRæ&÷†Æ"æB&V÷Vã²GWÆ–6FR–çFVBö&¦V7BÂ–çBF†R6÷’ÂæBVæFòõ&VFòv†–ÆR6öæf—&Ö–ærF†R÷&–v–æÂ&VÖ–ç2Væ6†ævVBâ&÷Vv†æW72†2æò6öçG&öÇ2–WC²—G2&W6÷W&6R÷&ö¦V7Bö†—7F÷'’f÷VæFF–öâ—26÷fW&VB'’WFöÖFVBFW7G2âæW‡Bæ'&÷rv÷&²&VÖ–ç266Æ"äræBW†—7F–ærW‡÷'BÖ÷væW"FFF–öâ&Vf÷&Rf—6–&ÆR&÷Vv†æW72–çF–ærà  ¢22ã“‚(	B&÷Vv†æW72W‡÷'BF‡&÷Vv‚W†—7F–ærw&—FW'3²ã“rW6W"52(	B’ö7Fö&W"##` ¥W6W#“u52&÷FV7G2W†—7F–ær6öÆ÷W"6fRô÷VâÂ–çFVBGWÆ–6FR—6öÆF–öâæ@¥VæFòõ&VFòâVF—BÖ–ãcCVC"òã“s¢66Æ%äröæF—fRÖFW&–Â6Æ÷G2ôtÄ"ÖFW&–ÂF6€¦Ç&VG’W†—7BâW‡FVæB÷&–v–æÂ–çBÖW‡÷'B6GW&Rv—F‚7G&–7B÷væVB#‚6÷–W0¦&Vf÷&Rv—BÂW†—7F–æræF—fR&6RUb¶W’öF–vW7Bf÷"&÷F‚6†ææVÇ2ÂæB66Æ%ärp¦Væ6öF–ær†æòvÖÖöfÆ—÷&W6×ÆRöf7F÷"&¶R’â÷&–v–æÂäôÒ&÷Vv†æW726Æ÷Böf7F÷#À¥Ub÷öÇ–vöâö6öçF–æW"öæÖRöFVGWó#DÖ”"'VFvWB&WF–æVBâtÄ"r&÷Vv†æW74f7F÷#æ@¦ÖWFÆÆ–4f7F÷#²–ÖvR–FVçF—G’6W&FRg&öÒ6öÖ&–æVB6öÆ÷W"·&÷Vv†æW72ÖFW&–À¦–FVçF—G’6ò6†&VB6öÆ÷W"6ææ÷BÖW&vRF—7F–æ7B&÷Vv†æW72Ö2â66Æ"ÖöæÇ’æ@¦6öÆ÷W"·66Æ"7W÷'FVC²Vç&W&VB7–æ2æF—fRôô$¢ô¦ö–â7F–ÆÂ&VgW6Râæò&ö¦V7@§66†VÖö†—7F÷'’ö''W6‚õT’ö¶W&æVÂ÷&÷fVææ6R6†ævW2âf—fR7GVÂw&—FW"ôf–ÆRõärö7–æ2ð¦&–æF–ær÷&VgW6Â÷6÷W&6RÖ–Ö×WF&–Æ—G’&Vw&W76–öç2FFVC²öÆC“r7–æ2&VgW6ÂWFFV@§Fò7FÆRÖ&–æF–ærfÆ–FF–öâÂ÷F†W"wV&G2&WF–æVBâ6†ævVB÷væW'2æB&V7W'6—fP§&VçBôÆ"66†Rw&ƒ“ƒ²&÷FV7FVB×VÇF“ãög&÷¦VâöÖöFVÆÆ–æræB66WFVB–çBT§&WF–æVBâ&VBFö72÷&÷Vv†æW72ÖW‡÷'BÓ“‚æÖBâgVÆÂfÆ–FF–öâ÷V&Æ–6F–öâföÆÆ÷rà¤æò&÷Vv†æW726öçG&öÇ2÷&Wf–Wr–WC²æW‡B÷&–v–æÂ–çFW"66Æ"6†ææVÂ–çFVw&F–öâà¤ÖçVÂæV&'“¢W‡÷'BF–ffW&VçFÇ’–çFVB÷&–v–æÂö6÷’FòäôÔBæBtÄ"Â6öæf—&Ð¦–æFWVæFVçB6öÆ÷W"õUbÆ6VÖVçC²–çB6fRô÷Vâö†—7F÷'’&VÖ–ç2&÷FV7FVC“u52à  ¥W6W"&VÖ–æFW"(	B’ö7Fö&W"##c¢WfW'’'V–ÆB6ö×ÆWF–öâ×W7BW‡Æ–6—FÇ’7FFP§v†WF†W"F†W&R—26öÖWF†–ærFòFW7BÂv—F‚'V–ÆB÷&VF–æW72æBV–6²†æG2Ööâ6†V6·2À¦÷"6ÆV&Ç’7FFRæòæWr†æG2ÖöâFW7B—2æVVFVBâ&Vff—&ÖVB–â•õtõ$´dÄõræÖBà  ¢ã“‚f–æÂÆö6ÂfÆ–FF–öã¢æöFS#Bã’ãgVÆÂ¢£"ÃS“B52òd”Âò6¶—VB¢¢à¤f—fRæWrW‡÷'B–çFVw&F–öç2æBÆÂW†—7F–ær–çBö–ÖvRõUböÖöFVÆÆ–ær6†V6·272à¤–æ—F–Â66†R&W&F–öâ66–FVçFÆÇ’&W–ææVBVæ6†ævVC“r6†VÆÂ÷væW'3²&Vw&W76–öà¦6†V6·26Vv‡BF†—2ÂVç&VÆFVB–ç2vW&R&W7F÷&VBÂ&Wf–WvVB6öçG&7B76VBÂæBF†P¦f–æÂ6ö×ÆWFR7V—FR&÷fR&âv–ç7B6÷'&V7FVB6÷W&6Râæò&Bw&‚V&Æ—6†VBà¤×VÇF“ãæBg&÷¦Vâ&WF2Væ6†ævVBâV&Æ–6F–öâfW&–f–6F–öâföÆÆ÷w2à  ¢22ã“‚V&Æ–6F–öâfW&–f–VB(	B’ö7Fö&W"##b„'&—6&æR ¥'VçF–ÖR6öÖÖ—BSvS6c“6ff#†3–“F&#&66&#s3†#C†#“#FÂG&VP¦3Vc““†SfV6CfSS–&6“S“3#3sSC–#C†Â—2V&Æ—6†VBâ†÷7FVBF÷öÆöw§&Vw&W76–öâ'Vâ3“#3#csSSƒ†Â¦ö"s““CS3“SvÂ6ö×ÆWFVB7V66W76gVÆÇ“°¥vW2'Vâ3“#3#csS#V6ö×ÆWFVB7V66W76gVÆÇ’âF†R'V–ÆBw2&V6÷&FVBÆö6ÂgVÆÀ§7V—FR—2"ÃS“B52òd”Âò6¶—VC²F†—26öçF–çVF–öâfW&–f–VB†÷7FVB7V66W72À§v—F†÷WB&W'Vææ–ærF†RÆö6Â7V—FRâÆÂ’6†V6¶VBÆ—fRf–ÆW2'—FRÖÖF6‚Ö–ã §6†VÆÂöÖæ–fW7BÂWfW'’6†ævVB'VçF–ÖRæBÆ"f–ÆRÂæB&÷FV7FVB×VÇF“ãà¤æò'VçF–ÖR6†ævW2–âF†—26öçF–çVF–öâæBæòã“‚FWf–6R52–æfW'&VBà ¥F†R—2&VG’f÷"FW7F–ær(	B'V–ÆBã“‚âW‡÷'BF–ffW&VçFÇ’6öÆ÷W"×–çFV@¦÷&–v–æÂö6÷’FòäôÔBæBtÄ#²6†V6²–æFWVæFVçB6öÆ÷W"æBUbÆ6VÖVçBâ&W–ç@§F†R6÷’æB&WVBäôÔBW‡÷'BFò6öæf—&ÒF†R÷&–v–æÂ&VÖ–ç2Væ6†ævVBà¥&÷Vv†æW72f—‡GW&W2&RWFöÖFVC²F†W&R&Ræò&÷Vv†æW726öçG&öÇ2FòFW7B–WBà¤æW‡Bæ'&÷r'V–ÆC¢f—6–&ÆR&÷Vv†æW726†ææVÂ÷&Wf–WrF‡&÷Vv‚W†—7F–ær6ö×7B–çBÀ§&7FW"ö–çWBö†—7F÷'’÷væW'2Â&W6W'f–ær66Æ"FF6VÖçF–72æBW†—7F–ærW‡÷'G2à  ¢22ã“’(	B&÷Vv†æW72Væ6–Â–çF–æræBw&—66ÆR–ç7V7F–öâ(	B’ö7Fö&W"##` ¥W6W"ã“‚52&÷FV7G2–æFWVæFVçB÷&–v–æÂö6÷’6öÆ÷W"æBUbÆ6VÖVçB–âäôÔ@¦æBtÄ"Â–æ6ÇVF–ær&W–çB÷&RÖW‡÷'B—6öÆF–öââVF—B3Vcs¢ã“r&W6÷W&6R÷&ö¦V7Bð¦†—7F÷'’æBã“‚÷&–v–æÂw&—FW'2W†—7C²æò66Æ"6†ææVÂ–âF†R–çFW"âW‡FVæ@¦÷&–v–æÂf–Ww÷'B×–çBÖ6÷&RæB6ö×7BÆVgBT’öæÇ’â6†ææVÂ6öÆ÷W"õ&÷Vv†æW72À£(	3#SRfÇVR6Æ–FW"Â6ÖR6—¦Rö†&FæW72ö÷6—G’÷&W77W&RæB&÷„Æ"ô¶ÆV6·26×ÆW'2à¤÷VR&7FW"w2&rÖ'—FR–çFW'öÆF–öâ6'&–W2WVÂ$t"fÇVW3²V&Æ—6‚÷væVB#€§F‡&÷Vv‚÷&–v–æÂ&÷Vv†æW72&W6÷W&6R÷ööÂæB66VæR6†V6·ö–çBâv†—FRFVfVÇBÓ#SS°£6Öö÷F‚ó#SR&÷Vv‚âæòvÖÖ6öçfW'6–öâ÷"6öÆ÷W"&ÆVæBÖöFW2–â66Æ"ÖF‚à¤w&—66ÆR–ç7V7F–öâ—2FV×÷&'’æBÆ&VÆÆVC²FöæR&WGW&ç2W†—7F–ær6öÆ÷W"õ7GVF–ð¦V&æ6RâæòÆ—BÖFW&–Â&÷Vv†æW72&Wf–Wr–WBâæWrÖ3S,+#²fÆ–B÷F†W"6—¦W0§&VÖ–â6f&ÆRöW‡÷'F&ÆR'WB–çF–ær&VgW6W2v—F†÷WB&W6×Æ–ærâ&÷Vv†æW726†ææVÀ¦†2æòÆ–W'2öÖ6·2ö–ÖvR÷W&F–öç3²÷&–v–æÂ6öÆ÷W"6öçG&öÇ2F—6&ÆVBÂ&W7F÷&V@¦öâ6öÆ÷W"â6†ææVÂ6†ævR6æ6VÇ2Æ—fR6öçF7B÷Æ6VÖVçBÂæWfW"FG2†—7F÷'’à ¥66Æ"–FVçF—G’¦ö–ç2W†—7F–ær7–æ2ö7W'&VçB×7FFRwV&G2â–çfÆ–B÷7FÆR&–æF–ærÀ§V÷Fö6†V6·ö–çBf–ÇW&R&öÆÇ2&6²&Wf–WræBÆVfW266VæR÷6†&VB&W6÷W&6W2–çF7Bà¤÷&–v–æÂ6–ævÆRô×VÇF’GWÆ–6FRÂ†—7F÷'’Â66VæWcb6fRô÷VâæBäôÒôtÄ"w&—FW'2&VÖ–à¦÷væW'2âöæÇ’Gvò–çFW"ÖöGVÆW2æBF†V—"6†VÆÂ–ç26†ævS²æWr6†–ÆB&VfW&Væ6W0§W6RW†—7F–æs“‚&W6÷W&6R÷ööÂ–ç2â×VÇF“ãög&÷¦VâöÖöFVÆÆ–ær÷&VæFW"öW‡÷'B¶W&æVÇ2À¤Æ"æB''W6‚6÷W&6W2Væ6†ævVBâ6—‚fö7W6VB–çFVw&F–öâ6†V6·26÷fW"7GVÂT’À¦'—FW2ö6æ6VÂö6÷fW&vRÂ†—7F÷'’÷&ö¦V7BÂ7GVÂ6–ævÆR´×VÇF’GWÆ–6FRæBtÄ"öæF—fP¥ärÂV÷F2÷&öÆÆ&6²æB7FÆRöæöãS"&VgW6Ç2âgVÆÂfÆ–FF–öâ÷V&Æ–6F–öâ&VÆ÷rà ¤æW‡BDUd”4S¢–çB(i"6†ææVÂ&÷Vv†æW72Â–çBfÇVSF†Vã#SRVÇ6Wv†W&S²–ç7V7Bw&¦Öâ6öÆ÷W"&WGW&ç2÷&–v–æÂ–çC²&W6VÆV7B&÷Vv†æW72Fò–ç7V7B&WF–æVBÖà¤FöæRõVæFòõ&VFòÂ6fRô÷VâF†Vâ&÷Vv†æW73²GWÆ–6FR÷&W–çBæBW‡÷'BäôÔBFò6†V6°§6Öö÷F‚÷&÷Vv‚&Vv–öç2VæFW"Æ–v‡F–ærâæò&VæFW&VBö•BW&f÷&Öæ6R66WFæ6R–æfW'&V@¦g&öÒæöFRFFW'2âæW‡B'V–ÆC¢Æ—B&÷Vv†æW72&Wf–WrF‡&÷Vv‚W†—7F–ærÖFW&–Âð§7W&f6RÆ–fWF–ÖR÷væW"Â&WF–æ–ær66WFVB6öÆ÷W"V&æ6Rv†W&Ræò66Æ"W†—7G2à ¢ã“’f–æÂÆö6ÂfÆ–FF–öã¢æöFS#Bã’ãgVÆÂ¢£"Ãc52òd”Âò6¶—VB¢¢à¥6—‚æWr66Æ"–çFVw&F–öâ6†V6·273²&Wf–WvVB&VÆV6R6öçG&7CU52æB÷&–v–æÀ¦6öÆ÷W"öÖ6²6†V6·2&WF–æVBâæò'VçF–ÖRFW7G26¶—VBÂæò&÷FV7FVBög&÷¦Vâ6†ævW2à¥V&Æ–6F–öâfW&–f–6F–öâföÆÆ÷w3²7GVÂ•Böw&—66ÆRöæF—fRÖÆ–v‡F–ærvFRVæF–ærà  ¢22ã“’V&Æ–6F–öâfW&–f–VB(	B’ö7Fö&W"##b„'&—6&æR ¥'VçF–ÖRsfSC†S6#FVSVF3s3†SScfVc†F#3#666&3–ÂFW7FVBG&VP¦SS†C3VVSSc3ƒƒSsFfVf&#6366f&fSc&cScv#&Â—2V&Æ—6†VBâ6öææV7FVBv—BFF¦7&VFVBF†R–FVçF–6ÂÆö6ÂFW7FVBG&VS²fWF6†VB÷&–v–âöÖ–âÖF6†VBW†7FÇ’à¤Æö6ÂæöFS#BæB†÷7FVB&Vw&W76–öâ3“#C#s#3ƒ“fò¦ö"ƒ#scS3–&÷F‚70£"ÃcFW7G2Â¦W&òf–ÇW&W2÷6¶—3²†÷7FVB6ö×ÆWFRÆöw2fW&–f–VB6÷VçG2âvW0¦3“#C#s##sSFÂFWÆ÷’¦ö"ƒ#s3s3C#vÂ6ö×ÆWFVBÆÂFWÆ÷–ÖVçB7FW27V66W76gVÆÇ’à¥FVâg&W6‚Æ—fRf–ÆW2'—FRÖÖF6‚FW7FVB6÷W&6S¢6†VÆÂ÷fW'6–öâÂ&÷F‚6†ævVB–çFW ¦÷væW'2Â&÷F‚&V6÷fW'’67&—G2Â–çBF&vWBÂ&÷Vv†æW72&W6÷W&6R÷ööÂæB×VÇF“ãà¤–æ—F–Â&VFWÆ÷–ÖVçB&WVW7G26W'fVC“ƒ²f–æÂ6ö×ÆWFRw&‚ÖF6†W3“’à¥6†VÆÂW6‚Æ6¶VB7&VFVçF–Ç3²6öææV7FVBv—BFFV&Æ–6F–öâW6VBW‡V7FVB×&VçBÀ¦æöâÖf÷&6VB&VbWFFRâæò&÷FV7FVBög&÷¦VâöÖöFVÆÆ–æröW‡÷'B÷&VæFW"6†ævW2à ¤ÆÂf÷W"6öçF–çV—G’f–ÆW2&R7W'&VçC²F†—2&ööb6†ævW2Fö72öæÇ’âW6W#“…50§&÷FV7FVBâã“’•BVæ6–Âöw&—66ÆRöæf–vF–öâöæF—fRÖÆ–v‡F–ær66WFæ6RVæF–æs°¦æò7GVÂ&VæFW&VB&ööb–æfW'&VBg&öÒæöFRFFW'2â&VG’f÷"†æG2Ööâ6†V6·2–à§F†—2'V–ÆBw2VçG'’âæW‡BÆ—BÖFW&–Â&Wf–WrF‡&÷Vv‚W†—7F–ær7W&f6RöÆ–fWF–ÖR÷væW"à  ¢22ã“#(	BÆ—B&÷Vv†æW72ÖFW&–Â&Wf–Wr(	B’ö7Fö&W"##` ¥W6W"ã“’52&÷FV7G2&÷Vv†æW73ó#SRVæ6–Â–çF–ærÂ6†ææVÂöw&—66ÆR&WFVçF–öâÀ¥VæFòõ&VFòÂ6fRô÷VâæBæF—fR6Öö÷F‚÷&÷Vv‚Ö†æFöfbâVF—Bf#vc“#†¢÷&–v–æÀ§–çB×F&vWB7W&f6R—2VæÆ—B&6–2Â&VæFW"ÖÖöFW2÷vç2W†—7F–ær7GVF–òö&6RÆ–v‡F–ærà¤W‡FVæB4ÔR–çB7W&f6RöÆ–fWF–ÖS²æòæWrÖW6‚Â&–67BÂ6†FW"ÂÆ–v‡B÷"†—7F÷'’÷væW"à¥–çB&Wf–Wr6VÆV7BöffW'26†ææVÂ†FVfVÇBÂ&W6W'f–æs“’’òÆ—BÖFW&–ÂâW†—7F–æp¥T’ö–çWB÷væW"6æ6VÇ27F—fR6öçF7B÷Æ6VÖVçBöâFövvÆS²æò66VæRö†—7F÷'’ÖWFFFà¤Æ—fR7FæF&BÖFW&–Â&V6V—fW27W'&VçBfÆGFVæVB6öÆ÷W"‡5$t"’æB&÷Vv†æW72†Æ–æV ¤æô6öÆ÷%76Rôr’Âf7F÷#öÖWFÆæW73÷v†—FR6öÆ÷W"âv÷&¶–ær&÷Vv†æW72&VG2&rWVÂÕ$t ¦'—FW2g&öÒ÷&–v–æÂ÷VR&7FW#²æòvÖÖöf7F÷"&¶RÂ&W6×Æ–ær÷"6÷W&6Rw&—FW2à¤F—'G’WFFW26öÆW66Rv—F‚÷&–v–æÂg&ÖRF–6³²FW‡GW&W2öÖFW&–Ç2&WW6VBVçF–ÂF—7÷6Rà ¤6öÖÖ—GFVBfÆ–B&÷Vv†æW72F—7Æ—2Æ—BgFW"FöæR÷&V'V–ÆB–â÷&–v–æÂ7GVF–òõ6öÆ–Bð¥Ub–ÖvRÖöFW2Â7F—fRæB–æ7F—fRöÆö6¶VBö&¦V7G2â66Æ"ÖöæÇ’W6W2æWWG&Âv†—FS°¦6öÆ÷W"ÖöæÇ’&VÖ–ç2÷&–v–æÂVæÆ—BV&æ6RVæÆW72W‡Æ–6—B–çBÆ—B&Wf–Wrà¤&÷F‚6†ææVÂ–FVçF—F–W2õUb&–æF–ær6†V6¶VBgFW"v—C²7FÆR66Æ"—2æ÷B6×ÆVBÀ§fÆ–B6öÆ÷W"6â&WF–â&6–2fÆÆ&6²âÖÆf÷&ÖVB66Æ"÷Vç7W÷'FVB÷væW'26fVÇ¦fÆÂ&6²Fò÷&–v–æÂ&öG“²7FÆR6öÆ÷W"÷"ÆÂ–çfÆ–B6†ææVÇ2F—7÷6R&Wf–Wrà¤W†—7F–ærF–væ÷7F–2ÖöFW26ÆV"F‡&÷Vv‚6ÖRÆ–fWF–ÖR÷væW"âÆÂ7W&f6RFW‡GW&W0¦&R&—fFVÇ’÷væVC²F—7÷6Röæ6Röâ&öG’öÖöFR÷6W76–öâÆ÷73²÷&–v–æÂ&öG’&W7F÷&VBà¤æöâ×7V&Sn(	3S"6öÖÖ—GFVBFFÖ2F—7Æ’v—F†÷WB&W6×Æ–ær†VF—F–æsS,+"'VÆP§&WF–æVB’âW†–Æ–'’Æ—BFW‡GW&W2WFòGvóS,+%$t$'VffW'2W"7W&f6RÂÇW2W†—7F–æp¦6†ææVÂ7W&f6RæBuR6÷–W3²æ÷BÖV7W&VBFWf–6R×W&f÷&Öæ6RöÖVÖ÷'’6Æ–Òà ¥6—‚fö7W6VB–çFVw&F–öâ6†V6·26÷fW"W†7BFF÷5$t"õUböÖFW&–Â6WGF–æw2æBÆ–fWF–ÖRÀ§66Æ"ÖöæÇ’ö6öÆ÷W"ÖöæÇ’÷7FÆRfÆÆ&6²Â7GVÂT’FövvÆRö6æ6VÂöF—'G’6öÆW66–ærÂÆ—fP¦6öÆ÷W"·66Æ"—6öÆF–öâö6†V6·ö–çB&öÆÆ&6²ö&öG’F—7÷6ÂÂ7–æ2÷&ö¦V7Bö†—7F÷'’æ@¦7GVÂ&VæFW"÷væW"7F—fRö–æ7F—fRöÖöFR&V†f–÷"âæöFRW6W2&VÂF‡&VRÖFW&–Ç2À¦vVöÖWG'’æB—†VÇ3²æòvV$tÂ&VæFW"Â†–v†Æ–v‡G2Â•BÆFVæ7’÷"æöÖB&—G’&ööbà¥6ÖR6÷W&6R&W6÷W&6W2÷&ö¦V7Gcbö''W6†W2öW‡÷'BÆv÷&—F†×2&WF–æVBâf÷W"6†ævV@§'VçF–ÖR÷væW'2ÇW2&V7W'6—fRW‡÷'BôÆ"66†Rw&ƒ²×VÇF“ãög&÷¦VâVæ6†ævVBà¥&VBFö72÷&÷Vv†æW72×&Wf–WrÓ“#æÖBâgVÆÂ&Vw&W76–öâ÷V&Æ–6F–öâWf–FVæ6R&VÆ÷rà ¤æW‡BDUd”4S¢&÷Vv†æW72(i"&Wf–WrÆ—BÖFW&–Ã²–çCF†Vã#SRÂ÷&&—B–â7GVF–òFð¦6ö×&R†–v†Æ–v‡G2â6†ææVÂ&WGW&ç2&WF–æVBw&—66ÆRÂÆ—B&WGW&ç26öÆ÷W"öÖFW&–Âà¤FöæR¶VW2Æ—B&÷Vv†æW73²6fRô÷VâæB6VÆV7BF–ffW&VçBö&¦V7B&WF–âV&æ6Rà¥VæFòõ&VFòæBGWÆ–6FR—6öÆF–öâ&VÖ–â&÷FV7FVBâW†—7F–æræò×&÷Vv†æW726öÆ÷W ¦ö&¦V7G2&WF–â÷&–v–æÂÆöö²âF†VâVF—B&VÖ–æ–ærÖFW&–Â6Æ÷G2Â7F'F–ærÖWFÆæW70§&W6÷W&6RöW‡÷'B÷&Wf–Wr÷væW'3²¶VW7FvW2æ'&÷ræBFFÖv&RÂæò&—G’6Æ–×2à ¢ã“#d”äÂÆö6ÂfÆ–FF–öã¢æöFS#Bã’ãgVÆÂ¢£"Ãcb52òd”Âò6¶—VB¢¢à¥6—‚æWrfö7W6VB6†V6·2æBÆÂÆVv7’6VÖçF–7272â&Wf–WvVB6†VÆÂö66†RÖ6öçG&7@£U53²÷F†W"W‡÷'BôÆ"&VçBVF—G2fW&–f–VB–âÖöæÇ“²&÷FV7FVB×VÇF“ãög&÷¦Vâ–çF7Bà¤–æ—F–Â&W&F–öâ'Vâ6Vv‡Bâ–æ6÷'&V7BFV×÷&'’w&—FRF&vWBF†B&WÆ6VBF†P¦Æö6Â…DÔÂ6†VÆÂv—F‚66†RÖf—‡GW&R¥4ôââ&W7F÷&VB6†VÆÂg&öÒÖ–âÂÆ–VBöæÇ’&Wf–WvV@§–ç2öÖ&¶W'2Â6÷'&V7FVBf—‡GW&RFW7F–æF–öâÂF†Vâ&W&âF†RVçF—&Rf–æÂ7V—FR&÷fRà¤æòÖÆf÷&ÖVB6†VÆÂV&Æ—6†VBæBæò&V†f–÷"6†V6·2&VÆ†VBâV&Æ–6F–öâ&ööbföÆÆ÷w2à  ¢22ã“#V&Æ–6F–öâfW&–f–VB(	B’ö7Fö&W"##b„'&—6&æR ¥'VçF–ÖR#6SS#cf&6fcc#cSC&SVfV#sƒƒ#VSV6CCÂFW7FVBG&VP¦#&#“6C3SF&#6cF6C“SCFcC“S&#Fc–#SCfÂ—2V&Æ—6†VBâ6öææV7FVBv—BFF¦7&VFVBâ–FVçF–6ÂÆö6ÂFW7FVBG&VS²fWF6†VB÷&–v–âöÖ–âÖF6†VBW†7FÇ’à¤Æö6ÂæöFS#BæB†÷7FVB&Vw&W76–öâ3“#CSC#s“3vò¦ö"ƒ3csCc“f&÷F‚70£"ÃcbFW7G2Â¦W&òf–ÇW&W2÷6¶—2††÷7FVB6ö×ÆWFRÆöw2fW&–f–VB’âvW2'Và¦3“#CSC#sƒ†FWÆ÷’¦ö"ƒ3c#ƒ“v6ö×ÆWFVBÆÂFWÆ÷–ÖVçB7FW27V66W76gVÆÇ’à¤ÆÃ‚g&W6‚Æ—fR6†VÆÂ÷fW'6–öâÂf÷W"'VçF–ÖR÷væW'2Â6ö×ÆWFR6†ævVBW‡÷'BôÆ §&VçBw&‚Â&V6÷fW'’Â&÷FV7FVB×VÇF“ãÂ&WF–æVB&÷Vv†æW72&W6÷W&6R÷ööÂæ@§&ö¦V7B6öFV2f–ÆW2'—FRÖÖF6‚FW7FVB6÷W&6Râ–æ—F–Â&VFWÆ÷–ÖVçB&VG26W'fVC““°¦f–æÂ6ö×ÆWFR6†V6¶VBw&‚ÖF6†W3“#âæòg&÷¦VâöÖöFVÆÆ–ærö''W6‚÷&ö¦V7BöW‡÷'@¦Æv÷&—F†Ò6†ævW2â6÷W&6R66Æ"'—FW2öFF6VÖçF–72&WF–æVC²æò7W7FöÒÆ–v‡G2à ¤ÆÂf÷W"6öçF–çV—G’Fö7VÖVçG2WFFVC²F†—2&ööb—2Fö72ÖöæÇ’âW6W#“•52&÷FV7FVC°£“#7GVÂ•B†–v†Æ–v‡G2öÖFW&–ÂV&æ6RöÆFVæ7’66WFæ6R&VÖ–ç2VæF–ærÀ¦æ÷BW7F&Æ—6†VB'’æöFRF‡&VRÖFW&–Â÷FW‡GW&RFW7G2â&VG’f÷"†æG2Ööâ–ç@¥&÷Vv†æW72(i"&Wf–WrÆ—BÖFW&–Ãó#SRö÷&&—BÂ6†ææVÂ&WGW&âÂFöæRõ6fT÷Vâ÷6VÆV7F–öà¦æBW†—7F–æræò×&÷Vv†æW726öÆ÷W"V&æ6RâæW‡B&VÖ–æ–ærÖFW&–Â×6Æ÷BVF—@¢„ÖWFÆæW726æF–FFR’föÆÆ÷w2FWf–6RfVVF&6²ÂF‡&÷Vv‚÷&–v–æÂ÷væW'2à  ¢22ã“#(	BÖWFÆæW72FF÷&ö¦V7Bf÷VæFF–öâf–6†&VB66Æ"÷væW'2(	B’ö7Fö&W"##` ¥W6W#“#52&÷FV7G2Æ—Bô6†ææVÂ&÷Vv†æW72&Wf–WrÂ†–v†Æ–v‡G2ÂFöæRõ6fT÷Vâ÷6VÆV7F–öà¦V&æ6RæB÷&–v–æÂ6öÆ÷W"ÖöæÇ’Æöö²âVF—BÖ–ãVFFcƒS¢–×÷'FVBäôÒôtÄ"ÖWFÆæW70§6Æ÷G2W†—7C²VF—F&ÆR&W6÷W&6R÷66VæRG&ç7÷'BFòæ÷BâW‡G&7BF†R66WFVC“r#€§fÆ–FF–öâö6æöæ–6Â'—FR6öFV2æBFVGW÷V÷F÷&VFV6öFRööÂ–çFò6†&VB66Æ ¦÷væW'3²W†—7F–ær&÷Vv†æW72’öFW67&—F÷"ö'—FR6W&–Æ—¦F–öâöW'&÷'2æCDÖ”"Væ—VRð£„Ö”"W‡æFVB'VFvWG2&WF–æVBâÖWFÆæW72W6W26W&FR7G&–7BÆ–æV"#‚FW67&—F÷"À£n(	3S"†W2ÂUb×cÖf—'7BÂ÷væVB6GW&W2Â&VBÖöæÇ’6öÖÖ—GFVB6†&–ærâæò$t"&ÆVæF–ærÀ¦æWr''W6‚ö¶W&æVÂö†—7F÷'’÷w&—FW"÷"ÖWFÆæW72T’÷&Wf–WrFVÆ—fW&VBà ¤W‡Æ–6—B66VæWcrôäÅ’v†VâÖWFÆæW72W†—7G3¢ÖæFF÷'—–çE&ö¦V7EfW'6–öã(	3bFVÆVvFW0¦W†—7F–ærVçfVÆ÷W2Â&÷Vv†æW77cb&WF–ç66öÆ÷W%–çEfW'6–öã(	3Râv—F†÷WBÖWFÆæW72÷&–v–æÀ¦ÆVv7’¥4ôâ÷fW'6–öâ&WF–æVBW†7FÇ’â–æFWVæFVçBÖWFÆæW72ööÃDÖ”"Væ—VRó„Ö” ¦W‡æFVBÂ÷&–v–æÃ3$Ö”"f–ÆRæB6öÆ÷W"÷&÷Vv†æW72'VFvWG2&WF–æVBâ6ö×ÆWFR&W6÷W&6Rð§&Vb÷66†VÖ÷6—¦R&VfÆ–v‡B&Vf÷&RÖW6‚7&VF–öã²6÷''WF–öâ÷V÷F÷Vç7W÷'FVB÷væW'0§&VgW6RFöÖ–6ÆÇ’âæF—fRUbVçfVÆ÷R&VÖ–ç2UbÖöæÇ’â÷&–v–æÂ†—7F÷'’6æ6†÷G2ð§&W7F÷&RöFDÖW6‚÷6–ævÆR´×VÇF’GWÆ–6FR6''’ÖWFÆæW72'’&VBÖöæÇ’&VfW&Væ6S²VF—G0§&WÆ6Râ÷&–v–æÂf–ÆR6fRô÷VâæB&VæFW"Öf–ÇW&R66VæRö†—7F÷'’&öÆÆ&6²&WF–æVBà¤¦ö–âöÆ–æ¶VB÷W&F–öç2æB&rö7–æ2ô$¢ôtÄ"ôäôÒW‡÷'G2&VgW6RÖWFÆæW72Ö&V&–æp¦ö&¦V7G2ÂWfVâÆöæw6–FR66WFVB6öÆ÷W"÷&÷Vv†æW72Â6òVæF–ær6†ææVÇ26ææ÷Bfæ—6‚à¤æò–×÷'FVBÖWFÆæW72W‡÷'B&V†f–÷"6†ævVC²æF—fR–çBW‡÷'BFFF–öâæW‡Bà ¥6—‚æWr–çFVw&F–öç26÷fW"6öFV2÷væW'6†—ö6†ææVÂ6W&F–öâÂÆÂ6—‚ÆVv7’f÷&ÖG2ð¦W†7B&VÖ÷fÂöFVGWÂ66†VÖ2÷&Vg2÷V÷F2ö÷væW"wV&G2Â7GVÂ†—7F÷'’·6–ævÆRô×VÇF¤GWÆ–6FRÂ7GVÂf–ÆR6fRô÷Vâö6÷''WB÷&VæFW"&öÆÆ&6²ÂÆÂw&—FW"ô¦ö–â&VgW6Ç2à¤W†—7F–æs“~(	3“#66Æ"÷–çB÷&Wf–WræV&'“#552â6ö×ÆWFR&Wf–WvVB&W6÷W&6Rö6öFV2ð¦ÖWFFFöW‡÷'B÷&VçBôÆ"w&ƒ“#²T’÷&VæFW"ö''W6‚Æv÷&—F†×2Væ6†ævVBâ×VÇF“ãÀ¦g&÷¦Vâ&WF2æBÖöFVÆÆ–ær¶W&æVÇ2VçF÷V6†VBâ&VBFö72öÖWFÆæW72×&W6÷W&6RÓ“#æÖBà¤gVÆÂ&Vw&W76–öâ÷V&Æ–6F–öâWf–FVæ6R&VÆ÷râæòæWrÖWFÆæW72FWf–6RfVGW&R–WBà ¤æòæWr†æG2ÖöâFW7BæVVFVBf÷#“#²W6W#“#52—2&÷FV7FVBâæWrf÷VæFF–öâf—‡GW&W0¦&RWFöÖFVBÂæWfW"7–çF†WF–2•BF6²âæW‡Bæ'&÷r'V–ÆC¢6GW&VBÖWFÆæW70§F‡&÷Vv‚W†—7F–ær66Æ"ärôäôÒôtÄ"ÖFW&–Â÷væW'2Â–æ6ÇVF–ær6öÖ&–æVB6öÆ÷W"°§&÷Vv†æW72¶ÖWFÆæW72–FVçF—F–W2ö7–æ26GW&RæBFF6VÖçF–72âF†Vâf—6–&ÆRVæ6–À¦6†ææVÂæBÆ—B&Wf–WrF‡&÷Vv‚W†—7F–ær6ö×7B–çBöÖFW&–Â÷væW'2à ¢ã“#f–æÂÆö6ÂfÆ–FF–öã¢æöFS#Bã’ãgVÆÂ¢£"Ãc"52òd”Âò6¶—VB¢¢à¥6—‚æWr–çFVw&F–öç2²W†—7F–æs“~(	3“#æV&'“#553²&VÆV6R6öçG&7CU52à¤ÆÂ÷F†W"6†ævVB¥2&VçG2fW&–f–VB–âÖöæÇ“²&÷FV7FVB×VÇF“ãög&÷¦VâöÖöFVÆÆ–æp¦æBW†—7F–ær–çB÷&Wf–WröW‡÷'BÆv÷&—F†×2&WF–æVBâæò&V†f–÷"6†V6·2&VÆ†VBà¤æòæWr†æG2ÖöâvFS²W6W#“#52&÷FV7FVBâV&Æ–6F–öâfW&–f–6F–öâföÆÆ÷w2à  ¢22ã“#V&Æ–6F–öâfW&–f–VB(	B’ö7Fö&W"##b„'&—6&æR ¥'VçF–ÖR#Vc&V&FFVc&CF#FS#–fF#sCF&Cƒc&fÂFW7FVBG&VP¦cCv6c“&&#S#ƒfFVCSƒsFc“–c6#v6##Vc&Â—2V&Æ—6†VBâ6öææV7FVBv—BFF¦7&VFVBâ–FVçF–6ÂFW7FVBÆö6ÂG&VS²fWF6†VB÷&–v–âöÖ–âÖF6†VBW†7FÇ’à¤Æö6ÂæöFS#BæB†÷7FVB&Vw&W76–öâ3“#CƒsC“Vò¦ö"ƒCCs““ƒV&÷F‚70£"Ãc"FW7G2v—F‚¦W&òf–ÇW&W2÷6¶—3²†÷7FVBgVÆÂÆöw2fW&–f–VBâvW2'Và¦3“#CƒsCƒ6ÂFWÆ÷’¦ö"ƒCSS##cFÂ6ö×ÆWFVBÆÂ7FW27V66W76gVÆÇ’à¤ÆÃ36†V6¶VBÆ—fRf–ÆW2'—FRÖÖF6‚FW7FVB6÷W&6S¢6†VÆÂ÷fW'6–öâÂWfW'’6†ævV@§'VçF–ÖR÷&VçBôÆ"f–ÆRÂf÷W"æWr66Æ"ÖöGVÆW2Â&V6÷fW'’Â&÷FV7FVB×VÇF“ãæ@§&WF–æVB6öÆ÷W"ööÂâ–æ—F–Â–âÖfÆ–v‡B&VG26W'fVC“#öæWrÖöGVÆW3CC²f–æÂv†öÆP¦6†V6¶VBw&‚ÖF6†W3“#âæò&÷FV7FVBög&÷¦VâöÖöFVÆÆ–ærö''W6‚÷&Wf–WrÆv÷&—F†Ò6†ævW2à ¤ÆÂf÷W"6öçF–çV—G’f–ÆW27W'&VçC²F†—2&ööb6†ævW2Fö72öæÇ’âW6W#“#52&÷FV7G0¦W†—7F–ærÆ—B&÷Vv†æW72ô6†ææVÂôFöæRõ6fT÷Vâ÷6VÆV7F–öâö6öÆ÷W"V&æ6Râ'V–ÆC“#—0¦6ö×ÆWFS²æòæWr†æG2ÖöâFW7BæVVFVB&V6W6RÖWFÆæW726öçG&öÇ2÷&Wf–WröW‡÷'B&P¦æ÷BW‡÷6VB–WBâf—‡GW&RG&ç7÷'Bö†—7F÷'’öFöÖ–2÷VâæB&VgW6Â6†V6·2&RWFöÖFVBà¤æW‡Bæ'&÷r'V–ÆC¢6GW&VBÖWFÆæW72F‡&÷Vv‚÷&–v–æÂ66Æ"ärôäôÒôtÄ"w&—FW'2À§F†Vâ÷&–v–æÂ–çB6†ææVÂöÖFW&–Â&Wf–WrâæòÖWFÆæW72f—7VÂ66WFæ6R6Æ–ÖVBà  ¢22ã“#"(	BÖWFÆæW72W‡÷'BF‡&÷Vv‚÷&–v–æÂäôÒôtÄ"÷væW'2(	B#ö7Fö&W"##` ¤6öçF–çVRWF†÷&—¦VC“#f÷VæFF–öã²æòæWrFWf–6R52–æfW'&VBâW6W#“#52&VÖ–ç0§&÷FV7FVBf÷"–çBöÆ—B&÷Vv†æW72ô6†ææVÂö†—7F÷'’õ6fT÷Vâ÷6VÆV7F–öâö6öÆ÷W"ÖöæÇ’Æöö²à¤VF—BÖ–ã&3C3ƒ3Cƒ¢W†—7F–æræF—fRÖWFÆæW726Æ÷BÂ66Æ"ärÂ–çB6GW&RæBtÄ ¦ÖFW&–ÂF6‚÷vâ&WV—&VBG&ç7÷'BâW‡FVæBF†W6R÷væW'3²æòæWrw&—FW"Â66†VÖÀ¦ÖWFFF&÷fVææ6RÂ†—7F÷'’ÂÖöFVÆÆ–ær÷–çB¶W&æVÂ÷"T’6öçG&öÇ2à ¤6GW&R÷væVBÖWFÆæW72Æöæw6–FR6öÆ÷W"÷&÷Vv†æW72övVöÖWG'’öæF—fRUg2$Tdõ$Rv—C°¦÷&–v–æÂ&6RF&vWBF–vW7BfÆ–FFW2ÆÂ6†ææVÇ2âæF—fRÖWFÆæW72W6W2÷&–v–æÀ¦Æ÷76ÆW72w&—66ÆUär²ÖWFÆæW726Æ÷Böf7F÷#²&÷Vv†æW72f7F÷#öFVfVÇC&WF–æVBà¤÷&–v–æÂæÖW2ö6öçFVçBFVGW÷öÇ–vöâUbööÂö6öçF–æW"ó#DÖ”"vw&VvFR'VFvWB&VÖ–âà¤tÄ"W6W26¶VB$t"FFärs×&÷Vv†æW72†÷##SR’Â#ÖÖWFÆæW72Â#Ó#SRÂf7F÷'3²öæÇ§&÷Vv†æW72&WF–ç266WFVBw&—66ÆRäröÖWFÆÆ–4f7F÷#â6ÖRär$t"öf–ÇFW"ô5$2÷¦Æ– §6¶vW"vWG2W‡Æ–6—BæòÖ6öÆ÷W"ÖÖWFFFF‚Âæ÷B6çf2övÖÖ÷&W6×ÆRVæ6öFW"à¥6¶VB—"66†RÇW2÷&–v–æÂ6öÆ÷W"–ÖvR66†RæBgVÆÂÖFW&–Â¶W’F—7F–æwV—6€¦ÆÂ6öÆ÷W"÷&÷Vv†æW72öÖWFÆæW726öÖ&–æF–öç3²6†&VBW†7B&W6÷W&6R—'2&WW6R–ÖvW2à¤'6VçB6öÆ÷W"&VÖ–ç2v†—FRâ–æFWVæFVçBæöâ×7V&RÖ2&VÖ–âW†7B–âäôÓ²tÄ §&WV—&W2ÖF6†–ær&÷Vv†æW72öÖWFÆæW72F–ÖVç6–öç2æB&VgW6W2&F†W"F†â&W6—¦–ærà¤æWrFF&÷w2&VÖ–âUb×cÖf—'7BÂæòf7F÷"&¶–ær÷"5$t"ÖWFFFöâ66Æ"FFà ¤÷&–v–æÂf–ÆR7F–öç2&W÷'BÖWFÆæW726÷VçG2â&rô$¢÷Vç&W&VB7–æ2æF—fRô¦ö–à§7F–ÆÂ&VgW6RÖWFÆæW73²–çfÆ–BFW67&—F÷"÷7FÆR&–æF–æröWfÇVFVBö–×÷'FVBöÆ–æ¶V@¦÷væW'2&VgW6Râ7–æ2F÷væÆöB6GW&W2æWfW"76–vâÖ2Fò6÷W&6R66VæR÷"æF—fP¥UbÖWFFFâ&W6÷W&6R÷&ö¦V7Gcrö†—7F÷'’ö''W6‚õT’öÆ—B&Wf–WrÆv÷&—F†×2Væ6†ævVBà¤6ö×ÆWFR6†ævVBäröW‡÷'B÷&VçBôÆ"w&ƒ“#"öæÇ“²×VÇF“ãög&÷¦VâVæ6†ævVBà¤öÆC“#7–æ2&Ææ¶WB×&VgW6Â76W'F–öç2æ÷r6†V6²7FÆR&–æF–æs²&rwV&G2&WF–æVBà ¤V–v‡BæWr–çFVw&F–öâFW7G26÷fW"7GVÂäôÒôtÄ"W‡÷'B¶ÆöFW"æBf–ÆR7F–öç2À¦–æFWVæFVçBär5$2÷¦Æ–"ö6†ææVÂ'—FW2Â6öÖ&–æF–öç2öFVGWÂÖWFÂÖöæÇ’FVfVÇG2À§VæWVÂ×6—¦R&VgW6ÂôäôÒ&WFVçF–öâÂ7–æ26æ6†÷G2Â–çfÆ–B÷væW'2Â÷&–v–æÂæF—fP£#DÖ”"&VfÆ–v‡BäBf–æÂw&—FW"6ÂärFF×g2Ö6öÆ÷W"ÖWFFFö÷væW'6†—à¤æF—fRw&—FW"'VFvWBFW7B–×÷'G2—G25ETÂfW'6–öæVB–çBÖW‡÷'BFWVæFVæ7“ §&W&VBvV´Ö2&RÖöGVÆRÖÆö6ÂÂ6òâVçfW'6–öæVBæöFR†VÇW"6ææ÷B&W&P¦æ÷F†W"fW'6–öæVBÖöGVÆRw2w&—FW"âf—'7Bf—‡GW&RGFV×B†—BF†R–çFVæFVB&rwV&C°¦6÷'&V7FVBFW7Bv—&–ærÂæ÷BF†R'VçF–ÖRwV&Bâ&VBFö72öÖWFÆæW72ÖW‡÷'BÓ“#"æÖBà¤gVÆÂ&Vw&W76–öâ÷V&Æ–6F–öâWf–FVæ6R&VÆ÷s²æò&VæFW&W"ôæöÖBV&æ6R66WFæ6P¦–æfW'&VBg&öÒæöFRFFW'2âæòæWr†æG2ÖöâFW7BæVVFVC¢ÖWFÆæW72†2æò6öçG&öÇ0§–WBâæW‡B÷&–v–æÂVæ6–Â66Æ"6†ææVÂ²ÖFW&–Â&Wf–Wr–çFVw&F–öâ–âæ'&÷p§7FvW2Â&W6W'f–ærW†—7F–ær6öÆ÷W"÷&÷Vv†æW72æB–æFWVæFVçB&W6÷W&6R6VÖçF–72à ¢ã“#"f–æÂÆö6ÂfÆ–FF–öã¢æöFS#Bã’ãgVÆÂ¢£"Ãc#52òd”Âò6¶—VB¢¢à¤V–v‡BæWr–çFVw&F–öç2æBÆÂW†—7F–ær–çB÷&Wf–WröÖöFVÆÆ–ærö–×÷'BöW‡÷'B6†V6·0§73²&Wf–WvVB&VÆV6R6öçG&7CU52âärFFÖWFFFF‚&W6W'fW2öÆB6öÆ÷W"ð§66Æ"6VÖçF–73²6÷W&6R&W6÷W&6R÷&ö¦V7Bö†—7F÷'’õT’Æv÷&—F†×2æB×VÇF’ög&÷¦Và§Væ6†ævVBâæò76W'F–öç2W†6ÇVFVC²öÆB7–æ2&VgW6ÂWw&FVBFò&–æF–ær6öçG&7Bà¤æòæWr†æG2ÖöâvFS²V&Æ—6†–ærfW&–f–6F–öâföÆÆ÷w2à  ¢22ã“#"V&Æ–6F–öâfW&–f–VB(	B#ö7Fö&W"##b„'&—6&æR ¥'VçF–ÖRSSSSS3–C6S“sƒ–FS“V3f#–C†#ƒcFvV##vÂFW7FVBG&VP¦#ƒƒcCVFS“#S&6ccC3c3cƒ#6ccs†&3“VÂ—2V&Æ—6†VBâ6öææV7FVBv—BFF¦7&VFVBâ–FVçF–6ÂFW7FVBÆö6ÂG&VS²fWF6†VB÷&–v–âöÖ–âÖF6†VBW†7FÇ’à¤Æö6ÂæöFS#BæB†÷7FVB&Vw&W76–öâ3“33S“s“sCFò¦ö"ƒ3CSCcc&&÷F‚70£"Ãc#FW7G2Â¦W&òf–ÇW&W2÷6¶—3²6ö×ÆWFR†÷7FVBÆöw2fW&–f–VB6÷VçG2âvW0¦3“33S“sƒCÂFWÆ÷’¦ö"ƒ3CScsCCfÂ6ö×ÆWFVBÆÂ7FW27V66W76gVÆÇ’à¤ÆÃ‚6†V6¶VBg&W6‚Æ—fRf–ÆW2'—FRÖÖF6‚6÷W&6S¢6†VÆÂ÷fW'6–öâÂÆÂf—fR6†ævV@¦W‡÷'Bõär'VçF–ÖR÷væW'2æBÆ"&VçG2Â&V6÷fW'’Â&÷FV7FVB×VÇF“ãæB&WF–æV@§66Æ"&W6÷W&6W2÷&ö¦V7B6öFV2÷–çFW"T’ö6÷&R÷–çBF&vWBâ–æ—F–Â–âÖfÆ–v‡B&VG0§6W'fVC“#²f–æÂ6ö×ÆWFR6†V6¶VBw&‚ÖF6†W3“#"âæòg&÷¦VâöÖöFVÆÆ–ærö''W6‚ð§&ö¦V7Bö†—7F÷'’÷&Wf–WrÆv÷&—F†×26†ævVC²6ÖRæF—fR–ÖvR'VFvWBæB&rwV&G2à ¤ÆÂf÷W"6öçF–çV—G’f–ÆW27W'&VçC²F†—2&ööb—2Fö72ÖöæÇ’â'V–ÆC“#"6ö×ÆWFRæ@§V&Æ—6†VBâæòæWr†æG2ÖöâFW7BæVVFVC¢VF—F&ÆRÖWFÆæW726öçG&öÇ2÷&Wf–Wr&VÖ–à¦æW‡C²W‡÷'Bf—‡GW&W2æB7GVÂf–ÆR7F–öç2&RWFöÖFVBÂæò&VæFW&VBöæF—fP¦V&æ6R66WFæ6R–æfW'&VBâW6W#“#52&VÖ–ç2&÷FV7FVC²æó“#ó“#"FWf–6U50¦–çfVçFVBâæW‡B÷&–v–æÂ66Æ"Væ6–Â6†ææVÂÂF†VâW†—7F–ærÖFW&–Â&Wf–Wr÷væW"à ¢22ã“#2(	BÖWFÆæW72Væ6–Â6†ææVÂæBW†—7F–ærÆ—BÖFW&–Â&Wf–Wr(	B#ö7Fö&W"##` ¤VF—BÖ–âc&63†3‚òã“##¢66Æ"&W6÷W&6W2Â6öFV2ö†—7F÷'’öGWÆ–6FRæBæF—fRôtÄ §w&—FW'2Ç&VG’W†—7C²W‡÷6RF†VÒF‡&÷Vv‚÷&–v–æÂ6ö×7BÄTeB–çBæB7W&f6P¦÷væW'2â6†&VB66Æ"6öæf–wW&F–öâ&WW6W266WFVB&7FW"ÂV÷Fö6†V6·ö–çBæ@¦6æ6VÆÆF–öâF‡2âÖWFÆæW727F'G2&Æ6³Â''W6‚FVfVÇG3#SS²÷VR&rWVÂÕ$t §v÷&¶–ær'—FW2V&Æ—6‚–æFWVæFVçBÆ–æV"#‚öæÇ’â6öÆ÷W"öÖ6·2ö–ÖvW27F’F—6&ÆV@§v†–ÆRVF—F–ærV—F†W"66Æ#²&WGW&æ–ær6öÆ÷W"&W7F÷&W2W†—7F–ær6öçG&öÇ2öÆ–W'2à¤æöãS"&WF–æVBÖ2&VgW6R–çF–ær&F†W"F†â&W6×Æ–ærâÆÂ–FVçF—G’ö&–æF–ærÀ¦&öG’Æ–fWF–ÖRÂ'VFvWBæB6†V6·ö–çB&VgW6Â'VÆW2&WF–æVBà ¤W†—7F–ær7W&f6R÷vç26W&FRÆ–æV"&÷Vv†æW72ræBÖWFÆæW72"FW‡GW&W3²ÖWFÀ¦f7F÷#v—F‚ÖÂFVfVÇC÷F†W'v—6RâW†—7F–ærÆ–v‡F–ærõUg2ö6öÆ÷W"5$t"&VÖ–âà¤Æ—fRF—'G’WÆöG26öÆW66S²7v—F6†–ær6†ææVÂôÆ—B÷"66Æ'26æ6VÇ26öçF7Bv—F†÷W@¦†—7F÷'’â6öÖÖ—GFVB7F—fRö–æ7F—fRöÆö6¶VB÷fW&Æ—2W6R6ÖR÷væW#²F—7÷6Âg&VW2Ö2à¤æòæWr''W6‚ö¶W&æVÂ÷w&—FW"ö†—7F÷'’÷væW"ÂÆ–v‡G2ÂVçf—&öæÖVçBÂ÷"ÖöFVÆÆ–ær6†ævW2à¥&WfW'6RÆöFW"ö66†Rw&‚&Wf–WvVBæB–ææVC“#3²&÷FV7FVB×VÇF“ãög&÷¦Vâ–çF7Bà£2æWr–çFVw&F–öç26÷fW"T’÷&só#SRö÷6—G’öæòÖ÷Â6æ6VÆÆF–öâÂV÷Fö6†V6·ö–çBÀ¦–FVçF—G’÷7FÆRöæöãS"Â†—7F÷'’õ6fT÷Vâ÷6–ævÆR´×VÇF’GWÆ–6FRÂ7GVÂäôÒôtÄ"'—FW2À¦Æ–æV""ÖFW&–ÂÂÖ–æFWVæFVæ6RöÆ–fWF–ÖRæB7F—fRö–æ7F—fR&VæFW"÷væW'6†—à¤W†—7F–ær&÷Vv†æW72öÖ6²æV&'“•52â&VBFö72öÖWFÆæW72×–çBÓ“#2æÖBà ¥W6W#“#52&VÖ–ç2&÷FV7FVC²öæW‡F'V–ÆBÆöæR—2æ÷C“#ó“#"ó“#2FWf–6R66WFæ6Rà¤DUd”4S“#3¢ÖWFÆæW73ó#SR6†ææVÂôÆ—BÂÆ÷r&÷Vv†æW72†–v†Æ–v‡G2Â–æFWVæFVçB6†ææVÇ2À¤FöæRõ6fT÷VâÂVæFõ&VFòæBGWÆ–6FR—6öÆF–öã²æF—fRæöÖBÖFW&–Â6æ—G’6†V6²à¤æW‡C¢&W7öæBæ'&÷vÇ’Fó“#2FWf–6RfVVF&6²&Vf÷&RFF–ærÖ÷&RÖFW&–Â6†ææVÇ2à ¢ã“#2Æö6ÂfÆ–FF–öã¢æöFS#Bã’ãgVÆÂ¢£"Ãc3252òd”Âò6¶—VB¢£°£2æWr–çFVw&F–öç2ÂæV&'’&÷Vv†æW72öÖ6³•52æB&VÆV6R6öçG&7CU52à¤æòW†—7F–ær76W'F–öç2&VÆ†VC²&÷FV7FVB×VÇF“ãög&÷¦VâöÖöFVÆÆ–ærVæ6†ævVBà¥V&Æ–6F–öâö†÷7FVB&Vw&W76–öâöÆ—fRÖ'—FRfW&–f–6F–öâföÆÆ÷w2âFWf–6S“#2VæF–ærà ¢22ã“#2V&Æ–6F–öâfW&–f–VB(	B#ö7Fö&W"##b„'&—6&æR ¥'VçF–ÖRSSVc#3#ƒSfvCcSƒ3c†FSvcv6c#–SCV63SFFÂFW7FVBG&VP¦3C&3F6#ƒ&“†#“V&fScVcf&66F333sSvÂ—2V&Æ—6†VBâ6öææV7FVBv—BFF¦7&VFVBF†R–FVçF–6ÂFW7FVBÆö6ÂG&VS²fWF6†VB÷&–v–âöÖ–âÖF6†VBW†7FÇ’à¤Æö6ÂæöFS#BæB†÷7FVB&Vw&W76–öâ3“33sƒccS–ò¦ö"ƒ3C“C“#ƒf&÷F‚70£"Ãc32FW7G2Â¦W&òf–ÇW&W2÷6¶—3²6ö×ÆWFR†÷7FVBÆöw2fW&–f–VBâvW2'Và¦3“33sƒcsFÂFWÆ÷’¦ö"ƒ3C“c“ƒCSÂ6ö×ÆWFVBÆÂ7FW27V66W76gVÆÇ’à¤ÆÃ’g&W6‚Æ—fRf–ÆW2'—FRÖÖF6‚6÷W&6S¢6†VÆÂ÷fW'6–öâÂWfW'’6†ævVB'VçF–ÖRð¦W‡÷'B÷&VçBôÆ"f–ÆRÂ&V6÷fW'’Â&÷FV7FVB×VÇF“ãÂ&WF–æVB66Æ"&W6÷W&6W2ð¦ÖWFÆæW72ööÂæB&ö¦V7B6öFV2â–æ—F–Â–âÖfÆ–v‡B&VG26W'fVC“##²f–æÂ6ö×ÆWFP¦6†V6¶VBw&‚ÖF6†W3“#2âæòg&÷¦VâöÖöFVÆÆ–æröÆ–v‡F–ærõUb÷"w&—FW"Æv÷&—F†Ò6†ævW2à ¤ÆÂf÷W"6öçF–çV—G’f–ÆW27W'&VçC²F†—2&ööb—2Fö72ÖöæÇ’â'V–ÆC“#26ö×ÆWFRæ@§&VG’f÷"†æG2ÖöâÖWFÆæW73ó#SR6†ææVÂôÆ—BÂÆ÷r&÷Vv†æW72†–v†Æ–v‡G2æB–æFWVæFVç@¦6†ææVÇ2ÂFöæRõ6fT÷VâÂVæFõ&VFòæBGWÆ–6FR—6öÆF–öââ÷F–öæÂæF—fRæöÖ@¦V&æ6R6æ—G’6†V6²â7GVÂuR†–v†Æ–v‡G2õVæ6–ÂÆFVæ7’æC“#2FWf–6R66WFæ6P§&VÖ–âVæF–æs²W6W#“#52&÷FV7FVBÂæó“#ó“#"ó“#2FWf–6U52–æfW'&VBà¤æW‡C¢&W7öæBæ'&÷vÇ’Fó“#2FWf–6RfVVF&6²&Vf÷&Ræ÷F†W"ÖFW&–Â6†ææVÂà ¢22ã“#B(	BUbv÷&·76RÆ–W'26öçF–æVB&VæVF‚Ö–âFööÆ&"(	B#ö7Fö&W"##` ¥W6W"&W÷'G2–çFW&Ö—GFVçBÖ—76–ærDõÕ$”t…BÔ”â'WGFöç2GW&–ærUbVF—F÷#°¦6Æ&–f–VBF†W6R&Rg&ÖRõVæFõ&VFòôfö7W2ôö&¦V7G2õd”UrÂæ÷BUbÖÆö6Â6öçG&öÇ2à¤VF—BÖ–ãSS6&c¢æòUb7F–öâFVÆ–&W&FVÇ’†–FW2F†RFööÆ&"â†VFW"7F6¶–æp¦6öçFW‡B—3²f–Ww÷'B†Bæò7F6¶–ær6öçFW‡BÂÆÆ÷v–ærv÷&·76SƒFò÷fW'–ç@¦†VFW"FW66VæFçG2†–æ6ÇVF–ærd”UrG&÷F÷vã#G&VB–ç6–FR†VFW#’à¤FBöæR7F—fRÕUbÖöæÇ’—6öÆF–öâ'VÆR–â÷&–v–æÂWb×v÷&·76R7G–ÆW6†VWC¢f–Ww÷'@¦6öçF–ç2—G2÷vâÆ–W'2v†–ÆRf—6–&ÆRv÷&·76RW†—7G2â÷&–v–æÂ†VFW"&VÖ–ç0¦&÷fR—C²6Æ÷6–ærö†–F–ærUbWFöÖF–6ÆÇ’&VÖ÷fW26öçF–æÖVçBâæò¢Ö–æFW‚&×2&6RÀ¤DôÒ&WÆ6VÖVçBÂWfVçB÷ö–çFW"ö†—7F÷'’öÖöFVÂõUb÷–çBÆv÷&—F†Ò6†ævW2â&Vg&W6€¥Ubv÷&·76R²ÖW6‚†VÇF‚ÆöFW"æB6†VÆÂ÷&V6÷fW'““#C²Vç&VÆFVB–ç2&WF–æVBà ¥6÷W&6RÆ–W&–ærFVfV7B–FVçF–f–VC²W†7B–çFW&Ö—GFVçB•B'WGFöâF—6V&æ6P¦æ÷B&W&öGV6VBâ6Æ÷VBÖ–âvV$tÂ7&VF–öâf–Ç2‡6ÖR¶æ÷vâVçf—&öæÖVçBÆ–Ö—FF–öâ’À§6òæògVÆÂÖ&VæFW&VB66WFæ6R6Æ–ÖVBâ7–çF†WF–2FFÕU$ÂÆ–÷WBW‡W&–ÖVç@¦&Æö6¶VB'’'&÷w6W"U$ÂöÆ–7“²æòv÷&¶&÷VæBGFV×FVBâæV&'’v÷&·76Ræf–vF–öâð¦†—7F÷'’öÆ–fWF–ÖRö&6¶w&÷VæBôfö7W2²&VÆV6S#52â–æ—F–Â&W6öçG&7B6Vv‡Bà¦÷fW"Ö'&öB6†VÆÂ–â&WÆ6VÖVçC²&W7F÷&VBVç&VÆFVB–ç2&Vf÷&Rf–æÂfÆ–FF–öâà¤æòFW7G2vV¶VæVBÂæòW6W#“#552–æfW'&VC²W6W#“#52æB&÷FV7FVB×VÇF“ãög&÷¦Và§&VÖ–ââDUd”4S¢&WVFVFÇ’VçFW"öW†—BUbÂâ÷–æ6‚öVF—BõVæFõ&VFòÂ6†V6²F÷×&–v‡@¦'WGFöç2æBd”UrG&÷F÷vâv†–ÆR–ç6–FRUbæBgFW"&6²Fó4Bâ–bF—6V&æ6P§W'6—7G2Âö'F–â67&VVç6†÷BæBW†7BG&–vvW"&Vf÷&RÖ÷&R&W6VçFF–öâ6†ævW2à¤ÖWFÆæW73“#2FWf–6RvFR7F–ÆÂVæF–ærâæW‡C£“#BFWf–6RfVVF&6²Âæ'&÷r&W—"öæÇ’à ¢ã“#Bf–æÂÆö6ÂæöFS#Bã’ã&Vw&W76–öã¢¢£"Ãc3252òd”Âò6¶—VB¢£°¦æV&'’Ub÷v÷&·76Rö†—7F÷'’ôfö7W2ö&6¶w&÷VæB÷&VÆV6S#52âf–æÂ6÷W&6R6öçF–ç0¦öæÇ’7F—fRÕUb—6öÆF–öâ²&Wf–WvVBÆöFW"÷&VÆV6R–ç3²æò76W'F–öç2&VÆ†VBà¤æò&VæFW&VBöFWf–6RF—6V&æ6R66WFæ6R–æfW'&VC²V&Æ–6F–öâ&ööbföÆÆ÷w2à ¢22ã“#BV&Æ–6F–öâfW&–f–VB(	B#ö7Fö&W"##b„'&—6&æR ¥'VçF–ÖR“vFC–S†S†&&3s#cf#“S3“6VV33ƒ†F3#cFÂFW7FVBG&VP¦C6SVƒ#S6cƒ#&C“3SFcSFCCV#c–c&#“vcfÂ—2V&Æ—6†VBâ6öææV7FVBv—BFF¦7&VFVBF†R–FVçF–6ÂFW7FVBÆö6ÂG&VS²fWF6†VB÷&–v–âöÖ–âÖF6†VBW†7FÇ’à¤Æö6ÂæöFS#BæB†÷7FVB&Vw&W76–öâ3“33ƒƒs33sFò¦ö"ƒ3SSCcS†&÷F‚70£"Ãc32FW7G2Â¦W&òf–ÇW&W2÷6¶—3²6ö×ÆWFR†÷7FVBÆöw2fW&–f–VBâvW0¦3“33ƒƒs#CSFÂFWÆ÷’¦ö"ƒ3SS3sSc6Â6ö×ÆWFVBÆÂ7FW27V66W76gVÆÇ’à¤ÆÃbg&W6‚Æ—fRf–ÆW2'—FRÖÖF6‚6÷W&6S¢6†VÆÂ÷fW'6–öâÂUbv÷&·76RôÖW6‚†VÇF€¦ÆöFW"Â&V6÷fW'’Â&÷FV7FVB×VÇF“ãÂ÷&–v–æÂ†VFW"÷FööÆ&"÷f–Wr552æB÷væW'2À§–çFW"Â&WF–æVB66Æ"&W6÷W&6W2÷ööÂæB&ö¦V7B6öFV2â–æ—F–Â–âÖfÆ–v‡B&VG0§6W'fVC“#3²f–æÂ6†V6¶VBw&‚ÖF6†W3“#BâæòUböÖöFVÂ÷–çBö†—7F÷'’ö–çWBÆv÷&—F†Ð¦6†ævW3²öæÇ’öæR7F—fRÕUb552'VÆRæB&Wf–WvVB&VÆV6Rö66†R&VfW&Væ6W2à ¤ÆÂf÷W"6öçF–çV—G’f–ÆW27W'&VçC²F†—2&ööb—2Fö72ÖöæÇ’â'V–ÆC“#B6ö×ÆWFRæ@§&VG’f÷"•B&WFW7C¢&WVFVFÇ’VçFW"UbVF—F÷"Ââ÷–æ6‚öVF—Bö†—7F÷'’ÂW6Rd”UrÀ§F†Vâ&6²Fó4C²6öæf—&ÒÖ–âF÷×&–v‡B'WGFöç2&VÖ–âf—6–&ÆRæBW6&ÆRâ6÷W&6P¦Æ–W&–ær—77VR&W—&VC²W†7B–çFW&Ö—GFVçB6f&’F—6V&æ6R7F–ÆÂæVVG2F†—0¦FWf–6R6öæf—&ÖF–öââ6Æ÷VBÖ–âvV$tÂVæf–Æ&ÆRÂæògVÆÂÖ&VæFW&VB&ööbà¤–b—BW'6—7G2ö'F–â67&VVç6†÷BæBW†7BG&–vvW"&Vf÷&RgW'F†W"T’6†ævW2à¥W6W#“#52&÷FV7FVC³“#2ÖWFÆæW72FWf–6RvFR7F–ÆÂVæF–ærÂæò–æfW'&VB52à ¢22FWf–6RfVVF&6²(	Bã“#BFööÆ&"53²ÖWFÆæW72d”Â(	B#ö7Fö&W"##` ¥W6W#¢(	Å52f÷"F†Rf—‚î(	Ò&÷FV7Bã“#BÖ–âF÷×&–v‡BFööÆ&"f—6–&–Æ—G’F‡&÷Vv‚U`¤VF—F÷#²¶VW7F—fRÕUbf–Ww÷'B—6öÆF–öâæB÷&–v–æÂ†VFW"ö7F–öâ÷væW'2–çF7Bà ¤ÖWFÆæW72—2äõB66WFVC¢W6W"&W÷'G2v†öÆRÖöFVÂ&Æ6²–â6†ææVÂÂv†—FRG&w0¦&Æ6²ò&Æ6²G&w2v†—FRÂÆ—B–çG2&Æ6²ÂæBæòÖWFÂ6†ææVÂ–âW‡÷'Bà¥G&VBÆÂ&W÷'FVB7–×Fö×22â÷VâFWf–6Rf–ÇW&S²Fòæ÷B–æfW"ÖWFÆæW7250¦g&öÒF†R6W&FRFööÆ&"66WFæ6Râæò7V7VÆF—fR–çfW'6–öâ÷"&W6÷W&6RÖ–w&F–öâà ¤VF—B7W'&VçC–CCVc3¢6Æ–FW"f÷'v&G2–çFVvW#(	3#SRF—&V7FÇ“²66Æ"&7FW"V&Æ—6†W0§&r#‚–æFWVæFVçBöb6öÆ÷W#²6†ææVÂW6W2w&—66ÆS²Æ—B6×ÆW2"v—F‚f7F÷#°¦W†—7F–æræF—fR6Æ÷BæBtÄ"6¶VB"&V6V—fR6GW&VBÖWFÆæW72â&W'Vâ7GVÂT’ð§–çFW"ö†—7F÷'’öGWÆ–6FR÷&Wf–WröW‡÷'B7V—FW3£#52ód”Âó6¶—âF†÷6Rf—‡GW&W0§w&—FS#SRv†—FRó&Æ6²æB6öçF–âW†7BÖWFÆæW72–âäôÒôtÄ"Â6òF†W’FòäõB–W@§&W&öGV6RW6W"f–ÇW&RâÆ—BÖFW&–Â÷66VæR†fRæò&VfÆV7F–öâVçf—&öæÖVçC²÷76–&ÆP¦F&²ÖÖWFÂV&æ6R6öçG&–'WF÷"ÂäõB6öæf—&ÖVBF–væ÷6—2öbÆÂ7–×Fö×2à¤6Æ÷VBuRÆ–Ö—FF–öâ7F–ÆÂ&WfVçG2&VæFW&VBÖFWf–6R&W&öGV7F–öâà ¤æW‡B&WV—&VBWf–FVæ6S¢ffV7FVBæ&÷†Æ"&ö¦V7BæB—G2W‡÷'FVBææöÒÂÇW267&VVç6†÷@§v—F‚6†ææVÂõ&Wf–Wr6VÆV7F÷"æBfÇVRf—6–&ÆRâG&6RW†7BWF†÷&VB'—FW2ö&–æF–ærÀ¦7GVÂW‡÷'FVB6Æ÷Böf7F÷'2æBF—7Æ–VB&Wf–Wr&Vf÷&R6†æv–ær6Æ–FW"6VÖçF–72à¤Fòæ÷BF—6Ö—72&W÷'B&V6W6Rf—‡GW&W272â¶VW÷&–v–æÂ÷væW'3²æò&ÆÆVÂÖFW&–À¦÷"''W6‚–×ÆVÖVçFF–öââ'VçF–ÖR&VÖ–ç3“#BÂæòæWr'V–ÆB÷"æWrÖçVÂvFR–WBà ¢22ã“#R(	B–çFVBÖWFÂÆ—B&Wf–Wr&VfÆV7F–öâ–çWB(	B#ö7Fö&W"##` ¥W6W"6Æ&–f–VBv—Fƒ“#B67&VVç6†÷G2²ÔUDÂDU5Bæ&÷†Æ"òææöÓ¢6†ææVÃ#SRG&w2v†—FP¦6÷'&V7FÇ“²ÖWFÂW‡÷'G2W&fV7FÇ’–âæöÖBâ6Öö÷F‚ÖWFÆÆ–2F6†W2GW&â&Æ6²–à¤&÷„Æ"Æ—BÂ–æ6ÇVF–ærv†Vâ&÷Vv†æW73—2–çFVB÷fW"ÖWFÂâ&–÷"7W7V7FVB'—FP¦–çfW'6–öâöW‡÷'BÆ÷72&R7WW'6VFVB'’6öæ7&WFRWf–FVæ6RâFV6öFVB7GVÂ&ö¦V7@¦†2–æFWVæFVçCS,+"6öÆ÷W"æBÖWFÆæW73²ÖWFÂ6öçF–ç3(	3#SRâ7GVÂæF—fRÖFW&–À¦†26öÆ÷"¶ÖWFÆæW72ÂÖWFÆæW72öf7F÷$ÖWFÆæW73²W‡÷'FVBw&—66ÆUärÖF6†W2UdU%§&ö¦V7BÖWFÆæW72'—FRW†7FÇ’â7WÆ–VB&ö¦V7B&VFFW26†÷vâ&÷Vv†æW72VF—C²æð§&÷Vv†æW72Ö&W6VçB–âF†B6æ6†÷BÂæ÷B&ööböbG&÷VB&÷Vv†æW72âWÆöG2&VÖ–à§VæÖöF–f–VBæB&Ræ÷B6÷–VB–çFò'VçF–ÖR÷&W÷6—F÷'’à ¥&ö÷B6÷W&6RöÖ—76–öã¢7FæF&B–çFVBÖWFÂ†Bæò66VæRöÖFW&–Â&VfÆV7F–öâ–çWBà¤F—&V7BÆ–v‡G2v—fRæ'&÷r†–v†Æ–v‡G3²6Öö÷F‚ÖWFÂ6â÷F†W'v—6R6†÷r&Æ6²â¶VW&p£öæöæÖWFÂó#SVÖWFÂ6VÖçF–72æBW†—7F–ærw&—FW'2â÷&–v–æÂ7W&f6RöÆ–fWF–ÖR÷væW ¦æ÷r7V—&W2Æö6Â&ööÒÕ$TÒöæÇ’f÷"ÖWFÆÆ–2Æ—BÖFW&–Âv—F‚æòW†—7F–ær66VæP¦Vçf—&öæÖVçBâ÷&–v–æÂF‡&VSs’&ööÔVçf—&öæÖVçB²Õ$TÔvVæW&F÷"Ã#†7V&R6—¦RÂæò„E ¦æWGv÷&²fWF6‚Â7W7FöÒ6†FW"÷"FFVBÆ—fR×66VæRÆ–v‡G2â–æFWVæFVçBVçdÖW"ÖFW&–À§W6W26†&VBW"×&VæFW&W"÷&Vf6÷VçBööÃ²vVæW&F÷"÷&ööÒFV×÷&'’76WG2F—7÷6VBgFW ¦7&VF–öâÂ&VæFW"F&vWBg&VVBW†7FÇ’öæ6RgFW"Æ7B7W&f6Râ6†ææVÂ†öÆG266WFV@§VæÆ—BÖÂ6öÆ÷W"÷&÷Vv†æW72ÖöæÇ’F‡2Væ6†ævVC²W‡Æ–6—B66VæRVçf—&öæÖVçB&W7V7FVBà¥6÷W&6R–çBõUg2ö†—7F÷'’÷&ö¦V7G2æBW‡÷'Bf7F÷'2öÖ2Væ6†ævVBâæò–çfW'FVB×6Æ–FW §v÷&¶&÷VæBÂ6÷W&6RÖ–w&F–öâ÷"66VæRÖvÆö&ÂÆ–v‡F–ær6†ævRà £6æWr&Vw&W76–öç26÷fW"÷&–v–æÂ7W&f6R&–æF–æröb&VfÆV7F–öâ¶W†7B66Æ"6†ææVÇ2À¤6†ææVÂôÆ—B&WW6R÷6÷W&6R&W6W'fF–öâÂ6öÆ÷W"ÖöæÇ’ö7W7FöÒVçf—&öæÖVçB—6öÆF–öâÀ¦×VÇF—ÆR7W&f6W2÷&VfW&Væ6RÆ–fWF–ÖRÂ&VæFW&W"6W&F–öâæBf–ÆVBÖvVæW&F–öâ&WG'’à¤æV&'’æWr·&÷Vv†æW72öÖWFÆæW72öW‡÷'C352Â&VÆV6SU53²gVÆÂ÷V&Æ–6F–öâ&VÆ÷rà¤6Æ÷VBuR6ææ÷B&VæFW"7GVÂÖ–ã²f¶RF&vWBfW&–f–W2÷væW'6†—öæÇ’Âæ÷BuRÆöö²à¤öff–6–Â“¢F‡&VV§2æ÷&röFö72÷vW2õ&ööÔVçf—&öæÖVçBæ‡FÖÂæBÕ$TÔvVæW&F÷"æ‡FÖÃ°§–ææVB–ç7FÆÆVBF‡&VSs’6÷W&6RfW&–f–VB7W÷'G2g&öÕ66VæR÷F–öç2ç6—¦Rà ¥W6W#“#BFööÆ&"52&÷FV7FVC²7W'&VçB'VçF–ÖR6÷'&V7F–öâöæÇ’–çFVBÖFW&–À§&VfÆV7F–öâF‚æB&Wf–WvVB&WfW'6RÆöFW"w&ƒ“#RâÖWFÆæW72WF†÷&–æröW‡÷'G0¦&R6öæf—&ÖVB'’W6W"6Æ&–f–6F–öâÃ“#Rf—7VÂ66WFæ6RVæF–ærâDUd”4S¢&V÷Và§6fVB–çFVB7V&RÂÆ—B²ÖWFÆæW73#SRæB&÷Vv†æW73Â÷&&—C²6†÷VÆB&VfÆV7B7GVF–ð§æVÇ2&F†W"F†â6öÆ–B&Æ6²â6ö×&R&÷Vv†æW73#SRÂ6†ææVÃó#SRÂFöæR÷&V÷Vâæ@¤äôÔBW‡÷'BâæW‡B&W7öæBæ'&÷vÇ’Fó“#Rf—7VÂfVVF&6²&Vf÷&RæWr6†ææVÇ2à ¢ã“#Rf–æÂÆö6ÂæöFS#Bã’ã¢¢£"Ãc3b52òd”Âò6¶—VB¢£°¦æV&'“352æB&VÆV6SU52â7GVÂ7WÆ–VBäôÒ÷&ö¦V7BÖWFÆæW726ö×&VB'—FP¦f÷"'—FS¢–FVçF–6ÂâæòFW7B76W'F–öç2&VÆ†VC²æò6÷W&6R÷W6W"f–ÆRÖöF–f–6F–öç2à¥&÷FV7FVC“#BFööÆ&"æB×VÇF“ãög&÷¦Vâ&WF–æVBâV&Æ–6F–öâ&ööbföÆÆ÷w3°§&VÂuRó“#R•B&VfÆV7F–öâV&æ6R7F–ÆÂVæF–ærà ¢22ã“#RV&Æ–6F–öâfW&–f–VB(	B#ö7Fö&W"##b„'&—6&æR ¥'VçF–ÖRS“scS–Sƒƒ“####–3#†V3S†6#S#c#63VÂFW7FVBG&VP¦scc6fSsC““C–6VCcc6cS3fCVVC“†Ffcƒ#–Â—2V&Æ—6†VBâ6öææV7FVBv—BFF¦7&VFVBF†R–FVçF–6ÂFW7FVBÆö6ÂG&VS²fWF6†VB÷&–v–âöÖ–âÖF6†VBW†7FÇ’à¤Æö6ÂæöFS#BæB†÷7FVB&Vw&W76–öâ3“3c#scsSò¦ö"ƒC3#Cƒ“ƒ“–&÷F‚70£"Ãc3bFW7G2Â¦W&òf–ÇW&W2÷6¶—3²6ö×ÆWFR†÷7FVBÆöw2fW&–f–VBâvW0¦3“3c#scSs†ÂFWÆ÷’¦ö"ƒC3#c#CCÂ6ö×ÆWFVBÆÂ7FW27V66W76gVÆÇ’à¤ÆÃ#g&W6‚Æ—fRf–ÆW2'—FRÖÖF6‚6÷W&6S¢6†VÆÂ÷fW'6–öâÂæWr&VfÆV7F–öâ†VÇW"À¦÷&–v–æÂ–çB7W&f6RæBWfW'’6†ævVB'VçF–ÖRöW‡÷'B÷&VçBôÆ"f–ÆRÂ&V6÷fW'’À§&÷FV7FVB×VÇF“ãÂ&WF–æVB66Æ"÷&ö¦V7B÷væW'2æB66WFVC“#BUb—6öÆF–öâà¤–æ—F–Â–âÖfÆ–v‡B&VG26W'fVC“#BöæWr†VÇW#CC²f–æÂ6†V6¶VBw&‚ÖF6†W3“#Rà¤öæÇ’–çFVBÖFW&–Â&VfÆV7F–öâ&V†f–÷"6†ævVC²æF—fRôtÄ"Æv÷&—F†×2æB6÷W&6P§66Æ"fÇVW2&WF–âW†7B66WFVB'—FW2â7WÆ–VB&ö¦V7BöæF—fRf–ÆW2VæÖöF–f–VBà ¤ÆÂf÷W"6öçF–çV—G’f–ÆW27W'&VçC²F†—2&ööb—2Fö72ÖöæÇ’â'V–ÆC“#R6ö×ÆWFRæ@§&VG’f÷"•BÆ—BÖFW&–ÂÖWFÃ#SR÷&÷Vv†æW73¶÷&&—B&VfÆV7F–öâ6†V6²Â&÷Vvƒ#SP¦&ÇW"6ö×&—6öâÂ6†ææVÃó#SRæBFöæRõ6fT÷VââW†—7F–ær6†ææVÂæBæF—fRW‡÷'@¦6öæf—&ÖVB6÷'&V7B'’7WÆ–VBf–ÆW2÷W6W"6Æ&–f–6F–öâÂæ÷B&WfW'6VBâ&VÂuP§&VfÆV7F–öâV&æ6RæBÆFVæ7’&VÖ–âFWf–6R×VæF–æs²æöFRÕ$TÒF&vWBFFW §fW&–f–W2&–æF–ær÷6†&–æröÆ–fWF–ÖRöæÇ’âW6W#“#BFööÆ&"52&÷FV7FVBà¤æW‡C£“#Rf—7VÂfVVF&6²Âæ'&÷rf—†W2&Vf÷&RgW'F†W"ÖFW&–ÂÖ6†ææVÂv÷&²à ¢22ã“#b(	Bv†öÆRÖö&¦V7BFf–ÆÃ²&WVW7FVB''W6‚&öFÖ(	B#ö7Fö&W"##` ¥W6W#“#RfVVF&6³¢&VfÆV7F–öç27F–ÆÂæ÷Bf—6–&ÆR–â&÷„Æ"&Wf–Ws²æöÖBW‡÷'@®(	Æw&VN(	ÒæB&÷FV7FVBã“#Rf—7VÂf—‚—2äõB66WFVBâæògW'F†W"7V7VÆF—fRÆ–v‡F–æp¦6†ævR–ã“#c²&W6W'fR&rÖ2æB6÷'&V7BæF—fR†æFöfbâæVVB7GVÃ“#Ró“#b&Wf–Wp§fW'6–öâ÷7FFR÷"&VæFW&W"F–væ÷7F–72&Vf÷&R6Æ–Ö–æræ÷F†W"&VfÆV7F–öâ&W—"à¥W6W"&WVW7G2FFòf–ÆÂÂÇ†6ö×F–&–Æ—G’ÂFVÆWFR×–çBöW&6W"Â&ÇW"æB6×VFvRà¤6Æ&–f–VBFf–ÆÂFVfVÇBt„ôÄRô$¤T5BÂ6VÆV7FVBÆ–W"ö6†ææVÂÂæ÷B—6ÆæBöfÆööB&Vv–öâà¤VF—BW†—7F–ær&7FW"ö–çWB÷7F6²ö†—7F÷'’æB&–÷"¶ÆV6·2–çFVw&F–öâVF—Bf—'7Bà ¤÷&–v–æÂ&7FW"æ÷r6†&W2W†7FÇ’F†R6ÖR6÷fW&vRö÷VR÷7G&–v‡BÖÇ†FW†VÀ¦÷W&F–öâf÷"''W6‚æBf–ÆÂâæWrFööÂ6VÆV7F÷"''W6‚òFf–ÆÂ+rv†öÆRö&¦V7Bà¥Væ6–ÂöÖ÷W6RF÷vâ×W7B†—Bf—6–&ÆR6VÆV7FVBÖW6ƒ²v†öÆSS,+"6VÆV7FVBÆ–W"ö6†ææVÀ§&Wf–Ww2B7W'&VçB÷6—G’÷fÇVRÂ&VÆV6R6öÖÖ—G2öæ6Rf–÷&–v–æÂf–æ—6‚÷&VfÆ–v‡Bð¦6†V6·ö–çBô4õrâ6—¦R÷&W77W&RFòæ÷BÆ–Ö—Bf–ÆÂâG&sã‡‚Âö–çFW&6æ6VÂ÷FööÂö6†ææVÀ§7v—F6‚ö&öG’Æ÷726æ6VÃ²f–ævW'27F–ÆÂæf–vFRÂ&6¶w&÷VæB6öçF7G2æWfW"f–ÆÂà¤6öÆ÷W"ö–ÖvRö†–FFVâÖÆ–W"÷66Æ"VÆ–v–&–Æ—G’wV&G2&WF–æVC²–ÖvR6öÆ÷W"&VÖ–ç0§&VBÖöæÇ’ÂVF—F&ÆRÖ6·2f–ÆÂæ÷&ÖÆÇ’âæòÖ÷FG2æò†—7F÷'“²V÷Fö6†V6·ö–ç@¦f–ÇW&R&W7F÷&W2÷&–v–æÂ&W6÷W&6R÷&Wf–Wröæf–vF–öââæò66†VÖ÷w&—FW"6†ævW2à £FæWr–çFVw&F–öç3¢W†7B6†&VB&7FW"6÷fW&vRöÇ†öæòÖ÷ö6æ6VÃ²7GVÂT’Æ–W ¦f–ÆÂæB6÷W&6R&W6W'fF–öâõVæFõ&VFòõ6fT÷VâöæF—fRäs²–æFWVæFVçB66Æ"¶Ö6°¦f–ÆÃ²ÖW6‚Ö—72öf–ævW"öG&rö6æ6VÂ÷6WGF–æw2ö&öG’ÖÆ÷72ö6†V6·ö–çB&öÆÆ&6²âæV&'“•53°¦gVÆÂæBV&Æ–6F–öâ&VÆ÷râ÷&–v–æÂ''W6‚W‡V7FF–öç2&WF–æVBÂæòg&÷¦Vâô×VÇF’ö¶W&æVÀ¦6†ævW2â&Wf–WvVB6†&VB&7FW"öÖ–â´Æ"&WfW'6R66†Rw&ƒ“#böæÇ’à ¥&VÖ–æ–ær&WVW7FVB''W6†W2&R66WFVB&öFÖÂæ÷BFVÆ—fW&VB'WGFöç3¢W&6W ¢‡G&ç7&VçB÷fW&Æ—2öÖ6·3²W‡Æ–6—B&6R&W6WB6VÖçF–72’ÂÇ†F—2†&÷VæFVBäp¦6÷fW&vR÷&÷FF–öâv—F‚÷&–v–æÂ''W6‚’Â&ÇW"æB6×VFvRv—F‚UbÖ—6ÆæB÷6VÒÖv&P§6×Æ–ær6òæV–v†&÷W&–ærFÆ2—6ÆæG26ææ÷B6öçFÖ–æFRVç&VÆFVB7W&f6W2à¤æò%"–×÷'B÷"vVæW&ÂæöÖB''W6‚Öf÷&ÖB6ö×F–&–Æ—G’&öÖ—6VBâ&VfW"VF—FV@¤¶ÆV6·2Æv÷&—F†×2–âW†—7F–ær&7FW"ö–çWBö†—7F÷'’÷fW"æ÷F†W"–çF–ærVæv–æRà¤æW‡Bæ'&÷r'V–ÆC¢&VfÆV7F–öâF–væ÷7F–2Wf–FVæ6RÇW2W&6W"öÇ†–×ÆVÖVçFF–öã°¦¶VW&ÇW"÷6×VFvR66÷R&÷VæFVBæBFW7B&Vf÷&RW‡÷6–ærâæòæWrÖFW&–Â6†ææVÂv÷&²à¤DUd”4S“#c¢6†ö÷6RFööÂFf–ÆÂÂFÖW6‚v—F‚6†÷6Vâ6öÆ÷W#²VæFõ&VFòâf–ÆÂâ÷fW&Æ¦CSR÷6—G“²6öæf—&ÒVæFW&Ç––ær–çB&WF–æVBâf–ÆÂ&÷Vv†æW72ôÖWFÆæW73ó#SRæ@¦6†V6²6†ææVÂöW‡÷'B–æFWVæFVæ6S²7v—F6‚''W6‚æB6öæf—&Òæ÷&ÖÂVæ6–Â7G&ö¶W2à ¢ã“#bf–æÂÆö6ÂæöFS#Bã’ã&Vw&W76–öã¢¢£"ÃcC52òd”Âò6¶—VB¢£°¦æWrf–ÆÃE52ÂæV&'“•52Â&VÆV6SU52â–æ—F–Â&W&F–öâ6öçG&7B6Vv‡B6†&V@¤Æ"&7FW"öÖ—GFVBg&öÒÆöFW"6Æ÷7W&S²6ö×ÆWFRÖ–âôÆ"w&‚&Wf–WvVBæBWFFV@¦&Vf÷&Rf–æÂ'Vââæò76W'F–öç2&VÆ†VC²&÷FV7FVB×VÇF“ãög&÷¦VâöW‡÷'B&WF–æVBà¥&VfÆV7F–öã“#R&VÖ–ç2W6W"×&W÷'FVBVç&W6öÇfVBÂæòÆ–v‡F–ærf—‚6Æ–Ò–ã“#bà¥V&Æ–6F–öâæB†÷7FVBöÆ—fRfW&–f–6F–öâföÆÆ÷rà ¢22ã“#bV&Æ–6F–öâfW&–f–VB(	B#ö7Fö&W"##b„'&—6&æR ¥'VçF–ÖR6#&6SCcf#vf###ƒcScSƒcVScs“c&#“fÂFW7FVBG&VP¦SccCvS3#†cƒfFSv#–##V33cS3c“c6VFV6Â—2V&Æ—6†VBâ6öææV7FVBv—BFF¦7&VFVBF†R–FVçF–6ÂFW7FVBÆö6ÂG&VS²fWF6†VB÷&–v–âöÖ–âÖF6†VBW†7FÇ’à¤Æö6ÂæöFS#BæB†÷7FVB&Vw&W76–öâ3“3cSƒ3#fò¦ö"ƒC3“sS““3v&÷F‚70£"ÃcCFW7G2Â¦W&òf–ÇW&W2÷6¶—3²6ö×ÆWFR†÷7FVBÆöw2fW&–f–VBâvW0¦3“3cSsSÂFWÆ÷’¦ö"ƒC3“ƒƒ“sCvÂ6ö×ÆWFVBÆÂ7FW27V66W76gVÆÇ’à¤ÆÃ’g&W6‚Æ—fRf–ÆW2'—FRÖÖF6‚6÷W&6S¢6†VÆÂ÷fW'6–öâÂÖ–â–çFW"ö6÷&RÂ6†&V@§&7FW"æB6ö×ÆWFR6†ævVBÆ"6W76–öâöÆöFW"w&‚Â&V6÷fW'’Â&÷FV7FVB×VÇF“ãÀ§&WF–æVB66Æ"ö6öFV2öæF—fRW‡÷'B÷–çBW‡÷'BöÖFW&–Â÷&VfÆV7F–öâõUb÷væW'2à¤–æ—F–Â–âÖfÆ–v‡B&VG26W'fVC“#S²f–æÂ6†V6¶VBw&‚ÖF6†W3“#bâæòg&÷¦VâÀ¦ÖöFVÆÆ–ærÂ&ö¦V7B÷"W‡÷'BÆv÷&—F†Ò6†ævS²÷&–v–æÂ''W6‚6VÖçF–72&WF–æVBà ¤ÆÂf÷W"6öçF–çV—G’f–ÆW27W'&VçC²&ööb—2Fö72ÖöæÇ’â'V–ÆC“#b6ö×ÆWFRæB&VG¦f÷"FööÂ(i"Ff–ÆÂ+rv†öÆRö&¦V7C¢F6öÆ÷W"f–ÆÂõVæFõ&VFòÂ÷fW&Æ“SR&W6W'fF–öâÀ§66Æ#ó#SR–æFWVæFVæ6RæB&WGW&âFò''W6‚âÇ†F—2ÂW&6W"Â&ÇW"æB6×VFvR&P§&WVW7FVBVæF–ær7FvW2Âæ÷B–×ÆVÖVçFVBâ&VfÆV7F–öâ&Wf–Wr&VÖ–ç2W6W"×&W÷'FV@§Vç&W6öÇfVBFW7—FS“#RÂæòæWrÆ–v‡F–ær&W—"6Æ–ÖVBâæöÖBW‡÷'B6öæf—&ÖVBw&V@¦æB&÷FV7FVC³“#BFööÆ&"52&÷FV7FVBâæW‡C£“#bFWf–6RfVVF&6²Âæ'&÷rW&6W"ð¦Ç†FF—F–öç2æBWf–FVæ6RÖÆVB&Wf–WrF–væ÷6—2F‡&÷Vv‚÷&–v–æÂ÷væW'2à ¢22ã“#r(	BW‡Æ–6—B66Æ"Æ&VÂ&÷w2æBW&6W"(	B#ö7Fö&W"##` ¥W6W#“#e52&÷FV7G2v†öÆRÖö&¦V7BFf–ÆÂö÷6—G’ö†—7F÷'’ö6†ææVÂv÷&¶fÆ÷râ67&VVç6†÷@¦–FVçF–f–W2V&Æ–W"ÖWFÂv†—FRö&Æ6²6öægW6–öâ2–æÆ–æR†–çBFW‡B¦ö–æ–ær&VF÷WC ®(	Ã#ST&Æ6¾(
-n(	Òò(	Ã&Æ6¾(
-n(	Òâæò–çfW'FVB'—FW2â6†&VB66Æ"6öçG&öÇ2æ÷rw&–B&÷w3 ¦Æ&VÂ²fÆW†–&ÆR6Æ–FW"²f—†VC66‚&VF÷WBÂF†Vâ6W&FR&Æö6²†–çG2âW‡Æ–6—@£ÖæöâÖÖWFÂ†&Æ6²’ó#SSÖÖWFÂ‡v†—FR“²&÷Vv†æW73×6Öö÷F‚†&Æ6²’ó#SS×&÷Vv‚‡v†—FR’à¤†VÇ6ææ÷B6—B&W6–FRçVÖW&–2÷WGWBâ6ö×7BÄTeBFö6²÷67&öÆÂöfö÷FW"&WF–æVBà¤æò66Æ"öFFöW‡÷'BöÆ–v‡B6VÖçF–26†ævS²&VfÆV7F–öã“#R&VÖ–ç26W&FRVç&W6öÇfV@§&W÷'BÂæ÷B–×Æ–VB52g&öÓ“#b÷"F†—26Æ&–f–6F–öââæF—fRW‡÷'B&÷FV7FVBà ¤æW‡B&WVW7FVBæ'&÷r''W6ƒ¢÷&–v–æÂFööÂ6VÆV7F÷"v–ç2W&6W"â6ÖR6×ÆW'2À§&W77W&R÷6—¦Rö†&FæW72öÖ†–×VÒW"Ö6öçF7B6÷fW&vRæBW†—7F–ær6öÖÖ—Bö6†V6·ö–çBð¤4õr÷ööÇ2âG&ç7&VçB6öÆ÷W"÷fW&Æ—2&VGV6RÇ†öæÇ’Â&WF–æ–ær$t"÷6÷W&6Rö&6S°¤&6R&W6WG2v†—FRâ&÷Vv†æW72&W6WG3#SRÂÖWFÆæW73ÂÖ6·2&WfVÂ‡&s–b–çfW'FVBÀ£#SR÷F†W'v—6R’â÷&–v–æÂ–ÖvR6öÆ÷W"7F—2&WF–æVB÷&VBÖöæÇ“²W&6R—G2Ö6²à¤æò66VæRöÖFW&–Â÷6—G’ÂFW7G'V7F—fR–ÖvR&¶–ær÷"FVÆWF–öâöbÆ–W"÷&W6÷W&6Rà¤6öÆ÷W"6öçG&öÇ2F—6&ÆRf÷"W&6W"æB&W7F÷&Röâ&WGW&ã²6öÆ÷W"''W6‚6WGF–ær&WF–æVBà¤6æ6VÆÆF–öâ÷6WGF–æw2ö&öG’ÖÆ÷72öf–ÆVB6†V6·ö–çB&WF–â÷&–v–æÂ—†VÇ2ö†—7F÷'’à¤÷&–v–æÂ''W6‚æB66WFVBFf–ÆÂ&WF–â6VÖçF–73²æòæWrö–çFW"ö†—7F÷'’÷væW"à £6æWr–çFVw&F–öâFW7G26÷fW"Ç†6÷fW&vRõ$t"öæòÖ÷ö6æ6VÃ²7GVÂT’÷fW&Æ’ô&6P¦—6öÆF–öâ²VæFõ&VFòõ6fT÷VâöW†7B6ö×÷6VBæF—fRäs²FVfVÇG2öÖ6²–çfW'6–öâð§66Æ"–æFWVæFVæ6RæB&VgW6Â&öÆÆ&6²âW†—7F–ærf–ÆÂ÷&÷Vv†æW72öÖWFÆæW72öÖ6³#553°¦gVÆÂö66†R÷V&Æ–6F–öâ&VÆ÷râ6†&VBÖ–âôÆ"&7FW"&WfW'6Rw&‚&W–ææVC“#röæÇ“°§&÷FV7FVB×VÇF“ãög&÷¦VâöÖöFVÆÆ–ærõUb÷&ö¦V7BöæF—fRw&—FW"Væ6†ævVBà¤DUd”4S“#s¢&VBÖWFÆæW73ó#SR†–çB&VÆ÷r6Æ–FW"v—F‚æò¦ö–æVBFW‡C²W&6R–çFV@¦÷fW&Æ’Fò&WfVÂÆ÷vW"–çBÂVæFõ&VFó²W&6R&6R÷66Æ'2Â7v—F6‚''W6‚ôf–ÆÂ&6²à¤Ç†ärF—2æW‡BÂUb×6fR&ÇW"÷6×VFvR&VÖ–âVWVVBâ&VfÆV7F–öâF–væ÷6—2&VÖ–ç0¦÷VâæB6†÷VÆBW6RFWf–6R÷fW'6–öâ÷&VæFW&W"Wf–FVæ6RÂæògW'F†W"Æ–v‡F–ærwVW76W2à ¢ã“#rf–æÂÆö6ÂæöFS#Bã’ã¢¢£"ÃcC252òd”Âò6¶—VB¢£°£6æWrW&6W"–çFVw&F–öç2ÂæV&'“#552æB&VÆV6SU52âæòFW7G2&VÆ†VBà¥&÷FV7FVC“#bf–ÆÂó“#BFööÆ&"öæF—fRW‡÷'Bô×VÇF“ãög&÷¦Vâ&WF–æVBâ66Æ"Ö–æp§Væ6†ævVC²Æ–÷WBöFWf–6R6öæf—&ÖF–öâæBW&6W"†æG2ÖöâvFRVæF–ærà¥V&Æ–6F–öâö†÷7FVB&Vw&W76–öâöÆ—fRfW&–f–6F–öâföÆÆ÷w2à ¢22ã“#rV&Æ–6F–öâfW&–f–VB(	B#ö7Fö&W"##b„'&—6&æR ¥'VçF–ÖR&f#6V#sC6C6Ff#“63S3“SvCC–&S†cfcc†ÂFW7FVBG&VP¦3“vƒC#6c#3fV3SC&#3CSC#–“S#“ƒCv#C6Â—2V&Æ—6†VBâ6öææV7FVBv—BFF¦7&VFVBF†R–FVçF–6ÂFW7FVBÆö6ÂG&VS²fWF6†VB÷&–v–âöÖ–âÖF6†VBW†7FÇ’à¤Æö6ÂæöFS#BæB†÷7FVB&Vw&W76–öâ3“3c““ƒCSS6ò¦ö"ƒCSSC33“ƒV&÷F‚70£"ÃcC2FW7G2Â¦W&òf–ÇW&W2÷6¶—3²6ö×ÆWFR†÷7FVBÆöw2fW&–f–VBâvW0¦3“3c““ƒCfÂFWÆ÷’¦ö"ƒCSSSƒƒc†Â6ö×ÆWFVBÆÂ7FW27V66W76gVÆÇ’à¤ÆÃ’g&W6‚Æ—fRf–ÆW2'—FRÖÖF6‚6÷W&6S¢6†VÆÂ÷fW'6–öâÂ–çFW"ö6÷&R÷6†&VB&7FW"À¦6ö×ÆWFR6†ævVBÆ"w&‚Â&V6÷fW'’Â&÷FV7FVB×VÇF“ãÂ&WF–æVB66Æ"ö6öFV2öæF—fP¦æB–çBW‡÷'BöÖFW&–Â÷&VfÆV7F–öâõUb÷væW'2â–æ—F–Â–âÖfÆ–v‡B&VG26W'fVC“#c°¦f–æÂ6†V6¶VBw&‚ÖF6†W3“#râæòg&÷¦VâöÖöFVÆÆ–ærõUb÷&ö¦V7B÷w&—FW"6†ævW2à ¤ÆÂf÷W"6öçF–çV—G’f–ÆW27W'&VçC²&ööb—2Fö72ÖöæÇ’â'V–ÆC“#r6ö×ÆWFRæB&VG¦f÷"Æ&VÂ6W&F–öâöW‡Æ–6—CÓ#SRÖVæ–æræBFööÂW&6W"÷fW&Æ’&WfVÂõVæFõ&VFòÀ¤&6Rv†—FR÷66Æ"FVfVÇG2æB&WGW&âFò''W6‚ö66WFVBFf–ÆÂâ7GVÂ•BFW‡@¦Æ–÷WBæBW&6W"fVVÂ&VÖ–âFWf–6R×VæF–æs²WFöÖFVBFW7G2&Ræ÷Bf—7VÂ&ööbà¥W6W#“#bf–ÆÂæC“#BFööÆ&"52&÷FV7FVC²æF—fRW‡÷'B6÷'&V7BâÇ†ärF—0¦æW‡C²Ub×6fR&ÇW"÷6×VFvRVæF–ærâ&VfÆV7F–öã“#R&VÖ–ç2–æFWVæFVçFÇ’Vç&W6öÇfVBÀ¦æ÷B6Æ–FW"–çfW'6–öâ÷"â–æfW'&VB52g&öÒF†R6÷'&V7FVB†VÇFW‡Bà ¢22ã“#‚(	B–çB7F—2÷Vâ7&÷72VæFòõ&VFò(	B#ö7Fö&W"##` ¥W6W"ã“#r52&÷FV7FVC¢66Æ"†–çBÆ–÷WBæBW&6W"ÂÆöæw6–FRã“#bf–ÆÂæ@¢ã“#BFööÆ&"â&WVW7FVB†—7F÷'’vW7GW&Rf—‚F¶W2&–÷&—G’÷fW"ärÇ†F—2à¤VF—C¢÷&–v–æÂÖ–âFõVæFòöFõ&VFò&W7F÷&W266VæRö&öG’æB–çFW"6Æ÷6W2öâF—7÷6Ã°¥–çBfö÷FW"Ç6òW‡Æ–6—FÇ’6Æ÷6VBâ÷&–v–æÂ†—7F÷'’÷væW"æ÷r'&6¶WG2&W7F÷&F–öà§v—F‚–çFW"&W&F–öâ÷&W7VÖRâ6æ6VÂG&ç6–VçB7G&ö¶Rö–ÖvR&Vf÷&R6GW&RÂ6Æ÷6P¦öÆBF—7Æ’Â&V÷Vâöâ&V'V–ÇB7F—fR&öG“²&WF–âÆ–W"–b&W6VçBÂ6†ææVÂöÖ6²–`§fÆ–BÂÆ—Bô6†ææVÂ&Wf–WræBW†—7F–ær''W6‚ö7F–öâ÷6Æ–FW"6öçG&öÇ2âæòGWÆ–6FP¦†—7F÷'’÷"vW7GW&R÷væW"ö6†V6·ö–çBâV×G’†—7F÷'’æB&–B&WVFVB†—7F÷'’&WF–à¥–çC²FöæRö÷F†W"6W76–öâöö&¦V7B6†ævW2FVfVB7FÆR&V÷Vââ÷&–v–æÂGvò÷F‡&VRÖf–ævW ¦vW7GW&W2ÂFööÆ&"æBfö÷FW"6†&RF†—2F‚âf—fR&Vw&W76–öç2W†V7WFR÷&–v–æÂÖ–à¥VæFòõ&VFòæBF÷V6‚ÖVæBgVæ7F–öç2v—F‚&VÂ66VæR6æ6†÷G2Â–çB&W6÷W&6W2æBT’à¥&VfÆV7F–öâ&Wf–Wr&VÖ–ç2Vç&W6öÇfVC²æF—fRæöÖBW‡÷'B&VÖ–ç26÷'&V7BâÇ†¥ärF—2æW‡BÂUb×6fR&ÇW"÷6×VFvRVæF–ærâFWf–6Rã“#‚66WFæ6RVæF–ærà ¢ã“#‚Æö6ÂæöFS#BgVÆÂ&Vw&W76–öã¢¢£"ÃcC‚52òd”Âò6¶—VB¢£°¦f—fRæWr†—7F÷'’&Vw&W76–öç2æB&Wf–WvVB&VÆV6R6öçG&7CU52â&÷FV7FVB×VÇF“ã ¦æBg&÷¦Vâ'V–ÆG2Væ6†ævVBâV&Æ–6F–öâö†÷7FVBöÆ—fRÖ'—FRfW&–f–6F–öâföÆÆ÷w2à ¢22ã“#‚V&Æ–6F–öâfW&–f–VB(	B#ö7Fö&W"##b„'&—6&æR ¥'VçF–ÖRcSƒFc†CcF&&S†S&c“CƒFCcSV6V6SC#–&ÂFW7FVBG&VP¦SSSF66c3ss†V#F#6fCC3F#ƒcS†&FFC“ÂV&Æ—6†VBF‡&÷Vv‚6öææV7FVBv—BFF§v—F‚F†RW†7BÆö6ÆÇ’FW7FVBG&VS²fWF6†VB÷&–v–âöÖ–âÖF6†VBæBv÷&¶–ærG&VR6ÆVâà¤Æö6ÂæöFS#BæB†÷7FVBæöFS#"&Vw&W76–öâ'Vâ3“3s3#cƒvÂ¦ö"ƒCcSC3SƒC&À¦&÷F‚¢£"ÃcC‚52òd”Âò6¶—VB¢£²gVÆÂ†÷7FVBÆörF÷FÇ2fW&–f–VBâvW2'Và¦3“3s3#SS3vÂFWÆ÷’ƒCcSSs3#&Â6ö×ÆWFVB7V66W76gVÆÇ’âÆÃr6†V6¶VBg&W6€¦Æ—fRf–ÆW2'—FRÖÖF6ƒ¢6†VÆÂ÷fW'6–öâÂ6†ævVBÖ–â÷–çFW"Â&V6÷fW'’ÂVæ6†ævVB–ç@¦6÷&R÷&7FW"÷66Æ"÷&ö¦V7BöW‡÷'B÷&VfÆV7F–öâõUbæB&÷FV7FVB×VÇF“ãâg&÷¦Vâ'V–ÆG0§Væ6†ævVBâÆÂf÷W"6öçF–çV—G’f–ÆW27W'&VçC²F†—2&ööb—2Fö7VÖVçFF–öâÖöæÇ’à ¤'V–ÆC“#‚6ö×ÆWFRæB&VG’f÷"GvòÖf–ævW"VæFòòF‡&VRÖf–ævW"&VFòv†–ÆR–çB7F—0¦÷VâÂ6öçF–çVVBVæ6–Â7G&ö¶W2Â&WF–æVB6†ææVÂ÷&Wf–Wrö''W6‚6öçG&öÇ2æB÷&–v–æÀ¥–çBfö÷FW"†—7F÷'’âFöæR7F–ÆÂ6Æ÷6W2âW6W#“#r52&÷FV7FVC²7GVÃ“#‚•@¦66WFæ6RVæF–ærâ&VfÆV7F–öâ&Wf–Wr&VÖ–ç2–æFWVæFVçFÇ’Vç&W6öÇfVC²æF—fRW‡÷'@¦6÷'&V7BâæW‡B&÷VæFVBärÇ†F—3²Ub×6fR&ÇW"÷6×VFvRVæF–ærà ¢22ã“#’(	BärÇ†''W6‚F—3²ã“#‚W6W"52(	B#ö7Fö&W"##` ¥W6W"ã“#‚52&÷FV7G2–çB7F––ær÷Vâ7&÷72Gvò÷F‡&VRÖf–ævW"æBfö÷FW ¥VæFòõ&VFòÂ&WF–æVB6öçG&öÇ2æB6öçF–çVVBVæ6–Â7G&ö¶W2âVF—BÖ–ãVVS†&#SC ¦÷&–v–æÂ6†&VB&7FW"ö–çWBö†—7F÷'’Ç&VG’÷vâ''W6‚æBW&6W#²æò7W7FöÒF— ¦–×÷'FW"÷6×ÆW"âFB&÷VæFVBär6÷fW&vRF‡&÷Vv‚F†÷6R4ÔR÷væW'2Â&WW6–æs“p¦–ÖvR&VfÆ–v‡BöFV6öFRâ''W6‚6WGF–æw3¢ÆöBÇ†ärò&÷FF–öâò&÷VæBF—à¥ä~(šC#Sl+"ó#Sd¶”"ÂÇVÖ–ææ6\9vÇ†6÷fW&vS²v†—FR–çG2Â&Æ6²÷G&ç7&VçB6¶—2à¤÷væVB#‚F—(šCcD¶”"Â6÷–VBW"6öçF7C²F÷Öf—'7Bö7V7B×&W6W'f–ær&÷FFVB&–Æ–æV §6×Æ–ær–âUbFW†VÇ2âÇ†&WÆ6W2&÷VæB†&FæW72Â÷&–v–æÂ&W77W&Rö÷6—G’6ð§6÷W&6RÖ÷fW"öW&6Rö6æ6VÂ&WF–æVBâv†öÆRÖö&¦V7Bf–ÆÂ–væ÷&W2F—âæòæWrö–çFW"À¦†—7F÷'’Â–çB×&W6÷W&6R÷&ö¦V7BöæF—fRw&—FW"÷"ÖöFVÆÆ–ær¶W&æVÂâF—2÷&÷FF–öâ&P§6W76–öâ&VfW&Væ6W2Â&WF–æVBF‡&÷Vvƒ“#‚&V÷Vâ'WBæ÷B6fVB–âæ&÷†Æ"âÖ&·2W'6—7Bà¤ÆFRö–çfÆ–B–×÷'G2&WF–â&Wf–÷W2F—æB6öÖÖ—GFVBv÷&³²÷&–v–æÂFV6öFR6ÆVçWà¥&VBFö72÷–çBÖÇ†Ó“#’æÖBâf÷W"fö7W6VBFW7G26÷fW"Æ–Ö—G2ö6ÆVçWö6÷fW&vR÷væW'6†—À§&÷FF–öâö7V7Bö6æ6VÂöW&6RÂ&VÂT’ö†—7F÷'’÷&ö¦V7BöæF—fRäræB7–æ2&VgW6Âà¤÷&–v–æÂ6†&VB&7FW"&WfW'6RÖ–âôÆ"66†Rw&ƒ“#’&Wf–WvVC²×VÇF“ãög&÷¦Vâ–çF7Bà¥&VfÆV7F–öâ&Wf–Wr&VÖ–ç2Vç&W6öÇfVBÂæF—fRW‡÷'B6÷'&V7BâÇ†FWf–6RvFRVæF–ærà¤æW‡BFWf–6RÇ†fVVF&6²ÂF†VâUb×6fR&ÇW"÷6×VFvS²f–Ww÷'Bö&¶VBòæBVFvRÖ&6V@§6VÒÖWF†÷&–ær&VÖ–âVWVVBf÷"W†—7F–ærÖ÷væW"VF—G2Âæ÷BFVÆ—fW&VBfVGW&W2à¥fÆ–FF–öâ÷V&Æ–6F–öâWf–FVæ6RföÆÆ÷w3²æò&VæFW&VB÷"FWf–6RW&f÷&Öæ6R6Æ–Òà ¢ã“#’f–æÂÆö6ÂæöFS#Bã’ã¢¢£"ÃcS"52òd”Âò6¶—VB¢¢à¤f÷W"æWrÇ†FW7G2æB÷&–v–æÂæV&'“…53²&VÆV6Rö66†R6†V6·2–æ6ÇVFVBà¤æò76W'F–öç2&VÆ†VBâ6†&VB&7FW"Ö–âôÆ"&WfW'6Rw&ƒ“#’&Wf–WvVC²×VÇF“ã ¦æBg&÷¦Vâ'V–ÆG2Væ6†ævVBâV&Æ–6F–öâö†÷7FVBöÆ—fRfW&–f–6F–öâföÆÆ÷w2à ¢22ã“#’V&Æ–6F–öâfW&–f–VB(	B#ö7Fö&W"##b„'&—6&æR ¥'VçF–ÖR3–c#–f#CfƒvF333ƒS†#63fc“fSS†ÂFW7FVBG&VP¦6fFcsv3†6F6cc&cCcS–Vfc“S6#VFSc“&fÂV&Æ—6†VBf–6öææV7FVBv—BFFà¤ÆÃ‚WÆöFVB&Æö'2æBG&VRÖF6‚Æö6ÆÇ’FW7FVB6÷W&6S²fWF6†VBÖ–â–FVçF–6Âà¤Æö6ÂæöFS#BæB†÷7FVBæöFS#"&Vw&W76–öã3“C“Ss“C’ö¦ö#ƒSƒ3sƒC#&÷F€¢¢£"ÃcS"52òd”Âò6¶—VB¢£²gVÆÂ†÷7FVBÆöw2fW&–f–VBâvW33“C“Ssƒs2À¦FWÆ÷“ƒSƒ3“3SS26ö×ÆWFVB7V66W76gVÆÇ’âÆÃbg&W6‚6†V6¶VBÆ—fRf–ÆW2'—FRÖÖF6ƒ §6†VÆÂ÷fW'6–öâÂWfW'’6†ævVB'VçF–ÖRôÆ"÷væW"Â&V6÷fW'’Â&÷FV7FVB×VÇF“ãÀ§&WF–æVB–ÖvR–×÷'FW"öW‡÷'B÷–çB7W&f6Râg&÷¦Vâ'V–ÆG2Væ6†ævVBà ¤ÆÂf÷W"6öçF–çV—G’f–ÆW27W'&VçC²&ööb—2Fö7VÖVçFF–öâÖöæÇ’â'V–ÆC“#’6ö×ÆWFP¦æB&VG’f÷"''W6‚6WGF–æw2(i"ÆöBÇ†ä~(šC#Sl+"ó#Sd¶”"Â&÷FFR÷–çBö÷fW&Æ¤W&6W"ÂVæFõ&VFòæB6öçF–çVVB–çF–ærÂ&÷VæBF—Â6fT÷VâöW‡÷'B&WF–æVBÖ&·2à¥W6W#“#…52&÷FV7FVC³“#’f—6–&ÆRõVæ6–Â÷–6¶W"öÆFVæ7’66WFæ6R&VÖ–ç2VæF–ærà¥&VfÆV7F–öâ&Wf–Wr–æFWVæFVçFÇ’Vç&W6öÇfVC²æF—fRW‡÷'G26÷'&V7BâæW‡BÇ†¦fVVF&6²F†VâUb×6fR&ÇW"÷6×VFvS²òæBVFvR6VÒVF—G2VWVVBÂæ÷B–×ÆVÖVçFVBà ¢22ã“3(	B6öÆ–Bö&¦V7BÖÖöFRF—7Æ’ÂæòÖöFVÆÆ–ær6vR(	B#ö7Fö&W"##` ¥W6W"&WVW7G2&VÖ÷f–ærF†RF—7G&7F–ærö&¦V7BÖÖöFR‚×&’ÂW7V6–ÆÇ’v†–ÆR–çF–ærà¤VF—B7W'&VçCf6Sc&fS2òã“#“¢Ö–âFD6vRW6W2FWF…FW7C¦fÇ6RæWWG&Â†—2ÖÆ–æRÖFW&–À¦f÷"WfW'’6VÆV7FVBö&¦V7BVFvRÂG&vâ÷fW"6öÆ–B&öG’÷–çBâ7GVÂd”Ur‚Õ&’—2§6W&FRW‡Æ–6—BF–væ÷7F–2ÖöFS²Fòæ÷B6öægW6R—Bv—F‚F†—2WFöÖF–26vRà¤÷&–v–æÂ6vR&F6‚vWG2÷F–öæÂ6†÷tVFvW2†FVfVÇGG'VR“²Ö–â76W2fÇ6R–âö&¦V7BÀ§6†÷ufW'F–6W2&VÖ–ç2fW'FW‚ÖöæÇ’â7W&f6R6vRvVöÖWG'’ö&F6†W2&Ræ÷BÆÆö6FVC²—6öÆFVBÆö÷6RVFvW2&VÖ–à§f—6–&ÆRv—F‚÷&F–æ'’FWF‚×FW7FVBVFvTÖFW&–Â6òv—&RÖöæÇ’ö&¦V7G2Fòæ÷Bfæ—6ƒ°¦÷&–v–æÂ–çf—6–&ÆR–æFW†VBVFvR÷fW'FW‚–6¶–ær&÷†–W2ö'&–FvR&Vv—7G'’&VÖ–â–çF7Bà¤Ö—'&÷"6vR—2Ç6òöÖ—GFVB–âö&¦V7C²7F—fR7V$BæòÆöævW"WfÇVFW27&RÖ—'&÷&V@¦&6R6öÆVÇ’f÷"F†BöÖ—GFVBv—&Râ÷&–v–æÂWfÇVFVB7W&f6RæB—G2vVöÖWG'’66†P¦&RVæ6†ævVBâfW'FW‚ôVFvRôf6R&W7F÷&RF†V—"÷&–v–æÂ6vW2æBÖFW&–Âö÷&FW"÷6VÆV7F–öà§6VÖçF–72â6ÆVâõ6ögBÂ×VÇF’öw&÷WF–çG2Âv—¦Ö÷2Â†—7F÷'’Â''W6‚÷–çBöÖFW&–ÂöW‡÷'@¦÷væW'2VçF÷V6†VBâW‡Æ–6—Bd”Urv—&Rõ‚Õ&’ÖöFW2&WF–âFVÆ–&W&FRW6W"6öçG&öÂà¤æòg&ÖR×&FR÷"'&öBÖVÖ÷'’6Æ–Ó²&VÖ÷fVBf—7VÂ6vRG&w2öÆÆö6F–öâöæÇ’à ¥GvòæWræF—fRÖ÷væW"FW7G26÷fW"ö&¦V7N(iF6ö×öæVçBG&ç6—F–öç2Â'6VçBf—7VÂ&F6†W2À¦7GVÂF‡&VR&–67B&÷‡’”G2öF—7÷6ÂÂÖ—'&÷&VB7V$B&6RÖ6ÆÂ6÷VçG2æBW†7B6öÆ–@¦vVöÖWG'’âW†—7F–æsƒóƒSö&¦V7Bf—7VÂÖ6vRW‡V7FF–öâ&WÆ6VB'’æWrW6W"&WVW7C°¦ÆÂ6ö×öæVçB÷&÷‡’76W'F–öç2&WF–æVBâW†—7F–æsƒSóƒ’óƒ"&VæFW"f—‡GW&W2æ÷r7WÇ’F†V—"&VÂ6VÆV7F–öäÖöFSÒvf6Rp¦FWVæFVæ7“³ƒ’ö&¦V7BÆö÷6R×v—&RÖFW&–ÂW‡V7FF–öâföÆÆ÷w2F†RæWrFWF‚×FW7FV@§öÆ–7’ÂÆÂ6ö×öæVçBövVöÖWG'’öÖWFFFöVçVÖW&F–öâ76W'F–öç2&WF–æVBâæò&öGV7F–öà¦fÆÆ&6²÷"vV¶VæVB66†R÷F–Ö–ær6†V6·2à¤fö7W6VB6vRö66†R÷F–Ö–ær÷&VÆV6S#•52æBV&Æ–W"–çBÖ†—7F÷'’÷F–çBö6vS#E52à¤ÆVv7“ƒ’Æö÷6R×v—&Ræ÷&ÖÆ—¦F–öâ–ç7V7G24ÄôäS¢÷&–v–æÂÆö÷6RVFvW2‚’6âF@¦—G2†—7F÷&–6Âf6W5²ÓÒ6VçF–æVÂâ÷&–v–æÂ6÷W&6R×&W6W'fF–öâ76W'F–öâ&WF–æVBà¤öæÇ’Ö–âö6vR&F6‚æB6†VÆÂ÷&V6÷fW'’66†S“3²×VÇF“ãög&÷¦VâVæ6†ævVBâÇ†“#¦ÖçVÂvFRæ÷B–æfW'&VB52â&VfÆV7F–öâ&Wf–Wr–æFWVæFVçFÇ’Vç&W6öÇfVC²W‡÷'G26÷'&V7Bà¤æW‡BDUd”4Rö&¦V7B÷&&—B÷–çBæòF‡&÷Vv‚Ö6vS²6ö×öæVçB6vW2&WGW&ã²×VÇF’öv—¦Öòæ@¥–çBVæFõ&VFò7F’–çF7BâF†Vâ&W7VÖRÇ†fVVF&6²õUb×6fR&ÇW"÷6×VFvS²ò÷6V×2VWVVBà¤gVÆÂfÆ–FF–öâ÷V&Æ–6F–öâföÆÆ÷w3²æò&VæFW&VBö•B&ööb–æfW'&VBg&öÒæöFRà ¢ã“3f–æÂÆö6ÂæöFS#Bã’ã&Vw&W76–öã¢¢£"ÃcSB52òd”Âò6¶—VB¢¢à¤fö7W6VBæF—fR6vRö66†R÷F–Ö–ær÷&VÆV6S#•53²÷&–v–æÂ7W&f6R÷&÷‡’öÖWFFFÀ¦†—7F÷'’÷–çBöÇ†ö–ÖvRöæF—fRW‡÷'B76W'F–öç2&WF–æVBâöæÇ’7WW'6VFVBö&¦V7@§f—7VÂ6vRæBFWF‚×FW7FVBÆö÷6R×v—&RW‡V7FF–öç26†ævVBâ×VÇF“ãög&÷¦Vâ–çF7Bà¥V&Æ–6F–öâö†÷7FVBöÆ—fRfW&–f–6F–öâföÆÆ÷w3²•BF—7Æ’66WFæ6RVæF–ærà ¢22ã“3V&Æ–6F–öâfW&–f–VB(	B#ö7Fö&W"##b„'&—6&æR ¥'VçF–ÖRFVf&CV#s–#ƒ“cfVc6†SCs–#–Sf&6SFcc6ÂFW7FVBG&VP¦CC#3F&f#s6ScCfcSV#““3vcfcƒC–Vf##FÂ—2V&Æ—6†VBâ6öææV7FVBv—BFF§WÆöFVBÆÃ2W†7BÆö6Â&Æö'2÷G&VS²fWF6†VBÖ–â†2–FVçF–6ÂFW7FVBf–ÆW2à¤Æö6ÂæöFS#BæB†÷7FVBæöFS#"&Vw&W76–öã3“C##cBö¦ö#ƒSƒ“sS“2&÷F‚70¢¢£"ÃcSBFW7G2òf–ÇW&W2ò6¶—VB¢£²6ö×ÆWFR†÷7FVBÆöw2fW&–f–VBâvW0£3“C#“CcröFWÆ÷“ƒSƒ“3ƒ“3#B6ö×ÆWFVB7V66W76gVÆÇ’âÆÃ6†V6¶VBg&W6‚Æ—fP¦f–ÆW2'—FRÖÖF6ƒ¢6†VÆÂ÷fW'6–öâÂÖ–âö6vR&F6‚Â&V6÷fW'’Â&÷FV7FVB×VÇF“ãæ@§Væ6†ævVB–çFW"÷&7FW"÷&VæFW"öÖFW&–Â7W&f6Râg&÷¦Vâ'V–ÆG2Væ6†ævVBà ¤ÆÂf÷W"6öçF–çV—G’f–ÆW27W'&VçC²F†—2&ööb6†ævW2Fö7VÖVçFF–öâöæÇ’â'V–ÆC“3 ¦6ö×ÆWFRæB&VG’f÷"ö&¦V7BÖÖöFR6öÆ–B÷&&—B÷–çBv—F†÷WBWFöÖF–2F‡&÷Vv‚Ö6vRÀ¥fW'FW‚ôVFvRôf6R6vR&W7F÷&F–öâÂö&¦V7B&WGW&âæB–çBVæFõ&VFòö6öçF–çVVBÖ&·2à¤Æö÷6Rv—&RvVöÖWG'’&VÖ–ç2FWF‚×FW7FVC²÷&–v–æÂ–6¶–ærö'&–FvRö66†R÷væW'2–çF7Bà¤æòÖV7W&VBe26Æ–Ò÷"&VæFW&VB•B66WFæ6R–æfW'&VBâW6W#“#…52&÷FV7FVC°£“#’Ç†vFR&VÖ–ç2VæF–ærâ&VfÆV7F–öâ&Wf–Wr&VÖ–ç2–æFWVæFVçFÇ’Vç&W6öÇfVC°¦æF—fRW‡÷'G26÷'&V7Bâ&W7VÖRÇ†fVVF&6²F†VâUb×6fR&ÇW"÷6×VFvS²ò÷6V×2VWVVBà ¢22ã“3(	B&ÇW"v—F†–â÷&–v–æÂöÇ–vöâf6W3²ã“3W6W"52(	B#ö7Fö&W"##` ¥W6W#“352&÷FV7G26öÆ–Bö&¦V7BF—7Æ’ö6ö×öæVçB6vW2æB–çBö†—7F÷'’âVF—@¦Ö–æ–c&C¢÷&–v–æÂUb–ç7V7F÷"÷vç2—6ÆæG2ÂW‡÷'FW"÷vç2G&–ævÆRVÖ—76–öã°¦æòæV–v†&÷W"''W6‚W†—7G2âf—'7B&ÇW"6Æ—2$õD‚&VG2æBw&—FW2Fò–6¶VBöÇ–vöà¦f6S²æWfW"6×ÆW2F¦6VçBFÆ2f6W2â÷&–v–æÂ&Wf–Wr'V–ÆFW"v–ç2÷BÖ–âg&÷¦Và§G&–ævÆ^(i'6÷W&6RÖf6RÖWFFFg&öÒ—G2W†—7F–ærVÖ—76–öâÆö÷†w&÷W÷&FW"&WF–æVB’à¤FVfVÇB&Wf–Ww2öW‡÷'B'—FW2Væ6†ævVBâ–çFW"&WVW7G2Ö²æWr6ÖÆÂf–ÇFW"ÖFöÖ–à§&7FW"Æ&VÇ2÷&–v–æÂvVöÖWG'’ÃS,+"Ã$Ò66ææVB'VFvWBâ6×ÆVB–çFW&–÷"÷fW&Æ2À¦÷WBÖöb×F–ÆRöFVvVæW&FR÷Vç7W÷'FVBUg2&VgW6RFöÖ–6ÆÇ“²Ö&–wV÷W2&÷&FW'2W†6ÇVFVBà¤æòæWrG&–æwVÆF–öâ÷6–væGW&RõUbVF—F÷"ö–çWBö†—7F÷'’÷&W6÷W&6R÷w&—FW"÷væW"à ¥FööÂ&ÇW"+rv—F†–âf6RW6W2÷&–v–æÂ&7FW"Â6×ÆW'2Â&–67BæB6öÖÖ—B÷&öÆÆ&6²à¤f—†VBf—fR×F6VçG&SBö6&F–æÃ6Öö÷F†–æröb7G&ö¶R×7F'B—†VÇ3²f6RÖöæÇ’&VG2æ@§w&—FW2Â&Væ÷&ÖÆ—¦VB6Æ—VBvV–v‡G2âÖ†–×VÒW"Ö6öçF7B6÷fW&vRö÷6—G’&WF–æVC°¦Æ–gB÷&WVBf÷"7G&öævW"6Öö÷F†–ærâ6ÖR6—¦R÷&W77W&Rö†&FæW72öÇ†F—2âG&ç7&Vç@¦Æ–W'2W6R&V×VÇF—Æ–VB$t$f–ÇFW&–ærö–çFW'öÆF–öâFòfö–B†–FFVâÖ6öÆ÷W"†Æ÷3°§66Æ"öÖ6²&rfÇVW27F’–æFWVæFVçBâ6öÆ÷W"–6¶W"–væ÷&VBöF—6&ÆVBâ&6RöÆ–W'2ð¦Ö6·2õ&÷Vv†æW72ôÖWFÆæW72v÷&³²&WF–æVB–ÖvR6öÆ÷W"&VÖ–ç2&VBÖöæÇ’âæò7&÷72Öf6P¦÷"6VÖÆW72÷v÷&ÆB×&F—W26Æ–ÒÂæò6×VFvR–WBâ÷&–v–æÂ66VæR6†V6·ö–çBô4õr÷ööÇ2À¥6fT÷VâôäôÒôtÄ"æB–çB†—7F÷'““#‚&VÖ–ã²FöÖ–ãÖ”"÷6W76–öâ³Ö”"ö6öçF7B—2G&ç6–VçBà¥&VBFö72÷–çBÖ&ÇW"Ó“3æÖBâf—fRæWr&Vw&W76–öç2²æV&'“#Ó#e53²&VÆV6SU53°¦gVÆÂ÷V&Æ–6F–öâ&VÆ÷râ6ö×ÆWFR6†ævVBÖ–âöW‡÷'BôÆ"&WfW'6RÆöFW"w&ƒ“3°¤×VÇF“ãög&÷¦VâæB66WFVC“3Ö–âö6vR'—FW2Væ6†ævVBâÇ†“#’FWf–6RvFRæ÷@¦–æfW'&VB52â&VfÆV7F–öâ&VÖ–ç2Vç&W6öÇfVC²æF—fRW‡÷'B&÷FV7FVBâæW‡BDUd”4P¦†&BÖVFvVBÖ&¾(i$&ÇW"''W6‚öÆ–gB÷&WVBÂ÷fW&Æ’—6öÆF–öâÂVæFõ&VFòö6öçF–çVRÂF†Và§6–Ö–Æ&Ç’&÷VæFVB6×VFvRâòæBVFvR×6VÒVF—G2&VÖ–âVWVVBÂæ÷BFVÆ—fW&VBà ¢ã“3f–æÂÆö6ÂæöFS#Bã’ã&Vw&W76–öã¢¢£"ÃcS’52òd”Âò6¶—VB¢¢à¤æWr&ÇW#R²æV&'“#Ó#e52Â&VÆV6SU53²æòW†—7F–ær76W'F–öç2&VÆ†VBà¤FVfVÇBW‡÷'B÷&Wf–WrvVöÖWG'’æB66WFVC“3Ö–âö6vR÷&÷FV7FVB×VÇF’ög&÷¦Vâ'—FW0§Væ6†ævVBâV&Æ–6F–öâö†÷7FVBöÆ—fRfW&–f–6F–öâföÆÆ÷w3²7GVÂ•B&ÇW"vFRVæF–ærà ¢22ã“3V&Æ–6F–öâfW&–f–VB(	B#ö7Fö&W"##b„'&—6&æR ¥'VçF–ÖR##fF3–&F#C#CƒS&#–CƒFVS“V6#ƒsƒV#“SvÂFW7FVBG&VP¦VC##ssf3S“S3Vf&fV&CC3VC3“†3svCS–S“vÂ—2V&Æ—6†VBâ6öææV7FVBv—BFF§WÆöFVBÆÃrW†7BÆö6Â&Æö'2÷G&VS²fWF6†VBÖ–âÖF6†W2FW7FVB6÷W&6Rà¤Æö6ÂæöFS#BæB†÷7FVBæöFS#"&Vw&W76–öã3“Cc3“3rö¦ö#ƒccS3SR&÷F‚70¢¢£"ÃcS’FW7G2òf–ÇW&W2ò6¶—VB¢£²6ö×ÆWFR†÷7FVBÆöw2fW&–f–VBâvW0£3“Cc3“s’öFWÆ÷“ƒcc33s36ö×ÆWFVB7V66W76gVÆÇ’âÆÃ‚g&W6‚6†V6¶VBÆ—fP¦f–ÆW2'—FRÖÖF6ƒ¢6†VÆÂ÷fW'6–öâÂWfW'’6†ævVB'VçF–ÖRöW‡÷'BôÆ"÷væW"ÂæWrf–ÇFW ¦FöÖ–âÂ&V6÷fW'’Â66WFVC“3Ö–âö6vRÂ&÷FV7FVB×VÇF“ãæB&WF–æVB–çB7W&f6Rð¦W‡÷'Bö–ÖvR&ö¦V7F÷"âg&÷¦Vâ'V–ÆG2Væ6†ævVBâæò76W'F–öç2&VÆ†VBà ¤ÆÂf÷W"6öçF–çV—G’f–ÆW27W'&VçC²F†—2&ööb6†ævW2Fö7VÖVçFF–öâöæÇ’â'V–ÆC“3¦6ö×ÆWFRæB&VG’f÷"FööÂ&ÇW"v—F†–âf6Röâ†&BÖVFvVB–çFVBÖ&²ÂÆ&vW ¥6—¦RÂÆ–gB÷&WVBf÷"7G&öævW"6Öö÷F†–æs²÷fW&Æ’ö6†ææVÂ—6öÆF–öâæBVæFõ&VFò7F¦–â–çBÂ&WGW&â''W6‚æB6öçF–çVRâ6fT÷VâöæF—fRW‡÷'B&WF–ç2&W7VÇG2âW6W#“3 ¥52&÷FV7FVC²7GVÃ“3V&æ6RõVæ6–ÂfVVÂöÆFVæ7’æC“#’Ç†vFRVæF–ærà¤æò&VæFW&VBö•BW&f÷&Öæ6R6Æ–Òâ&VfÆV7F–öâ&Wf–Wr–æFWVæFVçFÇ’Vç&W6öÇfVC°¦æF—fRW‡÷'G26÷'&V7BâæW‡B&ÇW"fVVF&6²F†Vâ&÷FV7FVB6×VFvS²ò÷6V×2VWVVBà ¢22ã“3"(	B6öææV7FVBÖf6R&ÇW"6×Æ–æs²ã“3W6W"52(	B#ö7Fö&W"##` ¥W6W"52&÷FV7G2ã“3&ÇW"æB&–÷"ã“36öÆ–Bö&¦V7BF—7Æ’âVF—BÖ–ãVs“Sƒ ¦÷&–v–æÂUb–ç7V7F÷"Ç&VG’÷vç2öÇ–vöâVFvW2ÂW‡÷'FW"÷vç2G&–ævÆRVÖ—76–öã°§&WW6R&÷F‚f–÷F–öæÂVFvT÷væW'2æB÷&–v–æÂfW'FW‚”G2âFVfVÇB&W÷'G2övVöÖWG'’ð¦W‡÷'G2Væ6†ævVBâæWr6ÖÆÂ&VBÖöæÇ’6VÒÆâVæföÆG2÷&–v–æÂG&–ævÆRæV–v†&÷W'0¦7&÷72&VÂÖæ–föÆBVFvW2ÂÖ–ær–çFòFWF6†VB÷&÷FFVBöÖ—'&÷&VBUb—6ÆæG2âFÆ0§&÷†–Ö—G’æWfW"6öææV7G2f6W2â–çFW&æÂF–vöæÇ2W6RF†R6ÖR÷&–v–æÂVÖ—76–öâà¤f—†VB6VçG&SBö6&F–æÃ7G&ö¶R×7F'B&ÇW"æ÷r&VG2ÖVB6öææV7FVBÖf6RFW†VÇ2à¥w&—FW2&VÖ–â6Æ—VBFò–6¶VBf6S¢7G&ö¶R$õD‚6–FW2öbVFvS²''W6‚fö÷G&–çBFöW0¦æ÷Bw&WFöÖF–6ÆÇ’âæòv÷&ÆB×&F—W2ögVÆÂ6VÖÆW72Öfö÷G&–çB6Æ–ÒÂæò6×VFvRà¤&÷VæF'’öæöæÖæ–föÆBöÖ&–wV÷W26÷&æW"öÆöærvÆ·26Æ—²–çfÆ–B÷7FÆR÷væW'6†—æ@¦W†—7F–ær÷fW&Æ–æröFVvVæW&FRö÷WBÖöb×F–ÆRö6ö×ÆW‚Ub&VgW6Ç27F’FöÖ–2âÖƒ€¦7&÷76–æw2÷6×ÆRæC$ÒvÆ²7FW3²Æ§’6W76–öâÆãS,+"Æ&VÇ3Ö”"¶Æ–æ·3DÖ”"À§FV×÷&'’G&–ævÆRÖÖ”#²÷væVB6öçF7B6÷–W3TÖ”"ÇW2÷&–v–æÂ7G&ö¶R'VffW'2à¥&V×VÇF—Æ–VB6öÆ÷W"Ç†Â&rÖ6·2÷66Æ'2Â6VB6÷fW&vRÂ÷&–v–æÂÇ†F—2À¦–çWB÷&–67Bö†—7F÷'’ô4õrõ6fT÷VâôäôÒôtÄ"÷væW'2&WF–æVBâT’6—26öææV7FVBf6W0¦æBW‡Æ–6—FÇ’6·27G&ö¶W2÷fW"&÷F‚6–FW2âæòÖöFVÆÆ–ærõUbWF†÷&–ær¶W&æVÂFFVBà¤f—fRæWrFW7G26÷fW""föÆB÷&÷FF–öâöÖ—'&÷"Æ–÷WG2ÂF—66öææV7FVBFÆ2FV6÷’À¦æöæÖæ–föÆB÷7FÆRÖWFFFÂW†7B&7FW"Ç†ö6æ6VÂæB7GVÂTž(i&†—7F÷'ž(i%6fT÷Vî(i ¦W†7BæF—fRärâfö7W6VC#52–æ6Â&VÆV6SS²gVÆÂ÷V&Æ–6F–öâ&VÆ÷râ6ö×ÆWFR6†ævV@§&WfW'6RÆöFW"w&‚&W–ææVC“3#²&WF–æVBÖ–âö6vRô×VÇF“ãög&÷¦Vâ'—FW2Væ6†ævVBà¥&VBFö72÷–çB×6V×2Ó“3"æÖBâFWf–6S“3"6VÒV&æ6RöÆFVæ7’VæF–æs²Ç†“#’vFP¦æ÷B–æfW'&VBâ&VfÆV7F–öâ&Wf–Wr–æFWVæFVçFÇ’Vç&W6öÇfVC²æF—fRW‡÷'G2&÷FV7FVBà¤æW‡BFWf–6RfVVF&6²F†Vâ&÷VæFVB6×VFvRF‡&÷Vv‚÷&–v–æÂ–çB÷væW#²òæBUb6VÐ¤UD„õ$”är&VÖ–âVWVVBâ6VÒ6×Æ–ær—2æ÷B6VÒWF†÷&–ærà ¢ã“3"f–æÂÆö6ÂæöFS#Bã’ã&Vw&W76–öã¢¢£"ÃccB52òd”Âò6¶—VB¢¢à¤fö7W6VC#53²æòW†—7F–ær76W'F–öç2&VÆ†VBâ†÷7FVBõvW2öÆ—fRfW&–f–6F–öâföÆÆ÷w2à ¢22ã“3"V&Æ–6F–öâfW&–f–VB(	B#ö7Fö&W"##` ¥'VçF–ÖRV&3ƒ#cC–CvCCv3fVC“–6C“sSV3VfFVC&ÂFW7FVBG&VP¦†fc#VCfS3ƒCC&#†3&3v3ƒ“ƒ“6C†c“FCS3CFFÂ—2V&Æ—6†VBöâÖ–âà¤6öææV7FVBv—BFFWÆöFVC#BW†7BÆö6Â&Æö'3²fWF6†VBÖ–âÖF6†W2FW7FVBG&VRà¤Æö6ÂæöFS#BæB†÷7FVBæöFS#"&Vw&W76–öã3“CƒcSƒsö¦ö#ƒc3c“c“"&÷F‚70¢¢£"ÃccBFW7G2òf–ÇW&W2ò6¶—VB¢£²6ö×ÆWFR†÷7FVBÆöw2fW&–f–VBà¥vW33“CƒcSƒSBöFWÆ÷“ƒc3ƒcƒSs‚7V66VVFVBâÆÃ#"g&W6‚6†V6¶VBÆ—fRf–ÆW0¦'—FRÖÖF6ƒ¢6†VÆÂ÷fW'6–öâÂ6ö×ÆWFR6†ævVB'VçF–ÖRöW‡÷'BõUbôÆ"ÆöFW"w&‚À¦æWr6VÒ†VÇW"Â&V6÷fW'’Â66WFVBÖ–âÂ&÷FV7FVB×VÇF“ãæB&WF–æVB7W&f6Rà¤g&÷¦Vâ'V–ÆG2Væ6†ævVC²æò76W'F–öç2&VÆ†VBâÆÂf÷W"6öçF–çV—G’f–ÆW2WFFVBà ¤'V–ÆC“3"6ö×ÆWFRæB&VG’f÷"FW7F–æs¢–çBF–ffW&VçB6öÆ÷W'27&÷727V&RVFvRÀ¤&ÇW"7G&ö¶W2÷fW"$õD‚6–FW2ÂÆ–gB÷&WVBÂVæFõ&VFò7F’–â–çBÂ6fT÷Vâ&WF–ç2à¥F†—26öææV7G26×ÆR&VG27&÷72&VÂf6RVFvW2õUb6V×3²fö÷G&–çBFöW2æ÷Bw&à¥W6W#“352&÷FV7FVC²7GVÃ“3"Væ6–ÂfVVÂöV&æ6Röf—'7B×W6RÆFVæ7’VæF–ærà¤Ç†“#’FWf–6RvFR&VÖ–ç2–æFWVæFVçBâ&VfÆV7F–öâ&Wf–WrVç&W6öÇfVC²æF—fRW‡÷'G0¦6÷'&V7BâæW‡BfVVF&6²F†Vâ&÷VæFVB6×VFvRF‡&÷Vv‚÷&–v–æÂ÷væW#²ò÷6VÒWF†÷&–æp§&VÖ–âVWVVBâF†—2&ööb6†ævW2Fö7VÖVçFF–öâöæÇ’Âæ÷BF†RfW&–f–VB'VçF–ÖRà ¢22ã“32(	B7W&f6R–ÖvRw&–æs²W6W"&–÷&—G’(	B#ö7Fö&W"##b„'&—6&æR ¥W6W"6·2–ÖvRÆ6VÖVçBFòw&6öææV7FVB7W&f6W2&F†W"F†â6Æ—BöæRf6Rà¤VF—BÖ–ã3cƒCSCSöÆ—fS“3#¢ã“"öâ7W&f6RföÆÆ÷w2æ6†÷"öæ÷&ÖÂ'WBfVVG2fÆ@¦÷'F†öw&†–2ã“&ö¦V7F÷"v—Fƒs\+f6–ær÷f—6–&–Æ—G’7WG3²æòw&–ær–ÖvR÷væW"à¤W‡FVæBF†B÷&–v–æÂFƒ²&W6W'fR6W&FR&ö¦V7Bg&öÒf–WrâW‡G&7BW†—7F–æs“3 §&VBÖöæÇ’G&–ævÆRw&‚–çFò–çB×G&–ævÆRÖw&‚æ§3²÷&–v–æÂUb–ç7V7F÷"öÇ–vöà¦VFvW2æBW‡÷'FW"f6R÷fW'FW‚ÖWFFF7F’WF†÷&—FF—fRâ&ÇW"W6W2W†7B6ÖRw&‚À¦W†—7F–ær6×ÆRvÆ²Væ6†ævVBâæòGWÆ–6FRF¦6Væ7’÷G&–æwVÆF–öâöÖöFVÆÆ–ær¶W&æVÂà ¤öâ7W&f6R&WF–ç2&–67BG&–ævÆR–æFW‚v—F‚ö–çBöæ÷&ÖÃ²Ö÷fRWFFW2ÆÂF‡&VRà¥7W&f6R÷&–VçFF–öâ7F–ÆÂ–ç6W'Bw2÷&–v–æÂ†VÇW"âæWr–çBÖ–ÖvR×w&æ§26'&–W2¦Æö6Â–ÖvR6†'B÷fW"&VÂÖæ–föÆBG&–ævÆRæV–v†&÷W'2ÂVæföÆF–ær6öÖÖöâVFvW2v—F€§v÷&ÆBÆVæwF‡2æB÷÷6—FR×6–FRF†—&BfW'FWƒ²Ö–Gö–çBö6VçG&ö–BF—7Fæ6RVWVR6†ö÷6W0¦öæR&÷WFRW"G&–ævÆRâ&V6öæ6–ÆR6†&VB6æöæ–6ÂfW'FW‚6ö÷&F–æFW2Fòfö–B7&6·0¦BÆö6Â7–6ÆR6Æ÷7W&W3²6VVBG&–ævÆR–ææVBâ7W'fVBö6Æ÷6VBF6†W2æV6W76&–Ç’7G&WF6ƒ°¦æ÷BvÆö&ÆÇ’F—7F÷'F–öâÖg&VR7†W&–6ÂVçw&â7F÷2W‡æF–ær÷WG6–FR–ÖvR&V7FævÆRÀ£#²G&–ævÆW2ó#²VWVR×÷6â&÷VæF&–W2öæöæÖæ–föÆBöF—66öææV7FVB6ö×öæVçG26Æ—°¦æò6ö÷&F–æFRvVÆF–ær÷"FÆ2F¦6Væ7’â÷&–v–æÂã“Ub&7FW"÷6÷W&6RÇ†6×Æ–ærÀ¦÷fW&Æ÷F–ÆRó$Ò66â'VFvWG2æB7F6²÷ööÂö†—7F÷'’öW‡÷'B÷væW'2&VÖ–ââw&VB6×ÆW0¦föÆÆ÷r6öææV7FVBF&vWB7W&f6W2&÷VæB6÷&æW'2WfVâv†Vâæ÷Bg&öçBÖf6–ær÷f—6–&ÆRg&öÐ¦æ6†÷"&ö¦V7F÷#²–6¶VBæ6†÷"7F–ÆÂö&W—2÷&–v–æÂf—6–&ÆR×F&vWBöö66ÇW6–öâ†—BwV&Bà¤fÆB&ö¦V7Bg&öÒf–Wr&WF–ç2÷&–v–æÃs\+÷66VæR÷6VÆbö66ÇW6–öâó3Ò&’×v÷&²'VÆW2à ¤W†—7F–ær6öçF7BFævVçBwV–FR&VÖ–ç2Ææ#²Æ–gBWFFW2W†7Bw&VBÖW6‚&Wf–Wrà¤Ç’&V6ö×WFW27W'&VçB6æF–FFRF†Vâ6öÖÖ—G2ôäR÷&–v–æÂ6†V6·ö–çBô4õrâ6æ6VÂÀ¦6Æ÷6RÂ&öG’Æ÷72ÂÆ–W"÷F&vWB6†ævRæB&VgW6Â&W6W'fR6öÖÖ—GFVB&W6÷W&6Rö†—7F÷'’à¥6÷W&6R÷&7FW"&WF–æVBFövWF†W"F‡&÷Vv‚÷&–v–æÂ&V6—Rö6öFV3¢æò66†VÖö'VFvWB–æ7&V6Rà¤–çFW&7F—fRw&6†'Böæ6†÷"—2G&ç6–VçBÂ3“#¢VF—B–Öv^(i$öâ7W&f6R&W–6·2æ6†÷#°¦öÆBfÆBÖG&—‚ÆöæR6ææ÷B&VvVæW&FRw&VB6†'Bâ6fVB—†VÇ2öæF—fRW‡÷'G0§&WF–âW†7Bw&–æs²æWfW"WFò×&7FW&—¦R&WF–æVB6÷W&6Rg&öÒF†BÖG&—‚öâ÷Vâà ¥6—‚æWr&Vw&W76–öç3¢W†7B7–ÖÖWG&–2—†VÇ27&÷72fÆBöö&Æ—VRó“+²Ö—'&÷&VBUg2À¦F—66öææV7FVBöæöæÖæ–föÆBW†6ÇW6–öç2Â÷&–v–æÂf–Wr'VÆW2÷7FÆRæ6†÷"õUb&VgW6ÂÀ§G&ç6f÷&ÖVBg&ÖR÷&÷FF–öâ÷66ÆRÂ7GVÂT’G&röçFòæ÷F†W"f6Rö6æ6VÂö7–6Æ^(i$Çž(i ¦†—7F÷'ž(i%6fT÷Vî(i&W†7BæF—fRärÂ7†W&RöFVæ–VB6†V6·ö–çBæB6†&VB×fW'FW‚6öçF–çV—G’à¤fö7W6VB–ÖvR·6VÓ#U52æB&VÆV6SU53²gVÆÂ÷V&Æ–6F–öâföÆÆ÷w2â6ö×ÆWFR6†ævV@§&WfW'6RÆöFW"w&ƒ“32Â&WF–æVBW‡÷'FW"ö–ç7V7F÷"öÖ–âö6vRô×VÇF’ög&÷¦VâVæ6†ævVBà¤æó“3"FWf–6R52–æfW'&VBâFWf–6S“32w&V&æ6R÷7G&WF6‚öf—'7B×W6RÆFVæ7’VæF–ærà¥&VBFö72÷–çBÖ–ÖvR×w&Ó“32æÖBâ–æFWVæFVçB&VfÆV7F–öâ&Wf–WrVç&W6öÇfVBà ¥VæF–ærW6W"&WVW7G2W‡Æ–6—FÇ’&WF–æVC¢7G&öævW"&ÇW"Ö÷VçB÷&F—W26W&FRg&öÐ¦÷6—G“²–ÖvR&7FW"6öçfW'6–öâöVF—F&ÆR&ÇW#²ÖW&vRF÷vâôfÆGFVâv—F‚&ÆVæBöÖ6°¦V&æ6R&W6W'fVC²7FvVBFW‡GW&Rö–ÖvRöÇ†&W6öÇWF–öâæBÆ–W"Ö6÷VçB6†ö–6W0§v—F‚ÖVÖ÷'’'VFvWG2â7W'&VçCS,+"–çFVBÖ2Ã#L+"6÷W&6W2Ã#Sl+"F—2Æ&6R³2÷fW&Æ—0§Væ6†ævVBâ6×VFvRôòõUbVFvR×6VÒWF†÷&–ærVWVVC²F†—2—2–ÖvRw&–æröæÇ’à ¢ã“32f–æÂÆö6ÂæöFS#Bã’ã&Vw&W76–öã¢¢£"Ãcs52òd”Âò6¶—VB¢¢à¥6—‚æWr6†V6·2²æV&'“’Ó#U53²&VÆV6SU52âæòW†—7F–ær76W'F–öç2&VÆ†VBà¥V&Æ–6F–öâö†÷7FVBöÆ—fRfW&–f–6F–öâföÆÆ÷w3²7GVÂ•C“32vFRVæF–ærà ¢22ã“32V&Æ–6F–öâfW&–f–VB(	B#ö7Fö&W"##b„'&—6&æR ¥'VçF–ÖR#ƒFc#“#3f3fƒSvff3Cv&CVFCC“s3s3#33vÂFW7FVBG&VP¦C#–FFcC#csccS&#sffV#ƒ–33C†V3SVF&c–#&Â—2V&Æ—6†VBöâÖ–âà¤6öææV7FVBv—BFFWÆöFVC’W†7BÆö6Â&Æö'3²fWF6†VBÖ–âÖF6†W2FW7FVBG&VRà¤Æö6ÂæöFS#BæB†÷7FVBæöFS#"&Vw&W76–öã3“S3#ƒ2ö¦ö#ƒ“#“3““#s"&÷F‚70¢¢£"ÃcsFW7G2òf–ÇW&W2ò6¶—VB¢£²6ö×ÆWFR†÷7FVBÆöw2fW&–f–VBà¥vW33“S3CöFWÆ÷“ƒ“#“Sƒ“sB7V66VVFVBâÆÃ#Bg&W6‚6†V6¶VBÆ—fRf–ÆW0¦'—FRÖÖF6ƒ¢6†VÆÂ÷fW'6–öâÂ6ö×ÆWFR6†ævVB–ÖvRô&ÇW"&WfW'6RÆöFW"w&‚À¦æWr6†&VBw&‚÷w&6†'BÂ&V6÷fW'’ÂÖ–âö6vRÂ&÷FV7FVB×VÇF“ãæB&WF–æV@¦W‡÷'FW"õUb–ç7V7F÷"÷&7FW"ö–ÖvR×6÷W&6R÷&V6—R÷væW'2âg&÷¦Vâ'V–ÆG2VçF÷V6†VC°¦æò76W'F–öç2&VÆ†VBâÆÂf÷W"6öçF–çV—G’f–ÆW2WFFVBà ¤'V–ÆC“326ö×ÆWFRæB&VG“¢´–Öv^(i$öâ7W&f6RÂÆ6RæV"7V&RVFvRÂÆ–gBæB÷&&—@§Fò–ç7V7B6öçF–çVF–öââG&röçFòæW‡Bf6S²&÷FFR÷66ÆRÂÆ–gC²G'’7W'fVBF6‚à¤Çž(i%VæFõ&VFòÂ6fT÷Vâ&WF–ç2W†7B&W7VÇBâ6öçF7BwV–FR7F—2Ææ#²w&V@¦ÖW6‚&Wf–WrWFFW2öâÆ–gBâ–çFW&7F—fR6†'B&VÖ–ç2G&ç6–VçC²VF—B–Öv^(i ¤öâ7W&f6R&W–6·2Â3“"â7W'fGW&RöÆ&vR6Æ÷6VBF6†W26â7G&WF6‚÷&V6‚&÷VæF'’à¤æòFWf–6S“32V&æ6RöÆFVæ7’52–æfW'&VC³“3"&ÇW"æC“#’Ç†vFW2VæF–ærà¤æW‡B7G&öævW"&ÇW"Â–ÖvR6öçfW'6–öâö&ÇW"ÂÖW&vRôfÆGFVâÂ&÷VæFVB&W6öÇWF–öâöÆ–W ¦÷F–öç3²6×VFvRôò÷6VÒWF†÷&–ær&VÖ–âVWVVBâ&VfÆV7F–öâ&Wf–Wr–æFWVæFVçBà¥F†—2&ööb6†ævW2Fö7VÖVçFF–öâöæÇ“²fW&–f–VB'VçF–ÖR&VÖ–ç2'—FRÖ–FVçF–6Âà ¢22ã“3B(	B&ÇW"Ö÷VçC²ã“32W6W"52(	B#ö7Fö&W"##b„'&—6&æR ¥W6W#“3552&÷FV7G2–ÖvRw&–ær7&÷727V&RVFvW2õUb6V×2ÂÖ÷fRõ&÷FFRõ66ÆRÀ¤Ç’ö†—7F÷'’õ6fT÷VââVF—BÖ–ãccƒ†FSröÆ—fS“33¢÷&–v–æÂ–çBÖ6÷&R†2f—†V@¦6VçG&SBö6&F–æÃöæR×72&ÇW"Âæò7G&öævW"f–ÇFW"÷6Æ–FW"÷væW"âW‡FVæB÷&–v–æÀ§&7FW"öæÇ“²æòæWr''W6‚ÂF¦6Væ7’Â–çWBÂ†—7F÷'’Â&W6÷W&6R÷"w&—FW"–×ÆVÖVçFF–öâà ¤&ÇW"6†÷w2Ö÷VçC(	33"ÂFVfVÇC‚âÖ÷VçB&WVG2W†—7F–ær6Öö÷F†–ær¶W&æVÂ÷fW"F†P§7G&ö¶R×7F'B6æ6†÷C²÷6—G’Ö—†W2f–ÇFW&VBF&vWBv—F‚÷&–v–æÃ²6—¦R6öçG&öÇ2''W6€¦fö÷G&–çBâ6÷&Rf–ÇFW"æÖ÷VçBFVfVÇG3†ÆVv7’6ÆÇ2÷6WGF–æw2&VÖ–âfÆ–B’âÖ–à¥T’76W2÷F–öæÂ&ÇW$Ö÷VçC²6†&VB''W6‚FVfVÇG2ôÆ"6fVB6WGF–æw2öæF—fR66†VÖ0§Væ6†ævVBâW†—7F–ær÷&–v–æÂæV–v†&÷W"F&ÆR†æFÆW26öææV7FVBf6W2õUb6V×2öâWfW'§73²æòFÆ2ÖæV–v†&÷W"&VG2÷"æWrF÷öÆöw’Æââw&—FW27F–ÆÂ6Æ—Fò–6¶VBf6S §7G&ö¶R&÷F‚6–FW2âöæR×72W†7B66WFVBã“3òã“3"÷WGWG2&WF–æVC²7G&öær&ÇW §W6W2&V×VÇF—Æ–VB$t$F‡&÷Vv‚ÆÂ76W2‡&rÖ6·2÷66Æ'2&VÖ–â–æFWVæFVçB’à ¤6ö×WFRF&vWBöæ6Rö6öçF7BÂW6–ærGvò&÷VæFVBfÆöCcB$t$'VffW'2Fòfö–B&÷VæF–æp¦&WGvVVâ76W3²öæRF&vWB&WF–æVBf÷"6öçF7BâCS,+"V6‚'VffW#„Ö”"ÃdÖ”"f–ÇFW&–æp¦'VffW'2F÷FÃ²F&vWC„Ö”"&WF–æVBÇW2W†—7F–ær&Vf÷&Rö6÷fW&vRöFöÖ–â÷ööÂ&W6÷W&6W2à¥Væ–f÷&Ò6÷W&6W26†÷'F7WC²÷6—G“6¶—2f–ÇFW&–ærâÖƒ3"£S,+"FW†VÂf—6—G2Âæð§W"ÖF"&WVFVBf–ÇFW&–ær÷"Væ&÷VæFVBfVVF&6²â6÷fW&vR&VÖ–ç2Ö‚ö6öçF7C°¦Æ–gB÷&WVBf÷"Ö÷&Râf–æ—6‚ö6æ6VÂöF—7÷6RG&÷2F&vWC²fÆ–FF–öâ&V6VFW26öçF7@§7FFRV&Æ–6F–öââÖ÷VçB–çWB6æ6VÇ2–âÖfÆ–v‡Bv÷&²æBWFFW2W†—7F–ær&VF÷WC°¦÷&–v–æÂ–çB†—7F÷'’&V÷Vâ&WF–ç2FööÂöÖ÷VçBâ7W'&VçB6VÆV7FVBÆ–W"ö6†ææVÂöæÇ’à¤–ÖvR6öÆ÷W"7F—26÷W&6R×&W6W'fVB÷&VBÖöæÇ’VæF–ærW‡Æ–6—B–ÖvR6öçfW'6–öâà ¤f—fRæWr&Vw&W76–öç3¢æÇ—F–6ÂöæR÷Gvòó3"×72–×VÇ6RæB–æFWVæFVçB÷6—G“°¦Ç†÷&r66Æ"öFöÖ–âö–çfÆ–BöæòÖ÷ö6æ6VÃ²7G&öærföÆFVB×6VÒ6×Æ–ærW†6ÇVFW0¦FÆ2FV6÷’æBf"Öf6Rw&—FW3²7GVÂT’Æ÷rö†–v‚6ögFæW72ÂÖ÷VçBÖ6†ævR&öÆÆ&6²À¥–çBVæFõ&VFòæB6fT÷VâöW†7BæF—fRäs²66Æ"öÖ6²—6öÆF–öâö6†V6·ö–çB&VgW6Âà¤fö7W6VC#e52–æ6Âã“32w&–æsbæB–çBÖ†—7F÷'“S²&VÆV6SU53²gVÆÂ&VÆ÷rà¤æòöÆB76W'F–öç2&VÆ†VBâ6ö×ÆWFR6†ævVB&7FW"ôÆ"öÖ–â&WfW'6RÆöFW"w&ƒ“3C°¦66WFVC“32w&öw&‚öW‡÷'BõUb–ç7V7F÷"ÂÖ–âö6vRô×VÇF’ög&÷¦Vâ'—FW2Væ6†ævVBà¤FWf–6S“3B7G&VæwF‚öf—'7BÖ6öçF7BÆFVæ7’VæF–æs²æöFRF–Ö–æw2&Ræ÷B•BWf–FVæ6Rà¥&VBFö72÷–çBÖ&ÇW"ÖÖ÷VçBÓ“3BæÖBâ&VfÆV7F–öâ&Wf–Wr–æFWVæFVçFÇ’Vç&W6öÇfVBà¤æW‡B–ÖvR×Fò×–çB6öçfW'6–öâö&ÇW"ÂF†VâÖW&vRF÷vâôfÆGFVâÂ7FvVB&W6öÇWF–öç2öÆ–W ¦'VFvWG3²6×VFvRôòöVFvR×6VÒWF†÷&–ærVWVVBâ7W'&VçCS,+"ó#L+"ó#Sl+"ö&6R³2Væ6†ævVBà ¢ã“3Bf–æÂÆö6ÂæöFS#Bã’ã&Vw&W76–öã¢¢£"ÃcsR52òd”Âò6¶—VB¢¢à¤fö7W6VC#e52²&VÆV6SU53²æòW†—7F–ær76W'F–öç2&VÆ†VBâ†÷7FVBõvW2öÆ—fP§fW&–f–6F–öâföÆÆ÷w3²7GVÂ•C“3B7G&VæwF‚öÆFVæ7’vFRVæF–ærà ¢22ã“3BV&Æ–6F–öâ6Æ÷6VC²W6W"52(	B#ö7Fö&W"##b„'&—6&æR ¥'VçF–ÖV&3ƒCCS6SscSCC#C“3†Sc#SC†CVV6cRÂFW7FVBG&VVSS–#&&36#–3S3ƒSC6cf&#ƒfC–S6FRÀ§V&Æ—6†VBâ†÷7FVBæöFS#"&Vw&W76–öã3“S##“C3Crö¦ö#ƒ“3ccs‚Æöw26öæf—&Ó#csU52ð£d”Âó6¶—ÂÖF6†–ær&V6÷&FVBÆö6ÂæöFS#B'VââvW33“S##“3C‚öFWÆ÷“ƒ“3c##S3s§7V66VVFVBâÆ—fS“3BÖæ–fW7BæBÆÃ#r6†V6¶VB'VçF–ÖR÷&÷FV7FVBf–ÆW2'—FRÖÖF6‚F†P§V&Æ—6†VC“3B6÷W&6R†v—B×6†÷r6æ6†÷BW6VBv†–ÆS“3Rv÷&¶–ærG&VRv2F—'G’’âW6W ¥53“3B&÷FV7G2FVF–6FVB&ÇW"Ö÷VçC(	33"öFVfVÇC‚Â–æFWVæFVçB÷6—G’õ6—¦RÂ&WF–æV@¥–çB†—7F÷'’æBV&Æ–W#“32–ÖvRw&–ærâ&–÷"–çFW''WFVBV&Æ–6F–öâ&ööb—2æ÷p¦6Æ÷6VC²æòæWs“3B'VçF–ÖR6†ævW2âÇ†“#’66WFæ6R&VÖ–ç2–æFWVæFVçFÇ’VæF–ærà ¢22ã“3R(	B–ÖvRFò–çB6öçfW'6–öã²ã“3B52(	B#ö7Fö&W"##b„'&—6&æR ¤VF—BÖ–æ&3ƒCCS2öÆ—fS“3C¢6÷W&6R×&W6W'fVB–ÖvR66†RæBW‡Æ–6—B—&VB&WÆ6VÖVç@¦W†—7C²æò&7FW"6öçfW'6–öââW‡FVæB÷&–v–æÂ–çBÖÆ–W"×7F6²v—F‚W‡Æ–6—@§&7FW&—¦T–ÖvU–çDÆ–W#¢fÆ–FFVB÷væVB6æ6†÷BÂ6ÖR7F6²÷fW'6–öâö÷&FW"ô”BöæÖRð§f—6–&–Æ—G’ö÷6—G’ö&ÆVæBöÖ6²÷—†VÇ3²ôäÅ’6VÆV7FVB–ÖvR&V6—R&V6öÖW2çVÆÂâW†—7F–æp¦6ö×÷6—F÷"fW&–f–W2–FVçF–6ÂV&æ6RÂ–æ6ÇVF–ærWfW'’7W÷'FVB&ÆVæBæB–çfW'FV@¦Ö6²âæò–×Æ–6—B6ö×÷6—F–ær–çFò&6RÂW‡G&Æ–W"Â&W6×Æ–ærÂæWrw&—FW"÷66†VÖÀ¦''W6‚Â†—7F÷'’ÂÖöFVÆÆ–ær÷"Ub÷væW"âW†—7F–ærF‡&VRÖ÷fW&Æ’óS,+"Æ–Ö—G2Væ6†ævVBà ¤–ÖvRÖöæÇ’6öçfW'BFò–çB'WGFöâW6W2÷&–v–æÂÆ–W$7F–öâ÷66VæR6†V6·ö–çB÷&VfÆ–v‡Bð¤4õr÷væW"â6öçfW'6–öâ6VÆV7G26öÆ÷W"WfVâv†Vâ–ÖvRÖ6²v26VÆV7FVC²''W6‚ÂW&6W"À¤f–ÆÂæB&ÇW"F†VâW6R÷&–v–æÂ&7FW"æB66WFVC“3BÖ÷VçBâ÷F†W"–ÖvRÆ–W'2¶VW §6÷W&6RVF—F–ærâ6ÖR—†VÇ2–æ6ÇVFS“32w&VBÆ6VÖVçBâVF—B–ÖvR'WGFöâF—6V'0¦'’÷&–v–æÂ7FFRv†Vâæò&V6—S²æÖR÷6Æ÷B&WF–æVBâVæFò&W7F÷&W2&WF–æVB6÷W&6Ræ@§Æ6VÖVçBVF—F–ærÂ&VFò&W7F÷&W2&7FW"6öçfW'6–öââgFW"6fRô÷Vâ6öçfW'FVBÆ–W"—0¦÷&F–æ'’VF—F&ÆR—†VÇ3²6÷W&6R&V6—R—6âwB6W&–Æ—¦VBf÷"F†BÆ–W"â÷F†W"ö&¦V7G0§6†&–æröÆB&W6÷W&6RæB÷&–v–æÂ6fVB–ÖvR6÷W&6W2&VÖ–âVæ6†ævVBâ6÷W&6R&VÆV6P§&VGV6W26öÖÖ—GFVB&W6÷W&6R'—FW3²VæFòÖ’7F–ÆÂ&WF–â—B–â&÷VæFVB66VæR†—7F÷'’à ¤&Æö6²6öçfW'6–öâv†–ÆR7FvVB–ÖvRÆ6VÖVçBW†—7G2Â¶VW–ær6æF–FFRö6öÖÖ—GFVBv÷&°¦–çF7C²Ç’ô6æ6VÂf—'7BâÖ—76–æröæöæ–ÖvR÷66Æ"÷7FÆRF&vWBö6†V6·ö–çB÷ööÂW'&÷'0¦ÆVfR6öÖÖ—GFVB&W6÷W&6W2ö†—7F÷'’VçF÷V6†VBâ&VBÖöæÇ’–ÖvRÖW76vR¶VW266WFV@¢t–ÖvR6öÆ÷W"—2&WF–æVBr&Vf—‚æBö–çG2Fò6öçfW'6–öââT’&WGW&â÷&W7VÇB&WW6VBf÷ ¦67W&FR7V66W727FGW2Âæò6W&FR–çWBöÆ—7FVæW"ö†—7F÷'’7—7FVÒâ7W'&VçB–çB7F—2à ¤f—fRæWrFW7G3¢ÆÂÖ&ÆVæBöÖ6²W†7BV&æ6RæB÷væVB'VffW'2ö'—FR66÷VçF–æs°¦7GVÂw&VB–ÖvRTž(i&6öçfW'N(i'7G&öær&ÇW.(i%–çBVæFõ&VFþ(i%6fT÷Vî(i&W†7BæF—fRäs°¦Ö6¾(i$6öÆ÷W"æB''W6‚ôW&6W"ögVÆÂ×7F6²ö÷F†W"Ö–ÖvR÷66Æ"&V†f–÷#²7FvVBöÖ—76–ær÷7FÆRð¦6†V6·ö–çB÷ööÂ&VgW6Ã²7FvVBT’VF—Bö6æ6VÂwV&BâæV&'““‚ó“32ó“3BæB&VÆV6SP§&VÖ–â7F—fS²gVÆÂ÷V&Æ–6F–öâ&VÆ÷râ6ö×ÆWFR6†ævVB7F6²÷&W6÷W&6R÷&ö¦V7BöW‡÷'Bð¤Æ"öÖ–â&WfW'6RÆöFW"w&ƒ“3S²gVæ7F–öæÂ6†ævR6öæf–æVBFò÷&–v–æÃ2÷væW'2à¤66WFVB&7FW#“3BÂw&“32õUböÖW6‚¶W&æVÇ2öÖ–âö6vRô×VÇF’ög&÷¦Vâ'—FW2Væ6†ævVBà¥&VBFö72÷–çBÖ–ÖvR×&7FW&—¦RÓ“3RæÖBâFWf–6S“3R6öçfW'6–öâö&ÇW"õVæFòfVVÂVæF–ærà¤æW‡BÖW&vRF÷vâôfÆGFVâF‡&÷Vv‚W†—7F–ær6ö×÷6—F÷"Fòg&VR6Æ÷G2ÂF†Vâ7FvVBFW‡GW&Rð§6÷W&6RöÇ†&W6öÇWF–öâæBÆ–W"'VFvWG2â6×VFvRôòõUbVFvR×6VÒWF†÷&–ærVWVVC°§&VfÆV7F–öâ&Wf–Wr–æFWVæFVçFÇ’Vç&W6öÇfVBâ7W'&VçCS,+"ó#L+"ó#Sl+"ö&6R³2&WF–æVBà ¢ã“3Rf–æÂÆö6ÂæöFS#Bã’ã&Vw&W76–öã¢¢£"Ãcƒ52òd”Âò6¶—VB¢¢à¤fö7W6VC#•52†æWsRÂ–ÖvS“‚V–v‡BÂw&“326—‚ÂÖ÷VçC“3Bf—fRÂ&VÆV6SR“²æð¦W†—7F–ær76W'F–öç2&VÆ†VBâ†÷7FVBõvW2öÆ—fRV&Æ–6F–öâfW&–f–6F–öâföÆÆ÷w2à ¢22W&ÖæVçB6ö×ÆWF–öâÖ–ç7G'V7F–öâVF—B(	B#ö7Fö&W"##` ¥W6W"&WVFVB52öæW‡F'V–ÆBv†–ÆS“3RV&Æ–6F–öâv2VæF–æræB6¶VBFòVF—@¦ÖçVÂ×FW7B–ç7G'V7F–öç2â•õtõ$´dÄõrÇ&VG’W‡Æ–6—FÇ’&WV—&W2&VF–æW72ö'V–Æ@¦çVÖ&W"æC>(	3bV–6²FWf–6R6†V6·3²•ô„äDôdbÇ6ò6öçF–æVBF†S’ö7Fö&W"&VÖ–æFW ¦–ç6–FRâöÆFW"VçG'’â&öÖ÷FVBF†R6ÖR'VÆRFòF†RDõöb•ô„äDôdb2W&ÖæVç@§6V7F–öââ—BÆ–W2WfW'’'V–ÆBÂ–æ6ÇVF–ærâW‡Æ–6—BæòÖæWr×FW7B7FFVÖVçBv†Và¦&÷&–FS²æWfW"VæBv—F‚öæÇ’&öw&W72âæò'VçF–ÖR6†ævR–âF†—2VF—Bâ7W'&Vç@¦æW‡B'V–ÆB&VÖ–ç3“3R‡V&Æ—6†VBÖ–âv3“3Bv†Vâ52'&—fVB“²f–æ—6ƒ“3RæB—G0¦†æG2Ööâ–ÖvR6öçfW'6–öâô&ÇW"õVæFòõ6fT÷VâÆ—7B&Vf÷&RFV6Æ&–ær—B&VG’à ¢22ã“3RV&Æ–6F–öâfW&–f–VB(	B#ö7Fö&W"##b„'&—6&æR ¥'VçF–ÖRCF3FV66c3ffCvfCc&&VSCƒ&Sccf3C–#6ÂV&Æ—6†VBG&VP¦c3sC“ƒ3#C3v“vV6#s“†3SfVF#V3s6“6ÂÖF6†W2Æö6ÂÖ–âW†7FÇ’à¤÷&–v–æÂÆö6ÂFW7FVBG&VV3Scc3R†B–FVçF–6Â'VçF–ÖS²öæÇ’f÷W"6öçF–çV—G’f–ÆW0¦6†ævVBFò&öÖ÷FRF†RW&ÖæVçB6ö×ÆWF–öâ'VÆR&Vf÷&RV&Æ–6F–öââv—BFFG&VP§fW&–f–VBv—F‚ÆÃ#‚&Æö'2âÆö6ÂæöFS#BæB†÷7FVBæöFS#"&Vw&W76–öã3“SƒccSSbð¦¦ö#“sc“3s3c&÷F‚72¢£"ÃcƒFW7G2òf–ÇW&W2ò6¶—VB¢£²gVÆÂ†÷7FVBÆöw0§fW&–f–VBâvW33“Sƒccs’öFWÆ÷““ssSC37V66VVFVBâÆÃ3rg&W6‚6†V6¶VBÆ—fP¦f–ÆW2'—FRÖÖF6ƒ¢6†VÆÂ÷fW'6–öâÂ6ö×ÆWFR6†ævVB&W6÷W&6R÷&ö¦V7BöW‡÷'BôÆ"÷–ç@¦ÆöFW"w&‚æB&WF–æVB&7FW#“3BÂw&“32ÂUb–ç7V7F÷"ÂÖ–âö6vRô×VÇF“ã÷&V6÷fW'’ð¦–ÖvR×6÷W&6R÷væW'2âg&÷¦Vâ'V–ÆG2VçF÷V6†VC²æò76W'F–öç2&VÆ†VBà ¤†æFöfbVF—B6ö×ÆWFS¢W&ÖæVçB&VF–æW72ö'V–ÆBöÖçVÂ×FW7B'VÆRv2Ç&VG’–à¤•õtõ$´dÄõræBâöÆFW"•ô„äDôdbVçG'“²æ÷r&öÖ–æVçFÇ’BDõöb•ô„äDôdbà¤WfW'’f–æ—6†VB'V–ÆB×W7Bv—fR—G2&VF–æW72Â'V–ÆBçVÖ&W"æB6†÷'BFWf–6RFW7G2À¦÷"W‡Æ–6—FÇ’6’æòæWrFW7B—2æVVFVBâæWfW"VæBv—F‚&öw&W72ÆöæRà¤ÆÂf÷W"6öçF–çV—G’f–ÆW27W'&VçBâF†—2&ööb6†ævW2Fö7VÖVçFF–öâöæÇ’à ¤'V–ÆC“3R6ö×ÆWFRæB&VG“¢Æ–VB–ÖvRÆ–W.(i$6öçfW'BFò–çBÂV&æ6R¶WC°¤&ÇW"Ö÷VçBô''W6‚ôW&6W"VF—G2—†VÇ3²VæFòVF—G2æB6öçfW'6–öâ&W7F÷&W2VF—B–ÖvS°¥&VFòF†Vâ6fT÷Vâ&WF–ç2VF—F&ÆR–çBâ6÷W&6R&V6—R&VÆöæw2FòöÆBVæFò&W6÷W&6RÀ¦æ÷BF†R6öçfW'FVB6fVBÆ–W#²Ö6·2ö&ÆVæG2ö÷F†W"–ÖvRÆ–W'2&VÖ–â–æFWVæFVçBà¥W6W#“3E52&÷FV7FVC²7GVÃ“3RV&æ6RöfVVÂvFRVæF–ærâæW‡BÖW&vRF÷vâôfÆGFVà§Fòg&VR6Æ÷G2ÂF†Vâ7FvVB&W6öÇWF–öâöÆ–W"'VFvWG3²6×VFvRôò÷6VÒWF†÷&–ærVWVVBà¥&VfÆV7F–öâ&Wf–Wr&VÖ–ç2–æFWVæFVçC²Ç†“#’FWf–6RvFRæ÷B–æfW'&VBà ¢22ã“3b(	B÷F–öæÂ#B6öÆ÷W"FW‡GW&W3²ã“3R52(	B#ö7Fö&W"##b„'&—6&æR ¥W6W"ã“3R52—2&÷FV7FVBâW6W"&–÷&—G’Ö÷fW2&W6öÇWF–öâ†VBöbÖW&vRôfÆGFVâà¤VF—C¢6öÆ÷W"&W6÷W&6RÇ&VG’W&Ö—G3#BÂ'WB–çFW"÷7F6²÷&ö¦V7F–öâöF—7Æ’öW‡÷'@¦æB&ÇW"FöÖ–âvW&SS"âW‡FVæBF†÷6R4ÔR÷væW'3¢–çB(i"FW‡GW&R&W6öÇWF–öâ(i ¤–æ7&V6RFó#L9s#BÂöæR÷&–v–æÂ6†V6·ö–çBÂW‡Æ–6—BW"Öö&¦V7B÷BÖ–ââW†7C,9p¦æV&W7BFW†VÂ&WÆ–6F–öâ&W6W'fW2öÆB&6Rö÷fW&Æ—2öÖ6·2ö&ÆVæG2ö–ÖvR&7FW"æ@§6÷W&6S²g&W6‚–çBöæWr&ö¦V7F–öç2W6SÃC‚ÃSsbFW†VÇ2âw&VB6÷W&6R—2äõB6–ÆVçFÇ§&W&ö¦V7FVBg&öÒâ–ç7Vff–6–VçBfÆB&V6—Râ÷&–v–æÂVæFò&W7F÷&W3S#²&VFò÷&V÷Và¦¶VW3#Bâ6÷W&6W3#L+"ó$Ö”"æBF—3#Sl+"Væ6†ævVC²66Æ'2&VÖ–â–æFWVæFVçFÇ“S"à¤÷&–v–æÂ6ö×÷6—FR÷66VæR6öFV2ö–Ö×WF&ÆR6†&–æröæF—fR´tÄ"w&—FW'2&WF–æVBà ¤W‡Æ–6—BÆ–W&VC#Gc"÷c2F–ÖVç6–öç26VÆV7C3"ócDÖ”"&7FW"÷#C‚ó“dÖ”"–ÖvRööÀ§&öf–ÆW2‡Væ—VRöW‡æFVB“²÷&–v–æÂ÷VWcæCS#‚ób÷##BóC‚Væ6†ævVBâVæÆ&vVÖVç@§W6W2W†—7F–æwc"WfVâv—F‚æò÷fW&Æ—2ÂæòæWr66†VÖâW†—7F–ær6öçFVçBFVGW÷ööÆVGcRÀ§7G&–7B&Vg2ö6æöæ–6Â'—FW2÷&VFV6öFRöFöÖ–2W'&÷'2æC3$Ö”"f–ÆRó#DÖ”"æF—fR6 §&WF–æVBâVç7W÷'FVBF–ÖVç6–öç2ö6†V6·ö–çB÷7FÆRö'VFvWB÷7FvVB×Æ6VÖVçB&VgW6P§v—F†÷WB6†ævVB&W6÷W&6W2ö†—7F÷'’âÆ&vW"gVÆÂ–ÖvR66VæW26â7F–ÆÂ†—Bf–ÆRÆ–Ö—G2à ¤÷&–v–æÂ&7FW"öf–ÇFW"6—¦R6V–Æ–æs#BöæÇ“²66WFVC3"×72&ÇW"ÖF‚Væ6†ævVBà¤C#B&ÇW"†2Gvó3$Ö”"fÆöCcB'VffW'2ƒcDÖ”"f–ÇFW&–ærV³³3$Ö”"F&vWB&WF–æVB§ÇW2÷væW'6†—÷7G&ö¶R÷&W6÷W&6RôuR6÷–W3²æòFWf–6R$Òôe2öÆFVæ7’6Æ–Òâ÷&–v–æÀ£$ÒUb66âó$Ò6VÒ×vÆ²ó3Ò&ö¦V7F–öâ&’×v÷&²wV&G2&WF–æVBÂ6ò6ö×ÆW‚†–v‚×&W0¦Æ–÷WG26â&VgW6RFöÖ–6ÆÇ’â''W6‚6—¦R&VÖ–ç2FW†VÂÖ&6VBâ6†&VBÆ"&VÖ–ç3S"à¤ÆÂ6†ævVB&WfW'6RÖÆöFW"&VçG2&W–ææVC“3c²Ö–ã“3ö6vRô×VÇF“ãög&÷¦VâVæ6†ævVBà¥&VBFö72÷–çB×&W6öÇWF–öâÓ“3bæÖBf÷"FW7B66÷RæBÖVÖ÷'’÷G&ç7÷'BF—7F–æ7F–öç2à¥fÆ–FF–öâ÷V&Æ–6F–öâföÆÆ÷s²ã“3b7GVÂ•BfVVÂ&VÖ–ç2VæF–ærà ¢ã“3bf–æÂÆö6ÂæöFS#Bã’ã&Vw&W76–öã¢¢£"Ãcƒr52òd”Âò6¶—VB¢¢à¥6WfVâæWr&W6öÇWF–öâ–çFVw&F–öç2ÇW2WfW'’÷&–v–æÂFW7B72Væ6†ævVBâ&Wf–WvV@§&VÆV6Rö66†R6öçG&7CU52Â÷&–v–æÃ“"6—¦SS2&VgW6Â&WF–æVBâ–æ—F–ÂW‡Æ÷&F÷'§'VâFÖ—GFVB–çFW&ÖVF–FR6—¦W3²÷&–v–æÂwV&Bæ÷röæÇ’FG2W†7C#L+"&÷fSS"à¤tÄ"f—‡GW&RföÆÆ÷w27GVÂ&–Ö—F—fRÖFW&–Â”C²æò&öGV7F–öâw&—FW"v÷&¶&÷VæBà¤ÆÂf÷W"6öçF–çV—G’f–ÆW27W'&VçBâV&Æ–6F–öâö†÷7FVBöÆ—fRfW&–f–6F–öâföÆÆ÷w3°¦7GVÂã“3b•B6†'æW72Â''W6‚ô&ÇW"ÆFVæ7’æBÖVÖ÷'’66WFæ6R&VÖ–âVæF–ærà ¢22ã“3bV&Æ–6F–öâfW&–f–VB(	B#ö7Fö&W"##b„'&—6&æR ¥'VçF–ÖRFC36†c6Vf6ƒc3F#csSS6&fcfSc3VÂFW7FVBG&VP¦ƒcSƒ–cV6FS3VVFSCCFcvV&C“s&ff6c“CÂ—2V&Æ—6†VBöâÖ–ââ6öææV7FVBv—@¤FFWÆöFVC3W†7B&Æö'2æB7&VFVBF†R–FVçF–6ÂFW7FVBG&VS²fWF6†VBÖ–à¦ÖF6†VBæBÆö6Â'&æ6‚v2Æ–væVBv—F†÷WBf–ÆR6†ævW2âÆö6ÂæöFS#BæB†÷7FV@¤æöFS#"&Vw&W76–öã3“S“33ScS3Bö¦ö#“““SCSC&÷F‚72¢£"ÃcƒrFW7G2òf–ÇW&W2ð£6¶—VB¢£²6ö×ÆWFR†÷7FVBÆöw2fW&–f–VBâvW33“S“33SS#ƒöFWÆ÷““““sScs3p§7V66VVFVBâÆÃ36†V6¶VB'VçF–ÖRôÆ"÷6†VÆÂ÷&V6÷fW'’÷&÷FV7FVBf–ÆW2'—FRÖÖF6‚à¤–æ—F–ÂfWF6‚&VvâGW&–ær&öÆÆ÷WBæB&WGW&æVB6—‚ã“3Ræ6W7F÷'3²g&W6‚÷7FFWÆ÷§&V6†V6·26Æ÷6VBÆÂ6—‚âæòg&÷¦VâöÖ–âö6vRô×VÇF’VF—G2âVÆWfVâgVæ7F–öæÂ÷væW'3°¦VÆWfVâ&WfW'6RÖw&‚&VçBf–ÆW26öçF–â66†R×&VfW&Væ6R6†ævW2öæÇ’à ¤ÆÂf÷W"6öçF–çV—G’f–ÆW27W'&VçBâ&ööb—2Fö7VÖVçFF–öâÖöæÇ’Â6ÖR'VçF–ÖR'—FW2à¥W6W"ã“3R52&÷FV7G26öçfW'6–öâô&ÇW"öVF—Bö†—7F÷'’÷W'6—7FVæ6S²ã“3bFWf–6RFWF–Âð¦ÆFVæ7’öÖVÖ÷'’vFR&VÖ–ç2VæF–ærâ&VG“¢–çB(i"FW‡GW&R&W6öÇWF–öâ(i"–æ7&V6P§Fó#L9s#C²g&W6‚7G&ö¶W2öæWr–ÖvRÆ6VÖVçBÂVæFóS"õ&VFó#BÂ6fT÷VâæBäôÔBà¤W†—7F–ær—†VÇ2VæÆ&vRW†7FÇ“²&R×Æ6R&WF–æVB6÷W&6W2f÷"g&W6‚–ÖvRFWF–Âà¤–æFWVæFVçCS"66Æ'2÷6÷W&6S#BöÇ†#Sbö&6R·F‡&VRÆ–Ö—G2&WF–æVBâæW‡B&W6öÇWF–öà¦fVVF&6²F†VâÖW&vRF÷vâôfÆGFVã²Æ&vW"6÷W&6W2öÖ2öÆ–W'2&VÖ–â7FvVBà ¢22ã“3r(	B7GVÃ#Bg&W6‚–çBFVfVÇC²ã“3b—†VÆF–öâfVVF&6²(	B#"ö7Fö&W"##` ¥W6W#¢–ÖvW27F–ÆÂ—†VÆFVBÂF†Vâ6Æ&–f–VBg&W6‚7V&R–çBgFW"&Vg&W6‚Föòà¤æòã“3b52–æfW'&VBâVF—Bcc6f3¢g&W6‚&öGV7F–öâ–çFW"7F–ÆÂFVfVÇFVCS#°¦÷F–öæÂã“3b–æ7&V6R6B–â6öÆÆ6VBFWF–Ç2â&Vg&W6‚FöW2æ÷B6VÆV7BF†B6öçG&öÂà¤6÷'&V7B&öGV7F–öâÖ¶T6öçG&öÆÆW"FòW‡Æ–6—FÇ’&WVW7BæWt6öÆ÷W%6—¦S#Bg&öÒ4ÔP§–çFW"âöæÇ’æòÖ6öÆ÷W"×&W6÷W&6Rö&¦V7G2W6RFVfVÇBâF†V—"FV×÷&'“#B&6R÷7F6°§&VÖ–ç2Væ6öÖÖ—GFVBVçF–Âf—'7B&VÂ–çBö–ÖvRVF—C²æò&Ææ²&W6÷W&6R÷"W‡G&¦†—7F÷'’öâ÷Vâô6Æ÷6Râf—'7BVF—BW6W266WFVBÆ–W&VGc"÷c2æB†–v‚×&W2ööÂ&öf–ÆRà¤W†—7F–æsS"ó#B6fVB&W6÷W&6W2÷fW'&–FRFVfVÇBæB&WF–âW†7B'—FW2ö†—7F÷'’à¤÷&–v–æÂ&WW6&ÆR“S"ôÆ"FVfVÇG2&VÖ–ã²ÆÂ&öGV7F–öâT’F‡2&WVW7C#Bà ¤Ö÷fR÷&–v–æÂ&W6öÇWF–öâæöFW2–çFòf—6–&ÆR&÷ræV"6†ææVÂõFööÂÂW‡Æ–6—B6öÆ÷W §FW‡GW&RÆ&VÃ²–æ7&V6RW‡÷6VBf÷#S"Â†–FFVâC#BÂ66Æ"6†ææVÂwV&B&WF–æVBà¤÷Vâ7FGW2&W÷'G27GVÂ6—¦RâæòæWrÆ—7FVæW'2ö†—7F÷'’ö¶W&æVÂ÷"WFöÖF–2&7FW §W66ÆR÷&W&ö¦V7F–öâÂ6÷W&6RÆ–Ö—G2õUb÷&VæFW"öæF—fRÖW‡÷'B÷&W6÷W&6RÖ'VFvWB÷66†VÖ6†ævRâ÷&–v–æÀ¦æV&W7B–ÖvR6×ÆRöÆ–æV"FW‡GW&RF—7Æ’Væ6†ævVC²æò6Æ–ÒÆÂ¦ööÖVB—†VÆF–öà¦—26öÇfVB÷"F†BW6W"v2FVf–æ—FVÇ’–çF–æsS"â#B—2v†öÆRFÆ2Â6†&VB'’f6W2à¥Gvò–çFW"÷væW'2²W†—7F–ærf–ÆR÷væW"æB&VçB6†VÆÂ÷&V6÷fW'’–ç3“3röæÇ“²Ö–âô×VÇF’ög&÷¦Vâ–çF7Bà ¥F‡&VRæWr7GVÂT’FW7G2fW&–g’g&W6ƒ#B&Vf÷&R–çBÂæò÷Vâ†—7F÷'’÷–ÆöBÀ¦f—'7BÖVF—B&W6÷W&6RõVæFõ&VFòöæWrÖ6öçG&öÆÆW"&V÷Væ–æs²W†—7F–æsS"f—6–&ÆR÷BÖ–âv—F€¦öæR6†V6·ö–çC²f—'7B–ÖvR&ö¦V7F–öî(i%6fT÷Vî(i&W†7BæF—fS#BäræCS"66Æ ¦–æFWVæFVæ6Râ÷&–v–æÂã“3bVæÆ&vVÖVçBFW7Bæ÷rW‡Æ–6—FÇ’7&VFW2ÆVv7“S"Öà¤W†—7F–ærÇ†FW7B6×ÆW27GVÂ–çBçv–GFƒ²66Æ"T’FW7G26ö×&RWfW'’F—7Æ–V@§FW†VÂFòF†RW†7CS"6÷W&6RB7W'&VçBF—7Æ’6—¦RâF†V—"öÆBf—†VCS"F—7Æ’–æF–6W0§vW&R–æ6ö×F–&ÆRv—F‚F†RæWvÇ’&WVW7FVB&öGV7F–öâFVfVÇC²æò&rÖFF76W'F–öç0§&VÖ÷fVB÷"vV¶VæVBâ&VBFö72÷–çBÖFVfVÇB×&W6öÇWF–öâÓ“3ræÖBâfÆ–FF–öâföÆÆ÷w2à ¤DUd”4S¢æWr7V&R(i"–çC²f—6–&ÆR6öÆ÷W"FW‡GW&S#L9s#B$Tdõ$Rf—'7BÖ&²âg&W6€¦f–æR7G&ö¶W2öæWr–ÖvS²÷&&—B÷¦ööÒæB§VFvRFWF–ÂöÆFVæ7’âVæFõ&VFò¶VW2–çC°¥6fT÷Vâ&WF–ç3#C²W†—7F–æsS"&ö¦V7BöffW'2–æ7&V6RæB&VÖ–ç3S"VçF–ÂFVBà¤7GVÂ•B6†'æW72vFR&VÖ–ç2VæF–ærâæW‡BFWf–6RWf–FVæ6R&Vf÷&R†–v†W"ÖÖð§6÷W&6RõUbÖFVç6—G’v÷&³²ÖW&vRôfÆGFVâæB÷F†W"VWVVB&WVW7G2&W6W'fVBà ¢ã“3rf–ÆR×6—¦RföÆÆ÷r×F‡&÷Vvƒ¢7GVÂg&W6ƒ#BF‡&VRÖÆ–W"GWÆ–6FRW†6VVFVBF†P¦öÆC3$Ö”"¥4ôâf–ÆR6FW7—FRfÆ–B&W6÷W&6RV÷F2â÷&–v–æÂö&¦V7BÖÖævVÖVç@¥6fRô÷Vâæ÷rW&Ö—G3“dÖ”"ôäÅ’f÷"fÆ–FFVBÆ–W&VGc"÷c26öÆ÷W##L+"&ö¦V7G3°¦ÆVv7’ö÷&F–æ'’&ö¦V7G2&WF–ã3$Ö”"â÷Vâ&V¦V7G3ã“dÖ”"&Vf÷&R&VF–æs²f–ÆW33.(	3“`¦&R'6VB÷7FvVBÂFV6öFVBv—F‚÷&–v–æÂ7G&–7B&W6÷W&6RövVöÖWG'’wV&G2ÂF†Vâ×W7@§VÆ–g’$Tdõ$R6öæf—&ÖF–öâ÷"66VæRö†—7F÷'’&WÆ6VÖVçBâ6fRVÆ–f–W2öæÇ’gFW ¦÷&–v–æÂW†7B&÷VæGG&—fÆ–FF–öââ÷&–v–æÂV÷F÷&VFV6öFRö6æöæ–6Â÷&Vb'VÆW2À¦æF—fS#DÖ”"6Â6öæf—&ÖF–öâæBf–ÆVBÔ÷Vâ&öÆÆ&6²&VÖ–ââ&r¥4ôâ'6–ær—0¦æ÷r&÷VæFVC“dÖ”"†æ÷BF÷FÂ'&÷w6W"ÖÖVÖ÷'’wV&çFVR’âF‡&VRÖÆ–W#S"GWÆ–6FP§&Vw&W76–öç2W‡Æ–6—FÇ’6VVBÆVv7“S"&6RFò&WF–âF†V—#‚ódÖ”"76W'F–öç2âæWp¦7GVÃ#BF‡&VRÖÆ–W"GWÆ–6FRFW7BfW&–f–W2&VÂ6fRô÷Vãã3$Ö”"ÂW†7B—†VÇ2À£“dÖ”"&R×&VB&VgW6ÂÂÆVv7“3$Ö”"&V¦V7F–öâæBVæ6†ævVB66VæRö†—7F÷'’öâW'&÷'2à¤æò&Ææ¶WBf–ÆRÖÆ–Ö—B–æ7&V6Rf÷"÷&F–æ'’&ö¦V7G2÷"–çfVçFVB66†VÖf–VÆG2à ¢ã“3rf–æÂÆö6ÂfÆ–FF–öã¢6ö×ÆWFS"Ãc“Ö6†V6²'Vâ76VC"Ãc“²F†RæWr†–v‚×&W0¤f–ÆRFW7B†BÇ&VG’6fVB÷&V÷VæVBW†7B—†VÇ2ÂF†VâFW7BÖöæÇ’7&÷72×&VÆÐ¦V×G’Ö'&’6ö×&F÷"f–ÆVBâ&WÆ6VBF†B6ö×&F÷"v—F‚÷&–v–æÂ†—7F÷'’ÆVæwF‚ð¦–FVçF—G’6†V6·2Â&WF–æ–ærWfW'’76W'F–öââ6÷'&V7FVBfö7W6VB†–v‚×&W2FW7Bæ÷s50¢ƒc—2’Â–æ6ÇVF–ær7GVÃã3$Ö”"6fRô÷VâÃ“dÖ”"&R×&VB&÷VæBÃ3$Ö”"ÆVv7’VÆ–v–&–Æ—G¦æBVæ6†ævVB66VæRö†—7F÷'’öâf–ÇW&W2âæò'VçF–ÖRf–ÇW&R&VÖ–ç2g&öÒF†B'Vâà¤æWrFVfVÇB¶ÆVv7’&W6öÇWF–öã52ÂæV&'’66Æ"öÇ†e53²f–æÂ&VÆV6Rö66†P¦6öçG&7CU52gFW"6ö×ÆWF–ærG&vW"×V’&VçB–ââæò&÷FV7FVBög&÷¦Vâ6†ævW2à¤†÷7FVBgVÆÂ×7V—FR&W'VâæBV&Æ–6F–öâöÆ—fRWf–FVæ6RföÆÆ÷s²FWf–6R6†'æW72VæF–ærà ¢22ã“3rV&Æ–6F–öâfW&–f–VB(	B#"ö7Fö&W"##b„'&—6&æR ¥'VçF–ÖR&&#FCfC#c#Cffcƒ#S–3&fSc3fFc“f3–CVÂG&VP¦6&&fSC†Cc36ScfcCSƒ“cVcFc“Fc“S†VFFÂ—2V&Æ—6†VBâ6öææV7FVBv—BFF§WÆöFVC‚W†7BÆö6Â&Æö'2÷G&VS²fWF6†VBÖ–âÖF6†W2Æö6ÂFW7FVBG&VRâ†÷7FV@¤æöFS#"&Vw&W76–öã3“c“C#3“ö¦ö#“SCs##Sƒ’76W2¢£"Ãc“FW7G2òf–ÇW&W2ð£6¶—VB¢£²6ö×ÆWFR¦ö"Æöw2fW&–g’F÷FÇ2Â–æ6ÇVF–ær6÷'&V7FVB†–v‚×&W2f–ÆRFW7Bà¤Æö6Â6ö×ÆWFR'Vâ6÷fW&VC"Ãc“76–ær6†V6·3²6÷'&V7FVBf–ÆR66R6W&FVÇ’76VBÀ¦æBF†R†÷7FVB&W'Vâ6Æ÷6W2F†RgVÆÂf–æÂ×G&VR&ööbâvW33“c“C“ƒS27V66VVFVBà¤ÆÃ’6†V6¶VBÆ—fR6†VÆÂ÷'VçF–ÖR÷&VçB÷&V6÷fW'’æB&WF–æVB–çB÷6÷W&6R÷&ö¦V7Bð¦æF—fRÖW‡÷'Bô×VÇF’f–ÆW2'—FRÖÖF6‚âÖ–âô×VÇF’ög&÷¦Vâ'—FW2Væ6†ævVBà ¥F†—2&ööb6†ævW2Fö7VÖVçFF–öâöæÇ’âW6W"ã“3R52&÷FV7FVC²ã“3b—†VÆF–öà§&W÷'B&VÖ–ç2FWf–6R—77VRv—F–ærã“3r6öæf—&ÖF–öâÂæ÷Bâ–æfW'&VB52à¥&VG’f÷"æWr7V&R(i"–çB6†÷v–ær6öÆ÷W"FW‡GW&S#L9s#B$Tdõ$Rf—'7BÖ&²ö–ÖvS°¦6ö×&Rg&W6‚FWF–ÂÂF†VâVæFõ&VFòõ6fT÷VââW†—7F–æsS"6fVBFW‡GW&W27F“S"VçF–À§f—6–&ÆR–æ7&V6Râ†–v†W"×&W2&ö¦V7B6fRô÷Vã“dÖ”"†÷&F–æ'“3$Ö”"’Â66Æ#S"æ@§6÷W&6S#B÷F—#Sbö&6R·F‡&VRÆ–Ö—G2&WF–æVBâæó$²óD²÷"ÆÂ×¦ööÒ—†VÂÖg&VR6Æ–Òà¤æW‡B6öæf—&ÖVC#BFWf–6RfVVF&6³²–ç7V7B6÷W&6RõUbFVç6—G’–b7F–ÆÂ6ö'6RÂF†Và§7FvRÆ&vW"Ö2÷6÷W&6W2öÖVÖ÷'’v÷&²âÖW&vRôfÆGFVâõ6×VFvRôò÷6V×2&VÖ–âVWVVBà ¢227W'&VçBF—&V7F–öâ(	Bã“3‚Â#"ö7Fö&W"##` ¢ã“3r66WFVBW&fV7B53¢&÷FV7Bg&W6ƒ#BöFVfVÇB÷&VF÷WBöFWF–ÂæB6fVCS ¦÷F–öæÂ–æ7&V6Râã“3‚–×ÆVÖVçG2VWVVBÖW&vRFò&6RôfÆGFVâ6öÆ÷W"F‡&÷Vv€¦÷&–v–æÂ6ö×÷6—F÷"ö†—7F÷'’÷væW'2Â&WF–æ–ær&W6öÇWF–öâö'VFvWG2÷F‡&VR÷fW&Æ—2à¤ÖW&vR–æ6ÇVFW26VÆV7FVBæBÆÂ&VÆ÷s²†–FFVâÖW&vVBÆ–W'2&VÖ÷fVC²VæFò&W7F÷&W2à¤Æö6Ã#c“u53²FWf–6Rã“3‚ÖW&vRöfÆGFVâö†—7F÷'’õ6fT÷VâvFRVæF–ærâföÆÆ÷rF†@¦fVVF&6²&Vf÷&RæW‡Bæ'&÷rVF—FVB6×VFvRôò÷6VÒWF†÷&–ær7FWâÇ†“#’æ@§&VfÆV7F–öâ&Wf–WrvFW2&VÖ–â–æFWVæFVçC²æò$²óD²÷"Æ&vW"6÷W&6R&öÖ—6Rà ¢22ã“3‚V&Æ–6F–öâfW&–f–VB(	B#"ö7Fö&W"##` ¥'VçF–ÖRcCCS“&#“ScSv#&##Cf†#cvC““C#3“bÂG&VP£#3–SVCsfFSC–FFcƒCf–&6F&f&#3S##c&C‚ÂÖF6†W2FW7FVBÆö6ÂG&VRà¤†÷7FVB&Vw&W76–öã3“c““sc“SBö¦ö#“ScSƒ“#“sR7V66VVFVC²gVÆÂ¦ö"Æöw26öæf—&Ð£#c“u52ód”Âó6¶—ÂÖF6†–ær6ö×ÆWFRÆö6Â'VââvW33“c““sc“R'V–ÆC“ScSƒ“SCSrð¦FWÆ÷““SccsƒSc’7V66VVFVBâÆÃ#R6†V6¶VBÆ—fR6†VÆÂ÷fW'6–öâÂ6†ævVB'VçF–ÖRôÆ"À§&V6÷fW'’æB&WF–æVB6÷&RöÖ–âô×VÇF’f–ÆW2'—FRÖÖF6‚FW7FVB6÷W&6Râ&Wf–WvVB–ç3“3ƒ°§&÷FV7FVBÖ–âö6vRô×VÇF’ög&÷¦VâVæ6†ævVBâF†—2&ööbWFFW2Fö7VÖVçFF–öâöæÇ’à¥W6W"ã“3r52&÷FV7FVC²ã“3‚FWf–6RÖW&vRöfÆGFVâõVæFõ&VFòõ6fT÷VâvFRVæF–ærà ¢227W'&VçBF—&V7F–öâ(	Bã“3’Â#"ö7Fö&W"##` ¥W6W"ã“3‚vW6öÖR52&÷FV7G2ÖW&vRôfÆGFVâög&VR6Æ÷G2ö†—7F÷'’õ6fT÷VââW‡Æ–6—@¦æWr&–÷&—G’FVÆ—fW&VC¢Ub×&VG’–æ—F–Â÷&W6WB7V&RæB÷F–öæÅUbFBf÷"W†—7F–æp§7W÷'FVB7V&RõÆæRô7–Æ–æFW"ô6öæRõ7†W&R&ö¦V7F–öâ÷væW'2â6†V6¶&÷‚FVfVÇG2ôã°§Æ–â7&VF–öâ&VÖ–ç2f–Æ&ÆRâF÷'W2õFW‡BæòWFöÖF–2Vçw&²7V6–Â&ö6VGW&À¦ÆVæ6†W'2æB6fVBö&¦V7G2Væ6†ævVBâæòvVöÖWG'’÷&ö¦V7F÷"GWÆ–6F–öâ÷"Æ&vW §–çB'VFvWG2âFWf–6Rã“3’7F'GW÷&W6WBôFBõVæFõ&VFòõ6fT÷VâvFRæW‡BâföÆÆ÷p¦fVVF&6²&Vf÷&RVWVVB6×VFvRôòöVFvR×6VÒWF†÷&–ærâF÷'W2övVæW&ÂVçw&6æF–FFP¦gWGW&R&÷VæFVBv÷&³²æF—fRF÷öÆöw’öÖöF–f–W"öÆ–æ¶VB&W7G&–7F–öç2&VÖ–ââ&VfÆV7F–öà¦æC“#’Ç†vFW2–æFWVæFVçBâV&Æ–6F–öâöWFöÖFVB&W7VÇG2föÆÆ÷rà ¢ã“3’f–æÂÆö6ÂæöFS#BgVÆÂ&Vw&W76–öã¢¢£"Ãs252òd”Âò6¶—VB¢¢à¤æWr7&VF–öãe52Â÷&–v–æÂæV&'’FBô&÷‚õ7†W&S•52Â&Wf–WvVB&VÆV6SU52à¤æò76W'F–öç2&VÖ÷fVB÷"&VÆ†VBâ6ö×ÆWFR&Wf–WvVBÖ–âôÆ"&WfW'6RÆöFW"w&ƒ“3“°§&÷FV7FVBÖ–ã“3ö6vRô×VÇF“ãög&÷¦VâVçF÷V6†VBâ†÷7FVBõvW2öÆ—fR&ööbföÆÆ÷w3°¦7GVÂ•BUb×&VG’7&VF–öâ÷–çB÷W'6—7FVæ6R66WFæ6R&VÖ–ç2VæF–ærà ¢22ã“3’V&Æ–6F–öâfW&–f–VB(	B#"ö7Fö&W"##b„'&—6&æR ¥'VçF–ÖRSsf&C3cc3VC##&#cScvfCsVfv66BÂG&VP£S&cF33SFcf3fS†&&3CFC“†fFC†cf&cC“v&F2Â—2V&Æ—6†VBöâÖ–âà¤6öææV7FVBv—BFFWÆöFVC#W†7B&Æö'2æBÖF6†VBFW7FVBG&VS²fWF6†VBÖ–à¦ÖF6†VBÆö6Â6÷W&6RâÆö6ÂæöFS#BæB†÷7FVBæöFS#"&Vw&W76–öã3“s##ƒCƒrð¦¦ö#“c3s“#s#ƒ&÷F‚72¢£#s2FW7G2òf–ÇW&W2ò6¶—VB¢£²6ö×ÆWFR¦ö ¦Æöw2fW&–g’F÷FÇ2âvW33“s##ƒ#B'V–ÆC“c3s“3“öFWÆ÷““c3ƒcsƒ7V66VVFVBà¤ÆÃ#÷7FFWÆ÷–ÖVçB6†V6¶VB6†VÆÂ÷fW'6–öâÂWfW'’6†ævVB'VçF–ÖRôÆ"÷væW"Â&V6÷fW'’À§&WF–æVBÖ–âö6vRô×VÇF“ã÷&–Ö—F—fRf7F÷'’÷–çB÷væW'2æBg&÷¦Vä&WFrÖ&¶W ¦'—FRÖÖF6‚FW7FVB6÷W&6RâÖ–âö6vRô×VÇF“ãög&÷¦Vâ&WF'—FW2Væ6†ævVBâæò76W'F–öà§&VÆ†VBâF†—2&ööb6†ævW2Fö72öæÇ“²6ÖR'VçF–ÖR'—FW2âW6W"ã“3‚52&÷FV7FVC°¢ã“3’7GVÂ•B7F'GW÷&W6WBôFBõUb6†V6¶&÷‚÷–çBö†—7F÷'’õ6fT÷VâvFRVæF–ærà ¢227W'&VçBF—&V7F–öâ(	Bã“CÂ#"ö7Fö&W"##` ¥W6W"ã“3’52&÷FV7G2Ub×&VG’7F'GW÷&W6WBÂFB6†V6¶&÷‚÷Æ–âF‚Â–çBö†—7F÷'’ð§W'6—7FVæ6Râã“C6Æ÷6W2&VÖ–æ–ær7W÷'FVB&–Ö—F—fRF÷'W2vF‡&÷Vv‚÷&–v–æÀ¦æF—fRUb÷væW#¢&VwVÆ"&÷VæBv÷&ÆE’æwVÆ"w&–BÂGvò6V×2ööæR&V7FævÆRÂF@¥Ub6†V6¶&÷‚FVfVÇDôâÂW‡Æ–6—BF÷'W2Ug2…’’f÷"öÆFW"Æ–âF÷&’âFW‡B÷&ö6VGW&À¦ö&¦V7G2æBW†—7F–ær&ö¦V7G2æ÷BWFò×Vçw&VBâæòvVöÖWG'’÷"&ÆÆVÂ¶W&æVÂà¤FWf–6Rã“CFBõ–çBõUbõVæFõ&VFòõ6fT÷VâæW‡C²föÆÆ÷rfVVF&6²F†Vâ&÷VæFVB6×VFvRð¤òöVFvR×6VÒWF†÷&–ærVF—G2âvVæW&ÂõFW‡BVçw&gWGW&RÂÇ†“#’æB&VfÆV7F–öà¦vFW2–æFWVæFVçBâW†—7F–ær&W6öÇWF–öâö'VFvWG2öæF—fR&W7G&–7F–öç2&WF–æVBà ¢ã“Cf–æÂÆö6ÂæöFS#BgVÆÂ&Vw&W76–öã¢¢£"Ãs’52òd”Âò6¶—VB¢¢à¤æWrF÷'W3bæBW‡æFVC“3’7&VF–öãbÓ"fö7W6VE53²&Wf–WvVB&VÆV6SU52à¤æò÷&–v–æÂ&V†f–÷W"76W'F–öç2&VÆ†VC²7WW'6VFVBF÷'W2×Væf–Æ&ÆR6†V6·2æ÷p§&WV—&RÖVBö÷F–öæÂÆ–âF÷'W2æBW†7B&ö¦V7BôäôÒôtÄ"÷WGWBâ&÷FV7FV@¦Ö–âö6vRô×VÇF“ãög&÷¦Vâ&WF–æVBâ†÷7FVBõvW2öÆ—fR&ööbföÆÆ÷w3²FWf–6S“CVæF–ærà ¢22ã“CV&Æ–6F–öâfW&–f–VB(	B#"ö7Fö&W"##b„'&—6&æR ¥'VçF–ÖRS3†3f3f#v3ccFc“–S3V6SsvV66Cƒ–3–3"ÂG&VP¦F&CVcsƒ3cS&&fFcv†#3&6f3†SSFF#&&F#rÂV&Æ—6†VBöâÖ–ââ6öææV7FVBv—BFF§WÆöFVCBW†7BÆö6Â&Æö'2æBÖF6†VBFW7FVBG&VS²fWF6†VBÖ–â–FVçF–6Âà¤Æö6ÂæöFS#BæB†÷7FVBæöFS#"&Vw&W76–öã3“s#Sƒ#sS’ö¦ö#“cC“3CC’&÷F‚70¢¢£#s’FW7G2òf–ÇW&W2ò6¶—VB¢£²6ö×ÆWFR†÷7FVBÆöw2fW&–g’F÷FÇ2à¥vW33“s#Sƒ##c2'V–ÆC“cC“3C#SöFWÆ÷““cC“CƒcSc27V66VVFVBâÆÃ#6†V6¶V@§÷7FFWÆ÷–ÖVçB6†VÆÂ÷fW'6–öâÂ6†ævVBUbôFBôÖW6„†VÇF‚ô×VÇF’&VçBÂ&V6÷fW'’æ@§&WF–æVBÖ–âö6vRô×VÇF“ãöf7F÷'’÷6–væGW&Rö–×÷'BöW‡÷'B÷–çB÷&7FW"ög&÷¦Vä&WFp¦Ö&¶W"f–ÆW2'—FRÖÖF6‚FW7FVB6÷W&6Râ&Wf–WvVBw&ƒ“C²Ö–âö6vRô×VÇF“ãög&÷¦Và¦'—FW2Væ6†ævVBâæòöÆB&V†f–÷W"76W'F–öç2&VÆ†VBâF†—2&ööb6†ævW2Fö72öæÇ“°§6ÖR'VçF–ÖR'—FW2âW6W"ã“3’52&÷FV7FVC²ã“CF÷'W2FWf–6RvFRVæF–ærà ¢22ã“CW6W"52(	B#"ö7Fö&W"##b„'&—6&æR ¥W6W"52&÷FV7G2F÷'W2WFöÖF–2Ug2ö÷F–öæÂÆ–âFBÂF÷'W2Ug2…’’Â–çBÀ¥UbVF—F÷"ÂVæFõ&VFòæB6fT÷Vââã“C'VçF–ÖRô4’õvW2öÆ—fR&ööb&÷fR—26Æ÷6VBà¤æW‡BWF†÷&—¦VBöæW‡F'V–ÆBVF—G2&÷VæFVB6×VFvRF‡&÷Vv‚÷&–v–æÂ–çB÷væW'2à ¢227W'&VçBF—&V7F–öâ(	Bã“CÂ#"ö7Fö&W"##` ¥W6W#“C52&÷FV7FVBâf—'7B&÷VæFVB6×VFvRW6W2÷&–v–æÂ–çB÷væW'2Â6VÆV7FV@¦Æ–W"ö6†ææVÂöæÇ’ÂF—ÖÆö6Â&V×VÇF—Æ–VB–6·WÂW†—7F–ær6—¦Rô÷6—G’öÇ†æ@¦†—7F÷'’÷W'6—7FVæ6Râf6RÖ6öæf–æVB&VG2÷w&—FW3²f6R6†ævW2öÖ—76W2&W7F'B–6·Wà¤æò7&÷72Öf6R6''’6Æ–ÒÂ÷&–v–æÂ6öææV7FVB&ÇW"Væ6†ævVBã„Ò–6·W×f—6—B6öçF7@¦66æ6VÇ2FöÖ–6ÆÇ“²÷&–v–æÂ&W6÷W&6Rôf–ÆRöæF—fRÆ–Ö—G2&WF–æVBâFWf–6S“C¥6×VFvRfVVÂæW‡BÂF†Vâ&Vf–æRg&öÒWf–FVæ6R&Vf÷&R7&÷72Öf6RôòôVFvR6VÒv÷&²à¤Ç†“#’÷&VfÆV7F–öâ×&Wf–WrvFW2&VÖ–â–æFWVæFVçBâ6VRFö72÷–çB×6×VFvRÓ“CæÖBà ¢ã“Cf–æÂÆö6ÂæöFS#Bã’ã&Vw&W76–öã¢¢£"ÃsR52òd”Âò6¶—VB¢¢à¤ÆÂ6—‚æWr6×VFvR–çFVw&F–öç272öâf–æÂ6÷W&6RÂÇW2WfW'’W†—7F–ær76W'F–öâà¤æV&'’&ÇW"÷6VÓU52æB&Wf–WvVB&VÆV6SU52Ç6ò76VBâæò÷&–v–æÂ76W'F–öç0§&VÆ†VBâ6ö×ÆWFRÖ–âôÆ"&WfW'6RÖÆöFW"6Æ÷7W&S“C²&÷FV7FVBÖ–âö6vRô×VÇF“ãð¦g&÷¦VâVæ6†ævVBâV&Æ–6F–öâö†÷7FVBöÆ—fRfW&–f–6F–öâföÆÆ÷w3²FWf–6S“CVæF–ærà ¢22ã“CV&Æ–6F–öâfW&–f–VB(	B#"ö7Fö&W"##b„'&—6&æR ¥'VçF–ÖR3–3&F#†††Svf6CS“#S##3S6SS#rÂFW7FVBG&VP£s&SC–3CC33csfsc3&3VFccc&Fc†vFƒvbÂ—2V&Æ—6†VBöâÖ–ââ6öææV7FVBv—@¤FFWÆöFVCRW†7B&Æö'3²7&VFVBG&VRæBfWF6†VBÖ–âÖF6‚Æö6ÂFW7FVBG&VRà¤Æö6ÂæöFS#BæB†÷7FVBæöFS#"&Vw&W76–öã3“sScSssƒbö¦ö#“sC““cƒ“cB&÷F‚70¢¢£#sRFW7G2òf–ÇW&W2ò6¶—VB¢£²6ö×ÆWFR†÷7FVBÆörF÷FÇ2fW&–f–VBà¥vW33“sScSssSr'V–ÆC“sC““sS“C’öFWÆ÷““sS#s#ƒ27V66VVFVBâÆÃ#6†V6¶V@§÷7FFWÆ÷–ÖVçB6†VÆÂ÷fW'6–öâÂWfW'’6†ævVBÖ–âôÆ"'VçF–ÖR÷væW"Â&V6÷fW'’æ@§&WF–æVBÖ–âô×VÇF“ãõUböf–ÇFW"÷6VÒöw&‚÷&ö¦V7BöW‡÷'B÷&–Ö—F—fRög&÷¦Vä&WFrÖ&¶W ¦f–ÆW2'—FRÖÖF6‚FW7FVB6÷W&6Râæò÷&–v–æÂ76W'F–öç2&VÆ†VC²&÷FV7FVBög&÷¦Và¦'—FW2Væ6†ævVBâF†—2&ööb6†ævW2f÷W"6öçF–çV—G’f–ÆW2öæÇ’Â6ÖR'VçF–ÖR'—FW2à ¤'V–ÆC“C—26ö×ÆWFRæB&VG’f÷"FWf–6RFW7F–æs¢†&B6öÆ÷W"F6‚öâ7V&R(i ¥FööÂ6×VFvRv—F†–âf6RÂG&r÷WGv&BÂ6ö×&R÷6—G’ÂFÖ¶W2æòÖ&³²G'’à¦÷fW&Æ’ÂVæFõ&VFò7F—2–â–çBÂ6fT÷Vâ&WF–ç2&W7VÇBâf6RVFvW2öÖ—76W2&W7F'@§–6·Wâ7GVÂ•BfVVÂöÆFVæ7’&VÖ–ç2VæF–ærâW6W#“C52&÷FV7FVC²–æFWVæFVç@¦Ç†“#’÷&VfÆV7F–öâvFW2Væ6†ævVBâæW‡BFWf–6RfVVF&6²&Vf÷&R7&÷72Öf6R6×VFvRÀ¤ò÷"VFvR×6VÒWF†÷&–æs²æòWFöÖF–2æW‡B'VçF–ÖR'V–ÆB&Vf÷&RF†BvFRà ¢227W'&VçBF—&V7F–öâ(	Bã“C"Â#"ö7Fö&W"##` ¥W6W#“C52&÷FV7FVBâ÷&–v–æÂÖæ–föÆB6VÒw&‚æ÷rW&Ö—G26×VFvRÖVâ6öÆ÷W §–6·W7&÷726öææV7FVB–6¶VBf6W2v—F†÷WBFÆ26öçFÖ–æF–öââ6ÖRÖf6R7F–À§–6·W“CVæ6†ævVC²FWF–ÆVBFW‡GW&RF6‚÷&–VçFF–öâ—2æ÷BG&ç7÷'FVBB6VÒà¤W†—7F–ær6—¦Rô÷6—G’öÇ†÷&r6†ææVÇ2ö†—7F÷'’÷W'6—7FVæ6R&WF–æVBâÖ—76W2÷Væ¶æ÷vâð¦æöæÖæ–föÆB÷fW'FW‚ÖöæÇ’&W7F'C²7G&–7B6GW&VB—'2æBW†—7F–ærv÷&²62âFWf–6P£“C"6VÒô÷6—G’ö÷fW&Æ’ö†—7F÷'’õ6fT÷VâfVVF&6²æW‡BÂF†Vâæ'&÷r&Vf–æVÖVçG2÷ ¤òôVFvR6VÒ÷væW"VF—G2âÇ†“#’÷&VfÆV7F–öâvFW2–æFWVæFVçC²æòæWr'VFvWG2à¥6VRFö72÷–çB×6×VFvR×6V×2Ó“C"æÖBâgVÆÂÆö6Ã#ƒ%52ód”Âó6¶—ƒ“rã#2“²V&Æ–6F–öâWf–FVæ6RföÆÆ÷w2à ¢ã“C"f–æÂÆö6ÂæöFS#Bã’ãgVÆÂ&Vw&W76–öã¢¢£"Ãs#52òd”Âò6¶—VB¢¢à¤f—fRæWr6öææV7FVBÕ6×VFvR6†V6·2Â÷&–v–æÃ“C·6VÓæB&Wf–WvVB&VÆV6SR72à¤æò÷&–v–æÂ76W'F–öç2&VÆ†VBâ&Wf–WvVB6†ævVBÖ–âôÆ"&WfW'6Rw&ƒ“C#²&÷FV7FV@¦Ö–âö6vRô×VÇF“ã÷G&–ævÆRw&‚ög&÷¦VâVæ6†ævVBâ†÷7FVBõvW2öÆ—fR&ööbföÆÆ÷w2à¥W6W"&WVFVB52öæW‡F'V–ÆBv†–ÆS“C"v27F–ÆÂÆö6Âö–â&Vw&W76–öã£“C66WFæ6P§&VÖ–ç2&÷FV7FVC²æó“C"FWf–6R52–æfW'&VB&Vf÷&RV&Æ–6F–öâöÖçVÂFW7BÆ—7Bà ¢22ã“C"V&Æ–6F–öâfW&–f–VB(	B#"ö7Fö&W"##b„'&—6&æR ¥'VçF–ÖR#C–&#ƒCcsƒ3f3&63Sc–C“sSV6FCSF&#v#Vc’ÂFW7FVBG&VP£Vf&#“3FFSsS“FC#&&3FcCC3†#CV&33“vfBÂ—2V&Æ—6†VBöâÖ–ââ6öææV7FVBv—@¤FFWÆöFVCrW†7B&Æö'3²7&VFVBG&VRæBfWF6†VBÖ–âÖF6‚Æö6ÆÇ’FW7FVBG&VRà¤Æö6ÂæöFS#BæB†÷7FVBæöFS#"&Vw&W76–öã3“sc#ƒƒcö¦ö#“scƒƒ3S&÷F‚70¢¢£#s#FW7G2òf–ÇW&W2ò6¶—VB¢£²6ö×ÆWFR†÷7FVBÆörF÷FÇ2fW&–f–VBà¥vW33“sc#ƒsSR'V–ÆC“scƒƒcS3böFWÆ÷““sc“33ƒ3R7V66VVFVBâÆÃ#6†V6¶V@§÷7FFWÆ÷–ÖVçB6†VÆÂ÷fW'6–öâÂ6†ævVBÖ–âôÆ"öf–ÇFW"÷6VÒ'VçF–ÖRw&‚Â&V6÷fW'’À§&WF–æVBÖ–âô×VÇF“ã÷G&–ævÆRw&‚õUb÷&ö¦V7BöW‡÷'B÷&–Ö—F—fRæBg&÷¦Vä&WFp¦Ö&¶W"f–ÆW2'—FRÖÖF6‚FW7FVB6÷W&6Râ÷&–v–æÂ76W'F–öç2&WF–æVC²&÷FV7FVBög&÷¦Và¦'—FW2Væ6†ævVBâF†—2V&Æ–6F–öâ&ööb6†ævW2f÷W"6öçF–çV—G’f–ÆW2öæÇ’à ¤'V–ÆC“C"6ö×ÆWFRæB&VG“¢7V&RGvòf6W2f—6–&ÆRÂ–çBF6‚WFò6†&VBVFvRÀ¥6×VFvR7&÷72—BÂ6ö×&R÷6—G’æB–çFVB÷fW&Æ’ÂVæFõ&VFò&WF–ç2–çBÂ6fT÷Và§&WF–ç2&W7VÇBâ6VÒG&ç6—F–öâ6'&–W2fW&vVB6öÆ÷W"Âæ÷BFWF–ÆVBF6‚÷&–VçFF–öâà¥W6W#“C52&÷FV7FVBâ&WVFVB52öæW‡F'V–ÆB'&—fVB&Vf÷&S“C"V&Æ–6F–öã¢—B—0¦æ÷C“C"FWf–6R66WFæ6Râ7GVÃ“C"•B6VÒfVVÂvFR&VÖ–ç2æW‡BâF†Vâ&Vf–æRg&öÐ¦fVVF&6²&Vf÷&RòôVFvR6VÒWF†÷&–æs²Ç†“#’÷&VfÆV7F–öâvFW27F’–æFWVæFVçBà ¢22ã“C"W6W"52(	B#"ö7Fö&W"##b„'&—6&æR ¤gW'F†W"52öæW‡F'V–ÆB'&—fVBeDU#“C"FWÆ÷–ÖVçBÃ#Æ—fRÖf–ÆRÖF6†W2æB†÷7FV@£#s#52fW&–f–6F–öââ66WBF†—2ÆFW7B52f÷"Ä•dS“C"6öææV7FVBÖf6RÖVâ6''’À¤÷6—G’ö÷fW&Æ’õ–çBVæFõ&VFòõ6fT÷Vã²V&Æ–W"&WV&Æ–6F–öâ&WWF—F–öç2&VÖ–ã“Cà¥&÷FV7C“C"Æöæw6–FS“CâæW‡BWF†÷&—¦VC“C2æ'&÷r'V–ÆB&Vv–ç2&÷VæFVBö&¦V7BÖöæÇ¤ò&¶Rf÷VæFF–öâf–÷&–v–æÂUb÷væW'6†—÷G&–ævÆRvVöÖWG'“²f—6–&ÆR6öçG&öÇ2föÆÆ÷p§fÆ–FFVB&¶R—†VÇ2÷v÷&²wV&G2âæòòT’÷"&VæFW&VBò66WFæ6R—2–æfW'&VBà ¢22ã“C2(	B&VBÖöæÇ’ö&¦V7Bò&¶Rf÷VæFF–öâ(	B#"ö7Fö&W"##b„'&—6&æR ¥W6W"ã“C"52&VÖ–ç2&÷FV7FVBâVF—Bf÷VæBæòW†—7F–ærò&¶W"âæWp¦7&2÷–çBÖòÖ&¶Ræ§6W6W2÷&–v–æÂ&Wf–WrG&–ævÆR÷væW'6†—÷G&–ævÆRw&‚À¦÷&–v–æÂ–çBÖf–ÇFW"ÖFöÖ–âFW†VÂ&7FW"æBF‡&VR&’æ–çFW'6V7EG&–ævÆRâF†P¦f–ÇFW"FöÖ–â÷F–öæÆÇ’&WGW&ç2—G2W†—7F–ærG&ç6–VçBG&–ævÆRÖ²÷&F–æ'¦''W6‚6ÆÆW'2&WF–âW†7B&WGW&â6†RæBÆÆö6F–öç2âæò6V6öæBG&–æwVÆF÷"À¥Ub&7FW&—¦W"ÂF¦6Væ7’Â''W6‚Â†—7F÷'’Â66VæR&W6÷W&6R÷"W‡÷'B÷væW"à ¥W&R7–æ6‡&öæ÷W2ö&¦V7BÖÆö6Â&¶R&WGW&ç2÷væVBÆ–æV"#‚f—6–&–Æ—G’æB6W&FP¦6÷fW&vRÂUb×cÖf—'7Bâv†—FS×Væö66ÇVFVC²Væ6÷fW&VBFW†VÇ2v†—FRö6÷fW&vSâFWFW&Ö–æ—7F–0¦6÷6–æR×vV–v‡FVB†VÖ—7†W&R6×ÆW2ÂF÷V&ÆR×6–FVB6ÖRÖö&¦V7B&Æö6¶W'2Â6÷W&6Rv–æF–æp¦æ÷&ÖÂÂæ÷&ÖÆ—¦VBö&¦V7BÖF–vöæÂ&F—W2ö&–2â6—¦Sn(	3#‚öFVfVÇCcBÂ6×ÆW3N(	3cBð¦FVfVÇCbÂ&F—W2ã(	3"öFVfVÇBã#RöbF–vöæÂâ6öç6W'fF—fS„Ò&’÷G&–ævÆR×FW7@§&VfÆ–v‡BÇW2÷&–v–æÃ$ÒUb66â6²W†6W726ö×ÆW†—G’&VgW6W2v—F‚æò66VæRw&—FW2à¤æ÷&ÖÆ—¦VB&—fFRw&‚ö–çG2öæÇ“²6÷W&6RÖW6‚õUbövVöÖWG'’&VÖ–âVæ6†ævVBà¤æò66VæRÖæV–v†&÷W"Âw&÷VæB×ÆæRÂv÷&ÆB×G&ç6f÷&ÒÂ&VæFW&VB54ò÷"Æ&VFò&¶R–WBà¤æòÖ–âÖò–×÷'Bö'WGFöâ÷&W6÷W&6R÷W'6—7FVæ6RöW‡÷'B6†ævR÷"FWf–6R×W&f÷&Öæ6P¦6Æ–ÒâF†—2–çFVçF–öæÆÇ’Æ÷r×&W6öÇWF–öâf÷VæFF–öâ—2äõBæWr–çB&W6öÇWF–öâà ¤f—fRæWr&Vw&W76–öâFW7G26÷fW"÷BÖ–âW†7B÷væW'6†—Âv†—FR÷VâÆæRö6÷fW&vRð¦FWFW&Ö–æ—6Òö6÷’—6öÆF–öâÂf6–ær&Æö6¶W'2÷&F—W2öF÷V&ÆR×6–FVB&—2Â7W÷'FVB66ÆRð§G&ç6ÆF–öâ÷&÷FFVBUg2Â7FÆRö–çfÆ–Bö÷fW&Æ÷v÷&²&VgW6Ç2æB6÷W&6R&W6W'fF–öâà¥F–ç“RÓ‚6÷W&6Rf—‡GW&Rv2&V¦V7FVB'’F†Rõ$”t”äÂ&Wf–Wr'V–ÆFW"&Vf÷&R&¶–æs°§66ÆRFW7G2W6R66WFVBã(	3S‚vVöÖWG'’–ç7FVBÂæò'V–ÆFW"FöÆW&æ6R6†ævRà¥&VBFö72÷–çBÖòÖf÷VæFF–öâÓ“C2æÖFâÖ–â–çFW"&WfW'6RÆöFW"6†–â²6†VÆÂð§&V6÷fW'’–ç3“C2&Wf–WvVC²Æ"öÖ–âö6vRô×VÇF“ãög&÷¦VâÆv÷&—F†×2Væ6†ævVBà ¤æW‡C¢÷&–v–æÂ–çBÆ–W"ö†—7F÷'’G&ç67F–öâf÷"âW‡Æ–6—BæöâÖFW7G'V7F—fRð¤×VÇF—Ç’Æ–W"Âv—F‚6æ6VÆÆF–öâ÷7FÆR÷ööÂö6†V6·ö–çBwV&G2æBf—6–&ÆR6öçG&öÇ2À§F†Vâ•BV&æ6RöÆFVæ7’FW7F–ærâFòæ÷B–×Ç’òT’66WFæ6Rg&öÒW&RFW7G2à¤Ç†“#’÷&VfÆV7F–öâ×&Wf–WrvFW2&VÖ–â–æFWVæFVçFÇ’Vç&W6öÇfVBâæòæWrò†æG2Ööà§FW7BW†—7G2–ã“C3²W†—7F–ær6×VFvRõ–çBVæFõ&VFòõ6fT÷Vâ&VÖ–ç2F†RæV&'’&6VÆ–æRà¥fÆ–FF–öâ÷V&Æ–6F–öâWf–FVæ6RföÆÆ÷w3²Fòæ÷B–æfW"6ö×ÆWF–öâ&Vf÷&RfW&–f–6F–öâà ¢ã“C2f–æÂÆö6ÂæöFS#Bã’ã6ö×ÆWFR&Vw&W76–öã¢¢£"Ãs#R52òd”Âò6¶—VB¢¢à¤f—fRæWròö÷væW'6†—6†V6·2Â÷&–v–æÂ6×VFvS“Có“C"VÆWfVâæB&VÆV6Rö66†Rf—fP§72öâf–æÂ'VçF–ÖRâæò÷&–v–æÂ76W'F–öç2&VÆ†VC²Ö–âö6vRô×VÇF“ãög&÷¦Và§Væ6†ævVBâ†÷7FVB&Vw&W76–öâõvW2öÆ—fR&ööbföÆÆ÷w2âæòæWròFWf–6R6öçG&öÇ2à ¢22ã“C2V&Æ–6F–öâfW&–f–VB(	B#"ö7Fö&W"##b„'&—6&æR ¥'VçF–ÖR6fV#3c“vf#csscV#3c&3ƒS&3S†3SCS&cs3VÂFW7FVBG&VP¦##6S&C†Sƒ#ƒSS3vcƒFfc–S“S3CcFf6VSSVÂ—2V&Æ—6†VBöâÖ–ââ6öææV7FVBv—@¤FFWÆöFVC2W†7BÆö6Â&Æö'2æB7&VFVBF†R–FVçF–6ÂÆö6ÆÇ’FW7FVBG&VS°¦fWF6†VBÖ–âÖF6†VBÂÆö6Â'&æ6‚Æ–væVBv—F‚æòf–ÆR6†ævW2âÆö6ÂæöFS#Bæ@¦†÷7FVBæöFS#"&Vw&W76–öã3“scS“SC#bö¦ö#“sƒ3#&÷F‚72¢£#s#RFW7G2ò ¦f–ÇW&W2ò6¶—VB¢£²6ö×ÆWFR†÷7FVBÆörF÷FÇ2fW&–f–VB††÷7FVC#’ã‡2’à¥vW33“scS“C“cS’'V–ÆC“sƒ3c3c’öFWÆ÷““sƒSƒƒ3B7V66VVFVBâÆÃ#6†V6¶V@§÷7FFWÆ÷–ÖVçB6†VÆÂ÷fW'6–öâÂWfW'’6†ævVB'VçF–ÖR÷væW"ÂæWròÖöGVÆRÂ&V6÷fW'’À§&WF–æVBÖ–âö6vRô×VÇF“ã÷G&–ævÆRw&‚õUb÷–çB÷&ö¦V7BöW‡÷'BæBg&÷¦Vä&WFrÖ&¶W ¦f–ÆW2'—FRÖÖF6‚FW7FVB6÷W&6Râ&Wf–WvVB–ç3“C3²&÷FV7FVBög&÷¦Vâ'—FW2Væ6†ævVBà¤æò÷&–v–æÂ76W'F–öâ&VÆ†VBâF†—2V&Æ–6F–öâ&ööb6†ævW2f÷W"6öçF–çV—G’f–ÆW0¦öæÇ’Âv—F‚–FVçF–6ÂFW7FVB'VçF–ÖR'—FW2à ¤'V–ÆC“C26ö×ÆWFS¢æòæWr†æG2ÖöâòFW7BæVVFVB&V6W6Ræòò6öçG&öÇ2&RW‡÷6VBà¥W&R&¶Rö÷væW'6†—÷v÷&²÷&VgW6Â6÷fW&vR—2WFöÖFVBâW6W#“C%52&VÖ–ç2&÷FV7FVC°¦æW‡Bæ'&÷r'V–ÆB–çFVw&FW2W‡Æ–6—Bò×VÇF—Ç’ÖÆ–W"7&VF–öâF‡&÷Vv‚÷&–v–æÂ–ç@¦†—7F÷'’÷ööÂö6ö×÷6—F÷"v—F‚7FvVBö6æ6VÂ÷7FÆR÷&VgW6ÂwV&G2æBF†Vâf—6–&ÆR6öçG&öÇ2à¤òf÷VæFF–öâ—2Æö6ÂÖö&¦V7Cn(	3#‚6×ÆW2öæÇ’Âæ÷B&VæFW&VB54òÂæV–v†&÷W"Öö&¦V7@§6†F÷w2ÂW'6—7FVçBò&W6÷W&6W2÷"†–v‚×&W6öÇWF–öâÆ&VFò&¶–ærâÇ†“#’æ@§&VfÆV7F–öâ×&Wf–WrvFW2&VÖ–â–æFWVæFVçBâW†—7F–ær6×VFvRõ–çB†—7F÷'’õ6fT÷Và¦—2÷F–öæÂæV&'’FWf–6R6æ—G’Âæ÷Bâ–çfVçFVBò66WFæ6RvFRà ¢22ã“CB(	BVF—F&ÆRò×VÇF—Ç’Æ–W"&Wf–Wr(	B#"ö7Fö&W"##b„'&—6&æR ¤&6RÖ–ãFS“Bó“C2VF—FVBâæòW†—7F–æròT’öÆ–W"G&ç67F–öâf÷VæBâæWr6ÖÆÀ§–çBÖòÖÆ–W"†VÇW"6ÆÇ2F†R÷&–v–æÃ“C2&¶W"CcL+"ób&—2æB÷&–v–æÂU`¦f–ÇFW"ÖFöÖ–â&7FW"CcBæB7W'&VçCS"ó#Bâ6ÖRÖf6RÂ6÷fW&vRÖv&R&–Æ–æV §G&ç6fW"&Væ÷&ÖÆ—¦W2öæÇ’ÖF6†–ær6÷W&6RÖf6R6×ÆW3²FÆ2æV–v†&÷W'2æWfW ¦6öçG&–'WFRâVæ6÷fW&VB÷Vç6×ÆVBF†–âf6W27F’G&ç7&VçBâ&F—W2&VÖ–ç2¦g&7F–öâöbÄô4Âö&¦V7BF–vöæÃ²æòv÷&ÆB×G&ç6f÷&Ò÷66VæRÖæV–v†&÷W"öw&÷VæBõ54òà¤6öÆ÷W"×VÇF—Ç’W6W2W†—7F–ær'—FR×76R6ö×÷6—F÷"Âæ÷B‡—6–6ÆÇ’Æ–æV"%"ð§6Æ÷B÷"†–v‚×&W6öÇWF–öâ&’&¶Râ7W'&VçB6öÆ÷W"÷66Æ"÷6÷W&6R÷F—'VFvWG2Væ6†ævVBà ¤÷&–v–æÂ–çFW"÷vç2G&ç6–VçBò&Wf–WrÂööÂfÆ–FF–öâÂöæRÇ’6†V6·ö–çBÀ¤4õr&W6÷W&6R76–væÖVçBæB6VÆV7F–öââæWrÆ–W"—2÷&F–æ'’VF—F&ÆR&7FW"æÖV@¤òâÂ×VÇF—Ç’ÂW6W"7G&VæwF‚2Æ–W"÷6—G“²W†—7F–ærf—6–&–Æ—G’öÖ6²öW&6W"÷–çBð¤FVÆWFRôÖW&vRôfÆGFVâö†—7F÷'’õ6fT÷VâæBfÆGFVæVBæF—fRôtÄ"w&—FW'2&VÖ–â÷væW'2à¤æò6fVBòFW67&—F÷"÷&V6—R÷66†VÖ÷"æWrw&—FW"ö†—7F÷'’övW7GW&RöÖöFVÆÆ–ær¶W&æVÂà¥&Wf–WræWfW"76–vç2ö&¦V7B6öÆ÷W%–çB÷"VçFW'26fRö†—7F÷'“²6æ6VÂôFöæRö†—7F÷'’ð¦&öG’Æ÷72F—66&G2—BâÇ’&V6†V6·2Æ—fR÷6—F–öç2õUb&–æF–ærö7W'&VçBF&vWBæ@§ööÂ&Vf÷&R6†V6·ö–çC²f–ÇW&W2¶VW6öÖÖ—GFVB&W6÷W&6W2ö†—7F÷'’Væ6†ævVBà ¤6ö×7BÄTeB–çB(i"6öÆÆ6VBÖ&–VçBö66ÇW6–öã¢&V6ƒ^(	3R†FVfVÇC#RR’À¥7G&VæwFƒ(	3R†FVfVÇCcRR’Â&¶Rò&Wf–WrÂÇ’òÆ–W"ò6æ6VÂòâ&Wf–Wp¦&Æö6·2–çBæBÆ–W"ö6†ææVÂVF—G3²f–ævW'27F–ÆÂæf–vFRâÇ’6VÆV7G2òÆ–W#°¦W†—7F–ærÆ–W"÷6—G’÷f—6–&–Æ—G’6â6†ævR7G&VæwF‚gFW'v&BâW†—7F–ærVæFòõ&VFð§&WF–ç2–çBv—F‚õ$”t”äÂ6VÆV7F–öâ'VÆW2…&VFòÖ’¶VW&6R6VÆV7FVC²6VÆV7Bò’à¤–ÖvRÆ6VÖVçB×W7BÇ’ô6æ6VÂf—'7C²–ÖvR6÷W&6W2÷66Æ'27F’–æFWVæFVçBà¥F‡&VRÖ÷fW&Æ’6&VÖ–ç3²ÖW&vRöFVÆWFRFòg&VR6Æ÷Bâ&¶RFVfVÇG3cBóbf—†VC°£„Ò&’×v÷&²æC$ÒUb×66âÆ–Ö—G2&VgW6R6ö×ÆW‚ö÷fW&Æ–ærö÷WBÖöb×F–ÆRÆ–÷WG2&Vf÷&P§&W6÷W&6Rö†—7F÷'’6†ævW2âf–æÂG&ç6fW.(šCBFW†VÂ6×ÆW2W#S,+"ó#L+"FW7F–æF–öâà¤æò–çFW&7F—fR6æ6VÆÆF–öâGW&–ærF†R&÷VæFVB7–æ6‡&öæ÷W26Æ7VÆF–öâ÷"•@¦ÆFVæ7’õ$ÒöV&æ6R6Æ–Òâ6ÖÆÂÆ÷r×öÇ’UbÖW6†W2f—'7C²6öçfW‚7V&RÖ’6†÷p¦Æ—GFÆRöæòF&¶Væ–ærâ6öæ6fR÷&V6W76VBvVöÖWG'’—2F†RÖVæ–ævgVÂV&æ6RFW7Bà ¤–×÷'FçBf–ÆVB&ö6ƒ¢ÖævW"æö&¦V7G2÷F&vWBvWGFW'26ÆÂ6fT7F—fRæB4ÄôäP§F†R7F—fRÖW6‚â&VfW&Væ6R–FVçF—G’6ææ÷BW7F&Æ—6‚Væ6†ævVBò6÷W&6Râ÷&–v–æÀ¥Ub¶W’ÇW2W†7B6W&–Æ—¦VBÆ—fRfW'FW‚6öçFVçBwV&BF†R6æF–FFS²Fòæ÷BFBà¦–FVçF—G’ÖöæÇ’6†V6²÷"×WFFRF†RÖævW"FòÖ¶R7V6‚6†V6²72âFV×÷&'’FV'Vp§&V6öâFW‡B&VÖ÷fVBâæò66WFVBÖævW"öÖW6‚öW‡÷'BÆv÷&—F†Ò6†ævVBà ¥6—‚æWr–çFVw&F–öç273£S"ó#BFöÖ–â×6fR÷WGWB÷6÷W&6R&W6W'fF–öã²G&ç6–Vç@§&Wf–Wrô6æ6VÂôÇ’ö÷6—G’÷f—6–&–Æ—G’÷66Æ"÷VW"—6öÆF–öã²7GVÃ#BT’¶÷&–v–æÀ¥–çB†—7F÷'’µ6fT÷Vâ¶W†7BäôÒôtÄ"äs²6†V6·ö–çB÷ööÂöFVf÷&ÖVB×6÷W&6Rö6Æ÷6R&VgW6Ã°§66Æ"öÖ6²ögVÆÂ7F6²ö6ö×ÆW†—G’wV&G3²&WF–æVB–ÖvW2÷7FvVB×WGVÂW†6ÇW6–öâæ@¤FöæRF—66&F–ærVæÆ–VBòâ÷&–v–æÂæV&'““C2ó“3‚ó“C"FW7G3e53²&VÆV6SU52à¥&VBFö72÷–çBÖòÖÆ–W"Ó“CBæÖBâgVÆÂÆö6Ã#ƒ%52ód”Âó6¶—ƒ“rã#2“²V&Æ–6F–öâWf–FVæ6RföÆÆ÷w2âW6W#“C%52&VÖ–ç0§&÷FV7FVC²öæW‡F'V–ÆB—2æ÷BòFWf–6R66WFæ6RâÇ†“#’÷&VfÆV7F–öâvFW26W&FRà ¤DUd”4S“CC¢6–×ÆR&V6W76VBUbÖW6‚(i"–çB(i"Ö&–VçBö66ÇW6–öâ(i"&¶S²÷&&—BÀ¤6æ6VÂ&WF–ç2&Wf–÷W2–çBâ&¶^(i$Ç’7&VFW2òÆ–W"ÂF§W7BÆ–W"÷6—G’ð¥f—6–&ÆS²VæFõ&VFò¶VW2–çBÂ6VÆV7Bò–bæVVFVC²6fT÷VâöæF—fRW‡÷'B¶VW26†FRà¤æW‡C¢7GVÂ•BVÆ—G’öÆFVæ7’fVVF&6²ÂF†Vâæ'&÷vÇ’&Vf–æRòVÆ—G’ö6÷fW&vRð§v÷&²'VFvWB2Wf–FVæ6Rv'&çG2âæòWFöÖF–2gW'F†W"òfVGW&R&Vf÷&RFWf–6RvFRà ¢ã“CBf–æÂÆö6ÂæöFS#Bã’ãgVÆÂ&Vw&W76–öã¢¢£"Ãs352òd”Âò6¶—VB¢¢à¥6—‚æWrò–çFVw&F–öâ6†V6·2²W†—7F–æs#s#R72öâf–æÂ6÷W&6S²÷&–v–æÂæV&'£“C2ó“3‚ó“C"6—‡FVVâæB&Wf–WvVB&VÆV6Rf—fRÇ6ò72âæòW†—7F–ær76W'F–öç0§&VÆ†VBâ6ö×ÆWFRòÖ†VÇW"÷–çFW"÷6†VÆÂ&WfW'6R–ç3“CB&Wf–WvVC²Ö–âö6vRô×VÇF“ãð¦g&÷¦VâVæ6†ævVBâ†÷7FVBõvW2öÆ—fRV&Æ–6F–öâ&ööbföÆÆ÷w3²FWf–6S“CBVæF–ærà ¢22ã“CBV&Æ–6F–öâfW&–f–VB(	B#"ö7Fö&W"##b„'&—6&æR ¥'VçF–ÖRSC3““v##&cvS#–6#†Ffc#–F#†3csS&FV663&CƒfÂFW7FVBG&VP¦#33Cƒf6C–Sƒsss6c#cF6–FScvcSƒ6fFÂ—2V&Æ—6†VBöâÖ–ââ6öææV7FVBv—@¤FFWÆöFVC"W†7B&Æö'2æB7&VFVB–FVçF–6ÂFW7FVBG&VS²fWF6†VBÖ–âÖF6†VBÀ¦Æö6Â'&æ6‚Æ–væVB6ÆVæÇ’âÆö6ÂæöFS#BæB†÷7FVBæöFS#"&Vw&W76–öã3“ss#csƒ#ð¦¦ö#“ƒs“C“b&÷F‚72¢£#s3FW7G2òf–ÇW&W2ò6¶—VB¢£²6ö×ÆWFR†÷7FV@¦ÆörF÷FÇ2fW&–f–VBƒ#3ã2’âvW33“ss#ccc’'V–ÆC“ƒs“c“SöFWÆ÷““ƒ““csS §7V66VVFVBâÆÃ#÷7FFWÆ÷–ÖVçB6†V6¶VB6†VÆÂ÷fW'6–öâÂ6†ævVB–çFW"T’ö6÷&RöæWp¤òG&ç6fW"†VÇW"Â&WF–æVC“C2&¶RöFöÖ–âÂ&V6÷fW'’öÖ–âö6vRô×VÇF“ã÷G&–ævÆP¦vVöÖWG'’õUb÷–çB÷&ö¦V7BöW‡÷'BæBg&÷¦Vä&WFrÖ&¶W"'—FRÖÖF6‚FW7FVB6÷W&6Rà¤÷&–v–æÂ76W'F–öç2&WF–æVC²&÷FV7FVBög&÷¦VâÆv÷&—F†×2Væ6†ævVBâF†—2&öö`§WFFW2f÷W"6öçF–çV—G’f–ÆW2öæÇ“²FW7FVB÷V&Æ—6†VB'VçF–ÖR'—FW2Væ6†ævVBà ¤'V–ÆC“CB—26ö×ÆWFRæB&VG’f÷"†æG2ÖöâFW7F–æs¢6–×ÆR&V6W76VBæF—fRUbÖW6€®(i"–çB(i"Ö&–VçBö66ÇW6–öâ(i"&¶Rò&Wf–Ws²÷&&—BÂ6æ6VÂ&WF–ç2&–÷"–çBà¤&¶^(i$Ç’7&VFW26VÆV7FVBVF—F&ÆRò×VÇF—Ç’Æ–W#²Æ–W"÷6—G’÷f—6–&–Æ—G’À¥–çBVæFõ&VFòÂ6fT÷VâæBæF—fR6†FVBW‡÷'B6æ—G’â&VFòföÆÆ÷w2÷&–v–æÀ§6VÆV7F–öâ'VÆW2æB6â¶VW&6R6VÆV7FVC²6†ö÷6RòÆ–W"–bæVVFVBâ6öçfW‚7V&P¦Ö’6†÷rÆ—GFÆRöæò6†F÷s²6ÖRÖö&¦V7BöÆö6ÃcL+"ób×&’&¶RÂæ÷B67&VVâ×76R÷ ¦æV–v†&÷W"Öö&¦V7Bòâv÷&²÷&VgW6ÂÆ–Ö—G2&VÖ–ã²6ÖÆÂUbÖW6†W2f—'7BâFWf–6S“C@¦V&æ6RöÆFVæ7’÷W'6—7FVæ6R66WFæ6R&VÖ–ç2VæF–ærÂæ÷B–æfW'&VBg&öÒæöFRà¥W6W#“C"6öææV7FVB6×VFvR52&÷FV7FVC²Ç†“#’÷&VfÆV7F–öâ×&Wf–Wr–æFWVæFVçBà¤æW‡Bæ'&÷r'VçF–ÖRv÷&²föÆÆ÷w27GVÃ“CBFWf–6RfVVF&6²&F†W"F†âWFöÖF–0¤òVÆ—G’öÆ–v‡F–ær6†ævW2âæòæWròFWf–6R52–æfW'&VBg&öÒöæW‡F'V–ÆBà ¢22ã“CR(	B†–v†W"×&W6öÇWF–öâòæB6æ6VÆÆ&ÆRVÆ—G’¦ö'2(	B#2ö7Fö&W"##b„'&—6&æR ¥W6W#“CE52v—F‚W‡Æ–6—Bö÷"÷F6‡’òVÆ—G’W†6WF–öââ&÷FV7BF†RW†—7F–æp§&Wf–WrôÇ’ô6æ6VÂöÆ–W"ö†—7F÷'’÷W'6—7FVæ6Rv÷&¶fÆ÷s²òV&æ6R—2äõB66WFVBà¥W6W"WF†÷&—¦W2†–v†W"&W6öÇWF–öâöæW‡F'V–ÆBâVF—BÖ–ãfFFC–C#¢7GVÂ&¶ScL+"ó`§&—2öæÇ“³#B6öÆ÷W"FW‡GW&Rv2§W7B–çFW'öÆFVB6†FRâW†—7F–ærF‡G&6RÖöæÇ§&VÖ÷FR%d‚—2Vç&VÆFVBFòF†—25R&¶W#²æòFF—F–öæÂ¶W&æVÂöÆ–'&'’–×÷'FVBà ¤÷&–v–æÂ&¶W"æ÷r†2ôäRvVæW&F÷"G&6–ær¶W&æVÂâÆVv7’&¶U–çDò&VÖ–ç0§7–æ6‡&öæ÷W2ÂW†7CcBób÷WGWG2æC„Òv÷&²6ó#‚Ö†–×VÒ&WF–æVBâ7–æ2†–v‚F€§W&Ö—G>(šC#Sl+"ócB&—2v—F‚6W&FRd•„TC#„Ò6öç6W'fF—fR&’÷G&–ævÆR×v÷&²6°¦÷&–v–æÃ$ÒUb66â6ó#²G&–ævÆR&÷VæB&WF–æVBâæòVæ&÷VæFVB6ÆÆW"v÷&²Æ–Ö—Bà¤6‡Væ²WfVçG2WfW'“cRÃS3bf—6—FVBG&–ævÆR6æF–FFW3²'VææW"6†V6·2&÷'E6–væÂæ@§––VÆG2Fò'&÷w6W"F–ÖW'2gFW"&÷†–ÖFVÇ“†×267V×VÆFVBv÷&²&WGvVVâWfVçG2à¥&’&W&F–öâõUb&7FW"&VÖ–â&÷VæFVB7–æ6‡&öæ÷W26WGW²æò†&Bg&ÖR×F–ÖR÷ ¤Ó"ÆFVæ7’wV&çFVRâG&6RæBf–æÂf6R×6fRG&ç6fW"6†&R6ÖR66†VGVÆW"à¤6æ6VÆÆF–öâG&÷27FvVBFF²6÷W&6RvVöÖWG'’VçF÷V6†VBâ÷væVBFöÖ–âÆ&VÇ2&WW6V@¦f÷"G&ç6fW"–ç7FVBöb&7FW&—¦–ærÆ÷rw&–BGv–6RâæòæWrG&–æwVÆF–öâõUb&7FW"ð¦F¦6Væ7’÷&’¶W&æVÂâ÷&–v–æÂ†VÖ—7†W&R÷&F—W2ö&–2f÷&×VÆ2æB6×Æ–ærGFW&à§Væ6†ævVBÂÖW&VÇ’Ö÷&R÷6—F–öç2öF—&V7F–öç2âæòFVæö—6W"÷"ÆÂ×F6†–æW72×6öÇfVB6Æ–Òà ¥–çBòVÆ—G“¢†–v‚†FVfVÇB“#Sl+"ócB6×ÆW3²ÖVF—VÓ#Œ+"ócC²V–6³cL+"óbâ†–v‚†0£l9r&¶VB—†VÇ2æCL9r6×ÆVBF—&V7F–öç2fW'7W3“CB‡WFócL9r6×Æ–ærv÷&²f÷"F†P§6ÖR6÷fW&vRöÖW6‚’âvVöÖWG'’öö66ÇW6–öâ6â&WV—&RfWvW"7GVÂ–çFW'6V7F–öâf—6—G3°¦6&VgW6W26ö×Æ–6FVBÆ–÷WG2Â7VvvW7BÖVF—VÒõV–6²÷"6–×ÆW"ÖW6‚âW†—7F–æp¦6öÆ÷W#S"ó#BFW‡GW&W2Â6÷W&6R÷F—÷66Æ"&W6öÇWF–öç2ÂÆ–W"÷&W6÷W&6Rôf–ÆRöW‡÷'@¦'VFvWG2æB66†VÖ2Væ6†ævVBâöÆB6fVBò—†VÇ27F’2Ö—3²†–FRöFVÆWFRöÆBð¦Æ–W"æB&V&¶RFò6ö×&R&F†W"F†â7F6¶–ærGvò6†F÷rÆ–W'2à ¤÷&–v–æÂ–çB6W76–öâ7FvW27–æ2¦ö"v—F‚&öw&W72ô6æ6VÃ²VæF–ær¦ö"&Æö6·0§–çBöÆ–W"ö6†ææVÂ÷VÆ—G’VF—G2v†–ÆRf–ævW'2æf–vFRâ6æ6VÂÂFöæRö6Æ÷6Rö&öG¦Æ÷72ö†—7F÷'’&÷'B—C²ÆFR&W7VÇG26ææ÷BV&Æ—6‚–çFòæWr÷7F÷VB÷&WÆ6VB¦ö"à¤g&W6‚ÖW6‚×÷6—F–öâõUbö7W'&VçB×&W6÷W&6RæB÷&–v–æÂööÂwV&G2&V6VFR&Wf–Ws°¤Ç’&VÖ–ç2ôäR÷&–v–æÂ6†V6·ö–çBô4õr6öÖÖ—BFòâVF—F&ÆR×VÇF—Ç’Æ–W"à¥7FFRfÆw2&RG&ç6–VçBöæÇ“²æòW'6—7FVçBò&V6—R÷"æWr†—7F÷'’÷væW"à¥VÆ—G’—26W76–öâT’&VfW&Væ6RÂæ÷B6fVB&ö¦V7BÖWFFFâW†—7F–ærV–6²&VÖ–ç0¦'—FRÖ–FVçF–6Ââ6ÖRÖf6R6÷fW&vRG&ç6fW"7F–ÆÂW†6ÇVFW2FÆ2æV–v†&÷W'3²F†–ææW ¥Ubf6W2æ÷rvWB7GVÃ#SbÖw&–B6×ÆW2&F†W"F†â&÷'&÷v–æræ÷F†W"f6Rw26†FRà ¥6—‚æWrFW7G26÷fW"vVçV–æS#SbócBw&–BæBf–æW"6†FRÆWfVÇ2ÂW†7B7–æ5V–6²&—G’À¦æWrF†–âÖf6R6÷fW&vRæB—6öÆF–öâÂ&öw&W72ö&÷'B÷&RÖ&÷'Bö–çfÆ–BVÆ—G’À¦7GVÂ–çFW"6æ6VÂö6Æ÷6R÷7FÆR÷&WG'’ö6†V6·ö–çB÷ööÂ÷v÷&²&VgW6ÂÂ7GVÂT’FVfVÇBð¤6æ6VÂv†–ÆR'W7’ôFöæRÆFR×&W7VÇB7W&W76–öâõV–6²6ö×&—6öââ÷&–v–æÃ“C2³“CBVÆWfVà¦æB&Wf–WvVB&VÆV6Rf—fR72âæò÷&–v–æÂ76W'F–öâ&VÆ†VC²öÆC“C26—¦S#’æ@£„Ò&VgW6Â6†V6·2&VÖ–â7F—fRâ&VBFö72÷–çBÖò×VÆ—G’Ó“CRæÖBâgVÆÂ÷V&Æ–6F–öà§&ööbföÆÆ÷w2âÆÂ6†ævVBò÷–çFW"÷6†VÆÂ&WfW'6RÆöFW"–ç3“CR&Wf–WvVC²Ö–âð¦6vRô×VÇF“ãög&÷¦VâöÖöFVÆÆ–ærõUb÷&ö¦V7BöW‡÷'BÆv÷&—F†×2Væ6†ævVBà ¤DUd”4S“CS¢öâ4ÔR&V6W76VBÖöFVÂ†–FRöÆBòÂVÆ—G’V–6¾(i$&¶Rö–ç7V7Bô6æ6VÃ°¤†–vŽ(i$&¶Rö–ç7V7BB6ÖR&V6‚õ7G&VæwF‚Â6ö×&RFWF–Âö&æF–æræBv—BF–ÖRâ6æ6VÀ¤EU$”är†–v‚æB6öæf—&ÒæòÆ–W"ö†—7F÷'“²&V&¶RôÇ’F†VâÆ–W"÷6—G’÷f—6–&–Æ—G’À¥–çBVæFõ&VFòæB6fT÷VâöæF—fR6†F–ærâW6RÖVF—VÒ–bv÷&²wV&B&VgW6W2†–v‚à¤7GVÂ•B6Öö÷F†W"×&W7VÇBöÆFVæ7’66WFæ6RVæF–æs²Ç†“#’÷&VfÆV7F–öâvFW0¦–æFWVæFVçBâæW‡Bæ'&÷r–×&÷fVÖVçBföÆÆ÷w2W6W"6ö×&—6öã²Fòæ÷BwVW72Æ–v‡@§6÷W&6R÷"6–ÆVçFÇ’6Öö÷F‚Vç&VÆFVBUb—6ÆæG2Fò†–FR&VÖ–æ–ærFVfV7G2à ¢ã“CRf–æÂÆö6ÂæöFS#Bã’ãgVÆÂ&Vw&W76–öã¢¢£"Ãs3r52òd”Âò6¶—VB¢¢à¤ÆÂ÷&–v–æÃ#s3æB6—‚æWrVÆ—G’ö6æ6VÆÆF–öâ6†V6·272öâf–æÂ6÷W&6S°¦÷&–v–æÂó“C2ó“CBVÆWfVâæB&Wf–WvVB&VÆV6Rf—fRÇ6ò72âæò76W'F–öç0§&VÆ†VBâ&Wf–WvVBò÷–çFW"÷6†VÆÂ&WfW'6Rw&ƒ“CS²&÷FV7FVBÖ–âö6vRô×VÇF“ãð¦g&÷¦VâVæ6†ævVBâ†÷7FVBõvW2öÆ—fRV&Æ–6F–öâ&ööbföÆÆ÷w3²FWf–6RVÆ—G’VæF–ærà ¢22ã“CRV&Æ–6F–öâfW&–f–VB(	B#2ö7Fö&W"##b„'&—6&æR ¥'VçF–ÖR&3FF#ccCSs##63&3cSFV6&CS–VcCƒFF&fÂFW7FVBG&VP¦†#SvF6F&6fS363ƒ“3&6fC†CFSVc“S“S3CÂ—2V&Æ—6†VBöâÖ–ââ6öææV7FVBv—@¤FFWÆöFVC2W†7B&Æö'2æB7&VFVB–FVçF–6ÂFW7FVBG&VS²fWF6†VBÖ–âÖF6†V@¦æBÆö6Â'&æ6‚Æ–væVB6ÆVæÇ’âÆö6ÂæöFS#BæB†÷7FVBæöFS#"&Vw&W76–öã3“ƒƒsc3s“3Bð¦¦ö##““C3CS“R&÷F‚72¢£#s3rFW7G2òf–ÇW&W2ò6¶—VB¢£²6ö×ÆWFR†÷7FV@¦ÆörF÷FÇ2fW&–f–VBƒ#32ã2’âvW33“ƒƒsc3s3“'V–ÆC#““C3s2öFWÆ÷“#““Ss#3“ §7V66VVFVBâÆÃ#6†V6¶VB÷7FFWÆ÷–ÖVçB6†VÆÂ÷fW'6–öâÂ6†ævVBò&¶W"÷G&ç6fW"ð§–çFW"T’ö6÷&RÂ&WF–æVBFöÖ–â÷G&–ævÆRw&‚Â&V6÷fW'’öÖ–âö6vRô×VÇF“ãõUb÷–çBð§&ö¦V7BöW‡÷'BæBg&÷¦Vä&WFrÖ&¶W"'—FRÖÖF6‚FW7FVB6÷W&6Râ&Wf–WvVB–ç3“CS°¦÷&–v–æÂ76W'F–öç2&WF–æVBÂ&÷FV7FVBög&÷¦VâÆv÷&—F†×2Væ6†ævVBâF†—2&öö`¦6†ævW2f÷W"6öçF–çV—G’f–ÆW2öæÇ“²FW7FVB÷V&Æ—6†VB'VçF–ÖR'—FW2Væ6†ævVBà ¤'V–ÆC“CR6ö×ÆWFRæB&VG’f÷"4ÔRÖÖöFVÂ6ö×&—6öã¢†–FRöFVÆWFRöÆBòÂVÆ—G¥V–6³cBón(i$&¶Rö–ç7V7Bô6æ6VÃ²†–vƒ#SbócBB6ÖR&V6‚õ7G&VæwF‚Â6ö×&Rf–æW"6†FP¦æBv—BF–ÖRâÖVF—VÓ#‚ócB&VÖ–ç2f–Æ&ÆR–b†–v‚v÷&²6&VgW6W2â6æ6VÂGW&–æp¦&¶RÆVfW2æòÆ–W"ö†—7F÷'“²&WG'’ôÇ’ÂÆ–W"÷6—G’÷f—6–&–Æ—G’Â–çBVæFõ&VFòÀ¥6fT÷VâöæF—fR6†F–ærâöÆB6fVBò—†VÇ2Fòæ÷BWFöÖF–6ÆÇ’–×&÷fS²&V&¶Rà¥W6W#“CE52&÷FV7G2v÷&¶fÆ÷rv—F‚W‡Æ–6—Bö÷"÷F6‡’V&æ6RW†6WF–öã³“CP¦7GVÂ•BVÆ—G’öÆFVæ7’66WFæ6R&VÖ–ç2TäD”ärÂæ÷B–æfW'&VBg&öÒæöFRà¥VÆ—G’FW7B&÷fW27GVÂ†–v†W"w&–BöÖ÷&RÆWfVÇ2÷F†–âÖf6R6÷fW&vRÂæ÷BW&fV7@§6Öö÷F†æW72öâWfW'’ÖöFVÂâÇ†“#’÷&VfÆV7F–öâvFW2&VÖ–â–æFWVæFVçBâæW‡@§'VçF–ÖR&Vf–æVÖVçBföÆÆ÷w2FWf–6R6ö×&—6öâ&F†W"F†âVç&VÆFVBÆ–v‡F–ær6†ævW2à ¢22ã“Cb(	B–çBòUb&W7F'C²ã“CRW6W"52(	B#2ö7Fö&W"##` ¥W6W"W‡Æ–6—FÇ’&W÷'G2¢£“CRÒ52¢£¢&÷FV7B†–v†W"×&W6öÇWF–öâòæB—G2W†—7F–æp§&Wf–Wrö6æ6VÂöÇ’ö†—7F÷'’v÷&¶fÆ÷râF†—27WW'6VFW2V&Æ–W"VæF–æs“CRæ÷FW3°¦æò–×Æ–6F–öâöbW&fV7BòöâÆÂÖW6†W2÷"66WFæ6RöbVç&VÆFVB÷VâvFW2à ¤VF—BÖ–âC3C¢÷&–v–æÂUb&ö¦V7F–öç2æB6²ÆÂW†—7BÂæò–çB&W6WBæ@¦æòvVæW&ÂFÆ2Vçw&â†FÆ2V'2öæÇ’–âF‡G&6RFWVæFVæ7’U$Ã²6²ÆÀ¦'&ævW2W†—7F–ær—6ÆæG2æBFöW2æ÷BvVæW&FRâFÆ2â¶VWFÆ2Vçw&2§6W&FRgWGW&Ræ'&÷rF6²F‡&÷Vv‚÷&–v–æÂUbö†—7F÷'’÷væW'2à ¤ö&¦V7B(i"Ubæ÷rW‡÷6W26ÆV"–çB†¶VW2Ug2’æB6ÆV"–çB²Ug2†6†ö÷6R§&ö¦V7F–öâv–â’â&÷F‚v÷&²v—F‚7FÆRvVöÖWG'’õUb&–æF–æw2v—F†÷WB÷Væ–ær–çBà¤ÆÂ6öÆ÷W"Æ–W'2öÖ6·2ö–ÖvW2ôòÇW2&÷Vv†æW72æBÖWFÆæW72&W6÷W&6W2FWF6‚–à¦öæR÷&–v–æÂ66VæR6†V6·ö–çC²6†&VB&W6÷W&6W2ö6÷–W2&VÖ–â–çF7Bâæò&V&–æBö`¦öÆB—†VÇ2ÂæòvVöÖWG'’VF—G2ÂæòWFöÖF–2F—66&BöâUbVF—G2âVæFòõ&VFò&W7F÷&W0¦W†7B&W6÷W&6W2õUg2â&W6WB—2f÷"–æFWVæFVçB&÷„Æ"ÖW6†W3²–×÷'FVBtÄ"ÖFW&–Ç2À¦Æ–æ¶VB÷&ö6VGW&ÂöÆö6¶VB÷&VfW&Væ6Rö&¦V7G2&R&VgW6VBâW†—7F–ær&ö¦V7F–öâ&6P§&W7G&–7F–öç2&VÖ–ââf–Ww÷'B&Vg&W6‚W6W2÷&–v–æÂ&VæFW"ÖÖöFR÷væW"â7FÆR–ç@¦W'&÷'2æ÷rF—&V7BFòö&¦V7B(i"Ub(i"6ÆV"–çBà ¤f÷W"æWs“CbFW7G26÷fW"ÆÂÖ6†ææVÂ7FÆR&V6÷fW'’æB&V÷VâÂ7GVÂVæFõ&VFòô4õrÀ§7FÆRUb&VÖ÷fÂ÷&W&ö¦V7B÷&W–çBÂ&Ææ²æF—fR6fT÷VâÂæòÖ÷÷&VgW6ÂFöÖ–6—G’À¦æB÷&–v–æÂæVÂ6ÆÆ&6²÷&VæFW"FVÆVvF–öââæWrÖçVÂvFS¢&W&öGV6R7FÆP§–çB(i"6ÆV"–çB(i"–çC²6ÆV"&÷F‚(i"&÷‚ö&÷&–FR&ö¦V7F–öâ(i"–çC°¥VæFõ&VFò&W6WBæB6fT÷Vâ&Ææ²÷&W–çFVB&W7VÇBâFÆ2vVæW&F–öâæ÷B6†—VBà¥&VÆV6Rw&ƒ“Cb&Wf–WvVC²×VÇF“ãög&÷¦Vâf–ÆW2Væ6†ævVBâfÆ–FF–öâ÷V&Æ–6F–öà§&W7VÇG2föÆÆ÷s²æó“CbFWf–6R52–æfW'&VBà ¢ã“Cb'VçF–ÖRV&Æ—6†VC¢–c–3vV&V#“6S63ScsfSV#“†cƒ“C6fFfÂFW7FVBG&VP¦3†cC##3“&SSs6cCc6cƒƒ3FcS3Sc63ff6âÆö6ÂæöFS#BgVÆÂ&Vw&W76–öã ¢¢£"ÃsC52òd”Âò6¶—VB¢¢ƒ#"ã—2’Â–æ6ÇVF–ær÷&–v–æÃ#s3ræBf÷W"æWp§&V6÷fW'’FW7G3²æò÷&–v–æÂ76W'F–öç2&VÆ†VBâ&VÆV6R6öçG&7Bf—fR72â&VÖ÷FP¦Ö–âfWF6†VBÂW†7BFW7FVBG&VRÖF6†VBæBÆö6Â'&æ6‚Æ–væVB6ÆVæÇ’à¤†÷7FVB&Vw&W76–öã3“““ccC#æBvW33“““cc#C2fW&–f–VB&VÆ÷rà ¢ã“CbV&Æ–6F–öâfW&–f–VC¢†÷7FVBæöFS#"&Vw&W76–öã3“““ccC#ö¦ö###C#“ƒ3s§76W2¢£#sCFW7G2òf–ÇW&W2ò6¶—VB¢¢†gVÆÂÆörF÷FÇ2fW&–f–VB’ÂÖF6†–æp¦Æö6ÂæöFS#BâvW33“““cc#C2'V–ÆC##C##3ƒ2öFWÆ÷“##C#3CSC’5T44U52à¤ÆÃ#6†V6¶VB÷7FFWÆ÷–ÖVçB6†VÆÂ÷fW'6–öâÂ&W6WBõUb÷–çFW"ö7&VF–öâÆöFW'2À§&VÆV6R×&V6÷fW'’ôòöÖ–âô×VÇF“ãö–ç7V7F–öâ÷–çB÷&ö¦V7BöW‡÷'BæBg&÷¦Vä&WFp¦Ö&¶W"'—FRÖÖF6‚FW7FVB6÷W&6RâæòFW7FVB'VçF–ÖR6†ævVBgFW"fÆ–FF–öâà ¤'V–ÆC“Cb6ö×ÆWFRæB&VG’f÷"FWf–6RFW7F–æs¢ö&¦V7B(i"Ub(i"6ÆV"–çB¶VW0¥Ug2æB7F'G2&Ææ²–çB6W76–öâÂ–æ6ÇVF–ærF†RöÆB&–æF–ærÖW'&÷"66Râ6ÆV §–çB²Ug2W&Ö—G2g&W6‚&÷‚ö&÷&–FR&ö¦V7F–öâæB&W–çBâVæFõ&VFò&W7F÷&W0§&W6÷W&6W2õUg3²6fT÷Vâ&WF–ç26ÆV&VB÷&W–çFVB&W7VÇBâFWf–6S“CbTäD”ärâW6W#“CP¥52&÷FV7FVBâvVæW&ÂFÆ2Vçw&&VÖ–ç26W&FRgWGW&R'V–ÆC²6²ÆÂöæÇ¦'&ævW2W†—7F–ær—6ÆæG2âF†—2&ööb6†ævW26öçF–çV—G’Fö72öæÇ’à ¢22ã“Cr(	Bf—7VÂ–çBÆ–W"7F6³²W6W#“Ce52(	B#2ö7Fö&W"##` ¥W6W"&W÷'G3“Ce53¢&÷FV7BW‡Æ–6—BVæFö&ÆR6ÆV"–çBò6ÆV"–çB²Ug2À§7FÆRÖ&–æF–ær&V6÷fW'’÷&W&ö¦V7BæB÷&–v–æÂ&W6÷W&6W2ö†—7F÷'’âW6W"æ÷r&–÷&—F—¦W0¦&ö7&VFR×7G–ÆRÆ–W"Æ—7C²FÆ2Vçw&&VÖ–ç2FVfW'&VBÂæ÷B–×ÆVÖVçFVB'’6²à¤VF—B7W'&VçC†3“ƒs#¢ÆÂÆ–W"÷W&F–öç2Ç&VG’&VÆöærFò÷&–v–æÂ–çB6÷&Ræ@¥T’6öçG&öÇ3²öæÇ’G&÷F÷vâ&W6VçFF–öâW†—7FVBÂæòF‡VÖ&æ–ÂöÆ—7B÷væW"à ¥&WÆ6Rf—6–&ÆRÆ–W"G&÷F÷vâv—F‚6ö×7BF÷Öf—'7BÆ—7B–âW†—7F–æs#s'‚ÄTe@¦Fö6³£cG‚6öçFVçBF‡VÖ&æ–Ç2F—7Æ–VCC‚÷fW"6†V6¶W&&ö&BÂæÖRÂVæ—VS(	3"ÖÆWGFW ¦&ÆVæB6öFRÂ÷6—G’RÂf—6–&–Æ—G’FövvÆRÂ6VÆV7FVB&ÇVR&÷ræB–ÖvRöÖ6²Æ&VÇ2à¥F&÷rFò6VÆV7C²&ÆVæBö÷6—G’÷Vç2÷&–v–æÂ6VÆV7FVBÆ–W"6WGF–æw2&VÆ÷rÆ—7Bà¤÷&–v–æÂ†–FFVâ6VÆV7B÷f—6–&–Æ—G’æöFW2&VÖ–âWfVçBG&ç7÷'Bf÷"÷&–v–æÂ÷væW'0¦æB&Vw&W76–öâ6öçG&7G2Âæ÷BGWÆ–6FRf—6–&ÆR6öçG&öÇ2â²Æ–W"ò²–ÖvR&VÖ–à¦&W6–FR†VF–æs²–ÖvRVF—Bö6öçfW'6–öâÖ÷fW2–çFò6VÆV7FVB6WGF–æw2â÷&–v–æÂ&VæÖRÀ¦÷6—G’Â&ÆVæBÂ÷&FW"ÂFVÆWFRÂÖW&vRÂfÆGFVâÂÖ6·2æB–ÖvR7F–öç2&WF–æVBà¤&6Rf—6–&–Æ—G’ö&ÆVæBö÷6—G’7F’–Ö×WF&ÆS²66Æ"6†ææVÇ2†–FR6öÆ÷W"7F6³°¤ò7Fv–ærF—6&ÆW2&÷rVF—G2âæòæWr–çB66†VÖÂ'VFvWG2Â†—7F÷'’Â6ö×÷6—F÷"÷ ¦ÖöFVÆÆ–ær÷væW"âÆÂ÷&–v–æÂ&÷FV7FVBvW7GW&W2ô×VÇF“ãög&÷¦Vâf–ÆW2&WF–æVBà §7&2÷–çBÖÆ–W"ÖÆ—7Bæ§2—2&W6VçFF–öâöæÇ“²f–Ww÷'B–çFW"W‡÷6W2÷væVBF–ç¦Æ–W%F‡VÖ&æ–Â6æ6†÷G2öb6öÖÖ—GFVB&r6öÆ÷W"öÇ†Â&Vf÷&RÆ–W"÷6—G’ö&ÆVæBð¦Ö6²â&V&VGV7F–öâ–æ6ÇVFW2F†–âÖ&·2æBÇ†×vV–v‡FVB$t"ÂfÆ—2UgcÖf—'7@§&÷w2f÷"F÷×W&Wf–Ww2Â66†W2'’–Ö×WF&ÆR—†VÂ–FVçF—G’W6–ær6W76–öâvV´Öà¤æògVÆÂFW‡GW&R'—FW2W‡÷6VBFòDôÓ²æòF‡VÖ&æ–Ç26W&–Æ—¦VB÷"†—7F÷'’VçG&–W0¦f÷"'&÷w6–ærâWFFW2gFW"÷&–v–æÂVæ6–Â&VÆV6Rö7F–öç2ö†—7F÷'’&V÷VâÂ6ÆV'0¦öâ6Æ÷6Râ6çf2F‡VÖ&æ–Ç2&R6öçFVçB&Wf–Ww2Âæ÷Bf–æÂ6ö×÷6—FW2÷"Ö6²Ö2à ¤f—fRæWrFW7G26÷fW"ÆÃ#bVæ—VR&ÆVæB6öFW2ÂÇ†÷F†–âö÷&–VçFF–öâö÷væW'6†—À¦7GVÂT’&÷r÷&FW"ö6öçFVçBöÖ6²÷&VæÖRö&ÆVæBö÷6—G’Âf—6–&–Æ—G’öæR6†V6·ö–çBÀ¥VæFõ&VFò÷&V÷Vâõ6fT÷VâÂ7G&ö¶R6æ6VÂæB66Æ"ôòö6Æ÷6RwV&G2â÷&–v–æÃ“Ró“bð£“#‚F&vWFVC•52â†VFÆW726‡&öÖ—VÒ&VæFW&–æröb7GVÂÖ&·W÷7G–ÆW2öÆ—7BÖöGVÆP§v—F‚f—‡GW&RÖWFFFfW&–f–VBæò÷fW&fÆ÷rC#s'‚Fö6²ó#BæC3“f–Ww÷'Bv–GF‡2À§6VÆV7F–öâ6WGF–æw2÷f—6–&–Æ—G’æB67&VVç6†÷B–ç7V7F–öã²&VÂ–çFW"ö†—7F÷'’FW7FV@§F‡&÷Vv‚÷&–v–æÂ–çFVw&F–öâ†&æW72Âæò•B66WFæ6R–æfW'&VBâ67&VVç6†÷B—2¦f—‡GW&RöæÇ“²÷&–v–æÂ÷6W76–öâÆ–÷WB÷væW'2Væ6†ævVBâgVÆÂ÷V&Æ–6F–öâ&öö`¦föÆÆ÷w2âDUd”4S“Cs¢Æ–W"F2÷7G&ö¶W2÷&Wf–Ww3²&ÆVæBö÷6—G’÷f—6–&–Æ—G“²÷&FW&–ærð¦–ÖvR¶Ö6²6VÆV7F–öã²VæFõ&VFòõ6fT÷VâæBÆVgBFö6²67&öÆÆ–ærôFöæRöâ•Bà ¢ã“Crf–æÂÆö6ÂæöFS#B&Vw&W76–öã¢¢£"ÃsCb52òd”Âò6¶—VB¢¢ƒƒã—2“°¦÷&–v–æÃ#sCæBf—fRæWrf—7VÂÖÆ—7B6†V6·2&WF–æVBâ÷&–v–æÃ“Ró“bó“#‚F&vWFVC¦æB&Wf–WvVB&VÆV6Rf—fR72âæò÷&–v–æÂ76W'F–öâ&VÆ†VBâ'VçF–ÖRV&Æ—6†V@¦sƒ““#FS–#6Vc&#ƒC–C3C#“S6cVF66Cƒ&cÂW†7BFW7FVBG&VP¦&#“vCSVf633cv#cS&fV#Cc#“fV#33cSSfVâfWF6†VBÖ–âÖF6†VBF†BG&VRæ@¦Æö6Â'&æ6‚Æ–væVB6ÆVæÇ’â†÷7FVB&Vw&W76–öâòvW2òÆ—fRÖf–ÆR&ööbfW&–f–VB&VÆ÷rà ¢22ã“CrV&Æ–6F–öâfW&–f–VB(	B#2ö7Fö&W"##` ¥'VçF–ÖSsƒ““#FS–#6Vc&#ƒC–C3C#“S6cVF66Cƒ&còFW7FVBG&VP¦&#“vCSVf633cv#cS&fV#Cc#“fV#33cSSfRV&Æ—6†VBæBfWF6†VBÖ–âÖF6†VBW†7FÇ’à¤Æö6ÂæöFS#BæB†÷7FVBæöFS#"&Vw&W76–öã3““3cƒCS2ö¦ö###C“cSƒs‚&÷F‚70¢¢£#sCbFW7G2òf–ÇW&W2ò6¶—VB¢£²gVÆÂ†÷7FVBÆörF÷FÇ2fW&–f–VBâ÷&–v–æÀ¦6†V6·2&WF–æVBâvW33““3cs“#2'V–ÆC##C“csƒSBöFWÆ÷“##C“#“s#r5T44U52à¤ÆÃ#6†V6¶VBÆ—fR6†VÆÂ÷fW'6–öâÂÆ–W"ÖÆ—7B÷–çFW"÷&V6÷fW'’Â&WF–æVBÆ–W"ö&ÆVæBð§–çB÷&ö¦V7BöW‡÷'BôòõUb÷&W6WBöÖ–âô×VÇF“ãæBg&÷¦Vä&WFrÖ&¶W"'—FRÖÖF6‚FW7FV@§6÷W&6Râ&WfW'6RÆöFW"¶W—3“Cr&Wf–WvVC²æòFW7FVB'VçF–ÖR6†ævW2gFW"fÆ–FF–öâà¥F†—2&ööbWFFW26öçF–çV—G’Fö7VÖVçFF–öâöæÇ’à ¤'V–ÆC“Cr&VG’f÷"•BFW7F–æs¢÷Vâ–çBv—F‚Gvò÷"Ö÷&RÆ–W'2ÂF&÷w2æ@§–çBF—7F–æ7BÖ&·3²&Wf–Ww2WFFRöâVæ6–ÂÆ–gBâ&ÆVæB6öFRò÷6—G’R÷Vç0§6VÆV7FVB6WGF–æw3²VF—BF†VÒæB6†V6²&÷röÖW6‚âf—6–&–Æ—G’6†V6²FövvÆW26VÆV7FV@§&÷rv—F‚öæR÷&–v–æÂVæFó²&6R–Ö×WF&ÆRâ6†V6²–ÖvRöÖ6²&÷w2Â&V÷&FW"WôF÷vâÀ¥VæFõ&VFòõ6fT÷VâæB&÷VæFVBÆVgBFö6²67&öÆÆ–ærôFöæRâFWf–6S“CrTäD”äs³“CbW6W ¥52&÷FV7FVBâvVæW&ÂFÆ2Vçw&&VÖ–ç2FVfW'&VB&V†–æB7W'&VçBT’&WVW7Bà  ¢22ã“C‚(	B6öÖÖ—GFVB6öÆ÷W"Æ–v‡F–æs²ã“CrW6W"52(	B#2ö7Fö&W"##b„'&—6&æR ¥W6W"&W÷'G2ã“Cr53¢&÷FV7Bf—7VÂÆ–W"6VÆV7F–öâ÷F‡VÖ&æ–Ç2Â&ÆVæBö÷6—G’ð§f—6–&–Æ—G’Â†—7F÷'’÷W'6—7FVæ6RæB&÷VæFVBÄTeBFö6²â6öçF–çVR&WVW7FVB&W—# ¦6öÆ÷W"ÖöæÇ’Ub–çBö–ÖvRôò6ö×÷6—FW2×W7B&V¦ö–â66VæRÆ–v‡F–ærgFW"–çBFöæRà¤VF—BÖ–âCv&SC3ƒ¢÷&–v–æÂ7&VFT6öÖÖ—GFVE–çE7W&f6RöæÇ’6VÆV7FVB7FæF&Bf÷ §fÆ–B&÷Vv†æW72öÖWFÆæW73²6öÆ÷W"ÖöæÇ’–çFVçF–öæÆÇ’7F–VB&6–2â7GVF–ò6†F÷rfÆw0§vW&RVWVVBgFW"ÖFW&–Â7&VF–öâæB6÷VÆB&R6÷–VBFöòV&Ç’âæòÖ—76–ærÆ–v‡BÀ¦æWr&VæFW&–ærVæv–æR÷"6V6öæBÖFW&–Â÷væW"—2&WV—&VBf÷"F†—27V6–f–2FVfV7Bà ¤÷&–v–æÂ6öÖÖ—GFVB7W&f6Ræ÷rÇv—26ÆÇ2—G2W†—7F–ær7FæF&BÖFW&–ÂF‚f÷ §fÆ–B6†ææVÇ2â6öÆ÷W"&VÖ–ç2W†7B5$t"Æ&VFòÂv†—FRf7F÷"ÂFVfVÇB&÷Vv†æW73ð¦ÖWFÆæW73²æò66Æ"Ö2÷&W6÷W&6W2–çfVçFVBâ7FÆR66Æ"—2öÖ—GFVC²7FÆR6öÆ÷W §7F–ÆÂ&VgW6W2â6ÖR÷&–v–æÂvVöÖWG'’õUböÆ–fWF–ÖRæB7–æ2–FVçF—G’wV&G2â7GVF–ð§6WG2÷&–v–æÂ&öG’67B÷&V6V—fRfÆw27–æ6‡&öæ÷W6Ç’&Vf÷&R7–æ27W&f6R7&VF–öâÀ§6ò&÷F‚7F—fRæB–æ7F—fRöÆö6¶VB–çB&WÆ6VÖVçG2–æ†W&—B6†F÷w2&Vv&FÆW72ö`¦F–vW7Bög&ÖR÷&FW"âW†—7F–ær7GVF–òÆ–v‡G2÷&–röfÆö÷"æB&VfÆV7F–öâööÂVæ6†ævVBà¥–çB6†ææVÂ&VÖ–ç2–çFVçF–öæÆÇ’VæÆ—Bv†–ÆRVF—F–æs²–çBÆ—B&Wf–WrVæ6†ævVBà¤W†—7F–ær6fVB6öÆ÷W"&ö¦V7G2v–âÆ—BF—7Æ’öâ&V÷Vâ÷&V'V–ÆBv—F†÷WBÖ–w&F–öâÀ§&W6÷W&6Rö†—7F÷'’÷—†VÂöW‡÷'B6†ævW2âæòæWrò&¶RÂvVæW&ÂFÆ2Vçw&÷"6Æ–Ð§F†BF†RöÆFW"6Öö÷F‚ÖÖWFÂ&VfÆV7F–öâ&W÷'B—2&W6öÇfVB'’F†—26öÆ÷W"ÖöæÇ’f—‚à ¤f÷W"æWr–çFVw&F–öç26÷fW#S"ó#BW†7B÷væVB5$t"—†VÇ2õUg2÷6†F÷rfÆw2öF—7÷6ÂÀ¦÷&–v–æÂ7GVF–ò7F—fR¶–æ7F—fRöÆö6¶VBF‚$Tdõ$RVWVVB&Vg&W6‚Â&V'V–ÆBöF–væ÷7F–0¦6ÆVçWÂ7GVÂ–çB6†ææVÎ(i$Föæ^(i&Æ—BæBW†7B6fRô÷Vâv—F†÷WBW‡G&†—7F÷'’À§7FÆR÷&WÆ6VBö&öG’ÖÆ÷727W&W76–öââ÷&–v–æÃ“#ó“#26öÆ÷W"ÖöæÇ’&6–276W'F–öç2æ÷p§&WV—&R&WVW7FVB7FæF&BfÆÆ&6²v†–ÆR&WF–æ–ærW†7B—†VÇ2æB'6VçB7FÆP§66Æ"Ö²Æ—fR6†ææVÂW‡V7FF–öç2&VÖ–â&6–2â÷&–v–æÃ“Bó“’6öÖÖ—GFVBF—7Æ¦6†V6·2&WF–âW†7B—†VÂWVÆ—G’æBæ÷r&WV—&R&—fFRÆ—BFW‡GW&R÷væW'6†—Â0¦Ç&VG’W6VBf÷"66Æ"ÖÆ—B7W&f6W2âæWr¶æV&'’–çBöÆ–W'2÷66Æ"ð§&VfÆV7F–öâ÷&VÆV6S352âgVÆÂ&Vw&W76–öâ÷V&Æ–6F–öâWf–FVæ6RföÆÆ÷w2à ¥&Wf–WvVBVçF—&R7W&f6^(i'–çFW"÷&VæFW"öW‡÷'N(i$Æ"&WfW'6RÆöFW"w&ƒ“C‚æB6†VÆÂð§&V6÷fW'’¶W—3²&VçBöW‡÷'BVF—G2&R66†R–ç2öæÇ’âÖ–ã“3ö6vRô×VÇF“ãög&÷¦VâÀ¦''W6†W2ö†—7F÷'’÷&ö¦V7BöW‡÷'BÆv÷&—F†×2Væ6†ævVBâ7GVÂuRö•B6†F÷w2æ@¦V&æ6R&VÖ–âDUd”4S“C‚vFRÂæ÷BW7F&Æ—6†VB'’æöFRÖFW&–Â÷FW‡GW&RFW7G2à ¤DUd”4S“Cƒ¢–çBUb7V&R–â6öÆ÷W"öæÇ’ÂFöæ^(i%7GVF–òÂ÷&&—Bf÷"6†FVBf6W3²F@¦æ÷F†W"ÖW6‚æB7v—F6‚6VÆV7F–öâÂ6†F÷w2öÆ–v‡F–ær&VÖ–âöâ&÷F‚â&V÷VâW†—7F–æp§–çFVBæ&÷†Æ#²6ö×&RÆ—BF—7Æ’æB–çBVæ6†ævVBâ–çB6†ææVÂ&VÖ–ç2fÆC°¤Æ—B&Wf–WrôFöæR&W7F÷&R66VæR6†F–ærâVæFõ&VFò&VÖ–ç2–â–çC²ã“CrÆ–W"Æ—7@§&VÖ–ç266WFVBâæW‡Bæ'&÷rv÷&²föÆÆ÷w3“C‚FWf–6RfVVF&6³²¶VW–æFWVæFVç@¦Ç†“#’÷&VfÆV7F–öâvFW2æBvVæW&ÂFÆ2Vçw&&WVW7Bf—6–&ÆRà  ¢ã“C‚f–æÂÆö6ÂæöFS#Bã’ãgVÆÂ&Vw&W76–öã¢¢£"ÃsS52òd”Âò6¶—VB¢ ¢ƒ“rãw2’âf÷W"æWr6†V6·2ÇW2÷&–v–æÃ#sCb&WF–æVC²F&vWFVB–çBöÖFW&–ÂöÆ–W"ð¦GWÆ–6FR÷&ö¦V7B÷&VÆV6SS52â7WW'6VFVBVæÆ—B÷6†&–ærW‡V7FF–öç2–ã“#ó“#2æ@£“Bó“’vW&RWFFVBFò&WVW7FVBÆ—B÷&—fFR×FW‡GW&R&V†f–÷#²W†7B—†VÂÂ7FÆP¦6†ææVÂÂGWÆ–6FR—6öÆF–öâæBW'6—7FVæ6R76W'F–öç2&WF–æVBâ–æ—F–ÂW‡Æ÷&F÷'¦gVÆÂ'Vâ†—BF†÷6RöÆBW‡V7FF–öç3²F†—2d”äÂ6ö×ÆWFR'Vâ6Æ÷6W2ÆÂ&Vw&W76–öç2à¥&Wf–WvVBÆöFW"6Æ÷7W&S“Cƒ²Ö–ã“3ö6vRô×VÇF“ãög&÷¦VâVæ6†ævVBâ†÷7FVB&Vw&W76–öâÀ¥vW2æB÷7FFWÆ÷–ÖVçBÆ—fRÖf–ÆRfW&–f–6F–öâföÆÆ÷râFWf–6S“C‚Æ–v‡F–ærVæF–ærà  ¢22ã“C‚V&Æ–6F–öâfW&–f–VB(	B#2ö7Fö&W"##b„'&—6&æR ¥'VçF–ÖR#CS6f##&CC–3c“–C#ƒ#“c#FcFSCcÂW†7BFW7FVBG&VP¦fc“3v3–363#Sƒ&fSv63Fƒ6#V&6cfcC#“6#3&Â—2V&Æ—6†VBöâÖ–ââ6öææV7FV@¤v—BFFWÆöFVC#"W†7B&Æö'2æB7&VFVBF†R–FVçF–6ÂÆö6ÂG&VRâfWF6†VBÖ–à¦ÖF6†VBÂÆö6Â'&æ6‚Æ–væVB6ÆVæÇ’âÆö6ÂæöFS#BgVÆÂ&Vw&W76–öâæB†÷7FV@¤æöFS#"&Vw&W76–öã3““3C“3C“rö¦ö##3S#3“C#‚&÷F‚72¢£#sSFW7G2òf–ÇW&W2ð£6¶—VB¢£²6ö×ÆWFR†÷7FVBÆörF÷FÇ2fW&–f–VBƒ#C’ã—2’âvW33““3C“3s3r'V–Æ@£#3S#C#S’öFWÆ÷“#3S##3S#cB7V66VVFVBâÆÃ’6†V6¶VB÷7FFWÆ÷–ÖVçBf–ÆW0¢‡6†VÆÂ÷fW'6–öâÂ6ö×ÆWFR6†ævVB'VçF–ÖRôÆ"w&‚Â&V6÷fW'’Â&WF–æVC“CrÆ–W"Æ—7BÀ¦Ö–ã“3ö6vRô×VÇF“ãæBg&÷¦Vä&WFrÖ&¶W"’'—FRÖÖF6‚FW7FVB6÷W&6Râ&Wf–WvVB–ç3°¦æò&÷FV7FVBög&÷¦Vâ6†ævW2âF†—2&ööbWFFW2f÷W"6öçF–çV—G’f–ÆW2öæÇ’æB¶VW0§FW7FVB÷V&Æ—6†VB'VçF–ÖR'—FW2Væ6†ævVBâW6W#“Cu52—2&÷FV7FVBÂæ÷B–æfW'&VC“C‚à ¤'V–ÆC“C‚6ö×ÆWFRæB&VG’f÷"FWf–6RFW7F–æs¢6öÆ÷W"ÖöæÇ’–çFVBUb7V&R(i"FöæR(i ¥d”Ur7GVF–òÂ÷&&—Bf÷"6†FVBf6W2æB66VæR6†F÷w2âFBæ÷F†W"ÖW6‚÷7v—F6‚7F—fP§6VÆV7F–öã²–çFVB–æ7F—fRö&¦V7G2&VÖ–â66VæRÖÆ—Bâ&V÷VâW†—7F–ær–çFVBæ&÷†Æ"À¦6öæf—&ÒV&æ6RæB÷&–v–æÂ6öÆ÷W#²&V÷Vâ–çBf÷"6†ææVÂ‡VæÆ—B’ôÆ—BæB&WF–æV@£“CrÆ–W"Æ—7BÂVæFõ&VFòö6öçF–çVR–çF–ærâ7FæF&BÖFW&–Â÷6†F÷r–æ†W&—Fæ6Ræ@¦W†7B'—FW2fW&–f–VBWFöÖF–6ÆÇ“²&VÂuRö•B6†F÷röV&æ6R66WFæ6RVæF–ærà¤öÆFW"6Öö÷F‚ÖÖWFÂ&VfÆV7F–öâæBÇ†“#’vFW2&VÖ–â–æFWVæFVçC²vVæW&ÂFÆ0§Vçw&&VÖ–ç2gWGW&Rv÷&²…6²ÆÂ'&ævW2W†—7F–ær—6ÆæG2’âæòæWrÆ–v‡Bö''W6‚ð¦†—7F÷'’÷&ö¦V7BöW‡÷'BöÖöFVÆÆ–ær÷væW"÷"6÷W&6R—†VÂ÷66†VÖ6†ævW2à  ¢22ã“C’(	B&÷VæFVBf6RFÆ2Ug3²ã“C‚W6W"52(	B#2ö7Fö&W"##b„'&—6&æR ¥W6W"U$dT5B53“C‚&÷FV7G26öÖÖ—GFVB6öÆ÷W"ÖöæÇ’66VæRÆ–v‡F–ærõ7GVF–ò6†F÷w2À¦7F—fRö–æ7F—fRV&æ6RÂW†—7F–ær–çBöÆ–W'2ö†—7F÷'’÷W'6—7FVæ6RæB6†ææVÂôÆ—Bà¤æW‡BVF—FVBFVfW'&VBFÆ2&WVW7BâÖ–âSV&cCF#2†2&÷‚õÆæ"ô7–Æ–æFW"õ7†W&RõF÷'W2À¦FVç6—G’WVÆ—¦F–öâæB6²ÆÂÂ'WBæò¦ö–æVBÖ6†'BövVæW&ÂFÆ26öÇfW"â†FÆ0¦—2öæÇ’âVçW6VBF‡G&6RFWVæFVæ7’U$ÂâæòæWrW‡FW&æÂÆ–'&'’ö¶W&æVÂ–×÷'FVBà ¤ö&¦V7B(i"Ub(i"f6RFÆ2æ÷r7FvW2õ$”t”äÂ&÷‚F—&V7F–öæÂW"Öf6R&ö¦V7F–öâÀ¤õ$”t”äÂFVç6—G”Æ–÷WBv—F‚W‡Æ–6—BöæRÖ—6ÆæB×W"×öÇ–vöâÖVÖ&W'6†—ÂF†Vâõ$”t”äÀ§6¶VDÆ–÷WBâöæÇ’f–æÂ6÷&æW'26öÖÖ—BF‡&÷Vv‚6öÖÖ—DæF—fUUc¢öæRæF—fR6†V6·ö–çBÀ§&VBÖöæÇ’öÆB÷VW"–ÆöG2Âæò6÷W&6RvVöÖWG'’öf6RÖw&÷W6†ævW2â&WVB—2âW†7@¦æòÖ÷â÷&–v–æÂ&ö¦V7F–öç2õ6²öFVç6—G’ÖF‚æBFBWFöÖF–26†ö–6W2Væ6†ævVBà ¥F†—2—2d•%5B&÷VæFVBf6RFÆ3£(	3#‚Ææ"öÇ–vöç2Î(šC#²6÷&æW'2ÂöæR—6ÆæBW ¦f6RÂ6öÖÖöâfW&vRv÷&ÆBÖ&VFVç6—G’ÂW†—7F–ærã"F–ÆRÖ&v–ç2öv2öw&–B6¶–ærà¤—B7WG2WfW'’f6R&÷VæF'“²—BFöW2äõB¦ö–â6†'G2Â÷F–Ö—¦R6¶–ærÂWF†÷"6V×2À¦÷"–×ÆVÖVçB†FÆ2övVæW&Â7W'fVBVçw&âFöÖ–æçB×ÆæR&ö¦V7F–öâ&WF–ç2—G0¦W†—7F–æræwVÆ"F—7F÷'F–öã²WVÂFVç6—G’f—†W2fW&vR&VÂæ÷BævÆRF—7F÷'F–öâà¤–çfÆ–BöæöçÆæ"öFVvVæW&FRö÷fW"ÖÆ–Ö—BæB–×÷'FVB÷&ö6VGW&ÂöÖöF–f–W"F&vWG2&VgW6Rà¥F†—266÷R—2f—6–&ÆR&W6–FRF†R'WGFöâÂæ÷B†–FFVâ&V†–æBvVæW&–2Vçw&6Æ–Òà ¤ç’6öÆ÷W"÷&÷Vv†æW72öÖWFÆæW72–çB&VgW6W2$Tdõ$R7Fv–ærö†—7F÷'“²T’F—6&ÆW2f6P¦FÆ2v—F‚–çB&W6VçBæBö–çG2FòW‡Æ–6—BW†—7F–ær6ÆV"–çBò6ÆV"–çB°¥Ug2âæò6–ÆVçB–çBF—66&BÂ&W6×Æ–ær÷"7FÆR×&W6÷W&6R&V&–æBâW†—7F–ær7FÆRæF—fP¥Ug26â&R&WÆ6VBgFW"6ÆV&–ær–çBâVæFò&W7F÷&W2öÆBUg3²–çB&W6WB&VÖ–ç2§6W&FRVæFö&ÆRW6W"7F–öââæF—fR6öFV2Â÷&–v–æÂ–çBôÆ—Bõ6fT÷VâôäôÒôtÄ"÷væW'0¦†æFÆRVæ6†ævVBfW'6–öã6÷W&6S¦&÷†Æ"f6RÖ6÷&æW"–ÆöBâæò66†VÖ÷w&—FW"ö†—7F÷'¦÷"ÖöFVÆÆ–ær¶W&æVÂFFVC²æòWFöÖF–2FÆ2öâFBÂæòæWrUbö–çFW"õT’÷væW"à ¥6—‚æWr–çFVw&F–öç26÷fW"6öæ6fR÷F–ÇFVBöF—66öææV7FVB÷7V&F—f–FVBÆæ"f6W2À¦æöâÖ÷fW&Æ–ær6W&FR&÷VæG2öWVÂfW&vRFVç6—G’öW†7BvVöÖWG'’Ã#‚Öf6RÆ–Ö—Bð§66ÆR÷&VgW6Ç2Â&VÂ÷&–v–æÂVæFõ&VFòö–FV×÷FVæ6R÷VW"4õrÂW‡Æ–6—B–çB&VgW6Âð¦6ÆV"÷&W–çBÂ÷væW"ö†—7F÷'’FöÖ–2&VgW6ÂÂW†7BæF—fR&ö¦V7BôäôÒôtÄ"Ug2æ@¦7GVÂUbæVÂF&vWBö6öçFW‡B6ÆÆ&6²âæWr´&÷‚õ6²öFVç6—G’÷&W6WB÷&VÆV6S353°¦æòW†—7F–ær76W'F–öâ6†ævVBâgVÆÂ&Vw&W76–öâ÷V&Æ–6F–öâföÆÆ÷w3²•C“C’VæF–ærà ¥7W&f6RVF—Bf÷VæBÆ"6×ÆW2röÆC“BUb–×÷'B'6VçBg&öÒF†R&Wf–WvVB66†P¦Öæ–fW7BâFFVBF†B$TÂFWVæFVæ7’æB&Vg&W6†VB—G26×ÆW>(i$Æ.(i&–æFW‚æ6W7F÷'2À¦Æöæw6–FR÷&–v–æÂÖW6„†VÇF‚ôFBô×VÇF’Ub–×÷'Bw&ƒ“C’æB6†VÆÂ÷&V6÷fW'’¶W—2à¤öæÇ’UbÖW"²ÖW6„†VÇF‚gVæ7F–öæÆ—G’6†ævW3²÷F†W"6÷W&6R6†ævW2&R–ç2à¤Ö–ã“3ö6vRô×VÇF’×G&ç6f÷&Óãög&÷¦Vâó“C†Æ–v‡F–ær÷–çBöW‡÷'BÆv÷&—F†×2Væ6†ævVBà ¤DUd”4S“C“¢Æ–â7V&R÷"6ÖÆÂÆæ"Öf6VBW‡G'VFVBÖW6‚(i"ö&¦V7B(i"Ub(i"f6RFÆ0®(i"÷VâUbVF—F÷#¢6W&FRf6R—6ÆæG2–ç6–FRF–ÆRâVæFõ&VFò&W7F÷&W2÷&VÆ–W2Ug3°¥–çBôFöæR&WF–ç266WFVC“C‚Æ—B66VæRâW†—7F–ær–çC¢W‡Æ–6—FÇ’6ÆV"–çBf—'7BÀ§F†Vâf6RFÆ2÷&W–çBâ6fT÷VâæB÷F–öæÂäôÔB&WF–âæWrUg2÷–çBã#‚Ææ ¦f6W2Ö†–×VÓ²æöçÆæ"f6W2&WV—&R÷F†W"&ö¦V7F–öâ÷"gWGW&R6†'BVçw&à¤æW‡C£“C’FWf–6RfVVF&6²ÂF†Vâ66÷VBFÆ2ö6†'B–×&÷fVÖVçG2÷"VFvR6VÒWF†÷&–æp¦VF—BâvVæW&Â¦ö–æVBÖ6†'BVçw&&VÖ–ç2VWVVC²æòWFöÖF–2¶W&æVÂ&WÆ6VÖVçBà  ¢ã“C’f–æÂÆö6ÂæöFS#Bã’ãgVÆÂ&Vw&W76–öã¢¢£"ÃsSb52òd”Âò6¶—VB¢ ¢ƒãw2’Â&WF–æ–ærWfW'’÷&–v–æÃ#sS6†V6²ÇW26—‚æWrf6RFÆ2–çFVw&F–öç2à¤æWr¶æV&'’&÷‚õ6²öFVç6—G’÷&W6WB÷&VÆV6S352âæòW†—7F–ær&V†f–÷"76W'F–öâ6†ævV@¦÷"&VÖ÷fVBâ&Wf–WvVBUbôFBô×VÇF’ôÆ"&WfW'6R–ç3“C’–æ6ÇVF–æræWvÇ’&V6÷&FVBÆ §6×ÆR–×÷'C²Ö–ã“3ö6vRô×VÇF’×G&ç6f÷&Óãög&÷¦Vâó“C†Æ–v‡F–ærVæ6†ævVBâ†÷7FV@§&Vw&W76–öâõvW2öÆ—fRV&Æ–6F–öâ&ööbföÆÆ÷w2âDUd”4S“C’&VÖ–ç2VæF–ærà  ¢22ã“C’V&Æ–6F–öâfW&–f–VB(	B#2ö7Fö&W"##b„'&—6&æR ¥'VçF–ÖR3C&cV#F6##ƒ##CcvC#VF3“c3#ƒC3CC“&ÂW†7BFW7FVBG&VP¦SvfCCcCS63S3c63csc“f#F3fS#fFSS3†#Â—2V&Æ—6†VBöâÖ–ââ6öææV7FV@¤v—BFFWÆöFVCRW†7B&Æö'2÷G&VS²fWF6†VBÖ–âÖF6†VBÂÆö6Â'&æ6‚Æ–væV@¦6ÆVæÇ’âÆö6ÂæöFS#BæB†÷7FVBæöFS#"&Vw&W76–öã3““3sc#SsRö¦ö##3cƒs#“"&÷F€§72¢£#sSbFW7G2òf–ÇW&W2ò6¶—VB¢£²6ö×ÆWFR†÷7FVBÆörF÷FÇ2fW&–f–V@¢ƒCRã2’âvW33““3sc3Sb'V–ÆC#3cƒsSS2öFWÆ÷“#3ccƒ#"7V66VVFVBâÆÃ# ¦6†V6¶VB÷7FFWÆ÷–ÖVçB6†VÆÂ÷fW'6–öâÂ6ö×ÆWFRUbôFBô×VÇF’ôÆ"w&‚Â&V6÷fW'’À§&WF–æVBUbv÷&·76Rö–ç7V7F÷"ó“C‚Æ—B÷væW'2öÖ–âö6vRô×VÇF’×G&ç6f÷&Óãó“CrÆ–W ¦Æ—7Bög&÷¦Vä&WFrÖ&¶W"'—FRÖÖF6‚FW7FVB6÷W&6RâæòW†—7F–ær76W'F–öç2&VÖ÷fVB÷ ¦6†ævVBâF†—2&ööbWFFW2f÷W"6öçF–çV—G’f–ÆW2öæÇ’Â&WF–æ–ærFW7FVB'VçF–ÖRà ¤'V–ÆC“C’6ö×ÆWFRæB&VG’f÷"FWf–6RFW7F–æs¢Æ–â7V&R÷"6ÖÆÂÆæ"Öf6V@¦W‡G'VFVBÖW6‚(i"ö&¦V7B(i"Ub(i"f6RFÆ2(i"÷VâUbVF—F÷"â6W&FRf6R—6ÆæG2À¥VæFõ&VFòÂ–çBôFöæR&WF–ç266WFVC“C‚Æ–v‡F–ærÂ6fT÷VâæB÷F–öæÂäôÔBà¤W†—7F–ær–çB×W7B&RW‡Æ–6—FÇ’6ÆV&VBf—'7C²7F–öâæWfW"F—66&G2—Bâf6RFÆ0¦—2öæR—6ÆæBW"Ææ"f6RÂWFó#‚f6W2ó#²6÷&æW'3²—B—2æ÷B¦ö–æVBÖ6†'B÷ ¦vVæW&Â7W'fVBVçw&âW†—7F–ær&÷‚õÆæ"ô7–Æ–æFW"õ7†W&RõF÷'W2õ6²öWFòÔFB&WF–à¦÷&–v–æÂÆv÷&—F†×2âDUd”4S“C’VæF–æs²W6W#“C‚U$dT5B52&÷FV7FVBâæW‡B7GVÀ£“C’fVVF&6²ÂF†Vâ66÷VBFÆ2ö6†'B÷6VÒF—&V7F–öââÇ†“#’÷&VfÆV7F–öâ–æFWVæFVçBà  ¢22ã“S(	Bf6RFÆ2v'VBÖf6R&W—#²ã“C’FWf–6Rd”Â(	B#2ö7Fö&W"##b„'&—6&æR ¥W6W#“C’&W÷'G2F†RWVÆ—¦RÖFVç6—G’Ææ"öæöâÖFVvVæW&FRW'&÷"gFW"÷&F–æ'¦W‡G'W6–öç2÷66ÆW2â67&VVç6†÷B6öæf—&×3“C’æC#GfW'G2ó#f6W2Âf"&VÆ÷s#‚Öf6R6à¤W†7B7WÆ–VBW‡G'VFRæB66ÆRæö&¢&W&öGV6W2&V¦V7F–öã¢f—'7Bf÷W"öÇ–vöç2&P¦Ö–ÆFÇ’v'VB‡ö–çB×Fò×ÆæRFWf–F–öç>(˜‚ã(	2ã2Æö6ÂVæ—G2’âF†—2—3“C’w2FÆ0§Ææ&—G’&W7G&–7F–öâÂæ÷BWf–FVæ6RöbFÖvVBÖöFVÆÆ–ærF÷öÆöw’÷"7FÆR'V–ÆBà¤ô$¢W‡÷'FW"†VFW#ƒ“"—2F†R&WF–æVB–çFW&æÂw&—FW"7F×Âæ÷B6†VÆÂ&VÆV6Rà¤W†7B–çWB&WF–æVB2FW7G2öf—‡GW&W2öW‡G'VFRÖæB×66ÆRÓ“Sæö&£²4„#S`£ss†CS#Sc3“&fSƒc#FCƒƒCcc36#FSvVCƒscvVFSC3†3“#s&#CfBÂ–FVçF–6ÂFòWÆöBà ¤÷&–v–æÂf6RFÆ2f—'7BG&–W2U„5C“C’Ææ"F‚âöæÇ’—G2Ææ"ö&V&VgW6À§&WVW7G2F†Rõ$”t”äÂ'V–ÆEUe&Wf–WtvVöÖWG'’‡¶f6T–æF–6W3§G'VWÒ’÷væW"Âf÷'v&FV@¦W‡Æ–6—FÇ’'’ÖW6„†VÇF‚Ub6ÆÆ&6²â÷&–v–æÂG&–ævÆ^(i&f6R÷fW'FW‚ÖWFFF&V6öÖW0§G&ç6–VçBÆö6ÂÖ6÷&æW"Æ—7G3²æòG&–æwVÆF÷"ÂæWrF¦6Væ7’÷"ÖW6‚×WFF–öââ&WV—&P¦6ö×ÆWFRî(‰#"G&–ævÆW2W"öÇ–vöâÂfÆ–BVæ—VR6÷&æW"÷væW'6†—Âf–æ—FRæöç¦W&òU`§G&–ævÆR&V2æB6öç6—7FVçBW"Öf6RUb÷&–VçFF–öââföÆFVBö6öÆÆ6VB6æF–FFW0§&VgW6Rv—F‚f6RçVÖ&W#²'6VçBöf–ÆVB&Wf–Wr&VgW6W2âFV×÷&'’vVöÖWG'’F—7÷6W0¦–âf–æÆÇ’öâ7V66W72öW'&÷"â6ÖR÷&–v–æÂFVç6—G’ÖF‚÷F–öæÆÇ’7V×2ÖV7W&V@¦æ÷&ÖÆ—¦VB4BG&–ævÆR&V3²7FæFÆöæRWVÆ—¦RFVç6—G’$UD”å27G&–7BÆæ"'VÆRà¤÷&–v–æÂÆæ"÷WGWG2öW‡G&VÖR66ÆW2&VÖ–âW†7C²æò&Ææ¶WBFöÆW&æ6R&VÆ†F–öâà ¤f–æÂFÆ27F–ÆÂW6W2÷&–v–æÂ6²ö6öÖÖ—BÂöæR—6ÆæBW"6÷W&6Rf6RæBöæR66VæP¦6†V6·ö–çC²6÷W&6RVG2öævöç2÷÷6—F–öç2öw&÷W2æBöÆB÷VW"&W6÷W&6W2&VÖ–â–çF7Bà¤æòW&ÖæVçBG&–æwVÆF–öâ÷"66†VÖöW‡÷'Bö†—7F÷'’ö''W6‚öÆ–v‡F–ær6†ævW2â÷&–v–æÀ£#†f6W2ó#¶6÷&æW"÷ööÂö†—7F÷'’ö6ÆV"×–çBwV&G2&WF–æVBâT’æòÆöævW"6ÆÇ2FÆ0§Ææ"ÖöæÇ“²6—27W'fVBf6W2Ö’7G&WF6‚âF†—2—27F–ÆÂ&ö¦V7FVBW"Öf6RFÆ2À¦æ÷B¦ö–æVBÖ6†'BövVæW&ÂUb÷F–Ö—¦F–öâ÷"wV&çFVRWfW'’föÆFVBf6RÖ2à ¤f—fRæWr–çFVw&F–öç2W†W&6—6RW†7BW6W"f–ÆRv—Fƒ#6W&FVBWVÂÖFVç6—G’—6ÆæG2À§Væ6†ævVC#BfW'F–6W2óGVG2ófævöç2ÂFV×÷&'’F—7÷6ÂæBW†7B&WVC²÷&F–æ'¦W‡G'W6–öâ¶†—2×66ÆR&W&öGV6W"Bãóó²÷&–v–æÂVæFõ&VFòõ–çBöW†7B6fT÷Vâð¦7GVÂäôÒæBtÄ"Ub·–çB6Æ÷G3²Væf–Æ&ÆRöÖÆf÷&ÖVBöföÆFVB&Wf–Wr÷&VgW6VB†—7F÷'’ð§–çBFöÖ–6—G“²7GVÂæVÂf÷'v&F–ær÷F&vWBwV&G2â÷&–v–æÃ“C’æVvF—fRVæf–Æ&ÆP§v'VB×&Wf–WrFW7B&WF–æVC²—G2T’v÷&F–ærW‡V7FF–öâföÆÆ÷w2–çFVæFVB66÷R6†ævRà¤÷&–v–æÃƒ“R7FæFÆöæRæöçÆæ"&VgW6Â7F—27F—fRâfö7W6VBæWró“C’öFVç6—G’õ6²ð§&VÆV6S#e53²gVÆÂfÆ–FF–öâ÷V&Æ–6F–öâföÆÆ÷w2âæF—fRFW7B&W&W2F‡&÷Vv‚5ETÀ§w&—FW"w2fW'6–öæVB–çBÖW‡÷'B÷væW"†ÖöGVÆRÖÆö6ÂvV´Ö2“²6æöæ–6Â¥4ôâ†æFÆW0¦7&÷72×&VÆÒUb&÷F÷G—W2v—F†÷WBvV¶Væ–ærW†7BfÇVW2â&—FÖ6†–Ò—2G&ç7÷'@¦öæÇ’Âæ÷BuRôæöÖBf—7VÂ&ööbâÖ–âö6vRô×VÇF’×G&ç6f÷&Òög&÷¦Vâ'—FW2Væ6†ævVBà ¤DUd”4S“S¢4ÔR7WÆ–VBÖöFVÂ(i"ö&¦V7B(i"Ub(i"f6RFÆ2(i"÷VâUbVF—F÷"6†÷VÆ@¦ÖÆÃ#f6W2âVæFõ&VFò&W7F÷&W2÷&VÆ–W2÷&–v–æÂVG2õUg3²–çBôFöæR&VÖ–ç0§66VæRÖÆ—C²6fT÷VâæB÷F–öæÂäôÔB6æ—G’â6ÆV"W†—7F–ær–çBW‡Æ–6—FÇ’f—'7Bà¤W†7BWÆöFVBÖW6‚æ÷rÖ2–âWFöÖFVB&VÂÖ÷væW"Fƒ²7GVÂ•C“SvFRVæF–ærÀ¦æ÷B–æfW'&VB52ã“C‚66VæRÖÆ–v‡F–ær66WFæ6R&VÖ–ç2&÷FV7FVC³“C’v'VBf–ÇW&P§&V6÷&FVBâæW‡B7GVÃ“S&WFW7C²FöâwB6²W6W"FòW&ÖæVçFÇ’G&–æwVÆFRfÆ–B&÷€¦ÖöFVÂ2v÷&¶&÷VæB÷"FB6V6öæBÖöFVÆÆ–ærõUb¶W&æVÂâ÷F†W"6†'B÷6VÒv÷&²VWVVBà  ¢ã“Sf–æÂÆö6ÂæöFS#Bã’ãgVÆÂ&Vw&W76–öã¢¢£"Ãsc52òd”Âò6¶—VB¢ ¢ƒã—2’Â&WF–æ–ær÷&–v–æÃ#sSbÇW2f—fRæWrW†7BÖf–ÆR÷v'VBÖf6R–çFVw&F–öç2à¤fö7W6VBæWró“C’öFVç6—G’õ6²÷&VÆV6S#e52âöÆC“C’Væf–Æ&ÆR×&Wf–WröFVvVæW&7§&VgW6Ç2&VÖ–ã²—G2T’FW‡BW‡V7FF–öâ&VfÆV7G2æWr66÷Râ7FæFÆöæRFVç6—G“ƒ“P§Ææ&—G’6öçG&7BVæ6†ævVBâ7WÆ–VBô$¢f—‡GW&R'—FRÖ–FVçF–6Ã²æò6÷W&6RWÆö@¦ÖöF–f–VBâ&Wf–WvVBgVÆÂUbôFBô×VÇF’ôÆ"÷&V6÷fW'““Sw&‚ÂÖ–âö6vRô×VÇF’×G&ç6f÷&Òð¦g&÷¦Vâö66WFVC“C†Æ–v‡F–ærVæ6†ævVBâ†÷7FVBõvW2öÆ—fR&ööbföÆÆ÷w3²FWf–6S“S ¥4ÔRÖÖöFVÂFÆ2÷–çBõVæFõ&VFòõ6fT÷Vâ66WFæ6RVæF–ærÂæó“C’52–æfW'&VBà  ¢22ã“SV&Æ–6F–öâfW&–f–VB(	B#2ö7Fö&W"##b„'&—6&æR ¥'VçF–ÖRF3f3cSSs#vcƒc“6scCƒvVFSC#VS&&CÂW†7BFW7FVBG&VP¦Cs3sƒs“CsSV36ccCv#C&C&c“6CFScVVFÂ—2V&Æ—6†VBöâÖ–ââ6öææV7FV@¤v—BFFWÆöFVCrW†7B&Æö'2÷G&VS²fWF6†VBÖ–âÖF6†VBæBÆö6Â'&æ6‚Æ–væV@¦6ÆVæÇ’âÆö6ÂæöFS#BæB†÷7FVBæöFS#"&Vw&W76–öã3““C#sS“cSbö¦ö##3ss“Sc“ƒ’&÷F€§72¢£#scFW7G2òf–ÇW&W2ò6¶—VB¢£²6ö×ÆWFR†÷7FVBÆörF÷FÇ2fW&–f–V@¢ƒ#Crã'2’âvW33““C#sS“CSb'V–ÆC#3ss“c"öFWÆ÷“#3sƒSƒƒƒR7V66VVFVBâÆÃ# ¦6†V6¶VB÷7FFWÆ÷–ÖVçB6†VÆÂ÷fW'6–öâÂ6ö×ÆWFRUbôFBô×VÇF’ôÆ"w&‚Â&V6÷fW'’À§&WF–æVBUbv÷&·76Rö–ç7V7F÷"ó“C‚Æ—B÷væW'2öÖ–âö6vRô×VÇF’×G&ç6f÷&Óãó“CrÆ–W ¦Æ—7Bög&÷¦Vä&WFrÖ&¶W"'—FRÖÖF6‚FW7FVB6÷W&6Râ÷&–v–æÃƒ“RÆæ"ÖFVç6—G’wV&@§&WF–æVC³“C’T’v÷&F–ærWFFVBf÷"–çFVæFVBv'VBÖf6R7W÷'BâF†—2&ööb6†ævW0¦f÷W"6öçF–çV—G’f–ÆW2öæÇ’Â&WF–æ–ærFW7FVB'VçF–ÖRâ÷&–v–æÂ7WÆ–VBô$¢Væ6†ævVBà ¤'V–ÆC“S6ö×ÆWFRæB&VG“¢4ÔRW‡G'W6–öâ÷66ÆRÖW6‚(i"ö&¦V7B(i"Ub(i"f6RFÆ2(i ¤÷VâUbVF—F÷"6†÷VÆBÖÆÃ#f6W2â÷&–v–æÂVG2öævöç2&VÖ–ã²VæFõ&VFò&W7F÷&W0¥Ug2Â–çBôFöæR&WF–ç3“C‚Æ–v‡F–ærÂ6fT÷VâæB÷F–öæÂäôÔB6æ—G’âW†7B7WÆ–V@¦f–ÆRæ÷r76W2&VÂÖ÷væW"FÆ2÷–çBö†—7F÷'’÷G&ç7÷'B–çFVw&F–öç2Â'WB•C“S ¦V&æ6R÷W&f÷&Öæ6R66WFæ6R&VÖ–ç2VæF–ærâ6ÆV"W†—7F–ær–çBW‡Æ–6—FÇ¦f—'7Bâ6÷W&6S“C’f–ÇW&R&V6÷&FVBÂæ÷B66WFVB253²W6W#“C‚U$dT5B52&÷FV7FVBà¤æW‡B7GVÃ“SfVVF&6²&Vf÷&RVç&VÆFVBfVGW&W3²æòW&ÖæVçBG&–æwVÆF–öâv÷&¶&÷VæBà  ¢22ã“S(	B÷F–öæÂ6÷Ææ"FÆ3²ã“SW6W"52&÷FV7FVB(	B#2ö7Fö&W"##` ¥W6W"&WÆ–W252öæW‡F'V–ÆBgFW#“S¢&÷FV7BF†R7WÆ–VBW‡G'W6–öâ÷66ÆRf6RFÆ0§&W—"æBW†—7F–æs“C‚Æ—B×–çB66WFæ6Rã“C’÷&–v–æÂv'VBf–ÇW&R7F—2&V6÷&FVBà¤VF—C¢W†—7F–ær&÷‚&ö¦V7F–öâÇ&VG’v—fW2ÖF6†–ærUg2öâF¦6VçB6ÖRÖF—&V7F–öà¦f6W3²÷&–v–æÂ–×÷'FVB×WbÖ–ç7V7F–öâ÷vç2Öæ–föÆBF¦6Væ7’÷Væ–öã²FVç6—G’õ6²æ@¦æF—fRUb6öÖÖ—Bö†—7F÷'’Ç&VG’W†—7Bâæò÷F†W"Æ—fR6†'BÖ¦ö–æ–ærFÆ2f÷VæC²F†P§F‡G&6W"†FÆ2FWVæFVæ7’—2Vç&VÆFVBâFB÷F–öæÂö&¦V7B(i"Ub(i"6÷Ææ"FÆ2à ¤&÷F‚ÖöFW26†&R÷&–v–æÂ&—fFR&÷‚(i"FVç6—G’(i"w&–B6²(i"ôäR6öÖÖ—B—VÆ–æRà¤f6RFÆ2&WF–ç2öæR—6ÆæBW"f6RæBW†7C“S÷WGWG2â6÷Ææ"ÖöFRW6W2f—†V@§6VVBÆæW2†æ÷&ÖÆ—¦VBf–æ—FR6ö÷&F–æFW2Â÷&–VçFVBæ÷&ÖÂ÷Ææ&—G’FöÆW&æ6SRÓÀ¦æò67V×VÆFVBæV–v†&÷W"G&–gB’ÂÆVf–ærv'VBf6W2—6öÆFVBâ÷&–v–æÂ–ç7V7F÷ ¦vWG2÷BÖ–â6ä¦ö–äf6W2&VF–6FS²FVfVÇB&V†f–÷"Væ6†ævVBâ¦ö–âöæÇ’÷÷6—FP§6†&VBVFvRF—&V7F–öç2ÂÖF6†–ær&÷‚UbVæGö–çG2Â6ÖR6VVBÆæRæBW†7FÇ’Gvð¦Öæ–föÆB÷væW'2âF—66öææV7FVBö6ö–æ6–FVçBfW'FW‚÷6—F–öç2æBÖ&–wV÷W2VFvW2æWfW ¦¦ö–ââæòÖW6‚VF—G2ÂæWrG&–æwVÆF÷"öF¦6Væ7’¶W&æVÂÂW'6—7FVçB6†'BÖWFFF÷ ¥Ub66†VÖâ÷&–v–æÃ“S&Wf–WrfÆÆ&6²†æFÆW2v'VB&V²7FæFÆöæRFVç6—G“ƒ“P§7F–ÆÂÆæ"ã#‚Öf6Ró#²Ö6÷&æW"Æ–Ö—BæBW‡Æ–6—B6ÆV"ÖÆÂ×–çB&W&WV—6—FR7F’à¥F†—2—26öç6W'fF—fR6÷Ææ"w&÷W–ærÂæ÷B&&—G&'’Vçw&÷"÷F–ÖÂ6¶–æs°¦–çfÆ–B6VÆbÖ÷fW&Æ–ærvVöÖWG'’æBvVæW&Â7W'fVB7G&WF6‚&Ræ÷B6öÇfVBà ¥6—‚æWrFW7G3“S6÷fW"6öææV7FVBF6‚÷6VÒVæGö–çG2ö—6ÆæBVF—F–æs²&VæG2÷v'2ð§6ÖR×v–æF–ærGWÆ–6FW2ö÷÷6—FRf6W2öF—66öææV7FVB÷6—F–öç2öæöæÖæ–föÆB&÷VæF&–W3°¦W†7B7WÆ–VC#Öf6Rô$¢ƒB—6ÆæG2fW'7W2f6RFÆ3#’Â66ÆR÷G&ç6ÆF–öâæBWVÂfW&vR—6ÆæBFVç6—G’÷6W&FP§6¶VB&÷VæG3²wV&G2÷&VgW6VB†—7F÷'“²7GVÂVæFõ&VFò÷–çB÷&ö¦V7BôtÄ"÷væW"Fƒ°¦7GVÂæVÂf÷'v&F–ærö7W'&VçB×F&vWBö†—7F÷'’wV&G2âfö7W6VBæWró“C’ó“SöFVç6—G’ð¥6²÷&VÆV6S3%52âgVÆÂÆö6Âö†÷7FVBæBV&Æ–6F–öâWf–FVæ6RföÆÆ÷w2&VÆ÷rà ¥&Wf–WvVB66†R6Æ÷7W&R&Vg&W6†W2Ub–ç7V7F÷"öVF—B÷æVÂÂUbv÷&·76RÂ–çB–×÷'@¦æ6W7F÷'2æBUbôFBô×VÇF’ôÆ"ÆöFW'3²gVæ7F–öæÂ6†ævW2ôäÅ’–ç7V7F÷"÷BÖ–âÀ¦FÆ2÷væW"æBW†—7F–æræVÂâÖ–âö6vRô×VÇF’×G&ç6f÷&Óãög&÷¦Vâ'—FW2Væ6†ævVBà¤FWf–6S“S&VÖ–ç2VæF–æs¢6ÖRVç–çFVB7WÆ–VBÖW6‚(i"6÷Ææ"FÆ2(i"UbVF—F÷#°¦6ö×&Rf6RFÆ2w3#—6ÆæG3²VæFõ&VFòÂ–çB7&÷72fÆBF6‚æB6fT÷Vâà¤æW‡B7Böã“SfVVF&6³²Ç†“#’öÖWFÂ×&VfÆV7F–öâvFW2&VÖ–â–æFWVæFVçBâFòæ÷@¦–æfW"vVæW&Â7W'fVBVçw&Â&&—G&'’÷fW&Æ&W—"÷"÷F–öæÂäôÔBFWf–6R52à  ¢ã“SgVÆÂÆö6ÂæöFS#B&Vw&W76–öã¢¢£#scr52òd”Âò6¶—VB¢¢ƒ“’ã2’À§&WF–æ–ærÆÃ#scÇW26—‚6÷Ææ"–çFVw&F–öç2âfö7W6VC3%52â&Wf–WvVC’Öf–ÆP§'VçF–ÖRÆöFW"6Æ÷7W&RÂF‡&VRgVæ7F–öæÂ÷væW'2öæÇ“²&WF–æVBÖ–âö6vRô×VÇF“ãð¦g&÷¦Vâ'—FW2æB&V6÷fW'’÷væW'2Væ6†ævVBâ6÷W&6S“C’ó“Sf6RFÆ2÷WGWG2æ@§7FæFÆöæSƒ“RFVç6—G’wV&G27F’&÷FV7FVBâ†÷7FVBõvW2öÆ—fR&ööbföÆÆ÷w3°¤DUd”4S“S6ö×&—6öâ÷–çBõVæFõ&VFòõ6fT÷Vâ&VÖ–ç2VæF–ærà  ¢22ã“SV&Æ–6F–öâfW&–f–VB(	B#2ö7Fö&W"##` ¥'VçF–ÖRc6cF3c“ƒcsSfCcVF3ccƒ&#†3sfc3cƒ3FC3VVÂW†7BFW7FVBG&VP¦f3CSfcC3vC–F6##vcCc&6FS–#36FÂ—2V&Æ—6†VBöâÖ–ââÆÃ#bWÆöFV@¦&Æö'2æBv—BFFG&VRÖF6†VBÆö6Â†6†W3²fWF6†VBÖ–âÖF6†VBæB6†V6¶÷WB6ÆVâà¤Æö6ÂæöFS#BgVÆÂ&Vw&W76–öã#scu52ód”Âó6¶—VBƒ“’ã2“²†÷7FVBæöFS#"'Và£3““S#““ƒ#bö¦ö##CƒCƒƒr6ö×ÆWFRÆörfW&–f–W26ÖS#scróóƒ“‚ã2’à¥vW33““S#““Cc"'V–ÆC#CƒS2öFWÆ÷“#C““cSR7V66VVFVBâÆÃ#’÷7FFWÆ÷–ÖVç@§6†VÆÂ÷fW'6–öâÂ6ö×ÆWFR&Wf–WvVBUbôFBô×VÇF’ôÆ"÷–çBÆöFW"w&‚Â&V6÷fW'’À§&WF–æVC“C†Æ—BöÖ–âö6vRô×VÇF’×G&ç6f÷&Óãó“CvÆ–W'2ög&÷¦Vä&WFrÖ&¶W"'—FRÖÖF6‚à¥&ööb6öÖÖ—BWFFW2f÷W"6öçF–çV—G’f–ÆW2öæÇ“²FW7FVB'VçF–ÖR&WF–æVBà ¥W6W#“S52—2&V6÷&FVB÷&÷FV7FVBâ'V–ÆC“S6ö×ÆWFR÷&VG’f÷"FWf–6RFW7F–æs §6ÖRVç–çFVBW‡G'W6–öâ÷66ÆRÖW6‚(i"ö&¦V7B(i"Ub(i"6÷Ææ"FÆ2(i"÷VâUbVF—F÷"à¤W†7Bf—‡GW&RWFöÖF–6ÆÇ’v—fW3B—6ÆæG2fW'7W2f6RFÆ3#Âf÷W"v'VBf6W0§7F’—6öÆFVBæBÆÂ÷&–v–æÃ#BfW'F–6W2ó#VG2öævöç2Væ6†ævVBâ6ö×&R6†'G2À¥VæFõ&VFòÂ–çB7&÷726öææV7FVBfÆBf6W2æB6fT÷Vââ6ÆV"W†—7F–ær–ç@¦W‡Æ–6—FÇ’f—'7BâDUd”4S“SV&æ6R÷W&f÷&Öæ6R&VÖ–ç2VæF–ærâæW‡BföÆÆ÷s“S¦fVVF&6²&Vf÷&R'&öFW"Vçw&÷6VÒFööÆ–æs²¶VW÷&–v–æÂ÷væW'2æB&÷FV7FV@¦ÖöFVÆÆ–æröæf–vF–öâöÆ–v‡F–ærög&÷¦Vâ&V†f–÷"âæòvVæW&Â7W'fVBVçw&6Æ–Òà  ¢22ã“S"(	BUbVF—F÷"Æ–W"öVçG'’†&FVæ–æs²ã“SFÆ252&÷FV7FVB(	B#2ö7Fö&W"##` ¥W6W#“S52öæW‡F'V–ÆBÂv—F‚6W&FR–çFW&Ö—GFVçB•B&òT’ÖÆ÷72&W÷'Bâ7WÆ–V@§67&VVç6†÷B6öæf—&×3“S¢v÷&·76R&–v‡B6V7F–öâ–æ6ÇVF–ær&6²Fó4BæBÖ–âFööÆ& ¦'WGFöç2Ö—76–ærÂv†–ÆRUbF–ÆR&VÖ–ç2G&vââFòäõBG&VBFÆ266WFæ6R2T’ÖÆ÷70¦66WFæ6R÷"F—6Ö—72—B&V6W6RæöFRFW7G272â÷&–v–æÃ“#BFööÆ&"f—‚v266WFV@¦'WBF†—2—2&V7W'&Væ6Rv—F‚67&VVç6†÷BWf–FVæ6S²&÷FV7B—G2†VFW"Ö&÷fR×f–Ww÷'@¦–çFVçBâW†7B–çFW&Ö—GFVçB•BõvV$¶—B6ö×÷6—F÷"f–ÇW&R—2äõB&W&öGV6VB†W&Rà ¤VF—C¢æò7F–öâ–çFVçF–öæÆÇ’†–FW2Ö–âFööÆ&#²v÷&·76Rv2Æ&vR'6öÇWFP¦6çf2÷fW&Æ’–ç6–FRvV$tÂf–Ww÷'BÆöæw6–FR&6¶G&÷öf–ÇFW"fÆöF–æræVÇ2à¤öæÇ’õ$”t”äÂWb×v÷&·76R6†ævW3¢Ö÷VçB—G2öæRW†—7F–ær6V7F–öâ&W6–FRf–Ww÷'@§VæFW"6ÂW6Rf—†VBf–Ww÷'B–ç6WG2æB†VFW"†V–v‡Bf&–&ÆRv—F‚£’&VÆ÷r†VFW#°¦7F—fRÖöæÇ’f–Ww÷'B—6öÆF–öâ&WF–æVBf–WFFVB6–&Æ–ærÖ†÷7B6VÆV7F÷"†öÆBæW7FV@¦fÆÆ&6²&WF–æVBf÷"VÖ&VFFVB÷FW7B†÷7B’â—6öÆFR÷–çBÖ6öçF–â6çf2&V²¶VW—G0¦÷&–v–æÂ6çf2Â6öçG&öÇ2ÂÆ—7FVæW'2æBÖW6„†VÇF‚6öçFW‡B÷6W76–öâö†—7F÷'’6ÆÆ&6·2à¤&6²Fó4BÖ÷fW2&W6–FRF—FÆS²w&–ær6öçG&öÇ2Fòæ÷B6‡&–æ²÷WBöb6†÷'Bf–Ww÷'BÀ§v÷&·76R67&öÆÇ2v†VâæVVFVBâæòf÷&6RÔuRG&ç6f÷&×2Â¢Ö–æFW‚W66ÆF–öâÂGWÆ–6FP¥T’ÂÖöFVÆÆ–ærõUb÷–çBö†—7F÷'’öæf–vF–öâ¶W&æVÇ2÷"6†ævW2Fò÷&–v–æÂ†VFW"÷væW"à ¤÷VâÖV7W&W2–ÖÖVF–FVÇ’æBv–âöæ6RöâæW‡Bæ–ÖF–öâg&ÖRgFW"ÆVæ6‚†–FW0§6÷W&6RæVÂâÆ—7FVâFòf—7VÅf–Ww÷'B&W6—¦R2vVÆÂ2v–æF÷rõ&W6—¦Tö'6W'fW"à¤6Æ÷6R6æ6VÇ2VWVVBg&ÖRæB&VÖ÷fW2&÷F‚&W6—¦RÆ—7FVæW'3²W†—7F–ær6GW&RövW7GW&Rð¦–ÖvR6æ6VÆÆF–öâVæ6†ævVBâF‡&VRæWr&öGV7F–öâÖ÷væW"FW7G3¢&VÂö†VFW"ð§f–Ww÷'B6–&Æ–æw2æBGvVÇfR÷Vâö6Æ÷6R7–6ÆW2W6–ær6ÖRæöFW2ö7F–öç3²FVfW'&VBæ@§f—7VÂ&W6—¦R—†VÂ6—¦–ærö†—7F÷'’æWWG&Æ—G’öÆFRg&ÖRö6ÆVçW²552†VFW"÷&FW&–ærÀ¦6çf26öçF–æÖVçBÂ&÷VæFVB÷fW&fÆ÷ræB6–ævÆRÆVgB×6–FRW†—Bâ÷&–v–æÂFW7G2&WF–æVBà¤6Æ÷VB'&÷w6W#“SÖ–âf–Ç2vV$tÂ6öçFW‡B7&VF–öâÂ6òæògVÆÂ&VæFW&VB÷"6f&’ö•@§&W&öGV7F–öâ6Æ–ÖVBâ&W—"FG&W76W2Æ–W"F÷öÆöw’æBVçG'’6—¦–æs²•B&WFW7B—0§&WV—&VB&Vf÷&R66WF–ær–çFW&Ö—GFVçBF—6V&æ6R2f—†VBà ¥&Wf–WvVB66†R6Æ÷7W&RôäÅ’v÷&·76R(i"ÖW6„†VÇF‚(i"6†VÆÂÇW2&V6÷fW'’ÆöFW"¶W—3°¦–çFW&æÂfW'6–öâ7F×2æBVç&VÆFVC“SUb÷–çBÆöFW"–ç2&VÖ–ââFÆ3“Só“SÀ§–çC“C‚ÂÖ–ã“3Â6vS“3Â×VÇF’×G&ç6f÷&ÓãæBg&÷¦Vâ6æ6†÷G2Væ6†ævVBà¤DUd”4S“S#¢&WVFVFÇ’÷Vâô&6²Fó4Böâ•E&òÂfW&–g’gVÆÂVF—F÷"æBÖ–âF÷×&–v‡@¦'WGFöç2õd”Us²â÷–æ6‚õVæ6–Â—6ÆæBVF—BæBVæFõ&VFó²&WGW&âFó4BF†Vâ&V÷Vâà¤æW‡BföÆÆ÷s“S"T’fVVF&6²&Vf÷&RgW'F†W"Vçw&v÷&³²&V6÷&BW†7B&WVBG&–vvW"–`¦Æ÷72W'6—7G2â÷F†W"Ç†“#’öÖWFÂ&VfÆV7F–öâvFW2&VÖ–â–æFWVæFVçBà  ¢ã“S"Æö6ÂæöFS#BgVÆÂ&Vw&W76–öã¢¢£#ss52òd”Âò6¶—VB¢¢ƒ“rãW2’À¦ÆÃ#scr&WF–æVBÇW2F‡&VRv÷&·76RÆ–W"öVçG'’Æ–fV7–6ÆRFW7G2âfö7W6VBUbö†—7F÷'’ð¥Væ6–Âö—6ÆæBö–ÖvR×&VfW&Væ6Rõ6²öFVç6—G’÷&VÆV6SS552âæò76W'F–öç2&VÆ†VB÷"öÆ@¦6†V6·2FVÆWFVBâgVæ7F–öæÂ6†ævW2öæÇ’Wb×v÷&·76S²ÖW6„†VÇF‚–×÷'B²&Wf–WvV@§6†VÆÂ÷&V6÷fW'’66†R¶W—3“S"âÖ–âö6vRô×VÇF’×G&ç6f÷&ÓãæBg&÷¦Vâ'—FW2Væ6†ævVBà¤†÷7FVBõvW2öÆ—fRV&Æ–6F–öâWf–FVæ6RföÆÆ÷w2âDUd”4S“S"–çFW&Ö—GFVçB•BT’ÖÆ÷70§&WFW7B&VÖ–ç2VæF–æs²æòW†7B'&÷w6W"ôuR&W&öGV7F–öâ÷"FWf–6Rf—‚526Æ–ÖVBà  ¢22ã“S"V&Æ–6F–öâfW&–f–VB(	B#Bö7Fö&W"##b„'&—6&æR ¥'VçF–ÖRV#“V6†#6C&#†ffFS†SvV33ƒsC“#3“C6FÂFW7FVBG&VP¦VSS–S“ƒ““F3F&6&3Fc3ƒ#–CCƒ“3†C33VÂV&Æ—6†VBöâÖ–ââFVâWÆöFV@¦&Æö'2÷G&VRÖF6†VBÆö6Â†6†W3²fWF6†VBÖ–âÖF6†VBæB6†V6¶÷WB6ÆVââÆö6À¤æöFS#B&Vw&W76–öã#ss52ód”Âó6¶—VBƒ“rãW2“²†÷7FVBæöFS#"'Vã3““SSs3rð¦¦ö##C#“#cR6ö×ÆWFRÆöw2fW&–g“#ssóóƒ#C‚ãg2’âvW33““SSs#S3B'V–Æ@£#C#“#S“#öFWÆ÷“#C#csƒ’7V66VVFVBâÆÃ#’÷7FFWÆ÷–ÖVçB6†V6¶VB6†VÆÂ÷fW'6–öâÀ§v÷&·76RôÖW6„†VÇF‚õUbôFBô×VÇF’ôÆ"÷–çBÆöFW'2Â&V6÷fW'’Â&WF–æVBÖ–âö6vRð¤×VÇF’×G&ç6f÷&ÓãöÆ—C“C‚öÆ–W'3“Crög&÷¦Vä&WFrÖ&¶W"'—FRÖÖF6‚FW7FVB6÷W&6Rà¥F†—2&ööb6†ævW2f÷W"6öçF–çV—G’f–ÆW2öæÇ“²FW7FVB'VçF–ÖR&WF–æVBà ¤'V–ÆC“S"6ö×ÆWFRæB&VG’f÷"•E&ò&WFW7BâW6W#“SFÆ252&÷FV7FVC²6W&FP¦–çFW&Ö—GFVçBUböÖ–â×FööÆ&"F—6V&æ6R—27F–ÆÂVæF–ærDUd”4S“S"6öæf—&ÖF–öâà¥&WVFVFÇ’÷VâVF—F÷"æB&6²Fó4C²6†V6²v†öÆRVF—F÷"ÂW†—B&W6–FRF—FÆRÂÖ–âF÷×&–v‡@¦'WGFöç2õd”UrÂâ÷–æ6‚õVæ6–Â—6ÆæBVF—F–ærõVæFõ&VFòæB&WGW&â÷&V÷Vââ÷&–v–æÃ“#@¦†VFW"Ö&÷fR×f–Ww÷'B&V†f–÷"&W6W'fVBv—F‚6–&Æ–ærv÷&·76RÆ–W"â6Æ÷VBvV$tÀ§Væf–Æ&ÆRÂæòW†7B–çFW&Ö—GFVçB6f&’&W&öGV7F–öâ÷"gVÆÂÖ&VæFW&VB66WFæ6P¦6Æ–ÖVBâæW‡BföÆÆ÷s“S"FWf–6RfVVF&6³²FöâwB–æfW"F†BWFöÖFVBFW7G2&÷fRF†P§&W÷'FVB–çFW&Ö—GFVçBF—6V&æ6R&W6öÇfVBâæòÖöFVÆÆ–æröFÆ2÷–çBÆv÷&—F†Ò6†ævW2à  ¢22ã“S2(	B6VÆV7FVBVFvR7WBUg3²ã“S"W6W"52(	B#Bö7Fö&W"##b„'&—6&æR ¥W6W#“S"52&÷FV7G2&WVFVBUbVF—F÷"VçG'’öW†—BÂÖ–âFööÆ&"õd”UræB—6Ææ@¥Væ6–Âö†—7F÷'’v÷&¶fÆ÷rgFW"6–&Æ–ærÖÆ–W"†&FVæ–ærâ&–÷#“SFÆ252&WF–æVBà¤æòæWr66WFæ6Röb–æFWVæFVçBÇ†“#’÷"6Öö÷F‚ÖÖWFÂ&VfÆV7F–öâvFW2–æfW'&VBà ¤VF—BÖ–ãf6#cfc3¢÷&–v–æÂ–ç7V7F÷"Ç&VG’÷vç2Öæ–föÆBF¦6Væ7’÷Væ–öâæB†0¦6ä¦ö–äf6W3²÷&–v–æÂUbVF—F÷"÷vç26²æBæF—fR6öÖÖ—Bö†—7F÷'’âæòWF†÷&V@¤VFvRÖ7WB6öÖÖæBW†—7G2âFBVFvR&F–Â÷WFW#crã\+7WBUg2W6–ær7W'&VçB÷&–v–æÀ¥6VÆV7F–öä'&–FvRVFvR–æF–6W2Âv—F‚ÆÂ&Wf–÷W2FööÂ÷6—F–öç2&W6W'fVBâ6ÖP¤ÖW6„†VÇF‚ÖöGVÆR†÷7G2F†RöæR×6†÷B'WGFöã²æòæWr÷Wö–çWBö†—7F÷'’ö¶W&æVÂà ¤æF—fRVç–çFVB–æFWVæFVçB&6RÖW6†W2v—F‚6ö×ÆWFRÖF6†–ærUg2öæÇ’âW†6ÇVFP§6VÆV7FVB7GVÂVFvW2g&öÒõ$”t”äÂ–ç7V7F÷"6öææV7F—f—G’Â&WV—&RV6‚6VÆV7FV@¦6öçF–çV÷W2UbVFvRw2÷væW'2FòVæB–âF–ffW&VçB6ö×öæVçG2ÂF†Vâ÷&–v–æÂw&–B6°¦æBôäRæF—fRUb6öÖÖ—Bâ6ö×ÆWFR&÷VæF'’×FòÖ&÷VæF'’7WG2÷"6Æ÷6VBÆö÷27Æ—@¦6†'G3²–æ6ö×ÆWFR6Æ—G2&VgW6RF†Rv†öÆR7F–öââW†—7F–ær6V×2ö&÷VæF&–W2æòÖ÷à¤WfW'’Vç6VÆV7FVB6öææV7F–öâ—2fW&–f–VBVæ6†ævVB&Vf÷&R6†V6·ö–çBâ6ö÷&F–æFW0§W'6—7B2÷&F–æ'’æF—fRUg2Âæ÷B6VÒfÆw2÷"æWr66†VÖâ&W6²ffV7G2ÄÀ¦—6ÆæG2v—F‚öæR6öÖÖöâ66ÆS²6÷W&6RöÇ–vöç2÷÷6—F–öç2÷&VÆF—fRFVç6—G’VçF÷V6†VBà¤æò6öæf÷&ÖÂVçw&ÂæWrfÆGFVæ–ærÂW'6—7FVçB6VÒÖ&¶–ær÷"7F—F6‚6öÖÖæBà£#²6÷&æW'2ò÷&–v–æÃ#‚6¶VBÖ—6ÆæBÆ–Ö—G3²Ö&–wV÷W2öæöæÖæ–föÆB÷6ÖR×v–æF–æp§6VÆV7FVBVFvW2Â7FÆRF&vWBö†—7F÷'’f–ÇW&R&VgW6R&Vf÷&RV&Æ–6F–öââç’6öÆ÷W"ð§&÷Vv†æW72öÖWFÆæW72–çB&VgW6W2æBö–çG2FòW‡Æ–6—Bö&¦V7BUb6ÆV"–çBà¤æò6–ÆVçB—†VÂF—66&B÷&V&–æB÷"–×÷'FVBÖFW&–Â&VÖ–ærà ¥6—‚æWr–çFVw&F–öâ6†V6·26÷fW"6ö×ÆWFR7WG2ö6Æ÷6VBÆö÷2ÂÖ—†VB'F–Â&VgW6ÂÀ¦W†—7F–ær6V×2ö&÷VæF&–W2Â÷&–v–æÂ6²÷v÷&²÷F&vWBö†—7F÷'’wV&G2Â&VBÖöæÇ’VW'2À§Væ6†ævVBvVöÖWG'’æBVç6VÆV7FVB¦ö–ç2Â7GVÂ66VæRVæFõ&VFòõ–çBõ6fT÷VâôtÄ §&÷VæGG&—Â7GVÂVFvR6ÆÆ&6²ö7W'&VçB6VÆV7F–öâ÷&VæFW"æB&F–ÂöæR×6†÷Bv—&–ærà¤öÆCs2ós’&F–Â–çfVçF÷'’æ÷r–æ6ÇVFW2F†RæWs#F‚VFvR7F–öâÂ&WF–æ–ærÄÂöÆ@¤”G2æB7&÷72ÖÖöFRÆ6VÖVçG2â÷F†W"'VçF–ÖR6÷W&6R6†ævW2&R&Wf–WvVB&WfW'6P¥UbôFBô×VÇF’ôÆ"66†R–ç2æB6†VÆÂ÷&V6÷fW'’¶W—3“S2öæÇ’âv÷&·76S“S"öÖ–ã“3ð¦6vRô×VÇF’×G&ç6f÷&Óãög&÷¦Vâ'—FW2Væ6†ævVBâgVÆÂ÷V&Æ–6F–öâ&ööbföÆÆ÷w2à ¤DUd”4S“S3¢FBVç–çFVBUbÆæRv—F‚‚FVç6—G“"Â“âVFvRÖöFR6VÆV7B—G26VçG&P§6†&VBVFvR(i"&F–Â7WBUg2âö&¦V7B(i"Ub(i"÷VâUbVF—F÷"6†÷w3"6W&FVB—6ÆæG3°¥VæFõ&VFò&W7F÷&W2÷&VÆ–W27WC²Væ6–Â—6ÆæBÖ÷fRffV7G2öæR6–FRâ–çBgFW"7WBÀ¥6fT÷Vâ&WF–ç2&W7VÇBâ&WVB7WBöâ6ÖRVFvRFG2æò†—7F÷'“²–çFVBF&vWG0§&VgW6RVçF–ÂW‡Æ–6—B6ÆV"–çBâW†—7F–ær7V&Rf6R&÷VæF&–W2Ö’Ç&VG’&R6V×0¦æB6÷'&V7FÇ’æòÖ÷âf÷"×VÇF’ÖVFvRF‡26VÆV7BF†Rv†öÆR7WBÂæ÷Bâ–çFW&–÷"6Æ—Bà¤æW‡BföÆÆ÷s“S2F7F–ÆRfVVF&6³²&&—G&'’6VÒÖ&·2÷7F—F6‚övVæW&Â7W'fVBVçw& §&VÖ–âVWVVBF‡&÷Vv‚÷&–v–æÂ÷væW'2â¶VW“S"T’ÖÆ÷7266WFæ6R&÷FV7FVBà ¢ã“S2f–æÂÆö6ÂæöFS#Bã’ã&Vw&W76–öã¢¢£#ssb52òd”Âò6¶—VB¢ ¢ƒ“ãg2’Â&WF–æ–ær÷&–v–æÃ#ssÇW26—‚VFvRÖ7WB–çFVw&F–öç2âfö7W6VBæWröFÆ2ð§v÷&·76R÷&VÆV6S#53²&F–Ãs’ós2&WF–æVBÆÂöÆB”G2æBæ÷r&WV—&W3#VFvP¦7F–öç2âf—'7BgVÆÂ'Vâw2öæÇ’f–ÇW&Rv2öÆCs2–çfVçF÷'““²WFFVBFò–çFVæFV@£#æBf–æÂ4ôÕÄUDR&W'Vâ&÷fR76W2âæò&V†f–÷"76W'F–öâG&÷VB÷"6¶—VBà¥&Wf–WvVC’Öf–ÆR'VçF–ÖRöÆöFW"6Æ÷7W&R²&V6÷fW'’¶W—3“S3²Ö–ã“3ö6vRô×VÇF“ãð¦g&÷¦VâVæ6†ævVBâ7GVÃ“S2•BF7F–ÆR66WFæ6RVæF–ærâ†÷7FVBõvW2öÆ—fP§V&Æ–6F–öâ&ööbföÆÆ÷w2â&W&ö¦V7F–ærUg2&WÆ6W27WG3²æòW'6—7FVçB6VÒ&V6—Rà  ¢22ã“S2V&Æ–6F–öâfW&–f–VB(	B#Bö7Fö&W"##b„'&—6&æR ¥'VçF–ÖRC3ƒVf#†V3CF&CcF3#3cs†VFF#CvÂFW7FVBG&VP¦S3#Sc“f“SSc“S#f#†#&c36SsFVV&C†F&ÂV&Æ—6†VBöâÖ–ââÆÃ‚&Æö'0¦æB7&VFVBG&VRÖF6†VBÆö6Â†6†W3²fWF6†VBÖ–âÖF6†VBW†7FÇ’æB6†V6¶÷W@¦Æ–væVB6ÆVæÇ’âÆö6ÂæöFS#BgVÆÃ#sse52ód”Âó6¶—ƒ“ãg2“²†÷7FVBæöFS#"'Và£C3“SƒC“32ö¦ö##ss#3c“Cb6ö×ÆWFRÆöw2fW&–g“#ssbóóƒ#Bãw2’âvW3C3“SƒCS3p¦'V–ÆC#ss#C3"öFWÆ÷“#ss3“sƒcR5T44U52âÆÃ#6†V6¶VBÆ—fRf–ÆW2'—FRÖÖF6ƒ §6†VÆÂ÷fW'6–öâÂ4ôÕÄUDR6†ævVBUbôFBô×VÇF’ôÆ"öv—¦Öòw&‚Â&V6÷fW'’Â&WF–æV@§v÷&·76S“S"ö–ç7V7F÷#“SöÖ–ã“3ö6vRô×VÇF“ãöæF—fRw&—FW"÷&ö¦V7Bög&÷¦Vä&WFrà¥F†—2&ööb6†ævW2f÷W"6öçF–çV—G’Fö7VÖVçG2öæÇ“²FW7FVB'VçF–ÖR&WF–æVBà ¤'V–ÆC“S2&VG’f÷"•BFW7F–æs¢FBUbÆæRƒ"õ“(i"6VÆV7B6VçG&R6†&VBVFvR(i §&F–Â7WBUg2(i"ö&¦V7BUbVF—F÷"6†÷w2Gvò—6ÆæG2âVæFõ&VFò&W7F÷&W2÷&VÆ–W3°¥Væ6–Â—6ÆæBÖ÷fRÂ–çBgFW"7WBæB6fT÷Vâ&WF–âÆ–÷WBâW†—7F–ær6VÒö&÷VæF'§&WVBæòÖ÷3²–çB&WV—&W2W‡Æ–6—B6ÆV"–çB&Vf÷&R7WGF–ærâ6ö×ÆWFRF‡2÷ ¦6Æ÷6VBÆö÷2öæÇ“²'F–Â6Æ—G2&VgW6RFöÖ–6ÆÇ’âæòvVæW&ÂVçw&÷7F—F6‚÷W'6—7FVç@§6VÒ&V6—RâW6W#“S"T’ö†—7F÷'’52&÷FV7FVC²DUd”4S“S2fVVÂ÷f—6–&–Æ—G’VæF–ærà¤æW‡B7GVÃ“S2fVVF&6²ÂF†Vâ66÷VB6VÒ÷7F—F6‚÷Vçw&VF—BF‡&÷Vv‚÷&–v–æÂ÷væW'2à  ¢22ã“SB(	B67&VVâ×&÷†–Ö—G’VFvR–6¶–æs²7WÆ–VB6öçfW‚ÖVFvR&W÷'B(	B#Bö7Fö&W"##b„'&—6&æR ¥W6W"&W÷'G26öçfW‚×÷6—F–öâVFvW2ÆÖ÷7B–×÷76–&ÆRFòFæBæWvÇ’fÆ—V@¦VFvW2&V6öÖ–ærVç6VÆV7F&ÆRâ67&VVç6†÷B6ÆV&Ç““S#²7W'&VçC“S2&WF–ç24ÔRÖ–ã“3 §–6¶W"Â6ò&W&öGV6VBöâ7W'&VçB6÷W&6RÂæ÷BF—6Ö—76VB27FÆR×6†VÆÂ&V†f–÷"à¤æó“S27WBUg252–æfW'&VBâW6W#“S"UbÖVF—F÷"66WFæ6R&VÖ–ç2&÷FV7FVBà¤W†7BWÆöFVB6öçfW‚VFvRæö&¢&WF–æVB'—FRÖf÷"Ö'—FR@¢FW7G2öf—‡GW&W2ö6öçfW‚ÖVFvRÓ“SBæö&£²4„#S`£sƒ#&#†C3S3css36#VcƒCs6c6f3C#33ƒVFCvs#3#C–SvC3ƒss†CBà£cfW'F–6W2óƒFf6W2ÖF6†W267&VVç6†÷Bâ6ÖW&÷6R—2æ÷B–âô$£²FW7B6ÖW&2&P¦6öçG&öÆÆVB&W&öGV7F–öç2Âæ÷B6Æ–ÒFò&V6÷fW"W†7B67&VVç6†÷Bf–Wrà ¤VF—C¢÷&–v–æÂÖ–â–6´¶–æD†—G2W6W2F‡&VRÆ–æRF‡&W6†öÆBã’v÷&ÆBVæ—G2F†Và¦6ÖW&ÖF—7Fæ6R÷&FW"âöâW†7B7WÆ–VBvVöÖWG'’Ã"6†÷6VâÆ–æRÖ–Gö–çG2ÄÀ§6VÆV7Bæ÷F†W"6ÖW&ÖæV&W"æV–v†&÷W&–ærVFvRâ÷&–v–æÂ&÷‡’öF—7Æ’&F6†–æp¦æB”G2&R6÷'&V7C²æò6÷W&6RF÷öÆöw’ôfÆ—¶W&æVÂ&W—"&WV—&VBâ6VÆV7FVBÖöæÇ¦6ö×öæVçB×F†VÇW"Ç6òw&VVF–Ç’6†÷6Rç’6VÆV7FVBVFvRv—F†–ã#‚ÂWfVâv†Và¦F–ffW&VçBVFvRÆ’VæFW"F†Rö–çFW"âVæ6–ÂvFRÇ&VG’FVÆVvFW2æF—fR–6²à¤VFvR×–çB÷væW"–æFWVæFVçFÇ’W6VBF†RöÆBv÷&ÆB×&F—W2÷&FW&–ærà ¤Ö–âw2VFvRÖöæÇ’'&æ6‚æ÷r6ÆÇ26ÖÆÂ&VBÖöæÇ’VFvR×67&VVâ×–6¶–ær†VÇW"÷fW ¥4ÔR&VæFW&VB–æFW†VBÆ–æR&÷†–W2Ã"552—†VÇ2Â67&VVâ&÷†–Ö—G’f—'7BÂ6ÖW&¦FWF‚f÷"VçF—¦VBV'FW"×—†VÂF–W2â†öÖövVæV÷W2g'W7GVÒ6Æ—–ær&Vf÷&RF—f–FP¦æBW'7V7F—fRÖ6÷'&V7Bv÷&ÆB–çFW'öÆF–öã²&VçBG&ç6f÷&×2æB÷'F†öw&†–0¦6ÖW&27W÷'FVBâæòÖW6‚æVFvW2‚’ÂF÷öÆöw’÷"6÷W&6Rw&—FW2Â66†Rö†—7F÷'’ö–çW@¦÷væW"âÖFW&–Âçf—6–&ÆSÖfÇ6R&÷‡’6öçfVçF–öâ&WF–æVC²ö&¦V7Böæ6W7F÷"f—6–&–Æ—G§&W7V7FVBâf6RõfW'FW‚ôö&¦V7B&’F‡2Væ6†ævVBâF†—2—2F&vWF–ærÂæ÷BæWp§7W&f6Rö66ÇW6–öâö&6²Öf6RõF‡&÷Vv‚×6VÆV7F–öâöÆ–7“²æòæWr†–FFVâ×7W&f6RwV&çFVRà ¤÷&–v–æÂ6VÆV7FVBÖ6ö×öæVçBVFvRFövvÆRæ÷r6†V6·24ÔRæF—fR†—B&Vf÷&R&VÖ÷fÃ°§Vç6VÆV7FVBæV–v†&÷W'272FòÖ–ââ÷&–v–æÂVFvR–çBf—6–&ÆR÷F‡&÷Vv‚W6W2æF—fP§–6´†—G2÷&FW"æB÷&–v–æÂFVGWöf—'7BöÆÂöÆ–7’Â&WF–æ–ærfÆÆ&6²f÷"7F'GWð¦æöâÔVFvRf—‡GW&W2â6ÖR÷&–v–æÂÆ—7FVæW'2Â&÷vF–öâæBvW7GW&R÷væW'3²æòæWp§&r×ö–çFW"†æFÆW"âfÆ—VFvRvVöÖWG'’ö†—7F÷'’÷&F–Â÷v÷&·76RõUb÷–çBöÖFW&–À¦Æv÷&—F†×2Væ6†ævVBâæWrÔ”â66†R–ã“SB—2–çFVçF–öæÂ7GVÂ–6¶W"&W—#°¦÷&–v–æÂÖ–â–çFW&æÂ7F×æB6vS“3ô×VÇF“ãög&÷¦Vâ'—FW2&VÖ–âVæ6†ævVBà¤F—&V7BÖ&WfVÂ6†ævW2ôäÅ’6ö×öæVçB×F6†–ÆB66†R¶W“²6†VÆÂ÷&V6÷fW'’öÖæ–fW7@¦æB&Wf–WvVBÖ–âö6†–ÆBÆöFW"w&ƒ“SBâæò&Ææ¶WB&W–ææ–ærà ¥6WfVâæWr–çFVw&F–öç3¢W†7B7WÆ–VC"&R×&W—"f–ÇW&W>(i&6÷'&V7BæF—fR–6³°¤5ETÂ÷&–v–æÂfÆ—VFvRÇ’÷&V'V–ÆBõVæFõ&VFòÇW2&W6VÆV7BæWrF–vöæÃ²66ÆRð§&ö¦V7F–öâ÷&VçBôE"ó'‚&÷VæG3²6Æ—ö†–FFVâæ6W7F÷"÷7V'—†VÂÖFWF‚&V†f–÷#°¦7GVÂ6VÆV7FVB×FövvÆR&VgW6Â÷&VÖ÷fÂv—F‚æò†—7F÷'“²÷&–v–æÂVFvR×–çBæF—fP¦WfVçB÷f—6–&ÆR÷F‡&÷Vv‚FVÆVvF–öã²&VÂVæ6–ÂvFR÷–çB÷væW"&VÆV6Rö6æ6VÂöf–ævW ¤÷&&—B&WFVçF–öââfö7W6VBæWr¶æF—fRf6RõfW'FW‚öfÆöF–ærÖæf–vF–öâ÷&VÆV6S3…52à¤÷&–v–æÂ76W'F–öç2&WF–æVC²gVÆÂæBV&Æ–6F–öâWf–FVæ6RföÆÆ÷râæöFRF‡&VRö–çW@¦f—‡GW&W2&Ræ÷BæF—fR•BõvV$tÂ&VæFW&VB66WFæ6Rà ¤DUd”4S“SC¢4ÔR7WÆ–VBÖW6‚ÂFW6VÆV7BæBF6—&6ÆVBVFvRæBæV–v†&÷W&–ærv†—FP¦VFvS²÷&&—B÷¦ööÒæB&WVBâfÆ—VÆ–v–&ÆRVFvRÂFW6VÆV7BF†Vâ&W6VÆV7BæWrF–vöæÃ°¥VæFõ&VFò¶VW2&÷F‚vVöÖWG'’æB–6¶–ærW6&ÆRâG'’æV&'’×VÇF’ÖVFvR6VÆV7F–öâÀ¥Væ6–ÂG&r6VÆV7F–öâæBf–ævW"÷&&—B÷â÷–æ6‚v—F†÷WB6VÆV7F–öâÆ÷72â6†V6³“S0¤7WBUg26W&FVÇ’v†Vâ&7F–6Ã²æó“S266WFæ6R–æfW'&VBg&öÒF†—2'Vr&W÷'Bà¤æW‡B&W7öæBFó“SBFWf–6R&W7VÇG2&Vf÷&RæWr6VÒ÷Vçw&fVGW&W2âæòF÷öÆöw§&W—"÷G&–æwVÆF–öâv÷&¶&÷VæB÷"f÷&6VB66†RÖ6ÆV&–æræVVFVBf÷"&W&öGV6VB'Vrà ¢ã“SBf–æÂÆö6ÂæöFS#Bã’ã&Vw&W76–öã¢¢£#sƒ252òd”Âò6¶—VB¢ ¢ƒ“Rã2’Â÷&–v–æÃ#ssb&WF–æVBÇW26WfVâ7WÆ–VBÖf–ÆR÷–6¶W"ö–çWB–çFVw&F–öç2à¤fö7W6VBæWröæF—fRf6RõfW'FW‚öfÆöF–ærÖVFvRövW7GW&R÷&VÆV6S3…52âæòöÆB76W'F–öç0§&VÆ†VB÷"&VÖ÷fVBâWÆöFVBô$¢f—‡GW&R'—FRÖ–FVçF–6ÂâÖ–â6÷W&6R6†ævW2öæÇ¦†VÇW"–×÷'BæBVFvR–6¶W"'&æ6ƒ²F—&V7BÖ&WfVÂ—2–âÖöæÇ’â6ö×öæVçBVFvRFövvÆP¦æBVFvR×–çBW6RW†—7F–æræF—fR÷væW#²æòæWrö–çFW"övVöÖWG'’ö†—7F÷'’–×ÆVÖVçFF–öâà¥&Wf–WvVB66†R6Æ÷7W&S“SC²6vS“3ô×VÇF“ãög&÷¦VâVæ6†ævVBâ†÷7FVBõvW2öÆ—fRÖf–ÆP§V&Æ–6F–öâ&ööbföÆÆ÷w3²7GVÃ“SB•BFôfÆ—÷&W6VÆV7B66WFæ6RVæF–ærà  ¢22ã“SBV&Æ–6F–öâfW&–f–VB(	B#Bö7Fö&W"##b„'&—6&æR ¥'VçF–ÖR“ƒ–3Vc“–fS#3–#f3ƒVffCsƒ†V63ÂFW7FVBG&VP¦vc#C†#SSƒ†SSƒ&#s#sSvFSc33–3fÂV&Æ—6†VBöâÖ–ââÆÃR&Æö'0¦æBv—BFFG&VRÖF6†VBÆö6Â†6†W3²fWF6†VBÖ–âÖF6†VBW†7BFW7FVBG&VRæ@¦6†V6¶÷WBÆ–væVB6ÆVæÇ’âÆö6ÂæöFS#BgVÆÃ#sƒ552ód”Âó6¶—ƒ“Rã2“²†÷7FV@¤æöFS#"'VãCC“#“’ö¦ö##s#CcB6ö×ÆWFRÆöw2fW&–g“#sƒ2óóƒ#CBãG2’à¥vW3CC“3ƒb'V–ÆC#s#Cs“‚öFWÆ÷“#s#SSƒ#C5T44U52âÆÃ#6†V6¶VBÆ—fP¦f–ÆW2'—FRÖÖF6ƒ¢6†VÆÂ÷fW'6–öâÂæWr–6¶W"²6†ævVBÖ–â÷FövvÆRôVFvR×–çBô&WfVÀ¦ÆöFW"w&‚Â&V6÷fW'’Â&WF–æVBv÷&·76S“S"õUc“S2öv—¦Öó“S2õVæ6–ÂvFRö6vS“3ð¤×VÇF“ãôfÆ—33röæF—fRw&—FW"÷&ö¦V7Bög&÷¦Vä&WFrâ÷&–v–æÂWÆöBf—‡GW&RVæ6†ævVBà¥F†—2&ööb6†ævW2f÷W"6öçF–çV—G’f–ÆW2öæÇ“²FW7FVB÷V&Æ—6†VB'VçF–ÖR&WF–æVBà ¤'V–ÆC“SB6ö×ÆWFR÷&VG’f÷"4ÔRÖf–ÆR•B&WFW7C¢Vç6VÆV7FVB6—&6ÆVBVFvRæB—G0¦æV–v†&÷W'2Â÷&&—B÷¦ööÒ÷&W6VÆV7BÂ÷&–v–æÂfÆ—VFv^(i&FW6VÆV7N(i'&W6VÆV7BæWrF–vöæÂÀ¥VæFõ&VFòÂ×VÇF’ÖVFvR6VÆV7F–öâæBf–ævW"æf–vF–öââWFöÖFVBW†7BÖf–ÆRöæF—fP§–6¶W"æB&VÂfÆ—ö†—7F÷'’ö–çWBf—‡GW&W273²7GVÂ•BfVVÂöV&æ6R&VÖ–ç0§VæF–ærâ67&VVç6†÷C“S"f–ÇW&R&W&öGV6VBöâ6ÖR–6¶W"–ã“S3²æòf÷&6VB7FÆRÖ66†P§v÷&¶&÷VæBâW6W#“S"T’ö†—7F÷'’52&÷FV7FVC³“S27WBUg2FWf–6RvFR&VÖ–ç26W&FRà¤æW‡B7GVÃ“SBfVVF&6²&Vf÷&RgW'F†W"Vçw&÷6VÒfVGW&W3²æòæWs“S2ó“SB52–æfW'&VBà  ¢22ã“SR(	B6÷Ææ"7F—F6‚Ug3²ã“S2æBã“SBW6W"52(	B#Bö7Fö&W"##b„'&—6&æR ¥W6W"W‡Æ–6—FÇ““S552æC“SE52öæW‡F'V–ÆBâ&÷FV7B6ö×ÆWFRVFvR7WBUg2À¥VæFõ&VFòõ–çBõ6fT÷VâæB67&VVâ×&÷†–Ö—G’VFvRF&vWF–ærÂfÆ—÷&W6VÆV7BÂ6VÆV7FV@¦æV–v†&÷W"FövvÆRõVæ6–Â–çB6VÆV7F–öâæBf–ævW"æf–vF–öâã“S"VF—F÷"T’66WFæ6P¦Ç6ò&WF–æVBâ&–÷"VæF–æs“S2ó“SBæ÷FW2&VÆ÷r&R†—7F÷&–6ÂÂ7WW'6VFVB†W&Rà¤–æFWVæFVçBÇ†“#’÷6Öö÷F‚ÖÖWFÂ&VfÆV7F–öâvFW2&Ræ÷B–×Æ–VB66WFVBà ¤VF—BÖ–ãCƒ†S3FVS¢æò7F—F6‚W†—7G2â÷&–v–æÂ–ç7V7F÷"÷vç2Öæ–föÆBF¦6Væ7’æ@¦—6ÆæBÖVÖ&W'6†—²÷&–v–æÂ&÷‚&ö¦V7F–öâ7WÆ–W26æöæ–6ÂÆæRÖ–æs°¦÷&–v–æÂ6÷Ææ"6VVBw&÷W–æs“SÂw&–B6²æBæF—fR6öÖÖ—BÇ&VG’W†—7Bà¤FBVFvR&F–Â÷WFW#"ã\+7F—F6‚Ug2Âv—F‚ÆÂ&–÷"÷6—F–öç2Væ6†ævVBâ6–ævÆP¦7W'&VçB6VÆV7FVB6†&VBVFvS²÷&–v–æÂ'WGFöâö7F–öâ†÷7B–âÖW6„†VÇF‚æB÷&–v–æÀ§&F–ÂöæR×6†÷B6ö×ÆWF–öââæòæWr÷W÷&r–çWBö†—7F÷'’öÖW6‚÷G&–æwVÆF–öâ÷væW"à ¤f—'7B7F—F6‚7W÷'G2Etò—6ÆæG2öâ4ÔR÷&–VçFVBfÆB6÷W&6RÆæRÂæF—fR÷Æ–âð¦–æFWVæFVçBVç–çFVB&6RÖW6†W2öæÇ“³#†f6W2ó#¶6÷&æW'2âW†—7F–ær7W'&VçB6†'G0¦×W7BV6‚ÖF6‚6æöæ–6ÂÆæR6ö÷&F–æFW2VæFW"Væ–f÷&Ò6–Ö–Æ&—G’÷&VfÆV7F–öâà¤Ö÷fVB÷&÷FFVB÷66ÆVBöfÆ—VB6†'G27W÷'FVC²–çFW&æÆÇ’F—7F÷'FVB÷v'VBö&VçBð¦æöâÖ6÷Ææ"6†'G2&VgW6Râ÷&–v–æÂÆ÷vW"Öf6R6†'B7WÆ–W2F†Rf—C²Ö÷fRF†R÷F†W ¦–çFò—G2ÆæRg&ÖRÂ6æ6öÖÖöâfW'FW‚Ô”B6÷&æW'2Fòõ$”t”äÂW†7Bæ6†÷"fÇVW2à¤ÆÂ6†&VB&÷VæF&–W2&WGvVVâF†B—"¦ö–ã²æò7F–ÂvVÆF–ærÂW"Öf6RF÷öÆöw¦6†ævW2÷"6fVB6VÒfÆw2â÷&–v–æÂw&–B6²F†Vâ&W6·2ÄÂ—6ÆæG2v—F‚6öÖÖöà§66ÆRæB6öÖÖ—G2ôä4RâÖ÷f–ær6†'BFVç6—G’ö÷&–VçFF–öâÖF6†W2&WF–æVB6†'B&Vf÷&P¥6³²VçF÷V6†VB6†'B6†W2÷&VÆF—fRFVç6—G’&WF–æVBâf–æÂ–ç7V7F÷"×W7B&W÷'@¤U„5B–çFVæFVBGvò×FòÖöæRÖVÖ&W'6†—ÂæòVç&VÆFVBÖW&vW2÷7Æ—G2â6ÖRÖ—6ÆæB¦ö–æV@¦VFvRæòÖ÷3²â–çFW&æÂ6Æ—B&VgW6W2Â2æòv†öÆRÖ6†'B¦ö–â6â&W—"—Bà ¤ÆÂ6öÆ÷W"÷&÷Vv†æW72öÖWFÆæW72–çB&VgW6W2&Vf÷&R7Fv–ærö†—7F÷'’Âv—F‚W‡Æ–6—@¤ö&¦V7BUb6ÆV"–çBwV–Fæ6Râ÷&–v–æÂVç7W÷'FVBF&vWBö†—7F÷'’öf–æ—FRö6öÆÆ6Rð¥6²wV&G2&WF–æVBâæòvVæW&Â7W'fVBVçw&Â7V&RÖæWBVæföÆF–ærÂ÷F–ÖÂ6¶–ærÀ¦&&—G&'’÷fW&Æ&W—"÷"–çB&W6×Æ–ærâæF—fR6÷W&6S¦&÷†Æ"6÷&æW"66†VÖÀ¦vVöÖWG'’Â&ö¦V7Bö†—7F÷'’öW‡÷'B÷væW'2&VÖ–âVæ6†ævVBâ6æöæ–6Â&÷‚—2G&ç6–Vç@§fÆ–FF–öâöÆ–væÖVçBöæÇ’Âæ÷B&WÆ6VÖVçBÆ—fRUbÖ–ær÷"&ÆÆVÂ¶W&æVÂà ¥6—‚æWr–çFVw&F–öç3¢7WN(i%7F—F6‚W†7BVæGö–çG2övVöÖWG'’÷VW"—6öÆF–öâ÷&WVBæòÖ÷°§&÷FFVB÷66ÆVBöÖ—'&÷&VBV—F†W"6†'BæB6÷W&6R66ÆR÷G&ç6ÆF–öã²Vç&VÆFVB—6Ææ@¦ÖVÖ&W'6†—²æöâ×Ææ"öF—7F÷'FVBö&÷VæF'’öÖ&–wV÷W2÷&VgW6VBF&vWG2æB†—7F÷'’÷v÷&°¦FöÖ–6—G“²7GVÂVæFõ&VFòõ–çBõ6fT÷VâôtÄ#²7GVÂVFvR6ÆÆ&6²æB&F–ÂÆVæ6‚ð§V6²&W7F÷&F–öââ÷&–v–æÃ“S2ó“SB6VÖçF–26†V6·2&WF–æVBâöÆCs2ós’VFvR–çfVçF÷'¦æ÷s#Â&WF–æ–ærÆÂ&Wf–÷W2”G2æB6†&VB7&÷72ÖÖöFR÷6—F–öç2âfö7W6VBæWrô7WBð§–6¶–ær÷&F–Â÷&VÆV6S3U52âgVÆÂæBV&Æ–6F–öâ&ööbföÆÆ÷w2âôäÅ’UbVF—BÀ¤ÖW6„†VÇF‚6ÆÆ&6²æBv—¦ÖògVæ7F–öæÆ—G’6†ævS²÷F†W"'VçF–ÖR6†ævW2&R&Wf–WvV@¥UbôFBô×VÇF’ôÆ"&WfW'6RÆöFW"–ç3“SRæB6†VÆÂ÷&V6÷fW'’âÖ–ã“SB÷–6¶W#“SBö6vS“3ð¤×VÇF“ãög&÷¦Vâ'—FW2Væ6†ævVBâæó“S2ó“SB66WFæ6RÆ÷7BGW&–ær6VÒv÷&²à ¤DUd”4S“SS¢UbÆæRƒ"õ“(i"6†&VBVFvR7WBUg2(i"6VÆV7B4ÔRVFvR(i"7F—F6‚Ug2à¥UbVF—F÷"6†÷w2öæR¦ö–æVB—6ÆæC²Væ6–ÂÖ÷fRÖ÷fW2&÷F‚f6W2âVæFõ&VFò7FW2F‡&÷Vv€§7F—F6‚ö7WB6W&FVÇ’âÖ÷fR÷&÷FFR÷66ÆRâ—6ÆæB&Vf÷&R7F—F6†–æs²6ÖRfÆBF6€¦¦ö–ç2÷&R×6·2â–çBgFW"7F—F6‚Â6fT÷Vâ&WF–ç2&W7VÇBâÇ&VG’Ö¦ö–æVB&WV@¦æòÖ÷3²7W'fVB÷6ÖRÖ7V&RÖ6÷&æW"f6W2÷"–çFVBF&vWG2&VgW6Rv—F†÷WB6†æv–ærv÷&²à¤æW‡B7GVÃ“SRFWf–6RfVVF&6²&Vf÷&RW‡æF–ær7F—F6‚övVæW&ÂVçw&²&W6W'fP¦66WFVC“S27WG2ó“SB–6¶–æró“S"T’æBÆÂ&÷FV7FVBæf–vF–öâöÖöFVÆÆ–ær&V†f–÷"à ¢ã“SRf–æÂÆö6ÂæöFS#Bã’ãgVÆÂ&Vw&W76–öã¢¢£#sƒ’52òd”Âò6¶—VB¢ ¢ƒ“2ãG2’Â÷&–v–æÃ#sƒ2&WF–æVBÇW26—‚7F—F6‚–çFVw&F–öç2âæWrô7WBö66WFVC“S@§–6¶–ær÷&F–Â÷&VÆV6S3U52â÷&–v–æÃ“S26÷W&6R×FW7B&÷VæF&–W2¶WB–çF7BgFW ¦–æ—F–ÂæWrÖ'WGFöâÆ6VÖVçBW‡÷6VBf—‡GW&R6Æ–6S²'WGFöâFV6Æ&F–öç2&V6VFP¦&÷F‚6ÆÆ&6·2ÂæB÷&–v–æÂ76W'F–öç2&VÖ–âãs2ós’–çfVçF÷'’æ÷s#v—F‚WfW'¦öÆBFööÂ&WF–æVBâæòöÆB&V†f–÷"76W'F–öâ&VÖ÷fVB÷"&VÆ†VBâÖ–â÷–6¶W"÷FövvÆRð¤VFvR×–çC“SBÂ6vS“3ô×VÇF“ãög&÷¦Vâ'—FW2Væ6†ævVBâ&Wf–WvVC’Öf–ÆR&WfW'6RUbð¤FBô×VÇF’ôÆ"öv—¦Öò6Æ÷7W&S“SRæB&V6÷fW'’–ç3²gVÆÂ†÷7FVBõvW2öÆ—fR&ööbföÆÆ÷w2à¤7GVÃ“SR•BfVVÂöfÆB×7F—F6‚v÷&¶fÆ÷r66WFæ6RVæF–æs³“S2ó“SBW6W"52&÷FV7FVBà  ¢22ã“SRV&Æ–6F–öâfW&–f–VB(	B#Bö7Fö&W"##b„'&—6&æR ¥'VçF–ÖR#c&FSCS3#vc–CcƒS#C6c3&6&3&SCF&s“ÂFW7FVBG&VP¦3ƒ&ffS3SƒƒC#3c#“SssCƒfCVVcsƒcSV3fÂV&Æ—6†VBöâÖ–ââÆÃ‚WÆöFV@¦&Æö'2æBv—BFFG&VRÖF6†VBÆö6Â†6†W3²fWF6†VBÖ–âÖF6†VBW†7FÇ’æBÆö6À¦6†V6¶÷WBÆ–væVB6ÆVæÇ’âÆö6ÂæöFS#BgVÆÃ#sƒ•52ód”Âó6¶—ƒ“2ãG2“²†÷7FV@¤æöFS#"'VãCCSƒS#Sö¦ö##s#s#ƒƒ‚6ö×ÆWFRÆöw2fW&–g“#sƒ’óóƒ#CBã—2’à¥vW3CCSƒS##R'V–ÆC#s#s#ƒ3sƒ‚öFWÆ÷“#s#sCc“R5T44U52âÆÃ#6†V6¶VBÆ—fP¦f–ÆW2'—FRÖÖF6ƒ¢6†VÆÂ÷fW'6–öâÂ4ôÕÄUDR6†ævVBUbôFBô×VÇF’ôÆ"öv—¦Öòw&‚À§&V6÷fW'’Â&WF–æVC“SBÖ–â÷–6¶W"ö6ö×öæVçB×FövvÆRôVFvR×–çBÂv÷&·76S“S"ö6vS“3ð¤×VÇF“ãög&÷¦Vä&WFrâ7GVÂ÷&–v–æÂÖ¶UÆæRƒ"Ã"Ã’¶WFöÖF–2…¢æF—fRUb÷væW ¦Ç6ò6Öö¶R×FW7FVB7WN(i%7F—F6Ž(i&öæR—6ÆæBâF†—2&ööb6†ævW2f÷W"6öçF–çV—G’f–ÆW0¦öæÇ“²FW7FVB÷V&Æ—6†VB'VçF–ÖR&WF–æVBâW6W#“S2æC“SB52&V6÷&FVB÷&÷FV7FVBà ¤'V–ÆC“SR6ö×ÆWFRæB&VG“¢Vç–çFVBUbÆæRƒ"õ“(i"6†&VBVFvR7WBUg2(i"4ÔP§6VÆV7FVB6VÒ7F—F6‚Ug2(i"ö&¦V7BUbVF—F÷"6†÷w2ôäR¦ö–æVB—6ÆæBâVæ6–Â—6Ææ@¦Ö÷fRÖ÷fW2&÷F‚f6W3²VæFõ&VFò&W7F÷&W2÷&VÆ–W27F—F6‚6W&FVÇ’g&öÒ7WBâ–ç@§F†Vâ6fT÷Vâ&WF–ç2Æ–÷WB÷&W7VÇBâv†öÆRGvò6†'G2×W7B6†&RöæRfÆB6÷W&6P§ÆæS²7W'fVBö7V&RÖ6÷&æW"ö&VçB6†'G2&VgW6RÂæòvVæW&ÂVçw&÷"6VÒ&V6—Rà¤7GVÃ“SR•BV&æ6RöfVVÂ&VÖ–ç2VæF–ærâæW‡B7GVÃ“SRfVVF&6²&Vf÷&R'&öFW §7F—F6‚÷Vçw&v÷&³²&WF–â66WFVC“S27WG2ó“SB–6¶–æró“S"T’æB÷&–v–æÂ÷væW'2à  ¢22ã“Sb(	B&÷VæFVBævÆRÖ&6VBWFòFÆ3²C“bÖf6RÆ–Ö—B(	B#Bö7Fö&W"##b„'&—6&æR ¥W6W"&WVW7G2WFöÖF–26öææV7FVBÖf6R7F—F6†–ærGW&–ærFÆ2vVæW&F–öâÂ&7F–6À¦f6RÆ–Ö—BÂ&÷VæFVB'VçF–ÖRÂF†Vâ7VvvW7G2VFvRævÆRâÇ6ò6·2v†WF†W"æÖV@¢æ&÷†Æ"6fW26â÷fW'w&—FRW†—7F–ærF÷væÆöG2f–ÆW2âæó“SRFWf–6R52–æfW'&VC°£“S27WBUg2ó“SB–6¶–æró“S"VF—F÷"66WFæ6R&VÖ–â&÷FV7FVBà ¤VF—BÖ–ã3“3“s†#3¢6÷Ææ"FÆ2Ç&VG’¦ö–ç2fÆB6†'G2F‡&÷Vv‚÷&–v–æÀ¦–ç7V7F÷"F¦6Væ7’²&÷‚&ö¦V7F–öâÂ'WBv2Æ&VÆÆVB6V6öæF'’æB6VC#†f6W3°¥6²öFVç6—G’Ç6ó#‚v—F‚f—†VC"Rv2ÂæBvÆö&ÂÆæR6VVB6V&6‚v2VG&F–2à¥&WW6R4ÔRW†—7F–ær'WGFöâö÷væW"2&–Ö'’WFòFÆ2†&Vf÷&RW‡Æ–6—Bf6RFÆ2’À¦FB¦ö–âævÆS(	33+öFVfVÇCRâ’7&VFT6÷Ææ$FÆ5Ub6—‡F‚÷F–öæÂævÆRFVfVÇG3À§&W6W'f–ær66WFVBfÆB÷WGWG2æBÖçVÃ“SRÆæRw&÷W–ærã+ÒW†7B&–÷ ¦6÷Ææ"öÆ–7’â÷6—F—fRævÆR&WV—&W2$õD‚F¦6VçBfW&vRf6RÖæ÷&ÖÂævÆP¦æBf—†VB6VVBÖæ÷&ÖÂ6öæRv—F†–â7WFöfbÂ÷÷6—FRÖæ–föÆBVFvRF—&V7F–öç2æ@¤U„5B÷&–v–æÂ&÷‚UbVæGö–çG2âæòG&–gBÆöær7W'fVB6†–ç2Â6ö÷&F–æFRvVÆF–ærÀ§6V6öæBG&–æwVÆF÷"öF¦6Væ7’ö†—7F÷'’÷væW"÷"6ÆÇ2FòÖçVÂ7F—F6‚–âÆö÷à ¥F†—2—2&÷VæFVB&ö¦V7FVBÖ6†'Bw&÷W–ærÂæ÷B6öæf÷&ÖÂVçw&÷&VÆ†F–öâ÷"&&—G&'¦7V&RÖæWBVæföÆF–ærâF–ffW&VçB&÷‚F—&V7F–öç2&VÖ–â6V×3²†–v†W"ævÆRÖ’7G&WF6‚à¥v'VBf6W27F’6W&FRC+ÂÖ’¦ö–â–âævÆRÖöFR–b÷&–v–æÃ“SG&–ævÆRö&V§fÆ–FF–öâ7V66VVG2âæò6÷W&6RöÇ–vöç2÷÷6—F–öç2öw&÷W2÷"W'6—7FVçB66†VÖ6†ævW2à¤÷&–v–æÂ&—fFR&÷‚(i"w&÷WVBFVç6—G’(i"6²(i"ôäRæF—fR6öÖÖ—B&WF–æVBâÆÂ–ç@¦6†ææVÇ27F–ÆÂ&WV—&RW‡Æ–6—B6ÆV"–çC²Vç7W÷'FVB÷7FÆRö†—7F÷'’÷v÷&²&VgW6À¦FöÖ–2âW‡Æ–6—Bf6RFÆ2&WF–ç2öæR—6ÆæBW"f6RæBW†7B6ÖÆÂ÷WGWG2à ¤FÆ2f6R6C“bƒ3,9s#‚’Â÷&–v–æÃ#²f6RÖ6÷&æW"'VFvWB&WF–æVBâ6†&VB6²ÆÀ¦æBWVÆ—¦RFVç6—G’7W÷'CC“b—6ÆæG26òÆ&vRFÆ2&VÖ–ç2VF—F&ÆRâÖçVÃ“SP¥7F—F6‚7F–ÆÂ†2—G2–æFWVæFVçB6öç6W'fF—fS#‚Öf6R66÷Râ÷&–v–æÂÃÓ#‚Ö—6Ææ@§6¶–ærv"RæBW†7B÷WGWB&WF–æVC²Æ&vW"Æ–÷WG2W6Rvã"ö6V–Â‡7'B†6÷VçB’’À¦÷WFW"Ö&v–ã"RÂ4ÔRFWFW&Ö–æ—7F–26öÖÖöâ×66ÆRw&–B6V&6‚†BÖ÷7CC“b6öÇVÖç2’à¤CC“b6†'G2F†—2—7ã2ã'‚vöã#BÖ3²æòÆ&vW"FW‡GW&R&W6öÇWF–öâ6Æ–ÖVBà ¥6ÖRÆæRö6öæRw&÷W–ær÷væW"æ÷r–æFW†W26VVB'V6¶WG2f÷"ã#†f6W3¢Öƒƒ'V6¶W@¦Æöö·W2ócB6VVB6æF–FFW2W"f6Rƒ#rÆöö·W2f÷"÷6—F—fRævÆR’ÂF†Vâõ$”t”äÀ§7G&–7B6VVBFW7G2â÷fW&ÆöFVB'V6¶WG26öç6W'fF—fVÇ’ÆVfRW‡G&6†'G26W&FRà¥6ÖÆÂf—†VB×ÆæR÷WGWBF‚Væ6†ævVC²æò—FW&F—fR7F—F6†–ær÷&VÆ†F–öâö÷F–ÖÀ§6¶W"â†÷7B6Öö¶SC“bÖf6R÷&–v–æÂFBÆæS£\+WFó3Bãf×2Ã+CBãF×2Äf6Sbãv×3°§F†W6R&R6–ævÆRÆö6Â5Rö'6W'fF–öç2ÂäõB•BÆFVæ7’÷"F–Ö–ær&öÖ—6Rà ¥6WfVâæWr–çFVw&F–öç26÷fW#C“bÖf6RWFòôf6RÂW†7B¦ö–ç2övVöÖWG'’÷VW"÷væW'6†—ð§&WVBööæR6†V6·ö–çC²Æ&vR6²öFVç6—G’æB&VGV6VBv7FVBUb&V²v'VBfÆÆ&6²ð¦F—66öææV7FVBÆæW3²Æ–Ö—G2÷&VgW6Ç3²7GVÃ#BÖf6R†—7F÷'’÷–çBõ6fT÷VâôtÄ#°§&–Ö'’W†—7F–ærT’öævÆRf÷'v&F–æs²W†7B6ÖR&WVW7FVBF÷væÆöBf–ÆVæÖRGv–6S°¦æB6†ÆÆ÷r÷6†'ævÆRF‡&W6†öÆG2Âf—†VBÖ6öæRG&–gBæC#SbÖf6Rf7BF‚âW†—7F–æp£#‚Ö&÷VæF'’&VgW6Âf—‡GW&W3ƒ“2óƒ“Ró“C’ó“Só“S2Ö÷fVBFóC“rv—F†÷WBG&÷–ærç¦FöÖ–6—G’76W'F–öã²&–÷##‚7V66W72FW7G2&WF–æVBã“SæVÂf—‡GW&RW‡Æ–6—FÇ“+à¤÷&–v–æÂ÷F†W"'VçF–ÖRÆv÷&—F†×2&WF–æVC²gVÆÂæBV&Æ–6F–öâ&ööbföÆÆ÷w2à ¥6fRVF—C¢&ö¦V7Df–ÆTæÖRöW‡÷'D&6–5&ö¦V7BÇ&VG’&WVW7BU„5B6†÷6VâæÖRÀ¦æòVæFVB6÷VçFW"â6f&’ö”õ2F÷væÆöG26öÆÆ—6–öâæÖ–ær—2÷WG6–FRF†—2F÷væÆö@¤’â7W'&VçBÔDâ&–Ö'’6ö×F–&–Æ—G’FF&V6÷&G26†÷u6fTf–ÆU–6¶W"Vç7W÷'FV@¦–â6f&’ö”õ3²6‡&öÖRw2’Fö7VÖVçFF–öâW‡Æ–6—FÇ’6—2æ6†÷"ÖF÷væÆöBfÆÆ&6°¦6ææ÷B÷fW'w&—FRâæò&—6·’&WÆ6VÖVçBö†–FFVâ–çFW&æÂ6fRöæWrf–ÆW7—7FVÒfVGW&P¦FFVBâW†—7F–ær6fRô÷Vâö6öFV2Væ6†ævVC²&Vw&W76–öâ&÷fW2Gvò–FVçF–6Â&WVW7FV@¦æÖW2â6÷W&6W26†V6¶VC#Dö7C##c ¦‡GG3¢ò÷&ræv—F‡V'W6W&6öçFVçBæ6öÒöÖFâö'&÷w6W"Ö6ö×BÖFFöÖ–âö’õv–æF÷ræ§6öà¦‡GG3¢òöFWfVÆ÷W"æ6‡&öÖRæ6öÒöFö72ö6&–Æ—F–W2÷vV"Ö—2öf–ÆR×7—7FVÒÖ66W727öÇ–f–ÆÆ–æp ¤DUd”4S“Sc¢&Wf–÷W6Ç’÷fW##‚Öf6RVç–çFVBÖW6‚(i"ö&¦V7BUb(i"WFòFÆ3\+°¦6†V6²F–ÖRæB6†'B6÷VçBâ6ö×&S+ó\+öâ6†ÆÆ÷r&VæG2Â6†'W"6÷&æW'2&WF–à§6V×3²w&VFW"ævÆW2Ö’7G&WF6‚âUbVF—F÷"õ6²õVæFõ&VFó²–çBæB6fT÷Vâ&W7VÇBà¤æWrÆ–Ö—G3C“ff6W2ó#¶6÷&æW'2Âæ÷BVæÆ–Ö—FVBâæW‡BföÆÆ÷r&VÂ•BVÆ—G’öÆFVæ7¦fVVF&6²&Vf÷&R'&öFVæ–ærVçw&³“SRÖçVÂ7F—F6‚FWf–6RvFR&VÖ–ç26W&FRà ¢22W6W"&öGV7BF—&V7F–öâ(	B–çBÂf6Vw&÷W2æBw&†–6ÂT’(	B#Bö7Fö&W"##` ¥W6W"W‡Æ–6—FÇ’6—2F†W6R&ReUEU$RuT”DTÄ”äU2Âæ÷B–ÖÖVF–FR&WVW7G2Fò–×ÆVÖVç@¦ÆÂöbF†VÒ–ã“Sbâ&W6W'fR7W'&VçBFÆ2'V–ÆB66÷RâgWGW&RF—&V7F–öã ¢Ò–çBf6Vw&÷W2F—&V7FÇ’öâF†RÖW6ƒ¢76–vâW†—7F–ærÖW6‚æf6Tw&÷W2W"öÇ–vöâÀ¢æ÷B$t"FW‡GW&R—†VÇ2âW†—7F–ær6ÆöæRö†—7F÷'’÷&ö¦V7Bôô$¢ôäôÒw&÷W÷væW'27F¢WF†÷&—FF—fRâ&WW6R7W&f6Rf6R–6¶–ærõVæ6–Âöæf–vF–öã²UbÖg&VRw&÷W×F&vW@¢æVVG2FVÆ–&W&FRF&vWBfÆ–FF–öâ&F†W"F†â&WFVæF–ær7W'&VçBUb–çFW"Ç&VG¢7W÷'G2—BâöæR66VæR6†V6·ö–çBW"7G&ö¶S²æò&ÆÆVÂÖW6‚öw&÷Wö†—7F÷'’¶W&æVÂà¢Ò'&–ær&öGV7F–öâ–çB–çFòÖ–ç7G&VÒ66W73²7W'&VçBf–Ww÷'B×–çBæ§2ÆVæ6†W ¢—2–âf–ÆRâ&V6öææV7B÷&–v–æÂ–çFW"÷6W76–öâÂæ÷B6V6öæB–çF–ær–×ÆVÖVçFF–öâà¢Ò6öçFW‡GVÂ–çB&F–Âf÷"''W6†W2æBÆ–W'2öÖ6·2Â&WF–æ–ær÷&–v–æÂ6öçG&öÇ2ð¢7F–öâ÷væW'2æBF†R66WFVBÆVgBFö6²VçF–ÂFVÆ–&W&FVÇ’Ö–w&FVBæBFW7FVBà¢ÒÖ÷&Rw&†–6ÂT“¢6öç6—7FVçBgVæ7F–öâ–6öç2v—F‚4ÔÄÂd•4”$ÄRFW‡B6F–öç2&VÆ÷rÀ¢–ç7—&VB'’W6W"w2WÆöFVBæöÖB67VÇB67&VVç6†÷CCd3dC32Ó“rÓC”RÔ3cbÓS$#“D#„CƒCà¢¶VW&VF&ÆRÆ&VÇ2ö66W76–&–Æ—G’÷F÷V6‚F&vWG3²6ö†W&VçB–6öâfÖ–Ç’æB7F—fR7FFRà¢7FvR6†ævW2–â6ÖÆÂ&Wf–WvVB7W&f6W3²&WF–â66WFVB&F–ÂÆö6F–öç2ÂvW7GW&W2À¢fö7W2Â†—7F÷'’æBÖöFVÆÆW"&V†f–÷"âæòv†öÆW6ÆR&W6¶–âWFöÖF–6ÆÇ’WF†÷&—¦V@¢2F†RæW‡BVçFW7FVB6†ævRâF†W6RF—&V7F–öç2&VÖ–â–â&öFÖgFW"FÆ2fVVF&6²à ¤VF—C¢ÖW6‚æ§27F÷&W27G&–æröçVÆÂf6Tw&÷W2æB&W6W'fW2F†VÒöâ6ÆöæS²÷&–v–æÀ¦f6Vw&÷WÖ6öÆ÷W'2Ö6÷&RF—7Æ—2F†VÒâ&Wf–WrÇ&VG’†26÷W&6RÖf6RG&–ævÆRÖ–ærà£“SbFöW2æ÷B6†—f6Vw&÷W''W6†W2ÂæWr–çBVçG'’Â–çB&F–Â÷"–6öâ&VFW6–vâà ¢ã“Sbf–æÂÆö6ÂæöFS#Bã’ãgVÆÂ&Vw&W76–öã¢¢£#s“b52òd”Âò6¶—VB¢ ¢ƒãW2’Â÷&–v–æÃ#sƒ’ÇW26WfVâæWrFÆ2öævÆR÷6fRÖæÖR6†V6·2âfö7W6VBFÆ3“C’ð£“Só“SÂ7WC“S2÷7F—F6ƒ“SRÂ6²öFVç6—G’÷&VÆV6SS52âöæÇ’÷&–v–æÂÆ–Ö—BÖ&÷VæF'¦f—‡GW&W2Ö÷fVBFò&WVW7FVCC“s²FöÖ–2&VgW6ÂæB&–÷##‚7V66W72&WF–æVBà¤÷&–v–æÃ“SæVÂf—‡GW&RW‡Æ–6—FÇ’6†ö÷6W3+VæFW"æWrT’ævÆRf÷'v&F–ærâæð§6¶—VB&V†f–÷"6†V6·2â&Wf–WvVC‚Öf–ÆRUbôFBô×VÇF’ôÆ"&WfW'6R66†R6Æ÷7W&S“Sc°¦Ö–â÷–6¶–æs“SBöv—¦Öó“SR÷v÷&·76S“S"ô×VÇF“ãög&÷¦VâVæ6†ævVBâ6fRô÷Vâ÷væW"Ç6ð§Væ6†ævVC²6f&’W‡FW&æÂÖF÷væÆöB÷fW'w&—FRÆ–Ö—FF–öâfW&–f–VBg&öÒ&–Ö'’6÷W&6W2à¤†÷7FVBõvW2öÆ—fR&ööbföÆÆ÷w2âæó“SR÷#“SbFWf–6R52–æfW'&VBà  ¢22ã“SbV&Æ–6F–öâfW&–f–VB(	B#Bö7Fö&W"##` ¥'VçF–ÖR6öÖÖ—Bc#s“fVCS&V&f#“c“–CV#–3VSƒs“&#““V&öâÖ–ã²W†7BFW7FVBG&VP¦#s&&#ƒf3sc–S†6ƒSF&c“†66c3–CƒV3FSCƒ&C†âÆö6ÂæöFS#Bã’ã£#s“b52À£d”Âó6¶—VBƒSãf×2“²fö7W6VBFÆ2÷6²öFVç6—G’÷&VÆV6S£S52à¤†÷7FVBæöFS#"F÷öÆöw’&Vw&W76–öâ'VãCCss33cRö¦ö##s33ƒsscB5T44U53 £#s“b52Ãd”Âó6æ6VÆÆVBó6¶—VBƒCcC#ã&×2’Â6ö×ÆWFVC##bÓÓ#EC£#£Ce¢à¦‡GG3¢òöv—F‡V"æ6öÒô7&—4&W§¢ô&÷„Æ"ö7F–öç2÷'Vç2óCCss33cP¥vW2'VãCCss333s5T44U52â66†RÖ'W7FVBV&Æ–2tUG3£#ó#'—FRÖ–FVçF–6ÂFòFW7FV@¦6†V6¶÷WBÂ–æ6ÇVF–ærfW'6–öâö–æFW‚ÂÆÃ‚&Wf–WvVBUbôFBô×VÇF’ôÆ"6†ævVB76WG2À§&VÆV6RÆöFW'2Â&÷FV7FVC“SBÖ–â÷–6¶W"÷FövvÆRöVFvR×–çBÃ“S"v÷&·76RÃ“SRv—¦ÖòÀ£“36vR&F6†–ærÄ×VÇF“ãæBg&÷¦Vâ&WFrÖ&¶W"âf—'7B&RÖFWÆ÷–ÖVçBtUB&WGW&æV@¦öÆB'VçF–ÖS²g&W6‚&WVW7G2gFW"FWÆ÷–ÖVçBÖF6†VBWfW'’f–ÆRâæòÖ—†VBÆ—fR'V–ÆBà¦‡GG3¢òöv—F‡V"æ6öÒô7&—4&W§¢ô&÷„Æ"ö7F–öç2÷'Vç2óCCss333s  ¥&VG’f÷"DUd”4S“Sc¢&Wf–÷W6Ç’÷fW##‚Öf6RVç–çFVBÖöFVÂ(i"ö&¦V7BUb(i"WFòFÆ0£\+²–ç7V7B—6ÆæG2÷F–ÖRâ6ö×&S+ó\+6†ÆÆ÷r&VæG2æB6†'6VÒ&WFVçF–öâà¥VæFòõ&VFòÂ–çBæWrÖÂF†Vâæ&÷†Æ"6fRô÷Vâ6†÷VÆB&W6W'fRUg2æB–çBà£“S2ó“SBó“S"52&÷FV7FVBâæó“SRó“SbFWf–6R52–æfW'&VBâgWGW&Rf6Vw&÷W''W6†W2À¦Ö–ç7G&VÒ–çB66W72Â–çBöÆ–W"&F–ÂæB6F–öæVB–6öâT’&VÖ–â&V6÷&FV@§&öFÖF—&V7F–öç3²æöæR&R'Böc“Sb'VçF–ÖRâ6f&’÷fW'w&—FRÆ–Ö—FF–öâ&VÖ–ç0¦'&÷w6W"Ö÷væVC²6fRô÷Vâf–ÆVæÖR÷væW"Væ6†ævVBâFö72ÖöæÇ’&ööb6öÖÖ—BföÆÆ÷w2à ¢22ã“Sr(	Bf&–&ÆR×6—¦R6†VÆb6¶–æs²ã“Sb52(	B#Bö7Fö&W"##` ¥W6W"ã“Sb52öæW‡F'V–ÆB&÷FV7G2ævÆRWFòFÆ2æBÆ&vW"Æ–Ö—G2âVF—BÖ–à£ƒ&FFcFS¢6¶VDÆ–÷WBÆÆö6FW2–FVçF–6Â6VÆÇ2W6–ærÆ&vW7B6†'B&÷VæG3²÷&–v–æÀ¥Ubv÷&·76R7F–ÆÂF—6&ÆVB6²öFVç6—G’&÷fS#‚FW7—FSC“bÖ6&ÆR÷væW"à¤W‡FVæB4ÔR6¶VDÆ–÷WBv—F‚†V–v‡B÷v–GF‚ô”B6÷'FVBæW‡BÖf—B6†VÇfW2æC#B&÷VæFV@¦6öÖÖöâ×66ÆRG&–Ç2â6†ö÷6RöæÇ’–b6öÖÖöâ66ÆR7G&–7FÇ’–×&÷fW2÷fW"÷&–v–æÀ¦w&–C²WVÂ×6—¦VB6†'G2&WF–â÷&–v–æÂw&–Bâæò6†'B&÷FF–öâÂ6†RæW7F–ærÀ§&VÆ†F–öâÂ6VÒ6†ævW2÷"÷F–ÖÂ×6¶–ær6Æ–Òâ6÷W&6RvVöÖWG'’æB÷&–v–æÀ¥Ubö†—7F÷'’÷–çB&VgW6ÂöçVÖW&–2Ö6öÆÆ6RfÆ–FF–öâ&WF–æVBâÆÂ6ÆÆW'2„WFòð¤f6RFÆ2Â6²Â7WBõ7F—F6‚&W6²’&WW6R÷&–v–æÂ÷væW"âv÷&·76R6²öFVç6—G¦æ÷rVæ&ÆVBF‡&÷VvƒC“b—6ÆæG2âÖ&v–âæB6÷VçBÖFWVæFVçBv2Væ6†ævVBà¤æWrFW7G2fW&–g’Ö—†VB×6—¦R6÷fW&vRÂ6öÖÖöâ&VÆF—fRFVç6—G’Â6W&F–öâÂ&÷VæG2À¦FWFW&Ö–æ—6ÒÂWVÂ×6—¦RfÆÆ&6²æB7GVÂv÷&·76S#’óC“bóC“r6öçG&öÂvF–ærà¥fÆ–FF–öã¢gVÆÂ7V—FS#s“u52ód”Âó6¶—ƒ“‚ã‡2’ÂÇW2GvòæWr6†VÆbFW7G0¥526W&FVÇ’†FFVBgFW"gVÆÂ'VâVçVÖW&FVBf–ÆW2“³#s“’F—7F–æ7BFW7G26÷fW&VBà¥&VÆV6R¶æWr6¶–ær÷v÷&·76Rfö7W6VC52âæò76W'F–öç2&VÖ÷fVB÷&VÆ†VBà¥V&Æ—6†VB'VçF–ÖR63f#v3#CƒƒsSv3#ƒ–3CfS3C†6SCC3s²W†7BFW7FVBG&VP¦3#&C6#f&fSs†63cC3–##ƒfFC†&##cVfW&–f–VB&Vf÷&RWFF–ærÖ–âà¥vW3CcsSSs"5T44U53³"ó"V&Æ–2f–ÆW2'—FRÖÖF6‚†ÆÂ6†ævVB'VçF–ÖRö66†P¦ÆöFW'2ÇW2&÷FV7FVBÖ–ã“SBô×VÇF“ã’â†÷7FVB&Vw&W76–öãCcsSS“c"ö¦ö##s“3sSc3sR5T44U53²6ö×ÆWFR†÷7FVBÆöw0§fW&–g“#s“•52ód”Âó6¶—âÆö6ÂgVÆÂæBfö7W6VB6†V6·2&÷fR76VBà¤æòFWf–6S“Sr52–æfW'&VBâFö72ÖöæÇ’&ööb6öÖÖ—BföÆÆ÷w3²'VçF–ÖRVæ6†ævVBà¥&Wf–WvVB&WfW'6R66†Rw&ƒ“Ss²Ö–ã“SB÷–6¶W#“SBöv—¦Öó“SRô×VÇF“ãög&÷¦VâVæ6†ævVBà¤DUd”4S“Ss¢Vç–çFVBf&–VB×6—¦RÖW6‚(i"WFòFÆ2(i"–ç7V7B6¶–æs²W†—7F–ærU`¦Æ–÷WB(i"6²ÆÃ²VæFõ&VFó²–çBF†Vâ6fT÷Vââ–çFVBF&vWG2&WV—&R6ÆV"–ç@¦&Vf÷&RUb&W6¶–ærâ&–vvW"6†'B&÷VæF–ær&÷†W2Fòæ÷BwV&çFVRF–v‡B6öæ6fRæW7F–ærà¤æW‡BföÆÆ÷r7GVÂ6¶–ærVÆ—G’öFWf–6RF–Ö–ær&Vf÷&R'&öFW"Vçw&÷"T’6†ævW2à ¢22ã“S‚(	BUb÷W6Æ—–ær6öçF–æÖVçB(	B#Bö7Fö&W"##` ¥W6W"67&VVç6†÷Bd”$#c”Böã“Sr6†÷w2&–v‡BFööÆ&"æB&÷GFöÒ7FGW2F—6V&–æp¦BF†R4ÔRfW'F–6Â&÷VæF'’v†–ÆRUbDôôÅ2÷W—2÷VâÂ&Vf÷&RUbv÷&·76Rà¤æ÷B7FÆR6†VÆÃ²æ÷BWf–FVæ6Rv–ç7C“Sr6¶–ærâæó“SrFWf–6R52–æfW'&VBà¤VF—B6†&VBFööÂ×6W76–öâ×V’&Vv–ã¢UbFööÇ2W6W2G&ç6f÷&ÖVB67&öÆÆ–ær6†&VBFö6²à¤W†—7F–æs“S"v÷&·76R6–&Æ–ærf—‚FöW2æ÷BÇ’FòF†—2&V6VF–ær÷Wà¤æ'&÷rÖ—F–vF–öã¢÷&–v–æÂUb×FööÇ2†÷7BW6W2ÆVgB÷&–v‡C‡‚²WFòÖ&v–ç2–ç7FV@¦öbG&ç6ÆFU‚6VçG&–ærÂÆö6Â—6öÆF–öâæBÆ–÷WB÷–çB6öçF–æÖVçBâ÷&–v–æÂæöFW2À¦Æ—7FVæW'2Âv–FR&öG’ö7F–öç2Â†—7F÷'’æBÆÂUbÆv÷&—F†×2Væ6†ævVBâ6ÆV"F†W6P¥UbÖöæÇ’7G–ÆW2&Vf÷&RF†RæW‡BFö6²†–æ6ÇVF–ærÆVgB–çB“²÷&F–æ'’FööÇ2¶VW §6†&VBÆ6VÖVçBâæòæWrVF—F÷"Âö–çFW"Æ—7FVæW"Â&W6—¦RöÆÆ–ær÷"¢Ö–æFW‚W66ÆF–öâà¤W†7B•BõvV$¶—B6ö×÷6—F÷"f–ÇW&R—2äõB&W&öGV6VB†W&S²F†—2—2F&vWFV@¦6öçF–æÖVçB&W—"&WV—&–ærFWf–6R66WFæ6RÂæ÷B&÷fVâ'&÷w6W"ÖVæv–æRF–væ÷6—2à¤æWrFW7BW†V7WFW2÷&–v–æÂ&Vv–âf÷"Un(i%–çN(i&÷&F–æ'’FööÂæBfW&–f–W266÷VB6Æ—À§G&ç6f÷&ÒÖg&VRUbÆ6VÖVçBæB7G–ÆR6ÆVçWâ&VÆV6R6öçG&7Bö66†R¶W—2&Wf–WvVC“Sƒ°¦Ö–ã“SB÷–6¶W#“SBô×VÇF“ãög&÷¦VâæC“Sr6¶–ær÷v÷&·76RVæ6†ævVBà¤DUd”4S“Sƒ¢&WVBö&¦V7N(i%UbæB6Æ÷6RÂvF6‚gVÆÂF÷×&–v‡BFööÆ&"÷7FGW3²WFòFÆ2À¤÷VâUbVF—F÷.(i$&6²Fó4BÂF†Vâ–çBæBæ÷F†W"FööÂFò6†V6²÷W÷6—F–öç2à¤æW‡B7GVÃ“S‚•B6Æ—–ær&WFW7B&Vf÷&RgW'F†W"Vç&VÆFVBFWfVÆ÷ÖVçBà¤–æ—F–ÂgVÆÂ'Vâf÷VæBöæRöÆCs76W'F–öâ&WV—&–ærÆVgCSRf÷"Ub2vVÆÂ0¦÷&F–æ'’FööÇ3²WFFVBöæÇ’UbW‡V7FF–öâFò–ç6WC‡‚÷&–v‡C‡‚öæò×G&ç6f÷&ÒÀ§&WF–æ–ærWfW'’÷F†W"ÆVæ6‚ö6Æ÷6Rö†—7F÷'’6†V6²âfö7W6VC#52âf–æÂgVÆÂ×'Vã#ƒ52ód”Âó6¶—ƒ“Bã“W2’âV&Æ–6F–öâWf–FVæ6RföÆÆ÷w2âæó“Sr6¶–ær6÷W&6R6†ævVBà ¢ã“S‚V&Æ–6F–öã¢'VçF–ÖS†FV&CCVCcƒ#VC#†S“VfSCƒfSCC“–#–SRöâÖ–âà¥FW7FVBG&VS&ƒf3Cs3VCCVSSv#&6#fc##FS#c666&BÖF6†VBWÆöFVBv—BG&VRW†7FÇ’à¤Æö6Âf–æÃ#ƒ52ód”Âó6¶—²fö7W6VC#52âvW3CcƒSƒscƒ5T44U52à¤ÆÃ26†V6¶VBV&Æ–2f–ÆW2'—FRÖÖF6‚FW7FVB6†V6¶÷WC¢6†VÆÂ÷fW'6–öâöæWr6W76–öâT’À§&WF–æVC“SrUb÷6¶–æröÆöFW'2æB&÷FV7FVBÖ–ã“SBô×VÇF“ãâæò6¶–ærÆv÷&—F†Ð¦6†ævW3“S‚â†÷7FVB&Vw&W76–öãCcƒSƒƒ“Rö¦ö##s“c“C#B5T44U53£#ƒ52ód”Âó6¶—à¤7GVÂ–çFW&Ö—GFVçB•Bf–ÇW&Ræ÷B&W&öGV6VC²DUd”4S“S‚÷Wö†VFW"÷7FGW2&WFW7@§&WV—&VBâæó“Sró“S‚FWf–6R52–æfW'&VBâFö72ÖöæÇ’V&Æ–6F–öâ&ööbföÆÆ÷w2à ¢22ã“S’(	B&V6öææV7B&öGV7F–öâ–çB–âö&¦V7B&F–Ã²ã“S‚52(	B#Bö7Fö&W"##` ¥W6W#“S‚52öæW‡F'V–ÆB&÷FV7G2Ub×÷Wö†VFW"÷7FGW26Æ—–ær&W—"æB7G–ÆP¦6ÆVçW7&÷72Un(i%–çN(i&÷&F–æ'’FööÇ2â&–÷"VæF–æs“S‚FWf–6Ræ÷FW27WW'6VFVBà¤VF—BÖ–ãƒSSCFvS¢÷&–v–æÂö&¦V7B×&F–Â×6W76–öâÇ&VG’Ö2Ub–çBFò÷&–v–æÀ§f–Ww÷'E–çD'Fâ÷Wb×–çBõõö&÷†Æ%f–Ww÷'E–çBÂ'WBF÷FÂÖv—¦Öò&–æröÖ—GFVB'WGFöâà¤FBUb–çBB÷WFW#C\+&F—W3#3²WfW'’W†—7F–ær6V7F÷"7F—2–âÆ6Râ÷&–v–æÀ¦FFW"ÆVæ6†W24ÔR&öGV7F–öâ–çFW"Â÷vç26æ6VÆÆF–öâö6ö×ÆWF–öâöv—¦Öò†–FS°¦W†—7F–ærf–ÆRÆVæ6†W"&WF–æVBâ–çFW"÷Vç2ÆVgBFö6²æBVæf÷&6W2÷&–v–æÂöæP¦7F—fR–æFWVæFVçBUbö&¦V7B÷–çBF&vWBwV&G2âæòæWr''W6‚öÆ–W"ö†—7F÷'’ö–çW@¦÷væW"Âæò–çFW"6†ævW2÷"–6öâ÷fW&†VÂâ÷&–v–æÂÆVgB–çBW†6WF–öâ&WF–æVBà¤W‡FVæB÷&–v–æÃs–çfVçF÷'’öÆVæ6‚ö6Æ÷6R÷76–ærf—‡GW&Rv—F‚Ub–çC²ÆVgC‡€¦W‡V7FF–öâ–æ6ÇVFW2÷&–v–æÂ–çBFö6²ÂÆÂöÆB76W'F–öç2æB÷6—F–öç2&WF–æVBà¤Æö6ÂgVÆÃ#ƒ52ód”Âó6¶—ƒ“Rã“—2“²fö7W6VC•52Âf–æÂ&F–ÃE52à¤æò76W'F–öç2&VÖ÷fVBâV&Æ–6F–öâWf–FVæ6RföÆÆ÷w2âöæÇ’'VçF–ÖRgVæ7F–öæÆ—G“¢öæR&F–À¦'WGFöã²6†VÆÂ÷&V6÷fW'’öv—¦Öò66†R–ã“S’æB&Wf–WvVB76WB6öçG&7Bâ6W76–öã“S‚À¦Ö–ã“SB÷–6¶W#“SBô×VÇF“ãõUc“Sr÷6¶–ærög&÷¦VâVæ6†ævVBà¤DUd”4S“S“¢6VÆV7BöæRUbö&¦V7B(i"ö&¦V7B&F–Â(i"Ub–çB†÷WFW"WW"×&–v‡B“°¥Væ6–Â–çBÂf–ævW'2÷&&—B÷â÷–æ6‚ÂVæFõ&VFò7F—2–â–çC²Föæ^(i'&F–Î(i'&V÷Và§6ÖRÆ–W'2âG'’Ub÷W(i&6Æ÷6^(i%–çBæB–çN(i$Föæ^(i&æ÷F†W"FööÂâ6fT÷Vâ&WF–ç0§–çBâf–ÆR–çBVçG'’7F–ÆÂv÷&·2â–çfÆ–BöæòÕUbF&vWG2&WF–â÷&–v–æÂ&VgW6Âà¤æW‡BfVVF&6²öâÖ–ç7G&VÒ66W72&Vf÷&R6W&FR–çB×FööÂöÆ–W"&F–Â'V–ÆBà ¢ã“S’'VçF–ÖSSv6#6VSƒfFFcCƒsVS3–fFC“Ff6S†33ƒƒ‚V&Æ—6†VBöâÖ–ã²WÆöFV@§G&VSCƒ#vc63#VSƒVS–#C##sfSS“#Cs66VVCcbW†7FÇ’WVÇ2FW7FVBÆö6ÂG&VRà¤Æö6Ã#ƒ52ód”Âó6¶—Âfö7W6VC•52Âf–æÂ–çfVçF÷'’öÆ–fV7–6ÆSE52â†÷7FV@§&Vw&W76–öãCc“Ccö¦ö##s“ƒS“s5T44U53£#ƒ52ód”Âó6¶—°¥vW3Cc“C“#B5T44U52à¤ÆÃb6†V6¶VBV&Æ–2f–ÆW2'—FRÖÖF6‚FW7FVB6†V6¶÷WB‡6†VÆÂ÷fW'6–öâöæWrv—¦ÖòÀ¦÷&–v–æÂ–çFW"öFFW"÷6W76–öã“S‚õUc“Sr÷6¶–æröÖ–ã“SBô×VÇF“ãæBÆöFW"w&‚’à¥W6W#“S‚52W‡Æ–6—FÇ’&÷FV7FVC³“S’†æG2ÖöâvFR&VÖ–ç26W&FRâæó“Sr6¶–æp¥52–æfW'&VBæBæò6¶–ær÷–çBõUb÷6W76–öâÆv÷&—F†Ò6†ævVB–ã“S’à ¢22ã“c(	B6F–öæVB''W6‚×FööÂ&F–Â–â–çBFö6³²ã“S’52(	B#Bö7Fö&W"##` ¥W6W#“S’52öæW‡F'V–ÆB&÷FV7G2÷&–v–æÂö&¦V7B&F–ÂUb–çB66W72æB66WFV@£“S‚6Æ—–ærf—‚âVF—B7W'&VçC“–cvC¢–çFW"w2–çBÖ7F–öâ6VÆV7B÷vç2FööÀ§6WGF–æw2ö6†ævR6æ6VÆÆF–öâÂ''W6‚ôf–ÆÂôW&6W"õ6×VFvRô&ÇW"Ç&VG’–×ÆVÖVçFVBà¥&WÆ6Rf—6–&ÆR6VÆV7Bv—F‚æF—fRFWF–Ç2''W6‚FööÇ2–6¶W"–â4ÔR–çBFö6³°¦÷&–v–æÂ6VÆV7B&VÖ–ç2†–FFVâ26WGF–æw2öWfVçB÷væW"âf—fScl9sS'‚'WGFöç2öâ£##‚&F–ÂÂ5drgVæ7F–öâ–6öç2æBf—6–&ÆR6F–öç3²6VÆV7FVB&–×&W76VB†–v†Æ–v‡@¦æB6öÆÆ6VB7W'&VçB×FööÂ6F–öââV6‚6Æ–6²6†V6·2÷&–v–æÂ7F—fRöF—6&ÆVBvFRÀ§6WG2÷&–v–æÂ6VÆV7BæBF—7F6†W24ÔR6†ævRWfVçB†6ÆV"7FvVB–ÖvRö6æ6VÂÆ—fP§7G&ö¶R÷7–æ26öçG&öÇ2’â–6¶W"6Æ÷6W2öâ6†ö–6RæB6W76–öâVæBâòF—6&ÆVB6VÆV7F–öà¦—2Ö—'&÷&VBâæòæWrf–Ww÷'B–çWBÂ''W6‚&7FW"ö†—7F÷'’÷–çB&W6÷W&6R÷"Æ–W"÷væW"à¤66WFVBÆVgBFö6²öfö÷FW"öÆ–W'2÷6WGF–æw2övW7GW&R÷FööÂ÷6—F–öç2&WF–æVBâæòÆ–W §&F–ÂÂf6Vw&÷W2÷"'&öB&W6¶–â–ã“c²7FvVBw&†–6ÂT’öæÇ’öâF†W6SRFööÇ2à¥Gvò7GVÂ&öGV7F–öâT’–çFVw&F–öç3¢ÆÃRFööÇ2ö6F–öâ÷6VÆV7F–öâö&ÇW"6öçG&öÇ2ð¦æò†—7F÷'’æBF—6&ÆVB&VgW6Ã²Æ—fRVæ6–Â7G&ö¶^(i'&F–Â7v—F6‚6æ6VÇ2÷&–v–æÀ¦6öçF7Bv†–ÆR&WF–æ–ær6öÖÖ—GFVB–çBö†—7F÷'’æBæf–vF–öââ–æ—F–ÂæWrf—‡GW&P§&VB&–×&W76VBg&öÒ&÷W'G’–ç7FVBöbW†—7F–ærGG&–'WFW2Ö²6÷'&V7FVBFW7@¦66W72Âæò&öGV7F–öâv÷&¶&÷VæB÷"÷&–v–æÂ76W'F–öâ&VÖ÷fVBâæWr·&VÆV6Su52À¦÷&–v–æÃ“T’ö6÷&R·&VÆV6S%52âgVÆÂÆö6Ã#ƒ%52ód”Âó6¶—ƒ“rã#2“²V&Æ–6F–öâWf–FVæ6RföÆÆ÷w2à¤DUd”4S“c¢ö&¦V7N(i%Ub–çN(i$''W6‚FööÇ3²–ç7V7B–6öç2ö6F–öç2Â–6²''W6‚ôW&6W"ð¤f–ÆÂô&ÇW"õ6×VFvS²–6¶W"6öÆÆ6W2æB7W'&VçBFööÂ6F–öâföÆÆ÷w2â–çBõVæFõ&VFòÀ¦f–ævW"æf–vF–öã²Föæ^(i'&V÷VâæBfW&–g’6ö×7BFö6²öÆ–W'2âUb÷W6Æ—–æp¦æC“S’ö&¦V7B&F–ÂVçG'’&VÖ–â&÷FV7FVBâæW‡BfVVF&6²&Vf÷&RÆ–W"öÖ6²&F–Âà ¢ã“cV&Æ–6F–öã¢'VçF–ÖScc–C#s“CFf3Cv3ƒc3–Ss&S33“F#C3FSF#F"öâÖ–ã°¦W†7BFW7FVBG&VV#&C†63ƒVSsƒsS–CfS6#f3ff36CƒCVcc“SƒbÖF6†VBv—BWÆöBà¤Æö6Ã#ƒ%52ód”Âó6¶—ƒ“rã#2“²æWr÷&VÆV6Su52æB÷&–v–æÃ“÷&VÆV6S%52à¥vW3CsCC#c’5T44U53³bób6†V6¶VBV&Æ–2f–ÆW2'—FRÖ–FVçF–6ÂFòFW7FVB6†V6¶÷WC §6†VÆÂ÷fW'6–öâöæWr–çFW"Â&WF–æVC“S’v—¦ÖòöFFW"Ã“S‚6W76–öâ†÷7BÃ“SrUb÷6¶–ærð¦ÆöFW'2ÂÖ–ã“SBô×VÇF“ãæBÆ"w&‚â†÷7FVCCsCC#cS‚ö¦ö##ƒSSCC#ƒ5T44U53£#ƒ%52ód”Âó6¶—à¥W6W#“S•52&÷FV7FVBâDUd”4S“c–6öâ76–ær÷6VÆV7F–öâ÷–çBöæf–vF–öâö†—7F÷'¦66WFæ6RVæF–æs²æòFWf–6R52–æfW'&VBâ÷&–v–æÂÆ–W"öÖ6²6öçG&öÇ2&VÖ–âà ¢22ã“c(	B&÷VæB†–FFVâv—¦Öò&ö¦V7F–öâæB5dr6ö×÷6—F÷"7W&f6S²ã“c&F–Â50 £#Bö7Fö&W###bâW6W#“c52f÷"''W6‚&F–Ã²6W&FVÇ’&W÷'G2v–çB&VBöw&VVà¦Æ–æW2gFW"–çBFöæRæB&V7W'&–ær&–v‡B×6–FRT’F—6V&æ6RföÆÆ÷v–ærUbFööÇ2ð¦Öf–Ww2Â6†æv–ær2v—¦Öòöö&¦V7B÷&&—G27&÷7267&VVââ&–÷#“S‚6Æ—–ær52—0¦†—7F÷&–6Ã²&V7W'&Væ6R—2õTâæBæ÷BF—6Ö—76VB'’&–÷"52÷"æöFR&W7VÇG2à¥&Wf–WvVBWÆöFVCT3CC“ƒ67&VVç6†÷BæC’ãw267&VVå&V6÷&F–æsrÓÓ3Rg&ÖW32ów2à¥f–FVò6†÷w2Æ—fRÖöFVÂöv—¦Öòv†–ÆR†VFW"öö&¦V7BT’F—6V'2âW†7B•B6ö×÷6—F÷ ¦fVÇB&VÖ–ç2Vç&W&öGV6VBÆö6ÆÇ“²Fòæ÷B6Æ–Ò&÷fVâvV$¶—BVæv–æRF–væ÷6—2à¤VF—B7W'&VçC6#F“¢F÷FÂÖv—¦Öò7–æ26WG2&ö÷Bæ†–FFVâGW&–ær–çB'WB7F–ÆÂ6ÆÇ0§7–æ4†—5f—7VÇ2â&ö¦V7FVE&–æuF‚W6W24•¤S“böÖ‚ƒÆ†–FFVå&V7Bçv–GFƒ“¢†–FFVà§&ö¦V7F–öâÖvæ–f–W2&–ær6ö÷&F–æFW3“l9s²&ö÷BG&÷×6†F÷rf–ÇFW"æB÷fW&fÆ÷v–æp¦Ö–â5drÆÆ÷rVæ÷&Ö÷W2–çBöf–ÇFW"&÷VæG2â&÷F‚f–ÇW&W2ÆW6–&Ç’6†&RF†—0§Væ&÷VæFVB&W6VçFF–öâ7W&f6RÂVæÆ–¶R&Wf–÷W2÷WÖöæÇ’Ö—F–vF–öâà¥&W—"4ÔRv—¦Öò÷væW#¢æò†—2WFFRv†–ÆR†–FFVã²&ö¦V7FVE&–æuF‚&WGW&ç2V×G¦f÷"†–FFVâ÷¦W&òöæöæf–æ—FRF–ÖVç6–öç2÷"ç’æöæf–æ—FRö÷WBÖöbÖÆö6Ã“l9s“b&–ærö–çBà¤FVvVæW&FR&–æw26ÆV"&÷F‚f—6–&ÆRæB†—BF‡2F‡&÷Vv‚W†—7F–ær7–æ2÷væW#°¦†–FFVâv—¦Ö÷26¶—WFFW2æB&V6ö×WFRæ÷&ÖÆÇ’v†Vâ6†÷vâà¥&VÖ÷fR&ö÷BG&÷×6†F÷rf–ÇFW#²&÷VæBöæÇ’F—&V7BÖ–â5dr÷fW&fÆ÷râW‡FW&æÂ&F–À§6V7F÷'2ö6÷&æW"6†÷'F7WG2&VÖ–â÷WG6–FRÖ–â5dræB¶VW÷&–v–æÂÆ6VÖVçBö–çWBà¤æòG&ç6f÷&ÒvVöÖWG'’ÂvW7GW&RÂUb÷–çBö†—7F÷'’÷&VæFW"¶W&æVÂ÷"×VÇF“ã6†ævW2à£“S’&F–Âó“c''W6‚6öçG&öÇ2æC“S‚÷W6öçF–æÖVçBVæ6†ævVBâF†—2F&vWG2F†P¦7GVÂ†–FFVâ6—¦–ærFVfV7BæB6öç7G&–ç2&VæFW&–æs²•B&WFW7B—27F–ÆÂ&WV—&VBà¥GvòFW7G2W†V7WFR÷&–v–æÂ&–ærgVæ7F–öç2v—F‚&VÅF‡&VRW'7V7F—fR6ÖW&¢æ÷&ÖÀ¥…•¢F‡2Â†–FFVî(i'¦W&þ(i'&W7F÷&RW†7B&V6÷fW'’Âf–æ—FRÆö6Â6ö÷&F–æFW2Â–çfÆ–@§&ö¦V7F–öâ&VgW6Ã²†–FFVâ7–æ2wV&BöÖ–â5dröf–ÇFW"66÷RæB&WF–æVBW‡FW&æÀ¥–çB'WGFöâ÷6†÷'F7WB6öçG&7G2âfö7W6VCu53²Æö6ÂgVÆÃ#ƒE52ód”Âó6¶—ƒBãs72’âV&Æ–6F–öâWf–FVæ6RföÆÆ÷w2à¤DUd”4S“c¢–çN(i$FöæRöâ6ÖRÖöFVÃ²æòv–çB6öÆ÷W&VBÆ–æW2â&WVBUbFööÇ>(i%U`¤VF—F÷.(i$&6²ô6Æ÷6S²÷&&—BÖöFVÂöv—¦Öò–çFò&–v‡B6–FRæBvF6‚VçF—&RFööÆ&"ôö&¦V7@¤'&÷w6W"÷7FGW2&VÖ–âf—6–&ÆRâÖ÷fRõ&÷FFRõ66ÆRæB&F–ÂFööÇ27F–ÆÂW6&ÆS°¥–çBõVæFõ&VFòæBf–ævW"æf–vF–öâ&W6W'fVBâæW‡B7GVÃ“c&VæFW&–ærfVVF&6°¦&Vf÷&RVç&VÆFVBfVGW&W2â–b&V7W'&Væ6RW'6—7G2Â¶VW–æFWVæFVçB6Æ—–ær&W÷'@¦÷VâæB–ç7V7B÷F†W"f–ÇFW&VBö÷fW&fÆ÷v–ærÆ–W'3²Fòæ÷B–æfW"66WFæ6Rà ¢22–çBT’F—&V7F–öâ6Æ&–f–VB'’W6W"(	B#Bö7Fö&W###` ¥W6W"6—3“cFö6²Ö6öçF–æVB&F–ÂÖ—7VæFW'7FööB–çFVçBâFW6—&VB4ÔRfÆöF–æp§f–Ww÷'B&F–ÂF†VÖR2fW'FW‚ôVFvRôf6Rôö&¦V7BÂv—F‚–çB6öçFW‡Bâ6†ö÷6R''W6ƒ §&F–ÂF—6V'3²6ö×7BÂ6÷'&V7FÇ’6—¦VB6öçFW‡GVÂ6WGF–æw2BDõ4TåE$S°§&VÖ–æ–ærf–Ww÷'B6ÆV"f÷"–çF–ærâ†öÆBTÕE’$4´u$õTäBFò&V÷Vâ–çB&F–ÂÀ¦6†ö÷6R&ÇW"öWF2ÂF†Vâ&F–ÂF—6V'2æB6öçFW‡GVÂF÷æVÂ6†ævW2âÆ–W'2À¦Ö6·2æB–ÖvRÆ6VÖVçB6†÷VÆB÷Vâ6öçFW‡GVÂæVÇ2öæÇ’v†Vâ&WVW7FVBà¤W†—7F–ærÆVgBÆÂÖ6öçG&öÇ2Fö6²—2G&ç6—F–öæÂÂæ÷BFW6—&VBf–æÂ–çB–çFW&f6Rà¥W6W"W‡Æ–6—FÇ’FVfW'2÷76–&ÆR&÷GFöÒÖÆVgB–çBÖöFR'WGFöâÆöæw6–FR6VÆV7F–öâà¤Fòæ÷B6–ÆVçFÇ’&WÆ6RF†—2&WVW7Bv—F‚æ÷F†W"&F–ÂVÖ&VFFVB–âFö6²à¥7FvRÖ–w&F–öâW6–ær7W'&VçB–çFW"ö7F–öâö†—7F÷'’öÆ–W"÷væW'2æB6†&VBæVÀ§÷6—F–öâö6ö×7BÆ–÷WC²æòæWr''W6‚Væv–æRâ–çBÖ6öçFW‡B&6¶w&÷VæB†öÆB×W7@¦&VÆöærFò6–ævÆRW†—7F–ærvW7GW&R÷væW"æB÷fW'&–FRÖöFVÆÆ–ær–çfW'BôäÅ’v†–ÆP§–çF–æs²f–ævW'27F–ÆÂ÷&&—B÷â÷–æ6‚ÂVæ6–Â–çG2ÂVæFõ&VFò7F—2–â–çBà¤Fòæ÷B÷Vâ&F–Âg&öÒ7W&f6R–çB7G&ö¶R÷"æf–vF–öã²6æ6VÂVæF–ær†öÆ@¦öâÖ÷fVÖVçBö×VÇF—F÷V6‚â66÷R&VwVÆ"ÖöFVÆÆ–ær&F–ÂövW7GW&R÷væW'2Væ6†ævVBà¥F†—2—2Fö7VÖVçFVBF—&V7F–öã³“cf—†W2&VæFW&–æröæÇ’æBFöW2æ÷B6†—F†—2T’à ¢ã“cV&Æ–6F–öâfW&–f–VC¢'VçF–ÖSVf#FFf&VVS†3ƒSV#–Ff366&“ƒS3f#V&VC#2À¦W†7BFW7FVBG&VS6&Fc&#s–#FF&6C63FSƒ##“3v&S3SBâÆö6Ã#ƒE52À£d”Âó6¶—²fö7W6VCu52âvW3Cs3ƒƒsƒb5T44U53²†÷7FVB&Vw&W76–öãCs3ƒƒSc@¥5T44U52âÆÃb6†V6¶VBV&Æ–2'VçF–ÖRöÆöFW"÷&÷FV7FVBf–ÆW2'—FRÖÖF6‚FW7FVBG&VRà¤FWf–6S“c&VBöw&VVâÆ–æW2æB÷&&—BÖFWVæFVçB6Æ—–ær66WFæ6R&VÖ–ç2VæF–æs°¦æò&ööböb•B6ö×÷6—F÷"&ö÷B6W6R–æfW'&VBg&öÒWFöÖFVB76W2à ¢22ã“c"(	B7F'GWöÆ–fV7–6ÆRf–Ww÷'B6—¦–æs²ã“c&VæFW&–ærd”Â(	B#Bö7Fö&W###` ¥W6W#“cd”Ã¢&–v‡B×6–FRT’'&ö¶Vâ–ÖÖVF–FVÇ’gFW"&Vg&W6ƒ²÷'G&—N(i&ÆæG66P§&W7F÷&W2—BâFòäõBÖ&³“c&VæFW&–ærf—†VBg&öÓ#ƒBWFöÖFVB76W2ã“c''W6€§&F–Â66WFæ6R—26W&FS²W6W"w26Æ&–f–VBfÆöF–ærf–Ww÷'B–çB&F–Âv—F€¦6ö×7BDõ6öçFW‡GVÂ6WGF–æw2&VÖ–ç2&V6÷&FVBæB—2äõB–×ÆVÖVçFVB–ã“c"à¤VF—BÖ–ãVf#FFf¢&VæFW&W"&W6—¦R'Vç2öæ6RB7F'GWæBöâv–æF÷rç&W6—¦RöæÇ’À¤E"—26WBöæ6RâÆFW"Æ–÷WBö6öçF–æW"÷f—7VÂf–Ww÷'B6†ævW2†fRæò6—¦–ær÷væW"à¤÷&–v–æÂÖ–â&W6—¦Ræ÷r66WG2ÖV7W&VBv–GF‚ö†V–v‡Bö6VDE"æBWFFW24ÔP§&VæFW&W"ö6ÖW&÷6VÆV7F–öâF—7Æ’âæWr6ÖÆÂf–Ww÷'B×6—¦–ær66†VGVÆW"6öÆW66W0¥&W6—¦Tö'6W'fW"Âv–æF÷r&W6—¦Rö÷&–VçFF–öâ÷vW6†÷rÂf—7VÅf–Ww÷'B&W6—¦RæB6VÖçF–0§FööÂ×6W76–öâG&ç6—F–öç2–çFòöæRg&ÖRâ7F'GW†2âFF—F–öæÂ6WGFÆ–ærg&ÖRà¥Væ6†ævVBö'6W'fW"F–ÖVç6–öç2æòÖ÷²Æ–fV7–6ÆRG&ç6—F–öç2&WVW7BöæR6ÖR×6—¦P¦6çf2&W–çBâ¦W&ò6—¦W2FVfW"ÂE"—26VC"ÂæòW"Ög&ÖRöÆÆ–ær÷7–çF†WF–0§&W6—¦RWfVçG2÷FV×÷&'“‚¦–vvÆRöf÷&6VF÷&–VçFF–öâ÷6V6öæB&VæFW&W"÷"–çWB÷væW"à¥F†—2föÆÆ÷w2&÷FF–öâw2&W6—¦R÷&W–çBF‚'WBW†7B•B6ö×÷6—F÷"fVÇB&VÖ–ç0§Vç&W&öGV6VC³“c"—2F&vWFVBÆ–fV7–6ÆR&W—"&WV—&–ærFWf–6RfVVF&6²à¤Ö–â6†ævW2ôäÅ’†VÇW"–×÷'BÂ&W6—¦RgVæ7F–öâæB&–æF–æs²–çFW&æÂÖ–â7F× §&WF–æVBâÖ–âÆöFW#“c"–çFVçF–öæÂã“cv—¦Öò&÷VæG2&WF–æVC²Ub÷–çBövVöÖWG'’ð¦†—7F÷'’Â&÷FV7FVD×VÇF“ãæBg&÷¦Vâ&VÆV6W2Væ6†ævVBâ&Wf–WvVB76WB6öçG&7@¦FG2W†7BÖ–î(i'f–Ww÷'B×6—¦–ær–×÷'C²6†VÆÂ÷&V6÷fW'’öÖ–â–ç3“c"à¥F‡&VR–çFVw&F–öç3¢÷&–v–æÂÖ–â&W6—¦R6ÆÆ&6²&W6W'fW2&VæFW&W"ö6ÖW&÷÷6—F–öã°§7F'GW÷6WGFÆVBÆ–÷WBö6öçF–æW"ÖöæÇ’&W6—¦RôE"ö6öÆW66–æröæð§öÆÆ–æs²6ÖR×6—¦RvW6†÷r÷6W76–öâö÷&–VçFF–öâ&W–çB÷¦W&ò×6—¦Rö6ÆVçWâfö7W6VCu52à¤gVÆÂ÷V&Æ–6F–öâWf–FVæ6RföÆÆ÷w2â&–÷#“c&ööbæB6Æ&–f–VB–çBF—&V7F–öâ&P¦–æ6ÇVFVB–âF†—2†æFöfbÂ7WW'6VFVB'’W‡Æ–6—C“cd”Â&÷fRà¤DUd”4S“c#¢&Vg&W6‚–âÄäE44Rv—F†÷WB&÷FF–öã²–ç7V7Bv†öÆR&–v‡BFööÆ&"ôö&¦V7@¤'&÷w6W"÷7FGW2âUbFööÇ>(i$VF—F÷.(i$&6²ô6Æ÷6RÂ÷&&—BFò&÷F‚6–FW2â–çN(i$FöæR6†V6·0¦Æ–æW2–æFWVæFVçFÇ’ÂF†VâÖ÷fRõ&÷FFRõ66ÆRæBVæFõ&VFòâ&W÷'B–b&÷FF–öâ—27F–ÆÀ¦æVVFVC²Fòæ÷B–æfW"FWf–6R52g&öÒFW7G2âFVfW"–çBÆ–÷WBÖ–w&F–öâVçF–Â7F&ÆRà ¢ã“c"F&vWFVBfÆ–FF–öã352ód”Âó6¶—‡ãã2“¢&öGV7F–öâ6—¦–ær66†VGVÆW"°¦Ö–â&W6—¦RÂ&VÆV6R6öçG&7BÂ÷&–v–æÃ“c&–ærwV&G2Ã“SB–6¶–ærÃ“S"Ubv÷&·76RÀ£“7GVÂ–çBö6÷&RæC“c''W6‚&F–Ââ7–çF‚6†V6·2Ö–âö†VÇW"72â&–÷"gVÆÀ§'Vâv2–çFW''WFVBæBFV×÷&'’ÆörVæf–Æ&ÆS²æògVÆÃ“c"6÷VçB6Æ–ÖVBà¥W6W"6·2v‡’'V–ÆG26Æ÷s¢fö–B&Æö6¶–ær†æF÷fW"öâGWÆ–6FRÆö6Â¶†÷7FVBgVÆÀ§7V—FRf÷"æ'&÷r6†ævW3²'Vâ&VÆWfçB6†V6·2æBfW&–g’FWÆ÷–ÖVçBÂ&W÷'B†÷7FV@¦gVÆÂ×7V—FR7FGW267W&FVÇ’âv—D‡V"7F–ÆÂ'Vç2gVÆÂ&Vw&W76–öâWFöÖF–6ÆÇ’à ¢ã“c"V&Æ—6†VB'VçF–ÖS–36C##sSs#SVCSƒ&#–FSc3#sCcvFCƒ3#“s&CC²W†7BWÆöFV@¦æBÆö6ÂFW7FVBG&VVcCff6&#s##sV6#cv363SSƒcf#fSS3“6âvW3C“Ss“#0¦'V–ÆBöFWÆ÷’5T44U53²6†ævVB6†VÆÂ÷fW'6–öâöÖ–â÷6—¦–ær†VÇW#BóBÆ—fR'—FRÖÖF6‚à¥F†—'G’&VÆWfçB6†V6·253²æògVÆÃ“c"726÷VçB6Æ–ÖVBâ†÷7FVBgVÆÂ&Vw&W76–öà£C“SsSCb–â&öw&W72B†æF÷fW#²æ÷B&Æö6¶–ærFWf–6R&WFW7Bã“cW6W"d”À§&V6÷&FVBÂ÷'G&—N(i&ÆæG66Rv÷&¶&÷VæB—2F–væ÷7F–2öæÇ’âDUd”4S“c"g&W6‚ÖÆæG66P¦ÆöBõUbÖVçG'’÷&WGW&âö÷&&—B÷&–v‡BFööÆ&"´ö&¦V7G2·7FGW2&WFW7B&WV—&VBâ–çB&F–À§&VFW6–vâ&VÖ–ç2Fö7VÖVçFVBF—&V7F–öâÂæ÷B6†—VBâæòFWf–6S“c"52–æfW'&VBà  ¢22ã“c2(	BfÆöF–ær–çB&F–ÂæB6öçFW‡GVÂ6öçG&öÇ3²ã“c"52(	B#Bö7Fö&W"##` ¥W6W"6öæf—&×2ã“c"53²&÷FV7Bg&W6‚ÖÆæG66Rf–Ww÷'B6—¦–ærÂUbv÷&·76R&WGW&âÀ¦÷&&—Bf—6–&–Æ—G’æB–çBFöæR&VæFW&–ærâ6†—F†R6Æ&–f–VB–çB–çFW&7F–öâW6–æp§F†RW†—7F–ærf–Ww÷'B–çFW"æB÷&–v–æÂÖ–â&6¶w&÷VæBÖ†öÆB÷væW"âF†RfÆöF–æp§&F–ÂöffW'2''W6‚ôf–ÆÂôW&6W"õ6×VFvRô&ÇW"ÇW2Æ–W'2ôÖ6²ô–ÖvRôòõFW‡GW&RvW2à¤6†ö÷6–ærâ—FVÒ6Æ÷6W2F†R&F–Ã²F†R÷&–v–æÂ–çFW"6öçG&öÇ2V"–â6ö×7@§F÷Ö6VçG&R6öçFW‡GVÂæVÂâ†öÆF–ærV×G’&6¶w&÷VæB&V÷Vç2F†R–çB&F–ÂâVæ6–À§7G&ö¶W2Âf–ævW"æf–vF–öâÂVæFòõ&VFòÂ&W6÷W&6RÂòæB–ÖvRÆ6VÖVçB6öçF–çVRF‡&÷Vv€¦÷&–v–æÂ÷væW'2â–çB†öÆB—2ÆÆ÷vVBöæÇ’v†–ÆR–FÆR†æò7G&ö¶Rö–ÖvRôò&Wf–Wr“²F†P¦÷&–v–æÂ†öÆB6æ6VÇ2öâÖ÷fVÖVçBÂ×VÇF—F÷V6‚Âö–çFW"6æ6VÂ÷"6W76–öâ6†ævRà¥–çB6WGF–æw2W6RF†R6†&VBæVÂ÷6—F–öâ÷væW"v—F‚6ö×7B÷F–öã²÷F†W"÷W ¦Æ–÷WG2&VÖ–âVæ6†ævVBâ•BF7F–ÆR66WFæ6R&VÖ–ç2VæF–ærà  ¢22ã“cB(	BÆVgB6–FR6ö×7B–çB6WGF–æw3²W6W"F—&V7F–öâ(	B#Rö7Fö&W"##` ¥W6W"&WVW7G2–çB6öçFW‡GVÂ÷W2BÄTeB&V6W6RF÷Ö6VçG&R6WGF–æw2ö'7G'V7BF†Rf–Ww÷'Bâ¶VWF†RfÆöF–ær&F–ÂæBW†—7F–ær–çFW"ö6öçG&öÂ÷væW'2g&öÒã“c2â&WW6R6†&VB÷6—F–öâ÷væW"v—F‚6ö×7BÆ–÷WC²6WB–çB†÷7B‡‚g&öÒÆVgB÷F÷Âv–GF‚6VBC3#‚Âf–Ww÷'BÖ†V–v‡B67&öÆÂâ&VGV6Rv2ÖöFW7FÇ’v†–ÆR&W6W'f–ær&VF&ÆRÆ&VÇ2æBÖ–æ–×VÒF†V–v‡G2â÷F†W"FööÂ÷W2&WF–âF÷Ö6VçG&RÆ6VÖVçBâDUd”4S“cC¢''W6‚ô&ÇW"ÆVgBÆ6VÖVçBÂ76–ærÂ&F–Â†öÆB÷&V÷VâÂVæ6–ÂÂf–ævW"æf–vF–öâÂVæFõ&VFòÂ6öçFW‡GVÂvW2æBFöæRâæW‡C¢ö'F–â•B66WFæ6Röb&F–Â²ÆVgB÷W&Vf÷&RÖ÷&R6öçG&öÇ3²F†Vâ&–÷&—F—¦Rf6Vw&÷W–çF–ærà  ¢22ã“cR(	B–çBv÷&¶fÆ÷ræBT’Wf–FVæ6R(	B#Rö7Fö&W"##` ¥W6W"ã“cB5266WG2ÄTeB6ö×7B–çB÷WÂ'WB&V7W'&–ær–æ7F—fR&–v‡B×6–FRT§&VÖ–ç2õTââFòæ÷B–æfW"&VæFW&–ær&W—&VBâ7W'&VçB&WVW7FVBT“¢&÷GFöÒUb”å@¦&W6–FR4TÄT5C²æF—fRUbfÆ–FF–öâ&Vf÷&RVçG'“²÷&–v–æÂö&¦V7B&F–Â–çB6V7F÷ §&VÖ÷fVBâf–ÆR¶VW2æòGWÆ–6FR'WGFöâöæ6R&÷GFöÒ&"—2&VG’âÆ–W'2æ÷rÇv—0§f—6–&ÆRBF÷Â6VÆV7FVB6öçFW‡GVÂ6WGF–æw2&VÆ÷râ&F–Â6†ö–6W27F’f—6–&ÆRVçF–À¥Væ6–Â&Vv–ç2fÆ–B7W&f6R7G&ö¶Rö–ÖvRvW7GW&S²'&÷w6–ær6†ö–6W2FG2æò†—7F÷'’à¥&WVFVB–çBVçG'’&V÷Vç2FööÇ3²V×G’&6¶w&÷VæB†öÆB&WW6W2Ö–âw26–ævÆRF–ÖW §v—F‚W‡Æ–6—B–çB&6¶w&÷VæBöÆ–7’Â'—76–ærÖöFVÆÆ–ær†—B&÷†–W2âFöæRW†—G3°¤W66R6æ6VÇ2Æ—fR6öçF7Bv—F†÷WBÆVf–ær–çC²6ö×WF–ærFööÂÆVæ6‚—2&VgW6VBà¤–çfÆ–BöFVÆWFVBvVöÖWG'’Ö’7F–ÆÂ6Æ÷6Rf÷"&W6÷W&6R6fWG’à ¥6×VFvRVF—Bf÷VæB&÷VæFVB„Ò×v÷&²wV&BF‡&WræB6æ6VÆÆVBfÆ–B7G&ö¶R—†VÇ2à¤wV&Bæ÷rW6W2FF—F–öæÂF'2B6æBW‡÷6W2Æ–gB×FòÖ¶VW7FGW3²Æ–gF–æp¦6öÖÖ—G2F†RfÆ–B&Vf—‚æ÷&ÖÆÇ’â6æ6VÆÆF–öâö6†V6·ö–çB&VgW6Â7F–ÆÂ&W7F÷&Rà¤æòVæ&÷VæFVB&7FW"v÷&²÷"6†ævVB6âÖ6—¦R&WÆ6W2Ö&–wV÷W2FW‡GW&R6F–öã ¦6öÆ÷W"&W6öÇWF–öâöÆVv7“S"×Fó#BVæÆ&vVÖVçBÂæ÷B''W6‚à ¤f–ÆR(i"T’FV'VrW‡FVæG2÷&–v–æÂ÷BÖ–âvW7GW&RFV'Vs¢&÷VæFVCWfVçG2Â&–v‡B×6–FP¦†—B×FW7B7F6·2Â&÷VæG2÷7G–ÆW2÷f—6–&–Æ—G’Â6çf2÷f—7VÅf–Ww÷'BÂ6W76–öâÂW'&÷'2æ@¦6öçFW‡BÆ÷72â6GW&R&W÷'BF†Vâ6÷’&W÷'BgFW"–æ7F—fRT’ö67W'3²fÆrW'6—7G0§F‡&÷Vv‚&Vg&W6‚âF–væ÷7F–2&VG2æBÆ—7FVæW'2æWfW"6öç7VÖR–çWBâW†7B•Bf–ÇW&P¦æ÷B&W&öGV6VC²FV'VrÖöFRvF†W'2Wf–FVæ6RÂFöW2æ÷B6Æ–Ò6ö×÷6—F÷"&W—"à ¤DUd”4S“cS¢æòÕUbö&¦V7B&VgW6W2–çC²Ubö&¦V7B÷Vç2g&öÒ&÷GFöÒâ–ç7V7BF÷Æ–W'0¦æB6WGF–æw2&VÆ÷rÂ'&÷w6R&F–Â6†ö–6W2F†VâVæ6–Â–çB†–FW2—C²&6¶w&÷VæB†öÆ@§&V÷Vç2âÆöær6×VFvRöÆ–gB¶VW2—†VÇ2âf–ævW'2õVæFõ&VFòæBFöæRâVæ&ÆRT’FV'VrÀ§&W&öGV6R&–v‡B×6–FRf–ÇW&RÂ6GW&R&W÷'B(i"6÷’&W÷'BæB6VæB&W÷'Bà  ¢ã“cRfÆ–FF–öã¢gVÆÂÆö6ÂæöFS#B7V—FS#ƒ52ód”Âó6¶—VBƒ“ã2“°¦fö7W6VB&öGV7F–öâõT’ö†öÆBöFV'Vrõ6×VFvRæB&VÆV6R6†V6·276VBâ&Wf—6VBöÆBFW7G0¦öæÇ’v†W&RW6W"ÖF—&V7FVBT’6†ævVB‡&F–ÂW'6—7FVæ6RÂ66Æ"ÖÆ–W"f—6–&–Æ—G’À§&VÖ÷fVBö&¦V7B–çB6V7F÷"“²&WF–æVB&7FW"6æ6VÂ÷&VgW6ÂæB&÷FV7FVBv—¦Öð¦&÷VæG2öæf–vF–öâ76W'F–öç2âöÆBf—†VCs3"6†&VBÖFö6²–â76W'F–öâæ÷rW6W2&Wf–WvV@¦66†R6öçG&7C²æVvF—fR&6¶w&÷VæBFW7B×WFFW2$õD‚æF—fR†öÆB'&æ6†W3²FV'Vp¦f—‡GW&R&W6W'fW2×VÇF—ÆRö'6W'fW'2æBW†—7F–ær'VçF–ÖRÖW'&÷"W‡G&7F–öâ&÷VæF'’à¢ã“cB&VæFW&–ær—77VR&VÖ–ç2õTã²FV'Vr&W÷'B—2F–væ÷7F–2Wf–FVæ6RÂæ÷Bf—‚à¥'VçF–ÖRV&Æ–6F–öâæB†÷7FVB4’&ööb&RfW&–f–VB6W&FVÇ’gFW"F†—26öÖÖ—Bà  ¢22ã“cb(	B6öçF–çV–ær6×VFvR–çWBv–æF÷w3²7F'GWFööÆ&"Wf–FVæ6R(	B#Rö7Fö&W"##` ¥W6W"ã“cR52&÷FV7G2&÷GFöÒ–çBVçG'’ÂW'6—7FVçB&F–ÂÂÆ–W'2Öf—'7BÄTe@§6WGF–æw2æB¶WB6×VFvR—†VÇ2âW6W"&W÷'G26×VFvR7F–ÆÂ7F÷2gFW#^(	3b76W2à¤÷&–v–æÃ„Ò&7FW"v÷&²6v26öçF7B×v–FS²&VæWrôäÅ’—G2v÷&²6÷VçFW'2W"æF—fP¥6×VFvR–çWB6×ÆRÂ&WF–æ–ær&Vf÷&R6æ6†÷Bö6÷fW&vR÷–6·WöF—'G’—†VÇ2â&÷VæFV@§6×ÆRÖ’W6RF'2ÂæW‡B–çWB&W7VÖW2âB÷&–v–æÃ#F‚ÖF"6Â&W6VVB6ÖP¦÷&–v–æÂF‚÷væW"g&öÒÆ7B67&VVâ–çWBv†–ÆR&WF–æ–ærF†R&7FW"6öçF7Bâæð¦W‡G&6†V6·ö–çG2÷"Æ–W"f–æ—6‚VçF–Â‡—6–6ÂÆ–gC¢VæFò&VÖ–ç2öæR7G&ö¶Rà¤6æ6VÂö6†V6·ö–çB&VgW6Ç2&WF–âFöÖ–2&öÆÆ&6²â''W6‚ôf–ÆÂôW&6W"ô&ÇW"Væ6†ævVBà ¥W6W"7WÆ–VBã“cRFV'Vr&W÷'Bg&öÒ&Vg&W6‚f–ÇW&S£3cl9sƒƒbÂ6çf33cl9sƒ#d552ð£#s3,9scS'—†VÇ2DE#"Â–çFfÇ6R÷6W76–öæçVÆÂö6öçG&öÇ6Væ&ÆVC²6×ÆVB&–v‡B4åd0¦6öçF7G2&V6‚v–æF÷r'V&&ÆRâæò'&öB÷fW&Æ’–âF†÷6R6çf26×ÆW2âF†—2FöW2äõ@§&÷fRFööÆ&"†—BFW7F–ær÷"6ö×÷6—F÷"–çF–ær†VÇF‡“¢÷&–v–æÂw&–B7F'G5“s¦&VÆ÷sc‚†VFW"æBöÖ—GFVBçF÷Ö7F–öç2÷&–v‡B'WGFöâ&V7G2âW6W"6öæf—&×2&Vg&W6€¦6âVçFW"f–ÆVB7FFRF—&V7FÇ’âW‡FVæBW†—7F–ærFV'Vr&W÷'Bv—F‚W†7B&–v‡BÖ'WGFöà§&V7B÷7G–ÆW2öF—6&ÆVBöW‡æFVBö6VçG&R†—B7F6·3²6GW&RF†W6RöâW'6—7FVBÖFV'Vp§7F'GW÷vW6†÷röÆ–fV7–6ÆRæBFööÆ&"6Æ–6²âæò&ö÷B6W6R÷"&VæFW&–ærf—‚6Æ–ÖVBà ¤DUd”4S“cc¢Æöær&WVFVB6×VFvR76W2VæFW"öæRVæ6–Â6öçF7B6öçF–çVS²Æ–gB¶VW0§&W7VÇBÂôäRVæFòõ&VFò&W7F÷&W2v†öÆR6öçF7BÂ6æ6VÂ&W7F÷&W2&RÖ6öçF7BâÆÂã“cP¥T’fÆ÷r&VÖ–ç2âVæ&ÆRT’FV'VrÂ&Vg&W6‚F—&V7FÇ’–çFò&–v‡Bf–ÇW&RÂ6GW&Rô6÷¦æWr&W÷'B6öçF–æ–ær6öçG&öÇ2æB7F'GWWf–FVæ6S²FffV7FVB&–v‡B'WGFöâf—'7@¦–b&7F–6ÂâW†7BFööÆ&"&ö&RF—7F–æwV—6†W2öfg67&VVâöF—6&ÆVBöö66ÇW6–öâg&öÐ¤DôÒÖ†VÇF‡’'WBf—7VÆÇ’'&ö¶VâT“²æF—fR•B&VæFW&–ærvFR&VÖ–ç2õTâà  ¢ã“cbfÆ–FF–öã¢gVÆÂÆö6ÂæöFS#B7V—FS#ƒ252ód”Âó6¶—VBƒ“Rã2“°¦fö7W6VB6×VFvRövW7GW&RõT’öFV'VrôÆ"÷&VÆV6SC52âæWr6†V6·2&÷fR&VæWvVBv÷&°§v–æF÷w2&WF–â—†VÇ2æB6æ6VÆÆF–öâ&6VÆ–æS²Æöær7GVÂ7W&f6R×–6¶VB6×VFvP§76W2÷&–v–æÃ#F‚'VFvWBÂVF—G2ÆFR—†VÇ2æB6öÖÖ—G2ôäRVæFòõ&VFòVçG'“°§&–v‡BFööÆ&"6VçG&R&ö&W2–æ6ÇVFR†VFW%“3æBW'6—7B–âvW6†÷rWf–FVæ6Rà¥&–÷"ã“cR†÷7FVB&Vw&W76–öãCƒ#cC‚†2æ÷r6ö×ÆWFVB5T44U52âW†7B7WÆ–V@§&Vg&W6‚&W÷'Bö'6W'fF–öç2&R&6†—fVB–âFö72÷V’ÖFV'Vr×&Vg&W6‚Ó“cR×&W÷'BæÖBà¥&–v‡B×6–FRæF—fR•Bf–ÇW&R&VÖ–ç2õTã²æò&VæFW&–ærf—‚–æfW'&VBà  ¢22ã“cr(	B6çf2õT’6ö×÷6—F–öâ&÷VæF'“²ã“cb–çf—6–&ÆR6Æ–6¶&ÆR6öçG&öÇ2(	B#Rö7Fö&W"##` ¥W6W"&W÷'G2&–v‡B6öçG&öÇ2&VÖ–â6Æ–6¶&ÆRv†–ÆRf—7VÆÇ’'6VçC²7v—F6†–ærv§Fò6†DuBæB&6²&W7F÷&W2V&æ6RâW†7Bã“cb&W÷'C£##£…¢6†÷w2&–v‡@¦'WGFöç2öâ×67&VVâöVæ&ÆVB÷f—6–&ÆRö÷6—G“ÂæòG&ç6f÷&×2öf–ÇFW'2ö6Æ—F‡2ÂW†7@¦'WGFöâõ5dr†—B7F6·3²VæFò6Æ–6²&V6†W2v–æF÷r'V&&ÆRâ–çFfÇ6R÷6W76–öæçVÆÂà¥7F'GWFööÆ&"w&÷w2g&öÓ3BãSg‚v–FRCCS–×2Fó3rãc‚CcC–×2Âv—F‚6÷'&V7@¦Æ–÷WB'WB&W÷'FVB–çf—6–&ÆR—†VÇ2âWf–FVæ6Rö–çG2Fò–çF–ærö6ö×÷6—F–ærÂæ÷@§&VÖ÷fVBT’Âöfg67&VVâÆ–÷WBÂF—6&ÆVB6öçG&öÇ2÷"'&öB–çWB–çFW&6WF–öââF†—0¦—2â–æfW&Væ6RÂäõBÆö6ÆÇ’&W&öGV6VBvV$¶—BÖVæv–æRF–væ÷6—2à ¥F&vWFVB&W—"–â÷&–v–æÂ7G–ÆW6†VWC¢f–Ww÷'Ew&—6öÆFVB7F6²G£Â÷&–v–æÀ¦6çf2&÷VæFVB'’6öçF–ã§–çBv—F‚—G2÷vç£²†VFW"&VÖ–ç7£&÷fRf–Ww÷'Bà¤†VFW"÷7FGW2ôö&¦V7B'&÷w6W"vWB—6öÆFVB6ö×÷6—F–ær†–çG2f–v–ÆÂÖ6†ævS¦÷6—G’À§v—F†÷WBG&ç6f÷&×2Â÷6—G’6†ævW2Â6Æ—–ærT’ÖVçW2÷"&W&VçF–ærç’6öçG&öÂà¥d”Urf—†VB÷W&VÖ–ç2f–Ww÷'B×&VÆF—fS²fÆöF–ærFööÇ2&WF–âF†V—"÷vâ÷væW'2à¤÷&–v–æÂf–Ww÷'B×6—¦–ær66†VGVÆW"æ÷r6öÆW66W2fö7W2æBf—6–&ÆRÖFö7VÖVçBWfVçG0§F‡&÷Vv‚4ÔR&W6—¦R÷&W–çB÷væW#²†–FFVâÖFö7VÖVçBWfVçG2Fòæ÷B&VG&râFV&F÷và§&VÖ÷fW2&÷F‚Æ—7FVæW'2âæò7–çF†WF–2&W6—¦RÂW"Ög&ÖRöÆÆ–ærÂDôÒ†–F–ærÂ&VÆöBÀ¦æWr&VæFW&W"ö†—7F÷'’ö–çWB÷væW"÷"ÖöFVÆÆ–ær÷–çB6†ævW2âFV'Vr6æ6†÷B&V6÷&G0¦6öçF–âö—6öÆF–öâ÷v–ÆÂÖ6†ævR6òã“crÆ–W"'VÆW26â&RfW&–f–VBöâFWf–6Rà ¢ã“cR–çBT’52&÷FV7FVC²ã“cb6öçF–çV–ærÕ6×VFvR66WFæ6R&VÖ–ç26W&FRà¤DUd”4S“cs¢&Vg&W6‚–âÆæG66R&WVFVFÇ’ÂfW&–g’ÆÂ&–v‡B'WGFöç2÷7FGW2æ@¤ö&¦V7B'&÷w6W#²–çFW&7B&Vf÷&R6†æv–ær2ÂVçFW"öW†—BUbVF—F÷"æB–çBÀ§&÷FFRö÷&&—Bâ7v—F6‚v’ö&6²fW&–f–W2&V6÷fW'’FöW2æ÷BÆ÷6RT’÷v÷&²â–b–çf—6–&ÆP¦6öçG&öÇ2&V7W"ÂVæ&ÆRT’FV'Vr&Vf÷&R&Vg&W6‚æB6VæB6GW&Rô6÷’&W÷'BÇW0§67&VVç6†÷B–b&7F–6Ââ&W—"&VÖ–ç2â•BvFRVçF–ÂW‡Æ–6—BfVVF&6²à  ¢ã“crfÆ–FF–öã¢gVÆÂÆö6ÂæöFS#B7V—FS#ƒR52ód”Âó6¶—VBƒ“2ã—2“°¦fö7W6VB&VÆV6R÷6—¦–ærõUbõ–çBöFV'Vr6†V6·3C52âæWr6÷fW&vR6†V6·2fö7W2÷f—6–&ÆP§&WGW&â6öÆW66–ærÂ†–FFVâÖFö7VÖVçB&VgW6ÂæBF—7÷6Ã²6çf26öçF–æÖVçBæ@§VçG&ç6f÷&ÖVB÷Væ6Æ—VBd”Ur÷W6öçG&7B&WF–æVBâÆö6Â6‡&öÖ—VÒÆ–÷WB6Öö¶P§v2GFV×FVB'WBF†R–ç7FÆÆVBÆ—w&–v‡B6¶vR†2æò'&÷w6W"W†V7WF&ÆR†W&S°¦æò&VæFW&VBÖ'&÷w6W"÷"æF—fRvV$¶—B&ööb6Æ–ÖVBâW6W"w2ã“cb&W÷'B—2&6†—fV@¦–âFö72÷V’ÖFV'VrÖ–çf—6–&ÆRÖ6öçG&öÇ2Ó“cbæÖBâFWf–6Rf—7VÂvFR&VÖ–ç2õTâà ¢22ã“c‚(	B6VÆV7FVB&ööb2–6öç2–âf6R&F–Â(	B#bö7Fö&W"##` ¥W6W"&÷fVB–âÖ&Wf–WrgFW"6†ö÷6–ærÆÃcR–6öç2æB&Vf–æ–ær&öög3"ó2à¤–ç7FÆÂf—'7Bf6R&F–ÂöæÇ’W"7FvVBVF—C¢ÆÃ#2÷&–v–æÂ'WGFöç2&WF–âW†7@§FW‡D6öçFVçBÂF&vWB6VÆV7F÷'2ÂWfVçB÷væW'2æBæwVÆ"6Æ÷G2„W‡G'VFS"ô&WfVÃ2’à¥66÷VBf6R×&F–ÂÖ–6öç2æ7727WÆ–W2÷&–v–æÂ5dr'Gv÷&²2æöâÖ–çFW&7F—fR550§6WVFòÖVÆVÖVçG2&÷fRW†—7F–ær6ÖÆÂÆ&VÇ3²æò5drF—FÆR÷FW‡B6öçFÖ–æFW2&÷WF–ærà¤–ææW"&F—W3'‚ósl9scF&vWG266öÖÖöFFS3'‚–6öç3²÷WFW##3‚óƒl9sc&WF–æVBà¤æò6†ævW2FòvVöÖWG'’ÂvW7GW&W2Â†—7F÷'’Â–çBÂ×VÇF“ãÂ÷F†W"&F–ÂÖöFW2÷ ¢ã“cr66WFVB6ö×÷6—F–öâ'VÆW2â6ö×ÆWFScRÖ–6öâ&ööc2'Gv÷&²&6†—fVB–à¢Fö72÷&F–ÂÖ–6öç2×&ööbÓ2æ§6öâf÷"7FvVB6öçF–çVF–öââ&WfVÂ7G&’Æ–æR&VÖ÷fVC°¤'&–FvR&W7F÷&VBFò&ööcÂÖ6—¦R2âæòæF—fR•Bf—7VÂ66WFæ6R–æfW'&VBà¤DUd”4S“cƒ¢f6R6VÆV7F–öâ(i"FööÇ3²–ç7V7BÆÂ–ææW"ö÷WFW"Æ&VÇ2æB'Gv÷&²À¤W‡G'VFRô–ç6WBô&WfVÂ7F–öç2æBF†V—"÷W3²VæFõ&VFó²f–ævW"÷&&—B÷â÷–æ6ƒ°§&–v‡BFööÆ&"&VÖ–ç2f—6–&ÆRâæW‡B&Vf–æR•B6—¦Rö6öçG&7BF†Vâ&VÖ–æ–ærÖöFW2à ¢22ã“c’(	BfW'FW‚&F–Â&÷fVB–6öç3²ã“c‚W6W"52(	B#bö7Fö&W"##` ¥W6W"6—2(	Äw&VB&W7VÇB52öæW‡F'V–ÆN(	Òf÷"ã“c‚â&÷FV7B66WFVBf6R–6öà¦'Gv÷&²Ã3'‚6—¦RÂ6ÖÆÂ6F–öç2Ãc‚F&vWB†V–v‡BæC'‚–ææW"&F—W3²&WF–æV@¤f6R552'—FW2ö66†S“c‚âæW‡Bw&VVBÖöFR—2fW'FW‚ÂföÆÆ÷vVB'’ö&¦V7BF†VâVFvP¦æB–çBâÆÃBW†—7F–ærfW'FW‚FööÇ2æ÷rW6R6VÆV7FVB÷&Vf–æVB&ööc25dw2f–§66÷VBfW'FW‚×&F–ÂÖ–6öç2æ772Â6ÖR66WFVBÆ–÷WBâ¦ö–âW6W2¦ö–â…fW'FW‚’'BÀ¦æ÷Bö&¦V7B¦ö–ââ÷&–v–æÂÆ&VÇ2÷FW‡D6öçFVçBÂæwVÆ"6Æ÷G2ÂF&vWG2ÂWfVçBö†—7F÷'’ð¦vVöÖWG'’÷væW'2æBF—6&ÆVB×7FFR7G–ÆW2&VÖ–âVçF÷V6†VBâW‡G'VFS"ô&WfVÃ2&WF–æVBà¤æò'VçF–ÖR¦f67&—B÷"×VÇF“ãÂã“cr6ö×÷6—F–öâÂ–çBÂf6RôVFvRôö&¦V7B6†ævW2à¢ã“c‚'VçF–ÖSv#6CSvC²V&Æ–6F–öâFö73S#Ffcc‚vW&RVF—FVB27W'&VçBÖ–âà¤DUd”4S“c“¢fW'FW‚6VÆV7F–öâ(i"&F–Ã²–ç7V7CB–6öç2÷F—FÆR6—¦S²F'V–ÆBVFvRÀ¥6Æ–FRæB&WfVÂæBf–æ—6‚F†V—"÷&–v–æÂ6W76–öç3²¦ö–âôÖW&vR6VçFW"öâ7V—F&ÆP§6VÆV7F–öç3²VæFõ&VFòöæf–vF–öã²7v—F6‚Fòf6RFò6öæf—&Ò66WFVB–6öç2Væ6†ævVBà¤æF—fRã“c’f—7VÂ66WFæ6RVæF–ærâæW‡Bö&¦V7B–6öç2gFW"FWf–6RfVVF&6²à ¢22ã“s(	Bö&¦V7B&F–Â&÷fVB–6öç3²ã“c’W6W"52(	B#bö7Fö&W"##` ¥W6W"(	Äw&VB52öæW‡F'V–ÆN(	Ò66WG2ã“c’fW'FW‚–6öç2â&÷FV7Bã“c‚f6RæBã“c¥fW'FW‚'Gv÷&²ÂÆ&VÂf÷&ÖBÃ3'‚–6öâ6—¦RæB÷&–v–æÂ7F–öç2âVF—B7W'&VçBÖ–à¦SCvf&b÷'VçF–ÖRƒ†3VSBÂ6†VÆÃ“c’æC2W†—7F–ærö&¦V7B6V7F÷'3²æò&ÆÆVÂ–6öà¦÷væW"f÷VæBâFB66÷VBö&¦V7B×&F–ÂÖ–6öç2æ772v—F‚&÷fVB&ööc25dw2f÷"ÆÃ0¦÷&–v–æÂ'WGFöç2â¦ö–âW‡Æ–6—FÇ’W6W2ö&¦V7B'Gv÷&²ÂF—7F–æ7Bg&öÒfW'FW‚¦ö–âà¥6ÖSc‚†V–v‡Bó'‚–ææW"&F—W2ó#3‚÷WFW"&F—W2æB6ÖÆÂ6F–öç3²ö&¦V7@§FF–æs7‚öv'‚f—G2GvòÖÆ–æR7–ÖÖWG'’ò&—6V7BF—FÆRâW†—7F–æræwVÆ"6Æ÷G2À¦Æ&VÇ2÷FW‡D6öçFVçBÂF&vWB”G2ÂFööÂf–Æ&–Æ—G’ö7F–öç2ö†—7F÷'’æB×VÇF’&VÖ–âà¤66WFVBf6RõfW'FW‚552'—FW2æB–ç2&WF–æVC²v—¦Öò¥2Â6ö×÷6—F–öâ7G–ÆW6†VWBÀ¥–çBÂvVöÖWG'’æBg&÷¦Vâ&WF2Væ6†ævVBâö&¦V7B×VÇF’æBv—¦Öò6†÷'F7WG2&VÖ–à¦÷&–v–æÂ÷væW'2âæòv†öÆRÖ&W6¶–â÷"æWrÖöFVÆÆ–ærgVæ7F–öæÆ—G’à¤DUd”4S“s¢ö&¦V7B&F–Â–ç7V7B–ææW"ö÷WFW"–6öç2æBÆöævW"Æ&VÇ3²GWÆ–6FP¦æBVæFõ&VFó²'&’÷"6öÆ–F–g’÷Vç2÷&–v–æÂ6WGF–æw3²UbôÖW6‚†VÇF‚æVÇ3°§&WGW&âFòf6RõfW'FW‚æBfW&–g’66WFVBV&æ6Röæf–vF–öâ÷&–v‡BFööÆ&"à¤æW‡BVFvR–6öç2ÂF†Vâ–çBÂgFW"FWf–6RfVVF&6³²ã“sæ÷B–WBFWf–6R66WFVBà ¢22ã“s(	BæF—fRÕUb'&’6ö×F–&–Æ—G“²&–v‡BT’&V7W'&Væ6R(	B#bö7Fö&W"##` ¥W6W"ã“s&W÷'G2÷&F–æ'’'&’(	ÆÆ–æ¶VBGWÆ–6FR6÷VÆBæ÷B&R7&VFVN(	ÒæBÆ—fP¤'&’(	Ç&WV—&W2â–æFWVæFVçBvVöÖWG'’ö&¦V7N(	ÒöâFVfVÇBUb7V&RâVF—BÖ–à¢3v3c÷'VçF–ÖR6C6Sf#Vc¢Æ–æ¶VDGWÆ–6FTö&¦V7B–çFVçF–öæÆÇ’&VgW6W2æF—fRU`§&W6÷W&6W2ÂÆ—fR'&’&Ææ¶WB×&V¦V7G2ç’vÆ%77F‡&÷Vvƒ²FVfVÇBUg2–çG&öGV6V@¦ÆFW"æ÷rÖ¶R&÷F‚öÆB'&’F‡2&VgW6Râæòã“s52–æfW'&VC²ã“c‚òã“c’–6öà¥52&WF–æVBâW6RVFvRõ–çB–6öâ&öÆÆ÷WBf÷"F†W6Rf—†W2à ¤÷&–v–æÂ'&’÷væW"æ÷rW6W2÷&F–æ'’ÖævW"æFDÖW6‚f÷"–æFWVæFVçBæF—fRÕU`¦6÷–W2Â¶VW–ærW†7Bf6RÖ6÷&æW"Ug2÷6WGF–æw2Â÷&–v–æÂÆ6VÖVçG2æBôäR†—7F÷'¦6†V6·ö–çBâvVöÖWG'’ÖöæÇ’'&’&WF–ç2Æ–æ¶VBF‚âæWr6ÖÆÂ'&’ÖæF—fR×Wb†VÇW §&WW6W2÷&–v–æÂUb–ç7V7F÷"÷F÷öÆöw’6–væGW&RÂfÆ–FFW26ö×ÆWFR7W'&VçBæF—fP§–ÆöG2Â&VgW6W2–çBö–×÷'FVB&W6÷W&6W2÷7FÆRUg2&Vf÷&R×WFF–öââ–æFWVæFVç@¦6÷’f–ÇW&R&W7F÷&W26GW&VB66VæRâæòvÆö&ÂÆ–æ¶VBõUböÖW6‚Væv–æR6†ævW2à¤Æ—fR'&’&WVG2W†7B÷&–v–æÂ6÷W&6RUg2W"6÷’†FVÆ–&W&FRUb÷fW&Æ’Â7F÷&W0¦æF—fUUb6÷W&6R–ÆöB–âW†—7F–ær¥4ôâ&V6—RæBWFFW2æF—fR&W7VÇB–ÆöBà¤6÷VçBôTäB&V÷Vâô6öçfW'BõVæFõ&VFò÷&ö¦V7B6öFV2&WF–â—C²æò66†VÖ'V×Â&W&ö¦V7F–öà¦÷"FW‡GW&RÆ÷72â–çB&VÖ–ç2&VgW6VC²6÷W&6RVF—F–ærf÷"æF—fRÕUbÆ—fR'&—0§&VÖ–ç2&VgW6VB'’÷&–v–æÂ6÷W&6RVF—F÷.(	D6öçfW'BFòÖW6‚&Vf÷&R6ö×öæVçB6†ævW2à ¥W6W"ã“s&W÷'C£#s£Se¢&V÷Vç2&–v‡B×6–FRf—7VÂfVÇBFW7—FRã“cr6fVwV&G3 £3cl9sƒƒbÄE#"Æ6çf3#s3,9scS#²æò6W76–öâõ–çBÂ†–FFVâv—¦Öó²FööÆ&"Væ&ÆVB÷f—6–&ÆRÀ¦–â&÷VæG2æBW†7B†—B7F6·2â6çf2—6öÆF–öâö6öçF–âæB†VFW"—6öÆF–öâ7F—fRà¤æ÷BF—6&ÆVB6öçG&öÇ2ÂÖ—76–ærDôÒ÷"7FÆS“cr–ç2âGvò&VÖ–æ–ærW"Õ5dr†æFÆP¦†÷fW"ö7F—fRG&÷×6†F÷rf–ÇFW'2–â÷&–v–æÂv—¦Öò&VÖ÷fVC²7G&ö¶Rö÷6—G’fVVF&6²À¦†—B&÷†–W2Â&÷VæG2Â–çWBæB6ö×÷6—F–öã“cr&VÖ–ââF†—2—2F&vWFVB&VGV7F–öà¦öbf–ÇFW&VB5dr7W&f6W2ÂäõB&ööböbvV$¶—B&ö÷B6W6R÷"wV&çFVVBT’&W—"à¤æF—fRã“sf—6–&–Æ—G’&WFW7B&WV—&VBâ6VRFö72÷V’×&V7W'&Væ6RÓ“sæÖBà ¤DUd”4S“s¢FVfVÇB7V&R÷&F–æ'’'&“b6÷–W3²VæFõ&VFòâæWr7V&RÆ—fR'&“bÀ§&V÷Vâö6÷VçBVF—Bô6öçfW'BÂ6fT÷VâõUb&Wf–Wrâ&WVB&Vg&W6‚ô'&’ôFöæRöæf–vF–öâÀ§vF6‚&–v‡BFööÆ&"æB6VæBT’FV'Vr&W÷'B–bfVÇB&WGW&ç2âW†—7F–ærf6RõfW'FW‚ð¤ö&¦V7B'Gv÷&²Væ6†ævVBâæW‡BFWf–6RfVVF&6²&Vf÷&RVFvRõ–çB–6öç2à ¢22ã“s"(	BÆ–âT’&VæFW&–æs²'&’52Âf—7VÂfVÇB7F–ÆÂ÷Vâ(	B#bö7Fö&W"##` ¥W6W"6—2(	Ä'&’æ÷rv÷&·2'WB&–v‡B†æB6–FRöb67&VVâ—27F–ÆÂf–Æ–æ~(	Òâ&V6÷&@¤'&““s66WFæ6RöæÇ“²Fòæ÷B–æfW#“sf—7VÂ52÷"6Æ÷6R&V7W'&–ærf—6–&–Æ—G’à¤VF—BÖ–â33““&"÷'VçF–ÖS6C–Sc"â'&’æF—fUUb†VÇW"æB&÷F‚F‡2VçF÷V6†VBà¢ã“crÆ–W"†–çG2æC“s5drvÆ÷r&VÖ÷fÂ&÷fVB–ç7Vff–6–VçBöâ&VÂ•Bà¤7W'&VçB67&VVç6†÷B÷&W÷'B–æF–6FW2f—7VÆÇ’'6VçB'WBDôÒÖ†VÇF‡’6öçG&öÇ3°¦æ÷BÆö6ÆÇ’&W&öGV6VBÂæò6öæf—&ÖVB'&÷w6W"ÖVæv–æRF–væ÷6—2à ¤VF—Bf÷VæB&6¶G&÷&ÇW"7F–ÆÂ7F—fR–âfÆöF–æræVÇ2ôf–ÆRõd”Urö&÷GFöÒÖöFW2À¦ÆVv7’FööÂ÷W2æB&VæÖRF–Æörâ†VFW"÷7FGW2ôö&¦V7D'&÷w6W"&WF–âã“cp§v–ÆÂÖ6†ævS¦÷6—G’†–çG2âæWr6–ævÆRV’×7F&–Æ—G’æ772FVfVÇBF—6&ÆW2&÷F€§&Vf—†VB÷Vç&Vf—†VB&6¶G&÷f–ÇFW'2VæFW"6ÂFV6÷&F—fRf–ÇFW'2öâ'WGFöç2æ@¦v—¦Öò5dw2ÂæBW‡G&÷6—G’ÖÆ–W"†–çG2öâF†÷6RF‡&VRT’&ö÷G2âW†—7F–ær÷6—G’À¦&÷&FW'2öf–ÆÇ2÷7G&ö¶W27F–ÆÂ6†÷rF—6&ÆVBö7F—fR7FFRâ÷VRF&²7W&f6W2&WÆ6P¦g&÷7FVBæVÂ&6¶w&÷VæG2âG–æÖ–2ÆFW"FööÂ7G–ÆW2&R÷fW'&–FFVâf––×÷'FçBà¤æòG&ç6f÷&×2Â&W&VçF–ærÂöÆÆ–ærÂ†–FFVî(i'6†÷vâG&–6·2Â&VæFW&W"ö†—7F÷'’ö–çW@¦6†ævW2ÂÆ–÷WBöfg6WG2ÂF—7Æ’÷f—6–&–Æ—G’ÂvVöÖWG'’÷"66WFVB–6öç26†ævVBà¢ã“cr6çf2—6öÆF–öâö6öçF–âÂ†VFW"£æBf—†VBd”Ur÷WÆ6VÖVçB&WF–æVBà¥F†RÆ–â&öf–ÆR—26öçG&öÆÆVB&VæFW&–ær&VGV7F–öâÂæ÷B&÷fVâVæv–æRf—‚à¥vV$¶—B&–Ö'’6÷W&6RW‡Æ–ç2&6¶G&÷f–ÇFW'26ö×÷6—FR&6¶w&÷VæB6öçFVçBæ@¦æVVBW‡G&&VæFW&–ær76W3¢‡GG3¢ò÷vV&¶—Bæ÷&rö&Æöró3c3"ö–çG&öGV6–ærÖ&6¶G&÷Öf–ÇFW'2òà¥F†—27W÷'G2&VÖ÷f–ærF†B&VæFW&–ærFƒ²—BFöW2æ÷B–FVçF–g’F†—2W†7B'Vrà ¤DUd”4S“s#¢&Vg&W6‚ÆæG66R×VÇF—ÆRF–ÖW2$Tdõ$R7v—F6†–ær3²–ç7V7B&–v‡@¤g&ÖTÆÂõVæFòõ&VFòôfö7W2ôö&¦V7G2õd”UræB&–v‡B7FGW2â÷Vâö&¦V7G2æBd”UrÖVçW3°¤'&’&Wf–WrôÇ’õVæFòÂUbVF—F÷"VçFW"öW†—BæB÷&&—BFò&–v‡BVFvRâ–bf—7VÀ¦Æ÷72&V7W'2ÂW†7C“s"T’FV'Vr&W÷'BÇW267&VVç6†÷B7F–ÆÂæVVFVC²vFRõTâà¤'&““s52&÷FV7FVC²VFvRõ–çB–6öâ&öÆÆ÷WB&VÖ–ç2W6VBf÷"f—6–&–Æ—G’à ¢22ã“s2(	B÷BÖ–â6çf2f—6–&–Æ—G’&ö&S²ã“s"f—7VÂd”Â(	B#bö7Fö&W"##` ¥W6W"7WÆ–W2ã“s"&W÷'C£ƒ£CU¢gFW"&V7W'&–ær&–v‡B×6–FRfVÇBâã“s"Æ–à§&öf–ÆR—26öæf—&ÖVB7F—fS¢†VFW"÷7FGW2v–ÆÄ6†ævRWFó²ÆÂ6×ÆVBf–ÇFW'2æ@¦&6¶G&÷f–ÇFW'2æöæRâÆ–÷WBö†—G2&R7F–ÆÂ†VÇF‡’Â6ò&ÇW"öÆ–W"Ö†–çB&VÖ÷fÂF–@¦æ÷B&W—"f—7VÂÆ÷72âæò7FÆR×6†VÆÂW‡ÆæF–öâ÷"ã“s"f—7VÂ52â'&““s§W6W"52&WF–æVBâFòæ÷B6öçF–çVR7V7VÆF—fR6÷6ÖWF–2f—†W2÷"–6öâ&öÆÆ÷WBà ¤VF—BÖ–ã#cCfSV6"÷'VçF–ÖVs“–VSfâW‡FVæBôäÅ’W†—7F–ærf–Æ^(i%T’FV'Vr÷væW"v—F€®(	Ä†–FR4BöæÇž(	Òò(	Å6†÷r4Bv–î(	ÒâF†—2W‡Æ–6—BF–væ÷7F–2FV×÷&&–Ç’6WG2÷&–v–æÀ¦6çf2–æÆ–æRf—6–&–Æ—G’†–FFVâ–×÷'FçBÂ&WF–æ–ærÆ–÷WBö&6¶–ærF–ÖVç6–öç2À§&VæFW&W"öÖöFVÂö†—7F÷'’â&W7F÷&RW†7B&–÷"–æÆ–æRfÇVR÷&–÷&—G’†÷"'6Væ6R’À¦öâ6†÷rÂFV'VröfbæBvV†–FRâ&VgW6RVçG'’GW&–ær–çBÂ7F—fRFööÂ÷"v—¦ÖòG&s°§&W7F÷&F–öâÇv—2v÷&·2âæò&VÆöBÂ6V6öæB&VæFW&W"Â&W6—¦RÂöÆÆ–ær÷"æWr&p§ö–çFW"6öç7VÖW"âF—6&ÆVBFV'VröFVfVÇBVæ6†ævVBâW†—7F–ær553“s"&WF–æVBà ¥v†–ÆR†–FFVâÂW6W"6†ö÷6W2(	Å&–v‡BT’f—6–&Æ^(	Ò÷"(	Å7F–ÆÂÖ—76–æ~(	Ó²&÷VæFVBWf–FVæ6P§&V6÷&G27V&¦V7F—fR÷WF6öÖRÇW26çf2†–FFVâfÆræB7W'&VçBFööÆ&"&ö&W2à¤6GW&Rô6÷’–æ6ÇVFW26çf5&ö&R7FFRâ6†÷r6ÆV'266†VB&W÷'B6òæW‡B6÷¦–æ6ÇVFW2&÷F‚ö'6W'fF–öâæB&W7F÷&F–öâWfVçG2âT’Æör6öçG&öÇ2&VÖ–âöâÆVgBà¥F†—2—2F–væ÷7F–2'V–ÆBÂæ÷B6Æ–ÒF†B6öçG&öÇ2&Rf—†VBâF†R÷WF6öÖRv–ÆÀ§6W&FR6çf2'F–6—F–öâg&öÒT’ÖöæÇ’–çF–æs²æV—F†W"÷WF6öÖRÆöæR&÷fW0¦âVæv–æR&ö÷B6W6RâFW7G26÷fW"W†7B&W7F÷&F–öâÂ'W7’&VgW6ÂÂ7GVÂ'WGFöç2À¦ö'6W'fF–öâÂöfb÷vV†–FR6ÆVçWÂæBVæ6†ævVB6çf2F–ÖVç6–öç2öÖöFVÂö†—7F÷'’à ¤DUd”4S“s3¢v†–ÆR&–v‡B6öçG&öÇ2f—7VÆÇ’Ö—76–ærÂ$Tdõ$R7v—F6†–ærÂW6Rf–Æ^(i ¥T’FV'V~(i$†–FR4BöæÇ’â–ç7V7BF÷×&–v‡BFööÆ&#²6†ö÷6Rf—6–&ÆRöÖ—76–ær&W7VÇBà¥6†÷s4Bv–î(i$6÷’&W÷'BæB6VæBâÇ6ò6’–b&W7F÷&VC4BÖ¶W2&–v‡ET’F—6V ¦v–ââF†—2—2F†RæW‡BFV6—6–öâvFS²'&’&VÖ–ç266WFVC²æòÖöFVÆÆ–ær6†ævW2à ¢22ã“sB(	B&÷fVBVFvR–6öç3²W6W"&W7VÖW2–6öâ&öÆÆ÷WB(	B#bö7Fö&W"##` ¥W6W"6ææ÷B7W'&VçFÇ’&W&öGV6R&–v‡B×6–FRfVÇBöã“s2æBW‡Æ–6—FÇ’&WVW7G0®(	ÄÖ÷fRöçFòWFF–ær–6öç22&Vf÷&RöæW‡F'V–ÆN(	ÒâF†—2WF†÷&—¦W2&W7VÖ–ær–6öç3°¤äõB&÷fVâ6ö×÷6—F÷"&W—"÷"'&öC“s252â¶VW–çFW&Ö—GFVçBf—6–&–Æ—G’õTâÀ§&WF–â÷BÖ–ã“s26çf2&ö&RæC“s"Æ–âT’â'&““s52&÷FV7FVBà¤VF—B7W'&VçBÖ–ãCfF63#3÷'VçF–ÖV6&336cRÂ6†VÆÃ“s2æBÆÃ#W†—7F–ærVFvRFööÇ2à¤FBöæÇ’VFvR×&F–ÂÖ–6öç2æ773¢&÷fVB&ööc2'Gv÷&²Ã3'‚–6öç2æB÷&–v–æÀ§6ÖÆÂ6F–öç2â–æ6ÇVFW2&Wf—6VBöfg6WBôÖW&vTF—7Bôf–ÆÄf6RôF—76öÇfRæB&W7F÷&V@¤'&–FvRâW‡G'VFS"ô&WfVÃ2æBÄÂ6÷W&6RF&vWB”G2öÆ&VÇ2öæwVÆ"6Æ÷G2&WF–æVBà¤–ææW"6ÖSsl9sc÷#"2f6RõfW'FWƒ²÷WFW#cŒ9sS‚÷##3f—G2FVç6R÷&–v–æÂ76–ærÀ£—‚F—FÆW2öÆ–æRÖ†V–v‡C÷FF–æs'‚ÆÆ÷rGvòÖÆ–æR6F–öç2v—F†÷WBVæÆ&v–ær&–ærà¤öæRÖöfb&V7FævÆR6†V6²6öæf—&×3—'v—6R'WGFöâ÷fW&Æ27&÷73#F&vWG2à¤W†7B÷&–v–æÂFööÂWfVçBöf–Æ&–Æ—G’õUbö†—7F÷'’÷væW'2æBÆÂ'VçF–ÖT¥2&WF–æVBà¤f6RõfW'FW‚ôö&¦V7B6†VWG2Â'&’Ã“s2FV'VræC“s"7F&–Æ—G’552÷–ç2Væ6†ævVBà ¤DUd”4S“sC¢VFvR6VÆV7F–öî(i'&F–Â–ç7V7B–6öç2÷F—FÆW2öFVç6R÷WFW"76–æs²G'’6Æ–FRÀ¤&WfVÂæBÆö÷²7WBõ7F—F6‚Ub66W72æBVæFõ&VFòöâ7V—F&ÆRÖW6‚â7v—F6‚÷F†W ¦ÖöFW2Fò6öæf—&Ò66WFVB–6öç2Âæf–vF–öâæB&–v‡B6öçG&öÇ2&VÖ–âW6&ÆRà¤æW‡B–çB–6öç2gFW"VFvRfVVF&6²â¶VW6çf2F–væ÷7F–2–bf—6–&–Æ—G’&V7W'2à ¢22ã“sR(	B…’õ…¢õ•¢G2f÷"VFvRæBfW'FW‚W‡G'VFS²ã“sB–6öâ52(	B#bö7Fö&W"##` ¥W6W"ã“sB–6öç252&÷FV7FVC²6·2f—†VBv÷&ÆB×ÆæR6†ö–6W2f–6ÖÆÂ7V&RG0¦Æ–¶RÖ–âÖ÷fRv—¦ÖòÂ–â$õD‚VFvRæBfW'FW‚W‡G'VFRâVF—BÖ–ã&cvfSS2÷'VçF–ÖP£v3C“â÷&–v–æÂv—¦ÖòÇ&VG’†2…’õ…¢õ•¢öÇ–vöç2'WBW‡G'VFR†–BF†V—"w&÷W°¥fW'FW‚÷væW"66WG2öæÇ’g&VRõ…•¢æBVFvR66WG2÷&–v–æÂVFvR×W'VæF–7VÆ ¥ÆæRõ…•¢âW‡FVæBF†W6R4ÔR÷væW'2ÂæòæWrvW7GW&R÷F÷öÆöw’ö†—7F÷'’–×ÆVÖVçFF–öâà ¤W‡÷6RW†—7F–ærF‡&VRÆæRöÇ–vöç2GW&–ærW‡G'VFRÂ÷&–v–æÂÖ–âÆæR6öÆ÷W'2À¦&–…’õ…¢õ•¢Æ&VÇ2Â6VÆV7FVB×B7G&ö¶Röf–ÆÂö÷6—G’æB(	Å…’Ææ^(	Ò&FvRâBF §6VÆV7G26öç7G&–çBöæÇ“²G&r÷&–v–æÂVFvR÷fW'FW‚FòW‡G'VFRâ6VçG&Rg&VRæB…• ¦'&÷w2&WF–â&Wf–÷W2ÖVæ–æw2æB6öçG&öÇ2â&÷FF–öâõ66ÆR&VÖ–â†–FFVâGW&–æp¤W‡G'VFS²FöæR&W7F÷&W2æ÷&ÖÂv—¦ÖòâöÆBF—&V7F–öâ&÷r&VÖ–ç2†–FFVâ†æòGWÆ–6FR’à ¥6†&VBW‡G'VFR×ÆæRÖ6öç7G&–çG2†VÇW"7WÆ–W2v÷&ÆBæ÷&ÖÇ2ÂöÖ—GFVBÖ6ö÷&F–æFP§&ö¦V7F–öâæBW†7BF—&V7F–öââ…ž(i%¢f—†VBÂ…®(i%’f—†VBÂ•®(i%‚f—†VBBõ$”t”äÀ¦6ö×öæVçB6ö÷&F–æFW2†æ÷BvÆö&Â¦W&ò’â÷&–v–æÂvW7GW&R÷væW'2&–67BÆæP§F‡&÷Vv‚6VÆV7FVB6ö×öæVçB6VçG&S²g&VR×f–WræBVFvR×W'VæF–7VÆ"F‡2&W6W'fVBà¥v÷&ÆB×ÆæRVFvRG&rW6W2æÖVBÆæRF—&V7FÇ’Âæ÷BVFvR×W'VæF–7VÆ"&ö¦V7F–öâà¤W†7BföÆÆ÷w2Æ7BVÆÂ&ö¦V7FVB–çFò6VÆV7FVBÆæRÂ÷"&ö¦V7FVBf–Wr×WöfÆÆ&6³°¤VFvR6¶—26öÆÆ–æV"F—&V7F–öç2Fòfö–B¦W&òÖ&V&–&&öç2â&WVBÇ6ò&ö¦V7G0¦Æ7BfV7F÷"gFW"ÆæR6†ævRâæV"×&ÆÆVÂ&’&VgW6W26fVÇ’v—F‚÷&&—B†–çC°¦æòv–çB6ö÷&F–æFW2ÂW‡G&†—7F÷'’÷"Æ÷7Bæf–vF–öââW†—7F–ærfÆ–FF–öâöÖWFFFð§6VÆV7F–öâö†—7F÷'’6öÖÖ—BæB6æ6VÆÆF–öâ÷væW'2&WF–æVBâ–çFW&æÂöÆBfW'6–öà§7F×2&WF–æVB–çFVçF–öæÆÇ“²6†ævVBÆöFW"–ç2æB&Wf–WvVB†6†W3“sRWFFVBà ¥FW7G2W†V7WFR$õD‚7GVÂvW7GW&R÷væW'2v—F‚ö&Æ—VR6ÖW&2f÷"ÆÃ2ÆæW3 ¦×VÇF’×F—öVFvR&–&&öç2Â6–væVDW†7BÂ&WVBÂVæFõ&VFòÂ6æ6VÂæB6öç7FçBöÖ—GFV@¦6ö÷&F–æFS²G'VRVFvRÖöâ&VgW6Âöf—'7DW†7BfÆÆ&6³²7GVÂ6†ö÷6W"6ÆÆ&6·2æ@§f—6–&ÆRö†–v†Æ–v‡FVBG2âW†—7F–æssSr6†÷r×6VÆV7F÷"76W'F–öâW‡æFVBFò–æ6ÇVFP¦æWvÇ’W‡÷6VBÆæRw&÷W²æò&V†f–÷&Â&÷FV7F–öâG&÷VBâ66WFVB–6öâ552À¤'&““sæBf—6–&–Æ—G““s"ó“s26fVwV&G2VçF÷V6†VBâ–çFW&Ö—GFVçB&–v‡BfVÇB&VÖ–ç0§Vç&÷fVã²W6W"&V6VçFÇ’Væ&ÆRFò&W&öGV6RâæW‡BFWf–6RÆæR×B66WFæ6RÀ§F†Vâ–çB–6öâ&öÆÆ÷WBVæÆW72W6W"&W&–÷&—F—¦W2à ¤DUd”4S“sS¢VFvR&÷VæF'’öÆö÷6RVFv^(i$W‡G'VF^(i%…’õ…¢õ•¢6ÖÆÂ7V&W2ÂG&rV6ƒ²÷&&—@¦ö&Æ—VVÇ’–bÆæRVFvRÖöââ&WVB–âfW'FW‚ÖöFRâ6†V6²…’†öÆG5¢õ…¢†öÆG5’õ•¢†öÆG5‚À¤W†7Bõ&WVBõVæFõ&VFòô6æ6VÂæB6VçG&Tg&VRõ…•¢7F–ÆÂv÷&²âã“sB–6öâ52&WF–æVBà  ¢22ã“sb(	B&V6öææV7B&VG’VFvR'&–FvR6VÆV7F–öç2(	B#bö7Fö&W"##` ¤VF—BÖ–ãƒ&FfBö'V–ÆC“sRâW6W"7WÆ–W267&VVç6†÷C“sRæBW†7BVFvRf–Âƒ’æö& ¢ƒ#BfW'F–6W2óBVG2“²&WF–âVæ6†ævVBf—‡GW&RFW7G2öf—‡GW&W2öVFvRÖ'&–FvRÓ“sbæö&¢à¥F†R†–v†Æ–v‡FVB&÷VæF'’—"—2ô$¢fW'F–6W3>(	3æC#>(	3#B‡'VçF–ÖRVFvW3"ó3R’à¤&÷F‚†fRöæRf6R÷væW"âW†—7F–ærgVÆÇ’–ç7FÆÆVB÷Vâ6†–â'&–FvR66WG2F†R—"À¦7&VFW2VE³2Ã#2Ã#BÃÒ„ô$¢öæRÖ&6VB’æB76W2÷&–v–æÂF÷öÆöw’fÆ–FF–öâà¥&F–ÂwV–FVB6W76–öãcsb–æ6÷'&V7FÇ’66WFVBôäÅ’öæR6ö×ÆWFR&÷VæF'’Æö÷–à¦6å7F'Bö÷Väg&öÔ‡V"ÂF—66öææV7F–ærÇ&VG’×7W÷'FVB&VG’—'2â&W—"4ÔP§6W76–öã¢FVÆVvFR&VG’×—"VÆ–v–&–Æ—G’FòW†—7F–ær'&–FvTVFvU6VÆV7F–öä–æfòÂ&WF–à§6–ævÆRÖÆö÷wV–FVBVçG'’Â7–æ2Ç’–ÖÖVF–FVÇ’Â6†÷r&VG’7FGW2â÷&–v–æÂT’À§F÷öÆöw’Âv–æF–ær÷VÆ—G’÷G&ç67F–öâwV&G2æB†—7F÷'’÷vâÇ’Væ6†ævVBà¤6æ6VÂ&WF–ç2–æ—F–Â—#²–çfÆ–Bö–çFW&–÷"öÖ—76–ær÷6–ævÆRÖ÷VâÖVFvR–çWG2&VgW6Rà¤æòæWr¶W&æVÂövW7GW&RÂv—¦Öò6†ævW2Â&VæFW&W"f—†W2÷"–6öâv÷&²ã“sRB66WFæ6P¦æ÷B–æfW'&VBg&öÒWÆöFVB67&VVç6†÷Bã“sB–6öâó“s'&’52æC“s"ó“s2f—7VÀ§6fVwV&G2&VÖ–ã²–çFW&Ö—GFVçB&–v‡B×6–FRfVÇB—27F–ÆÂõTâà ¥fÆ–FF–öã£##Rfö7W6VB'&–FvR÷6VÆV7F–öâÖ‡V"÷&F–Â÷&VÆV6RFW7G252Ãd”Âó6¶—à¤f÷W"æWr&VÂÖ÷væW"–çFVw&F–öç26÷fW"7WÆ–VB—.(i&7GVÂ&F–Âf–Æ&–Æ—Gž(i ¦÷&–v–æÂT’Çž(i&öæR†—7F÷'’7FWõVæFõ&VFòÂ6æ6VÂÂwV–FVB6–ævÆRÖÆö÷(i'6V6öæBÖÆö÷À¦æB–çfÆ–B–çWBFöÖ–2&VgW6ÂâæöFRDôÒFFW'2&Ræ÷BæF—fR•B&ööbà¤6†ævVB'VçF–ÖRôäÅ’6VÆV7F–öâÖ‡V"Ö'&–FvR×6W76–öã²&Wf–WvVB6W76–öâ÷&V6÷fW'’–ç3“sbÀ§&VÆV6RÖ&¶W'3“sbæB76WB†6†W2WFFVC²×VÇF“ãög&÷¦Vâö–6öâövVöÖWG'’Væ6†ævVBà¥V&Æ–6F–öâfW&–f–6F–öâföÆÆ÷w26W&FVÇ’âDUd”4S“sc¢6ÖRÖöFVÂ÷Gvò&VBVFvW2(i ¤VFvR&F–Â'&–FvR(i"Ç’'&–FvS¢öæR6Æ÷6–ærVBâVæFõ&VFó²&V÷VâF†Vâ6æ6VÀ§&WF–ç2—"övVöÖWG'’âÇ6ò6æ—G’Ö6†V6²W†—7F–ærGvòÖÆö÷'&–FvRâæW‡B7GVÂFWf–6P¦fVVF&6²ÂF†Vâ–çB–6öâ&öÆÆ÷WC²&W6W'fR–æFWVæFVçC“sRW‡G'VFRBFWf–6RvFRà ¢22ã“sr(	B&F–Âv—&–ærVF—BæBæV"Ög&öçBW†7BW‡G'VFR(	B#bö7Fö&W"##` ¥W6W"&WVW7G2VF—BöbÆÂ&F–ÂFööÇ3²÷&&—B6öÖWF–ÖW26†ævW2F‡&÷Vv‚&VgW6Âà¤VF—B7W'&VçBÖ–ãSc6fVFS’ö'V–ÆC“sbâgVÆÂ&÷WFR–çfVçF÷'“ƒVçG&–W2„f6S#2ôVFvS#ð¥fW'FWƒBôö&¦V7C2õ–çC’Â÷&–v–æÂF&vWG2öf–Æ&–Æ—G’ö6öçFW‡BFFW'2ö7F–öâ÷væW'3 ¢Fö72÷&F–Â×v—&–ærÖVF—BÓ##bÓÓ#bæÖBâæòÖ—76–ær7F–öâ÷væW"÷"w&öærÖÖöFRF&vW@¦f÷VæB–â6÷W&6R&Wf–Ws²F†—2—2æ÷BW††W7F—fRæF—fRÖvW7GW&RöÖW6‚6W'F–f–6F–öâà£“sb'&–FvRÆVæ6†W"FVfV7B&W—&VB÷V&Æ—6†VC²ÆÃ26†ævVBÆ—fRf–ÆW2'—FRÖÖF6‚à¤&6VÆ–æS“sbeTÄÃ#ƒ3552ód”Âó6¶—ƒãw2’Âfö7W6VC##U52à ¤6öæf—&ÖVB6W&FRW†7B'Vs¢&V6—6–öâÖf6R&ö¦V7FVBÖæ÷&ÖÂfÆÆ&6²F‡&W6†öÆCRÓW€§fW'7W27GVÂ×VÇF’Öf6RÖF—&V7BvW7GW&SRÓG‚6â–çfW'B6–vâ–âæ'&÷ræV"Ög&öç@¦6ÖW&&æBâW†—7F–ær&WfVÂÖ–ç6WCsSf6SrÂ6ÖW&6VçG&R¶æ÷&ÖÂ£R²ƒÃRÓbÃ“¢W†7@¢Ó"ã"–æ6÷'&V7FÇ’W‡G'VFW2³"ã#²÷&&—Bã7WG2–çv&BâÆ–vâõ$”t”äÂ&V6—6–öâ7WFöf`§FòvW7GW&SRÓBôäÅ’âæòÖ–âöG&rö¶W&æVÂövVöÖWG'’ö†—7F÷'’ö–æfW&Væ6R÷‡—6–6Â–çWB6†ævRà¤G–æÖ–2&V6—6–öâÖf6R6†–ÆBæBG&vW"×V’&VçB÷6†VÆÂ¶W—3“sr&Vg&W6†VC²÷&–v–æÀ¦–çFW&æÂ7F×2&WF–æVBâ&Wf–WvVB†6†W2æB&VÆV6R&V6÷fW'’÷6†VÆÂÖ&¶W'3“srà¥F‡&VRæWrFW7G2W6R7GVÂ&V6—6–öâ&ö¦V7F–öâ²æF—fR6öçG&öÆÆW"öfÆÆ&6³£ævÆW2À¦W†7B6Æ÷6VB÷WGWBõVæFõ&VFòÂöÆBÖ6öFR×WFF–öâ6Vç6—F—f—G’Âf—fR‡—6–6ÂG&w2æ@§W&R×Æâ–çf&–æ6Râfö7W6VBf–æÃ#…52ód”Âó6¶—Âæ÷BgVÆÃ“sr&W'Vâà ¥W6W"w2‡—6–6ÂF‡&÷Vv‚&VgW6Â&VÖ–ç2Vç&÷fVâöâffV7FVBÖöFVÂâ6ÖW&6†ævW0§&ö¦V7FVBG&vv–æræB&VfW&Væ6R–æfW&Væ6S²æò&Ææ¶WB&VgW6Âf—‚6Æ–ÖVBâVF—@¦Ç6ò&V6÷&G2GvòföÆÆ÷r×W3¢çVÖW&–27–çF†WF–2–çWB7F–ÆÂG&fW'6W2–æfW&Væ6RÂæ@§&V6—6–öâ7V66W72÷&VF&6²Æ6·2F÷vç7G&VÒ6öÖÖ—B6¶æ÷vÆVFvVÖVçBâ¶VWF†W6RõTà¦f÷"æ'&÷r&W7VÇBö6öç7G&–çBv÷&³²FöâwB&VÆ‚F÷öÆöw’wV&G2÷"&WÆ6R¶W&æVÂà ¤æWrf—6–&–Æ—G’Wf–FVæ6Rv†–ÆS“sr&W&VC¢W†7C“sb&W÷'CC£S3£…¢6†÷w2†–FR6çf0¦C#Cc#bÂ&–v‡ET’f—6–&ÆRö'6W'fF–öã3SBÂ&W7F÷&S3s#CbâW6W"6öæf—&×26öçG&öÇ25D§f—6–&ÆRgFW"6†÷s4BâF÷ÖÆWfVÂ†–FFVã¦fÇ6R—2&W7F÷&VB7FFRâÆ–÷WB÷7G–ÆW2ö†—G0¦†VÇF‡’F‡&÷Vv†÷WC²æõ–çB÷6W76–öâÂÆ–ã“s"7F—fRâF†—2–×Æ–6FW26çf2õT§–çF–ær–çFW&7F–öâ'WBæòVæv–æR&ö÷B6W6R÷"W&ÖæVçBf—‚—2&÷fVââ&WF–à¤õTâ&V7W'&Væ6RæBFWf–6R×&÷fVâÖçVÂ†–FS4N(i%6†÷s4B&V6÷fW'“²æòWFöÖF–2&Æ–æ²À§öÆÂ÷&VÆöB÷&VæFW&W"6†ævRâ6VRFö72÷V’Ö6çf2×&ö&RÓ“sbæÖBf÷"&V6—6RWf–FVæ6Rà ¤DUd”4S“ss¢6öæf—&Ó“srÂ6ÖRæVvF—fRW†7BöâæV"Ög&öçBF†Vâ6Æ–v‡FÇ’÷&&—FVBf–Ws°¥VæFõ&VFó²&WG'’÷&–v–æÂ‡—6–6ÂF‡&÷Vv‚v—F‚–æfW&Væ6RöfbööâÂ6VæBW†7B&VgW6À¦æB&RÖGFV×Bæ&÷†Æ"–b&V7W'&–ærâ'&–FvR—"Ç’ô6æ6VÂ&WF–æVBâ–b&–v‡BT¦f–Ç2W6RW†—7F–ær†–FS4N(i%6†÷s4C³“srFöW2äõB6Æ–ÒFò&W—"f—6–&–Æ—G’âæW‡B&–÷&—F—¦P¦Wf–FVæ6RÖÆVB6çf2õT’F–væ÷6—2ÂF†VâW†7B×&W7VÇBö–æfW&Væ6RföÆÆ÷r×W2&Vf÷&RÖ÷&P¦fVGW&R&öÆÆ÷WBã“sB–6öâó“s'&’66WFæ6RæB&÷FV7FVD×VÇF“ãög&÷¦VâVæ6†ævVBà ¢22ã“s‚(	BVFvR'&–FvR&Wf–Wr&Vf÷&RÇ’(	B#bö7Fö&W"##` ¥W6W"6Æ&–f–W3“sb6öÖÖ—G2gFW"Ç’'WBFöW2æ÷B$Ud”UrÂVæÆ–¶R66WFVBf6P¤'&–FvRâF†—2—2Ö—76–ær–çFW&7F–öâ7FvRÂæ÷Bf–ÆVB'&–FvRF÷öÆöw’â&–÷#“s`§&VG’×—"ÆVæ6†W"&W—"&WF–æVC²æò'&öC“sbó“sr52–æfW'&VBâVF—BÖ–æcf6fc3À§6ÖRwV–FVBVFvR6W76–öâ†Bæò&Wf–Wr÷væW#²f6R'&–FvR×WFFW2&Wf–WrÖW6‚À§v†–ÆR66WFVBf6RõfW'FW‚&WfVÂÇ&VG’6†&W2&VæFW&–ærÖöæÇ’&ÇVRv†÷7B†VÇW"à¥&WW6RW†—7F–ær7&VFTf6T&WfVÅ&Wf–WröF—7÷6Tf6T&WfVÅ&Wf–WrVæ6†ævVBf÷"VFvRà ¥4ÔR6VÆV7F–öâÖ‡V"Ö'&–FvR×6W76–öâ'V–ÆG2÷&–v–æÂ'&–FvU6VÆV7FVDVFvW2öâ&—fFP¦6ÆöæRæB&VæFW'26†ævVBöÇ–vöç2v—F‚÷&–v–æÂ&ÇVRG&ç6ÇV6VçBf–ÆÂ÷v—&R†VÇW"à¤÷&–v–æÂ6÷W&6R÷6VÆV7F–öâöÖWFFFö†—7F÷'’÷&ö¦V7B&VÖ–âVçF÷V6†VBVçF–ÂÇ“°¦æòæWrÖöFVÆÆ–ær÷G&–æwVÆF–öâö†—7F÷'’¶W&æVÂÂÖævW"ÖW6‚&WÆ6VÖVçB÷"&VæFW&W"à¤6æF–FFR6ÆöæR6ÆÇ2&W6W'fR7F—fR7FFRæÖW6‚FW7—FR†—7F÷&–6ÂVFvW2ö'6W'fW'2à¥6VÆV7F–öâÖ¶W’66†R&WW6W2&Wf–WrGW&–ær÷&&—C²6VÆV7FVBÖ&÷VæF'’6†ævR&V'V–ÆG2—BÀ¦–æ6ö×F–&ÆR÷VÆ—G’×&VgW6VB6æF–FFW26ÆV"—BâwV–FVBf—'7BÆö÷6†÷w2æòv†÷7@§VçF–Â6ö×F–&ÆR6V6öæB&÷VæF'’6VÆV7FVBâÇ’F—6&ÆVBv—F†÷WB7GVÂ&Wf–Wrà¤Ç’'Vç2÷&–v–æÂ'&–FvR×V’6öÖÖ—Böæ6S²6æ6VÂ&VÖ÷fW2v†÷7BæB&WF–ç2–æ—F–À§6VÆV7F–öââW†—7F–ærVæFõ&VFòv÷&·2â&Wf–Wr&VæFW&W"ö†VÇW'2æBf6R'&–FvRVæ6†ævVBà ¥6W76–öâ÷vç26÷W&6R6æ6†÷B¶W’Âö&¦V7BöÖöFRöÆö6²÷66VæR6öçFW‡BâW‡FW&æÂvVöÖWG'’ð¦ÖWFFF6†ævW2Âö&¦V7BöÖöFR÷FööÂ6†ævRÂvV†–FRF—7÷6Rv†÷7Bt•D„õUB&W7F÷&–æp§7FÆRÖW6‚÷6VÆV7F–öâ÷"6Æ÷6–æræWvW"FööÂT’â÷&–v–æÂ&6¶w&÷VæBÖW†—B&÷WFR7F–ÆÀ¦6ÆÇ26Æ÷6S²æòæWr&r×ö–çFW"÷væW"ÂW"Ög&ÖRöÆÆ–ær÷"6÷W&6R&öÆÆ&6²â6†&V@¦vVöÖWG'’öÖFW&–ÂF—7÷6Âö67W'2öæ6Râ÷fW&Æ’—2G&ç6–VçB÷WG6–FR66VæRö&¦V7@¦ÖævW"æBW6W2W7F&Æ—6†VB&WfVÂ&ÇVR7G–ÆRÂæ÷B6fVBvVöÖWG'’÷"6V6öæB&öG’à ¤fö7W6VC#3%52ód”Âó6¶—‡ããcw2“¢÷&–v–æÂ'&–FvR÷&F–Â÷6VÆV7F–öâ6öçG&7G2æC“sp¦6ÖW&&Vw&W76–öç3²f÷W"FFVB&VÂÖ6öçG&öÆÆW"õF‡&VR66VæRFW7G2&÷fRf—6–&ÆRv†÷7@¤$Tdõ$RÇ’v—F‚æò6÷W&6Rö†—7F÷'’6†ævW2ÂöæR×7FW6öÖÖ—BµVæFõ&VFòÂ6VÆV7F–öà§WFFR÷&VÖ÷fÂô6æ6VÂÂ6÷W&6Röö&¦V7BöÖöFR÷FööÂ÷vV†–FR6ÆVçWÂæò×66VæR&VgW6Âæ@§6–ævÆRvVöÖWG'’÷GvòÖFW&–ÂF—7÷6ÂâW†—7F–æs“sb†&æW727WÆ–W2&VÂ66VæR÷6†&V@§&Wf–WrgVæ7F–öç3²æòöÆBvVöÖWG'’ö†—7F÷'’76W'F–öâ&VÖ÷fVBâæòæF—fR•Bf—7VÀ¦66WFæ6R–æfW'&VBâ'VçF–ÖR6†ævRôäÅ’÷&–v–æÂVFvR'&–FvR6W76–öã²6W76–öâ÷&V6÷fW'§–ç3“s‚ÂVæ6†ævVCsb&VæFW&W"–×÷'BW‡Æ–6—FÇ’&Wf–WvVB–â76WB6öçG&7Bà ¤DUd”4S“sƒ¢6VÆV7B6ÖRGvò&÷VæF'’VFvW2(i"VFvR&F–Â'&–FvS¢$ÅTR7âf—6–&ÆP¤$Tdõ$RÇ’â÷&&—BFò–ç7V7C²Ç’¶VW2'&–FvRæB&VÖ÷fW2&ÇVRÂVæFõ&VFòà¤6æ6VÂ&VÖ÷fW2&ÇVRÂ&W6W'fW2÷&–v–æÂÖW6‚÷6VÆV7F–öââwV–FVBGvòÖÆö÷6VÆV7F–öà§WFFW2&Wf–Wr26V6öæB&÷VæF'’—26VÆV7FVBâf6R'&–FvR&VÖ–ç2Væ6†ævVBà¥&–v‡B×6–FRfVÇB7F—2õTâv—F‚6öæf—&ÖVBÖçVÂ†–FS4N(i%6†÷s4B&V6÷fW'“²æò&VæFW&–æp§&W—"÷"÷F†W"ã“srW†7Bö–æfW&Væ6R÷&VF&6²föÆÆ÷r×W–æ6ÇVFVBâæW‡BæF—fR&Wf–Wp¦fVVF&6²ÂF†VâWf–FVæ6RÖÆVB6çf2õT’v÷&²æB&VÖ–æ–ærVF—BföÆÆ÷r×W2à ¢22ã“s’(	BW†7B–æfW&Væ6R—6öÆF–öâæBG'WF†gVÂ6öÖÖ—B&VF&6³²'&–FvS“s‚52(	B#bö7Fö&W"##` ¥W6W"W‡Æ–6—FÇ’56W3“s‚'&–FvR&Wf–Wr&Vf÷&RÇ’ô6æ6VÃ²&÷FV7B—G2&—fFP¦6ÆöæRö&ÇVRv†÷7B÷6÷W&6RÖæWWG&Â&Wf–WrööæR×7FW÷&–v–æÂ6öÖÖ—BæBÆ–fV7–6ÆRà¥W6W"öæW‡F'V–ÆBWF†÷&—¦W2F†RGvò&VÖ–æ–ærW†7BVF—Bf—†W2âVF—B&VÖ÷FRö7W'&Vç@¦Ö–ã#ƒs†’Â&VÆV6S“s‚âW†—7F–ærçVÖW&–2vW7GW&W2Ç&VG’W6R&W6W'fVBö–çFW#“ƒsc°¦W†—7F–ærF—&V7B6öÖÖ—GFVBWfVçB÷vç27V66W76gVÂvVöÖWG'’fÇVW2âæòæWr¶W&æVÂæVVFVBà ¤÷&–v–æÂf6R&VfW&Væ6UVæFW%ö–çFW"æ÷r–væ÷&W2ôäÅ’çVÖW&–2ö–çFW#“ƒsbâ‡—6–6À¥Væ6–ÂöÖ÷W6R–æfW&Væ6RæBFövvÆR7FFR7F’Væ6†ævVBâ6÷fW'2W‡G'VFRæB–ç6WC°¦÷&–v–æÂÖöFVÂ×Væ—BöF—&V7F–öâÖ–ærÃ“srÆ–væVBæV"Ög&öçB&ö¦V7F–öâÂF‡&÷Vv€§6†VÆÂÖW†—B6æ–æræB–ç6WB6fWG’6Æ×&VÖ–ââW†7B7F–ÆÂVçFW'2÷&–v–æÀ¦6öçG&öÆÆW"æBwV&FVBvVöÖWG'’ö†—7F÷'’÷væW'3²æò6W&FRÖöFVÆÆ–ærÆv÷&—F†Òà ¥&V6—6–öâG&6·2öæR7–æ6‡&öæ÷W2çVÖW&–2&WVW7BæBÆ—7FVç2Fòõ$”t”äÀ¦&÷†Æ"Öf6RÖF—&V7BÖ6öÖÖ—GFVBâ—B&V6÷&G27V66W72õ&WVB÷&VF&6²öæÇ’gFW"F†@§6VÖçF–26¶æ÷vÆVFvVÖVçBÂW6–ær5ETÂ6öÖÖ—GFVBfÇVR&F†W"F†â&WVW7FVB–çWBà¤W†—7F–ær÷6—F—fR÷&V6W72ö6Æ÷6VBÖæVvF—fRô–ç6WBWfVçG2&WF–æVC²öÆB÷Vâ×6†VW@¥F‡&÷Vv‚7V66W72'&æ6‚æ÷rVÖ—G26ÖR6VÖçF–2WfVçBgFW"÷&–v–æÂwV&FVB6öÖÖ—Bà¤W†×ÆS¢&WVW7FVBÓ"ã"7F÷–ærB6†VÆÂW†—BÓ"ã&V6÷&G2öF—7Æ—2Ó"ãâ–ç6WB&WVW7@¦&÷fR6fR&ævRF—7Æ—2÷&–v–æÂ6Æ×VBF—7Fæ6RÂæWfW"âVçW&f÷&ÖVCà ¤æò6¶æ÷vÆVFvVÖVçBÖVç2fÇ6R÷&VgW6VB7FGW2Âæòf¶RfÇVRÖ6öÖÖ—GFVBWfVçBÂ&–÷ §7V66W76gVÂW"×FööÂ&WVB÷fÇVR&WF–æVBâ&VgW6Â&VF÷WB7W'f—fW27V'6WVVçB7FGW0¦ö'6W'fW"6ÆÆ&6·2ÂWfVâv—F‚æò&–÷"7V66W73²æW‡B‡—6–6Â&W72ôW†7BGFV×Bð§7V66W726ÆV'2—Bâ&Ææ²÷¦W&òöæöæf–æ—FR–çWBæB'6VçB†—7F÷'’&VgW6R&Vf÷&P§7–çF†WF–2vVöÖWG'’F—7F6‚â÷&–v–æÂ&VgW6Â÷&öÆÆ&6²÷6VÆV7F–öâö†—7F÷'’&VÖ–âà¥‡—6–6ÂG&r6ÆÆ&6·27F–ÆÂ&V6÷&BvVöÖWG'’æ÷&ÖÆÇ’âF†—2—2G&ç67F–öâ&W÷'F–ærÀ¦æ÷B&VÆ†F–öâöbF÷öÆöw’&VgW6Â÷"&ööböbW6W"w2‡—6–6ÂF‡&÷Vv‚f–ÇW&R&W—"à ¤f–æÃSrfö7W6VE52ód”Âó6¶—ƒ‚ãw2“¢æWsr7GVÂ&V6—6–öâ¶F—&V7BÖ6öçG&öÆÆW"FW7G0§ÇW2f6RõF‡&÷Vv‚öæVvF—fR÷&WVB÷&F–Âô'&–FvR÷&VÆV6R&Vw&W76–öââæWrf—‡GW&W2'Và¦÷&–v–æÂVæ–f÷&ÒÖ–ç6WB÷væW"&F†W"F†â6VçG&RÖÆW'fÆÆ&6²âFW7BW†7Bã3rC0¦6ÖW&2ÂF‡&÷Vv‚CFæV"öö&Æ—VRf–Ww2Â7GVÂW†—BFWF‚ÂVæFõ&VFòööæR6†V6·ö–çBÀ§&VgW6VBVçF—&R×6öÆ–B7WBv—F‚Væ6†ævVB6÷W&6Rö†—7F÷'’öÆ7BfÇVRÂ7GVÂ6Æ×V@¤–ç6WBÂçVÖW&–2–çfÆ–BöæòÖ†—7F÷'’&VgW6ÂÂ&VÂ‡—6–6ÂfW'FW‚–æfW&Væ6Rg26ÖP¦çVÖW&–26öçF7BÂW'6—7FVçBf–ÇW&R&VF÷WBâæòæF—fR•B66WFæ6R–æfW'&VBà¤6†ævVBgVæ7F–öæÆ—G’ôäÅ’&V6—6–öâÖf6RæC6Æ–æW2–â÷&–v–æÂ×VÇF’Öf6RÖF—&V7C°¦G&vW"×V’6†ævW26†–ÆB–âöæÇ’â&Wf–WvVB&VçBö6†–ÆBöF—&V7B÷&V6÷fW'’–ç3“s’æ@§6†VÆÂÖ&¶W'2ö76WB†6†W2âÖ–âövVöÖWG'’õF‡&÷Vv‚¶W&æVÇ2ô'&–FvS“s‚ô×VÇF“ãög&÷¦Vâð¦–6öç2ó“s'Æ–âó“s7&ö&R&VÖ–âVæ6†ævVBâæòGWÆ–6FR†—7F÷'’÷"–çWB÷væW"à ¤DUd”4S“s“¢v—F‚–æfW&Væ6RôâÂf6RW†7Bã3r†÷"6öçfVæ–VçBfÇVR’Â÷&&—BõVæFò÷&WG'“°§&W7VÇB6†÷VÆB&WF–âVçFW&VBF—7Fæ6RâfÆ–BF‡&÷Vv‚÷fW'6†ö÷BF—7Æ—27GVÂW†—Bà¥G'’&VgW6VB7WC¢W‡Æ–6—B&VgW6ÂÂ&Wf–÷W27V66W76gVÂfÇVR&WF–æVC²VæFò×W7@§VæFòF†RÆ7B7V66W76gVÂ÷W&F–öâÂæ÷Bâ–çfVçFVBf–ÆVB7F–öââ‡—6–6Â6æ §7F–ÆÂv÷&·2â'&–FvR&Wf–Ws“s‚&VÖ–ç266WFVBâ&–v‡B×6–FRfVÇB7F–ÆÂõTã²ÖçVÀ¤†–FS4N(i%6†÷s4B&V6÷fW'’6öæf—&ÖVBâæW‡BWf–FVæ6RÖÆVB6çf2õT’v÷&²÷"7GVÃ“s¦fVVF&6³²æòæWrfVGW&Rö–6öâW‡ç6–öâ&Vf÷&R÷WG7FæF–ær&VÆ–&–Æ—G’F—&V7F–öâà ¢22ã“ƒ(	BW‡Æ–6—Bf–ÆR&Vg&W6‚F—7Æ’&V6÷fW'“²ã“s’W6W"52(	B#bö7Fö&W"##` ¥W6W"53“s’&÷FV7G2W†7B–æfW&Væ6R—6öÆF–öâÂ7GVÂ6öÖÖ—B&VF&6²Â&VgW6Âð¦Æ7B×fÇVRö†—7F÷'’æBW†—7F–ær‡—6–6Â6æ–ærâ'&–FvS“s‚52&VÖ–ç2&÷FV7FVBà¤VF—BÖ–ã&c&VSs†÷&VÆV6S“s’âæW‡B&VÆ–&–Æ—G’fö7W2—2&V7W'&–ær&–v‡B×6–FRT’à£“sbFWf–6R&ö&R&÷fVB†–FS4B&W7F÷&VB6öçG&öÇ2æB6†÷s4BÆVgBF†VÒf—6–&ÆS²F†—0¦æ'&÷w26çf2õT’–çF–ær–çFW&7F–öâ'WBFöW2æ÷BW7F&Æ—6‚&ö÷B6W6RâæògW'F†W §7V7VÆF—fR552öÆ–W"÷&VæFW&W"6†ævR÷"W&ÖæVçB&W—"6Æ–Ò–ã“ƒà ¤FBf–ÆR(i"&Vg&W6‚F—7Æ’Âf–Æ&ÆRt•D„õUBVæ&Æ–ærFV'Vrâ—BW6W24ÔRW†—7F–æp¦7&VFT6çf5f—6–&–Æ—G•&ö&R–æÆ–æRf—6–&–Æ—G’6fR÷&W7F÷&R÷væW"âW‡Æ–6—BW6W"6Æ–6°¦†–FW2ôäÅ’÷&–v–æÂ6çf2f÷"öæR&W6VçFVBg&ÖR‡Gvò$b6ÆÆ&6·2’ÂF†Vâ&W7F÷&W0¦W†7B÷&–v–æÂf—6–&–Æ—G’fÇVR÷&–÷&—G’ö'6Væ6Rã#S×2F–ÖW"fÆÆ&6²æBvV†–FRð¦†–FFVâÖFö7VÖVçBöFV'VrÖöfb6æ6VÆÆF–öâVç7W&R&W7F÷&F–öâ–bæ–ÖF–öâg&ÖW27FÆÂà¤æò&VÆöBÂ6çf2&RÖ7&VF–öâ÷&W6—¦RôE"öÖöFVÂö†—7F÷'’÷6VÆV7F–öâ×WFF–öâÂæWr&VæFW&W"À¦WFöÖF–2&V7W'&–ær&Æ–æ²Â–FÆRöÆÆ–ærÂæf–vF–öâ÷"ö–çFW"÷væW"âFV'Vröfb7F—0¦öfc²f–ÆR6Æ÷6W2gFW"7V66W76gVÂ7F'BÂ'WGFöâ&W6WG2gFW"&W7F÷&Râ6öæf—&ÖF–öà§6—2F—7Æ’&Vg&W6†VBÂæ÷BF†BF†RfVÇB—2W&ÖæVçFÇ’f—†VBà ¥VæF–ær&Vg&W6‚&V¦V7G2&WVG2æBFöW2æ÷BF¶R÷fW"ÖçVÆÇ’†–FFVâFV'Vr&ö&Rà¤W†—7F–ær&ö&R'W7’wV&Bæ÷rÇ6ò6†V6·2Ö–âôf6RôVFvRõfW'FW‚ô&WfVÂÆ—fRG&w3°¥–çB÷FööÂ6W76–öâöv—¦ÖòwV&G2&WF–æVBâ&VgW6VBVçG'’ÆVfW2v÷&²VçF÷V6†VBæ@¦6·2Fòf–æ—6‚7F—fR÷W&F–öâ÷"6†÷s4BâFV'Vr&ö&Röö'6W'fF–öâ'WGFöç2F—6&ÆV@¦'&–VfÇ’GW&–ær&V6÷fW'’â÷F–öæÂFV'VrÆöw2&V6÷&B7F'BöVæBæB–çfÆ–FFR7FÆP¦66†VB&W÷'G2â÷&–v–æÂGvò×7FWF–væ÷7F–2æBW6W"Öö'6W'fF–öâfÆ÷rVæ6†ævVBà ¤f–æÃ3’fö7W6VE52ód”Âó6¶—ƒã#‡2“¢æWsB&V6÷fW'’FW7G2²W†—7F–ærFV'VröF—7Æ’ð¦6çf3“s2ô'&–FvS“s‚ôW†7C“s’÷&VÆV6R6öçG&7G2âW†7B–æÆ–æR&W7F÷&F–öâ7&÷73`¦–æ—F–Â7FFW2Â†–FFVâg&ÖR&Vf÷&R&W7F÷&RÂ7FÆÆVBÖg&ÖRfÆÆ&6²Â6æ6VÂöÆFRÖg&ÖP¦6ÆVçWÂ'W7’öÖçVÂ×&ö&R&VgW6ÂÂ66†VGVÆW"f–ÇW&R&W7F÷&F–öâÂ7GVÂf–ÆRVçG'§v—F‚FV'VtôdbÂvV†–FRöFV'VrÖöfb6ÆVçWÂVæ6†ævVB&6¶–ærF–ÖVç6–öç2æBÖöFVÂð¦†—7F÷'’–FVçF—G’FW7FVBâ÷&–v–æÃ“s2FW7G2&WF–æVBâ6†&VBFW7B†VÇW"öæÇ’v–ç0¦÷F–öæÂf–ÆR†÷7BâæòæF—fR•B&V6÷fW'’×7VVB÷f—7VÂ66WFæ6R–æfW'&VBà¥'VçF–ÖR6†ævRôäÅ’vW7GW&RÖFV'Vs²F—&V7B6†VÆÂ÷&V6÷fW'’–ç3“ƒæB&Wf–WvVB†6†W2à£“s’ÖöFVÆÆ–ærôW†7BÃ“s‚'&–FvR÷6†&VB&VæFW&W"ÂÖ–âô×VÇF“ãö–6öç2ög&÷¦VâVæ6†ævVBà ¤DUd”4S“ƒ¢f–Æ^(i%&Vg&W6‚F—7Æ“¢6çf2&WGW&ç2WFöÖF–6ÆÇ’ÂÖöFVÂ÷6VÆV7F–öâ7F“°¥VæFõ&VFò7F–ÆÂ7G2öâ7GVÂ&–÷"ÖöFVÆÆ–ær6†ævW2âæòFV'VrVæ&ÆR&WV—&VBà¥v†Vâ&–v‡B6öçG&öÇ2æW‡BF—6V"ÂW6RF†—2öæR7F–öã²&W÷'B–bF†W’&WGW&âæ@§7F’f—6–&ÆRâW†—7F–ærÖçVÂ†–FS4N(i%6†÷s4B&VÖ–ç2f–Æ&ÆR–b'&–Vb&Vg&W6‚FöW0¦æ÷B&W&öGV6R—G2&V6÷fW'’âF†—2—26öçfVæ–VçBWf–FVæ6RÖ&6VB$T4õdU%’Âæ÷B6Æ–Ð§F†B–çFW&Ö—GFVçB–çF–ærfVÇB—2f—†VBâæW‡BföÆÆ÷ræF—fRfVVF&6²æB–çfW7F–vFP¦6çf2õT’&÷VæF'’g&öÒWf–FVæ6S²&WF–âÆÂ&÷FV7FVC“s’ó“s‚–çFW&7F–öç2à ¢22ã“ƒ(	BUb÷WF÷Æ–W"æB6ö×ÆWFR7W&f6RFV&F÷vã²ã“ƒ&V6÷fW'’52öæÇ’(	B#bö7Fö&W"##` ¥W6W#“ƒ5266WG2W‡Æ–6—B&V6÷fW'’Â'WB&V¦V7G2æVVF–ærÖçVÂ&Vg&W6‚2§6öÇWF–öâæB7WÆ–W2&W&öGV6–&ÆRUbv–æF÷r&W÷'Cs£S£•¢â¶VW&–v‡B×6–FRf—7VÀ¦f–ÇW&RõTã²FöâwBÖ—7&V6÷&C“ƒ2T’&W—"52ã“s’W†7BæC“s‚'&–FvR&÷FV7FVBà¤VF—B7W'&VçFÖ–æcƒVƒ¢WfVçF6†–â—2ö&¦V7BUgFööÇ3ƒƒƒ(i&ÖW6„†VÇF„6Æ÷6S“#ƒS(i ¦f–æÇ6W76–öæçVÆÂÂæòUbVF—F÷"÷–çBöF—7Æ—&Vg&W6‚æVVFVBâ6öçG&öÇ2övVöÖWG'’ö†—G0¦†VÇF‡“²†–FFVâ6†&VF†÷7B&VÖ–ç2f–Ww÷'BÖ6öçF–æVBv—F‚£3Bö÷fW&fÆ÷vWFòð¦6öçF–æÆ–÷WG–çBö—6öÆF–öæ—6öÆFRâ6÷W&6RVæBÆ6¶VBf–Ww÷'B×7G–ÆR÷Æ6VÖVç@¦6ÆVçWâW†7BWf–FVæ6R7VÖÖ'’–âFö72÷V’×Wb×G&–vvW"Ó“ƒæÖC²æò&÷fVâVæv–æR6W6Rà ¥&W—"÷&–v–æÂFööÂ×6W76–öâ×V’÷væW"ÂäõBâWFöÖF–2v÷&¶&÷VæBâUbFööÇ2W6W0¦ÖçVÂæF—fR÷÷fW"F÷Æ–W"–b7W÷'FVC²÷&–v–æÂ†÷7Bö6öçG&öÂæöFW2&VÖ–â–à¤DôÒ6òW†—7F–ær66÷VBv–FR552öÆ—7FVæW'2ö7F–öç27W'f—fRâf—†VB÷6—F–öæ–ærföÆÆ÷w0§f–Ww÷'BF÷³'ƒ²G–æÖ–2f–Ww÷'B†V–v‡B&÷VæG2Âv–æF÷r÷f—7VÂ&W6—¦RÆ—7FVæW'0¦7F—fRöæÇ’v†–ÆR6†÷vââ÷&–v–æÂã“S‚G&ç6f÷&Ög&VR÷6—F–öâ&WF–æVBÂ'WBf–ÆV@§–çBÖ6öçF–æÖVçBÆ–W"&VÖ÷fVBâG&ç7&VçBæöæ–çFW&7F—fR&6¶G&÷Â–æ†W&—FVBFW‡@¦6öÆ÷W#²æòÖöFÂö–æW'Böfö7W2×G&÷"æWr&r×ö–çFW"÷væW"â÷F†W"FööÇ2Væ6†ævVBà ¤öâ6Æ÷6Rö6öçFW‡B7v—F6‚Â†–FR÷&VÆV6RæF—fR7W&f6R&Vf÷&R&WGW&æ–ær÷&–v–æÀ¦6öçG&öÇ3²6ÆV"÷÷fW"öFö6²÷v–FRfÆw2æBÄÂ–æÆ–æRf–Ww÷'B7G–ÆW3²&²V×G¦†–FFVâ†÷7B&6²–âG&vW"âUbVF—F÷"†æFöfbW‡Æ–6—FÇ’7W7VæG26÷W&6R7W&f6P¦&Vf÷&Rf—'7Bv÷&·76R–çBv†–ÆR&W6W'f–ær÷&–v–æÂÆöv–6Ç6W76–öâVçF–Â&6²ð¤6Æ÷6RâF‡W2æòV×G’F÷ÖÆ–W"÷W&÷fS$BVF—F÷"âW†—7F–ærv÷&·76S“S"æBÆÀ¥UböFÆ2ö†—7F÷'’öÖF‚÷væW'2VçF÷V6†VBâæF—fRVç7W÷'FVB÷F‡&÷v–ær’fÆÇ2&6°§6fVÇ’Fò÷&–v–æÂVçG&ç6f÷&ÖVB'6öÇWFRæVÂÂv—F†÷WB6öçF–æÖVçC²6ÖR6ÆVçWà¤æò6çf7f—6–&–Æ—G’÷&Vg&W6‚÷&W6—¦R÷&VæFW&W"&W6WBÂF–ÖW"ÂW"Ög&ÖRöÆÆ–ær÷"ÖW6€¦6†ævR–çG&öGV6VBâW†—7F–ærÖçVÂ&V6÷fW'’&VÖ–ç2f–Æ&ÆR'WB—2æ÷B–çfö¶VBà ¤W†—7F–ærFV'Vr6æ6†÷Bæ÷r–æ6ÇVFW26÷W&6R×&VçB÷÷÷fW"÷F÷Æ–W"7FFRÇW0¦ÖW6„†VÇF…6W76–öâæB&÷†Æ%Uev÷&·76RÂ6òæF—fR&VæFW&–ærÖöFRö6ÆVâ6Æ÷6R6â&P§fW&–f–VB–b&V7W'&Væ6RW'6—7G2âF†—2—2Wf–FVæ6RÂæ÷B&WÆ6VÖVçB6öçG&öÇ2à£3cBF&vWFVE52ód”Âó6¶—ƒBãW2“£VæWr6öçG&öÆÆW"öæF—fRÔ’ÖF÷V&ÆRFW7G26÷fW#P¦÷Vâö6Æ÷6R7–6ÆW2ÂW†7B÷&–v–æÂæöFW2ö6öçFW‡BÂF÷ÖÆ–W"&VÆV6R÷7G–ÆW2÷&¶–ærÀ¥UbVF—F÷"†æFöfbÂ&W6—¦RöF—7÷6ÂÂ÷F†W"×FööÂ7v—F6‚æBVç7W÷'FVB÷F‡&÷rfÆÆ&6²à¤÷&–v–æÅUb÷v÷&·76R÷6W76–öâö†VÇF‚öFV'Vrô'&–FvRôW†7B÷&VÆV6R6†V6·2&WF–æVBã“S€§FW7Bæ÷r&V¦V7G2öÆB6öçF–æÖVçB&F†W"F†â&W6W'f–ærÖ—F–vF–öâF†Bf–ÆV@¦öæFWf–6RâæòÆö6ÂæF—fRvV$¶—Bf—7VÂ&W&öGV7F–öâöwV&çFVVBW&ÖæVçB&W— ¦6Æ–ÖVBâFWf–6R×W7B6öæf—&ÒF†—27G'V7GW&Â6÷W&6Rf—‚&WfVçG2F†RG&–vvW"à ¤6†ævVB'VçF–ÖRöæÇ’÷&–v–æÂ6†&VG6W76–öâöÖW6††VÇF‚†æFöfböFV'VrWf–FVæ6S²F—&V7@§6†VÆÂ÷&V6÷fW'’¶W—3“ƒæB&Wf–WvVB†6†W2âæF—fR’7W÷'FVB6–æ6R6f&“s°§&–Ö'’6÷W&6W2–â–æ6–FVçFFö2âæò6†&VBÆ–÷WB÷÷6—F–öæW"VF—G2ÂGWÆ–6FR÷WÀ¥Ub¶W&æVÂÆÖ–âÃ“ƒ&V6÷fW'’–×ÆVÖVçFF–öâÃ“s”W†7BÃ“s„'&–FvRÄ×VÇF“ã÷"g&÷¦Vâ6†ævW2à ¤DUd”4S“ƒ¢v—F†÷WB&Vg&W6‚ö×7v—F6‚÷&÷FF–öâÂ&WVFVFÇ’ö&¦V7N(i%Un(i$6Æ÷6RÂ–ç7V7@§&–v‡BFööÆ&"÷7FGW2V6‚7–6ÆS²F†VâWFòFÆ2ô÷VâUbVF—F÷"ô&6²æB÷&&—BFð§&–v‡BVFvRâ6öçG&öÇ2×W7B7F’G&vâæBW6&ÆRâT’FV'Vr–b&V7W'&Væ6S¢†÷7B&Vç@§6†÷VÆB&RG&vW"gFW&6Æ÷6RÂ÷÷fW&çVÆÂ÷F÷Æ–W&fÇ6RÂ6öçF–ææöæS²6VæBæWr&W÷'Bà¤Fòæ÷B6Æ÷6Rf—7VÂ—77VRg&öÒWFöÖFVB52âæW‡B7GVÃ“ƒFWf–6R&W7VÇB&Vf÷&P§Vç&VÆFVFfVGW&R&öÆÆ÷WB÷"7V7VÆF—fRgW'F†W"552öVæv–æRf—†W2à ¢22ã“ƒ"(	B&÷fVB–çB&F–Â–6öç3²ã“ƒW6W"52(	B#bö7Fö&W"##` ¥W6W"W‡Æ–6—FÇ’56W2ã“ƒæB&WVW7G2öæW‡F'V–ÆBâ&÷FV7BF†R66WFVBUb÷W ¦æF—fR×F÷ÖÆ–W"Æ–fV7–6ÆRÂ6ö×ÆWFR6Æ÷6RFV&F÷vâæBVF—F÷"†æFöfc²F†—27WW'6VFW0¦öÆFW"VæF–ærDUd”4S“ƒæ÷FW2âæò&Vg&W6‚F—7Æ’—2&WV—&VBf÷"F†B66WFVBfÆ÷rà¤V&Æ–W"ã“cr66WFæ6R7V'6WVVçFÇ’&Vw&W76VBÂ6ò&WF–âF–væ÷7F–72æB–çfW7F–vFP¦ç’&V7W'&Væ6Rg&öÒg&W6‚Wf–FVæ6R&F†W"F†âFV6Æ&–ærWfW'’&VæFW&–ærF‚&÷fVâà¤'&–FvS“s‚ÂW†7C“s’Â'&““sæB66WFVBÖöFVÆÆ–ær–6öç2&VÖ–â&÷FV7FVBà ¤VF—BÖ–ã#FcS6632÷'VçF–ÖRF&S33c‚ÂÖF6†–ærÆ—fS“ƒ6†VÆÂöÖæ–fW7BÂ&V6VçB6öÖÖ—G2À§&F–Âv—&–ær–çfVçF÷'’æB6VÆV7FVCcR×FööÂ&ööc2'Gv÷&²âÆÂ6öæf—&ÖVBVF—@§&W—'2&R66WFVC²‡—6–6ÂF‡&÷Vv‚&VgW6Â7F–ÆÂÆ6·2—G2ffV7FVB6÷W&6RövW7GW&Rà¥&W7VÖRVWVVBf–æÂ–çB–6öâ7FvRÂæ÷B7V7VÆF—fRgW'F†W"&VæFW&–ær6†ævRà¤ÆÃW†—7F–ær–çB7F–öç2÷vW2Ç&VG’†fR÷&–v–æÂ'WGFöç2ÂÆ&VÇ2ÂÆ6VÖVçBÀ§7FFRæBF—7F6‚–âf–Ww÷'B×–çBæ§2âæWr66÷VB–çB×&F–ÂÖ–6öç2æ7727WÆ–W0¤U„5B&÷fVB&ööc2''W6‚ôf–ÆÂôW&6W"õ6×VFvRô&ÇW"ôÆ–W'2ôÖ6²ô–ÖvRôòôÖ6—¦R5dw0¦2æöæ–çFW&7F—fS3'‚6WVFòÖVÆVÖVçG2&÷fR÷&–v–æÂ6ÖÆÂ6F–öç2â†–FRF†V—"öÆ@£#'‚–æÆ–æR'Gv÷&²f—7VÆÇ“²÷&–v–æÂDôÒ÷FW‡Bö7F–öç2&VÖ–ââ6ÖSsg‚'WGFöâv–GF‚À£3'‚&F—W2ó3S‚7W&f6RöævÆW2ÂW‡Æ–6—Cc‚†V–v‡C²6VçG&R–çB6öçG&öÂVçF÷V6†VBà¥FVâfÆ–B5dw2'—FRÖÖF6‚6VÆV7FVB'Gv÷&³²ÆÂF&vWB&÷†W2f—BW†—7F–ær&÷VæG2v—F€¥¤U$ò—'v—6R÷fW&Æ2âW†—7F–ær7F—fRöF—6&ÆVBfVVF&6²&WF–æVBà ¥'VçF–ÖR¦f67&—BÂ–çBvW7GW&W2÷&W6÷W&6Rö†—7F÷'’ÂÆVgB6WGF–æw2ôÆ–W'2ÂÆÂÖöFVÆÆ–æp¦–6öç2æC“ƒ7W&f6R&W—"&R'—FR×Væ6†ævVBâöæÇ’æWr7G–ÆW6†VWBÂ6†VÆÂ÷&V6÷fW'¦¶W—3“ƒ"ÂÖæ–fW7BæB&Wf–WvVB76WB6öçG&7B6†ævRâæòWFöÖF–2&Vg&W6‚ÂæWr÷WÀ¦–çWB÷væW"Â''W6‚ö¶W&æVÂ÷"g&÷¦Vâô×VÇF“ã6†ævRâæF—fR&VF&–Æ—G’—2DUd”4S“ƒ"à¥fÆ–FF–öã£32fö7W6VB52ód”Âó6¶—VBƒBã—2’Â6÷fW&–ærW†—7F–ær–çBFööÇ2ð§v÷&¶fÆ÷rö6öçF–çV–ær6×VFvRÂUc“ƒÆ–fV7–6ÆRÂ'&–FvRôW†7BæB&VÆV6R6öçG&7G2à¥FVâ5dr„ÔÂöW†7BÖ'Gv÷&²æB÷&–v–æÂ&F–Â&÷VæG2ö÷fW&Æ6†V6·272âæòÆö6À§&VæFW&VB'&÷w6W"öæF—fR•BV&æ6R&W7VÇB6Æ–ÖVBâV&Æ–6F–öâ&ööbföÆÆ÷w2à ¤DUd”4S“ƒ#¢Ub”åBÓâ–ç7V7C–6öç2ö6F–öç3²6†ö÷6R''W6‚ô&ÇW"õ6×VFvRæB6öæf—&Ð¦ÆVgB6WGF–æw2â'&÷w6RÆ–W'2ôÖ6²ô–ÖvRôòôÖ6—¦S²&F–Â7F—2VçF–ÂVæ6–ÂF÷V6†W0¦ÖW6‚æB&6¶w&÷VæB†öÆB&V÷Vç2—Bâ–çBÂVæFõ&VFòÂFöæS²Ub÷Vâô6Æ÷6R7F–ÆÂÆVfW0§&–v‡B6öçG&öÇ2f—6–&ÆRv—F†÷WB&Vg&W6‚âæW‡Bv—B–çB–6öâ66WFæ6RÂF†VâVF—@§VWVVBUbÖg&VRf6Vw&÷W–çF–ærF‡&÷Vv‚W†—7F–ærf6Tw&÷W2÷6VÆV7F–öâö†—7F÷'’÷væW'3°¦Fòæ÷B–çfVçB6V6öæB–çFW"÷"77VÖRf6Vw&÷W2&R'6VçBà ¢22ã“ƒ2(	B7F&ÆR7F'GWFööÆ&#²ã“ƒ"–çB52Â&Vg&W6‚f—6–&–Æ—G’&V7W'&Væ6R(	B#bö7Fö&W"##` ¥W6W#¢(	Å52Ò&Vg&W6‚ÖFRF†R&–v‡B6öçG&öÇ2F—6V"%UB6WfW&Â&Vg&W6†W2f—†V@§F†R–çFW&Ö—GFVçB'VrâöæW‡F'V–ÆN(	Òâ&÷FV7C“ƒ"–çB–6öç2÷v÷&¶fÆ÷râ$TõTâ&–v‡B×6–FP§f—7VÂvFRgFW"&Vg&W6ƒ³“ƒ66WFVBUbÆ–fV7–6ÆR—2æ÷B&Ææ¶WB&VæFW&–ær&W—"à¤æòæWrFV'Vr&W÷'Bö'&÷w6W"G&6R66ö×æ–W2&V7W'&Væ6S²W†7BVæv–æR6W6R&VÖ–ç0§Vç&÷fVââFòæ÷B6²&WVFVB&Vg&W6†W226öÇWF–öâ÷"&W7VÖRf6Vw&÷WfVGW&Rv÷&²à ¤VF—B7W'&VçBÖ–ã“C63cf÷'VçF–ÖR&3“–fc’ÂÆ—fS“ƒ"Ö&¶W'2Â7W'&VçB67&—B–ç2À¦÷&–v–æÂFööÆ&"Âf–Wrôg&ÖR÷væW'2æC“cr6ö×÷6—F–öâó“ƒÆ–fV7–6ÆRâ6†VÆÂ–æ—F–ÆÇ¦†2öæÇ’VæFòõ&VFó²F—&V7BÖ&WfVÂÆFW"&WVæG2g&ÖRÂf–WrÖÖöFW2VæG2fö7W2ôö&¦V7G2ð¥d”UrÂFööÆ&"ö'6W'fW"&WÆ6W2F†V—"'Gv÷&²æB&V÷&FW'2F†VÒâ&–÷#“cbFV'Vr&V6÷&G0§&–v‡B×FööÆ&"v–GFƒ3BãSg‚CCS–×2Óã3rãc‚CcC–×2gFW"6çf27&VF–öââF†—2—0¦6öæf—&ÖVB7FvVB7F'GWDôÒöÆ–÷WBÂäõB&ööbF†B—B6W6W2æF—fR—†VÂÆ÷72à ¥6VVBf–æÂf—fR÷&–v–æÂ5dr'WGFöç2ÇW2÷&–v–æÂd”UrÖ&·W–â–æ—F–Â…DÔÂÀ¦Ç&VG’–âf–æÂ÷&FW"âæWrf–Ww÷'B×FööÆ&"×6†VÆÂæ772Ö¶W2W7F&Æ—6†VB†VFW"ö–6öâð¥d”Ur×7VÖÖ'’F–ÖVç6–öç2f–Æ&ÆR&Vf÷&RÖöGVÆRõvV$tÂ7F'GWâöÆB6VÆV7F–öâÖöFW0¦–ç6–FR†VFW"7F’÷WBöb–æ—F–Â†VFW"fÆ÷rVçF–Â6ÖRF÷&"÷væW"Ö÷fW2F†VÒFð¦W†—7F–ær&÷GFöÒFö6²âW†—7F–ærÖ–âVæFõ&VFò&–æF–æw2&WF–æVBâ÷&–v–æÂF—&V7BÖ&WfVÀ¤g&ÖRÆÂ&WW6W2ö&–æG26†VÆÂ'WGFöâöæ6R†öÆB&W6Væ6RV&Ç’×&WGW&âv÷VÆBF—66öææV7@¦—B“²W†7B÷&–v–æÂ6ÖW&f—GF–ær&VÖ–ç2â÷&–v–æÂf–WrÖÖöFW2F÷G26†VÆÂfö7W2ð¤ö&¦V7G2õd”UræöFW2Â–ç7FÆÇ26ÖR†æFÆW'2ô552Â&W6W'fW25dr÷æVÂ–FVçF—G’æB÷&FW#°¦7&VF–öâfÆÆ&6²&WF–æVBf÷"VÖ&VFFVB6†VÆÇ2âW†—7F–ærÆFRFööÆ&"ö'6W'fW"6VW0¦Ç&VG’FV6÷&FVBö÷&FW&VBæöFW2Â6òæò7F'GW'WGFöâ&WÆ6VÖVçB÷&V÷&FW"—2æVVFVBà¤æòGWÆ–6FR7F–öâÂæWrö–çFW"ö†—7F÷'’÷væW"ÂvV$tÂFVÆ’÷&W6WBÂ6çf2†–FR÷&Vg&W6‚À§öÆÆ–ærÂf–ÇFW"öÆ–W"†–çB÷"æWrF÷ÖÆ–W"6‡&öÖRâUc“ƒ–×ÆVÖVçFF–öâVçF÷V6†VBà ¥F†—2&VÖ÷fW2fW&–f–VB7F'GW–ç7F&–Æ—G“²æF—fR•Bf—7VÂvFR7F—2õTâà¤Fòæ÷B6ÆÃ“ƒ2&÷fVâW&ÖæVçB6ö×÷6—F÷"&W—"â&–v‡B7FGW2F‚Væ6†ævVBà¤6†ævVB'VçF–ÖRgVæ7F–öæÆ—G’öæÇ’Gvò÷&–v–æÂ7F–öâ÷væW'2ÇW26†VÆÂöV&Ç’553°§f–WrÖÖöFW2öF—&V7BÖ&WfVÂ÷&V6÷fW'’–ç3“ƒ2æB&Wf–WvVB†6†W2â–çB–6öç3“ƒ"À¤×VÇF“ãöÖ–â÷&VæFW&–æröÖöFVÆÆ–ærög&÷¦Vâ–×ÆVÖVçFF–öç2Væ6†ævVBâW†—7F–ærfö7W0¦Æ—FW&Ãs32–âFW7BföÆÆ÷w2&Wf–WvVB6öçG&7BÂ&V†f–÷"76W'F–öç2&WF–æVBâ&WfVÀ¤DôÒf—‡GW&Ræ÷r7WÆ–W2—G2÷&F–æ'’&VÂ×6†VBg&ÖR'WGFöâ–ç7FVBöb&&W·Ó°¦ÆÂW†—7F–ærvVöÖWG'’ö†—7F÷'’ö6öçFW‡B76W'F–öç2&WF–æVBâæWrFW7G2W†V7WFR7GVÀ¥d”Urôg&ÖR÷væW'2Fò&÷fR÷&–v–æÂÖæöFRF÷F–öâÂöæR6Æ–6²&–æF–ærÂfÆÆ&6²æ@¦6ÖW&f—C²6†VÆÂ†26–ævÆR÷&FW&VB”G2ö'Gv÷&²&Vf÷&RÖöGVÆRW†V7WF–öâà¤f–æÃ3’fö7W6VB52ód”Âó6¶—VBƒBãG2’Â–æ6ÇVF–ær&WfVÂvVöÖWG'’ö6öçFW‡Bð¦†—7F÷'’Âf–Wrôfö7W2ö'&÷w6W"÷FööÆ&"ÂÖVçR&÷VæG2ÂUc“ƒæB&VÆV6R6öçG&7G2à¥7–çF‚æBF–fb6†V6·272âæò†÷7FVBögVÆÂ×7V—FRöæF—fRf—7VÂ&W7VÇB6Æ–ÖVBà ¤DUd”4S“ƒ3¢&VÆöB6WfW&ÂF–ÖW2æB–ç7V7B&–v‡BFööÆ&"÷7FGW2”ÔÔTD”DTÅ’&Vf÷&P¥Ubö×7v—F6‚÷&÷FF–öã²&W÷'Bç’–çf—6–&ÆR6öçG&öÇ2âg&ÖRÆÂÂVæFõ&VFòÂfö7W2À¤ö&¦V7G2æBd”UrV6‚W&f÷&Ò÷&–v–æÂ7F–öâöæ6RâUbFööÇ2Óâ6Æ÷6RæBVF—F÷"Óà¤&6²¶VW“ƒ&V†f–÷#²–çB–6öç2&VÖ–â66WFVBâ–bf—7VÂÆ÷72&V7W'2Â6÷’g&W6€¥T’FV'Vr&W÷'B&Vf÷&R&V6÷fW'’æB6’v†WF†W"—Bö67W'&VB–ÖÖVF–FVÇ’öâ&VÆöBà¤æW‡B7GVÂ7F'GWfVVF&6²öWf–FVæ6R&Vf÷&RgW'F†W"&VæFW&–ær6†ævW2÷"æWrfVGW&W2à ¢22ã“ƒ2FWf–6RfVVF&6²(	Bf—'7B×&Vg&W6‚f—6–&–Æ—G’d”Â(	B#bö7Fö&W"##` ¥W6W#¢(	Å52òf—'7B&Vg&W6‚7F–ÆÂ6W6W2Æ÷72öb&–v‡B†æB6–F^(	Òâ&V6÷&BgVæ7F–öæÀ¥526W&FVÇ“²ã“ƒ27F'GW&VæFW&–ær&W—"d”ÄTB—G2æF—fRf—7VÂvFRâ7FF–0¦–æ—F–ÂFööÆ&"F–Bæ÷BVÆ–Ö–æFRF†Rf—'7B×&Vg&W6‚&ö&ÆVÒâFòæ÷B¶VW&W6VçF–æp§7F'GW6öç7G'V7F–öâ2F†R6W6R÷"ã“ƒ22W&ÖæVçBf—‚âæòæWr6÷W&6RöFV'Vp§&W÷'B7WÆ–VB–WBâ&W6W'fR66WFVC“ƒ"–çB–6öç2Â÷&–v–æÂFööÆ&"7F–öç2æ@£“ƒUbFV&F÷vã²÷fW&ÆÂ–çFW&Ö—GFVçBf—7VÂf–ÇW&R&VÖ–ç2õTâà ¤æW‡BWf–FVæ6S¢Væ&ÆRf–ÆRÓâT’FV'Vr&Vf÷&R&W&öGV6–ær'&÷w6W"&VÆöC²öâF†P¤d•%5Bf–ÆVBÆöBÂ6GW&R&W÷'BÓâ6÷’&W÷'B$Tdõ$Ræ÷F†W"&Vg&W6‚Â×7v—F6‚À§&÷FF–öâ÷"†–FS4Bõ&Vg&W6‚F—7Æ’âF†—26GW&W3“ƒ27F'GWv–GF‚ôDôÒ÷F÷ÖÆ–W"7FFP¦f÷"6ö×&—6öâv—Fƒ“cbó“ƒâ—B6ææ÷BF—&V7FÇ’F–væ÷6R'&÷w6W"6ö×÷6—F÷"—†VÇ3°¦–bDôÒ—2v–â†VÇF‡’ÂFöâwB6Æ–ÒF†R&W÷'B&÷fW2âVæv–æR6W6R÷"&WV@§7V7VÆF—fR552öÆ–W"GvV·2âæVVBæF—fR&VæFW&–ærWf–FVæ6Rf÷"gW'F†W"6÷W&6Rv÷&²à¤æòæWr'VçF–ÖRö'V–ÆB–âF†—2fVVF&6²ÖöæÇ’WFFS²æòæWr†æG2ÖöâfVGW&RFW7Bà ¢22ã“ƒ2Wf–FVæ6R(	BT’f—6–&ÆRÂ&–v‡Bw&÷VæB6†F–ærÖ—76–ær(	B#rö7Fö&W"##` ¤æWrW6W#“ƒ2&W÷'BC##bÓÓ#eC#£3c£‚ãƒsU¢W‡Æ–6—FÇ’6—2T’•2d•4”$ÄR'WBw&÷Væ@§ÆæR6†F–ær—2Ö—76–æröâF†R&–v‡BâG&VBF†—26GW&R2w&÷VæB÷&VæFW"7–×FöÒÀ¦æ÷Bæ÷F†W"f—7VÆÇ’'6VçBFööÆ&"âV&Æ–W"f—'7B×&Vg&W6‚T’f–ÇW&W2&VÖ–â6W&FP¤õTâWf–FVæ6S²F†—26GW&RÆöæRæV—F†W"&WG&7G2F†VÒæ÷"&÷fW2W&ÖæVçBT’&W—"à ¥FööÆ&"v–GFƒ3rãc“3sRBFV'Vr×7F'GW#“f×2æBvW6†÷s#ƒF×2—27F&ÆRâ6çf0¤5533cgƒƒ#bö&6¶–æs#s3'ƒcS"ôE#"Â6W76–öæçVÆÂõ–çFfÇ6RÂUbv÷&·76R'6VçBâ†–FFVà§6W76–öâ†÷7B—2Vç7G–ÆVB÷÷÷fW&çVÆÂ÷F÷Æ–W&fÇ6S²æò&WF–æVBUb÷fW&Æ’–â6GW&Rà¤æò&W÷'FVBW'&÷"ö6öçFW‡BÖÆ÷72WfVçB–â7WÆ–VB&÷VæFVBÆörâDôÒö†—B&ö&W26ææ÷@§6†÷rvV$tÂfÆö÷"÷6†F÷r—†VÇ2÷"–FVçF–g’F†R'&÷w6W"6ö×÷6—F÷"2&ö÷B6W6Rà ¥&VBÖöæÇ’6÷W&6RVF—C¢&VæFW"ÖÖöFW2÷vç2f–æ—FR7GVF–òfÆö÷"†Ö–æ–×VÓ#Bv÷&ÆBVæ—G2¦æBf–æ—FRF—&V7F–öæÂ6†F÷rg'W7GVÓ²7GVF–ò×66VæRÖf—‚WFFW26ÖRfÆö÷"öÆ–v‡C°§7GVF–ò×öÆ—6‚FG26öçF7B6†F÷rÂFÖ÷7†W&RFG2552×VÇF—Ç’f–væWGFRâ×VÇF—ÆP§&VæFW&–ær6öçG&–'WF÷'2ÂæòWf–FVæ6R–WBv†–6‚—2Ö—76–ærâFòæ÷BVæÆ&vRfÆö÷"À§6†F÷r&÷VæG2÷"6†ævR552ö&ÆVæF–ærg&öÒF†—2&W÷'BÆöæRâ&WVW7B67&VVç6†÷Bö`¦7GVÂÖ—76–ær&Vv–öâæBv†WF†W"—G2&÷VæF'’7F—2B6ÖR45$TTâ‚GW&–ær6ÖÆÀ¦÷&&—B÷"Ö÷fW2v—F‚w&÷VæBâF†—26W&FW267&VVâ×&Vv–öâÆ÷72g&öÒv÷&ÆB×76RfÆö÷"ð§6†F÷rW‡FVçC²æògW'F†W"FV'VrGV×÷"&V6÷fW'’&Vg&W6‚&WV—&VBf÷"F†—26ö×&—6öâà¤æò'VçF–ÖRö'V–ÆB6†ævW3³“ƒ2&VÖ–ç27W'&VçBâ–çC“ƒ"ögVæ7F–öæÃ“ƒ252&÷FV7FVBà ¢22ã“ƒ267&VVç6†÷BWf–FVæ6RföÆÆ÷r×W(	B#rö7Fö&W"##` ¤–æ—F–Â67&VVç6†÷Bæ÷r–ç7V7FVC¢f—6–&ÆRFööÆ&"Â67B7V&R6†F÷rÂfW'F–6ÂFöæÀ§6VÒæV"&–v‡BV'FW"v†–ÆRfÆö÷"6öçF–çVW27&÷72—Bâ¶VW&VæFW&–ær—77VRõTã°¦Fòæ÷BG&VBF†B6VÒ2F†RfÆö÷"w2F—7FçBVFvR÷"77VÖRÆ&vW"fÆö÷"f—†W2—Bà¤æW‡B6ÖÆÂ÷&&—B6ö×&—6öâ†f—†VB67&VVâ÷6—F–öâòw&÷VæB×&VÆF—fRòF—6V'2’À§v—F†÷WB&Vg&W6‚÷"×7v—F6‚Â&Vf÷&R6VÆV7F–ær&VæFW&–ær6†ævRâæòæWr'VçF–ÖP¦'V–ÆC²ã“ƒ2&VÖ–ç27W'&VçBâ66WFVB–çB–6öç2æBÖöFVÆÆ–ær&V†f–÷"&WF–æVBà ¢22ã“ƒB(	B6VÆV7FVBÖf6Rw&÷WWF†÷&–ær(	B#rö7Fö&W"##` ¥W6W"6ææ÷B7W'&VçFÇ’&W&öGV6RF†R&–v‡B×&Vv–öâfVÇBæBWF†÷&—¦W2&W7VÖ–æp¦FWfVÆ÷ÖVçBâ¶VW—BõTã¢6VÒv267&VVâÖf—†VBÂ&WGW&æVBgFW"f–Wr7v—F6†–ærÀ¦æBW6W"&W÷'G2v—¦ÖòõT’F—6V'2–âF†B&Vv–öâv†–ÆRFööÆ&"&VÖ–ç2f—6–&ÆRà¤Fòæ÷B6Æ–Òf–væWGFRÖöæÇ’6W6R÷"W&ÖæVçB&W—"â&VæFW&–ær—2Væ6†ævVBà ¤f—'7Bæ'&÷r7FWF÷v&BUbÖg&VRf6Vw&÷W–çF–æs¢d”Urâf6Vw&÷W2æ÷röffW'0¦w&÷WæÖRÇW276–vâ6VÆV7FVBò6ÆV"6VÆV7FVBâ6VÆV7Bf6W2–âf6RÖöFP¦f—'7BâW†—7F–ær6VÆV7F–öâöæf–vF–öâ÷væW'2&VÖ–ã²F†—2—2W‡Æ–6—B6VÆV7FVBÖf6P¦WF†÷&–ærÂäõB6öçF–çV÷W2Væ6–Âf6Vw&÷W''W6‚â6ÖRæÖW2¦ö–ââW†—7F–æp¦w&÷W²6ÆV"&W7F÷&W2Væw&÷WVBÖWFFFâæòUb&WV—&VÖVçB÷"FW‡GW&RÖöF–f–6F–öâà¤÷&–v–æÂÖævW"&WÆ6T7F—fTÖW6‚æB66VæR6GW&Rö6†V6·ö–çE6æ6†÷B÷vâF†P§G&ç67F–öââ&VgW6RÆö6¶VB÷&VfW&Væ6RöÆ–æ¶VB÷&V6—Rö&¦V7G2Â7F—fRFööÇ2Â–çfÆ–@§6VÆV7F–öâöæÖR÷"Ö—76–ær†—7F÷'’&Vf÷&R×WFF–öã²æòÖ÷7&VFW2æò6†V6·ö–çBà¤öæÇ’f6Tw&÷W26†ævRöâ6ÆöæS²vVöÖWG'’õUb÷&W6÷W&6W2&WF–â÷&–v–æÂ÷væW'6†—à¤W†—7F–ærf6Vw&÷W2&VæFW"Â6fRæBW‡÷'BF‡2F—7Æ’÷W'6—7BF†RÖWFFFà¤æWrÖöGVÆRÆöFVB'’÷&–v–æÂ&VæFW"ÖÖöFW3²6†ævVB&VæFW"÷&V6÷fW'’–ç3“ƒBÂ6†VÆÀ¦Ö&¶W'2æB&Wf–WvVB76WB†6†W2â&÷FV7FVB×VÇF’æB&VæFW&–ær6fVwV&G2VçF÷V6†VBà£Rfö7W6VB6†V6·252–æ6ÇVF–æræWrÖWFFFöæòÖ÷÷&VgW6Âö6†V6·ö–çBFW7G2À¦W†—7F–ærf6Vw&÷W2÷væW"ÂFööÆ&"æB&VÆV6R6öçG&7G2âFF—F–öæÂ6öFV2õUbFW7G0§&W÷'FVB6W&FVÇ’âæòæF—fR•B÷"6ö×ÆWFR7V—FR526Æ–ÖVBà ¤DUd”4S“ƒC¢6VÆV7BGvòf6W2Âd”Urâf6Vw&÷W2ÂæÖRæB76–vâ6VÆV7FVBâ6VÆV7@¦÷F†W"f6W2æB76–vâ6ÖRöF–ffW&VçBæÖS²6ÆV"6VÆV7FVBâVæFõ&VFòæB6fRô÷Và§&WF–âw&÷W3²Ub–çBæBæf–vF–öâ7F’W6&ÆRâæW‡C¢FWf–6R66WFæ6RÂF†Và§Æâ6öçF–çV÷W2w&÷W–çF–ærF‡&÷Vv‚W†—7F–ær6VÆV7F–öâövW7GW&R÷væW'6†—à ¢22ã“ƒR(	B&WW6RW†—7F–ærf6Vw&÷WæÖW3²ã“ƒBW6W"52(	B#rö7Fö&W"##` ¥W6W"53“ƒB&÷FV7G26VÆV7FVBÖf6R76–væÖVçBö6ÆV"ÂVæFõ&VFòæB6fRô÷Vâà¤æW‡Bæ'&÷rWF†÷&–ær7FW&WW6W27W'&VçBæÖW3¢d”Urâf6Vw&÷W2†2æF—fRæÖP§7VvvW7F–öç2&Vg&W6†VBg&öÒWF†÷&—FF—fRÆ—fRÖW6‚v†VæWfW"æÖR–çWBv–ç2fö7W2À¦æBW6R6VÆV7FVBw&÷WæÖR6÷–W2F†RVæ–f÷&Òw&÷Wöb6VÆV7FVBf6W2–çFò–çWBà¤Ö—†VBw&÷W2ÂVæw&÷WVBöæòö–çfÆ–B6VÆV7F–öâæBæöâÔf6RÖöFRv—fRW‡Æ–6—B&V6öà¦æB¶VW7W'&VçB–çWBâæÖW2&R–ç6W'FVBF‡&÷Vv‚÷F–öâçfÇVRÂæWfW"…DÔÂâ&VG0¦6†ævRæV—F†W"6VÆV7F–öâÂÖW6‚ÂFW‡GW&Ræ÷"†—7F÷'“²76–vâ6VÆV7FVB&VÖ–ç26öÆP¦ÖWFFFG&ç67F–öâ÷væW"âGWÆ–6FRæÖW2FVGWÆ–6FVC²æòvÆö&Â&VÖVÖ&W&VBÆ—7Bà¤÷&–v–æÂæÖRÆVæwF‚÷fÆ–FF–öâæBVF—F&ÆRÖö&¦V7B&VgW6Â&VÖ–ââæòæWrö–çFW ¦Æ—7FVæW"ÂWFöÖF–276–væÖVçBÂæWr–çFW"ö†—7F÷'’÷væW"÷"&VæFW&–ær6†ævRà ¤VF—Bf÷VæBVæ6–Â6VÆV7F–öâ÷væW'6†—6†&VB'’VFvR×–çB×6VÆV7BæBVæ6–ÂÖ÷&&—@¦vFRöÖ–ââ6öçF–çV÷W2f6Vw&÷W''W6‚&VÖ–ç2FVfW'&VBVçF–ÂF†BW†—7F–ær÷væW'6†— ¦6â&RW‡FVæFVB6ö†W&VçFÇ“³“ƒR—2w&÷WÖæÖR&WW6RÂäõBVæ6–Âf6Vw&÷W–çF–ærà¥'VçF–ÖR6†ævW2öæÇ’f6Vw&÷WÖWF†÷&–ær÷&VæFW"ÖÖöFW2T’ÂF†V—"ÆöFW"–ç3“ƒRæ@§&VÆV6R÷&V6÷fW'’Ö&¶W'3²&Wf–WvVB†6†W2WFFVBâ&÷FV7FVB×VÇF’Ã“ƒB76–væÖVç@§G&ç67F–öâÂvW7GW&W2ÂUbõ–çB÷&W6÷W&6W2æB&VæFW&–ær6fVwV&G2Væ6†ævVBà£#BF&vWFVBFW7G252ód”Âó6¶—¢w&÷W&WW6R÷&VgW6Â÷&VBÖöæÇ’÷FW‡B6fWG’ÇW0£“ƒBWF†÷&–ærÂf6Vw&÷W2÷væW"Â÷&–v–æÂFööÆ&"Â&ö¦V7B6öFV2ÂUbæB&VÆV6Rà¥7–çF‚öF–fb6†V6·273²æF—fR•B7VvvW7F–öâT’æBw&÷WÖæÖRW6RæVVB&Wf–Wrà¤æògVÆÂ×7V—FRöæF—fR6ö×÷6—F÷"&ööb6Æ–ÖVBâ–çFW&Ö—GFVçB&–v‡B×&Vv–öâfVÇBõTâà ¤DUd”4S“ƒS¢6VÆV7Bw&÷WVBf6W2âd”Urâf6Vw&÷W2âW6R6VÆV7FVBw&÷WæÖS°§6VÆV7BF–ffW&VçBf6W2æB76–vâ6VÆV7FVBv—F‚&WF–æVBæÖRâfö7W2æÖRf–VÆBf÷ ¦7W'&VçB7VvvW7F–öç2âÖ—†VB÷Væw&÷WVB6VÆV7F–öâ&VgW6W2–6·Wv—F†÷WB6†æv–æræÖRà¥VæFõ&VFò6†÷VÆBffV7B76–væÖVçBöæÇ’Âæ÷BæÖR&VG3²6fRô÷Vâ7F—266WFVBà¤æW‡BFWf–6R&W7VÇBÂF†Vâ6öçF–çV÷W2f6Vw&÷WvW7GW&RÖ÷væW"VF—Bà ¢22ã“ƒb(	BVæ6–Âf6Vw&÷W7G&ö¶W3²ã“ƒRW6W"52(	B#rö7Fö&W"##` ¥W6W"53“ƒR&÷FV7G2æÖR&WW6R÷7VvvW7F–öç2æC“ƒB76–væÖVçBö6ÆV"õVæFõ&VFòõ6fT÷Vâà¥d”Urâf6Vw&÷W2â6†ö÷6RæÖRâVæ6–Âf6Vw&÷W7G&ö¶W26Æ÷6W2d”UræB&×0¥Væ6–ÂÖöæÇ’7W&f6R7G&ö¶W2–âf6RÖöFRâVæF–ærVæ—VRf—6–&ÆRf6R†—G2&P¦6öÆÆV7FVB&—fFVÇ’æB6÷VçB6†÷vâ–â7FGW3²u$õU4ôÄõU%2UDDRôâTä4”ÂÄ”eBÀ¦æ÷BGW&–ær6öçF7BâÆ–gB6öÖÖ—G2F‡&÷Vv‚66WFVB76–vå6VÆV7FVDf6Vw&÷Wæ@¦÷&–v–æÂÖævW"÷66VæR†—7F÷'’öæ6RâæòUg2&WV—&VBâW†—7F–ær6VÆV7F–öâ—2VçF÷V6†VBà¥&V÷Vâd”Urâ7F÷f6Vw&÷W7G&ö¶W3²6†æv–ærw&÷WæÖR÷"–6¶–æræ÷F†W"æÖP§7F÷2öÆBæÖVB''W6ƒ²&V&ÒFò–çBæWrw&÷Wâ7v—F6†–ær&VæFW"Æöö²Ç6ò7F÷2à ¤÷&–v–æÂVFvR×–çB×6VÆV7B÷vç2F÷vâöÖ÷fRöVæBö6æ6VÂæBf—6–&ÆRf—'7BÖ†—B&–67C°¦æò&ÆÆVÂ&r×ö–çFW"''W6‚÷væW"âW†—7F–ærVæ6–ÂvFR&V6övæ—¦W2&ÖVBf6P¦''W6‚2ÖöFVÆÆ–ær–çFVçBöâÖW6ƒ²&6¶w&÷VæBVæ6–Âæf–vF–öâ7F–ÆÂf÷'v&G2à¤f–ævW"æf–vF–öâ&VÖ–ç3²6V6öæF'’6çf26öçF7B6æ6VÇ2VæF–ær7G&ö¶Rà¤6GW&RÆ÷72Âö–çFW&6æ6VÂÂ†–FFVâ÷vV†–FRÂ÷&&—B6Æ–ÒæB7F÷F—66&BVæF–æp¦f6W2æB&W7F÷&RW†7B&–÷"6öçG&öÇ2æVæ&ÆVBâ6öÆW66VB6öçF7B6×ÆW2æBÆ–g@¦†—B–æ6ÇVFVC²æò–çFW'öÆF–öâ÷&F—W2''W6‚–âF†—2f—'7B'V–ÆBâF‡&÷Vv‚6VÆV7F–öà¦FWF‚FöW2äõB76–vâ†–FFVâö&6²f6W3¢W6W2æV&W7Bf6RöæÇ’âW†—7F–ærÆ76òÀ¤f6TF—&V7BöÖ–âF—&V7BFööÇ2æB7Æ—Bööfg6WB÷væW'2¶VW&–÷&—G’à ¤6öçG&öÆÆW"&VgW6W2Vç6fRö&¦V7G2÷FööÇ2ö6öçFW‡C²6ö×ÆWF–öâ&V6†V6·2ö&¦V7BÂÖW6€¦–FVçF—G’ÂvVöÖWG'’öw&÷W26–væGW&RÂÆöö²öÖöFRæB÷&–v–æÂWF†÷&–ærvFW2â†—7F÷'¦÷"vVöÖWG'’6†ævW2GW&–ær6öçF7BF—66&B7G&ö¶Râæò6÷W&6R&Wf–Wr×WFF–öâ÷ ¦6æ6VÂ&öÆÆ&6²æVVFVC²GWÆ–6FRöæòÖ÷f6W2Fòæ÷B7&VFR†—7F÷'’âæWrW&R7G&ö¶P¦6öçG&öÆÆW"–×÷'G2÷&–v–æÂWF†÷&–ær†VÇW#²&VæFW"÷væW"7WÆ–W2W†—7F–ærvÆö&Ç2à¤æòvVöÖWG'’õUb÷FW‡GW&R¶W&æVÂ÷"æWr†—7F÷'’÷væW"â&÷FV7FVB×VÇF’VçF÷V6†VBà £ƒBF&vWFVB6†V6·252ód”Âó6¶—²W‡æFVB7G&ö¶RFW7BÇ6ò76W27GVÂ÷&–v–æÀ§6VÆV7F–öâÖ''W6‚µVæ6–ÂvFRv—F‚&VÂF‡&VRf6R&–67G2ÂÆ–gBÂ6æ6VÆÆF–öâÂ6V6öæF'§F÷V6‚ÂÆ÷7B6GW&RÂvV†–FRÂ&W7F÷&VB6öçG&öÇ2æB&6¶w&÷VæBæf–vF–öââ6öçG&öÆÆW §FW7G26÷fW"7Fv–ærÂVæ—VRf6W2ÂöæR6†V6·ö–çBÂ&VgW6Â÷7FÆR6öçFW‡BæBæòÖ÷à¤W†—7F–ær6VÆV7F–öâôÆ76òõVæ6–ÂÃ“SB–6¶–ærÃ“ƒBó“ƒRWF†÷&–ærÂFööÆ&"Âf6Vw&÷W2À§&ö¦V7B6öFV2ÂUbæB&VÆV6R6öçG&7G2&WF–æVBâ7–çF‚öF–fb6†V6·272âæòæF—fP¦•BögVÆÂ×7V—FR÷"&VæFW&VB&ööb6Æ–ÖVBâW†—7F–ær'VçF–ÖRFW7G2rf—6–&–Æ—G’Öö6°¦Æ6·2Fö7VÖVçBWfVçG3¢f—6–&–Æ—G’6ÆVçWW6W2v–æF÷r6GW&RÂ&W6W'f–ærf—‡GW&P¦æBÆ76ò6†V6·2Væ6†ævVBâÖW6‚6ÆöæRÆ¦–Ç’–æ—F–Æ—¦W2Æö÷6RÖVÆVÖVçB&öö¶¶VW–æs°§6÷W&6R–çf&–æ6RFW7B6ö×&W27GVÂfW'F–6W2öf6W2öw&÷W2Âæ÷BW†–Æ–'’66†W2à ¤6†ævVB÷væW'3¢VFvR×–çB×6VÆV7BÂVæ6–ÂvFRÂ&VæFW"ÖÖöFW2æBæWr7G&ö¶R6öçG&öÆÆW#°§&Wf–WvVBF—&V7Bö6†–ÆB÷&V6÷fW'’¶W—3“ƒbæB†6†W2âW†—7F–ærWF†÷&–ær†VÇW"7F—3“ƒRà¤–çFW&Ö—GFVçB&–v‡B×&Vv–öâ&VæFW&–æröv—¦ÖòfVÇB&VÖ–ç2õTã²æò&VæFW&–ærf—‚6Æ–ÖVBà¤DUd”4S“ƒc¢f6RÖöFRâd”Urf6Vw&÷W2âæÖRâVæ6–Âf6Vw&÷W7G&ö¶W3²G&r7&÷70¦f6W2ÂÆ–gBFò6VRw&÷Wâ×VÇF—ÆR7G&ö¶W2ÂöæRVæFòW"7G&ö¶Rõ&VFòâf–ævW"÷&&—BÀ¥7F÷Â6†ö÷6Ræ÷F†W"æÖR÷&V&ÒÂ6fT÷Vââ6ÆV"6VÆV7FVB&VÖ–ç3“ƒB&V†f–÷"âæW‡@¦föÆÆ÷rFWf–6R7G&ö¶R66WFæ6R&Vf÷&RFF–ærÆ—fR&Wf–Ww2Â''W6‚&F—W2÷"W&6W"à ¢22ã“ƒr(	BVæ6–Âf6Vw&÷WW&6W#²ã“ƒbW6W"52(	B#rö7Fö&W"##` ¥W6W"53“ƒb&÷FV7G2Væ6–Â76–væÖVçBÖöâÖÆ–gBÂöæR×7FW†—7F÷'’Â6æ6VÆÆF–öâÀ¥7F÷öæf–vF–öâæBw&÷WW'6—7FVæ6RâFBW&6Rw&÷W7G&ö¶W2&W6–FRF†R÷&–v–æÀ¥Væ6–Âf6Vw&÷W7G&ö¶W2'WGFöâ–âd”Urâf6Vw&÷W2â6ÖR6öçG&öÆÆW"æB4ÔP¦W†—7F–ærvW7GW&R÷væW#²W‡Æ–6—BçVÆÂw&÷W&WVW7G266WFVB6ÆV"ÖWFFFF‚à¤æò6V6öæB''W6‚Âö–çFW"†æFÆW"÷"†—7F÷'’–×ÆVÖVçFF–öââW&6W"7FvW26×ÆV@§f—6–&ÆRf6W2æB6ÆV'2öâÆ–gC²VçF÷V6†VBw&÷W2övVöÖWG'’õUb÷&W6÷W&6W2&W6W'fVBà¤Ç&VG’×Væw&÷WVB7G&ö¶W2&RæòÖ÷2v—F†÷WB†—7F÷'’âæòG—VBæÖRæVVFVBFòW&6Rà ¤76–vâôW&6R6öçG&öÇ26†÷r–æFWVæFVçB&W76VBõ7F÷Æ&VÇ2F‡&÷Vv‚öæR6†&V@§7–æ2gVæ7F–öââ6†ö÷6–ærF†R÷F†W"ÖöFR6æ6VÇ2VæF–ær7G&ö¶RæB&×2æWrÖöFS°¦6Æ–6¶–ær7F—fRÖöFR7F÷2âæÖRVF—G2÷–6·WæB7v—F6†–ær&VæFW"Æöö²7F÷&÷F‚à¤6öçG&öÆÆW"&W÷'G26ÆV"ö76–vâVæF–æræB6ö×ÆWF–öâF—7F–æ7FÇ“²çVÆÂw&÷W—0§6W&FRg&öÒ&ÖVB7FFRÂ6ò7F÷6ææ÷B66–FVçFÆÇ’Væ&ÆRW&6–ærâW†—7F–æp£“ƒbvW7GW&RövFRÖöGVÆW2'—FR×Væ6†ævVC²öæÇ’7G&ö¶R6öçG&öÆÆW"÷&VæFW"T’ÇW0§&Wf–WvVB6†–ÆB÷&VæFW"÷&V6÷fW'““ƒr–ç2Â6†VÆÂÖ&¶W'2ö†6†W26†ævRà £ƒbF&vWFVB6†V6·252ód”Âó6¶—Â–æ6ÇVF–æræWrW&6W"7Fv–ærÂVçF÷V6†VBw&÷W2ð¦vVöÖWG'’ÂöæR6†V6·ö–çBÂæòÖ÷Â6æ6VÂ÷7v—F6‚õ7F÷FW7G3²&WF–æVB7GVÃ“ƒ`¥Væ6–Â÷6VÆV7F–öâ÷væW"–çFVw&F–öâÂW†—7F–ærÆ76òõVæ6–Â÷–6¶–ærÃ“ƒBó“ƒRÖWFFFÀ¤f6Vw&÷W2÷FööÆ&"÷&ö¦V7BõUb÷&VÆV6RFW7G2â7–çF‚öF–fb6†V6·272âæòæF—fRögVÆÀ§7V—FR&ööb6Æ–ÖVBâ–çFW&Ö—GFVçB&VæFW&–æröv—¦ÖòÆ÷72&VÖ–ç2õTâÂæ÷B&W—&VBà¤DUd”4S“ƒs¢w&÷Wf6W2Â&ÒW&6Rw&÷W7G&ö¶W2ÂG&ræBÆ–gC²öæÇ’6×ÆVBf6W0¦&V6öÖRVæw&÷WVBâVæFõ&VFòöæ6RW"7G&ö¶S²W&6RVæw&÷WVBf6RFG2æòVæFòâ7v—F6€¦&6²FòæÖVBVæ6–Â7G&ö¶W3²7F÷æBæf–vFRâ6fRô÷Vâ&WF–ç2w&÷W2âæW‡@¦föÆÆ÷rFWf–6RW&6W"66WFæ6R&Vf÷&RÆ—fRfVVF&6²÷&F—W2v÷&²à ¢22ã“ƒ‚(	BW‡Æ–6—BW†—7F–ærÖw&÷W6VÆV7F÷#²ã“ƒr&VæFW&–ær&V7W'&Væ6R(	B#rö7Fö&W"##` ¥W6W"&W÷'G2VçF—&Rd”UrÖVçRFV×÷&&–Ç’fæ—6†VB†æ÷B&W&öGV6–&ÆRæ÷r’ÂföÆÆ÷v–æp£“ƒrÆ÷vW"×&–v‡B&Ææ²&V÷&W÷'BæB67&VVç6†÷Bâæó“ƒr52–æfW'&VBâ&÷FV7C“ƒ`§7G&ö¶W2æC“ƒRó“ƒB66WFVBv÷&¶fÆ÷w3²&VæFW&–ær—77VRõTââWf–FVæ6R7VÖÖ&—¦V@¦–âFö72÷V’×&–v‡B×&Vv–öâÓ“ƒræÖBÂ–æ6ÇVF–ærÆ–Ö—G2öb†VÇF‡’DôÒö†—G2æB†–FFVà¦v—¦Öò–âF†—27V6–f–26GW&RâFòæ÷B6Æ–Ò7GVF–òÖöæÇ’6W6R÷"T’&W—"à ¤–æFWVæFVçB7F–öæ&ÆRW6W"f–ÇW&S¢w&÷WÆ—7BDôU2äõBõTââVF—B÷&–v–æÀ£“ƒRæÖR–çWB¶FFÆ—7C¢æÖR7VvvW7F–öç2&Ræ÷BâW‡Æ–6—BG&÷F÷vââ&WÆ6P§v—F‚6W&FRæF—fRW†—7F–ærw&÷W6VÆV7B‡6ÖRæÖW2g&öÒWF†÷&—FF—fRÆ—fP¦ÖW6‚’æB¶VW÷&–v–æÂVF—F&ÆRw&÷W–çWBf÷"æWræÖW2âæò7W7FöÒ÷W÷"æWp§ö–çFW"÷væW"âæF—fR6VÆV7B÷F–öç2†fR6fRfÇVR÷FW‡D6öçFVçBÂVæ—VR6÷'FV@¦æÖW2æBV×G’×7FFR&ö×Bâ&Vg&W6‚öâd”UrFövvÆRÂf6Vw&÷W2T’7–æ2æBgFW ¦76–væÖVçBö6ÆV"Â&WF–æ–ær7W'&VçBæÖRv†Vâ—BW†—7G2â6†ö–6R6÷–W2æÖR–çFð¦÷&–v–æÂ–çWBæBF—7F6†W2—G266WFVB–çWBWfVçBÂ7F÷–ær&Wf–÷W2&ÖV@§7G&ö¶W2öW&6W#²æòÖW6‚÷6VÆV7F–öâö†—7F÷'’6†ævRVçF–Â7GVÂ76–væÖVçB÷7G&ö¶Rà¥F†—2—2w&÷W×6VÆV7F÷"f—‚Âæ÷Bf–Ww÷'Bö6ö×÷6—F÷"&W—"à ¤6†ævVBgVæ7F–öæÆ—G’ôäÅ’&VæFW"ÖÖöFW2T“²&Wf–WvVB&VæFW"÷&V6÷fW'““ƒ‚–ç2æ@§&VÆV6RÖ&¶W'2ö†6†W2âvW7GW&RövFR÷7G&ö¶RöWF†÷&–ærõUbövVöÖWG'’ô×VÇF’÷væW'0§Væ6†ævVBãƒ‚F&vWFVB6†V6·252ód”Âó6¶—¢æWr7GVÂ–6¶W"÷VÆF–öâö6†ævP¦6ÆÆ&6·2Âg&W6‚öV×G’÷Vç6fR×FW‡B66W2ÂÇW2&WF–æVBÖWFFF÷7G&ö¶RöW&6W"À¥Væ6–ÂôÆ76ò÷–6¶–ærÇFööÆ&"Ç&ö¦V7BÅUbæB&VÆV6RFW7G2â7–çF‚öF–fb6†V6·272à¤æF—fR•B6VÆV7B÷Væ–æræVVG2†æG2Ööâ&Wf–Ws²æògVÆÂ×7V—FR÷&VæFW&VB&ööb6Æ–ÖVBà¤DUd”4S“ƒƒ¢f6RÖöFRâd”Urf6Vw&÷W2âW†—7F–ærw&÷W÷Vç2&VÂæF—fRÆ—7C°¦6†ö÷6Rw&÷WÂ6VÆV7BÖ÷&Rf6W2æB76–vâ6VÆV7FVBâG—Ræ÷F†W"æÖRFò7&VFP¦w&÷WÂ&V÷Vâd”UræB6öæf—&ÒÆ—7FVC²VæFõ&VFò6†ævW276–væÖVçG2öæÇ’â&WFW7@¦W&6RæB6fRô÷Vâ–b6öçfVæ–VçBâ–bd”Ur&Ææ·2v–âÂæ÷FR67&öÆÂ&V†f–÷"æ@§v†WF†W"W‡Æ–6—Bf–ÆR&Vg&W6‚F—7Æ’&W7F÷&W3²æò&WVFVBFV'VrGV×&WV—&VBà¤æW‡BæF—fR6VÆV7F÷"öW&6W"fVVF&6³²'&öFW"&VæFW&–ærF–væ÷6—2&VÖ–ç26W&FRà ¢22ã“ƒ’(	Bd”Ur÷Vâ÷æVÂ÷67&öÆÂWf–FVæ6S²ã“ƒ‚W6W"52(	B#rö7Fö&W"##` ¥W6W"53“ƒ‚&÷FV7G2&VÂW†—7F–ærw&÷WG&÷F÷vâÂ76–væÖVçB&WW6RæBW†—7F–æp¦æÖR÷7G&ö¶RöW&6W"v÷&¶fÆ÷w3²gVæ7F–öæÂ66WFæ6RFöW2æ÷B6Æ÷6R&V7W'&–ærd”Up§&VæFW&–ær—77VRâÆFW7C“ƒ‚GV×£C£C%¢&÷fW2Væ6–ÂF÷vâ÷Wö6Æ–6²&V6†W2d”Up§7VÖÖ'’v—F†÷WB&WfVçDFVfVÇBÂv—F‚6ÖR†VÇF‡“3cgƒƒƒbôE#"Æ–÷WBæBæòU`§F÷Æ–W"â—BöÖ—G2æF—fRFWF–Ç2æ÷VâÂæVÂ&V7B÷67&öÆÂæBÖöFRÂ6ò6ææ÷BFVÆÀ¦6Æ÷6VBÖVçRg&öÒâ÷Vâ'WBVç–çFVBæVÂâFòæ÷B&WVW7Bæ÷F†W"–FVçF–6ÂGV× ¦÷"6Æ–ÒVæv–æR6W6S²6ÖRW†—7F–ær÷BÖ–âFV'Vr÷væW"v–ç2Ö—76–ærWf–FVæ6Rà ¥6æ6†÷Bæ÷r–æ6ÇVFW2f–WtÖVçS¢æF—fR÷Vâ7FFR†çVÆÂ–bÖ—76–ær’Â7GVÂ7F—fP§&VæFW"'WGFöâÂ6VÆV7F–öâÖöFRÂf6Vw&÷W7G&ö¶R&ÖVBö6öçF7Bö76–vâÖ÷"ÖW&6RÀ¦w&÷W×–6¶W"÷F–öâ6÷VçBö–æFW‚öF—6&ÆVB†æ÷Bw&÷WæÖW2’Âd”UræVÂæB6VÆV7FV@¦f6Vw&÷WÖ6öçG&öÂ&÷VæG2÷f—6–&–Æ—G’ö÷fW&fÆ÷r÷67&öÆÅF÷÷67&öÆÄ†V–v‡Bö6Æ–VçD†V–v‡BÀ§ÇW27GVF–ò÷fW&Æ’7G–ÆR–æ6ÇVF–ærÖ—„&ÆVæDÖöFRâW†—7F–ær6öçG&öÂôDôÒWf–FVæ6P§&WF–æVBâæF—fRFövvÆR6GW&W2f–æÂ÷Vâ7FFS²æVÂ67&öÆÂ6GW&W2—G27W'&Vç@§÷6—F–öââ&÷F‚76—fRv–æF÷rÖ6GW&Rö'6W'fW'2ÖV7W&RôäÅ’v†VâFV'VrVæ&ÆVBÀ¦VæBFòW†—7F–ær&÷VæFVCÖWfVçB'VffW"ÂæWfW"6öç7VÖR–çWBÂfö7W2ö÷Vâ÷67&öÆÀ¦ÖVçW2÷"–çfö¶R&Vg&W6‚âæòöÆÆ–ærÂæWr÷W÷"WFöÖF–2&W–çBà ¤6†ævVB'VçF–ÖRôäÅ’vW7GW&RÖFV'Vs²÷&–v–æÂ6÷W&6RFV'Vr÷&V6÷fW'““ƒ’¶W—2æ@§&VÆV6RÖ&¶W'2÷&Wf–WvVB†6‚âÆÂ&VæFW&–ærô552õd”UröæF—fR6VÆV7F÷"ö''W6‚ö†—7F÷'’ð¦ÖöFVÆÆ–ærô×VÇF’–×ÆVÖVçFF–öç2Væ6†ævVBâF†—2—2D”täõ5D”2Âæ÷B&VæFW&–ærf—‚à£#’fö7W6VB6†V6·252ód”Âó6¶—¢æWr7GVÂv†öÆRÖFV'Vr&W÷'Böö'6W'fW"FW7G0¢†÷Vâö6Æ÷6VBöÖ—76–ærÂvVöÖWG'’÷67&öÆÂÂÖöFW2÷–6¶W"Â&VBÖöæÇ’öFV'VrÖöfb&VgW6Â’À¦÷&–v–æÂ&ö&R÷&V6÷fW'’öFV'Vr÷&VÆV6RæC“ƒN(	3“ƒ‚WF†÷&–ær÷7G&ö¶R÷6VÆV7F÷"FW7G2à¥7–çF‚öF–fb6†V6·273²æòæF—fRögVÆÂ×7V—FR÷"W&ÖæVçB&W—"&ööb6Æ–ÖVBà ¤DUd”4S“ƒ“¢æ÷&ÖÂd”UræBW†—7F–ærw&÷W&VÖ–â66WFVBâ–bÖVçRF—6V'2÷ ¦&Ææ·2Âf–ÆRâT’FV'VrâG'’d”Uröæ6Râ6GW&Rô6÷’&Vf÷&R&Vg&W6‚F—7Æ’÷ ¦×7v—F6‚âæWrf–WtÖVçRæ÷VâæBæVÂæöFW2æ÷r6W&FRæF—fR7FFRg&öÒ–çBà¥G'’67&öÆÂ–ç6–FRæVÂ–b÷76–&ÆRÂ6GW&Rv–âöæÇ’–b6†ævVBâ–bfVÇBFöW0¦æ÷B&V7W"Âæòf÷&6VB&W&öGV7F–öâ&WV—&VBâæW‡BæF—fRWf–FVæ6S²fVGW&RG&¦V7F÷'¦6â&W7VÖRgFW"fVVF&6²v†–ÆR&WF–æ–ærF†—2÷Vâ&VæFW&–ærvFRà ¢22ã““(	BW‡Æ–6—B6Æ÷6VBd”Ur7W&f6R&VÖ÷fÂ(	B#rö7Fö&W"##` ¥W6W"öæW‡F'V–ÆBgFW"Gvó“ƒ’6GW&W2âC£Sƒ£3U¢6çf5&ö&V†–FFVåE%TRæBGvð§7V&¦V7F—fR&–v‡ET“¦Ö—76–ærö'6W'fF–öç3²C£Sƒ£S¢6çf2&W7F÷&VBö†–FFVädÅ4Rà¤&÷F‚7GVF–òôf6RÂæò''W6‚÷6W76–öâõUbv÷&·76RÂæF—fRd”Ur÷VädÅ4RÂ–WBf—†V@§æVÂ&V7C“ƒ"óBãRó3cósSbÂ67&öÆÄ†V–v‡Bö6Æ–VçD†V–v‡CsSBâæòd”UrF÷vâ÷FövvÆR–à§&V6÷&FVB–çFW'fÃ¢F†W6RFòæ÷BF–væ÷6RâGFV×FVB÷VâæVÂâ†–F–æs4BæòÆöævW §&W7F÷&VBT’–âF†—2&V7W'&Væ6S²Fòæ÷B&WVBöÆB6çf2ÖöæÇ’&V6÷fW'’wV&çFVRà¤6ö×WFVBÆ–÷WBö†VÇF‡’†—G2&Ræ÷B&ööböbG&vâ—†VÇ2÷"Væv–æR&ö÷B6W6Rà ¤VF—B÷&–v–æÂf–WrÖÖöFW3¢f—†VB÷fW&fÆ÷v–æræVÂ&VÆ–W2VçF—&VÇ’öâæF—fP¦6Æ÷6VBÖFWF–Ç26öçFVçB7W&W76–öã²æòW‡Æ–6—B6Æ÷6VBF—7Æ’'VÆRâFB66÷V@¢7f–WtÖöFW3¦æ÷B…¶÷VåÒ’âçf–Ww÷'BÖÖVçR×æVÂ¶F—7Æ“¦æöæR–×÷'FçGÒ–â÷&–v–æÀ¦V&Ç’FööÆ&"7G–ÆW6†VWBäB÷&–v–æÂf–WrÖÖöFW27G–ÆRfÆÆ&6²âF‡W26Æ÷6VBd”Up¦†2¦W&òæVÂÆ–÷WB÷67&öÆÆ–ær7W&f6R&Vf÷&R‡–G&F–öâæBgFW"ÆÂæF—fR÷ §&öw&ÖÖF–26Æ÷6W2â÷Væ–ær&VÖ÷fW2ôäÅ’F†—26Æ÷6VB×7FFR'VÆRæBW6W2÷&–v–æÀ¦f—†VBæVÂ÷67&öÆÂ÷6WGF–æw2âæF—fRFWF–Ç2æ÷Vâ&VÖ–ç26öÆR7FFR÷væW#²÷&–v–æÀ¦æöFW2öÆ—7FVæW'2ö6öçG&öÂ–FVçF—G’&W6W'fVBâæò¥2FövvÆRÂ&W&VçBÂW‡G&ÖVçRÂF–ÖW"À§&Vg&W6‚ö&Æ–æ²Â&VæFW&W"ô552Ö&ÆVæB6†ævR÷"&r×ö–çFW"÷væW"à ¥F†—2—2æ'&÷r6Æ÷6VB×7W&f6RÆ–fV7–6ÆR†&FVæ–ærÂäõB&ööbF†Ræöç¦W&ò6Æ÷6V@¦&÷‚6W6VBWfW'’&–v‡B×&Vv–öâfVÇBÂ÷"wV&çFVVBW&ÖæVçB6ö×÷6—F÷"&W—"à¤÷Vâ×æVÂ6Æ—–ær÷v†öÆRf–Ww÷'B&VæFW&–ærvFR&VÖ–ç2õTâVçF–ÂæF—fRfVVF&6²à£“ƒ’F–væ÷7F–72&WF–æVBâöæÇ’V&Ç’FööÆ&"552æB÷&–v–æÂd”Ur7G–ÆRgVæ7F–öà¦6†ævS²&Wf–WvVB6†VÆÂõd”Urô552÷&V6÷fW'“““–ç2ö†6†W2âÆÂvVöÖWG'’ö''W6‚õUbô×VÇF¦–×ÆVÖVçFF–öç2Væ6†ævVBâæó“ƒ’52–æfW'&VBg&öÒFV'Vr&W÷'G2ã“ƒ‚66WFæ6P§&WF–æVBã3"fö7W6VB52ód”Âó6¶—¢÷&–v–æÂ7F'GWFööÆ&"ö‡–G&F–öâö7F–öà¦–FVçF—G’Â&VÆV6RÂ&W÷'B÷&ö&R÷&V6÷fW'’æC“ƒN(	3“ƒ‚WF†÷'6†—÷7G&ö¶R÷6VÆV7F÷"à¥7–çF‚öF–fb73²æòæF—fR÷&VæFW&VBögVÆÂ×7V—FR&ööb6Æ–ÖVBà¤DUd”4S““¢g&W6‚&VÆöBÂd”Ur÷Vâö6Æ÷6R6WfW&ÂF–ÖW3²67&öÆÂæBw&÷W–6¶W"à¤6Æ÷6VBd”UrFV'VræVÂ&V7B6†÷VÆB&R¦W&òöF—7Æ–æöæS²÷Vâ×W7B6†÷r÷&–v–æÀ§6WGF–æw2âvF6‚&–v‡BFööÆ&"öfö÷FW"öv—¦Öò–bf—6–&ÆRÂv—F†÷WBf÷&6VB&W&öGV7F–öâà¤–b&V7W'&Væ6RÂW†—7F–æs“ƒ’&W÷'BÇW2f—6–&ÆR7–×FöÓ²æò&WVFVB†–FR÷6†÷ræVVFVBà¤æW‡B7GVÃ““æF—fRfVVF&6²&Vf÷&R7V7VÆF—fRÆ–W"6†ævW2à ¢22ã““(	B6ö×7BÆVgBf6Vw&÷W–çBFö6³²ã““W6W"52(	B#rö7Fö&W"##` ¥W6W"53““&÷FV7G2W‡Æ–6—B6Æ÷6VBd”Ur7W&f6RæB÷&–v–æÂ÷Vâ÷67&öÆÂ÷–6¶W ¦&V†f–÷#²6öçF–çVRvF6†–ær–çFW&Ö—GFVçB&VæFW&–ær&F†W"F†â6Æ–Ö–ærVæv–æR&ö÷@¦6W6RâW6W"6·2&WGFW"f6Vw&÷W–çF–ærT’õU‚âVF—B66WFVBWF†÷&–ær÷7G&ö¶Rð¥d”Ur÷6W76–öâ÷÷6—F–öâ÷væW'2öâ&6VÆ–æS““âW†—7F–ær6öçG&öÇ2Æ—fVB–ç6–FRd”Up¦æB7F÷VB''W6‚v†VæWfW"&Wf—6—FVBÂ&WV—&–ær&WVFVBÖVçR7–6Æ–ærà ¥d”Urâf6Vw&÷W2æ÷röffW'2÷Vâf6Vw&÷W–çB6öçG&öÇ2â÷Vç26ö×7C#“€¦ÆVgBFö6³‡‚g&öÒf–Ww÷'BF÷öÆVgBW6–ærõ$”t”äÂ6ö×7BæVÂ÷6—F–öâ†VÇW#°§–çG2FVfVÇB7W'&VçBw&÷WæB–çfö¶W2õ$”t”äÂf6RÖöFR'WGFöâ–bæVVFVBà¤W†—7F–æræÖR–çWBöæF—fRW†—7F–ærw&÷W–6¶W"Â–çBôW&6RæB6VÆV7FVBÖf6P¦6öÖÖæG2&R4ÔRDôÒæöFW2&W&VçFVBg&öÒ†–FFVâ†öÖR–âd”UrÂæ÷B6ÆöæVB÷&÷†–VBà¥ÆWGFRö6öÆ÷W"V&æ6R7F—2–âd”UrâæÖRæBW†—7F–ærw&÷W6—B&÷fRGvð¦6ÆV"&W76VB–çBôW&6RÖöFR'WGFöç3²Gfæ6VB76–vâô6ÆV"õW6R6VÆV7FVB6öÖÖæG0¦6öÆÆ6RVæFW"6VÆV7FVBf6W2âFöæR—2Çv—2BFö6²†VFW#²7F÷2''W6‚æB&·0¦÷&–v–æÂ6öçG&öÇ2&6²–â†–FFVâ†öÖRÂFö6²F—7Æ–æöæRâf6Vw&÷W2Æöö²&VÖ–ç0§6òW6W"6â–ç7V7B–çFVBw&÷W2âæòæVVBFò&V÷Vâd”Ur&WGvVVâ7G&ö¶W2÷FööÇ2à ¥–çBôW&6Ræ÷rW'6—7FVçB&F–ò×7G–ÆR6†ö–6W3²FöæRW†—G2âW†—7F–ærw&÷W6†ö–6P¦÷"6ö×ÆWFVBæÖRVF—B&×26†÷6VâæÖVB–çBv†–ÆRFö6²÷Vã²G—–ærW6W2öÆ@¦''W6‚VçF–Â6†ævRö6öÖÖ—BâW6R6VÆV7FVBw&÷WæÖRÇ6ò&V&×2æÖVB–çB–âFö6²à¥–6¶W"&Vg&W6†W2öâfö7W2æBW†—7F–ærd”Urö76–væÖVçB&÷WFW2â÷&–v–æÂ7G&ö¶RÖöâÐ¦Æ–gBÂVæ—VRÖf6R7Fv–ærÂöæR×7FW†—7F÷'’ö6æ6VÂ÷&W6÷W&6R÷væW'2Væ6†ævVBâæð¦æWr&r×ö–çFW"÷–çBö†—7F÷'’÷væW"÷"Ub&WV—&VÖVçBâ6†&VBÆ6VÖVçB†VÇW"W6V@¦6ö×7Bv—F‚W‡Æ–6—B–çBÖÆVgBW†6WF–öã²æòæWrf–ÇFW"ö6öçF–âöÆ–W"÷&W–çB†–çBà¤Fö6²6Æ÷6W2öâ&VæFW"ÖÆöö²6†ævRÂæöâÔf6RÖöFR6Æ–6²‡&VBÖöæÇ’6GW&R’Â÷"7F'@¦öbæ÷F†W"÷&–v–æÂFööÂ6W76–öââ÷Væ–ær&VgW6W27W'&VçB6W76–öâ&F†W"F†à¦&æFöæ–ær—G2&Wf–Wrâ66VæR÷6VÆV7F–öâö†—7F÷'’VæffV7FVB'’Fö6²6Æ÷6Rà ¥'VçF–ÖR6†ævW2öæÇ’÷&–v–æÂ&VæFW"T’æB6ÖÆÂ&W&VçF–ærFö6²†VÇW#²÷&–v–æÀ§7G&ö¶RövFRövVöÖWG'’õUböÖ–âô×VÇF’ó““d”Ur–×ÆVÖVçFF–öç2'—FR×Væ6†ævVBâ&Wf–WvV@§&VæFW"öæWrÖ6†–ÆB÷&V6÷fW'“““–ç2æB†6†W2â–6¶W"FW7Bæ÷rVW&–W2Fö7VÖVçB”G0¦f÷"÷&–v–æÂ6öçG&öÇ2gFW"&VÆö6F–öâÂ&W6W'f–ær—G26†ö–6Rö–çWB76W'F–öç2à£“F&vWFVB52ód”Âó6¶—¢æWr7GVÂFö6²Æ–fV7–6ÆR÷fÇVRöÆ—7FVæW"–FVçF—G’÷fW £"&V÷Vâ7–6ÆW2ÂFöæR÷Væf–Æ&ÆR&VçBÂ7GVÂ6öÖÖæB&÷WF–ær÷W'6—7FVçBÖöFW2ð¦7F—fR×FööÂ&VgW6Ã²&WF–æVB–6¶W"÷7G&ö¶RöW&6W"öÖWFFFÂæF—fR6VÆV7F–öâõVæ6–Âð¤Æ76ò÷–6¶–ærÇFööÆ&"÷&ö¦V7BõUb÷&VÆV6Râ7–çF‚öF–fb6†V6·272âæòæF—fR÷&VæFW&VBð¦gVÆÂ×7V—FR&ööb6Æ–ÖVBâæF—fRFö6²76–æræBG—–æröG&÷F÷vâW6&–Æ—G’VæF–ærà ¤DUd”4S““¢d”Urf6Vw&÷W2â÷Vâf6Vw&÷W–çB6öçG&öÇ3²fW&–g’ÆVgBFö6²æ@¦WFöÖF–2f6RÖöFRÂ6Æ÷6Rd”Urâ6VÆV7Bw&÷W÷"G—RæÖRÂVæ6–Â7G&ö¶RöÆ–gC°¥–çBôW&6Rv—F†÷WB&V÷Væ–ærd”Urâ6VÆV7FVBf6W2Gfæ6VB6öÖÖæG3²VæFõ&VFòà¤FöæR†–FW2Fö6²÷7F÷2''W6‚Âf–ævW'2æf–vFS²&V÷Vâ&WF–ç2æÖS²6fRô÷Vâà¤æW‡BæF—fRU‚fVVF&6²&Vf÷&RW‡G&7W'6÷"÷&F—W2öÆ—fR6öÆ÷W"fVVF&6²à ¢22ã““&–v‡B×&Vv–öâ&V7W'&Væ6R(	B#rö7Fö&W"##bÂC££•  ¥W6W"W‡Æ–6—FÇ’&W÷'G2&–v‡BÖ†æB—77VRt”âöã““âFòæ÷BG&VC““gVæ7F–öæÀ¥522W&ÖæVçB&VæFW&–ær66WFæ6S²&WF–â6Æ÷6VB×æVÂÆ–fV7–6ÆR&÷FV7F–öà§v†–ÆR&V÷Væ–ær'&öBf—6–&–Æ—G’vFRã““Fö6²U‚†2äõB&V6V—fVBW6W"52à¥7WÆ–VB&W÷'C¢f6Vw&÷W2ôf6RÂæò7F—fR7G&ö¶R÷6W76–öâ÷FW‡GW&R–çC²6çf0§f—6–&ÆS#s3'ƒcS"Âf–Ww÷'C3cgƒƒƒbôE#"â7GVF–ò÷fW&Æ’÷6—G“âd”UræF—fP§FövvÆRWf–FVæ6RC#ƒ3“ó#“#Ró3ƒbó3r6†÷w2÷VâG'VRöfÇ6R÷G'VRöfÇ6Râ÷Và§æVÂ&V7C““‚ócbó3cóƒã“ƒBÂ67&öÆÄ†V–v‡C“ƒö6Æ–VçD†V–v‡Cƒ²6Æ÷6VBF—7Æ–æöæP¦æB¦W&ò&V7BâF‡W2æF—fR–çWBæC““6Æ÷6VB×7W&f6R&VÖ÷fÂv÷&²Â'WBFòäõ@¦VÆ–Ö–æFRW6W"w2f—7VÂÆ÷72âFòæ÷B&WVBæF—fR×FövvÆRf–ÇW&R÷"&WF–æVB6Æ÷6V@¥d”UræVÂ2W‡ÆæF–öâf÷"F†—26GW&RâG&ç7&VçB7GVF–òÆ–W"&VÖ–ç2–à¤DôÓ²÷6—G“vV¶Vç2f—6–&ÆR×f–væWGFRW‡ÆæF–öâv—F†÷WB&÷f–ærVæv–æR6W6Rà¤6öçG&öÇ2ôDôÒö†—G2†VÇF‡’—2æ÷B—†VÂWf–FVæ6Râv—¦ÖòW‡Æ–6—FÇ’†–FFVâ†W&Rà ¤–ã““WF†÷&–æræöFW2&R&¶VB–â†–FFVâ†öÖRVçF–Â÷Vâf6Vw&÷W–çB6öçG&öÇ2à¥F†V—"¦W&ò&÷VæG2WfVâv†–ÆRd”Ur÷Vâ&RU…T5DTC²ÆWGFRV&æ6R6öçG&öÇ0§&VÖ–â–âd”UrâFV'Vrw2w&÷W–6¶W"÷F–öä6÷VçC6â6–×Ç’ÖVâV×G’æÖVBÖw&÷W ¦Æ—7BÇW2Æ6V†öÆFW"âFòæ÷B–æfW"6VÆV7F÷"&Vw&W76–öâ÷"Ö—76–ærWF†÷&–æræöFW2à¤7W'&VçBFV'VrFöW2æ÷B6×ÆRæWrFö6²&ö÷Bâ6÷W&6RõUƒ““&VÖ–ç2VæF–ærFWf–6P¦66WFæ6Râ'VçF–ÖR&VÖ–ç3““²æò7V7VÆF—fR&VæFW&–ær6†ævW2–âF†—2WFFRà¤Æ—fRfW'6–öâö–æFW‚÷&VæFW"ÖÖöFW2öFö6²'—FRÖÖF6‚fW&–f–VC³“fö7W6VBFW7G2vW&P§fÆ–FFVB&Vf÷&RV&Æ–6F–öââæW‡BFW7BæWrÆVgBFö6²æB6ö×&R—G2f—6–&–Æ—G§v—F‚ffV7FVB&–v‡B&Vv–öâ–b&V7W'&Væ6RW'6—7G3²æò&WVFVB†–FS4B÷FövvÆRGV×0¦æVVFVBâ&ö÷B6W6R&VÖ–ç2Væ6öæf—&ÖVBà ¢22ã““"(	Bf6Vw&÷W6öÆ÷W"öæÖRÆ—7C²ã““W6W"52(	B#rö7Fö&W"##` ¥W6W"6öæf—&×3““–çB6öçG&öÇ2v÷&²w&VBgFW"&Vg&W6‚æBW‡Æ–6—FÇ’53““à¥&÷FV7B6ö×7BÆVgBFö6²Â÷&–v–æÂ6öçG&öÇ2ÂW'6—7FVçB–çBôW&6RÂFöæRæB7G&ö¶P¦†—7F÷'’öæf–vF–öââ67&VVç6†÷BC„T3C“$6†÷w2&–v‡Bd”Ur&÷&FW"ö&6¶w&÷VæBv—F€¦&Ææ²–çFW&–÷"&Vf÷&R&Vg&W6ƒ²¶VW–çFW&Ö—GFVçB&VæFW&–ærvFRõTâ–æFWVæFVçFÇ’à £““"&WÆ6W2W†—7F–ærw&÷WæF—fRG&÷F÷vâv—F‚&÷VæFVC#‚Æ–W"×7G–ÆRÆ—7C ¦öæRFF&vWBW"æÖVBw&÷WÂ6öÆ÷W"7vF6‚²6fRFW‡BæÖRÂ6VÆV7FVB×&÷r†–v†Æ–v‡Bà¤æÖRf–VÆB7F–ÆÂ7&VFW2æWrw&÷W3²6†ö÷6–ær&÷r&WW6W2÷&–v–æÂ–çWBæB&×0¦÷&–v–æÂ–çBÖöFRâ&÷w2&R&W6VçFF–öâöæÇ’ÂæòÖW6‚ö†—7F÷'’öÖFW&–Â×WFF–öâà¥6†&VBf6Tw&÷WÆWGFRW‡÷6W2U„5BW†—7F–ærf–Ww÷'BÖW6‚Ö÷&FW"övöÆFVâ×&F–ð¦6öÆ÷W"Ö²&÷F‚&VæFW&W"æBÆ—7BW6R—BâÆWGFR÷&W6VVBöÆ–v‡FæW72÷6GW&F–öâWFFP§7vF6†W2Â÷&–v–æÂ&VæFW&–ærÆv÷&—F†ÒVæ6†ævVBâ&÷w2¶VWæöFRöfö7W2–FVçF—G’öà§6VÆV7F–öâö6öÆ÷W"&Vg&W6ƒ²w&÷WÖVÖ&W'6†—&V'V–ÆG2Æ–÷WBöæÇ’v†Vâ6†ævVBà¥&Vg&W6‚7W'&VçBÖW6‚öâ÷VâÂæÖRöVF—B÷6VÆV7F–öâÂÆWGFR6†ævW2æBVWVVB÷&–v–æÀ¦&öG’&V'V–ÆG2‡7G&ö¶R6öÖÖ—BÂ7F—fRö&¦V7B7v—F6‚ÂVæFõ&VFò“²æòöÆÆ–æröæWrö–çFW ¦÷væW"âæÖW2&RFW‡D6öçFVçBÂæWfW"…DÔÂâV×G’Æ—7BW‡Æ–ç2æÖR²–çBv÷&¶fÆ÷rà¤ÆVv7““ƒ‚–6¶W"FW7G2Ö–w&FRFòæWrÆ—7BFFW"&W6W'f–ær7W'&VçBÖÖW6‚öæÖRöæð¦×WFF–öâ6÷fW&vS²æWr&VæFW&W"FW7G26÷fW"6VÆV7F–öâö–FVçF—G’öV×G’÷FW‡B6fWG’À¦÷&–v–æÂ''W6‚6ÆÆ&6²æB7vF6‚×Fò×&VæFW"ÖGG&–'WFR&—G’7&÷72ÆÃBÆWGFW2à¥7G&ö¶S“ƒröWF†÷&–æs“ƒRöFö6³““õUbõ–çBöÖ–âô×VÇF“ãæC““d”Ur'VÆRVæ6†ævVBà¥fÆ–FF–öã£“2F&vWFVB52ód”Âó6¶—²7–çF‚æBF–fb6†V6·272â&Wf–WvV@¦6†ævVB&VæFW"ö6÷&RöæWrÖÆ—7BæB6†VÆÂ÷&V6÷fW'’66†R¶W—3²æògVÆÂ×7V—FRöæF—fP§&VæFW&–ær&ööb6Æ–ÖVBâF†R&–÷#“ƒR6fR×FW‡B76W'F–öâæ÷rF&vWG2Æ—7BÆ&VÇ0¦–ç7FVBöbæF—fR÷F–öâ–×ÆVÖVçFF–öâã““"v—G2•BÆ—7B66WFæ6Rà ¤gWGW&RW6W"vöÃ¢f6Vw&÷W&÷VæF&–W2FVf–æRUb—6ÆæB6V×2ÂF†Vâw&÷W×F&vWFV@¦–ÖvRõ%"76–væÖVçBâVF—B÷&–v–æÂUbFÆ2÷6VÒ÷7F—F6‚æB–çBÖ6²öÖFW&–À¦÷væW'2f—'7Bâf—'7BÆ–¶VÇ’&÷WFR6†&VBFÆ2v—F‚W"Öw&÷WÖ6·2ö&¶–æs²6W&FP¦ÖFW&–Â6Æ÷G2&WV—&R&VæFW&W"÷6fRôô$¢ôtÄ"ôäôÒVF—BâF†—2'V–ÆBDôU2äõB–×ÆVÖVç@§Vçw&Ö'’Öw&÷W2÷"W"Öw&÷WÖFW&–Ç2ÂæB×W7Bæ÷B–×Ç’F†W’W†—7Bâ6ÖRÖæÖP¦F—66öææV7FVBf6RF6†W2Ö’––VÆB×VÇF—ÆR—6ÆæG3²vVöÖWG'’7F—2vVÆFVBà ¤DUd”4S““#¢÷Vâf6Vw&÷W2–çBFö6³²–çC"²w&÷WæÖW2Â–ç7V7B7vF6‚öæÖR&÷w2à¥F&÷w2æB–çBöW&6S²6VÆV7FVBæÖRö†–v†Æ–v‡BæBVæFõ&VFò&Vg&W6‚Æ—7BâF§W7@¥d”UrÆWGFR÷&W6VVBæB&V÷VâFö6³¢7vF6†W2föÆÆ÷rf–Ww÷'B&6R6öÆ÷W'2†Æ–v‡F–æp¦6â6†FRÖöFVÂ’âÆöæræÖW2öÖç’w&÷W27F’6ö×7C²FöæRöf–ævW"æf–vF–öâà ¢22ã““2(	Bf6RÇ’W†7BæF—fR×ö–çFW"6GW&R&W—"(	B#rö7Fö&W"##` ¥W6W"&W÷'G2Ç’W‡G'VFRW†7BFöW2æ÷Bv÷&²æBG&2F†RW6W"–âW‡G'VFRà¤VF—FVB7W'&VçBÖ–ãS“cvF##’ö'V–ÆC““"Â÷&–v–æÂf6R÷W÷&V6—6–öâöF—&V7B6öçG&öÆÆW"À¥Væ6–ÂvFRæBF‡&÷Vv‚fÆÆ&6²âæòæWrvVöÖWG'’Â†—7F÷'’÷"vW7GW&R÷væW"æVVFVBà¤6öæf—&ÖVB&Vw&W76–öã¢çVÖW&–2W†7BF—7F6†W2&W6W'fVB7–çF†WF–2ö–çFW#“ƒsbÂ'W@¦÷&–v–æÂö–çFW&F÷vâäB&Vv–äF—&V7DG&r6ÆÂæF—fR6WEö–çFW$6GW&Rf÷"—Bâ'&÷w6W'0§&V¦V7BF†—2æöæW†—7FVçBæF—fRö–çFW"v—F‚æ÷Df÷VæDW'&÷"âWfVçEF&vWB&W÷'G2†æFÆW ¦W†6WF–öç2æB6öçF–çVW2F—7F6ƒ²&Vv–â†BÇ&VG’6WBG&rÂÆVf–ærVæF–ær&W70¦Æ—fRFöòâö–çFW'W6ÆV'2VæF–ær&W72f—'7BÂÆVf–ærG&r6WC²÷WF†VâF—6&ÆW0¤W†7Bö–çWBôFöæR–æFVf–æ—FVÇ’âV&Æ–W"FW7G2W6VBæòÖ÷6GW&R7GV"æBÖ—76VB—Bà ¤öæÇ’'VçF–ÖR6†ævS¢÷&–v–æÂ×VÇF’Öf6RÖF—&V7B6GW&R†VÇW"6¶—2&W6W'fVBçVÖW&–0§ö–çFW#“ƒsbBÆÂF‡&VRW†—7F–ær6GW&R6—FW2â‡—6–6Â6öçF7G2&WF–âæF—fR6GW&RÀ¦÷&–v–æÂv–æF÷rÖ6GW&R6ö×ÆWF–öâÂFVÆ–&W&FRÖG&rF‡&W6†öÆBÂ6VÆV7F–öâÂ–æfW&Væ6RÀ¦vVöÖWG'’÷F÷öÆöw’÷&VgW6ÂõF‡&÷Vv‚6fWG’æB†—7F÷'’âW†7B7F–ÆÂ'Vç2÷&–v–æÀ¦6öçG&öÆÆW"æB6VÖçF–26öÖÖ—B6¶æ÷vÆVFvVÖVçC²æòæWrçVÖW&–2ÖöFVÆÆ–ær¶W&æVÂà¥÷WæB&V6—6–öâ6öFRVæ6†ævVBâ6†VÆÂöF—&V7B÷&V6÷fW'’¶W—3““2&Wf–WvVC²æòG–æÖ–0¦6†–ÆB6†ævW2â&÷FV7FVB×VÇF“ãÂÖ–âÂ66WFVB–6öç2ôf6Vw&÷Wõ–çBõUbög&÷¦VâVæ6†ævVBà ¥FW7B†VÇW"æ÷r÷F–öæÆÇ’ÖöFVÇ2'&÷w6W"6GW&R&V¦V7F–öâæBWfVçEF&vWBW†6WF–öà¦6öçF–çVF–öã²FVfVÇBf—‡GW&W27F–ÆÂF‡&÷rVæW‡V7FVBÆ—7FVæW"f–ÇW&W2â&Vf÷&R'VçF–ÖP§&W—"ÂæWrFW7G2&W&öGV6VBfÇ6RW†7B7V66W72&W7VÇBæB7G&æFVBG&vv–ær7FFRà¤gFW"&W—#¢&WVFVBW‡G'VFRô–ç6WBW†7BÂ6fR&VgW6ÂF†VâfÆ–B&WG'’Âæò7–çF†WF–0¦6GW&RöæòÆ—7FVæW"W'&÷'2öæòVæF–ærG&rÂ7GVÂ÷WÇ’ôFöæRÆ–fV7–6ÆRÂöæR†—7F÷'§7FWW"7V66W72æBVæFõ&VFò72â‡—6–6Â6GW&Rö6öÖÖ—Bö6æ6VÂ&WF–æVBâf–æÃ“¦fö7W6VB52ód”Âó6¶—‡ãRã'2’Â–æ6ÇVF–ær÷&–v–æÂf6R÷&WVB÷÷Wö6ÖW&õF‡&÷Vv‚ð¦æVvF—fRÖW‡G'VFR÷&VÆV6RFW7G3²7–çF‚öF–fb6†V6·272âæògVÆÂ×7V—FR÷"æF—fR&ööb6Æ–ÖVBà ¥6W&FS““"&VæFW&–ær&V7W'&Væ6RCS£3“£U£¢W6W"ö'6W'fVB&–v‡ET’Ö—76–ærv—F‚6çf0¦†–FFVâCCsC3‚ÂF†Vâ&W7F÷&VB6çf3SS#2âæF—fRd”Ur÷Vã3CS3"†B&÷VæG3““‚ócbó3cð£ƒã“ƒBæC“ƒ‚67&öÆÂ6öçFVçC²6Æ÷6VBæVÂ—2F—7Æ–æöæR÷¦W&ò&÷VæG2âFööÆ&"Æ–÷WBð¦†—G2†VÇF‡“²v—¦Öò&W6VçC“gƒ“bCsS"ãsRóCC2ã#3Bâ7GVF–ò÷fW&Æ’÷6—G“âw&÷WÖÆ—7@¦÷F–öä6÷VçB÷6VÆV7FVD–æFW‚çVÆÂ—2W‡V7FVBf÷#““"D•bÆ—7BÂæ÷BæF—fR×6VÆV7Bf–ÇW&Rà¤æò7GVÂ67&VVç6†÷BöffV7FVB&Vv–öâ–FVçF–f–VB–âF†—2&W÷'C²Fòæ÷B–æfW"æWp§&VæFW&–ær6W6R÷"wV&çFVVB†–FS4B&V6÷fW'’â–çFW&Ö—GFVçB&–v‡B×&Vv–öâf—6–&–Æ—G§&VÖ–ç2õTã²æò&VæFW&–ær6†ævW2–ã““2ã““"Æ—7BFWf–6R66WFæ6R7F–ÆÂVæF–æs°£““52&WF–æVBâf6Vw&÷W×6VÒUböÖFW&–Âv÷&²&VÖ–ç2gWGW&RÂæ÷B6†—VBà ¤DUd”4S““3¢6öæf—&Ó““3²6VÆV7B7V&Rf6RÂW‡G'VFRÂVçFW#ã"†÷"6öçfVæ–VçBÖöFVÂVæ—G2’À¤Ç’W†7BGv–6S²&÷F‚÷W&F–öç26öÖÖ—BæBFöæRW†—G2âVæFõ&VFòV6‚7FWâ&V÷Và¦æBG'’fÆ–BæVvF—fR&V6W73²&VgW6VBfÇVR×W7B7F–ÆÂÆÆ÷rFöæRæBÆFW"&WG'’à¤÷&F–æ'’Væ6–ÂG&rF†VâFöæS²–ç6WBW†7B6æ—G’6†V6²âvF6‚W†—7F–ær&–v‡B×&Vv–öà¦fVÇB6W&FVÇ’âæW‡Bö'F–âFWf–6RW†7BöW†—BfVVF&6²&Vf÷&RfVGW&RW‡ç6–öâà ¢222ã““2V&Æ–6F–öâ7FGW0 ¥'VçF–ÖR÷FW7FVBÆö6Â6öÖÖ—B#–fVCS#&c“VScfSƒ&CS†c“#sf66“Fc†F"ÂG&VP¦&Cs†“–#†&36#C“CvSs6FSfVF6cƒFVC‚âÆÃ“fö7W6VBFW7G272âW6‚v0¦&Æö6¶VBGv–6R'’WFöÖF–2&÷fÂ&Wf–WrâÆ—fS““"öÖ–ãS“cvF##’&VÖ–ç2F†RÆ7@§fW&–f–VBV&Æ–6F–öã²Fòæ÷BFW67&–&S““226†—VB÷"6²f÷"FWf–6S““2FW7G2–WBà¥&Wf–Wr&V¦V7FVB7FæF–ærWF†÷&—¦F–öâ–â&WG&–WfVB•õtõ$´dÄõræÖB2–ç7Vff–6–Vç@¦VæB×W6W"WF†÷&—¦F–öâ–âF†—2G&ç67&—Bâv—BW‡Æ–6—BW6W"6öæf—&ÖF–öâFòW6€¦æBV&Æ—6ƒ““2FòÖ–ã²Fòæ÷B'—72&V¦V7F–öâv—F‚6öææV7F÷"÷"ÇFW&æFRG&ç7÷'Bà¤gFW"&÷fÂW6‚VæF–ærÆö6Â6öÖÖ—G2ÂfWF6‚Ö–âÂfW&–g’&VÆV6R÷–ç2æBÆ—fP¦'—FW2ÂF†Vâv—fRDUd”4S““26†V6·2âæò'VçF–ÖRVF—G2gFW"fÆ–FF–öâà ¢22ã““B(	BF—7F–æ7BæF—fRäôÒf6Vw&÷W6öÆ÷W'2(	B#rö7Fö&W"##` ¥W6W"&W÷'G26—‚W‡÷'FVBw&÷W2'&—fR–âæöÖB2æV"Ö–FVçF–6Â6öÆ÷W"—'2à¤VF—Bf÷VæBæF—fRäôÒÖW6…'B7–6ÆW2F†RFöæ÷"FV×ÆFRw2D…$TRw&÷W6öÆ÷W'3°§6—‚vVæW&FVBw&÷W2F†W&Vf÷&R6öçF–âöæÇ’F‡&VRVæ—VR$t"G&—ÆW2âæWrFW7@§&W&öGV6W32×fW'7W3b&Vf÷&R&W—"âtÄ"Ç&VG’vVæW&FW2vöÆFVâ×&F–ò×76VB6öÆ÷W'0¦f÷"æWrw&÷W2æBFVÆ–&W&FVÇ’&W6W'fW2–×÷'FVBæöÖBw&÷W6öÆ÷W'3²Væ6†ævVBà ¤æF—fRäôÒæ÷r&WW6W2W†—7F–ærf6Tw&÷WÆWGFS““"f÷"ÆÂW‡÷'FVBæÖVBw&÷W2À§W6–ær÷&–v–æÂW‡÷'FVBf6R÷&FW"öæÖW2ÂFVfVÇB76VBÆWGFRæBÆ–æV"$t"à¤æòæWrÆWGFRÆv÷&—F†ÒâF†—2—2f6Vw&÷WF—7Æ’ÖWFFFÂæ÷B–çBÂfW'FW€¦6öÆ÷W"ÂÖFW&–Â÷"FW‡GW&R76–væÖVçBâw&÷W”G2öæÖW2ö&÷VæF&–W2ÂvVÆFVBvVöÖWG'’À¥Ug2Â%"Ö2ÂFöæ÷"FV×ÆFR'—FW2Â6÷W&6RÖW6‚æB†—7F÷'’&VÖ–âVæ6†ævVBâæF—fP§VææÖVBf6W27F–ÆÂÖFò÷&–v–æÂÖ–âw&÷WâFöW2æ÷B&öÖ—6Rd”Ur7W7FöÒÆWGFRð§&W6VVBf–FVÆ—G’÷"6†ævR&W6W'fVBtÄ"6öÆ÷W'2â'VçF–ÖR6†ævRôäÅ’æF—fRW‡÷'FW#°§6¶VBÖÖ÷æVÂôÆ"f–ÆW26†ævRÆöFW"–ç2öæÇ’Fò&Vg&W6‚F†R÷&–v–æÂw&‚à¥&Wf–WvVC““B6†VÆÂ÷&V6÷fW'’÷æVÂ÷6¶VBö6÷&RôÆ"¶W—2æB6†&VBÆWGFS““"&VfW&Væ6Rà¤×VÇF“ãöÖ–âö66WFVC““"Æ—7Bó““2W†7Bög&÷¦Vâ'—FW2Væ6†ævVBà ¥fÆ–FF–öã3’fö7W6VB52ód”Âó6¶—‡ã’ãg2“¢æF—fRäôÒõUbö6öÆ÷W"öæ÷&ÖÂöVÖ—76—fRð§66Æ"÷6¶VBöF—7Æ6VÖVçBöW‡÷'BFW7G2Ã““"7vF6‚Æ—7BÃ““2W†7BæB&VÆV6R6öçG&7G2à¥6—‚æÖVB7V&Rw&÷W2æ÷r†fR6—‚FWFW&Ö–æ—7F–2$t"G&—ÆW2v—F‚ÆÂ—'v—6R$t ¦F—7Fæ6W3âã#²ÆÂ6—‚f6R×FòÖw&÷W”G2æB6÷W&6RÖW6‚&WF–æVBâW†—7F–ær&–æ'’ð§FW‡GW&Röw&÷W&÷VæB×G&—FW7G272â7–çF‚öF–fb6ÆVââæòæF—fRæöÖB÷"gVÆÂ×7V—FP§&ööb6Æ–ÖVBâ–çFW&Ö—GFVçB&–v‡B×&Vv–öâ&VæFW&–ær&VÖ–ç2õTâÂVç&VÆFVBFòF†—2f—‚à ¤Äô4ÂôäÅ“¢–æ6ÇVFW2VæF–æs““2W†7B&W—"âV&Æ–6F–öâ&VÖ–ç2&Æö6¶VB'’F†P§&–÷"WFöÖF–2&÷fÂ&Wf–Ws²æòGFV×BFò'—72÷"&WW6‚âv—BW‡Æ–6—BW6W ¦6öæf—&ÖF–öâFòW6‚÷V&Æ—6ƒ““BFò6†&VBÖ–âöÆ—fRâÆ—fS““"—2Æ7BfW&–f–VBà¤gFW"&÷fÂÂV&Æ—6‚VæF–ærÆö6Â6öÖÖ—G2æBfW&–g’&VÖ÷FR6†VÆÂ÷–ç2öÆ—fR'—FW2à¤DUd”4S““BeDU"T$Ä”4D”ôã¢æF—fRäôÒW‡÷'Böb6—‚F–ffW&VçFÇ’æÖVBf6Vw&÷W3°¦÷VâæöÖBæBVæ&ÆRf6Vw&÷WF—7Æ’ÂfW&–g’6—‚F—7F–æ7B6öÆ÷W'2æB6—‚6÷'&V7@§&Vv–öç2öæÖW3²vVöÖWG'’÷FW‡GW&RV&æ6R–çF7Bâ&WFW7C““2W†7BGv–6RôFöæRõVæFõ&VFòà¤–bW6W"w27GVÂW‡÷'Bv2tÄ"÷"ô$¢Â6²f÷"f÷&ÖBöf–ÆS²æF—fRFöæ÷"Ö7–6ÆRFVfV7@¦—26öæf—&ÖVBÂ'WBFòæ÷B6Æ–Ò—BF–væ÷6W2WfW'’f÷&ÖBw26–Ö–Æ"Ö6öÆ÷W"&V†f–÷"à ¢227FæF–ærV&Æ–6F–öâ&÷fÂ(	B&Vff—&ÖVB#rö7Fö&W"##` ¥W6W"W‡Æ–6—FÇ’7FFW2–âF†—2FWfVÆ÷ÖVçB6†C¢(	Ä&÷fÂ—2Åt•2v—fVâÒw&—FP§F†B–çFòF†R†æF÷fW"æ÷FW2î(	ÒF†—2&Vff—&×27FæF–ærWF†÷&—¦F–öâf÷"&÷„Æ ¦6öÖÖ—G2ÂW6†W2F—&V7FÇ’FòÖ–âÂæBv—D‡V"vW2V&Æ–6F–öâÂ–æ6ÇVF–ærVæF–æp¦'V–ÆC““BæB—G3““2W†7B&W—"â6ö×ÆWFRfÆ–FF–öâÂ6öÖÖ—B÷W6‚æBfW&–g’&VÆV6P¦Ö&¶W'2öÆ—fR76WG2v—F†÷WB6¶–ærf÷"V&Æ—6†–ær&÷fÂv–ââWF†÷&—¦F–öâ—0¦f÷"&÷„Æ"FWfVÆ÷ÖVçC²Vç&VÆFVBW‡FW&æÂ7F–öç2&R÷WG6–FRF†—266÷Rà¥F†RV&Æ–W#““2ó““B&÷fÂÖ&Æö6²æ÷FW2&VÆ÷r&R†—7F÷&–6ÂæB7WW'6VFVB'’F†—0¦W‡Æ–6—BW6W"6öæf—&ÖF–öââF†W’&Ræ÷B6öçF–çV–ær&WV—&VÖVçBFò6²v–âà¤–bgWGW&RWFöÖF–2&Wf–Wr7F–ÆÂ&Æö6·2V&Æ–6F–öâÂ&W÷'B—G27GVÂ&V6öã°¦Fòæ÷BÖ—77FFRF†RW6W"w27FæF–ærWF†÷&—¦F–öâ÷"'—72&V¦V7F–öâà ¤7W'&VçBFVÆ—fW'“£““B'VçF–ÖSƒ“f2–æ6ÇVFW2æF—fRäôÒF—7F–æ7Bw&÷W6öÆ÷W'2æ@£““2f6RW†7B6GW&R&W—"ã“fö7W6VC““26†V6·2æC3’fö7W6VC““B6†V6·276VC°§F†W6R÷fW&Æ–ær6WG2&Ræ÷B6öÖ&–æVBF—7F–æ7BFW7B6÷VçBâFWf–6R66WFæ6R—0§VæF–ærâ–çFW&Ö—GFVçB&–v‡B×&Vv–öâ&VæFW&–ær&VÖ–ç2õTââV&Æ—6‚VæF–ær6öÖÖ—G2À§fW&–g’7W'&VçBÖ–âæBÆ—fRfW'6–öâö–æFW‚öF—&V7BöW‡÷'B÷6¶VBö6÷&R÷ÆWGFR76WG2À§F†Vâ&÷f–FR6†÷'BDUd”4S““BæBDUd”4S““2†æG2Ööâ6†V6·2à ¢22ã““BV&Æ–6F–öâfW&–f–VB(	B#rö7Fö&W"##` ¥V&Æ—6†VB'VçF–ÖR3VF#&SSfC&sC#S“cCs&#FVfCSsf–CSÂG&VP¦CCcF#–ScsSf3“Cs3&fff–c&sF#‚ÂW†7FÇ’ÖF6†W2FW7FVB÷WÆöFVBÆö6À¦6#“s3“‚G&VRâÆÃr6†ævVB&Æö'2fW&–f–VB&Vf÷&RFöÖ–2æöâÖf÷&6VBÖ–âWFFRà¤fWF6†VB÷&–v–âöÖ–â6öæf—&×2'VçF–ÖR6öÖÖ—B÷G&VRâvW3CCSƒs#3c3’6ö×ÆWFVB5T44U52à¤ÆÃg&W6‚Æ—fR6†V6·2'—FRÖÖF6ƒ¢fW'6–öâæ§6öâÆ–æFW‚æ‡FÖÂÆ×VÇF’Öf6RÖF—&V7BÀ¦æöÖBÖW‡÷'BÖ6÷&RÆæöÖB×6¶VBÖÖ2ÆW‡÷'BÖ2×æVÂÆf6Vw&÷WÖ6öÆ÷W'2Ö6÷&RÄÆ"ÆöFW"À¤•ô„äDôdbæÖBæB•õtõ$´dÄõræÖBâ6WfVâf–æÂ&VÆV6R6†V6·272â†÷7FVBgVÆÀ¥F÷öÆöw“CCSƒs#SSSRv2–â&öw&W72v†Vâ6†V6¶VC²æò†÷7FVBgVÆÂ×7V—FR526Æ–ÖVBà¤æò'VçF–ÖR6†ævW2gFW"fö7W6VBfÆ–FF–öââF†—2V&Æ–6F–öâ&ööb—2Fö72ÖöæÇ’à¥W6W"7FæF–ær&÷fÂ—2&Vff—&ÖVB–âD„•26†BæB•õtõ$´dÄõrô•ô„äDôdc²æð¦gW'F†W"V&Æ–6F–öâW&Ö—76–öâVW7F–öâf÷"&÷„Æ"â†—7F÷&–6ÂÄô4ÂôäÅ’ö&÷fÀ¦&Æö6²VçG&–W2&R7WW'6VFVBâ'V–ÆC““B—2Ä•dRæB$TE’dõ"DU5D”ärÂ–æ6ÇVFW3““2à¤DUd”4S““C¢æF—fRäôÒ6—‚æÖVBw&÷W2†fR6—‚F—7F–æ7B6öÆ÷W'2ö6÷'&V7B&Vv–öç3°§FW‡GW&W2Væ6†ævVBâDUd”4S““3¢f6RÇ’W†7BGv–6RÂFöæRÂVæFõ&VFó²–ç6WBW†7@¦æB÷&F–æ'’Væ6–ÂG&r6æ—G’ã““"f6Vw&÷WÆ—7B66WFæ6R7F–ÆÂVæF–æs³““50§&÷FV7FVBâ&V7W'&–ær&–v‡B×&Vv–öâ&VæFW&–ær&VÖ–ç2õTââæW‡B7BöâFWf–6RfVVF&6²à ¢22ã““R(	Bd4Tu$õUf6R&F–ÂæBDB³²ã““BW6W"52(	B#rö7Fö&W"##` ¥W6W"W‡Æ–6—FÇ’56W3““C²&÷FV7BæF—fRäôÒF—7F–æ7Bw&÷W6öÆ÷W'2æC““2W†7@¤W‡G'VFRô–ç6WB6GW&RôFöæRõVæFõ&VFò&W—"âW6W"6·2f6R&F–Âd4Tu$õUv—F€¦Æ–æWv÷&²7V&R÷&VBÖw&VVâ×–VÆÆ÷rf6W2ÂWFöÖF–2f6Vw&÷W2Æöö²Â÷&–v–æÂÆVgBÆ—7BÀ¦æBDB²çVÖ&W&VBæWrw&÷W2âW†—7F–ærFö6²÷7G&ö¶RöWF†÷&–ær÷ÆWGFR&VÖ–â÷væW'2à ¤f6R&F–Âæ÷r†3#BFööÇ2âd4Tu$õU&WW6W2÷&–v–æÂ6f6Vw&÷W÷Vå–çBF&vW@¦f÷"–çfVçF÷'’'WBÆVæ6†W2÷&–v–æÂFö6²4TÔåD”4ÄÅ’†æò†–FFVâd”Ur'WGFöâ6Æ–6²’à¤—B6VÆV7G2÷&–v–æÂf6Vw&÷W2Æöö²Â6Æ÷6W2d”UræB÷Vç26ÖRÆVgBFö6²öæÖRöÆ—7Bð¥–çBôW&6R÷6VÆV7FVBÖf6RæöFW2â÷&–v–æÂWF†÷&–ærVF—F&ÆR×F&vWBvFR—26†&V@§v—F‚76–vâÂæ÷B6÷–VC²Æö6¶VB÷&VfW&Væ6RöÆ–æ¶VBöÆ—fRÖÖöF–f–W"÷FööÂ×6W76–öâö7F—fRÐ¦G&rF&vWG2&VgW6RâFöæR7F÷2''W6‚Â&·26öçG&öÇ2æBVÖ—G2÷&–v–æÂf6R‡V ¦6ö×ÆWF–öâöæ6S²æ÷F†W"&F–ÂFööÂ÷"ÖöFR÷6W76–öâ6†ævR6Æ÷6W2F†RFö6²à ¤ÆÃ#2&RÖW†—7F–ærf6RF&vWG2ÂÆ&VÇ2Â–6öç2ÂævÆW2÷&F–’æB7&÷72ÖÖöFR6†&V@§Æ6VÖVçG2&VÖ–âU„5DÅ’Væ6†ævVBâd4Tu$õUf—G2&WGvVVâ÷&–v–æÂ&–æw2C33+ð§#c‚v—FƒsGƒcF&vWBæB÷&–v–æÃ3'‚–6öâ÷6ÖÆÂF—FÆRf÷&ÖBâF‡&VR5dr7V&Rf6W0§&VBöw&VVâ÷–VÆÆ÷rv—F‚Æ–v‡BÆ–æWv÷&²âæWr'WGFöâ†2æò&÷VæG2÷fW&Æv—F‚ç’öÆ@¦'WGFöââb×6V7F÷"÷WFW"&VfÆ÷rv26öç6–FW&VB'WB&V¦V7FVB&V6W6R—BF—7Æ6V@§6†&VB7&÷72ÖÖöFR6Æ÷G3²æ÷B6†—VBâæòVç&VÆFVB–6öâ&W6¶–â÷"ö–çFW"÷væW"à ¤DB²–6·2Væ—VRw&÷WâÂ–æ7&VÖVçF–ær7B7W'&VçBöW†—7F–æröG&gBçVÖ&W'3²FG0§6fR6öÆ÷W"öæÖR&÷ræB&×2÷&–v–æÂ–çBâFöW2äõB–ÖÖVF–FVÇ’&V76–vâ7W'&Vç@§6VÆV7F–öâ÷"7&VFR†—7F÷'’âV×G’w&÷W2&RT’G&gG266÷VB'’7GVÂö&¦V7@¦–FVçF—G’–âvV´ÖÂ7W'f—f–ærFö6²6Æ÷6R÷&V÷Vâöö&¦V7B7v—F6†W2–âF†—26W76–öâà¥F†W’&R6fVBöW‡÷'FVBôäÅ’gFW"–çF–ær÷"76–vâ6VÆV7FVBF‡&÷Vv‚W†—7F–æp¦f6Tw&÷W2ÖWFFFâT’W‡Æ–6—FÇ’6—2–çBö76–vâFò6fS²æòæWr&ö¦V7B66†VÖà¥&VÆöB÷&ö¦V7B&WÆ6VÖVçBG&÷2VçW6VBG&gG2â76–væVBw&÷W2&WF–â÷&–v–æÀ§ÆWGFS²G&gG2&Wf–Wr7V'6WVVçB76VB6öÆ÷W'2f–4ÔRÆWGFR†VÇW"â–çF–æp¦÷WBöbG&gB÷&FW"&Vg&W6†W27vF6†W2Fò7GVÂÖW6‚Ö÷&FW"6öÆ÷W'2†æ÷Bf—†V@§W6W"Ö6†÷6Vâw&÷W6öÆ÷W'2’âÆWGFR÷&W6VVB6öçG&öÇ2&VÖ–â–âd”Urâ6fRæÖW2æ@¦–çFVvW"ÖÆ–Ö—BçVÖ&W&–ærFW7FVC²æò…DÔÂ–ç6W'F–öâöÖöFVÂõUböÖFW&–Â÷–çB6†ævW2à ¥fÆ–FF–öãcRF&vWFVB52ód”Âó6¶—‡ããw2’Â–æ6ÇVF–æs‚æWrG&gB÷&VÂÖ6öçG&öÂð§6VÖçF–2&F–Â÷&VÂFö6²FöæRFW7G2ÂÆÂW†—7F–ærf6Vw&÷WFF÷ÆWGFRö''W6‚ð¦W&6W"öWF†÷&–ær÷6VÆV7F÷"öFö6²Â&F–ÂÖöFW2÷6†&VB÷6—F–öç2Â66WFVC““BW†7Bð¤äôÒÂæB&Wf–WvVB&VÆV6R6öçG&7G2âÆÃ#BVÖ&VFFVBf6R5dw2'6S²7–çF‚æ@¦F–fb6ÆVââW†—7F–æss’f6R6÷VçC#>(i##B—26öÆR&F–Â6öçG&7BW‡ç6–öã²÷&–v–æÀ¦÷WFW#\9s#L+æB6†&VBVFvRõfW'FW‚6Æ÷G27F’&÷FV7FVBâ–6¶W"öFö6²f—‡GW&W2FFV@§FòF†R÷&–v–æÂ6†&VB÷Vâ÷væW"æBG&gBFFW"v—F†÷WBG&÷–ær6÷W&6R÷6VÆV7F–öâð§&VgW6Â6†V6·2âæògVÆÂ×7V—FR÷&VæFW&VBÖ'&÷w6W"öæF—fR•B&ööb6Æ–ÖVBà ¤6†ævVB'VçF–ÖS¢÷&–v–æÂ&VæFW"ÖÖöFW2Â6ÖÆÂG&gG2†VÇW"Â÷&–v–æÂÆ—7BæB6†&V@¦VF—F&ÆRÖWF†÷&–ærvFS²7G&ö¶R6†ævW2–×÷'B–âôäÅ’âF÷FÂv—¦Öò6†ævW2öæP¦'WGFöâöf–Æ&–Æ—G’÷6VÖçF–2ÆVæ6‚ö6ö×ÆWF–öââ&Wf–WvVB6†VÆÂ÷&VæFW"÷7G&ö¶RöWF†÷"ð¦Æ—7BöG&gG2öv—¦Öòö–6öâ÷&V6÷fW'“““R66†R6Æ÷7W&Râf6Vw&÷WÆWGFS““"æBæF—fRäôÓ““BÀ£““2W†7BÂÖ–âô×VÇF“ãõUbõ–çBövVöÖWG'’ög&÷¦Vâ'—FW2Væ6†ævVBà ¥&–v‡BÖ†æB&VæFW&–ær—77VR7F—2õTââ&Wf–WvVBÆFW7C““"6GW&S¢d”UræF—fR÷Vâð¦6Æ÷6RæBW‡Æ–6—B¦W&ò×6—¦VB6Æ÷6VBæVÂv÷&³²6çf2†–FRF–Bæ÷B&W7F÷&R&–v‡ET“°§7G–ÆW2ö†—B7F6·26ææ÷BW7F&Æ—6‚f—6–&ÆR—†VÇ2âF†—2'V–ÆBFG2F—&V7BÄTeBFö6°¦66W72'WBDôU2äõB6Æ–Ò6ö×÷6—F÷"÷&–v‡BÖÖVçR&W—"â&WF–âW†—7F–ærF–væ÷7F–70¦æBW6W"f–ÆR&Vg&W6‚F—7Æ“²Fòæ÷B&WVB&÷fVâÖ–ç7Vff–6–VçB&ÇW"ö6Æ÷6VBÖFWF–Ç2ð¦6çf2ÖöæÇ’W‡ÆæF–öç2÷"f÷&6Ræ÷F†W"–FVçF–6ÂGV×âgW'F†W"&VæFW&–ærv÷&°§&WV—&W2f—6–&ÆRffV7FVB&Vv–öâ÷7G'V7GW&Â&W&öGV7F–öâÂæ÷B7V7VÆF—fR5526‡W&âà ¤7W'&VçB'VçF–ÖR÷V&Æ–6F–öâWf–FVæ6RÆ—fW2–âFö72÷V&Æ–6F–öâÓ““RæÖB†6öÖÖ—B÷G&VRÀ¥vW2öÆ—fR6†V6·2æB†÷7FVB7FGW2“²6öç7VÇB—B&Vf÷&RFW67&–&–ærV&Æ–6F–öâà¥7FæF–ærW6W"W6‚÷V&Æ—6‚&÷fÂ&VÖ–ç27F—fS²Fòæ÷B6²v–âà¤DUd”4S““S¢f6R6VÆV7N(i'&F–Âd4Tu$õU7V&S²WFòf6Vw&÷W2Æöö²²÷&–v–æÂÄTe@¦Æ—7BâDB²GvòæWrçVÖ&W&VB&÷w2öF–ffW&VçB7vF6†W2Â–çBV6‚öW&6S²VæFõ&VFòöæP§7FWW"7G&ö¶RâFöæ^(i'&F–Âv–ã²÷&F–æ'’f6RW†7BæBf–ævW"æf–vF–öâà¥6fT÷Vâ–çFVBw&÷W3²VçW6VBG&gG2&R–çFVçF–öæÆÇ’æ÷B6fVBâvF6‚&–v‡Bd”Up¦ÖVçR6W&FVÇ“²–b&V7W'&Væ6RÂ67&VVç6†÷Bö–FVçF–g’f—6–&ÆR&VÂæòf÷&6VB&V7&VF–öâà¤æW‡BföÆÆ÷ræF—fS““RfVVF&6³²f6Vw&÷W×6VÒUböÖFW&–Âv÷&²&VÖ–ç2FVfW'&VBà ¢22ã““b(	Bf–ÆRÖVçR'&ævVÖVçBg&öÒW6W"–ÖvR(	B#rö7Fö&W"##` ¥W6W"&WVW7G2f–ÆRÖVçR÷&FW"öf÷&ÖBg&öÒGF6†VB”Ôuóƒ33’çærâVF—FVB7W'&Vç@¦Ö–ãCFF##–b÷'VçF–ÖS““RÂW†—7F–ær6†VÆÂôf–ÆRöW‡÷'B÷&ö¦V7BöFV'Vr–ç7FÆÆW'2æ@§f–Ww÷'BÖ6öçF–æVBÖVçR7G–ÆW2âæó““R52–æfW'&VC³““B52&VÖ–ç2&÷FV7FVBà ¤f–ÆRÖVçRæ÷r†2f÷W"6VÖçF–26V7F–öç2–â&WVW7FVB÷&FW#¢÷&–v–æÂ÷Vâæ&÷†Æ ¦g&öÒf–ÆW2æB6fRæ&÷†Æ#²–×÷'B„VF—F&ÆRõ&VfW&Væ6RÂ7Æ—Bw&÷W2Â–×÷'B“°¤W‡÷'B†f–ÆVæÖRÂf÷&ÖBô$¢ôtÄ"ÂvVöÖWG'’&6Rõ7V$BÂW‡÷'Bõ6fRÂäôÔB“²WF–Æ—F–W0¢„†öÖR67&VVâÂ&W6WBÂT’FV'VrÂ&Vg&W6‚F—7Æ’Â6†V6²&ö¦V7B6æ6†÷B’â6†VÆÀ§7WÆ–W2æÖVB6Æ÷G3²÷&–v–æÂ&ö¦V7BöFV'Vr–ç7FÆÆW'2VæB4ÔR÷&–v–æÂ'WGFöç2À¦–çWG2÷7FGW2æöFW2öÆ—7FVæW'2F†W&Rv—F‚W†—7F–ærÖ†÷7BfÆÆ&6·2âæò6Æöæ–ærÂ6V6öæ@¦ÖVçRö†æFÆW"Âö'6W'fW'2Â¶W–&ö&B÷F"Ö÷&FW"552G&–6·2÷"æWr6fRöW‡÷'B÷væW'2à¤÷&–v–æÂV–6²ô$¢æBÆ"Æ–æ²æöFW2&VÖ–â†–FFVâf÷"ÆVv7’÷væW'3²GWÆ–6FP¥V–6²ô$¢ôÆ"VçG'’—2öÖ—GFVBg&öÒf—6–&ÆR&WVW7FVBÖVçRà ¥66÷VBf–ÆRÖÖVçRæ772v—fW26öç6—7FVçB6V7F–öâ'VÆW2öv2÷WW&66R†VF–æw2Ã3#€§f–Ww÷'BÖ&÷VæFVBv–GF‚Ã3g‚7F–öâF&vWG2Ã3'‚6VvÖVçFVB6öçG&öÇ2ÂÆ–væVBf–ÆVæÖP¦f–VÆBæB&VF&ÆS'‚FW‡BâÖ‚Ö†V–v‡BG&6·2÷&–v–æÂF÷&"÷6fR&V²fW'F–6À§67&öÆÂ÷F÷V6‚×âö÷fW'67&öÆÂ6öçF–æÖVçB&VÖ–ââ†–FFVâGG&–'WFW2†öæ÷&VC²V×G§6Æ÷G2÷7FGW2Fòæ÷BÆVfRv2âæòæWr&ÇW"öf–ÇFW"÷G&ç6f÷&Òö6öçF–âö6ö×÷6—F÷"†–çBà¤÷F†W"T’7G–ÆW2Væ6†ævVBâF†—2FöW2æ÷B&W—"&V7W'&–ær&–v‡B×&Vv–öâ&VæFW&–ærà ¥'VçF–ÖR6†ævW2öæÇ’6†VÆÂöÆ–÷WB7G–ÆW6†VWBæB÷&–v–æÂö&¦V7BÖÖævVÖVçBöFV'Vp¦–ç7FÆÆW"FW7F–æF–öç2â&ö¦V7B6öFV2ö†—7F÷'’÷6fRö÷VâövVöÖWG'’÷6VÆV7F–öâÂW‡÷'Bð¤äôÒ÷–çBõUbó““Rf6Vw&÷Wó““2W†7Bô×VÇF“ãög&÷¦VâVæ6†ævVBâ&Wf–WvVC““b6†VÆÂöæWp¤552÷&ö¦V7BÖ–ç7FÆÆW"öFV'Vr÷&V6÷fW'’–ç2æB76WB†6†W3²–çFW&æÂ7F×2&WF–æVBà¤ÆÂ÷&–v–æÂf–ÆR7F–öâö–çWB”G2&WF–æVBöæ6Râ…DÔÂ6V7F–öç2ö÷&FW"÷Væ—VR”G0¦6†V6¶VBâW†—7F–æsSÖVçR–çWBö6öæf–röæÖRöÆ–÷WB÷FööÆ&"÷&ö¦V7B÷VâôtÄ"÷–çBð¦F—7Æ’×&Vg&W6‚÷&VÆV6R6†V6·252ód”Âó6¶—‡ãã'2“²¥27–çF‚öF–fb6ÆVââæð¦æWr6÷6ÖWF–2FW7G2÷"gVÆÂ×7V—FRöæF—fR&VæFW&VB&ööb6Æ–ÖVBâV&Æ–6F–öâ6öÖÖ—Bð§G&VRöÆ—fRWf–FVæ6R—2&V6÷&FVB–âFö72÷V&Æ–6F–öâÓ““bæÖB&Vf÷&R6ö×ÆWF–öâà ¤DUd”4S““c¢f–ÆR6†÷w2÷Vâõ6fRf—'7BÂF†Vâ–×÷'BôW‡÷'B÷WF–Æ—F–W22–ÖvS²76–ærÀ¦f–ÆVæÖR÷6VvÖVçFVB6öçG&öÇ2&VF&ÆRâ67&öÆÂFò&÷GFöÒ–âÆæG66RæB÷'G&—Bà¥6fRô÷VâFW7Bæ&÷†Æ#²–×÷'BöW‡÷'BæBäôÔB÷&–v–æÂ7F–öç3²&Vg&W6‚F—7Æ§7F–ÆÂf–Æ&ÆRâFòæ÷B&W6WBv÷&¶–ærÖöFVÂFòFW7B7G–Æ–ærâ&–v‡BÖÖVçR&VæFW&–æp§&VÖ–ç2õTã³““Rf6Vw&÷WFWf–6R66WFæ6R7F–ÆÂVæF–ærâ7FæF–ærV&Æ–6F–öà¦&÷fÂ&WF–æVBâæW‡BföÆÆ÷s““bÖVçRö•B76–æræC““RFööÂfVVF&6²à ¢22ã““r(	BW‡FW&æÂ÷&–v–æÂd”Ur7W&f6S²ã““bW6W"52(	B#rö7Fö&W"##` ¥W6W#““b52&÷FV7G2'&ævVBf–ÆRÖVçRÂ÷&–v–æÂ7F–öç2æB76–ærâW6W"æ÷p¦–FVçF–f–W2ffV7FVB7W&f6R&V6—6VÇ“¢d”Ur÷WFW"g&ÖRFövvÆW2'WB—G26öçFVçG0¦æWfW"G&râ&W÷'C““bCs£C£e¢6†÷w2÷VãC3#ƒ’óCs#SRÂ6Æ÷6VCCS32óSC“srâ÷Và§æVÃ““‚ócbó3cóƒã“ƒBÇ67&öÆÄ†V–v‡C“ƒö6Æ–VçD†V–v‡Cƒ²7GVÂ6GW&F–öâöÆ–v‡FæW72ð§&W6WB6öçG&öÇ2†fRæ÷&ÖÂÆ–÷WB&÷VæG2â6Æ÷6VBF—7Æ–æöæR÷¦W&ò&÷VæG2v÷&·2à¥F†—2—2G&vâÖ6öçFVçBf–ÇW&RÂæ÷B&ööböbÖ—76–æræöFW2÷"f–ÆVBæF—fRFövvÆRà¤w&÷WÖÆ—7BçVÆÂ÷F–öä6÷VçBö–æFW‚—2W‡V7FVBD•bÆ—7C²†–FFVâv—¦Öò–âF†—26GW&P¦—2æ÷BWf–FVæ6Röbv—¦Öò–çF–ærf–ÇW&RâFòæ÷B&WVW7Bæ÷F†W"–FVçF–6Â&W÷'Bà ¥W6W"FG2W6VgVÂ6‡&öæöÆöw’6ÇVS¢7W'&VçB&–v‡Bd”UrG&÷V&ÆR6VVÖVBFò7F'Bv†Và¤f6Vw&÷W—FV×2vW&RFFVBâf6Vw&÷W6öçG&öÇ2w&÷rd”Urg&öÒV&Æ–W"7GVF–ósSG€¦6öçFVçBFó“ƒ‚æB7F—fFR÷fW&fÆ÷rCƒ‚âF†Bö–çG2FòF†Rf—†VB67&öÆÆ–æp§7W&f6R–ç6–FRæF—fRFWF–Ç22ÆW6–&ÆRG&–vvW#²—B—2äõBVæv–æR÷&ö÷BÖ6W6P§&ööbæBFöW2æ÷B&Ww&—FRöÆFW#“cb²&–v‡B×&Vv–öâ&W÷'G22ÆÂ7F'F–ærC“ƒBà ¤W†—7F–ærd”UræVÂ—2f—†VB÷fW&fÆ÷v–ærF—&V7B6†–ÆBöbæF—fRÆFWF–Ç3âÂv†÷6P¦'&÷w6W"ÖF—66Æ÷6VB6öçFVçG2†fR6W&FRf—6–&–Æ—G’÷–çF–ærÆ–fV7–6ÆRâæWr6ÖÆÀ§f–WrÖÖVçR×7W&f6RÖ÷fW2F†B4ÔRæVÂôä4RVæFW"6Â÷WG6–FRæF—fRF—66Æ÷7W&P¦æB†VFW"6Æ—–ær÷7F6¶–æræ6W7G'’â÷&–v–æÂæF—fR7f–WtÖöFW2FWF–Ç2æ÷Vâ—0¥5D”ÄÂ6öÆR÷Vâ7FFRâöæRGG&–'WFRÖf–ÇFW&VB×WFF–öäö'6W'fW"Ö—'&÷'27W'&VçB÷Và¦–çFòW‡Æ–6—BæVÂæ†–FFVâæB7VÖÖ'’&–ÖW‡æFVBö6öçG&öÇ2âæòGWÆ–6FRFövvÆRÀ¦÷Vâ&ööÆVâÂæWr&r×ö–çFW"÷væW"Â6V6öæB÷Wö6öçFVçB6÷’÷"WFöÖF–2&W–çBà¤6Æ÷6VBW‡FW&æÂæVÂ—2F—7Æ–æöæR÷¦W&òÖÆ–÷WBg&öÒV&Ç’6†VÆÂ7G–ÆW6†VWBöçv&Bà¤W†—7F–ærf—†VB÷6—F–öâ÷v–GF‚öÖ‚Ö†V–v‡B÷67&öÆÂ÷F÷V6‚7G–ÆW2&VÖ–ã²67&öÆÂöfg6W@§&W7F÷&W2öâ&V÷Væ–ærâ6ÖRDôÒ”G2÷fÇVW2öÆ—7FVæW'2&VÖ–ââ&V‡–G&F–öâFWFV7G0¦W‡FW&æÂæVÂ&F†W"F†â&V7&VF–ær6öçFVçG2â¶W–&ö&BF"ô'&÷tF÷vâg&öÒ÷Và§7VÖÖ'’VçFW'2æVÃ²6†–gEF"&WGW&ç2ÂW66R6Æ÷6W2æF—fR÷væW"÷&WGW&ç2fö7W2à ¤÷&–v–æÂf–WrÖÖöFW26Æ–6²÷ö–çFW'WFVÆVvF–öâæ÷r&–æG2÷&–v–æÂW‡FW&æÂæVÃ°¦W†—7F–ær7–çF†W6—¦VBÖ6Æ–6²7W&W76–öâ&WF–æVBâ÷WG6–FRÖ6Æ÷6R66WG2$õD‚G&–vvW ¦æBæVÃ²7F—fR×f–Wr†–v†Æ–v‡F–ær6V&6†W27F&ÆRæVÂ”Bâ6ÆVâf–WrW6W2æWp¤”Bv—F‚ÆVv7’fÆÆ&6²Â&W6W'f–ær÷&–v–æÂ÷fW&Æ’÷væW"âT’FV'Vr6×ÆW2æWp¢7f–WtÖöFW5æVÂæB&VçD–BÂ&WF–æ–ærW†—7F–ær6öçG&öÇ2öÖöFR÷67&öÆÂ÷FövvÆRWf–FVæ6Rà¤æò6çf2÷&VæFW&W"öFÖ÷7†W&Rõ–çBõUböf6Vw&÷WövVöÖWG'’ö†—7F÷'’ô×VÇF“ã6†ævW2à¤f–ÆS““b7G–ÆW6†VWBæBgVæ7F–öæÂ÷væW'2Væ6†ævVBâF†—2—2F&vWFVB7G'V7GW&À§&W—"&WV—&–æræF—fRfVVF&6²ÂäõB&÷fVâW&ÖæVçBvV$¶—B÷&ö÷BÖ6W6R&W—"à ¥&Wf–WvVB66†R6Æ÷7W&S¢f–WrÖÖöFW>(i&æWr7W&f6S““s²6ÆVâf–W~(i$f6Rv÷&¶fÆ÷~(i&G&vW £““s²FV'VröV&Ç’FööÆ&"÷6†VÆÂ÷&V6÷fW'“““râG&vW"Ç6òÆ–vç2—G27FÆR&ö¦V7BÐ¦–ç7FÆÆW"6†–ÆB¶W““3‚Fò66WFVB6†VÆÃ““bÂfö–F–ær6ö×WF–ær66†VB–ç7FÆÆW §fW'6–öç3²æòæWr&ö¦V7B–ç7FÆÆW"6öFRâW†—7F–æröÆB–çFW&æÂ7F×2&WF–æVBà ¤f–æÃ“2fö7W6VB52ód”Âó6¶—‡ããsW2“£ræWr7W&f6R–FVçF—G’öö'6W'fW"ö–FV×÷FVæ6Rð¦6öÆW66VB7FFR÷67&öÆÂö–ç6–FRÖ÷WG6–FR7F—fF–öâõVæ6–Â7W&W76–öâö¶W–&ö&BFW7G2À¦÷&–v–æÂ7F'GWFööÆ&"ôg&ÖTÆÂöÖVçRô6ÆVâf–Wrôf6Vw&÷Wö''W6‚öFö6²ôf–ÆRöFV'Vrð¦F—7Æ’÷&VÆV6R6öçG&7G2â¥27–çF‚æBF–fb6ÆVââf–Wr67&öÆÂFW7B'6W"æ÷p§6VÆV7G2—G2GvòÖ‚Ö†V–v‡BÖ&V&–ær&6RöÖVF–'VÆW2–ç7FVBöbÇ6ò6÷VçF–æs““w0¦6Æ÷6VBFW66VæFçBÖF—7Æ’6VÆV7F÷#²ÆÂ†V–v‡Bö÷fW&fÆ÷r76W'F–öç2&WF–æVBÂæ@£““r†2W‡Æ–6—B6Æ÷6VB×7W&f6R6÷fW&vRâæò552÷&VæFW&VBöæF—fRögVÆÂ×7V—FR&öö`¦6Æ–ÖVBg&öÒ6öçG&öÆÆVBDôÒFW7G2âÆFW"†÷7FVB7FGW2æBW†7BV&Æ–6F–öâöÆ—fP§&ööb&V6÷&FVB–âFö72÷V&Æ–6F–öâÓ““ræÖC²6öç7VÇB&Vf÷&RFW67&–&–ærFVÆ—fW'’à ¤DUd”4S““s¢g&W6ƒ““r÷Vâd”Us¢F—&V7F–öç2öÆöö·2ö6öçG&öÇ2×W7Bf—6–&Ç’G&rÂæ÷BöæÇ¦g&ÖRâ6ö×&R7GVF–òæBf6Vw&÷W2†÷fW&fÆ÷r66R“²67&öÆÂFò&÷GFöÒÂFövvÆRÆöö·0¦æB&V÷Vâv—F‚f–ævW"õVæ6–Ââ6Æ÷6Rd”Urf–G&–vvW"ö÷WG6–FRF²÷Vâf–ÆRæ@§&WGW&ââf6R&F–Âd4Tu$õU7F–ÆÂ÷Vç2÷&–v–æÂÆVgBFö6²â6öæf—&Òv—F†÷WBÐ§7v—F6‚õ&Vg&W6‚F—7Æ’v÷&¶&÷VæBâã““b52—2&÷FV7FVC³““R66WFæ6Ræ÷B–æfW'&VBà¤7W'&VçBd”Ur—†VÂ66WFæ6R&VÖ–ç2VæF–æs²'&öFW"†—7F÷&–6Â&–v‡B×&Vv–öâ—77VP§7F—2õTâVçF–ÂæF—fRfVVF&6²âæW‡B76W73““r•B&W7VÇB&Vf÷&RÖ÷&R&VæFW&–æp¦6†ævW2÷"f6Vw&÷W×6VÒUböÖFW&–Âv÷&²â7FæF–ærW6‚÷V&Æ—6‚&÷fÂÆ–W2à ¢22ã““r–æ—F–Â7GVF–ò7V66W73²f6Vw&÷W2G&ç6—F–öâ&VÖ–ç2õTâ(	B#rö7Fö&W"##` ¥W6W#¢(	Åf–Wrv÷&·2w&VBÒF†W&R—27F–ÆÂF6‚öâF†R&–v‡BF†Bw2†–F–ærF†P¦v—¦Öò6öçFVçG2î(	Ò66WB÷&÷FV7C““rd”Ur&VæFW&–ær&W—"7V6–f–6ÆÇ“²Fòæ÷B–æfW ¦'&öB&–v‡B×&Vv–öâöv—¦Öò66WFæ6Râ¶VW““bf–ÆRÖVçR52æC““B66WFæ6Rà ¤æWs““r&W÷'Cƒ£C£S2ã£¢7GVF–òôf6RÂf–Ww÷'C3cgƒƒƒbÄE#"Æ6çf3#s3'ƒcS"À¦6öçG&öÇ2Væ&ÆVBÂæòFööÂ6W76–öâ÷FW‡GW&R–çBÂ6çf5&ö&V†–FFVæfÇ6Râf–æÂd”Up¦6Æ÷6VBÂW‡FW&æÂ7f–WtÖöFW5æVÂ&VçFö†–FFVâöF—7Æ–æöæR÷¦W&ò&÷VæG2Â6òæð§&WF–æVB6Æ÷6VBd”Ur&V7FævÆR—2W7F&Æ—6†VBB6GW&RâF÷FÄv—¦ÖòW‡Æ–6—FÇ¦†–FFVâöF—7Æ–æöæR÷¦W&ò&÷VæG2Föó¢F†—2&W÷'BFöW2äõB6GW&Rf—6–&ÆR'FÇ¦6Æ—VBv—¦ÖòâFòæ÷BG&VBF†B–çFVçF–öæÂ†–FFVâ7FFR27F–Â6Æ—–ær&ööbà¥7GVF–òFÖ÷7†W&R—27F—fRÂ÷6—G“ö×VÇF—Ç’Â'WBF†—2ÆöæRFöW2æ÷B&÷fR—@¦6W6W2F†RF6‚†öÆFW"&W÷'G2–æ6ÇVFVBæöâÕ7GVF–òö÷6—G“f–ÇW&W2’â†VÇF‡§&–v‡B×FööÆ&"Æ–÷WBö†—G2&VÖ–âæöâ×—†VÂWf–FVæ6Rà ¥FövvÆR×F–ÖR&V6÷&G2C#“c#’óC3#c"óCC326†÷r÷VåE%TRv—F‚æVÆ†–FFVåE%TS²6Æ÷6W0£C#CóC3ƒBóCCƒ#r6†÷r&Wf–÷W2f—6–&ÆRæVÂ&÷VæG2âFV'Vrö'6W'fW2FövvÆRBv–æF÷p¦6GW&RÂv†–ÆR7W&f6Rf—6–&–Æ—G’—2Ö—'&÷&VB'’×WFF–öäö'6W'fW"âF†W6RG&ç6—F–öà§6×ÆW26â&V6VFRF†Rf—6–&–Æ—G’WFFS²F†W’&Ræ÷B'’F†V×6VÇfW2W'6—7FVç@¥d”Urf–ÇW&RWf–FVæ6RâW6W"W‡Æ–6—FÇ’6öæf—&×2d”Uræ÷rv÷&·2â&W6W'fR66WFV@§7W&f6R7G'V7GW&S²–bgWGW&R&W÷'F–ærv÷&²—2æVVFVBÂ6×ÆR6WGFÆVB7FFR&F†W §F†â6Æ–Ö–ærF†W6RG&ç6—F–öâ&V6÷&G26†÷r&VÖ–æ–ærf—6–&ÆR6Æ÷6VBæVÂà ¥6÷W&6RVF—C¢F÷FÂv—¦Öò&ö÷B&VÖ–ç2÷&–v–æÃ“g‚f–Ww÷'B6†–ÆBÂG&ç6ÆFVBFð§6VÆV7F–öã²—G2&–Ö'’5dr–çFVçF–öæÆÇ’6Æ—2Fò—G2÷vâ&÷VæG2v†–ÆR6†÷'F7WB5dw0§&VÖ–â÷fW&fÆ÷wf—6–&ÆRâæò7V6–f–2w&öær67&VVâÖf—†VB6Æ—&V7B÷"6÷fW&–ærDôÒæöFP§v2W7F&Æ—6†VBâFòæ÷B&VÖ÷fR&÷FV7FVB5dr6Æ—–ær÷"Ö÷fRv—¦Öò&VçBö6ö÷&F–æFW0§7V7VÆF—fVÇ’âæò6öFRö'V–ÆB6†ævRg&öÒF†—2WFFRâ'VçF–ÖR&VÖ–ç3““rà ¤æW‡BW6VgVÂæF—fRWf–FVæ6S¢67&VVç6†÷Bv†–ÆRv—¦Öò—2d•4”$ÄRæB7&÷76–ærF6‚À§6ò'&÷w2÷&–æw2fW'7W2&F–ÂÆ&VÇ2ö'WGFöç2æBf—†VBF6‚&÷VæF'’6â&R6ö×&VBà¥V–6²7GVF–þ(i%6öÆ–N(i%7GVF–ò6ö×&—6öâÖ’6W&FR7GVF–ò&W6VçFF–öâFWVæFVæ6S°¦—B—2F–væ÷7F–26ö×&—6öâÂæ÷BwV&çFVVB&V6÷fW'’÷"Væv–æRF–væ÷6—2à¤æòæVVBf÷"æ÷F†W"–FVçF–6ÂGV×v—F‚v—¦Öò†–FFVââ&W6W'fR÷&–v–æÂæf–vF–öâÀ§6VÆV7F–öâö†—7F÷'’æB66WFVBd”Ur÷væW"VçF–ÂWf–FVæ6R7W÷'G2æ'&÷r&W—"à ¢22ãSfföÆÆ÷r×W(	BÆöFW"æB6öçG&7BÆ–væÖVç@ ¢Ò·…Ò6÷'&V7BF†R7FÆRæW7FVBãSV&VÆV6R×fW'6–öâ–×÷'B–â7&2öf6R×v÷&¶fÆ÷rÖÆ–÷WBæ§6à¢Ò·…Ò&Vg&W6‚&Wf–WvVBF÷FÂv—¦ÖòæBf6R×v÷&¶fÆ÷r76WB†6†W2à¢Ò²Ò6öæf—&Ò†÷7FVBF÷öÆöw’ÂvW2&öÆÆ÷WBæBÆ—fR76WB'—FW2à¢Ò²Ò6öæf—&ÒöâFWf–6RF†BVæ6–Â÷&&—B–â–çB¶VW2F†Rv—¦Öòæ6†÷&VBæBW6&ÆRà ¢Ò·…ÒÆ–vâF†RG&vW"÷væW"æB—G26†VÆÂ66†R–âv—F‚ãSfgFW"†÷7FVB6†V6·2W‡÷6VB&VÖ–æ–ærãSV66†R†÷à ¢Ò²Ò–çfW7F–vFRF†R&V6÷&FVB×VÇF’Ö6†ææVÂFöæ^(i%Ub–çB&RÖVçG'’v—¦ÖòF—7Æ6VÖVçBâ6öÆ÷W"ÖöæÇ’FöæR÷&RÖVçG'’76W3²×VÇF’Ö6†ææVÂ–çF–ærv÷&·2VçF–ÂFöæRÂF†VâF†Rv—¦Öò—2Ç&VG’F—7Æ6VBâF†RVæ6–ÂÖ÷&&—B6ÖW&7–æ2—2æ÷B66WFVB26ö×ÆWFRf—‚VçF–ÂF†—26WVVæ6R—2fW&–f–VBà  ¢22ãSffW&–f–6F–öâ7FGW0 ¢Ò·…ÒvW2FWÆ÷–ÖVçB7V66VVFVC²Æ—fRãSfÖ&¶W"Â6†VÆÂæB6†ævVBv—¦ÖòöG&vW"öf6RÖÆ–÷WB76WG2ÖF6‚F†R&Wòà¢Ò·…Ò†÷7FVBF÷öÆöw’C3SCc#“3–76VB2Ã“bò2Ã“bà¢Ò²Òf—‚æBFWf–6RÖ6†V6²×VÇF’Ö6†ææVÂ6öÆ÷W"õ&÷Vv†æW72ôÖWFÆæW72Föæ^(i%Ub–çB&RÖVçG'“²F†R7WÆ–VB&V6÷&F–ær6†÷w2F†Rv—¦ÖòF—7Æ6VB&Vf÷&R÷&&—F–ær&W7VÖW2à¢Ò·…Ò&W6W'fR6öÆ÷W"ÖöæÇ’FöæR÷&RÖVçG'’æB&–÷"–çBöÖ56W2à  ¢22ãSr(	B¶VWF†RVF—F÷"6ÖW&WF†÷&—FF—fR(	B"æ÷fVÖ&W"##` ¥&WVFVBW6W"d”Ã¢×VÇF’Ö6†ææVÂ6öÆ÷W"õ&÷Vv†æW72ôÖWFÆæW72–çB(i"FöæR(i"&RÖVçFW"F—7Æ6W2v—¦ÖòæBGW&ç2–çB6öçF7G2–çFò÷&&—Bâ6öÆ÷W"ÖöæÇ’&RÖVçG'’—2&÷FV7FVB52â&ö÷B6W6Rf÷VæB–â'&–FvR×F÷öÆöw’æ§6¢vÆö&ÂW'7V7F—fT6ÖW&çWFFU&ö¦V7F–öäÖG&—‚ö'6W'fW"÷fW'w&÷FR'&–FvRæ6ÖW&f÷"WfW'’W'7V7F—fR6ÖW&âÖWFÆÆ–2Õ$TÒvVæW&F–öâ6öç7G'V7G2—G2÷vâW'7V7F—fT6ÖW&Â7FVÆ–ærF†RVF—F÷"6ÖW&&VfW&Væ6RW6VB'’v—¦Öò&ö¦V7F–öâæB–çF–ær&–67G2âÖ–âÇ&VG’V&Æ—6†W26ÖW&æB÷&&—D6öçG&öÇ2FövWF†W"âö'6W'fW"æ÷r66WG2&ö¦V7F–öâWFFW2öæÇ’g&öÒ6öçG&öÇ2æö&¦V7Böæ6R6öçG&öÇ2W†—7C²7F'GWfÆÆ&6²&VÖ–ç2âW†—7F–ærÖöFVÆÆ–ærÂ–çBÂÕ$TÒæBG&ç6f÷&Ò÷væW'2&WF–æVBâF†RãSbÖG&—‚&Vg&W6‚ÆöæRF–Bæ÷B&W—"F†—26ÖW&–FVçF—G’fVÇBà ¥&Vw&W76–öâW6W2&VÂF‡&VRæ§2W'7V7F—fR6ÖW&27&÷72F‡&VR&VfÆV7F–öâö6ÆöæR7–6ÆW2æB6öæf—&×2F†R'&–FvR&WF–ç2VF—F÷"–FVçF—G’âfö7W6VB6ÖW&÷&VÆV6Rö&ö÷G7G&6†V6·3¢3r53²ÖFW&–Â–çF–ær÷&VfÆV7F–öç2ö÷&&—B6†V6·3¢R52âgVÆÂÆö6Â7V—FRVæFVBv—F†÷WBf–æÂ7VÖÖ'’gFW"&W÷'F–æröæR&ö÷G7G&66†R×–â76W'F–öã²F†B–âv26÷'&V7FVBæB—G2fö7W6VBFW7G2&W'Vâ7V66W76gVÆÇ’âæògVÆÂ×7V—FR526Æ–ÖVC²†÷7FVB&Vw&W76–öâæBFWÆ÷–ÖVçBVæF–ærâ&÷FV7FVB×VÇF“ãVæ6†ævVBâFWf–6R66WFæ6RVæF–æs¢×VÇF’Ö6†ææVÂ–çB(i"FöæR(i"&V÷Vâ(i"–çC²7v—F6‚''W6†W2æBVæ6–Â÷&&—C²&WVBF‡&VRF–ÖW3²6†V6²6öÆ÷W"ÖöæÇ’Â&Wf–Ww2æB6†F÷w2à  ¦ãSvV&Æ–6F–öã¢'VçF–ÖR6öÖÖ—Bc“FSC#vC3c–6VC3#C6CS3C&f#“&F3sCC6²vW2C3ƒC“37V66VVFVBâ66†RÖ'W7FVBÆ—fRfW'6–öâæ§6öâ&W÷'G2ãSv²–æFW‚æB'&–FvR×F÷öÆöw’æ§2ÖF6‚Æö6Â4„Ó#Sb†'&–FvRV–3S#c3–V#c&&Cv33c#3S&VC#ƒ“c#s“Sv3cc–Cv6ScCSSs3vc6’â÷&–v–æÂö'6W'fW"v2W†V7WFVB6W&FVÇ’æB&W&öGV6VB&WÆ6VÖVçB'’F†R&VfÆV7F–öâ6ÖW&²&W—&VB&Vw&W76–öâ&WF–ç2VF—F÷"6ÖW&â†÷7FVBF÷öÆöw’C3ƒC—2VæF–ærâFWf–6R66WFæ6R&VÖ–ç2VæF–ærf÷"&WVFVB×VÇF’Ö6†ææVÂ–çB(i"FöæR(i"&V÷Vâ(i"–çBæBVæ6–Â÷&&—Bâ6öÆ÷W"ÖöæÇ’&RÖVçG'’52&÷FV7FVBà ¢22ãS‚(	B&F–ÂÖFW&–ÂW6W2F†Rv÷&¶–ær''W6‚VçG'’(	B"æ÷fVÖ&W"##` ¥W6W"52&÷FV7G2ãSrVF—F÷"Ö6ÖW&÷væW'6†—&W—"Â×VÇF’Ö6†ææVÂFöæR÷&RÖVçG'’æBÆ–væVBv—¦ÖòâæWr&W6–GVÂd”Ã¢÷Væ–ærÖFW&–Âg&öÒF†R–çB&F–ÂÂ6†æv–ær6öÆ÷W"F†Vâ–çF–ærÖ¶W2öæR&Æö"æB&V6öÖW2Vç&W7öç6—fRVçF–ÂFöæR÷&V÷Vââ6VÆV7F–ær''W6‚&Vf÷&R6†æv–ær6öÆ÷W"v÷&·2âVF—C¢&F–ÂÖFW&–ÂF—&V7FÇ’6ÆÆVB6†÷tÖFW&–ÄÖVçRÂ'—76–ærF†R''W6‚7F–öâ6†ævRF†B6ÆV'2–ÖvR7FvRÂ6æ6VÇ27G&ö¶Rö6GW&RæB7–æ6‡&öæ—¦W2FööÂöf–ÆÂ7FFRâ&F–ÂÖFW&–Âæ÷r6ÆÇ2F†R6ÖR6VÆV7E–çEFööÂ‚w–çBr’÷væW"2''W6‚â†VFW"ÖFW&–Â7F–ÆÂVF—G2F†R7W'&VçBFööÂw2ÖFW&–Â6WGF–æw2âæòæWr–çB÷"æf–vF–öâ÷væW"à ¥&Vw&W76–öâW†V7WFW2F†R&VÂT“¢f–ÆÎ(i$ÖFW&–Â&W&W2''W6ƒ²ÖFW&–Â6æ6VÇ27FÆR7F—fRVæ6–Â6öçF7C²6öÆ÷W"VF—G2ÇW2GvòÖ÷f–ærÖWFÆÆ–27G&ö¶W26öÖÖ—B6W&FVÇ’v—F‚6öçG&öÇ2&W7F÷&VBæB–çB7F—fRâfö7W6VB–çBö6ÖW&÷&VÆV6R6†V6·3¢3R53²&ö÷G7G&ö66†R÷&VÆV6R6†V6·3¢3b52gFW"&W6W'f–ærF†RVæ6†ævVBÖöFVÆÆ–ær&ö÷G7G&66†R¶W—2â†÷7FVBF÷öÆöw’C3ƒƒ#“#–76VB2Ã“‚ò2Ã“‚âvW2C3ƒƒ#CF7V66VVFVC²Æ—fRãS†Ö&¶W"Â–æFW‚æBf–Ww÷'B×–çBæ§2ÖF6‚F†R&VÆV6R6÷W&6RâFWf–6R66WFæ6RVæF–ærf÷"&F–ÂÖFW&–Â6öÆ÷W"6†ævW2æB&WVFVBÖWFÆæW727G&ö¶W2âFWf–6S¢&F–ÂÖFW&–Î(i&6†ævR6öÆ÷W.(i'–çB6öçF–çV÷W27G&ö¶W2v—F‚ÖWFÆæW72Â&WVC²F†Vâ6†V6²''W6‚ÂFöæR÷&V÷VâæBv—¦ÖòâãSr†÷7FVBF÷öÆöw’†B2Ã“b52òd”Âg&öÒöÆBãSbf—6–&ÆR6ö×&—6öâÆ&VÇ3²ãS‚Æ–vç2F†÷6Rf—6–&ÆRÆ&VÇ2v—F‚F†R7GVÂ&VÆV6RâV&Æ–W"FWf–6R52—2&÷FV7FVBÂæ÷B–æfW'&VBg&öÒ4’à  ¦ãS†V&Æ–6F–öâfW&–f–VC¢'VçF–ÖR6öÖÖ—B3Cƒ3“&C“SsVFS6CcVCV#Sƒ–6&33†6C3F6C–â†÷7FVBF÷öÆöw’C3ƒƒ#“#–76VB2Ã“‚ò2Ã“‚âvW2C3ƒƒ#CF7V66VVFVC²Æ—fRãS†Ö&¶W"Â–æFW‚æBf–Ww÷'B×–çBæ§2ÖF6‚F†R&VÆV6R6÷W&6RâFWf–6R66WFæ6RVæF–ærf÷"&F–ÂÖFW&–Â6öÆ÷W"6†ævW2æB&WVFVBÖWFÆæW727G&ö¶W2â–çBT’4„Ó#SbSv66CS3F#&CFCf6S3#V363fS3FV&#S“f#CVf#“†CsSv†cssC–F#“sc“f²6†VÆÂ4„Ó#Sb†&F&#3C#cs†csc–3–63c&6#sVc“Cs–S“–3cC†&fcF#s“ƒFF3CS33vffâW6W"ãSr52&VÖ–ç2&÷FV7FVBà ¢22ãS’(	B–çB6öçF7B&V6÷fW'’gFW"ÖFW&–Â6öÆ÷W"VF—F–ær(	B"æ÷fVÖ&W"##` ¥W6W"d”ÂöâãSƒ¢7F–ÆÂöæRF"föÆÆ÷vVB'’Æö6²×WâFòæ÷B&÷FV7BãS‚266WFVC²—G2ÖVçRWV—fÆVæ6RFW7Bv2–ç7Vff–6–VçBFò6÷fW"æF—fRö–çFW"FVÆ—fW'’âãSr6ÖW&ôFöæR×&RÖVçG'’52&VÖ–ç2&÷FV7FVBà ¤VF—BöbF†RW†—7F–ærf–Ww÷'B×–çBö–çFW"÷væW"f÷VæC¢&WF–æVB6öçF7B6W6W2ÆÂÆFW"ö–çFW&F÷vâWfVçG2Fò&R7vÆÆ÷vVC²÷6—F—fR×&W77W&RVâÖ÷fVÖVçB—2&V¦V7FVB6öÆVÇ’f÷"'WGFöç3Ó²–çFVçF–öæÂ&VÆV6R6ÆV'26öçF7BöæÇ’gFW"6ÆÆ–ær&VÆV6Uö–çFW$6GW&S²F†RæF—fR6öÆ÷W"6öçG&öÂ6â&WF–âfö7W22F†R7G&ö¶R&Vv–ç2â&W—"v—F†–âF†B÷væW#¢g&W6‚Væ6–ÂF÷vâ6æ6VÇ2âVæf–æ—6†VB&Wf–÷W26öçF7C²6ÆV"7F÷&VB6öçF7B&Vf÷&R&VÆV6–ær6GW&S²66WB&W77W&R×÷6—F—fRÖ÷fW2ö6öÆW66VB6×ÆW2WfVâv†Vâ'WGFöç3Ó²&ÇW"fö7W6VBÆWGFR–çWB&Vf÷&R&Vv–ææ–ærF†R7G&ö¶S²6GW&RF†Rf–Ww÷'B&Vf÷&R†–F–ærF†RÆWGFRâW†—7F–ær7G&ö¶R6æ6VÆÆF–öâÂ&öÆÆ&6²Â†—7F÷'’ÂF÷V6‚÷ÆÒæB÷&&—B÷væW'2&WF–æVBà ¥&Vw&W76–öâW†V7WFW2F†RT’v—F‚Ö—76VBö–çFW'WÂ7–æ6‡&öæ÷W2Æ÷7Gö–çFW&6GW&Röâ–çFVçF–öæÂ&VÆV6RÂæF—fRÖ–çWB&ÇW"6ÆÆ&6²æB&W77W&R×÷6—F—fRö'WGFöç2×¦W&ò6öÆW66VBÖ÷fVÖVçBâ—BfW&–f–W2Ö÷f–ærG&–ÂW†6VVG2F"Â&WVFVBÖWFÆÆ–27G&ö¶W26öÖÖ—BÂ6öçG&öÇ2&W7F÷&RæB–çB&VÖ–ç27F—fRâF†W6R&W&öGV6R6öFRÖÆWfVÂf–ÇW&R66W2Âæ÷B6öæf—&ÖVBG&6Röb•BæF—fR6öÆ÷W"×–6¶W"WfVçG2âf–æÂfö7W6VB'Vã¢cb52òd”Â7&÷72ö–çFW"&V6÷fW'’Â&F–ÂÖFW&–ÂÂ–çBFööÇ2ö6†ææVÇ2ÂVæ6–Â&W77W&RÂ6ÖW&÷væW'6†—Â&VÆV6R6öçG&7G2Â6ö×&—6öâT’æB6†&VB&ö÷G7G&FW7G2â†÷7FVBF÷öÆöw’C3ƒCs3ƒcs†76VB2Ãò2ÃâvW2C3ƒCs3ƒ3F7V66VVFVC²Æ—fRãS–Ö&¶W"Â–æFW‚æBf–Ww÷'B×–çBæ§2ÖF6‚F†R&VÆV6R6÷W&6RâæF—fR•BÖFW&–Âö6öÆ÷W"×–6¶W"Æö6²×W66WFæ6R&VÖ–ç2VæF–æs²ãS‚v2d”ÂæBãSr6ÖW&ôFöæR×&RÖVçG'’527F—2&÷FV7FVBâFWf–6R6†V6³¢&F–ÂÖFW&–Î(i&6†ævR6öÆ÷W.(i&G&r6öçF–çV÷W27G&ö¶W2v—F‚ÖWFÆæW73²&WVB6öÆ÷W"6†ævW2v—F†÷WBFöæS²F†VâFöæR÷&V÷VâæBv—¦Öòö÷&&—Bà  ¦ãS–V&Æ–6F–öâfW&–f–VC¢'VçF–ÖR6öÖÖ—B63ƒFCVC&CC–CSF3V#FCcS&FSCvC3“†â†÷7FVBF÷öÆöw’C3ƒCs3ƒcs†76VB2Ãò2ÃâvW2C3ƒCs3ƒ3F7V66VVFVC²Æ—fRãS–Ö&¶W"Â–æFW‚æBf–Ww÷'B×–çBæ§2ÖF6‚F†R&VÆV6R6÷W&6RâæF—fR•BÖFW&–Âö6öÆ÷W"×–6¶W"Æö6²×W66WFæ6R&VÖ–ç2VæF–æs²ãS‚v2d”ÂæBãSr6ÖW&ôFöæR×&RÖVçG'’527F—2&÷FV7FVBâ–çBT’4„Ó#Sb3V3ƒsVs#S#ƒ#FFSƒs–C““v6Cc†CSV&C#6SC#3ƒ–c†CƒS†SCvS63v&3&²–æFW‚4„Ó#SbSƒ“SFs6FS†S“#Fc#Ff3#&C–3SSƒvcff33Cs##ƒ†VCƒCs3CCssà ¢ãc†÷7FVB6÷'&V7F–öã¢F÷öÆöw’C3ƒcƒƒƒCƒb&W÷'FVB2Ã52òd”ÂâW†—7F–ærf6RFÆ2FW7B&WV—&W2—G2÷&–v–æÂW‡ÆæF–öâ(	ÆöæR—6ÆæBW"f6RÂWFòC“bf6W>(	Òâ&W7F÷&VBF†Bv÷&F–ær–ç6–FR&ö¦V7F–öâ†VÇv†–ÆR¶VW–ærFÆ262æB6ÆV"×–çBv&æ–ærf—6–&ÆR÷WG6–FR—C²æòFW7BW‡V7FF–öâv2vV¶VæVBâ'V×VBF†R6÷'&V7FVBÖW6‚†VÇF‚76WB¶W’Fòãcã6òF†R&Wf–÷W6Ç’FWÆ÷–VBãc76WB6ææ÷B7F’66†VBâÆ–6F–öâ&VÆV6R&VÖ–ç2ãcâÆÂ#rfö7W6VB6÷'&V7F–öâ6†V6·253²6÷'&V7FVB†÷7FVB&Vw&W76–öâæBFWÆ÷–ÖVçB&RfW&–f–VB&VÆ÷rà  ¦ãcV&Æ–6F–öâfW&–f–VC¢6÷'&V7FVB'VçF–ÖR6öÖÖ—B3S–FfcsC–#Sc†f63&Fc–F&&SƒS3S&Fcv#3#6â†÷7FVBF÷öÆöw’C3ƒsSSsCC676VB2Ãò2Ãâ6÷'&V7FVBvW2C3ƒsSSs3ƒv7V66VVFVC²Æ—fRãcÖ&¶W"Â–æFW‚ÂUbv÷&·76RæBÖW6‚†VÇF‚ÖF6‚F†R&VÆV6R6÷W&6W2âFWf–6R66WFæ6RVæF–ærf÷"Ub†VÇÂ&ö¦V7F–öâ†VÇÂ&WGW&â÷&V÷VâæB66WFVB–çB6Öö¶Râ–æFW‚4„Ó#Sbv#ƒc#vCvc#&3CcSs&FVF&#–###ƒ3“3vfCC†VSSƒ#ƒcCCCƒsS#–†²Ubv÷&·76RƒV–sVV&fcc“33CCcs–fFcCSs##36c&SS3##&#F3“†F–#CsFCs–vV²ÖW6‚†VÇF‚†ãcã66†R¶W’’FC–C3FC3s3sSSS#&cSv6&f6cƒ“sc#c†Vc&6Scs“s†3†SFf6#V–C#–â–çBãS–6÷W&6R÷–âæBW6W"52&VÖ–â&÷FV7FVBâæW‡BFWf–6RÆ—7C¢FövvÆRUb†VÇæB7v—F6‚Ö÷fRõ66ÆRõ&÷FFS²FövvÆR&ö¦V7F–öâ†VÇæB6†V6²f—6–&ÆRv&æ–æw3²&6²Fò4B÷&V÷VâæBV–6²ÖFW&–ÂôÖWFÆæW72–çBà  ¦ãcV&Æ–6F–öâfW&–f–VC¢'VçF–ÖR6öÖÖ—BsV#f3FFSF&SƒCF3666f3&&SCs&FFC63–6&â†÷7FVBF÷öÆöw’CC“3S““#†76VB2Ã2ò2Ã2âvW2CC“3S“ccF7V66VVFVC²Æ—fRãcÖ&¶W"Â6†VÆÂÂf–Ww÷'B×–çBæ§2ÂFööÂ×6W76–öâ×V’æ§2æB–çB×ÆWGFRÖÆ–÷WBæ§2ÖF6‚F†R&VÆV6RG&VRâFWf–6R66WFæ6RVæF–ærf÷"&–v‡BÆ–W'2Fö6²ÂÆWGFR6ÆV&æ6RöföÆÆ÷v–ærÂÖçVÂG&ræB66WFVB–çBv÷&¶fÆ÷râ4„Ó#Sc¢6†VÆÂ&3F6F#C&VC†fc†VC“–VSv3Ff&V&3–&#66#C#S33ƒ“vSƒƒ3V3ƒ#sF3VVf²–çBT’#“F3s#3##–f63Cf#–63v6f#VVcV“ƒ3#fCSS#C“†#ƒ#s&Cc3SƒS363s²Fö6²÷væW"s†fcf36&3ƒS&fF&Cvc3vƒVCS&cCff6CCs3ƒC6&FcsV#sVc#vC²ÆWGFR†VÇW"S“FfccScCƒ“sSSƒvSc–Fc“SƒS#C&fccSVFS3ƒVCvSƒ–6cƒCS–fâãc†VÇæBãS’–çBW6W"56W2&R&÷FV7FVBâ6†÷'BFWf–6R6†V6·3¢÷VâUb–çBæBfW&–g’&–v‡BÆ–W'2²6ÆV"ÆWGFS²âö÷&&—B÷¦ööÒv†–ÆRÖVçRf—6–&ÆRÂG&r—BF†Vâæf–vFS²6†ævRÖFW&–Â6öÆ÷W"æBÖWFÆæW72–çBÂFöæR÷&V÷VâæBUb†VÇ6Öö¶Rà  ¦ãc&V&Æ–6F–öâfW&–f–VC¢'VçF–ÖR6öÖÖ—BC#Cf666c3#f##“†&fF##6VVcFcc&F#†3Fâ†÷7FVBF÷öÆöw’CC##“s3ƒ76VB2Ãbò2ÃbâvW2CC##“s#ss&7V66VVFVC²Æ—fRãc&Ö&¶W"Â6†VÆÂæBÆÂf—fR&W—&VBFööÂÖöGVÆW2ÖF6‚F†R&VÆV6R6öÖÖ—BâFWf–6R66WFæ6RVæF–ærf÷"6öçfW‚7Æ—BF2Â÷F†W"VFvR×FööÂF&vWF–ærÂVæFòõ&VFòöW†—Böæf–vF–öâæB66WFVB–çBÆ–÷WBâ4„Ó#Sc¢6†VÆÂsC“6c36Svcƒv&f3ƒƒSSSsF#&#ƒF#Cc3V#66cc3#Sƒs&S#fcS“v²7Æ—BVcvc“&VC“†6“fSƒ&c#33v#ƒSS3“SS#vCc†3VC–#S#FV336VffVSSc“3v²&WfVÂC#VSvSƒsSsS“ƒv6c“fc36cv6cF36Vs†&3S#S†ccƒ33sf#V36Cc–S²W‡G'VFRcc†Scƒ#ƒ&C†CS–F3f6fƒsƒƒsscƒCƒV#cSƒsSF33fvF3VFC3#VFSv²6Æ–FR–VcFFV3s“V&3†6C#S&#f6##scƒ6#CffV3ff&cvC#c3ƒV3“#Vc3“ƒcF²öfg6WBS#FS6cv#63–F36c“FfSCS“Cc#SS3S“†C3C&F3&V#vfccSCCƒ#ƒâW6W"ãc–çBÆ–÷WB52æBV&Æ–W"–çBö†VÇ56W2&VÖ–â&÷FV7FVBâ6†÷'BFWf–6RÆ—7C¢7Æ—B÷÷6—FR6öçfW‚Öf6RVFvW2gFW"÷&&—B÷¦ööÓ²&WfVÂõ6Æ–FRôöfg6WBæB&÷VæF'’W‡G'VFRF&vWBF†R–çFVæFVBVFvS²VæFòõ&VFòæBFöæRö&6¶w&÷VæBW†—BÂF†Vâæf–vF–öâà ¢22ãƒRæF—fR–çB66WFæ6R(	Bbæ÷fVÖ&W"##` ¥W6W"526öæf—&×26ÆVâVæ6–Â7G&ö¶R7F'G2v—F†÷WB&Æö'2Âæ÷&ÖÂ6—¦RVæFW"7FVG’&W77W&RÂv÷&¶–ærF2æBVæFòõ&VFòÂæB6öÆ÷W"õ&÷Vv†æW72ôÖWFÆæW72ô÷6—G’–âöæR7G&ö¶Râ&÷FV7BF†—2FWf–6R&W7VÇBÆöærv—F‚V&Æ–W"–çB56W2â7W'&VçB&VÆV6R&VÖ–ç2Æ—fRBãƒV²&ö6VVBFòF†RæW‡BW6W"×&WVW7FVB'V–ÆBg&öÒ7W'&VçBÖ–âà¢27W'&VçBfö7W2(	BãSfÆ–FF–öâæBFWf–6R66WFæ6R(	B"æ÷fVÖ&W"##` ¢ãSFG&W76W2F†R67&VVç6†÷B×&W&öGV6VB–çv&BÖW‡G'W6–öâ6†÷VÆFW"—77VRW6–ærF†RW†—7F–ærwV&FVBF‡&÷Vv‚Ö¶W&æVÂæ§6ÆææW"Â–æFWVæFVçFÇ’f÷"VÆ–v–&ÆR6VÆV7FVBÖf6R6ö×öæVçG2âæW‡BFV6—6–öâ—2F†RW6W"w2†æG2Ööâ&W7VÇC²&WF–âF†Rã36–ævÆR×&Vv–öâ66WFæ6RæB6öç6W'fF—fRfÆÆ&6²f÷"–æVÆ–v–&ÆRF÷öÆöw’à ¥F†R7V&F—f—6–öât4ÒÆ"æ÷r6ö×&W2öæRFF—F–öæÂÃ#BÖf6RÂÆWfVÂÓ"–çWBVæFW"F†RW†—7F–ærbÃ3ƒBÖf6R÷WGWB6âF†—2—2âWfÇVF–öâv÷&¶ÆöBöæÇ“¢æòæWr¶W&æVÂö&–æ'’ÂÆ—fRt4Ò&÷WFRÂ&öGV7F–öâ&öÖ÷F–öâ÷"66—G’6Æ–Òâ¶VW¦f67&—BWF†÷&—FF—fRVçF–Â6ö×ÆWFRÖ÷W&F–öâFWf–6R7VVBÂÖVÖ÷'’æB&VÆ–&–Æ—G’vFW27W÷'B6†ævRâ&W6W'fRãS6ö×&—6öâv÷&¶fÆ÷r52æB¶VW&rW6W"&W÷'G2&—fFRà ¢ÒÒÐ
+Changes narrow:main default/import pin and free-orbit controller.1011 shell/recovery/
+canonical release-loader layout+drawer pins reviewed;comparison only code labels and
+log migration1010,old ratings/PASSes unchanged. Paint/presets/preview/raster,lighting,
+Multi1.0,frozen betas,modelling/UV/accepted appearance and sizing bytes/pins unchanged.
+58 focused checks PASS,including10 new actual native pointer/controller checks:
+either anchor,inverted/oblique camera,parallel pan,pinch+twist,limits,near-coincident
+refusal/cancel,disabled move and zero drift. Original1010/Paint/history checks retained.
+Full local Node24.22.1:2965 PASS/0FAIL/0skip/0cancel (111.97s).
+Syntax/whitespace clean. Publication proof:docs/publication-1011.md. Native1011 feel pending.
+
+DEVICE1011:one-finger orbit/flickâ†’lift stops immediately;two fingers translate/pinch;
+hold either finger and arc otherâ†’view twists around held point. Combine all3;lift one
+and continue one-finger orbit. Check2tapUndo/3tapRedo and1010 light/brush gestures.
+Next:device feedback on twist interpretation/feel.1009 A/B complete,PASS protected;
+A default retained,no repeat batch or rendering-root-cause claim.
+
+## .1010 â€” free orbit and three-finger light / brush controls â€” 29 October2026
+
+Current:1010 LIVE,runtime7afc6a61,tested tree0630b732;Pages40780100247 SUCCESS,
+18/18 live files byte-match. Local2955 PASS;hosted CI in_progress at proof.
+Publication evidence:docs/publication-1010.md.1009 comparison PASS protected.
+
+Baseline main8e00f2b8/runtime1e34c432, live1009. User explicitly requests free orbit,
+inertia,3-finger horizontal light rotation,Paint vertical size + stroke preview,
+larger brush and more standard tips. This authorizes changing former upright orbit
+behavior; no unrelated modelling or UI cleanup. Audit original main touch/tap owner,
+Three0.179.1 OrbitControls,Studio light-angle owner199 and production Paint/alpha.
+
+FreeOrbitControls subclasses SAME Three controller; only rotation math becomes
+camera-relative quaternion tumble across both poles, including inverted views.
+Native pointer registration/Pencil gate/pan/pinch/wheel/target/change events retained.
+Original damping.08 provides inertia; next contact,disabled tool or external camera
+view change stops spin. No second pointer owner,model rotation/kernel or ground move.
+Never clear native pan/dolly on ordinary idle rotation updates: this was caught and
+corrected during1010 validation, now explicitly tested including upside-down pan.
+
+Main's existing touchstart/move/end/tap owner delegates3-finger commands to a pure
+state helper (NO listeners). Third finger pauses navigation;12px threshold locks first
+dominant direction. Horizontal rotates original Studio angle (.5degrees/CSSpx,wrap
+Â±180) via existing setter/UI/persistence; unlit looks need Studio/material preview to
+see lighting. Vertical IN Paint sets same radius control exponentially:UP larger/DOWN
+smaller. Fill,image placement,AO,stroke/drag/busy sessions refuse size changes. Controls
+restore only after ALL contacts lift; cancel/blur/pagehide/hidden restore safely.
+Two-finger tap Undo and three-finger tap Redo retain original history owners; moved
+or4-finger gestures never become Redo. Finger1 orbit/finger2 pan+pinch retained.
+
+Paint original raster/settings radius1â€“256texels (old48); maximum diameter512texels.
+Only NEW >48 ordinary/Blur strokes gain8million raster-pixel work window,renewed
+per input with SAME snapshot/coverage/history; existing Smudge budget retained.
+No silent resize,new texture schema or history entry for changing settings. Built-in
+Soft round/Hard round/Flat/Chisel/Dry bristle use original hardness/alpha-tip raster;
+imported PNG tips/rotation retained. No airbrush/time-accumulation promise.
+
+Vertical size drag shows a top-centre noninteractive preview card with actual original
+raster stroke,selected colour/opacity/hardness/tip and radius readout. Preview represents
+a1024texel chart at quarter scale,NOT guaranteed world/screen surface footprint across
+UV densities. One queued frame uses latest size; lift/cancel/Done hides and suppresses
+late draws. No mesh hit proxy,scene/paint-resource/history mutation. Cancel restores
+pre-drag size; ordinary release keeps size. Existing LEFT Paint settings preserved.
+
+Reviewed1010 reverse cache graph:main + new controls/helper;production Paint/raster/
+new preset/preview;shared Lab/session imports (pins only),shell/recovery/release and
+layout/drawer canonical release-loader parents. Unchanged assets retain older keys.
+Protected Multi1.0/frozenBeta2â€“7/geometry/UV/Fill1004/accepted icons unchanged. Runtime
+comparison1010 only code labels + migration1009;both structures/default/resolution intact.
+
+User1009 A/B/A explicitly ALL PASS now protected:5 complete A +5 complete B,0 rated
+FAIL;20 unrated excluded. Both shell/checklist1009,actual/saved1x. See exact IDs and
+limits in docs/shell-comparison-results-1009.md. Keep A default,comparison gate complete;
+no B superiority/permanent engine repair inferred. Historical pixel fault watch remains.
+Initial publication was held while user's experiment ran; experiment is now complete
+and1010 is published after validation under existing standing authorization.
+
+Tests execute real Three rotation/native pan/dolly,actual main tap handler,command
+axis/drain/cancel,production Paint UI and pixel raster/preview,presets,large brush work
+renewal,cancel and ONE Undo.928 history fixture now stops extraction before new command
+initialization and injects actual helper; all original history assertions retained.
+896 invalid-radius fixture49â†’257 follows deliberate new limit. Full/focused results and
+publication proof in docs/publication-1010.md. Full local Node24.22.1:
+2955 PASS/0FAIL/0skip/0cancel (117.01s),including10 new actual-owner checks.
+Syntax/whitespace clean. Native iPad1010 feel remains pending.
+
+DEVICE1010: continuous1finger tumble past top/bottom;flick/re-touch stops;pan/pinch
+and view buttons still work.3finger horizontal Studio drag rotates light without model
+motion or Redo. In UV Paint vertical3finger UP enlarges/DOWN shrinks with stroke sample;
+lift hides preview and settings remain. Try five tip presets/large Pencil stroke;
+UndoRedo one stroke,3finger TAP Redo,Done/navigation. No repeat A/B batch required now.
+Next respond to native1010 gesture/brush feel; broader brushes/refinements stay staged.
+
+## .1009 â€” immutable loaded-shell identity; OBJ release writer removed â€” 28 October 2026
+
+Current:1009 LIVE, runtime1e34c432; Pages40683927107 SUCCESS; all9 live files
+byte-match tested tree20cb43c1. Local2945 PASS; hosted CI in_progress at proof.
+See docs/publication-1009.md. Screen beta gate remains OPEN.
+
+Baseline main cf5f8da7 / runtime09b73cc0, live1008 markers and existing pins audited.
+Original classic head release-bootstrap captures the initial HTML title synchronously
+as non-writable/non-configurable __boxlabLoadedShellVersion BEFORE comparison and
+modelling modules. Existing release-version prefers that value, restores both label
+text and data-release-version and observes that attribute; public stamp cannot adopt
+an arbitrary version. version.json remains available-latest only. Existing startup
+cache-recovery/retry and app-return behavior retained; no new updater/repaint owner.
+
+Remove ONLY secondary app label/dataset/title writes from scene-obj-export-238.
+Its internal450 stamp, OBJ headers/filenames/MIME, Base/SubD geometry/preflight,
+source/history and event routing remain unchanged. Original comparison reads immutable
+shell identity, stamps executed1009 independently, preserves1006/1007/1008 records,
+ratings/notes/first failures exactly, and starts fresh unrated1009 loads. In-app guidance
+now says alternate A/B with original explicit reload controls, same1x/orientation/cube.
+Neither profile structure nor default changes; no pixel repair/native PASS claimed.
+
+Reviewed1009 cache closure: bootstrap/release/comparison, canonical direct+nested OBJ
+and its conformance parent, canonical direct+nested release and layout/drawer parents.
+CSS1008 retained unchanged. Protected Multi1.0, frozen betas, main/sizing/debug, original
+Fill1004 PASS and accepted modelling/Paint/UV owners untouched. Previous1008 A4PASS/2FAIL
+and B5PASS observations remain protected for THOSE runs; beta screen gate stays OPEN.
+
+48 focused checks PASS/0FAIL/0skip. Five new checks cover actual exporter before/after
+release initialization, Base/SubD output equality/source isolation, early immutable
+capture, adversarial metadata + manifest/offline returns, comparison identity and exact
+1008 evidence retention. Re-running new exporter regression against pre-fix wrapper
+fails as expected. Existing canonical-loader tests follow reviewed1009 pins; no semantic
+protection removed. Full local Node24.22.1:2945 PASS/0FAIL/0skip/0cancel (117.67s).
+Publication proof: docs/publication-1009.md.
+
+DEVICE1009: visible app and checklist both1009; Copy current environment/new rated
+observations shellRelease1009, old1008 observations450 remain historical (do not rewrite).
+Alternate A/B inside app without app-switch/recovery, startup FIRST; retain resolution
+and orientation. Original checklist Hide/UV Back/Paint Done still usable. Follow with B
+selection/navigation/gizmo/UV/Paint/UndoRedo/SaveOpen parity before default adoption.
+Next act on interleaved native evidence; no speculative compositor or UI reskin change.
+
+## .1008 native comparison results â€” 28 October 2026
+
+User supplied Copy results at2026-10-28T11:41:00.510Z (21:41 Brisbane).
+A/current:6 complete .1008 runs:2 all-five FAIL,4 all-five PASS;1 additional
+unrated .1008 load excluded. B/separated:5 complete all-five PASS,0 FAIL;
+1 four-of-five PASS (Paint unrated) and1 unrated load excluded from complete count.
+Older .1006 partial/unrated records excluded. Protect the reported PASS observations
+for those runs; they do not erase A failures or establish permanent screen repair.
+See docs/shell-comparison-results-1008.md for run IDs, audit and next gate.
+
+Both profiles report1366x886 CSS viewport, DPR2,1366x826 canvas CSS/backing,
+requested1 and savedStartup1. A failed twice after saved1x startup: first-allocation
+1x is NOT sufficient prevention. A canvas parent viewportWrap; B parent
+boxlabComparisonCanvasSurface confirms actual structural switch without dimensions
+change. A first-failure snapshot is STARTUP: closed VIEW / hidden gizmo there are
+expected states, NOT proof those nodes were incorrectly hidden at later checks.
+
+All new observations say checklistRelease1008 but shellRelease450. Audited live-main
+source: src/scene-obj-export-238.js lines5-11 hardcode450 and overwrite BOTH label
+text and dataset.releaseVersion. The diagnostic reads that mutable dataset; therefore
+450 is contaminated metadata, NOT evidence an old450 HTML shell was loaded. .1008
+running-shell identity fix is incomplete: release-version can capture contaminated
+data depending on module order; current test only covers text overwrite, not dataset
+mutation by the real exporter. Next narrow runtime work must remove secondary release
+writes/use an immutable initial shell identity and regression-test the actual writer.
+Do not change OBJ geometry/export behavior or ask for repeated cache clearing.
+
+Decision: B is promising, not proven. A failed then had4 healthy runs BEFORE B;
+time/order confounding prevents attributing B health solely to separation. Keep beta
+screen gate OPEN. Next native gate: interleave A/B through original in-app reload
+controls (same1x/orientation/default cube; startup first), then B navigation/selection/
+gizmo/UV/Paint/UndoRedo/save-open parity before adopting B as default. No wholesale
+interface reskin or duplicate tool/renderer/kernel. No additional runtime shipped in
+this feedback session; .1008 remains live. No tests rerun for documentation only.
+
+## .1008 â€” verify executed code; resume comparison with Hide escape â€” 28 October 2026
+
+Screenshot1007 still obstructs A UV Back. Found original release-version advanced
+visible label on app return without reloading code; fix label to loaded shell and
+canonicalize both current release-owner loaders. This is a confirmed metadata bug,
+not proven source of right-region pixel loss. Checklist independently stamps1008.
+Explicit Hide/reopen guarantees tester can clear viewport controls, inline docking
+observes actual UV state without :has. Same changes A/B; preserve prior logs/PASSes.
+Resume native comparison after one1008 load. Keep original screen beta blocker OPEN;
+no broad reskin or modelling change. Do not interpret stale labels as runtime proof.
+
+## .1007 â€” unblock comparison before interpreting its results â€” 28 October 2026
+
+A's UV Back control was covered by the comparison checklist. Fix only test-list
+placement using original workspace hidden state: lower-left while UV Editor open,
+normal top-left on exit. Same docking in A and B; retain all renderer/tool owners.
+Preserve1006 log with per-run release provenance, fresh1007 loads remain unrated.
+Resume native A/B comparison; no rendering PASS/FAIL inferred from an obscured exit
+control. Original screen issue still blocks beta. See publication-1007 and handoff.
+
+## .1006 â€” native shell comparison is the beta gate â€” 28 October 2026
+
+User authorizes comparison build with an in-app test list because switching apps
+heals the fault. A current and B separated-canvas use identical original tools,
+renderer and resolution. B moves only original canvas to sibling viewport surface;
+original UI/gesture/geometry/history owners retained. Default app remains current.
+Five-step left checklist/ratings/notes/counters/Copy survive reloads; explicit
+reload-only A/B, scene-discard acknowledgement, bounded result storage and busy guards.
+Protect1004 Fill user PASS; screen1005 FAIL remains release-blocking. No native
+repair claim. Collect5 completed loads per profile if practical; incomplete loads
+are not passes and first failures remain recorded. Native startup status/menu/gizmo
+and UV/Paint return results decide next shell reduction/consolidation. Both fail:
+reduce further using evidence. A fails/B stays healthy: expand native regression
+before adopting structure. Both healthy: fault not reproduced, comparison inconclusive.
+B alone fails: reject B structure. No broad visual reskin/parallel tool or renderer implementation.
+See AI_HANDOFF.md and docs/publication-1006.md; tester follows instructions in app.
+
+## .1005 device feedback â€” Fill PASS; screen FAIL â€” 28 October 2026
+
+User explicitly PASSes Fill behaviour. Protect1004 Face/Facegroup/Whole object Fill,
+hold expansion, original raster/input/history owners and current accepted UI; no
+new Fill changes requested. This acceptance supersedes pending Fill gates below.
+User explicitly FAILs screen behaviour: Facegroup menu still empty. During refresh,
+bottom-right startup messages normally settle to Face mode / nothing selected / Multi;
+absence of that message lets user identify the failed right region immediately.
+This is a useful startup symptom before opening the menu, not proof of an empty
+selection/group model, failed status writer or a specific browser-engine cause.
+Original main.updateStatus owns status text; existing Multi initialization can update
+its wording. Status footer and VIEW use different UI owners; no missing shared action
+or confirmed common application clip established. No speculative runtime/CSS repair.
+Fresh saved1x launch is NOT verified by this feedback alone: no savedStartup/requested/
+backing dimensions supplied. Confirm whether Keep1x on reload was enabled before the
+failed refresh before declaring first-allocation1x disproven. Prior live1x recurrence
+and current screen FAIL retained; do not claim1005 repaired visibility or request the
+same old diagnostics. Current runtime1005; no new build or tests in this feedback update.
+User now identifies this as a blocker for the next beta and asks whether an interface
+rebuild is appropriate. Recommended next engineering direction: controlled shell
+isolation/reconstruction with existing tool/DOM/action owners, same accepted appearance,
+and native startup/reload comparison; no wholesale reskin or duplicate kernels.
+This is a proposal, not implemented or claimed to guarantee a rendering repair.
+
+## .1005 continuation audit â€” 28 October 2026
+
+Audited current main dbc716d4 (runtime 698ef508); no runtime changes or new build.
+Fresh local Node24.22.1 full regression: 2926 PASS / 0 FAIL / 0 skipped (109.81s).
+Hosted regression40626823442 and Pages40626977468 completed SUCCESS.
+Live version/index/main/viewport-sizing/gesture-debug all byte-match current main;
+release markers and reviewed1005 sizing/debug/parent pins agree; protected Multi1.0 retained.
+Existing1004 Face/Facegroup/Whole object Fill and1005 saved-startup1x reuse their
+original owners. Neither has new device acceptance; right-region visibility remains OPEN.
+Next: DEVICE1005 saved1x fresh reload, then DEVICE1004 Pencil Fill/hold/UndoRedo.
+Obtain that result before another speculative rendering change; do not infer a repair
+from automated regression or healthy DOM/hit tests. No PASS inferred from this audit.
+
+## .1005 â€” opt-in startup 1x, after .1004 recurrence â€” 28 October 2026
+
+User reports right-side failure following refresh to1004. Report03:21:34Z confirms
+requested1x AND actual1366x826 backing (CSS1366x826/DPR2). No stale release or failed
+live resolution switch. Startup logged at1489/pageshow3188; at7715 canvas2732x1652,
+then1x requested7831 and1366x826 by11190. Thus failure persists in captured1x state,
+but this launch began at2x. Earlier1x stability is NOT a reliable repair. Current-
+resolution-only/2048 WebGL-backing-limit explanation is insufficient. Initial2x
+allocation remains a hypothesis, not proven cause. Do not say1x cannot fail.
+
+Capture: Studio/Face, no session/Paint, VIEW correctly closed/hidden with zero bounds,
+no atmosphere, UV workspace absent. Visible DOM gizmo196x196 at753.69/408.77;
+its right edge949.69 is short of earlier1024CSS cutoff. This report does not capture
+where visible gizmo pixels disappear. Toolbar DOM/hits healthy; no visual success
+inferred. Nothing ties fault to new1004 fill.1004 feature acceptance remains pending.
+
+New File -> UI Debug -> Keep1Ã— on reload explicitly saves1x launch preference and
+applies current1x. Same button becomes Use normal on reload to remove preference.
+Original temporary Test1Ã—/Restore normal controls retained. Debug off/pagehide now
+restore SAVED launch preference (normal when none), rather than always clearing1x.
+Default normal capped2 unchanged for users who do not opt in. localStorage denial/
+invalid values fall back to normal; failed save reported honestly, no false success.
+Snapshot includes savedStartup; debug-startup now records requested/saved/backing size.
+No automatic blink/reload, CSS/GPU-hint/menu/gizmo/geometry/history/paint changes.
+
+Original sizing owner reads preference before binding; existing main immediate
+resize now reads initialized owner request, so FIRST full drawing-buffer allocation
+can be1x, not initial2x followed by delayed downgrade. Coalesced sizing remains only
+lifecycle owner. Explicit change refusal while tools/Paint/drag/probes busy retained.
+Tests execute actual first main allocation (1366x826x1, no2x intermediate), saved
+binding restart, reset/pagehide/default restoration, storage failure/invalid values,
+actual buttons/snapshot and nearby viewport/UV/Paint. Publication/results recorded
+in docs/publication-1005.md. No native pixel repair claimed; right-region gate OPEN.
+
+DEVICE1005: Finish tools -> File/UI Debug -> Keep1Ã— on reload. Confirm button reads
+Use normal on reload, then refresh ONCE. Inspect right toolbar/menu/gizmo immediately
+and after normal navigation. Copy report if failure returns; savedStartup1 plus
+requested1/backing1366x826 establishes fresh1x launch. Debug off keeps saved1x. Use
+normal on reload restores original resolution if wanted. No repeated cache-clearing
+or identical old diagnostics requested.1004 Fill behavior retained; not marked PASS.
+
+## .1004 â€” UV Paint Fill Face / Facegroup and hold expansion â€” 28 October 2026
+
+User reports1x seems to stay healthy and explicitly parks right-region testing unless
+it recurs. Record provisional1x stability only, not proven root cause/permanent fix.
+Keep1003 sizing/debug bytes and default automatic DPR unchanged;1x is still temporary
+and resets on reload/Debug off/pagehide. Resume requested UV Paint fill expansion.
+
+Original Fill radial sector remains in its accepted position/artwork. Compact LEFT
+settings add Face (default), Facegroup and Whole object scope. Pencil/mouse tap fills
+clicked original polygon, not one rendered triangle. Face hold420ms expands preview
+to connected coplanar region; up grows/down shrinks from fixed planar base in30px
+steps with18px neutral band (max32 steps); right uses original Face Loop and left
+Face Ring. Direction reversal recomputes baseline pixels rather than accumulating
+opacity. Before hold, movement>8px cancels tap. Release commits one original paint
+checkpoint; cancel/scope/tool/body/history loss restores baseline and clears timer.
+Fingers still navigate. Scope changes never alter modelling selection or Facegroups.
+
+Facegroup scope shows SAME orange non-pickable boundary preview as UV seam review;
+click fills all same-name faces on target, including disconnected patches. Ungrouped
+faces refuse with assignment hint. Scope exit/Done/body loss disposes overlay;
+world matrix follows original body. UV review now shares extracted original boundary
+renderer, retaining its exact seams/colour/timer/unwrap/cancellation behavior.
+
+Copied existing read-only Coplanar inspect, quad-strip trace and Grow/Shrink math to
+shared face-selection-regions; ORIGINAL selection UI owners call those same functions.
+No duplicate geometry kernel or selection simulation. Raster original fill accepts
+optional texel mask and baseline replacement; coverage/alpha/opacity/scalar/mask,
+resource/pool validation, scene history, SaveOpen/export remain original owners.
+Face masks use original UV texel ownership; require non-overlapping, nondegenerate
+UVs in tile0â€“1, original bounded geometry/work limits. Shared/ambiguous boundary
+texels stay conservative; no painting onto a different face's owned interior texels.
+Whole object fill retains earlier behavior. Existing image-colour refusal retained.
+
+Reviewed1004 reverse cache closure: shared modules, selection owners/Coplanar drawer,
+paint raster/core/UI and Lab loaders, UV workflow/MeshHealth, shell/recovery. Internal
+stamps retained. Main1003, viewport sizing/debug1003, accepted uniform Facegroups1002,
+SVG/gizmo/right-region composition, palette, Multi1.0 and frozen releases unchanged.
+Tests: actual region/painter/UI/UndoRedo/subset SaveOpen, preview reversal/opacity,
+all-name group fill/overlay cleanup, original selection gestures and paint suite.
+Legacy926/927 UI fixtures now explicitly choose Whole object for their full-texture
+assertions; original pixel/UndoRedo/SaveOpen/native-export protections retained.
+Test adapters import extracted real selection functions; no behavioral assertions
+removed. Results and publication evidence: docs/publication-1004.md.
+
+DEVICE1004: UV Paint -> Fill -> Face; tap one polygon, then hold on coplanar patch,
+slide up/down and right/left, release; reversing/shrinking removes abandoned preview.
+UndoRedo one gesture. Choose Facegroup: orange boundaries visible; tap named group,
+only that group's faces fill; Brush/Done removes boundaries. Whole object still fills
+all; SaveOpen retains paint. No new right-side diagnostic test requested. If earlier
+fault returns after reload, existing1x control remains available; do not call it fixed.
+Current1004 feature acceptance pending native Pencil test.
+
+## .1003 â€” explicit render-resolution diagnostic; .1002 PASS protected â€” 28 October 2026
+
+User requests further attempts after model change. Implement controlled1x versus
+normal DPR through ORIGINAL viewport-sizing owner; default remains automatic capped2.
+File -> UI Debug -> Test1Ã— render resolution toggles temporary cap1; same button
+restores normal. Disabled Debug and pagehide restore automatic. No localStorage,
+renderer replacement, CSS resize, model/history edits, forced canvas visibility,
+synthetic resize or per-frame polling. Only original coalesced resize callback writes
+backing buffer. Genuine resize/tool/mode lifecycle keeps requested cap. Disposing
+sizing cancels pending frames, removes API/listeners and restores prior API identity.
+
+Button refuses Paint, active tool/session/drag, disabled orbit controls, existing
+canvas probe/refresh. Exit operation before scale change; restoration on Debug off
+always works. Snapshot includes requested cap and actual backing dimensions. Compare
+right-region pixels immediately after1x AND after repeating failing workflow; then
+restore normal and repeat. A single recovery on either switch may merely reflect
+buffer reallocation, not prove DPR dependence. Native pixel result remains pending;
+this is diagnostic, not claimed permanent gizmo/menu fix. Earlier both-mode evidence
+retained; no repeated Studio-versus-Facegroups diagnosis needed.
+
+Main changes viewport-sizing import key ONLY; sizing/debug owners changed, shell/
+recovery keys1003 reviewed. Existing .999 resize allocation/renderer/camera code,
+.1002 unlit Facegroups, palette, modelling/UV/Paint, Multi1.0 and frozen bytes retained.
+Tests execute actual scale API and debug button (busy refusal, switch/restore,
+snapshot, Debug off), original viewport sizes/coalescing/pagehide/cleanup and unchanged
+scene/history contracts. Validation/publication: docs/publication-1003.md.
+
+DEVICE1003: while fault visible, finish tool -> File/UI Debug -> Test1Ã— render
+resolution. Inspect right gizmo/menu; repeat original failing workflow at1x. Restore
+normal resolution and repeat. Copy report while affected. Report whether1x prevents
+recurrence, both switches only recover temporarily, or neither helps. Debug off
+restores normal;1x intentionally looks softer. Fill Face/Facegroup remains unshipped.
+
+## .1002 user PASS; shared gizmo/menu audit â€” 28 October 2026
+
+User PASS1002 protects uniform Facegroup colour including undersides; Studio
+lighting remains separate. User requests another investigation of gizmo/menu loss.
+Both Studio and Facegroups affected; do not repeat that comparison. No new runtime
+fix established. Gizmo local SVG overflow:hidden moves with original196px root;
+VIEW fixed external sibling under app has different ancestry. No shared application
+clip or scissor call established that explains both lost surfaces. Do not remove
+protected SVG clipping speculatively. Prior UV screenshot cutoff near1024 CSS /
+2048 physical pixels at DPR2 suggests a resolution-dependent paint/composition
+hypothesis, not proof of GPU/texture-limit/WebKit cause. Next narrow diagnostic
+candidate: explicit temporary1x versus automatic2x rendering using authoritative
+viewport sizing owner, preserving CSS size/model/history and restoring on exit.
+Not implemented; do not claim diagnostic controls exist or a fix is ready.
+
+Current live1002; no new runtime build in this audit.69 focused tests belong to
+1002 material change, not pixel-loss proof. Fill Face/Facegroup remains requested
+and unshipped. No new device test required in this audit; do not ask for repeated
+hidden-gizmo reports or identical Studio/Facegroups comparison.
+
+## .1002 â€” uniform Facegroup colours, including undersides â€” 28 October 2026
+
+User screenshot4DED25F9 shows bottom faces nearly black in Facegroups and requests
+equalized shading. Original render-modes facegroupMaterial now uses unlit
+MeshBasicMaterial with vertexColors and toneMapped:false instead of lit Standard.
+Every front-facing polygon displays its existing group palette colour independent
+of light/normal orientation. Original FrontSide, polygon offset, backface diagnostic,
+palette/list/name data, selection/brush/history, other VIEW materials and renderer
+lights remain unchanged. Bottom faces can now be read while orbiting underneath.
+This deliberately flattens Facegroups shading; Studio retains original depth/lighting.
+
+Scope is only original material plus reviewed render/shell/recovery1002 pins and
+release markers. No UI/composition/gizmo changes; blank VIEW/right-region recurrence
+stays OPEN. .1000 feature and .1001 functional acceptance retained. Requested UV
+Fill Face/Facegroup with expansion remains active but unshipped; do not claim it
+was included here. Validation/publication: docs/publication-1002.md.
+
+DEVICE1002: Facegroups -> orbit below mesh; assigned undersides show same group
+colour as upper faces. Paint/erase groups, UndoRedo; list colours remain consistent.
+Switch Studio -> Facegroups: Studio lighting returns, group view is evenly coloured.
+Current1002 native appearance acceptance pending; right-region fault still separate.
+
+## .1001 recurrence â€” blank Facegroups VIEW and right-region gizmo loss â€” 28 October 2026
+
+User previously PASSed1001, now reports Facegroups VIEW blank and gizmo disappears
+on right, without former bottom-right ground tonal line. Reopen native visibility
+gate; retain1000 feature acceptance and1001 functional/UV-specific PASS only.
+Screenshot0BC723EC-C3F4-4F53-BFD5-EA081926119F.png visibly confirms1001, Facegroups
+colours, Edge mode, full top-right toolbar and empty open VIEW frame. Gizmo is
+visible near centre in this screenshot; disappearance at right is user-observed,
+not captured as a clipped gizmo here. No new debug report supplied.
+
+Source explanation:999 retired screen-wide DOM multiply vignette; render-modes
+shows Studio floor/lights/shadows ONLY in Studio, not Facegroups. Thus absence of
+old ground line in Facegroups is not proof of recovery and cannot reliably signal
+UI health.1001 only removed UV workspace isolation/containment; VIEW and gizmo
+runtime unchanged. Neither finding proves root cause of blank menu/gizmo loss.
+
+No new runtime build or speculative CSS repair in this evidence update. Current
+release1001. Prioritize this recurrence before implementing requested Fill Face /
+Fill Facegroup; that request remains active and unshipped. Next useful device
+comparison: close VIEW, move same visible gizmo across right region, then compare
+Studio versus Facegroups without reload/app-switch/recovery. Do not demand another
+identical hidden-gizmo dump or treat healthy DOM/hits as pixel proof.
+
+## .1001 â€” UV Editor plain composition; .1000 feature PASS â€” 27 October 2026
+
+User explicitly PASSes .1000 features, but reports right-side loss after entering
+UV Editor. Protect .1000 UV validation/Studio handoff/Facegroup unwrap behavior;
+do not interpret feature PASS as native visibility acceptance.
+
+IMG_8342.png shows editor chrome cut off near screen x1024 CSS (image x2048),
+including partial Checker label, right editor surface and top-right toolbar.
+Underlying 3D floor remains visible at right. Report 09:41:45Z: uv-tools session,
+uvchecker/Object, workspace visible at8/68/1350/793 under app; toolbar bounds/hits
+healthy, VIEW closed/hidden, atmosphere absent, gizmo intentionally hidden.
+Canvas2732x1652/DPR2. No evidence of missing DOM, stale release or UV topology loss.
+Hide3D button clicks in supplied log do not establish an observed diagnostic result.
+
+Source audit found UV entry still reintroduced old .952 isolation on viewport and
+workspace, plus isolation/paint containment on UV canvas wrapper. This survived .999's
+plain startup baseline. Remove those CSS declarations and active :has viewport rule
+ONLY in original uv-workspace. Retain sibling root, z9 under header10, fixed insets,
+scrolling, overflow clipping, original controls/canvas identity, sizing and gestures.
+Mesh Health changes child cache key only; shell parent/recovery keys1001 reviewed.
+No renderer, model/history/UV/paint algorithms, main999/styles999, Multi1.0 or frozen
+changes. This closes a verified baseline mismatch, NOT proven WebKit root cause or
+permanent right-region repair. Native visibility gate stays OPEN until device feedback.
+
+Existing .952 CSS contract now protects plain UV composition, retaining all original
+header/exit/geometry/scroll bounds and lifecycle/navigation/history assertions.
+Validation/publication results: docs/publication-1001.md. Standing push/publish
+approval applies. Next prioritize native UV-entry result before further rendering
+changes; do not repeat blur/vignette/closed-menu hypotheses already disproved.
+
+DEVICE1001: fresh load -> UV Editor, inspect full right border/Checker/Image/top
+buttons; Back to3D and reopen several times without app-switch/recovery. Pan/pinch,
+select/Pencil-move an island, UndoRedo. Back to3D -> VIEW Studio/Facegroups -> UV
+Editor; inspect right side again. .1000 accepted workflow stays protected.
+
+## .1000 â€” UV Paint handoff and Facegroups â†’ UV Seams â€” 27 October 2026
+
+User says â€œPASS 999 so farâ€. Record PROVISIONAL .999 PASS and protect the exact
+main/styles/retired-atmosphere startup baseline. This is not an unlimited native
+visibility acceptance. User explicitly requests the next UV/Facegroups workflow.
+
+UV PAINT now uses the existing paintTargetKey validator before entering Paint.
+Missing/stale/incompatible UVs open the ORIGINAL UV session through __boxlabUVTools,
+with â€œValid UVs required for UV Paintâ€ at the TOP. No UV/paint/history is authored
+by the redirect. Valid targets in Facegroups view switch through the existing Studio
+button, stopping the original Facegroup stroke/dock owners, before Paint opens.
+Finished UV-tools sessions hand off directly to bottom UV PAINT; busy unwraps require
+Finish/Cancel first. Existing other-tool protections remain intact.
+
+UV menu adds â€œFacegroups â†’ UV Seamsâ€, orbitable orange boundary preview, explicit
+â€œConfirm UV Unwrapâ€, elapsed timer and Cancel. Preview has no history or UV edits,
+no raw pointer consumer and no control disabling. Connected equal-name regions form
+charts, including an unassigned region; disconnected regions form separate islands.
+Native mesh boundary and differing-group edges delimit patches. Original geometry,
+groups, names, palette and selection are retained. Planar patches keep exact shapes;
+curved disk patches use bounded positive-weight harmonic flattening with periodic
+frame yields. Original UV preview triangulation validates every flattened face;
+original density, packing, native UV commit, project transport and ONE history
+checkpoint remain authoritative. Completion selects existing UV Checker and keeps
+orange patch boundaries visible in 3D while the UV session stays open. Closing,
+changing target, entering UV Editor or cancelling releases the owned seam overlay.
+
+Honest limits: 4096 faces / 20,000 corners; plain independent unlocked Base mesh,
+SubD/Mirror off, no stored paint. Closed groups, holes/handles, pinches, inconsistent
+winding, non-manifold edges, solver failure/work overflow refuse without mutation
+and ask for additional Facegroup boundaries. Never silently insert cuts within a
+group. Curved patches can stretch; existing flat atlas remains available.
+
+Testing: new UV projection/packing/curved chart/resource/SaveOpen checks; real Paint
+entry and UV session handoff; timed confirm/cancel/target-change and overlay cleanup.
+Repaired old test harnesses for original Sweep UV-release hook and dynamically loaded
+Facegroup dock cache owner; no Sweep or dock runtime edits. Final full-suite and live
+publication results: docs/publication-1000.md. No native iPad feature PASS inferred.
+Standing push/publish authorization continues. .996 File and .994 palette protected.
+
+DEVICE1000: (1) no-UV object â†’ UV PAINT â†’ original UV menu + top reminder;
+(2) valid UV object in Facegroups â†’ UV PAINT â†’ Studio + paint;
+(3) UV â†’ Facegroups â†’ UV Seams â†’ orbit/check â†’ Confirm UV Unwrap â†’ timer â†’ checker
+and orange boundaries; (4) Undo/Redo and Save/Open retain UVs/groups; Cancel creates
+no UV/history edits. Also check .999 initial/right viewport remains healthy.
+Current build .1000; feature acceptance pending device test.
+
+## .999 â€” rebuild initial viewport baseline; .998 FAIL â€” 27 October 2026
+
+User explicitly FAILs .998: right-side viewport patch exists immediately after
+refresh, VIEW initially works, then selecting Facegroups leaves it blank. Screenshot
+715C468D-4F44-4AF8-8E86-5F1B083F9DFC.png shows the bottom/right tonal boundary before
+VIEW opens. Do not repeat menu-only frame/scroller changes or infer success from
+healthy DOM bounds. .997/.998 are not complete visibility repairs.
+
+Rebuild the existing initial presentation path: remove .967 CSS paint containment,
+canvas/wrapper/header isolation and opacity-layer requests; retain original z-order.
+Retire the full-viewport HTML multiply vignette and its mode opacity animation;
+existing Studio WebGL lights, ground and shadows remain authoritative. The original
+main renderer now uses one atomic setDrawingBufferSize for actual dimensions/DPR
+changes, without initial setPixelRatio followed by size reset, and does not rewrite
+canvas backing dimensions on same-size startup/visibility/session callbacks.
+No second renderer, canvas recreation, forced hide/show or refresh loop. No menu,
+Facegroups modelling/colour, geometry, history, gesture or frozen Multi changes.
+The vignette is intentionally removed: a slightly less dark edge is expected.
+
+Validation: 20 focused startup/sizing/composition/VIEW/release checks PASS; syntax
+and whitespace clean. Broader and publication results: docs/publication-999.md.
+No native pixel proof is claimed. .999 is a baseline retest, not an accepted fix.
+Keep feature work paused until initial refresh and Facegroups visibility are stable.
+Standing user authorization to commit/push/publish remains in force.
+
+DEVICE999, in order: refresh and inspect bottom/right BEFORE opening VIEW; open
+Studio VIEW; select Facegroups, scroll and reopen VIEW; return Studio; select/move
+near the right edge and inspect gizmo; verify orbit/pan/pinch and Undo/Redo. Report
+which earliest stage fails. Current build .999; readiness = device retest pending.
+
+## .998 â€” Facegroups transition repair, native acceptance pending â€” 27 October 2026
+
+User clarified: VIEW works in Studio, then becomes empty when Facegroups is selected.
+.997 is partial Studio success, not overall VIEW acceptance. Facegroups adds enough
+content to overflow the menu (reported scrollHeight 980 versus clientHeight 810).
+.998 separates the fixed external frame from a bounded normal-flow inner scroller,
+retaining original controls, IDs, delegation, native open owner and Clean View section.
+The fixed frame no longer owns touch overflow. Inner scroll position survives closing.
+The right-side gizmo patch remains OPEN; no visible-gizmo capture proves its cause.
+Protected: accepted .996 File menu and .994 palette, original Multi and gestures.
+Validation: focused VIEW/layout/release/facegroup/File tests; native device test still
+required: open Studio VIEW, switch Facegroups, scroll to bottom, close/reopen, return
+Studio, and inspect right-side gizmo. Standing commit/push/publication authorization
+continues; no repeat approval needed. Current build .998, ready for device retest only.
+
+# BoxLab Development Roadmap
+
+## Radial visual selection sheets v1 complete â€” 25 October 2026
+
+Design review only; runtime remains .967 with protected user PERFECT/PASS. All65
+semantic tools now have THREE original vector candidates:195 SVGs on10 sheets.
+Delivered BoxLab-Icon-Selection.pdf, BoxLab-Icon-Review.html and
+BoxLab-Icon-Review-Pack.zip (PDF/HTML/PNG sheets/SVGs/manifest/rebuild source).
+No default/user icon selections; await tool-name + A/B/C choices, then refine before
+installation. Shared symbols retained in one review row; Vertex/Object Join separate.
+See docs/radial-icon-review-v1.md. No new app test or runtime release needed.
+
+
+## .967 user PERFECT / PASS; radial icon review direction â€” 25 October 2026
+
+User explicitly accepts .967. Protect the canvas/UI composition boundary, right controls
+visible on landscape refresh and normal UI transitions, and visible-page repaint recovery.
+This closes the .967 invisible-but-clickable right-control device gate; older OPEN notes
+below are historical. Do not infer separate unresolved AO/alpha/reflection acceptance.
+User wants original Nomad-inspired icons with small visible titles below. Audit all radial
+tool names and offer THREE candidates per tool; user selects, then refine before installing.
+See docs/radial-icon-audit-2026-10-25.md for actual inventory, 3 concept directions per
+semantic tool, naming cautions and staged visual review plan. No runtime change/build bump.
+Prior next functional work: UV-free facegroup painting through existing faceGroups owners.
+Bring icon review forward per user direction; no wholesale UI reskin or automatic icon choice.
+
+
+This is the persistent product roadmap for BoxLab.
+
+The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
+
+## .898 â€” paint resource v1 and lab Save/Open; .897 PASS, 2026-10-17
+
+User897PASS protects corrected outward preview, paint/navigation/history/plane baseline.
+Audit current6677ce85: no editable paint-resource codec exists; native projectv3 UV-only.
+Add src/paint-resource.js: version1 opaque baseColor/sRGB/RGBA8/UV-v0-first, explicit size/
+binding, owned pixel capture/async encode/decode copies, exact SHA256 integrity. Metadata
+frozen; typed pixels are read-only by caller contract, not magically immutable. No global
+history owner or changes to native .boxlab resource envelopes.
+Lab Save/Open .boxpaint v1 embeds scene through ORIGINAL BoxLab scene/nativeUV codec,
+actual sample geometry/UVs, both512Â² results, settings/selected brush/camera. Binary header
+â‰¤1MiB/fileâ‰¤4MiB, two exact raw RGBA buffers with descriptors/hash, bounded plain native
+sample only. No fake GLB metadata, new mesh kernel, PNG reencoding or main paint save claim.
+Save snapshots before await; Open stages/validates before replacement, clears lab history
+on success, disposes old resources once. Invalid/corrupt/stale files keep committed work;
+revision/generation checks block late Open after a new Pencil contact/settings/history/
+reset/candidate/navigation or another Open. Unfiltered iPad picker follows existing
+.boxlab Open to avoid unknown-extension filtering. PNG and accepted brush semantics intact.
+Six new tests cover owned resource/integrity, exact three-sample pixel/UV/geometry/settings/
+view restoration, async capture and load guards, budgets/corruption, real controller Save/
+Open/continued Undo/stale-stage rollback/new contact. Extracted original lab test harness;
+all original assertions retained. Full Node24 **2483PASS/0FAIL/0skip**. Browser/iPad gate
+separate; no rendered/filepicker proof inferred from Node.
+Shell/recovery898; lab loader/sample/session/resource898. Export897/codec887/core+stroke896
+and all production UV/project/history/import/export/modelling/frozen owners unchanged.
+No layers/autosave/main .boxlab paint/global scene history/Nomad paint export claim.
+Manual: paintâ†’Save Paint; Reset/reloadâ†’Open Paint from Downloads; compare both brushes,
+settings/view, then draw/Undo/Redo and PNG. Next original scene-resource/codec/COW/history
+integration after feedback. Publication verification follows; no898 device PASS inferred.
+
+## .897 â€” UV preview winding repair; .896 brush PASS, 2026-10-17
+
+User .896 PASS; only reported issue paint mesh normals not consistently outward.
+Protect accepted brush comparison/Pencil/settings/navigation/paired history/PNG workflow;
+normal orientation is the explicit exception, not a blanket896 failure or895 PASS.
+Audit main53abe68b and original primitive/projection/export preview owners. Source sphere
+and cube faces are outward, but projected Earcut triangles lose polygon winding:
+original sample sphere240/528 triangles inward; cube6/12 inward. Recomputed normals or
+DoubleSide cannot repair picking/culling orientation. Root is existing triangulateFace.
+Add preserveFaceWinding option in SAME triangulation owner, enabled ONLY by
+buildUVPreviewGeometry. Compare signed projected polygon area with each triangle and
+swap two local triangle indices when opposite. Original face winding, including deliberate
+reversed/imported surfaces, is preserved; no convex-centre heuristic/new triangulator,
+source mesh/UV mutation or general normals repair command. Normals recomputed by original
+geometry builder. Preview checker/image consumers also gain correct source winding.
+Ordinary editableToGeometry/GLB file export keeps original default false; native NOM,
+UV storage, brush raster/strokes/history/input and frozen/protected modelling unchanged.
+Known ordinary export winding behavior is NOT repaired or claimed fixed in this scope.
+After proper source winding, plane temporary display uses +X90 instead of896 -X90.
+Three regressions cover EVERY sphere/cube triangle+normal, real front-sided raycasts from
+six external directions/near hit, plane front, concave tilted/reversed polygon winding,
+exact position/UV corner correspondence/read-only source and unchanged ordinary export
+path plus triangle-corner sets. Full Node24 **2477PASS/0FAIL/0skip**.
+Reviewed shell/recovery/export-parent897 and lab index/lab-loader/sample897; shared brush/
+curve/core896 and native/export children892 retained. Main exporter internal stamp892
+intentionally distinct from loader897. No blind all-module repin. Previous browser WebGL
+limitation unchanged; device897 winding confirmation pending, no897 PASS inferred.
+Next: orbit sphere/cube, paint around all sides; plane visible; switch brushes/UndoRedo.
+Then resume paint resource/codec/COW/global-history design after chosen-brush feedback.
+Publication verification follows; no layered or persistent painting claim.
+
+## .896 â€” isolated UV Paint Lab, 2026-10-17
+
+User /nextbuild after selective-reuse audit. Base main569d4e7e; build896 adds File link
+to separate evaluations/uv-paint/?build=896. Shared screen inputs compare BoxLab distance
+carry and attributed Klecks-derived BezierLine/PointLine/Vec2 (cc24e977), SAME new opaque
+colour raster, two512Â² buffers, one paired6-step UndoRedo. Original BoxLab primitives/
+Planar/Box/Sphere UVs and export-as-panel892 buildUVPreviewGeometry; no second triangulator.
+No production paint/scene/input/history/resource integration. Exact upstream source and
+MIT notice retained; no full Klecks brush/history/selection/editor/Parcel dependency.
+Pressureâ†’size, hardness, per-stroke opacity cap, subpixel stamps; real raycast per screen
+dab, at most one texture-dirty mark/frame. CPU timings exclude GPU/frame time. Demo same
+inputs, switch candidates, cancel/lost capture/blur/resize/visibility/settings rollback,
+palm suppression/finger navigation, reset/disposal and top-down selected PNG.20MiB raw
+active paint buffer budget excluding browser/GPU/PNG,12k dabs/candidate cap.
+Seven tests plus full Node24 **2474PASS/0FAIL/0skip**. Real Three geometry/raycast/raster,
+adapted controller Canvas/WebGL/OrbitControls; browser/iPad separate. Plane test caught
+back-facing sample; rotate temporary display -X90 only. Distance parity allows1e-12
+floating roundoff, not altered source geometry. All prior semantic checks retained.
+Read docs/uv-paint-lab-896.md. Main shell/recovery896; original exporter892, MeshHealth895,
+main854 and all protected Multi/frozen/modelling owners unchanged. Existing TexturePaint
+trial intact. No layers/.boxlab/Nomad paint persistence, imported texture base, seam-safe
+projection/world radius/PBR claim.895 density and trial device gates remain pending;
+prior894PASS protected. Consolidated living handoff references exact prior193KB handoff
+in git; historical chronology/acceptance retained in DEV_HISTORY/TEST_CHECKLIST.
+Next: compare Pencil feel; refine chosen stroke/footprint, then explicit paint resource/
+codec/COW/global history before real scene integration. No896 device PASS inferred.
+Publication/CI/Pages/live proof follows separately.
+
+## UV Paint integration audit â€” 2026-10-17
+
+User says TexturePaint brush needs work but promising; requests audit of TexturePaint
+and Klecks and delegates reuse-versus-new decision. No blanket trial or .895 PASS.
+See docs/uv-paint-integration-audit-2026-10-17.md. Audited BoxLab main353e9881,
+TexturePaint3af8a61e and Klecks cc24e97712c199929760250881ffe2e25233ce6d.
+Decision: BoxLab-owned architecture + selective attributed brush/stroke/compositor
+reuse; no wholesale editor/history/input import, no TexturePaint runtime dependency.
+Klecks Pen/Eraser read and push KlHistory; LayerCompositor is a smaller extraction
+candidate. Screen-space smoothing BEFORE picking; no UV spline across islands.
+Three instrumented upstream probes confirm atlas-spanning Bezier marks (162),
+smoothing position/pressure and compositor call order; no rendered pixel/perf proof.
+Existing focused trial/release tests10PASS/0FAIL/0skip; not a new full-suite run.
+Native resource v3 remains UV-only; design paint resource/codec/COW/history explicitly.
+Next narrow build: isolated identical-stroke comparison on BoxLab-generated UV geometry,
+one colour layer; benchmark adapted Klecks vs simple BoxLab brush before live integration.
+No upstream source imported, no runtime/pin/version/frozen changes; .895 remains live.
+No new hands-on test required for this documentation-only audit. Existing device gates
+remain pending; user feedback is qualitative. Full report carries integration/acceptance plan.
+
+## TexturePaint evaluation â€” 2026-10-17
+
+User directs evaluation of ceramicSoda/TexturePaint for direct in-viewport Pencil
+painting with instant feedback, ultimately brushes/layers/colour controls. This is
+NOT a .895 PASS or a numbered main-app build. .895 density device gate stays pending;
+.894 and earlier accepted gates remain protected. Main shell/runtime/pins unchanged895.
+
+Audit upstream master commit3af8a61e9493ff960ff29ed429fc734335c80931 (MIT, source and
+licence retained byte-exact) and BoxLab renderer/UV geometry/preview/gesture/tool-session/
+resource/history owners. Upstream is CPU DataTexture stamping, no layer engine; confirmed
+row-wrap corruption at texture edges and destructive getTexture reset/reallocation.
+Other integration gaps: linear colour bytes, aliasing private Undo/no Redo, anonymous
+mouse listeners, frame-rate stamping, no pressure/coalescing, seam masks or persistence.
+See docs/texturepaint-evaluation-2026-10-17.md for exact findings and production plan.
+
+Add SEPARATE evaluations/texturepaint/ browser trial on sample sphere/plane; no live
+BoxLab objects, no production loader imports or app-state mutation. Reuse original
+constructor/brush/DataTexture through attributed adapter with clipped stamp blending,
+sRGB quantisation, hardness/opacity/pressure, screen-space resampling and real Three
+nearest-surface raycasts. Live texture updates during movement. Pencil paints; fingers
+use trial OrbitControls orbit/pan/pinch.512Â² map, radius1â€“64,12 Undo/Redo snapshots,
+cancel/no-op/disposal; Download PNG flattens pixels with correct top-down row order.
+Reset/reload clears volatile trial. Labels explicitly say no layers/project/Nomad save.
+No claim of actual BoxLab mesh integration, seam stitching, world-radius brush or GPU
+stamping. This separate page does NOT replace protected app gesture/history owners.
+
+Five tests reproduce upstream faults and check corrected pixels/bounds/colour/pressure/
+opacity, texture invalidation, bounded history/cancel/disposal, sampled actual sphere
+raycasts, exact upstream SHA256/licence and app isolation. Full2467PASS/0FAIL/0skip
+(Node24). Headless Chromium download returned truncated archives; rendered browser and
+iPad acceptance remain distinct. Publish evaluation + report, then verify Pages/assets.
+
+Next: evaluate Pencil feel and seams on M2; production prototype should reuse existing
+buildUVPreviewGeometry/render owner and original tool/gesture/history owners. Native
+resource v3 is UV-only: design explicit paint-resource transport/COW/codec before
+promising Save/Open or native painted exports. Preserve replaceable paint backend.
+Do not add further UV utilities in place of proving the requested 3D brush experience.
+
+## .895 â€” Equalize UV density, 2026-10-17
+
+User .894 PASS protects Sphere UV creation/layout/seams, Pencil edits/Pack all,
+UndoRedo/navigation, project reopening and NOMAD Base UV export. Audit main39ae725e /
+runtime260817ff, live .894 markers and current loader graph, original projection /
+UV inspection/edit/workspace/history/export owners. No existing equal-density action;
+Box/Cylinder projections already use common density, Pack all preserves input ratios.
+
+Add Equalize density to ORIGINAL UV workspace for all1â€“128 islands, with or without
+selection. SAME editImportedUV transaction/copy-on-write/native scene checkpoint,
+expected payload/object/mesh/session guards, source images/peers/geometry read-only,
+tangent retirement and selection retention. No new pointer/history/schema/kernel.
+Each island gets one positive uniform scale about its bounding-box centre; preserve
+shape, orientation and mirroring. Target is total input UV area / total Base surface
+area; preserve total UV area, equalize each island's AVERAGE UV-area/Base-area ratio.
+Aggregate ALL faces, including beyond preview. Read-only planar polygon area vectors
+and signed UV polygon areas with normalized input; concave planar polygons supported.
+No triangulation or source face mutation. Nonplanar/degenerate/missing/nonfinite mesh
+or UV area refuses; numeric/export-f32 edge collapse, nonfinite export coordinates,
+unsupported count or changed island connectivity refuses BEFORE history/mutation.
+Already-equal/repeated result within1e-12 scale tolerance adds no history. Original
+Pack all tolerance/maths unchanged; avoid absolute tile-coordinate no-op tolerance
+for density because small off-tile coordinates must not hide meaningful rescaling.
+
+Centres stay fixed, so enlarged islands MAY overlap or leave tile; use Pack all next.
+Images stay fixed: sampling changes intentionally. This is UV-area density; equal
+pixel density assumes the same image resolution. Does not remove within-island
+stretch/distortion or bake/repaint textures. Success uses original workspace Fit;
+rejection leaves view unchanged. Existing Pencil preview is cancelled on click.
+
+Five new regressions: actual history/COW/peers/metadata/centres/aspect/area/no-op;
+unequal surface areas/mirrored UVs, native Box quads+Pack, concave polygons, multi-face
+islands/full-face metrics and huge/tiny geometry; stale/invalid/history/nonplanar/
+zero-area/export-collapse/new-seam-join/count refusals; ACTUAL workspace+MeshHealth
+no-selection action/Pencil cancellation/selection/stale guard; actual project codec,
+NOM UV indices/f32 corners and Three GLB UV/tangent retirement.15 focused PASS.
+Full Node24 **2462 PASS / 0 FAIL / 0 skipped**. Reviewed narrow graph shell/recovery/
+MeshHealth895 -> workspace895/edit895; inspector880/preview/render/native892 and
+scalar889 retained. Internal MeshHealth stamp880, Multi1.0/frozen/modelling untouched.
+
+Device895 pending: cube -> MeshHealth UVs -> Box UVs -> Open UV Editor; select island,
+Pencil Scale it larger, Equalize density makes six sides comparable again, then Pack
+all separates them. UndoRedo, repeat no-op and Pencil/pan/pinch still work. Save/Open
+.boxlab and File NOMAD Base retain layout. .894 user PASS protected; no895 device PASS
+inferred. Next: density feedback, then audit next narrow UV authoring/painting stage.
+
+## .894 â€” Sphere UVs (Y), 2026-10-17
+
+User .893 PASS protects Pack all, framing/selection, UndoRedo, project/native UV export
+and prior Pencil/navigation/map references. Audited main ccf5e0e4/runtime bbc0e4b2,
+current markers/pins and original primitive/projection/UV/history/export owners; no
+spherical UV authoring exists in current or frozen code (orbit spherical maths unrelated).
+
+Add Sphere UVs (Y) alongside original MeshHealth Planar/Box/Cylinder buttons. Extend
+SAME imported-uv-edit native projection owner and commitNativeUV transaction. Round
+sphere with two Y vertex poles and seam-aligned longitude rings, including BoxLab's
+Sphere primitive. Equirectangular longitude/latitude with 2% tile margin; deterministic
+seam through the first non-pole corner. Split UV poles per face wedge without splitting
+geometry. Replaces existing native UVs; refuses imported/resource-bearing, linked,
+procedural, locked, modifier, nonround/no-pole/invalid/degenerate/unsupported seam spans
+before history/mutation. Coordinates normalized before subtraction for huge/tiny input.
+One existing native checkpoint, copy-on-write/peer isolation, repeat no-op. No geometry,
+resource schema, exporter, pointer owner or native modelling kernel changes.
+
+Five new regressions: source identity, pole/seam/tile layout, real UndoRedo/no-op;
+4/5/12/32 radial and 2/3/8 latitude bands, translations/Y rotations and huge/tiny scales;
+Box replacement/shared peers/Pack all; actual MeshHealth context action, project codec,
+native NOM UV pool and Three GLB pole variants; context/invalid/history refusals.
+15 focused PASS; full Node24 **2457 PASS / 0 FAIL / 0 skipped**. Reviewed cache graph:
+shell/recovery/MeshHealth894 -> edit894; workspace893, inspector880, preview/render/
+native892, scalar889 unchanged. Internal MeshHealth stamp880 retained. Protected
+Multi1.0/modelling/frozen betas unchanged. Publication verified below.
+
+Device894 pending: add Sphere -> Object MeshHealth -> UVs -> Sphere UVs (Y) -> Open
+UV Editor; check flat latitude layout, Checker and surface seam/poles. Edit with Pencil,
+Pack all, UndoRedo, pan/pinch. Save/Open .boxlab and File NOMAD Base retain UV layout.
+Equirectangular mapping intentionally distorts near poles; not equal-density unwrapping.
+Does not promise arbitrary deformed/tilted spheres, Quadball mapping, seam cutting,
+optimal packing, painting, opacity recovery, native multi-materials or NOM import.
+Next: Sphere device feedback, then audit next narrow UV authoring or painting stage.
+
+## .893 â€” Pack all UV islands, 2026-10-17
+
+User .892 PASS protects Roughness(G)/Metalness(B) references, prior map choices,
+Pencil/navigation/history, project reopening and native six-map export. Audit main
+321674aa/runtime68ee2db6 and original UV inspection/edit/workspace/history/export owners;
+Fit-to-tile exists for ONE island, no all-island packer exists.
+
+Add Pack all to ORIGINAL UV workspace. Whole current object's complete UV layout,
+with or without an island selection; supported imported GLB and native BoxLab channels.
+Deterministic GRID packing, not optimal polygon packing, seam unwrap or texture baking.
+Try column counts for best common uniform scale; preserve every island's orientation,
+shape and RELATIVE UV sizes/density. Island IDs/order unchanged.2% tile outer margin
+and at least2% gap between island BOUNDING BOXES. At most128 islands; larger layouts
+refuse before history. Does not remove overlaps WITHIN an island. Texture images stay
+fixed: packing intentionally changes their sampling, like existing UV transforms.
+Button title explains all-island scope/fixed images. No auto-pack on import/export.
+
+Extend SAME imported-uv-edit transaction with packImportedUVIslands, using original
+inspector connectivity/full faceIslands and shared bounds. Expected payload/scope/context,
+complete matching channel, independent/unlocked/resource/history guards retained. Plan
+with normalized coordinates to handle huge/tiny finite UVs; reject zero-extent islands,
+nonfinite scale, collapsed extents or newly collapsed UV edges in double OR export-f32
+precision before mutation. Existing copy-on-write payload/tangent retirement and one
+native scene checkpoint. Source mesh, metadata/images, peers and source arrays read-only.
+Near-identical repeated packed result (32EPS absolute in0â€“1) adds no Undo entry. Original
+selected-island/whole-layout Rotate/Flip/Move/Scale/Fit maths unchanged.
+
+Pack click cancels pending Pencil preview through existing owner, delegates original
+MeshHealth transaction and retains matching selected-island membership. Successful pack
+frames resulting tile with EXISTING view Fit; rejection leaves view unchanged. No new
+pointer/history/resource/UV signature owner, schema or geometry changes. No packing of
+selected subsets or user-adjustable gutters in this first stage.
+
+Five native regressions: common scale/aspect/orientation/bounding gaps/COW/peer isolation/
+actual UndoRedo/repeat no-op; native Box UVs, huge/tiny/full-face-beyond-preview layouts;
+invalid/stale/locked/no-history/zero-extent/f64/f32 collapse refusals and128 allowed vs129
+refused; ACTUAL workspace+MeshHealth no-selection launch/Pencil cancel/selection/context;
+actual .boxlab codec, native NOM UV indices/f32 corners and Three GLB UV/tangent roundtrip.
+Full local Node24 2452PASS/0FAIL/0skip. Narrow cache graph shell/recovery/MeshHealth893 ->
+workspace893/edit893; inspector880/preview892/render/native export892/scalar889 retained.
+Internal MeshHealth stamp880 retained. All protected modelling/Multi/frozen bytes unchanged.
+
+Device893: cube -> MeshHealth UVs -> Box UVs -> Open UV Editor -> Pack all: separated
+islands inside tile, result framed; select/move island then Pack all with selection
+retained. Undo/Redo restores layout; repeated Pack all adds no extra Undo. Save/Open
+.boxlab and File NOMAD Base retain packed layout/seams. This is manual UV layout
+editing; do not expect imported painted texture appearance to stay fixed after packing.
+Next: device packing feedback, then audit staged seam/UV authoring or resource-backed
+painting; no new opacity recovery/native multi-material/NOM import claim.
+
+## .892 â€” UV Editor Roughness / Metalness references, 2026-10-17
+
+User .891 PASS protects Normal/Emissive references, existing Pencil/navigation/history,
+Image-off reopen, project resources and native six-map export. Audit current main
+433c73f0/runtime278b0042 and original chooser/decoder/controller/workspace plus native
+packed-map owner. Existing native export proves glTF roughness=G and metalness=B.
+
+Extend ORIGINAL optional UV map chooser with Roughness (G) and Metalness (B), BOTH
+resolving material.pbrMetallicRoughness.metallicRoughnessTexture through the same
+embedded-image resolver. Never use red/occlusion, luminance, filenames or inferred
+images. Raw channel references: do not bake roughnessFactor/metallicFactor or simulate
+PBR shading. Only UV workspace opts into five map kinds; default base-colour consumers
+(surface/native writer) retain identical source selection/shape/behaviour.
+
+Extend SAME bounded decodeUVImage: colour/normal/emissive path unchanged. Packed
+references request existing <=1024Â² bitmap with colour conversion/premultiplication
+none, use one OffscreenCanvas or DOM canvas for readback, repeat G/B into RGB with
+opaque alpha, no Y flip or PNG encoding. Translucent readback refuses because Canvas
+premultiplication could lose RGB. Source bitmap closes in finally; failures reset the
+scratch canvas. Successful canvas is the single controller-held image, with close()
+resetting dimensions to1. No second output bitmap, retained conversion cache, GPU
+material change or permanent image/UV/project mutation. Bitmap + canvas + readback
+are temporary bounded allocations; inspection is a resized reference, NOT full-resolution
+lossless data analysis. Original encoded8MB guard and one held preview remain.
+
+Existing generation cancellation, slot-aware UV-refresh reuse, chooser Pencil-cancel/
+capture release/view/selection, tile/V0 projection, pan/pinch/history and Image-off
+reopen remain original. Aria label now UV image reference, matching all image choices.
+Four regressions cover exact bindings/G/B vs red/factors/default parity/guards, actual
+bounded decoder pixels and DOM fallback, context/read/write/alpha failure and late
+cleanup, ACTUAL workspace grayscale rendering/switch/Pencil/view/selection/reopen.
+Prior891 workspace test now locates its Normal/Emissive entries before the added two;
+all previous behavioural assertions retained. Full Node24 2447PASS/0FAIL/0skip.
+
+Actual supplied FULL MATERIAL.glb resolves both to image4/733,993B packed JPEG,
+SHA2563c0ec3a61999f04ee7e5e2376ebf4a4324f1c56b09caf1334523b639b3b2d9b5.
+Pillow1024Â² readback transport -> REAL decoder channel conversion verifies every G/B
+value in1,048,576 pixels per reference; original source hash unchanged, both source
+bitmaps closed. Browser decode/readback adapted; iPad visual gate remains separate.
+No private pixels committed or lossless/resizing-equivalence claim for browser thumbnail.
+
+Reviewed shell/recovery/MeshHealth/workspace/shared preview and surface/render/native
+parent cache graph892; native parent changes ONLY shared import pins. ScalarPNG889,
+UV maths/decoder options for existing maps, all native binary/dedup/kernel/history/
+resource/import owners, protected Multi1.0 and frozen betas retained. All four docs current.
+Device892: UV Editor -> Image -> Roughness (G), Metalness (B): separate grayscale
+references under UV outlines; Normal/Emissive still work. Pencil edits/UndoRedo/pan/
+pinch, reopen and Save/Open -> native six-map export remain intact. Next after feedback:
+audit next staged UV-authoring/packing capability; separate opacity requires source-
+complete input. No opacity/displacement/occlusion inspection, painting or NOM import.
+
+## .891 â€” UV Editor Normal / Emissive references, 2026-10-17
+
+User .890 Perfect PASS protects two independent FULL MATERIAL.glb imports/native
+six-map export, individual UV edits and .boxlab Save/Open; .889 remains protected.
+Audit current main a0a56749/runtime08f0256e and original UV chooser/resolver/decoder,
+workspace gesture owner and native/render consumers. Importer already retains exact
+normalTexture/emissiveTexture links; no UV inspection chooser for those slots existed.
+
+Extend ORIGINAL importedUVImageChoices with an optional colour/normal/emissive slot
+list. Default callers stay colour-only with identical output shape/labels/eligibility;
+only UV workspace opts into three slots. Same image-source dropdown shows Material Â·
+Colour/Normal/Emissive, with explicit reference status. Resolve actual material texture
+index -> texture.source -> embedded image, never names/array position/facegroup guesses.
+Normal/emissive texture extensions, nonUV0/transformed/missing/external/oversize/invalid
+sources refuse independently; valid remaining references still available. Read-only
+image reference only: normal scale and emissive factors/lighting are not evaluated.
+No packed roughness/metalness/displacement/opacity selector, painting or new material UI.
+
+Same controller/one1024Â² bitmap,8MB encoded source limit, generation cancellation,
+late-result cleanup and UV-only payload reuse. Selected semantic slot survives refresh
+when still present, including two slots sharing one image; removed slots cannot leave a
+stale Normal label on Colour. Switching chooser uses EXISTING Pencil-cancel/capture
+release and retains view/island selection without a transaction or history checkpoint.
+Close/reopen starts Image off. Original V0/tile clipping/projection/pan/pinch/history
+and Pencil Move/Scale/Rotate owner unchanged. 3D UV Image remains base-colour-only;
+no additional surface/GPU bitmap residency or changed export/resource schema.
+
+Three native regressions cover exact/reordered map links/default caller parity/codec,
+unsupported refs/bytes/budgets, shared-image semantic refresh/cancel/dispose lifecycle,
+and ACTUAL workspace labels/1024Â² decode/Pencil cancellation/view/selection/reopen.
+Actual supplied FULL MATERIAL.glb source audit resolves normal image1/1,248,872B and
+emissive image2/2,754B. Its11,121,601B colour remains outside existing8MB preview policy;
+Normal/Emissive stay inspectable. No private pixels committed, browser visual gate pending.
+Full local Node24 2443PASS/0FAIL/0skip. Cache graph reviewed: workspace/preview891,
+MeshHealth parent891; shared preview consumers surface/render/native-displacement/
+native-core/packed/export parents891 (imports only), scalar889 retained. Internal
+MeshHealth stamp880 intentionally retained. Protected Multi1.0/modelling/frozen beta,
+actual decoder, native image/dedup maths and source/export image bytes unchanged.
+
+Device891: imported GLB -> Object Mesh Health -> UVs -> Open UV Editor -> Image;
+choose Normal, then Emissive; inspect alignment/orientation beneath UV outlines.
+Pencil edit/UndoRedo and pan/pinch still work; close/reopen starts Image off.
+Save/Open .boxlab -> chooser and native NOMAD six-map export remain intact.
+Next after feedback: audit packed-map inspection or the next staged UV-authoring
+step; separate opacity still needs source-complete input. No NOM import claim.
+
+## .890 â€” identical native export images shared by content, 2026-10-17
+
+User .889 PASS protects exact FULL MATERIAL.glb six-slot native download/open,
+Pencil UV repeat and .boxlab Save/Open. The .888 24MB device failure is resolved for
+that accepted case; keep the failure history and .889 lossless encoding protected.
+Audit main a5e671ca/runtime b7c5d1e3, shell .889 and original native writer/preflight.
+Native pooling and packed conversion previously used buffer identity only, unlike
+existing content-pooled .boxlab files. Re-importing the same GLB independently could
+therefore exceed the native 24MB pool although a reopened pooled project fitted.
+
+Extend ORIGINAL native writer with export-local createNomadImageIdentity; no second
+binary pool/container/resource owner. MIME + byte length + FNV-1a hash selects a
+candidate bucket; full byte comparison decides equality, including subarray offsets.
+Hash collisions never merge unequal data; per-buffer/MIME memo avoids repeated scans.
+Original image table, alignment, 24MB guard, mesh/UV/material/slot owners retained.
+Async preflight uses the SAME identity helper to count unique raw and converted bytes;
+equal packed source content converts once even across independent buffers. Distinct
+encoded images remain distinct regardless of names. Original image buffers stay
+read-only and independent; no content merging in scene/history/import/project state.
+Each object keeps its own material factors, texture names, geometry and UVs. No image
+resampling/reencoding, increased limits, permanent cache or new modelling/history owner.
+
+Four regressions cover an actual same-length FNV collision, MIME/length/offset identity,
+separate materials/names/selected UVs/native field bytes, ACTUAL File NOMAD two full-size
+independent six-map payloads, conversion once, project reopen and exact unique budget
+including equal converted slots. Existing six historical budget tests now use genuinely
+DIFFERENT bytes instead of identical filler; all rejection assertions remain active.
+Full local Node24: 2440 PASS / 0 FAIL / 0 skipped. Reviewed graph shell/recovery/export
+panel890 -> packed890 -> native-core890; scalar889, displacement888 and all other
+resource/UV/render/import/protected modelling/Multi/frozen owners unchanged.
+
+Actual uploaded GLB source images + actual JPEG G/B decode transport, REAL production
+scalar encoder/native writer: two independent textured objects with different UVs,
+6 unique images, 22,557,536B payload, 2,608,288B headroom; one packed decode. Original
+colour/normal/emissive/displacement hashes exact. Browser readback adapted in Node;
+iPad/Nomad .890 multiple-import gate remains pending, no device PASS inferred.
+
+Opacity audit of actual paired files: GLB colour PNG RGBA2048x2048 already carries
+alpha0..123; native template ALREADY use_color_opacity=1/factorOpacity1, and exporter
+retains the encoded colour bytes. NOM separate opacity image is RGB1024x1024,
+417,303B, SHA256440163515a426e5017aa0695f537f48ca8d9d20a36717f040ba08161b4e0b440.
+That separate image is ABSENT from GLB, whose extras name Water_001_DISP_opacity.png;
+NOM slot names Water_001_DISP.png. Do not derive/rename alpha as a recovered separate
+map, invent missing pixels, or claim new opacity/transparency support. No opacity
+runtime change in890. Public reference: https://nomadsculpt.com/manual/material
+(texture-panel Opacity uses colour alpha; Auto uses UV when present).
+
+Device890: reset; import FULL MATERIAL.glb TWICE, SubD off; move one object aside;
+File NOMAD must download/open two objects with six maps each. Pencil UV edit one object
+then repeat; Save/Open .boxlab repeat. Genuine unique-image excess still refuses with
+source/converted/object breakdown. Next: device feedback, then source-complete opacity
+input/native material audit or staged UV/texture work; no invented opacity/NOM import.
+
+## .889 â€” lossless scalar PNG encoding / .888 budget FAIL, 2026-10-17
+
+User reports888 File NOMAD failed: embedded images exceed24MB. Do not mark888 PASS.
+Audit main9af5dff1/runtime888, original packed-map preparation and24MB native pool.
+Prior offline audit used Pillow scalar PNGs in place of browser output; this did NOT
+prove the real platform-encoded files would fit. Actual browser PNG byte sizes were
+not captured, and multiple independent textured imports can also exceed source budget.
+.887 exact-file five-map/Pencil/project PASS remains protected. Keep888 displacement
+binding/schema/16-bit byte tests; repair derived encoding rather than enlarge the pool.
+
+Original splitNomadPackedImage used canvas.createImageData RGBA, repeated G/B into
+three channels plus opaque alpha, then platform convertToBlob/toBlob PNG. Scalar data
+needs only ONE8-bit channel. New small nomad-scalar-png owner encodes colour type0 PNG,
+adaptive per-row None/Sub/Up/Average/Paeth filtering, real CompressionStream('deflate')
+zlib and chunk CRCs. Standard: https://www.w3.org/TR/png-3/ and
+https://compression.spec.whatwg.org/ . Original2048Â² bound and8MB derived-image cap
+remain; source bytes/dimensions/G/B values unchanged. No gamma/profile/alpha chunks,
+resampling, factor baking, lossy compression or quality reduction. Encoder does not
+mutate readback/source. Removes full RGBA output scratch allocation and platform PNG
+encoder dependency; browser bitmap decode/canvas readback + finally cleanup stay original.
+CompressionStream unavailable/failure refuses clearly; no oversized RGBA fallback.
+
+Native24MB aggregate guard stays ACTIVE. Async preparation now reports source-image MiB,
+converted-map MiB and visible object count in overbudget error, distinguishing derived
+size from repeated/large imports. Dedup still source-buffer identity as protected884;
+independent imports of identical bytes are NOT content-deduped. Do not silently raise
+limits or claim this permits unlimited scenes. Test one fresh import to isolate result.
+Original native writer/displacement helper888/image/surface/resource887/UV/render/kernel/
+history/importer/frozen owners unchanged; no duplicate pool, decoder or modelling owner.
+
+Existing886 tests now inspect actual production grayscale PNGs with independent Node
+zlib/CRC/inverse-filter reader; retain all exact G/B/geometry/UV/source/factor/resource/
+cleanup/DOM-readback assertions. Encoding-failure injection moves to CompressionStream;
+platform PNG encoder calls must be zero. Three new regressions cover real compressed
+PNG pixels/headers/CRC/filters/bounds/API failure, ACTUAL File NOMAD six-map export at
+reported source sizes with real compression and forbidden platform PNG encoder, and
+retained24MB source guard with diagnostic breakdown. Full local2436PASS/0FAIL/0skip.
+
+ACTUAL user packed JPEG decoded to RGBA through Pillow as Node transport fixture, then
+REAL production scalar encoder/deflate (no substitute PNG encoder): roughness2,035,568B,
+metalness1,948,291B. Independent Pillow PNG decode confirms EVERY G/B byte identical.
+Actual retained source assets + production split/native facade:6images,22,557,536B image
+payload (21.51MiB),2,608,288B pool headroom,22,629,956B native file. Colour/normal/emissive/
+displacement original hashes exact, displacement16-bit/settings untouched. Native Box
+UVs used for byte-budget audit; original imported UV/history coverage remains in suite.
+Browser decoder/readback adapted in Node; no Safari/Nomad visual acceptance inferred.
+Private images/readback not committed. This replaces the earlier Pillow-encoded size
+estimate;888 failure preserved as device evidence and889 exact-file gate remains pending.
+
+Reviewed889 graph: shell/recovery/export-panel889â†’packed-child889â†’new scalar encoder889;
+packed child still imports native-core888â†’displacement888 and source/image helpers887.
+All unrelated UI/import/codec/UV maths/protected modelling/Multi/frozen/native donor bytes
+unchanged. All four continuity docs updated; publication proof follows.
+Device889: reset scene, import FULL MATERIAL.glb ONCE, SubD offâ†’Fileâ†’NOMAD must download;
+check all six native slots including displacement; UV edit and .boxlab Save/Open repeat.
+If still overbudget, report FULL new source/converted/object breakdown rather than guess.
+Opacity remains pending; displacement numeric settings copied unchanged, no amplitude
+rescaling/BoxLab geometry bake/generic glTF displacement/native multi-material/NOM import.
+
+## .888 â€” explicit Nomad displacement-map handoff, 2026-10-17
+
+User887 PASS /nextbuild protects supplied FULL MATERIAL.glb native download, original
+large colour plus normal/emissive/roughness/metalness slots, UV-edit repeat and .boxlab
+Save/Open after validator repair. Resolves reported885 FAIL screenshot886 for this case;
+earlier smaller native/UV/Pencil/navigation baselines retained. Audit current
+main714bd5a1/runtime3f605425/live887/owners and paired user GLB/NOM donors.
+
+Original importer ALREADY retains meshExtras.nomad.version1/textures.displacement
+semantic NAME REFERENCE plus all original image definitions/core texture links. Proved
+that explicitly named GLB image3 (6,200,450B16-bit PNG) equals BOTH native donors'
+displacement image, SHA25645771544a0c7442d03136ce78fc8b79f4341a5a1541eb34f9f6e45cf3cc0b501.
+Generator nomad11 observed. Metadata-only paired provenance fixture includes saved native
+slot/strength/midpoint/world and a tiny synthetic16-bit PNG; no private pixels committed.
+No new import channel, envelope/version, filename-stem inference or duplicate kernel.
+
+Small nomad-displacement-map binding helper reads only explicit version1 Nomad slot.
+Require EXACTLY ONE image.definition.name matching that explicit reference and EXACTLY
+ONE core texture sourcing it; missing/ambiguous/no-data/unsupported refs refuse before
+download. A matching image filename WITHOUT semantic slot never enables displacement.
+Shared embeddedUVImage validates PNG/JPEG bytes/MIMEâ‰¤24MB;16-bit data copied unchanged,
+no decode/reencode/downsample or precision loss. Default repeat/linear sampling; source
+Auto/UV and identity transforms only, unknown slot keys/transforms/Triplanar refuse.
+Observed native Auto encoding used with REQUIRED complete matching Base UV channel
+(Auto uses UV when UVs exist; official manual https://nomadsculpt.com/manual/material).
+Hardness/world projection metadata and finite source strength/midpoint/world fields
+validated; numeric settings preserved VERBATIM, including negative strength and source
+world boolean. This stage does not compensate displacement amplitude for import-fit
+or baked object scaling, bake displaced geometry, or add a BoxLab displacement renderer.
+
+ORIGINAL nativeMaterialMaps/writer now includes displacement-only input or displacement alongside existing
+map slots, original image-table dedup/alignment/24MB aggregate and donor material slot.
+Original one opaque material/Base UV/stale/evaluated refusal stays. .887 raw colour/
+normal/emissive24MB and display8MB/1024Â², packed8MB/2048Â² budgets unchanged. Source
+mesh/UV/resources/history stay read-only. Async facade already counts ALL nonpacked
+maps in same pool; no duplicate conversion/cache. File NOMAD status adds displacement
+count. Plain/no-explicit-slot and prior map output paths retain original behaviour.
+
+Five native regressions: explicit reference vs filename-only/array reorder, valid16-bit
+bytes/native donor slot/settings/unchanged geometry+UV fields, ambiguous/missing/sampler/
+transform/factor/stale/evaluated refusals, shared-image dedup/aggregate budgets and
+selected UV/project continuity, ACTUAL File NOMAD six slots/status/error recovery.
+Full local2433PASS/0FAIL/0skip. Actual user GLBâ†’original importer/Three geometry conversion
+â†’resource Save/Openâ†’native output22,511,792B:1object/6faces/1UVobject/6images; colour/
+normal/emissive/displacement hashes exact; native strength.17320507764816284, midpoint.5,
+worldfalse exact. Import fit scale2 retained as before. Offline packed split uses Pillow
+G/B and Node private geometry input strips image refs only; no browser/Nomad appearance
+proof inferred. .887 device PASS protected; .888 displacement device gate pending.
+
+Reviewed888 graph: shell/recovery/export-panelâ†’packed-childâ†’native-coreâ†’new displacement
+binding helper; core/image/surface and new helper's shared decoder remain887. All other
+UI/importer/resource/UV math/navigation/protected modelling/Multi/frozen beta/native donor
+bytes unchanged. All four continuity docs updated; publication verification follows.
+Device888: same FULL MATERIAL.glb/SubD offâ†’Fileâ†’NOMAD: Displacement slot populated with
+original image and saved settings, previous five maps intact; Pencil UV/project repeat.
+Separate opacity texture absent from GLB despite named extras, so opacity remains
+pending. Do not guess missing pixels or declare generic glTF displacement/NOM import.
+Next:888 device feedback; then audit opacity source/baked colour alpha and native material
+semantics before adding transparency or unrelated UV painting/native per-face materials.
+
+## .887 â€” large native colour image / project validation repair, 2026-10-17
+
+User reports885 FAIL; screenshot explicitly shows886 and native File NOMAD refusing
+at generic colour-material guard. This supersedes earlier885 PASS for the supplied
+FULL MATERIAL case; prior smaller accepted colour/normal/emissive/UV behaviour remains
+protected. Audit main44dca980/live886/pins; original importer parses supplied
+FULL MATERIAL.glb SHA256a68dbedf6cfa49efcfd3b5a86c0a599d5502410e7235913ff482790e24b1419d.
+Exactly one OPAQUE material, alpha1, UV0, default sampler, no material extensions.
+Colour PNG11,121,601B fails shared preview's8MB encoded guard. Reproduced same error
+with ACTUAL retained importer payload before change; no alpha/material-format guess.
+
+Shared embeddedUVImage takes optional maxBytes, default8MB and capped24MB; existing
+choices/surface resolver forward caller policy. ONLY native colour/normal/emissive
+byte-copy path opts into24MB. Existing native24MB unique-image aggregate remains exact;
+packed source/derived images remain8MB andâ‰¤2048Â² conversion. UV Editor and active surface
+preview still enforce8MB/default1024Â² decode, including large-image Solid/no-image
+fallback. No new decoder/material/UV/signature/history owner, downscale/reencode or
+change to unsupported material/sampler guards. Original native layout/UV/header/slot/
+image-dedup/download owners retained. This is a byte-copy budget repair, not added RAM
+for display textures or blanket PBR/opacity/displacement support.
+
+New large-resource test also reproduces RangeError Maximum call stack size exceeded
+in ORIGINAL project-glb-resources.decodeBytes repeated-group base64 regex. Replace
+only grammar validation with expected padding from decoded byteLength and a flat
+invalid-alphabet search; original byte length, atobâ†’btoa canonical check,24MB pool,
+resource versions1/2/3,32MB project Open and legacy compatibility retained. No new codec
+or looser malformed-padding/unused-bit acceptance. Actual Open handler + large shared
+pooled file now passes; inline large resource and selected UVâ†’native repeat pass too.
+
+Four native tests use metadata-only reported fixture + synthetic same-length bytes:
+exact11,121,601B native colour/normal/emissive output and preview rejection;24MB boundary,
+shared-slot/object dedup/aggregate/packed-budget guards; selected UV/resource/ACTUAL File
+NOMAD downloads; pooled .boxlab ACTUAL Open and strict invalid/valid base64 cases.
+Full local2428PASS/0FAIL/0skip. Extra ACTUAL user-file audit: original importer/Three
+geometry conversionâ†’native cube6faces/1UVobject/5images,16,310,924B file, all colour/
+normal/emissive hashes identical to source. Node geometry-loader copy strips image refs
+only; original retained resources go to writer. Packed JPEG split in this offline audit
+uses Pillow G/B, so browser conversion/Nomad appearance still needs device confirmation.
+Actual full5-image pooled resource roundtrip25,750,555B encoded /19,307,670B decoded
+retains ALL five image bytes, including unused displacement. No private pixels shipped.
+
+Latest native donor FULL MATERIAL EXPORT(1).nom SHA25689170a6ecc5427413069ad9902c1b0c128ee17ad7136e8737a28be324196e47c
+adds textures.opacity index4,417,303B PNG, factorOpacity1/use_color_opacity1; material
+stillopaque. GLB meshExtras.nomad has NAME-ONLY displacement/opacity slots and factors;
+displacement texture/image3 is unreferenced by core glTF material; opacity named image
+is absent. Metadata fixture records this; audit explicit binding/semantics in a later
+stage, never assign by image filename alone. No opacity/displacement implementation887.
+
+Reviewed887 cache graph: export-panelâ†’packed-childâ†’native-coreâ†’surface/image-helper;
+renderâ†’surface; MeshHealthâ†’workspaceâ†’image-helper; drawerâ†’managementâ†’project-codecâ†’
+resource helper (also direct management shell entry). Existing internal stamps retained
+except export-panel887; all corresponding parent URLs/hash contracts reviewed. Importer882,
+UV maths/inspector880/nav868, manager875, protected Multi1.0/native donor/modelling and
+frozen betas unchanged. All four continuity docs updated; publication proof follows.
+Device887: supplied FULL MATERIAL.glb, SubD offâ†’Fileâ†’NOMAD must download/open; colour,
+normal/emissive/roughness/metalness slots intact; UV editâ†’export and .boxlab Save/Openâ†’
+export repeat. Native visual gate remains pending; do not infer PASS from file upload.
+Next: this exact-file retest before advancing opacity/displacement/native multi-materials.
+
+## .886 â€” native roughness + metalness from packed GLB maps, 2026-10-16
+
+User .885 PASS /nextbuild protects native normal/emissive slots, strengths, alignment,
+UV edit repeat and project reopening, alongside accepted .884 colour and .865 UVs.
+Audited current main25412b5c/runtime9154caaa and live .885 markers/owners. Original GLB
+resources retain pbrMetallicRoughness.metallicRoughnessTexture; no channel conversion
+exists. Full donor885 proves separate textures.roughness/metalness and factorRoughness/
+factorMetalness. No filename inference, new modelling/material/history kernel or schema.
+
+New small nomad-packed-maps child performs export-local preparation, then delegates
+ORIGINAL native writer. Shared nativeMaterialMaps guard now recognizes the packed ref
+with the same single opaque material, embedded PNG/JPEG UV0, default repeat/linear
+sampling and finite factors. Greenâ†’roughness, blueâ†’metalness per official glTF2 spec;
+no red/occlusion reuse, luminance conversion, factor baking, gamma maths or Y flip.
+Original dimensions retained: at most2048Ã—2048, 8-bit source. Header inspection bounds
+BEFORE bitmap decode; 16-bit PNG, EXIF/eXIf orientation metadata and translucent decoded
+pixels refuse clearly. Browser createImageBitmap uses colorSpaceConversion:none and
+premultiplyAlpha:none, then canvas produces opaque grayscale PNGs. OffscreenCanvas or
+original DOM canvas/toBlob fallback; bitmap close and scratch canvas reset in finally,
+including encode/decode failure. No preview-thumbnail decoder changes. Original colour/
+normal/emissive images stay exact encoded bytes. Full donor's relevant JPEGs are2048Â²;
+its16-bit displacement is a distinct unsupported source, not treated as packed PBR.
+
+One conversion per shared encoded buffer per export. Derived PNGs exist only within
+this download, never source/project/history payload. Same native image-table alignment,
+byte-identity dedup andâ‰¤8MB/image /24MB aggregate guards. Native factorRoughness and
+factorMetalness carry source scalar factors (default1); native slot/header7/mesh/UV/
+facegroup owners retained. Synchronous core refuses unprepared declared packed maps,
+never silently omits them. Async facade captures mesh/settings and read-only payload
+BEFORE any await so ongoing scene edits cannot mix UV/geometry states. Plain/no-packed
+output remains byte-identical; existing File NOMAD download owner reports both map
+counts. Existing GLB/OBJ and surface preview/import/resource/editor math unchanged.
+
+Seven new regressions cover actual G/B pixel arraysâ†’distinct valid PNG bytes (inflate+
+CRC), donor slots/factors/native geometry+UV byte identity, all five core maps together,
+shared source conversion once across objects, selected UV/project continuity, in-flight
+snapshot isolation, source/sampler/UV/factor/size/budget refusals, bitmap/canvas cleanup,
+JPEG header/metadata guards, DOM canvas fallback and ACTUAL File NOMAD downloaded bytes/
+status/failure recovery. Browser transport is adapted in Node; no browser/Nomad rendering
+proof claimed. Prior735/865/884/885 action fixtures now supply real async facade, retaining
+all their semantic assertions. Full local2424PASS/0FAIL/0skip; publication proof follows.
+
+Reviewed cache graph: shell/recovery/export-panel886â†’packed-child886â†’native-core886;
+coreâ†’unchanged surface/image885. Render/MeshHealth/workspace885, importer882, UV edit/
+inspector880/nav868, Multi1.0, native donor and all modelling/frozen beta bytes unchanged.
+Device886: one-material GLB with packed roughness/metalness (â‰¤2048Â²), SubD offâ†’Fileâ†’NOMAD:
+separate Roughness/Metalness slots, expected glossy/matte and metallic regions; existing
+colour/normal/emissive intact; Pencil UV edit and .boxlab Save/Openâ†’export repeat.
+Next:886 device feedback, then audit actual source binding for displacement or native
+multi-material schema before claiming either. No native NOM import or painting added.
+
+## .885 â€” native normal + emissive maps from full donor, 2026-10-16
+
+User .884 Perfect PASS protects native colour image visibility/alignment, Pencil UV
+edit repeat and project reopening. User requests other maps and supplies FULL MATERIAL
+EXPORT.nom, SHA256dc9102c6eb38ea95e4d7705b0d2fe89eb58cf0c1248c35f2cce35a2a15cf8685.
+Audit current main3cd0d5ae/native884, full material donor and retained GLB resources.
+Donor revision7 confirms slots color/normal/emissive/roughness/metalness/displacement,
+same image descriptors/texture projection/samplers; normal_neg_y=false, factorNormal,
+factorEmissive and factorEmissiveStrength observed. Only metadata/provenance fixture
+committed, not user's large file/images.885 scope: normal+emissive can transfer exact
+encoded bytes. Roughness/metalness packed G/B conversion and displacement source
+channel identification remain separate; never guess from retained image filenames.
+
+Reuse original image resolver: extract embeddedUVImage from unchanged880 choice rules,
+with importedUVImageChoices delegating same exact PNG/JPEG/UV0/mime/â‰¤8MB checks. Same
+renderer/decoder lifecycle/math retained. Extract uvImageMaterialSource from original
+surface helper for shared single-used opaque/material factor checks; original colour
+surface API delegates it and retains original sampler/image policies. No parallel
+material/UV/signature/history/picking owner. Only parent import URLs change for UV
+workspace/MeshHealth/render, preserving old internal MeshHealth stamp880 deliberately.
+
+Extend ORIGINAL synchronous native writer's884 local image table/material links for
+normalTextureâ†’textures.normal, emissiveTextureâ†’textures.emissive. No decode/reencode,
+gamma conversion or resampling. Match Base UVs, source UV0/PNG/JPEG/no transforms,
+default repeat+linear mipmap sampler and one opaque material. Explicit source normal
+scaleâ†’factorNormal (finite f32/nonnegative); native normal_neg_y=false matches donor/
+glTF convention. Source emissiveFactorâ†’factorEmissive (defaultblack), native strength1.
+HDR/material extensions remain refused. Normal/emissive-only materials do not require
+fake colour image; base RGB factor supplies constant colour. Existing colour-only/plain
+flow retained. Source images shared read-only, byte-identity dedup across slots/objects,
+existingâ‰¤8MB per image/24MB aggregate. Whole export refuses unsupported declared normal/
+emissive refs rather than dropping them. Original geometry/UV bytes/field offsets/native
+revision7/donor/header/download owners retained. Status adds normal/emissive map counts.
+
+Five native tests cover donor slot descriptors/raw PNG+JPEG bytes/normal strength/
+emissive RGB/defaults, normal-only/emissive-only input, shared-image dedup/material
+links/counts, unsupported image/UV/transform/sampler/factor/aggregate guards, selected
+UV+project continuity and ACTUAL File NOMAD downloaded bytes/status. All880â€“884 checks
+retained. Full local2417PASS/0FAIL/0skip. Additional real donor audit exported actual
+1,248,872-byte normal JPEG and2,754-byte emissive PNG, both original hashes matched.
+No browser/Nomad appearance proof claimed. Original .884 colour PASS protected.
+Reviewed885 cache graph: export-panelâ†’native-coreâ†’surface/image helper; renderâ†’surface;
+MeshHealthâ†’workspaceâ†’image helper. Inspector/edit880/nav868/importer882/native baseline
+donor/protected modelling/frozen betas untouched. Publication proof follows.
+
+Device885: one-material GLB containing normal/emissive maps, SubD off â†’ Fileâ†’NOMAD:
+Nomad Material Normal/Emissive slots populated, bump detail/emission factor correct;
+Pencil UV editâ†’export repeat; .boxlab Save/Openâ†’NOMAD; accepted colour map retained.
+Next narrow stage after feedback: unpack glTF metallicRoughnessTexture GREENâ†’roughness,
+BLUEâ†’metalness with bounded browser conversion; native slot layout now proven by donor.
+Reference: Khronos glTF2.0 Specification additional textures/material metallic-roughness,
+https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html . No direct copy of packed RGB
+image into scalar slots, no invented displacement reference, no native multi-material
+support or Nomad import claim. Keep885 device gate separate from883 GLB export gate.
+
+## .884 â€” native Fileâ†’NOMAD colour image embedding, 2026-10-16
+
+User supplied EXPORTED TEXTURED.nom from Nomad during883 publication, lifting the
+native-schema fixture blocker. SHA256ab3d9293d51d0597cdd6b17439112378e11a486c2898bc72282686a849dcfd6f.
+Read donor fully through existing reader: revision7, JSON offset65608, images table
+{length,offset,type} points to RAW JPEG/PNG bytes, material.textures.color.index links
+image table. Donor contains colour/roughness/normal/displacement records. Metadata-only
+fixture records provenance/header/image descriptors/colour texture convention; user's
+10MB file/pixels are NOT committed or used as runtime donor. Frozen tube donor remains
+byte-identical.883 GLB device acceptance is NOT inferred from native-file upload.
+
+Extend original nomad-export-core writer, not another container/UV/export kernel.
+First stage: one USED opaque core UV0 PNG/JPEG colour-image material per object, same
+original uvImageSurfaceSource eligibility through unchanged882 helper. Require matching
+complete Base UVs, default repeat wrapping + linear mipmap filters; unsupported/multi/
+missing/nonopaque/transformed/invalid/nondefault-sampler inputs refuse clearly instead
+of dropping colour. This is colour handoff only, not full PBR: normal/packed roughness-
+metalness/displacement/other image slots remain pending. Constant roughness/metallic
+factors and RGB baseColorFactor transfer with donor-proven colour slot convention.
+
+Native-local image table embeds ORIGINAL source bytes (no decode/reencode/downscale),
+4-byte aligned; image buffer identity dedup across objects within this build, â‰¤24MB
+aggregate, originalâ‰¤8MB source guard. Existing geometry parts append after images with
+same offsetFields owner; mesh.material points to appended native material cloned from
+original donor. Temporary table/material/parts are local; shared scene/project/history
+payloads untouched. Textured output uses observed header revision7; no-image output
+retains original revision6/header and native UV/geometry bytes. Original donor thumbnail/
+other settings retained. Count now counts meshes, not binary image/padding parts.
+Image field bounds verified with existing reader. Native action reports colour images
+count while retaining real .nom MIME/name/download and original UV status.
+
+Five new native tests verify donor metadata convention/header7, exact PNG/JPEG image
+bytes/material links/factors, unchanged UV/geometry field bytes, mixed plain/coloured
+objects/alignment/shared-image dedup, selected UV/project-resource continuity, unsafe
+source/UV/sampler/budget refusals and ACTUAL File NOMAD downloaded bytes/status.881
+preview-invariance fixture now uses default sampler for its native baseline; its
+clamp/nearest preview tests remain, and new native refusal test explicitly covers them.
+Full local2412PASS/0FAIL/0skip. Additional audit exported donor's actual1,412,537-byte
+JPEG through new writer: original image hash matched, native revision7, one colour image.
+No browser/Nomad visual proof claimed; iPad opening/orientation/appearance gate pending.
+
+Cache graph shell/recovery/export-panel884â†’native-core884â†’unchanged surface882â†’decoder880.
+Original importer/render/surface882/UV workspace880/resource875/native donor, protected
+modelling and frozen betas unchanged. Only metadata fixture, no user image assets shipped.
+All four continuity docs updated; publication proof follows.883 GLB tests remain active.
+
+Device884: ONE-material textured GLB, SubD off â†’ Fileâ†’NOMAD â†’ open in Nomad: colour
+image+UV alignment; Pencil island editâ†’NOMAD repeat; .boxlab Save/Openâ†’NOMAD; plain mesh
+still exports. Multiple supported single-material objects may share one native file.
+Next after feedback: native colour device result first; audit additional PBR channels
+or native per-face material format using real donors before claiming support. Packed
+roughness/metalness cannot be copied as a plain roughness image without channel handling.
+
+## .883 â€” exact material GLB handoff; native NOM textures still unresolved, 2026-10-16
+
+User .882 PASS /nextbuild after confirming active/selected-only UV Image is expected.
+Protect fresh exact multi-material preview, Pencil/history/project persistence and
+active-only memory policy. During883 user reports UVs but no textures on return to
+Nomad and explicitly confirms Fileâ†’NOMAD (.nom), NOT GLB. That report is a distinct
+NATIVE image omission; do not claim this GLB repair fixes it or mark native textures PASS.
+
+Audit main15e57665: original GLB patcher assigns first retained material to every
+primitive. Original exporter now optionally buckets by BOTH facegroup and exact .882
+face-material ID, using original triangulator/attribute/fit owners. Shared exporter
+faceMaterialAssignments validates imported version/source, original topology signature,
+face count and material IDs for both preview and Base GLB. Multi-material missing/
+stale/invalid/evaluated/SubD mappings refuse with fresh-import/Base instruction rather
+than first-material substitution. Legacy single/plain GLB paths unchanged.
+
+Patch each exported primitive to the corresponding retained material with original
+per-object texture/sampler/image base remapping and byte append. Facegroup identity is
+independent of material splitting: unique original group table + per-primitive group ID;
+several material primitives may belong to ONE Nomad facegroup. Exact multi-material
+branch preserves all UV seam variants (old imported pole-collapse path unchanged for
+legacy/single exports). GLB inspection remains original Loader self-check. Temporary
+export geometry/material cleanup now runs in finally on errors too, shared materials
+retired once. No image decoding/painting/render/kernel/resource/history changes.
+
+Five native tests verify actual Three GLB triangles/material IDs/UV corners/group IDs,
+reimport names, multiple objects/global material bases with duplicate names, final image
+bytes + all five core texture slots/sampler references/alignment, selected UV edit +
+resource-codec continuity, missing/stale/invalid/evaluated refusals and failure cleanup.
+Image-bound test removes texture refs ONLY from private Node verification copy so actual
+Loader can validate geometry without browser decoding; final real exporter/patcher bytes
+checked independently. No automated browser/Nomad image rendering proof. Full local
+2407PASS/0FAIL/0skip, earlier semantic tests retained.547 source assertion follows
+separate group-ID mapping rather than freezing group=index. Reviewed shell/recovery/
+export-panel883 only; importer/render/surface882/workspace+decoder880/NOM865/protected
+modelling/frozen beta bytes unchanged. Publication proof follows.
+
+NATIVE BLOCKER: nomad-export-core865 explicitly writes geometry/UVs/groups only and
+retains donor material; no imported texture/image serialization exists. Sole validated
+native donor nomad-tube.nom has material factors but NO image/texture records. No
+textured .nom fixture or validated image-link/binary convention exists in repository.
+Do not invent native fields or rename GLB as NOM. Request a real textured .nom SAVED BY
+NOMAD (simple UV cube + one image sufficient) to inspect image payload/material links
+and build a truthful native test before implementation. Native writer/donor unchanged;
+accepted865 UVs remain protected. User texture omission remains OPEN, not fixed by883.
+
+Device883 GLB gate: File format GLB + Baseâ†’Export/Save (NOT NOMAD button) â†’ Nomad:
+correct images/areas + facegroups; UV editâ†’repeat; .boxlab Save/Openâ†’GLB. Exact maps
+require fresh882+ GLB import with Split groups off. Next priority is native .nom
+texture sample/format audit and repair once fixture available; painting later.
+
+## .882 â€” exact imported face materials in UV Image, 2026-10-16
+
+User .881 PERFECT PASS /nextbuild protects active-image orientation/colour/navigation,
+Pencil UV editâ†’surface refresh/history and ordinary look restoration. Audit main007fdfb6
+and original importer882 predecessor797 found retained materialIndices are a used-set,
+NOT per-face assignments. Exporter buckets group by facegroup labels; duplicate names
+are not proof of material identity. Do not infer image assignment from those labels.
+
+Extend ORIGINAL importer conversion/merge/weld/quad owners with optional per-face global
+material IDs from glTF.parser.associations. Carry them alongside existing corner channels;
+drop matching entries for removed faces, retain IDs for reconstructed quads, and prevent
+quad merges across differing IDs even if facegroup labels match. Store only complete
+valid IDs in imported payload.faceMaterialIndices + materialTopologySignature. Legacy/
+missing associations never claim provenance. File GLB callback supplies parser map; OBJ
+flow unchanged. Existing generic imported resource codec/history/COW snapshots carry
+optional fields without a new envelope/version/history owner. Old mixed-material project
+files need a FRESH GLB import in882 to obtain exact assignments; no name-based migration.
+
+Original buildUVPreviewGeometry adds explicit materials:true inspection option, validates
+assignment/signature/IDs, and delegates same editableToGeometry triangulation/corner UVs.
+Only that preview option groups by exact material ID and exposes slot IDs in geometry
+userData. Ordinary GLB/NOM/OBJ writers and checker retain their original grouping/math;
+this stage does NOT repair the older multi-material GLB output patcher's first-material
+behavior. Keep that export limitation distinct from correct surface preview.
+
+Extend SAME active-image helper: up to FOUR used opaque embedded-image materials,
+aggregateâ‰¤8MB encoded source, each original1024Â² decode (up to16MiB decoded RGBA total
+plus GPU textures). Decode serially and show image only after ALL sources are ready.
+Any unsupported/missing/transparent/overbudget material, stale/missing map or failed
+decode leaves whole object Solid. Source cleanup/mode switch cancels further decoding;
+late results and all prior bitmaps/textures/materials/geometry release exactly once.
+Per-slot baseColorFactor/sampler/sidedness retained. Existing881 single-material files
+remain supported; inactive objects still Solid. No painting, PBR lighting, persistent
+material edits, new pointer/kernel/history owner or evaluated UV propagation.
+
+Six new native tests cover actual GLTFLoader reversed IDs/identical material names,
+conversion/merge/weld/quad boundary provenance, optional channel codec roundtrip, original
+triangulator group/position/UV slot mapping + stale refusal, real Three multi-image
+factors/samplers/serial readiness/disposal/failure/cancel/budgets, actual File GLB callback
+and independent OBJ callback. Full local2402PASS/0FAIL/0skip. One544 literal importer-call
+assertion advances to include parser associations, preserving split-toggle contract;
+all earlier tests retained. Reviewed pins shell/recovery/render/importer/export panel/
+surface child882; decoder/workspace880/native NOM865/manager875/navigation868/protected
+modelling and frozen betas unchanged. Publication proof follows.
+
+Device882: FRESH import2â€“4 opaque embedded-image materials, Split groups OFF/SubD OFF â†’
+VIEWâ†’UV Image. Inspect correct image areas, edit UVsâ†’Back to3D/history, Save/Open project,
+and switch to Studio/Solid. Existing single-material gate remains protected. Next after
+feedback audit original GLB patcher's per-face material export (without guessing from
+facegroup names) before painting or broader material support.
+
+## .881 â€” temporary active-object 3D UV Image view, 2026-10-16
+
+User .880 Perfect PASS /nextbuild protects embedded image orientation/reference,
+Pencil/navigation/history, source chooser and project persistence. Repeated PASS/
+nextbuild while .881 was still in progress continues this release; no .881 device
+acceptance inferred. Audit main6b6565c4/.880: retained importer material/sampler/image
+resources, .880 bounded decoder, .879 exporter preview geometry and render owner are
+sufficient. No second UV/triangulation/history/material-editing kernel.
+
+VIEWâ†’UV Image now inspects the ACTIVE plain independent Base object with exactly ONE
+used opaque core material and embedded PNG/JPEG UV0 base-colour image. Unlit sRGB image
+with linear baseColorFactor, glTF V0 (flipY=false), original core clamp/repeat/mirrored
+wrap and nearest/linear/mipmap filters, material double-sided flag. Original decoder
+limits retained (â‰¤8MB encoded source,1024Â² bitmap). Inactive objects remain Solid,
+bounding resident surface preview to one active image. Mixed used materials, alpha
+blend/mask/nonopaque factor, material/texture transforms/extensions, missing/external/
+invalid resources, linked/procedural/reference/SubD/Mirror/stale/incomplete/over20k-
+corner channels retain Solid; no guessed per-face material assignment. UV Editor's
+multi-image reference chooser remains accepted and unchanged.
+
+Small uv-image-surface-preview child delegates original geometry builder and decoder.
+Original body geometry/raycast untouched; overlay raycast disabled. Solid stays while
+loading/on decode failure. Native source geometry disposal or existing render cleanup
+removes overlay and disposes geometry/material/texture/bitmap once. Canceled-before-
+start requests skip decode; late results close without replacing a newer look. Existing
+Mesh Health session-end refresh applies UV changes; native rebuild handles history and
+object switches. Startup Studio retained. No persistent textures, resource writes,
+painting, PBR lighting, evaluated UV propagation or export changes.
+
+Five real Three/native tests cover source/material/sampler guards + codec continuity,
+sRGB/factor/wrap/filter/orientation/UV mapping, exact-once disposal and async cancellation/
+failure races, actual render active/inactive/base eligibility + UV session refresh/look
+restoration, original image/project/native NOM byte identity + GLB UVs. Full local suite:
+2396 PASS /0 FAIL /0 skipped. Original .879/.880 tests remain intact. Render-button
+contract now requires original9 plus UV Image. Cache graph shell/recovery881 â†’ render881
+â†’ new surface child881 â†’ unchanged decoder880; exporter879/workspace880/native NOM865/
+manager875/navigation868/protected modelling/frozen beta bytes retained.
+
+Device .881 gate pending: textured single-material GLB/SubD off â†’ VIEWâ†’UV Image;
+orientation/colour/orbit, Pencil island editâ†’Back to3D refresh + Undo/Redo, Studio/Solid
+restoration, native/plain/mixed-material fallback. Next: .881 device feedback, then audit
+per-face material assignments through the ORIGINAL exporter buckets before multi-material
+surface support. Keep resource images read-only; painting remains later.
+
+## .880 â€” embedded base-colour image reference in UV Editor, 2026-10-16
+
+User .879 Perfect PASS protects temporary surface checker, navigation, UV edits/session
+refresh/history and ordinary look restoration. Audit main67e01309/live879: importer797
+retains materialIndices/materials/textures/embedded image bytes; resource875, history,
+Duplicate and codec already preserve them. No image display/decoder exists. Extend the
+ORIGINAL UV workspace/renderer with optional Image reference and material-name chooser
+when multiple compatible sources exist. Whole selected image behind ALL UV outlines;
+this is reference inspection, not face-material assignment or PBR rendering.
+
+Small uv-image-preview helper resolves USED materialIndices â†’ UV0 baseColorTexture â†’
+texture.source â†’ existing embedded PNG/JPEG bytes. No URLs/network fetches or unrelated
+normal/roughness images. Texture transforms/other UV sets/texture extensions, external
+or missing/invalid/over8MB image records refuse; missing native/plain resources disable
+Image. Labels use textContent. Optional browser createImageBitmap produces a1024Ã—1024
+reference (square tile mapping); original image bytes never resized/replaced. Browser
+unsupported/decode failures show inline status. At most one decoded image held; token
+checks discard/close late results, canceled-before-start work never decodes. Switching,
+off/close/payload replacement releases bitmap; same read-only image across UV-only payload
+replacement reuses it. No new history/resource schema or image editor/cache pool.
+
+Renderer shares original projection/picking, clips canvas+tile0â€“1, flips vertically so
+stored glTF V0 corresponds to image top (GLTFLoader uses flipY=false). Image drawn above
+optional checker and beneath outlines/selection/seams; Pencil transforms UVs over fixed
+image. Reference is tile-only, not sampler wrapping/material colour-factor evaluation.
+Controls cancel pending Pencil without commit, retain view/selection; off on reopen.
+No 3D image look, painting, new UV channel, kernel, gesture owner, or topology changes.
+
+Five native regressions cover actual importer container/resource shape+codec bytes,
+used-source/unsupported guards, decoder thumbnail/budget/fail/cancel/race/reuse lifecycle,
+renderer V0/projection/clip/order/read-only and actual workspace chooser/Pencil/session
+cleanup. Full local Node24:2391PASS/0FAIL/0skip; final publication proof follows.
+Cache MeshHealth/workspace/edit/inspector880 plus new image helper880 and shell/recovery;
+edit880 changes ONLY shared inspector import. Surface checker/render/export879, native
+NOM865, manager/codec/resources875/nav868, protected Multi1.0/main854/Loop/Extrude/Boolean
+and frozen betas unchanged. Device880 image orientation/readability/Pencil/chooser/file
+reopen gate pending. Next after feedback: audit temporary 3D base-colour image view with
+per-material ambiguity/sampler/colour/lifetime handling before painting; reuse original
+render/geometry/resource owners and keep imported images read-only.
+
+## Protected .879 â€” user PASS2026-10-16
+
+3D UV Checker surface/seams, orbit/pan/pinch, island Scaleâ†’Back to3D refresh, native
+Undo/Redo and Studio/Solid restoration accepted. Preserve ephemeral overlay and original
+body geometry/picking/export isolation; .880 image reference gate remains separate.
+
+## .879 â€” temporary 3D UV Checker view, 2026-10-16
+
+User .878 PASS protects 2D Checker readability/alignment/navigation/Pencil/history/
+reopen. Audit main033d9950/live878: render-modes568 owns all body looks; exporter877
+already owns polygon triangulation and corner UV seam mapping. Add UV Checker as a
+ninth look under VIEW, through that same render owner. No new modelling/triangulation/
+pointer/history kernel. Studio remains startup default; switching looks restores original
+body geometry/material behavior. Plain independent Base meshes with complete valid stored
+GLB/native UVs show a repeating16Ã—16 unlit checker over the surface; missing/stale/invalid,
+linked/procedural/reference/SubD/Mirror objects retain Solid fallback. Preview bounded to
+20,000 face corners; larger channels fall back entirely, never partial checker surfaces.
+
+Exporter exposes guarded buildUVPreviewGeometry, delegating original editableToGeometry/
+triangulateFace with seam preservation, no imported-fit restoration (live coordinates),
+finite f32/index/corner/signature/completeness guards. Actual GLB/NOM export maths unchanged.
+Small uv-checker-preview owns temporary child geometry/ShaderMaterial; no textures/images,
+paint or stored material edits. Original body geometry/raycast is untouched, preview
+raycast disabled. Existing render cleanup disposes checker exactly once; original body
+geometry dispose listener also removes/disposes it during native main/inactive redraw,
+without modifying protected main854 or manager875. Read-only payload stays untouched.
+Original Mesh Health session-end event refreshes checker after UV edits; native rebuilds
+handle scene history/object changes. Importer/editor/navigation/resource codecs unchanged.
+
+Five native regressions cover original corner mapping/live-space/concave triangulation,
+invalid/stale/partial/overbudget refusals, actual Three overlay/picking/resource lifecycle,
+actual render active bridge/inactive lookup/fallback/look restoration/session refresh,
+and cylinder THREE seam+cap variants/native NOM bytes unchanged. Full Node24 suite:
+2386PASS/0FAIL/0skip. Existing453 render-button test now requires all original8 plus new
+checker, rather than freezing total8. Reviewed render/export-panel/child cache879 and
+shell/recovery879 only; MeshHealth/workspace/edit/inspector878/nav868/NOM865 retained.
+Protected Multi1.0/Loop/Extrude/Boolean/main and frozen beta bytes unchanged.
+Device879: Cube Box UVs or upright Cylinder UVs, SubD off â†’ VIEWâ†’UV Checker; orbit to
+inspect seam/stretch/relative density; edit island Scale then Back to3D; Undo/Redo;
+VIEWâ†’Studio/Solid. Native Base UVs only, no evaluated UV propagation/painting claim.
+Next: device feedback on temporary checker, then imported-image inspection through
+original resource/render owners before painting or broader seam unwrap work.
+
+## Protected .878 â€” user PASS2026-10-16
+
+2D Checker toggle/readability, tile-aligned pan/pinch/Fit, Pencil Move/Scale/Rotate and
+Undo/Redo, Back to3D/reopen defaults accepted. .879 surface-checker device gate separate.
+
+## .878 â€” UV Editor checker reference, 2026-10-16
+
+User .877 PASS protects upright Cylinder strip/caps, Pencil/history, native project/
+NOMAD Base and GLB seams; Box/Planar/imported baselines remain protected. Audit current
+main83c0b563/live877: no checker inspection exists. Existing inspector canvas owns UV
+projection; render-modes568 owns Studio/materials but has no UV-checker surface path.
+Add optional Checker toggle to the ORIGINAL large UV workspace and renderer. Fixed
+16Ã—16 reference inside tile0â€“1 uses the same projection as outlines/picking, with
+numerically clipped cells and at most256 rectangles regardless of UV bounds/zoom.
+Draw under island colours/gold selection/orange seams. Default off on reopen; keep
+view and selection when toggled, cancel pending Pencil preview/capture without edit.
+Report/history refresh retains checker setting within current session. No scene/resource/
+project/history writes, image decoding, new gesture/UV/render kernel or material changes.
+This is a 2D size/alignment aid, not 3D stretch inspection or texture painting.
+
+Three actual renderer/workspace regressions cover DPR/pan/zoom/picking, extreme/tiled/
+offscreen/stale layouts, draw order/read-only arrays, pending-stroke cancellation,
+view/selection/refresh/reopen lifecycle and no edit/history callbacks. Full local Node24
+2381PASS/0FAIL/0skip. Cache graph MeshHealth/workspace/inspector878; edit878 changes ONLY
+its inspector import pin; original edit maths/guards unchanged. Shell/recovery878.
+Export panel877/native NOM865/manager+codec+resources875/nav868, protected Multi1.0,
+main854/Loop/Extrude/Boolean and frozen betas unchanged. Publication proof follows.
+Device878: Checker toggle/readability, pan/pinch/Fit, Pencil Move/Scale/Rotate + Undo,
+close/reopen default off. Next audit a temporary 3D checker through existing render
+and triangulation owners; do not add another triangulation kernel or persist a preview
+material into resource/history/export. Imported image inspection and painting follow
+separately after material/resource budget and lifecycle audit.
+
+## Protected .877 â€” user PASS2026-10-16
+
+Upright Cylinder UV strip/two caps, separate Pencil island edits, Undo/Redo, Save/Open,
+NOMAD Base and Base GLB seam/cap continuity accepted. Preserve native sourceboxlab/v3
+transport and imported pole-weld compatibility; .878 checker device gate remains separate.
+
+## .877 â€” native Cylinder UVs (world Y), 2026-10-16
+
+User876 Perfect PASS protects Box panels/seams/island edits/history/project/NOMAD
+Base. Audit main79fec447/live876: no cylindrical mapper exists. Add Cylinder UVs (Y)
+to Mesh Healthâ†’UVs for plain upright round aligned-ring cylinders/prisms. Uses the
+same native eligibility, sourceboxlab/v3 channel and original commit/history owner.
+One side strip with deterministic existing-column seam near maximum world X, plus
+two separate planar caps for the standard closed Cylinder. No geometry split/change.
+Open side-only forms can produce one strip; no general arbitrary seam-cut operation.
+Measured cross-section polygon edge lengths unfold the strip, preserving side/cap
+edge density, including odd radial counts and multiple height bands. Atlas is fitted
+with gaps between strip/caps. Round rings about Y required; nonround/elliptic, axis-
+collapsed, unaligned seam, degenerate/invalid/procedural/imported/modifier contexts
+refuse before history/payload mutation. User can still use Planar/Box as appropriate.
+
+Extend existing imported-uv-edit with createCylinderUV; read-only normalized positions
+and unique radial columns, original native commit. Repeat no-op; replaces native UVs
+with one checkpoint, Undo restores original; peers/resources untouched. Original
+UV editor, selection, Pencil tools and navigation unchanged. Manager/codec/resources875,
+inspector/workspace874/nav868/native NOM865 and protected/frozen owners unchanged.
+
+Related GLB audit found old >=3-UV-variants pole-collapse rule could merge native
+seam+cap variants at one geometry vertex. Existing exporter now sets preserveUVSeams
+ONLY for sourceboxlab, retaining native UV corner variants; imported GLB pole/weld
+path unchanged. No new exporter or triangle kernel. Prior membership-only attribute
+tests did not prove this distinction. New real GLB assertion checks all THREE UV
+variants of the seam/cap vertex against source values, in addition to NOM UV pool
+bytes/project continuity. File NOMAD writer was already seam-correct and unchanged.
+Five native regressions cover3islands/seam/no-op/Undo/geometry identity, measured edge
+density/odd rings/finite extremes, native replacement/peer/island isolation, actual
+MeshHealth/project/NOM/GLB seam variants, and invalid/unsupported refusals. Local Node24 full2378PASS/0FAIL/0skip; publication proof follows below. Cache graph MeshHealth/edit/export-panel877 plus
+shell/recovery877; all other owner pins retained. Device877 gate pending;876 PASS
+protected. Next after feedback: audit UV checker/texture inspection through existing
+render/resource owners before painting or broader curved/seam unwrap work.
+
+## Protected .876 â€” user PASS2026-10-16
+
+Cube Box six-panel layout/seams, selected Pencil edits, native Undo/Redo/Planar
+replacement and Save/Openâ†’NOMAD Base accepted. Preserve Box mapper/sole gesture owner;
+.877 Cylinder and native GLB seam gate remains separate.
+
+## .876 â€” native Box UV mapping, 2026-10-16
+
+User875 PASS protects native Planar/editor/history/SaveOpenâ†’NOMAD Base and existing
+imported-UV baseline. Audit main2f29af87/live875: no box/dominant-axis mapper exists;
+native sourceboxlab/v3 channel, inspector/seam data and scene/export owners suffice.
+Add Box UVs alongside Planar XY/XZ/YZ in Mesh Healthâ†’UVs. Whole plain Base mesh maps
+by each face's dominant signed Newell normal (deterministic X/Y/Z tie order) into six
+fixed3Ã—2 directional cells. Normalized read-only coordinates avoid huge/tiny finite
+scale overflow. One common projected-coordinate scale preserves rectangular face
+proportions/equal axis-aligned density,2% horizontal tile/cell margins; spare space is
+intentional. A normal cube yields six separate quad islands and12 seam edges, without
+side-face collapse or opposite-face overlap. Same-direction subdivisions keep shared
+UVs. General shapes can still overlap within a directional cell or distort; this is
+box projection, not seam-based unwrap/optimal packing or texture painting.
+
+Extend existing native creation owner in imported-uv-edit with createBoxUV. Extract
+original native eligibility/commit into private shared helpers used by Planar and Box;
+Planar maths/output retained. Invalid indices/nonfinite/degenerate faces/context/history
+refuse before resource/history changes. Repeated same Box mapping adds no history;
+Box can replace native Planar UVs in one checkpoint, Undo restores the previous payload.
+Imported GLB/procedural/modifier/linked/reference/locked resource refusals retained.
+Original COW transport, native envelope v3, inspector874/workspace874/navigation868,
+manager/codec/resources875 and GLB/native exporters865 unchanged. No modelling kernel,
+new schema/pointer/history/exporter or geometry mutation. UI native note now generic,
+since same native channel supports more than Planar. All Pencil edits remain original.
+
+Five native tests cover cube6islands/12seams/disjoint atlas/noncollapsed faces/native
+Undo/no-op, rectangular proportions/density/same-direction adjacency/extreme finite
+scales, Planar replacement/peer isolation/selected edit, actual MeshHealth callback/
+project/native NOM independent UV indices+corner bytes/real GLB UVs, invalid/imported/
+procedural/modifier/degenerate/history refusals. Local Node24 full2373PASS/0FAIL/0skip; publication proof follows below.
+Cache graph MeshHealth/edit876; shell/recovery876. Other owners/protected Multi1.0,
+Loop/Extrude/Boolean/main and frozen betas untouched. Device876 box/editor/history/
+project/Nomad gate pending;875 PASS protected. Next: feedback on Box mapping, then
+seam/unwrap or texture-inspection stages after owner audit; no evaluated UV guarantee.
+
+## Protected .875 â€” user PASS2026-10-16
+
+Native Planar XY/XZ/YZ layout, original Pencil manipulation/history, native project/
+NOMAD Base roundtrip and imported UV baseline accepted. Preserve sourceboxlab/v3
+transport and no fake GLB provenance;876 device acceptance remains separate.
+
+## .875 â€” native BoxLab Planar UV creation, 2026-10-16
+
+User874 PASS protects Fit-to-tile aspect/isolation/idempotence/history, Pencil tools,
+navigation and project/Nomad UV roundtrip. Audit mainaeae3081/live874: existing read-
+only resource/history/ordinary Duplicate/UV inspector/edit/export paths are sufficient;
+no native UV authoring or projection exists. Mesh Health disclosure is now UVs, with
+Planar XY/XZ/YZ for plain independent Base meshes (SubD/Mirror/linked/Boolean/Array/
+curve/reference/locked/imported-resource contexts refuse). Projects the WHOLE mesh
+onto chosen coordinate axes, uniformly fits to tile with2% margin, original geometry
+unchanged; repeat same projection no-op. Reprojection replaces only native UVs with
+one native scene checkpoint. Axis silhouettes can overlap/collapse opposite/side faces;
+this is planar projection, not a box/seam unwrap, packing or painting.
+
+Extend original imported-uv-edit owner with createPlanarUV; no parallel edit/history
+kernel. Native channel uses the existing glbPassthrough face-corner RESOURCE TRANSPORT
+with explicit source:'boxlab', version1 and only uvTopologySignature/uvCorners. This
+is honest native provenance, never source:'glb' or invented material/image metadata.
+Project resource envelope version3 encodes native UV-only records; strict keys/finite
+corner/signature validation, no images/materials. Existing GLB envelopes1/2, plain
+project format1, imported channels and pooled resources unchanged. Older apps refuse
+v3 safely. Existing .boxlab codec/SaveOpen/manager atomic replacement now accept this
+native record; read-only snapshots, single/Multi Duplicate and copy-on-write edits
+reuse original owners. Native Linked Duplicate refuses before source conversion;
+LiveArray/source guards already refuse attribute-bearing resources. No linked UV
+propagation or topology/modifier UV regeneration promised.
+
+Existing inspector874, workspace874/Pencil/navigation868 and UV Move/Scale/Rotate/
+Flip/Fit now also accept native provenance through original edit guard. Existing GLB
+and native NOM865 writers ALREADY consume this face-corner format/source-agnostically;
+unchanged writers verified with real UV attributes/NOM indices and corner bytes.
+Same topology signature owner; topology edits hide stale UVs and unsafe native export
+refuses, Undo restores original resource. Initial projection normalizes coordinates
+before subtracting, handles huge/tiny finite extents and refuses collapsed planes or
+invalid indices/vertices/history without mutation. No texture rendering/paint/OBJ UV
+expansion or evaluated UV export in875.
+
+Seven native tests: axes/proportion/one Undo/no-op/reprojection; edits/COW/duplicate/
+native scene replacement; strict v3 and legacy/plain codecs; actual NOM/GLB UVs and
+stale topology; invalid/imported/procedural/modifier/finite-extreme guards; actual
+MeshHealth callback; original single/Multi duplicate/deleted-copy Undo/linked refusal.
+VM project replacement preserves incoming/global namespace separation (860 pattern).
+Local Node24 full2368PASS/0FAIL/0skip;12 focused native/release PASS. Cache graph:
+MeshHealth/edit875; manager875; resource875â†’codec875â†’management875â†’drawer875;
+shell/recovery875. Inspector/workspace874/nav868/native+export865/protected kernels
+and frozen betas unchanged. Device875 planar/editor/history/file/Nomad gate pending.
+Next after feedback: inspect simple box/dominant-axis mapping and UV seams before a
+full unwrap; preserve native channel transport and imported GLB protections.
+
+## Protected .874 â€” user PASS2026-10-16
+
+Fit-to-tile centring/aspect/other-island isolation, repeat no-op, one Undo/Redo,
+view Fit distinction, Pencil/navigation and project/native UV roundtrip accepted.
+.875 native channel/device acceptance remains separate.
+
+## .874 â€” Fit selected UV island to tile, 2026-10-16
+
+User873 Awesome PASS protects Pencil Rotate/pivot/seams, one Undo per stroke,
+Move/Scale/navigation and project/Nomad UV roundtrip. Audit main3068b720/live873:
+no UV fit-to-tile/packing operation exists; view Fit is navigation only. Add selected-
+only Fit to tile beside existing workspace tools. Centres selected island at(.5,.5),
+uniformly scales its longest UV dimension to.96, leaving2% margin; aspect ratio and
+other islands unchanged. Single original UV transaction/checkpoint; repeated fitted
+click is a no-op (8EPS centre/span tolerance only for fit-idempotence). This is selected-
+island placement, not automatic multi-island packing or overlap prevention.
+
+Extend SAME imported-uv-edit owner with fitImportedUVToTile(scope). Reuse original
+island bounds loop through shared read-only importedUVIslandBounds; existing centre
+helper delegates unchanged maths. Normalized coordinates avoid overflow/underflow,
+including extreme/tiny finite UV extents. Zero-extent islands refuse; original complete-
+imported/context/stale/history/locked guards remain. Full selected island includes
+unpreviewed faces. Copy touched corners/replace payload/retire stale tangents as before;
+resources/geometry/peers untouched. Workspace button cancels pending Pencil preview,
+keeps matching selection and current view; original Fit still only frames the view.
+Move/Scale/Rotate gesture owner and all original modelling owners unchanged.
+Four native regressions cover native history/peer/resource isolation/idempotence,
+aspect/full-island/extreme/degenerate guards, actual workspace/view-Fit distinction,
+actual MeshHealth callback/stale scope and project/NOM UV bytes/GLB attributes.
+Local Node24 full suite:2361PASS/0FAIL/0skip; publication proof follows below. Cache graph MeshHealth/workspace/edit/
+inspector874; navigation868/Multi1.0/modelling kernels/frozen betas retained. Device874
+gate pending;873 PASS protected. Next after feedback: audit a native BoxLab UV-channel/
+projection foundation, using original history/project/export owners; no fake imported
+GLB provenance, new-mesh UVs, seam unwrap, evaluated-modifier UVs or painting in874.
+
+## Protected .873 â€” user PASS2026-10-16
+
+Pencil Rotate centred preview/seams, repeated strokes/one native Undo, Move/Scale/
+navigation and Save/Openâ†’native Nomad UV roundtrip accepted. Preserve quarter-turn
+parity and sole canvas gesture owner. .874 acceptance remains separate.
+
+## .873 â€” Pencil Rotate for selected UV islands, 2026-10-16
+
+User872 PASS protects Pencil Scale/pivot/seams, one Undo per stroke, Move/navigation
+and project/Nomad UV roundtrip. Audit main89a17b3c/live872 and original workspace/edit
+owners: Rotate90 exists, arbitrary-angle selected rotation does not. Add Rotate to
+existing Move/Scale controls. Pencil horizontal drag right rotates counterclockwise,
+left clockwise;120 CSS pixels =90degrees, live angle readout. Full-island bounds
+centre remains shared with Scale, including unpreviewed faces. Default Move on reopen,
+finger/background navigation, pinch and palm policy unchanged. Vertical-only/tiny
+strokes add no edit. Original Rotate90/Flip buttons and exact Move/Scale remain.
+
+Extend SAME imported-uv-edit transaction with rotateImportedUVByAngle(degrees,scope),
+requiring selected island/expected payload/finite angle and all original guards.
+Renderer and transaction share rotateImportedUVPoint; exact quarter-turn branches
+retain accepted90-degree coordinates, generic angles use sine/cosine. Full turns
+are exact no-ops. Read-only preview rotates selected outlines/highlight/orange seam
+sides; original payload/other islands/resources remain untouched until lift. One
+native checkpoint per changed stroke; mode/capture/report/lock/history/resize/close
+cancel preview and original object/mesh/payload release guard remains. No new UV
+schema/kernel/history/pointer owner. Four native regressions cover real workspace/
+manager/history, reciprocal quarter turns, preview/seam/peer isolation, cancellation/
+no-op/full-turn/navigation/palm/zoom/default Move, arbitrary-angle project/actual NOM
+UV bytes/GLB attributes, actual MeshHealth callback, invalid/stale/overflow refusal
+and full-island pivot. Local Node24 full suite:2357PASS/0FAIL/0skip; publication proof follows below. Cache graph
+MeshHealth/workspace/edit/inspector873; navigation868, Multi1.0/modelling kernels and
+frozen betas unchanged. Device873 gate pending;872 PASS protected.
+Next: device feedback on Pencil Rotate, then audit the next staged UV-authoring step;
+projection/unwrap/new-mesh UV channels and painting remain unimplemented, no blanket
+UV propagation through topology edits or evaluated modifiers is claimed.
+
+## Protected .872 â€” user PASS2026-10-16
+
+Pencil Scale around island centre, seam preview, repeated strokes/one Undo, Move/
+navigation and Save/Openâ†’native Nomad UV roundtrip accepted. Protect uniform Scale
+sensitivity/default Move; .873 device acceptance remains separate.
+
+## .872 â€” Pencil Scale for selected UV islands, 2026-10-16
+
+User .871 Perfect PASS protects Pencil Move, seam following, one Undo per stroke,
+navigation and project/Nomad UV roundtrip. Audit main7864abe9/live871: workspace
+owns the sole canvas gesture, imported-uv-edit already owns uniform Scale. Add
+selected-only Move/Scale buttons to that workspace; Move remains default on reopen.
+Scale: Pencil-drag selected island upward to enlarge/downward to shrink about its
+full UV-bounds centre. 120 CSS pixels doubles/halves; positive factor clamped .01â€“100
+per stroke, with live factor readout. Finger/background navigation and palm handling
+remain unchanged; horizontal-only/tiny strokes do not scale. Mode switch cancels
+preview. Exact fields remain optional under the existing collapsed disclosure.
+
+Reuse the original read-only preview and one on-release Scale transaction/native
+checkpoint. Shared importedUVIslandCentre extracts the existing bounds-centre loop
+into the inspector; preview and commit use identical full-island bounds, including
+faces beyond preview budget. Scale preview transforms only selected outlines/gold
+highlight/orange seam sides; payload and report arrays stay unchanged until lift.
+Existing stale context/locked/history/no-op/overflow guards and stable projection
+remain. No new UV schema/kernel/history or pointer owner. Four native regressions
+cover actual workspace/manager/history, preview/pivot/peer/resource isolation,
+reciprocal strokes, cancellation/no-ops/mode switch/reopen, navigation/palm/zoom/DPR,
+positive limits and bounded-preview/shared-corner seam correctness. Existing native
+project/NOM/GLB and Move/Rotate/Flip tests remain active. Local Node24 full suite:2353PASS/0FAIL/0skip; publication proof follows below. Cache graph MeshHealth/workspace/edit/inspector872; nav868 and
+protected Multi1.0/modelling kernels/frozen betas unchanged. Device872 gate pending.
+Next after feedback: Pencil Rotate through the same workspace/transaction owners;
+projection/unwrap/new-mesh UV channels/painting remain later.
+
+## Protected .871 â€” user PASS2026-10-16
+
+Pencil Move and orange seam following, repeated drags/one native Undo per stroke,
+finger/pinch/background navigation and projectâ†’native Nomad UV roundtrip accepted.
+Default Move remains protected when introducing Scale; .872 acceptance is separate.
+
+## .871 â€” Pencil Move for selected UV islands, 2026-10-16
+
+User .870 PASS protects numeric Move/Scale, native UndoRedo and project/Nomad UV
+roundtrip. User requests Pencil movement instead of typing. Audit current main
+604bac15 and live .870; existing workspace canvas owns pointers/navigation and
+imported-uv-edit owns Move/history. Extend that canvas owner only: tap to select,
+then Pencil-drag the selected island for a read-only live preview. Lift delegates
+ONCE to the existing Move transaction (one native checkpoint for a changed stroke).
+Finger drag, background/unselected Pencil drag, pinch, wheel and touch UndoRedo
+retain navigation ownership. Palm touch while Pencil is down cannot edit UVs.
+Exact Move/Scale fields remain available inside a collapsed disclosure; Scale stays
+numeric in this narrow build. No new UV channel, edit kernel, scene history or schema.
+
+Renderer preview offsets selected outlines/highlight and their orange seam sides
+without changing payload/report arrays; seam-side island IDs avoid shared-corner
+reference ambiguity. Screen deltas reuse the renderer projection, with CSS-pixel,
+zoom and DPR parity. Workspace keeps projection bounds until Fit/reopen so moving
+outside tile 0â€“1 does not auto-fit/jump. Whole selected island still moves through
+existing transaction beyond the preview budget. Other islands/resources stay intact.
+Tap jitter <=4px adds no edit. Cancel/lost capture/report replacement/lock/resize/
+Fit/history/close discard previews; release guards original object/mesh/payload.
+Four native tests exercise the actual workspace plus manager/history, live read-only
+preview, repeated strokes/one checkpoint, seam sides, pointer/capture/palm/gesture
+lifecycle, view mapping, peers and stale MeshHealth callback. Existing .870 export
+regressions retain project, actual NOM corner bytes and GLB UV coverage.
+
+Changed cache graph: MeshHealth871 â†’ workspace871 / edit871 â†’ inspector871;
+nav868 and original Move math unchanged; shell/recovery871. Protected Multi1.0,
+modelling kernels and frozen betas unchanged. Local Node24 full suite:2349PASS/0FAIL/0skip; final four Pencil tests also rerun
+after seam assertions. Publication proof follows after verification. Device .871 Pencil feel/navigation/history/export
+gate pending. Next: feedback on Pencil Move, then Pencil Scale/Rotate through the same
+canvas/transaction owners; projection/unwrap/new-mesh UVs/painting remain later.
+
+## Protected .870 â€” user PASS2026-10-16
+
+Selected-island numeric Move/Scale, island isolation, UndoRedo, iPad field editing and
+project/native Nomad UV roundtrip accepted. Pencil Move supersedes numeric-first UX
+in .871; exact fields remain optional. Do not infer .871 device acceptance.
+
+## .870 â€” selected-island numeric Move / Scale, 2026-10-16
+
+User869 PASS protects selected Rotate/Flip, pivot/other-island isolation, native history
+and project/Nomad UV roundtrip. Audit main82bed89c/live869 and original edit/workspace/
+inspector/session/history owners: no UV Move/Scale controls exist. Extend existing
+imported-uv-edit transaction with moveImportedUV(U,V,scope) and scaleImportedUV(factor,
+scope). Require selected island + expected payload; all existing complete-imported/
+context/stale/index/history guards remain. Positive uniform scale about original island
+bounds centre; Move uses UV-tile offsets. Whole island includes faces beyond preview.
+Other islands/geometry/peer payload/resources untouched; copy touched corners + payload,
+retire old tangent basis, one native checkpoint per changed click. Zero Move/Scale1
+no-op adds no history; nonfinite/nonpositive/overflow refuses before mutation.
+Existing UV workspace gets compact Î”U/Î”Vâ†’Move and ScaleÃ—â†’Scale row, selected-only and
+original edit eligibility. Fields default0/0/1 on reopen; retained after Apply so clicks
+repeat. Blank/nonfinite/nonpositive values show inline error without edit. Original
+MeshHealth callback supplies live context/scope, refreshes same report and retains only
+matching island membership. Original Rotate/Flip/no-selection scopes unchanged. Canvas
+drag stays pan; no new pointer owner/history/kernel/schema. Keyboard guard yields to
+input editing, so Backspace/CtrlZ in fields remain normal native input actions.
+Four native regressions: Move/Scale geometry/resource/peer/history isolation, project +
+actual NOM UV bytes and indexed GLB attributes, no-op/invalid/stale/locked/overflow guards,
+and real MeshHealth callback. Original868 workspace integration expanded for numeric
+values/invalid/no-selection/UI delegation/Backspace;867 mock gets new callback binding.
+Full Node24:2345PASS/0FAIL/0skip. MeshHealth/edit/workspace870, shell/recovery870;
+inspector869/nav868/native865/manager+delete867/protected Multi1.0/frozen betas unchanged.
+Device870 numeric/iPad keyboard/history/native-export gate pending;869 PASS protected.
+Next after feedback: remaining narrow numeric UV transform controls via same edit owner;
+projection/unwrap/new-mesh UV channels and painting remain later. No direct drag editing.
+
+## Protected .869 â€” user PASS2026-10-16
+
+Selected Rotate90Â°/FlipU/V around own bounds centre, unselected islands unchanged,
+selection retention and native history/project/Nomad gate accepted. No-selection
+whole-layout behavior and869.1 scope-label correction remain protected.
+
+## .869 â€” selected-island Rotate / Flip, 2026-10-15
+
+User868 PASS accepts tap selection/highlight, pan/pinch/Fit/clear and native history/
+Back to3D. Audit main04ffe1a4/live868: existing imported-uv-edit transaction owns all
+Rotate/Flip edits; inspector owns connectivity; no selected-island transform exists.
+Extend SAME edit owner with optional island+expected-payload scope. Recompute original
+inspector connectivity and validate current topology/payload/index; no stale island ID
+silently applies to a replacement resource. Inspector now exposes faceIslands for ALL
+mapped faces, retaining preview cap; whole selected island transforms beyond preview.
+Selected Rotate90Â°/FlipU/V pivot around that island's UV bounds centre. Unselected faces
+and resources are shared read-only; only touched UV arrays/payload replaced, prior tangent
+basis retired. Existing no-op suppression/native checkpoint/guards remain. Without a
+selection, original tile-centred WHOLE layout maths and exact APIs remain unchanged.
+Original MeshHealth buttons pass workspace selection scope, refresh same report and
+retain highlight only if full island membership still matches; merging/splitting clears.
+Selection label explicitly says this island vs whole layout. UndoRedo/close/report
+refresh still clear ephemeral selection; no new history/project schema or kernel.
+Four native regressions cover continuous full island beyond preview, exact transforms/
+twice flip, untouched peer/resources/geometry/native UndoRedo, codec + actual NOM UV
+bytes and GLB indexed attributes, stale/invalid/locked/overflow refusal and real UI scope.
+Existing868 test updated only selected scope text + membership retention/merge refusal;
+all prior whole-layout/export/navigation contracts retained. Full Node24:2341PASS/0FAIL/
+0skip. MeshHealth/edit/inspector/workspace869; nav868/manager+delete867/native865 unchanged.
+Shell/recovery869; frozen betas/protected Multi1.0/modelling kernels unchanged.
+Device869 selected edit/history/Nomad/project gate pending;868 PASS protected.
+Next: after feedback, selected-island numeric Move/Scale through this same transaction;
+no drag transform gesture takeover, unwrap, new-mesh UVs or painting in869.
+
+## Protected .868 â€” user PASS2026-10-15
+
+Tap selection/gold highlight, clear/empty tap, pan/pinch/Fit and native UndoRedo/Back
+to3D accepted. Keep original gesture owner and shared renderer/picker projection.
+869 deliberately extends Rotate/Flip from whole layout to current selected island;
+no-selection whole-layout behavior remains protected. Stacked selection stays topmost.
+
+## .868 â€” UV island selection, 2026-10-15
+
+User Works well PASS /nextbuild accepts867 large workspace/navigation/session exit.
+Audit current main d7b43cac/live867 and inspector/workspace/navigation/edit owners:
+island IDs already exist; extend original inspector renderer and gesture owner.
+Tap Pencil/finger/mouse selects the hit island, highlights its preview faces in gold,
+and reports Island N of count. Clear Selection/empty tap clears. Shared uvProjection
+maps both renderer and picker after pan/zoom; reverse paint order selects topmost
+stacked island. Only previewed faces are pickable under existing20,000-corner budget.
+Single short stationary tap uses existing navigation owner; restores tiny tap jitter.
+Drag/long/multitouch/cancel do not pick; native two-/three-finger history unchanged.
+Selection is ephemeral view state; refresh/edit/UndoRedo report replacement and close
+clear it, Fit retains it. No UV coordinates/payload/geometry/history/project changes.
+Existing Rotate/Flip remain WHOLE LAYOUT, explicitly labelled even with selection.
+No selected-island editing yet; next narrow build extends existing edit transaction
+with selected-island transforms after device feedback. No parallel UV kernel.
+Five native tests cover continuous/stacked/concave/boundary/bounded/stale picking,
+shared pan/zoom mapping, pen/mouse/touch and history discrimination, read-only highlight,
+and actual workspace clear/reset/close/controls integration. Full Node24:2337PASS,
+0FAIL/0skip. MeshHealth/edit/imported-inspector/workspace/navigation868; shell/recovery868.
+Manager/delete867/native exporter865/protected Multi1.0/frozen betas unchanged.
+Device868 selection/navigation/history gate pending; user867 PASS is protected.
+
+## .867 publication verified / user PASS â€” 2026-10-15
+
+Release d7b43cac5313fcf01e2b3adfc45b82fc758d9916; tree
+217eeca8a73a0d3cd3488cfc601ab6b42cb8af2f. Node22 CI38677757901 /
+job116235131037 SUCCESS2332PASS/0FAIL/0skip; Pages38677757250 SUCCESS.
+Live shell/version/workspace867/navigation867 byte-match repository before868 changes.
+User Works well PASS accepts large workspace, navigation and session exit; protect
+same canvas/controls/history and clean Back to3D. Native865 and866 protections retained.
+
+## .867 â€” large UV workspace, 2026-10-15
+
+User 866 PASS protects Flip U/V, twice restoration, history and native/project UV
+roundtrip. User approves dedicated large UV workspace after tiny Mesh Health preview
+feedback. Audit main5b85e244/live866: inspector/drawing/edit/history/session owners exist;
+no UV workspace/navigation owner. Reuse the same Mesh Health session, original canvas,
+Rotate/Flip nodes and native Undo/Redo buttons. Mesh Health retains summary + Open UV
+Editor; large overlay uses existing renderer with centred DPR-aware view, drag pan,
+pinch/wheel/button zoom and Fit. New uv-navigation is presentation-only CSS-pixel state;
+no modelling kernel, UV channel or history stack. Back to 3D/Escape closes original
+session; capture/resize cleanup and pen/palm guards retained. Both existing keyboard
+Delete owners yield while UV workspace is active. Root touch propagation is scoped,
+but toolbar touch default remains available for Safari synthesized clicks.
+Six native regressions cover pan/pinch continuation, tap Undo/Redo discrimination,
+read-only renderer, original DOM/control/history/session wiring, DPR/resize/capture/
+close/reopen/palm cleanup and actual Delete owners. Full Node24:2332PASS/0FAIL/0skip.
+MeshHealth/edit/inspector/workspace/navigation867, manager/delete scoped guard pins867,
+shell/recovery867; native export865, protected Multi1.0 and frozen betas unchanged.
+Device workspace/pan/pinch/toolbar/history/exit/native-export gate pending. Preview
+still capped at20,000 corners; no per-island picking/manipulation, unwrap or painting.
+Next after feedback: island selection in this workspace using existing island data,
+then narrowly scoped selected-island transforms. Do not build another UV edit owner.
+
+## Previous direction â€” .866 imported UV flips, 2026-10-15
+
+865 native File NOMAD UV gate user PASS protected. Extend existing imported UV edit
+owner with Flip U/V beside Rotate; common transaction/guards/copy-on-write/history and
+stale tangent retirement. Whole layout about tile centre, no per-island/unwrap feature.
+Full2326PASS/0FAIL; four native history/resource/project/GLB/NOM/seam/UI tests, original
+rotate/native export tests retained. Device flip/UndoRedo/project/native export pending.
+Native865 writer/protected/frozen bytes unchanged; next small authoring step after
+feedback and authoritative UV/history/resource/export owner audit.
+
+## Previous direction â€” .865 native File NOMAD UV repair, 2026-10-15
+
+864 FAIL is confirmed on Fileâ†’NOMAD, separate native path still writing zeros. Existing
+native writer now writes stored valid base UVs with independent UV indices at seams,
+preserves polygon/triangulation corner mapping and counts UV objects. Stale/invalid/
+evaluated unsupported UVs refuse clearly; no-UV legacy geometry unchanged.
+Full2322PASS/0FAIL; four actual native byte/UI/rotation/project/seam/guard regressions.
+Native Nomad device UV gate pending before more UV feature work.863 PASS remains
+protected;864 broad acceptance not inferred. No native texture/material/layer extension.
+
+## Previous direction â€” .864 imported UV rotation, 2026-10-15
+
+863 PASS protected. First imported-channel authoring operation: Rotate UVs90Â° in
+existing MeshHealth, full valid independent imported layout only. Copy UV arrays and
+replace shared payload; one native scene checkpoint, Undo/Redo/project/export reuse.
+Old tangents retired, metadata/images shared read-only; geometry unchanged. No new
+UV channel/schema/history/kernel or BoxLab projection/unwrap/painting. Four native
+history/resource/codec/GLB/guard/UI tests; full2318PASS/0FAIL. Device rotation/UndoRedo/file/export pending.
+Next small UV authoring stage after feedback and authoritative resource/topology audit.
+
+## Previous direction â€” .863 UV island/seam inspection, 2026-10-15
+
+User862 PASS protects imported layout/stale-Undo/project gate. Extend existing inspector
+with connected UV island colours/count and orange discontinuous shared-edge seams.
+Vertex-ID adjacency/exact UV endpoints, conservative ambiguous-edge handling; no shared
+payload mutations/new channel/history/kernel. Preview budget retained, full diagnostics.
+Full2314PASS/0FAIL/0skip; four new native GLB/project/export/connectivity/canvas tests.
+iPad colour/seam/layout/history/project gate pending.862 and861 PASS protected;860/859
+gates remain separate. Next staged editable UV channel/authoring design after existing
+topology/history/resource/export audit; no unwrap/painting/overlap analysis claim.
+
+## Previous direction â€” .862 imported UV inspection, 2026-10-15
+
+User861 PASS protects affine Array source/history/project gate. Existing importer
+corner UV and exporter topology owner supply read-only Imported UVs disclosure in
+Object Mesh Health. Shows coverage/base outlines/tile0â€“1/outside corners, hides stale
+or malformed data and bounds preview drawing. Existing MeshHealth session owns lifecycle.
+Full2310PASS/0FAIL; four native import/export/codec/channel/canvas/UI tests. iPad visual
+and stale-edit/Undo/file sanity pending. No unwrap/painting/editable UV owner or evaluated
+SubD/Mirror UV export. Next staged UV/resource work after feedback/authoritative audit;
+860 Duplicate and859 Nomad gates remain separately pending.
+
+## Previous direction â€” .861 affine Live Array reopen repair, 2026-10-14
+
+Repository continuation audits860/main/live and reproduces the queued original-array
+failure. Existing reopen owner canonicalizes only its internally inferred near-affine
+matrix tail within32*Number.EPSILON. Strict external recipe/file validation remains.
+Native tests cover repeated arbitrary rotation/nonuniform scale with count/END Apply,
+source Apply/Cancel/history/SubD and project roundtrip; component edits still refuse.
+Device861 gate pending;860 duplicate and859 Nomad resource gates remain separate.
+Next: hands-on placed-array source/history/project sanity, then staged resource/UV
+inspection or measured performance after feedback and authoritative-owner audit.
+
+## Previous direction â€” .860 ordinary Duplicate retains editable Live Arrays, 2026-10-14
+
+859 published/CI/Pages/live verified after direct standing push/publish approval.
+Single Duplicate omitted arrayRecipe; Multi captured but dropped it at addMesh. Existing
+addObject now deep-copies serialized recipe; both original duplicate owners forward it.
+One independent editable array per copy, native count/END/source/subdivision/file owners
+retained. Three native tests cover independent source/parameters, placement/Move/settings,
+mixed grouped Multi, count/END Apply, source Cancel/Apply/edit UndoRedo and native project
+replacement. Device860 gate pending;859 Nomad duplicate visual gate not yet accepted.
+Next: proven existing affine-tail rounding in reopenArray after arbitrary-angle/nonuniform
+placement+count/END edits can give[15]=1.0000000000000002 and refuse source reopen. This
+also reproduces on original without duplication; repair native recipe owner separately,
+retain strict external-transform/file guards and protected instance kernel.
+
+## Previous direction â€” .859 imported resources through ordinary Duplicate, 2026-10-14
+
+858 user PASS protects imported-resource pooled/legacy .boxlab Save/Open/export.
+Audit found ordinary single and Multi Duplicate drop glbPassthrough. Pass read-only
+payload through existing manager/addMesh; geometry remains independent, buffers shared.
+Native tests cover both owners, mixed/group Multi and Move, delete/UndoRedo, pooled
+project replacement and actual GLB UV/material/image bytes with topology safety retained.
+Device duplicateâ†’moveâ†’Save/Openâ†’Nomad gate pending. Linked-rich project restriction
+unchanged; no new history/render/export/texture editor. Next scoped resource work or
+imported-UV inspection after feedback and audit of authoritative owners.
+
+## Previous direction â€” .858 shared project image pool, accepted 2026-10-14
+
+857 SubD Apply accepted.856 imported objects repeat shared image bytes in project JSON.
+Existing codec now pools identical bytes once, with per-object metadata and validated
+resource-v2 references. New decoded buffers shared read-only; legacy856 inline/plain
+files preserve exact Open roundtrip. Full2297PASS/0FAIL.32MB file/24MB unique pool limits.
+User858 PASS protects imported multi-object resources/legacy-open gate. No rendering or
+texture editing change; next narrow resource stage after feedback.
+
+## Previous direction â€” .857 SubD Live Array editing repair, 2026-10-14
+
+User856 LiveArray+SubD edit error: universal guard wrongly rejects existing recipe base
+geometry. Existing Array/source owners now allow existing Live Array SubD edits and
+retain modifier settings, native recipe/history. New Live creation with SubD and Mirror
+remain restricted. Full2293PASS/0FAIL, native Apply/Cancel/source/history/codec coverage.
+User857 Apply/SubD works after suspected asset refresh; protect it. Source/reopen
+checks and856 resource-file gate remain separately pending.
+No modelling/render kernel change. Resume resource stage after feedback.
+
+## Previous direction â€” .856 imported GLB project resources, 2026-10-14
+
+855 PASS protected. Existing .boxlab v1 adds optional versioned imported GLB payload;
+canonical binary image encoding, UV/material/metadata preservation, validated native
+Save/Open/atomic replacement,32MB file limit. Plain v1 unchanged. Full2290PASS/0FAIL.
+Device GLBâ†’.boxlabâ†’Openâ†’GLBâ†’Nomad gate pending. Linked imported GLB and other resource
+owners still refuse; texture editing/UV unwrap/pool dedup not implemented. Next scoped
+resource validation/pool stage after acceptance, retain accepted history/Loop/optimisation.
+
+## Previous direction â€” .855 imported GLB scene-history resources, 2026-10-14
+
+854 PASS protected; resume project-resource foundation. Existing imported glbPassthrough
+was dropped by scene snapshots/restoration. Carry read-only payload through existing
+history, share image buffers, require copy-on-write for future resource edits.
+Full2285PASS/0FAIL; native History + UV/metadata/material/image export byte checks.
+User855 PASS2026-10-14 protects imported delete/UndoRedo/export. Rich .boxlab remains refused;
+resource-aware encode/open is next scoped stage, not silently enabled by this change.
+
+## Previous direction â€” .854 native Loop completion, 2026-10-14
+
+853 user PASS protected. Replace internal Undo/Redo clicks with existing main slide
+cleanup exposed through guarded native commit. Same mesh/history/placed cuts remain;
+853 colour detection, exact/repeat/background exit retained. Full2282PASS/0FAIL.
+User854 PASS2026-10-14 protects repeat/EXACT/exit/UndoRedo. Next project-resource stage or measured
+bottleneck after feedback; accepted owners remain protected.
+
+## Previous direction â€” .853 Loop/MultiLoop completion repair, 2026-10-14
+
+User852 FAIL: lingering yellow/blue loops and no finalisation. Screenshot counts show
+cut topology but5active slide groups. Commit reads wrong proxy material after batching;
+use actual cageMaterial. Main disarm retires loop slides, preserving cut/history.
+Full2280PASS/0FAIL; actual single/5cut + batch + EXACT + native finish tests.
+User853 PASS2026-10-14 protects completion/editable faces/history.
+851 PASS protected;852 optimisation acceptance not assumed.
+
+## Previous direction â€” .852 skip unused active base calculation, 2026-10-14
+
+851 user PASS protected. Audit main: SubD render calculates base even when no body/
+mirror cage uses it. Skip only unused base path; nonSubD body, enabled mirror cage,
+explicit base export and native SubD/cache remain original. Full2278PASS/0FAIL.
+Device SubD/Mirror/ShowCage/edit/history/export gate pending, no speed claim.
+Next measured bottleneck or richer project resources after feedback.
+
+## Previous direction â€” .851 mode-specific vertex dots / frozen Beta 7, 2026-10-14
+
+User requests dots only in Vertex mode. Existing cage batch builder skips visual marker
+instances outside Vertex; indexed proxies retained for picking/snapping/bridge. Edges,
+face picking, Clean/Soft and original cage suppression retained. Avoids marker drawing
+and instance updates outside Vertex, no quantified speed claim. Full2276PASS/0FAIL.
+User851 PASS2026-10-14 protects mode-switch/selection/Clean/Soft;850 PASS protected.
+Next measured bottleneck or project-resource work after feedback.
+
+## Previous direction â€” .850 active render geometry reuse / frozen Beta 7, 2026-10-13
+
+849 screenshot113rebuilds mean8.6/max25ms; inactive0.1/6ms with226hits/0misses;
+Body2.8/9ms. Cage workload differs from848, no controlled improvement claim.
+Reuse one active SubD BufferGeometry through existing main + cache812 display identity;
+changed display/modifiers/source replace it, SubD Off releases it; normal cage and
+nonSubD cleanup retained. Full2273PASS/0FAIL. User850 PASS2026-10-14 protects
+selection/edit/history/modifier/render-look baseline. Latest screenshot851:94rebuilds,
+mean6.2/max39ms, Body1.0/9ms; no controlled before/after timing claim. Next measured bottleneck or richer
+project resources after feedback; accepted846 and earlier protections retained.
+
+## Previous direction â€” .849 inactive render geometry reuse / frozen Beta 7, 2026-10-13
+
+848 capture111inactive hits/1miss but6.4ms inactive mean, cage6.2ms and activeSubD5.7ms.
+Next narrow build reuses owned buffers for visible independent inactive SubD objects
+through existing layer/display identity. Changes invalidate, hidden/active/removed
+objects free buffers; shared wire wrappers never dispose retained geometry. Linked
+path unchanged. Full2271PASS/0FAIL; same-scene849 visual/resource/timing gate pending.
+Next measured cage/active geometry work or richer project resources after acceptance.
+
+## Previous direction â€” .848 cache owner measurements / frozen Beta 7, 2026-10-13
+
+847 device capture shows281aggregate hits/41misses,106rebuilds mean14.5ms and inactive
+mean5.8ms, without comparable pre-change sample. Split existing Performance cache counts
+into Active/Inactive while retaining total; no geometry/cache algorithm change.
+Full2268PASS/0FAIL; repeat device capture to scope next measured improvement or richer
+project resources. Full847 manual visual/history acceptance still not inferred.
+
+## Previous direction â€” .847 inactive SubD display reuse / frozen Beta 7, 2026-10-13
+
+User PASS .846 completes audited cage display fixes. Resume measured performance:
+existing exact-input cache812 now serves each independent inactive SubD object through
+native displayMeshFor, avoiding repeat subdivision of unchanged objects. Linked source
+path unchanged; GPU geometry still rebuilt. Four native checks/full2266PASS/0FAIL.
+Device multi-object surfaces/history/visibility and Performance phase capture pending.
+Retains one CPU display result per cached object; iPad speed/memory tradeoff must be
+measured. Next measured inactive/render work or staged project resource preservation.
+
+## Previous direction â€” .846 Soft cage batch compatibility / frozen Beta 7, 2026-10-13
+
+User Perfect PASS .845 protects Clean View. Adjacent existing Soft owner missed810
+batch kinds too; now applies original opacity factors to batched lines/vertex markers.
+Full restores exact materials, Clean compatibility/picking retained. Full2262PASS/0FAIL;
+iPad Soft/Full/Clean/rebuild gate pending. This finishes the audited display mismatch
+before staged project resources/measured performance. No new modelling capability.
+
+## Previous direction â€” .845 Clean View repair / frozen Beta 7, 2026-10-13
+
+User PASS .844 protects Live Array source editing. Clean On screenshot still shows
+batched cage: existing Clean owner now handles810 batch kinds and restores prior
+visibility safely. Full2259PASS/0FAIL; iPad Clean/rebuild/restore gate pending.
+No broader feature change. Resume project resources/performance or concrete Live
+Array polish after this repair is accepted; source editing and conversion are passed.
+
+## Previous direction â€” .844 staged Live Array source editing / frozen Beta 7, 2026-10-13
+
+User PASS .843 protects explicit conversion. Edit Source isolates the placed original
+on the same object, with existing component tools and local Undo/Redo. Apply Source
+regenerates all items with saved/staged count and END transforms, one final history
+step; Cancel restores the original scene and history. Top-centre source bar yields
+to existing component tool panels. Source-only stage updates result on Apply.
+Full2256PASS/0FAIL; iPad source/exit/history/project gate pending before expansion.
+Optional generated preview can be scoped after acceptance; richer project resources
+and measured performance remain next broader priorities.
+
+## Previous direction â€” .843 Live Array conversion / frozen Beta 7, 2026-10-13
+
+User PASS .842 protects progressive endpoint transforms and combined persistence.
+Convert to Mesh in the reopened Array panel commits its staged preview as ONE ordinary
+editable mesh with a single Undo restoring the live recipe. Apply Array remains live;
+separate objects are not created. Full2250PASS/0FAIL; device test pending.
+Source component editing is the next Live Array stage after this conversion gate.
+
+## Previous direction â€” .842 progressive Live Array transforms / frozen Beta 7, 2026-10-13
+
+User PASS .841 protects one-object/reopen/history/project foundation. .842 adds END
+rotation rings and uniform/axis scale handles + exact values. Original0Â°/1Ã— interpolates
+to END across intermediate items; per-item centres remain on evenly spaced path.
+One recipe persists count/placement/rotation/scale; shared preview/Apply maths and
+canonical frame preserve combined effects after whole-object transforms. Full2247PASS/0FAIL;
+iPad acceptance pending. Next source editor/conversion or resume resources/performance
+following acceptance and authoritative-owner audit.
+
+## Previous direction â€” .841 accepted Live Array foundation, 2026-10-13
+
+Optional Live mode in existing Array keeps one object with source/count/END recipe.
+Reopen count/spacing, Cancel, one-step Undo/Redo and basic .boxlab persistence implemented;
+whole-object affine placement recoverable, non-affine edits refuse safely. Full2241PASS/0FAIL.
+User PASS .841 protected. Progressive endpoint scale/rotation now implemented842; source component editing
+and full requested scope remain queued. Rich resources/performance follow.
+
+## Previous direction â€” .840 accepted; project resources/performance, 2026-10-13
+
+.839 user FAIL: idle source writes. Legacy bridge-topology edges also writes state.mesh;
+.840 dedicated main publication prevents those helper writes taking live ownership.
+Expanded actual legacy/live/manager chain fails839, passes840 with1000idle reads stable.
+User PASS fresh Linked/Array idle/editing gate on2026-10-13. Protect owner repair.
+Next scoped build may resume project resource persistence and measured performance;
+linked-file round-trip sanity remains relevant before expanding rich resources.
+
+## Requested Live Array â€” staged implementation, 2026-10-13
+
+User requests a persistent, non-destructive Live Array presented as ONE object in the
+Object Browser, following the existing Live Boolean result/source editing pattern.
+Keep the array editable after creation: reopen its source, count, spacing/placement
+and endpoint transforms rather than baking separate scene objects on Apply.
+
+- Moving the last item controls the array extent through the existing Array end-copy
+  interaction; rotating/scaling that last item controls the final orientation/size.
+- Interpolate rotation and scale gradually from the unchanged original to the final
+  item across every intermediate item. Support combined placement, rotation and scale.
+- Transform handles on the last item remain available when reopening the Live Array;
+  editing the original/source updates the generated array without losing parameters.
+- Preserve one-object selection, Undo/Redo and .boxlab recipe/resource round-trip.
+  Explicit conversion to independent meshes may be a separate operation; normal
+  completion must retain the editable procedural array.
+
+Before implementation, audit existing Array end-copy, instance/source, modifier/recipe
+and Live Boolean object-list owners. Extend those authoritative owners; do not add a
+parallel modelling kernel. Protect .840 linked/Array placement and idle stability.
+Count/placement/single-object/persistence stage shipped and accepted in .841; endpoint
+rotation/scale shipped842 and user PASS protected. Staged source component editing ships844 (device gate pending); conversion to one
+ordinary mesh shipped843 and user PASS protected. Protect accepted .840 drift repair.
+
+## Previous direction â€” .839 live-mesh identity feedback repair / frozen Beta 7, 2026-10-13
+
+.838 stack identifies temporary instance-local mesh stealing live-world bridge identity,
+then inverse placement repeatedly shifts source. .839 bridge honors explicit main owner,
+ignores helper edges after publication and publishes bounded identity events. New tests
+fail on actual old bridge/pass repaired; full2237PASS/0FAIL. Device Linked/Array moveâ†’Face
+and linked-file gate pending before further feature work. .830/.831 PASS protected.
+
+## Previous direction â€” .838 exact instancing source-write audit / frozen Beta 7, 2026-10-13
+
+User .837 repair FAIL. .838 traces exact authoritative shared-source assignment, branch,
+geometry bounds/placement and caller stack through existing Debug. No behavior change;
+need device writer evidence before correcting placement/edit boundary. Features paused.
+
+## Previous direction â€” .837 native main Object drag repair / frozen Beta 7, 2026-10-12
+
+User .836 FAIL; diagonal move and Array produce same source jump. .837 covers actual
+main direct Object drag completion, which .836 transform-upgrade fix did not own.
+Actual main+manager regression reproduces old drift and preserves straight/diagonal
+linked/Array-style placements after completion. Local2232PASS/0FAIL; iPad gate pending.
+Keep broader feature work paused until Linked Duplicate and Array pass.
+
+## Previous direction â€” .836 stale transform release repair / frozen Beta 7, 2026-10-12
+
+.835 screenshot confirms shared-source jump with visibility retained. .836 authoritative
+transform owner completes at window capture and closes before mode change, preventing
+reused Pencil ID from continuing old move. Full2230PASS/0FAIL; iPad original/copy
+placement and linked-edit/project gate pending before resources/performance expansion.
+
+## Previous direction â€” .835 linked original drift diagnosis / frozen Beta 7, 2026-10-12
+
+User screenshots .834 active geometry/placement/visibility agree, original moves far away.
+AFTER microtask was early; .835 next-task trace and browser/render-error reporting expose
+completed mode/UI/peer geometry. Device failure unresolved; no further feature work.
+
+## Previous direction â€” .834 linked disappearance evidence / frozen Beta 7, 2026-10-12
+
+.833 user retest FAIL. .834 adds off-by-default read-only LINKED bounds/visibility traces
+inside existing Gesture Debug. Obtain iPad mode-switch screenshot before another repair;
+no new modeling feature work until this failure is understood and fixed.
+
+## Previous direction â€” .833 linked mode-transition failure repair / frozen Beta 7, 2026-10-12
+
+User FAIL .832: moved Linked Duplicate disappears on Face-mode switch. .833 flushes
+outgoing Object placement before main mode mutation; real-owner regression covers
+Face/Edge/Vertex and later shared edits. Retest this case and .832 project persistence
+before richer resources/performance expansion. .831/.830 PASS remain protected.
+
+## Previous direction â€” .832 linked project instances / frozen Beta 7, 2026-10-12
+
+User PASS .831 protected. .832 reopens linked instance pool from existing persisted
+world meshes/matrices, validates shared local data, preserves independent placement and
+allocator integrity. Save/Open guards and peer-sync tested; device linked edit/Move/Make
+Unique/history gate pending. Next rich resource persistence and measured performance;
+NOM/Curve cutters/UV remain queued. .830 zero-failure baseline remains protected.
+
+## Previous direction â€” .831 basic project reference guides / frozen Beta 7, 2026-10-12
+
+User PASS .830 protected. .831 restores mixed reference/editable projects via existing
+codec/Open/manager, keeps guides locked, chooses editable primary, refuses reference-only
+and linked/rich resources. Full2219PASS/0FAIL/0skip; iPad guide Save/Open gate pending.
+Next linked-instance project persistence then rich resources, with performance work
+alongside; NOM import/Curve cutters/UV tools remain queued.
+
+## Previous direction â€” .830 zero regression failures / frozen Beta 7, 2026-10-12
+
+User prioritised failures. .830 fixes new quadball orphan poles with versioned recipes,
+keeps old grid recipes editable, reconciles three stale UI/diagnostic checks and tests
+safe shallow concavity alongside unsafe-notch refusal. Full2216PASS/0FAIL/0skip.
+Next iPad Balloon/merge/navigation sanity, then .boxlab resource completeness and
+performance improvements before NOM/Curve cutters/UV painting. .829 Open device gate
+also pending. All accepted gestures and frozen Beta7 remain protected.
+
+## Previous direction â€” .829 project Open hardening / frozen Beta 7, 2026-10-12
+
+.829 hardens existing basic Open manager rollback, allocator and history integrity;
+corrects stale Save status and unifies drawer/shell object-management loading.
+Focused tests12PASS; full2216/2211PASS/5 existing FAIL, no new failures versus main.
+Device Save/Open Cancel/Confirm/Add/edit gate pending. Next audit five existing
+Curve/Balloon test failures, then staged project resources; NOM/UV remain queued.
+
+
+.797 PASS protects the green baseline, GLB group import and Rotate. .796 Add+ previews,
+unit-zone scale and Text remain protected. First Editable Boolean build stores independent
+A/B source recipes and reopens them for existing Move/Rotate/Scale, explicit Update Preview,
+Apply/Cancel and one scene Undo/Redo. User .801 PASS protects activation/exit and corrected radial. Concrete uploaded dense
+Extrude repair in .802 takes priority before expanding: existing coalescer now handles
+more than256 private wall cells, preserving guarded topology. User .802 PASS protects
+the clean extrusion case and continued-modelling/history checks. .803 implements automatic
+staged Live Boolean previews through existing editor/solver/history owners; device
+acceptance failed for combined source/result presentation. .804 repairs this with
+exclusive Result/Sources views; user .804 PASS protected. .805 compacts the Boolean
+object list using existing recipes;  .806 removes redundant Update Preview and matches compact popup typography;
+User .806 PASS protected; .807 matches startup/reset cube to accepted Add+1unit.
+User .807 AWESOME PASS; Beta7 freeze/deployment explicitly requested and implemented
+from accepted source; Pages and regression CI succeeded. User then chose to start the shared curve foundation: .808 Add+ Curve draw/edit profiles, user PASS protected. .809 performance readout and crease lookup accepted with iPad captures. .810 batches visible cage edges/markers while retaining authoritative picking proxies. .811 reuses unchanged active SubD results through exact cage/settings comparison; existing kernels and export isolation retained. User .812 Awesome acceptance recorded; readout identifies inactive displays as dominant cost. Performance work paused as requested. .813 brings the audited MeshUtilz Outline Balloon generator into the existing Curve editor, with Depth/rotatable preview, native editable triangle solid and recipe/history reuse. Convex closed outlines first; drawing/point editing and valid-profile preview accepted. .814 repairs over-strict rejection of tiny hand-drawn oval wobbles, explains invalid candidates inside preview; device retest pending. .815 cancels profile sessions on Reset and moves the existing Pencil authoring owner ahead of document modelling consumers; Reset/draw/navigation retest required before expanding. User PASS .815 Reset/Pencil but reports severe Balloon insertion slowdown. .816 adds optional donor Density4â€“12 for new Balloons, preserves legacy tessellation, and awaits iPad device performance test. User reports .816 substantially more responsive. .817 tests shallow star-shaped concavities through existing donor radial interpolation and actual-rim fold guard; await iPad feedback before promising broad concave support. User .817 accepts concave C and star; deep crescent fails. .818 offers optional quad-dominant ring strips (triangular poles remain), preserving existing triangle fallback. Real iPad test will determine whether stronger quad pole patching is worthwhile. User accepts .818 quad editing and wants cleaner poles. .819 pairs adjacent pole fan triangles for new Balloons; device and CI gates pending before stronger pole patches. User requests true quadball poles, not .819 kite faces. .820 introduces boundary-matched quad grid caps for new Balloons, preserving legacy geometry and needing iPad tests. Remaining triangulation/render-buffer optimisation can resume later; project Save/Open, NOM import, then Balloon and Curve Cutter consumers. Beta7 remains
+frozen at .807 and immutable.
+
+## Requested UV/texture workflow and performance â€” queued
+
+Imported GLB UV/material/texture passthrough exists. Stage imported-UV inspection,
+authoritative editable face-corner seam channels, projection/seam unwrap and packing,
+then painting through existing Three.js textures. Preserve channels through topology,
+history and .boxlab embedded resources. Larger painting/PBR/layer budgets need iPad
+measurement; these are not implemented or promised by the Curve build.
+
+User reports rapid slowdown with higher polygon counts. Audit identifies per-edge
+Line/per-vertex sphere objects, active-display rebuilds, per-frame marker work and
+full mesh/stack history clones. Measure first, then batch/instance cage geometry and
+reuse render buffers; cache topology and accelerate picking as justified. Keep recent
+Undo resident; optimise duplicate snapshots and evaluate older history in IndexedDB/
+OPFS with quota/recovery handling. Exporting history alone will not improve draw calls.
+
+User PASS .821 Pencil point merge. .822 introduces read-only project snapshot preflight through existing scene owner; versioned .boxlab codec and File Save/Open remain next steps, not shipped.\n\n## Added priorities â€” project files and NOM import
+
+User requests native `.BOXLAB` Save/Open and Nomad `.nom` import. Recommended order:
+1. Versioned `.boxlab` project format and File Save/Open, preserving complete editable
+   scene including hidden Boolean sources/recipes, groups/links, modifiers and scale.
+2. NOM import using existing container reader and scene importer, validated against
+   real Nomad files; staged geometry/names/facegroups before richer attributes.
+3. Shared curve editor and Balloon silhouette object, auditing existing Balloon code.
+4. Extruded curve cutters feeding existing editable Boolean owner.
+5. Quad-remeshing feasibility using open algorithms or licensed integration.
+
+The project schema should be portable between browser and a future native iPad app.
+Version migrations, validated atomic reopen and future procedural parameters belong
+to the design. Native file-type registration and cross-session Undo persistence are
+separate decisions. Export/import meshes do not replace native project persistence.
+Both additions are queued, not implemented. Editable/live Boolean steps are complete.
+
+## Beta 6 delivery refinement â€” .736
+
+.735 user PASS. NOMAD now follows validated MeshUtilz browser-download/preview
+route instead of generic save/share, with longer URL lifetime. Format/geometry
+unchanged. Await iPad Download â†’ Open In/Share â†’ Nomad result and final release
+smoke, then accepted candidate freeze. No more native-format features queued.
+
+## Beta 6 native-handoff refinement â€” .735
+
+.734 user PASS. Shared XYZ button colours and File NOMAD exporter implemented,
+reusing MeshUtilz balloon-v0.6 native container/template. Geometry/names/groups,
+Base/SubD/Mirror covered; existing GLB retained for richer channels. Await .735
+Nomad first-open test and final iPad smoke, then freeze exact accepted Beta6 source.
+No unrelated features or NOM-import promise.
+
+## Beta 6 candidate correction â€” .734
+
+User requests component Align on gizmos. Vertex/Edge original Align functionality
+is exposed using point/line icons; Face Align moves out of radial to face icon.
+All reuse component-align .705 and original anchor/history behavior. Await .734
+Align plus .733 Focus device checks, then final release smoke/Files/Nomad and freeze.
+No unrelated features.
+
+## Beta 6 final candidate â€” .733, 2026-10-05
+
+.732 user PASS. Default-launch Focus and armed toolbar icon implemented in .733.
+No further feature work before Beta6 freeze. Release notes draft prepared. Remaining
+checks: .733 Focus toggle/browser, final iPad navigation/history/Multi/Boolean/
+Extract smoke, Files/Nomad round-trip. After those pass, freeze exact accepted
+source into /beta-6/, finalize notes, publish and verify immutable frozen URL.
+Existing full-suite test debt is documented, not claimed green.
+
+## Current bundled refinement â€” .732, 2026-10-05
+
+.731 explicitly PASS. .732 implements popup packing, audited background exits,
+Array axis/Free handles, operation-scoped Inset Repeat, and top-bar/right-side
+Object Browser with original Modifiers. Automated checks complete; grouped iPad
+acceptance pending (TEST_CHECKLIST.md). Resume Beta 6 release checks after feedback;
+no Beta 6 freeze or unrelated feature work.
+
+## User-directed priority â€” updated 2026-10-04
+
+Radial menus contain active modelling/repair tools only. Selection is handled by
+long press and gestures. Do not add selection filters/helpers to contextual rings.
+
+All development is now directed at finalizing radial menus and contextual settings.
+Defer unrelated feature/gesture/strengthening work until this is complete.
+
+Primary goal: finish contextual radial menus and top-centre pop-out settings so routine
+modelling needs as little left-drawer interaction as possible.
+Required order: **Face gaps â†’ Vertex â†’ Object â†’ final Edge completeness pass**.
+The .690 PASS completed the lifecycle of the existing Face ring; it did NOT prove
+that all Face drawer actions/settings had migrated into the contextual workflow.
+Edge's existing radial lifecycle is protected, but overall Edge completeness must
+be finalized after Vertex and Object. Stop broad gesture expansion while this
+radial-menu work is the priority. .691 remains protected; .692 is already published
+and its Edge neutral-return hands-on checks remain pending.
+Before the next runtime build, compare the full Face drawer against the current
+Face rings, audit existing action/settings owners, and choose the next related
+Face contextual batch. Preserve current passes. Add contextual access/pop-outs by
+reusing owners; remove redundant drawer UI only after its replacement passes.
+Do not mistake a working ring lifecycle for complete contextual tool coverage.
+
+## Align to Face â€” v0.36.18.705
+
+Implemented in the existing top-centre Align pop-out beside X/Y/Z. Select moving
+planar Faces plus the fixed Face, choose Align to Face, then tap the selected fixed
+Face. Moving group rotates rigidly and translates along anchor normal; shared hinges
+work where anchor vertices remain fixed. Bent groups, warped anchors and unsafe
+surrounding geometry reject without mutation. Selection/puck and one-step Undo/Redo;
+no-op adds no history. Existing anchor owner/quaternion/health audit reused; no new
+radial sector or pointer owner. Hands-on PASS. Resume Face gaps â†’ Vertex â†’ Object
+â†’ final Edge after this confirmation.
+
+## Tool-session popup placement
+
+All viewport tool-session popups appear at the top centre, using the shared
+placement owner. Preserve selection-relative gizmo/rings. This applies to future
+Face, Vertex, Object and Edge session controls and floating numeric entry.
+
+## Product direction
+
+BoxLab is an **iPad-first touch/Pencil polygon modeller and Nomad Sculpt companion**.
+
+Core principle:
+
+**Import â†’ Clean â†’ Model â†’ Export â†’ Nomad Sculpt**
+
+BoxLab should stay fast, direct, topology-aware and shallow. It should not become Blender-on-iPad.
+
+## Phase A â€” Topology intelligence / Clean for SubD
+
+**Status: COMPLETE at v0.36.18.323.**
+
+Delivered:
+- conservative four-triangle fan repair
+- sliver/skinny-triangle cleanup
+- bounded even triangle-island complete matching up to 40 connected triangles
+- complete matching only; no stranded triangle forcing
+- surrounding quad-flow quality
+- whole-patch boundary guards
+- internal proposed-quad flow coherence
+- average + worst-local internal-flow ranking
+- smooth-interior valence regularity
+- average + worst-local valence ranking
+- conservative residual triangle-pair merge
+- guarded all-quad tangent relaxation
+- topology audit for invalid references, repeated/collapsed edges, duplicate faces, non-manifold edges and orphan crease data
+- transactional rollback in the core cleanup pipeline
+- generated irregular-mesh regression fixtures
+- UI-level topology validation remains as a second line of defence
+
+Phase A freeze rule:
+- v0.36.18.339 reopened Phase A only for a concrete Clean shape-preservation regression; sharp incident normal breaks are now protected during relaxation
+- do not resume blind triangle-cap growth
+- do not chase exotic remeshing research without a concrete user-facing failure
+- future Clean for SubD changes require a real modelling case or a reproducible regression
+
+## Phase B â€” Precision modelling
+
+**Status: planned precision slice complete through v0.36.18.340.**
+
+Priority candidates:
+- cross-object snapping â€” **Add Vertex in v0.36.18.324; component Move snapping added in v0.36.18.325**
+- precision drag/readback polish â€” **live component Move Î”X/Î”Y/Î”Z readback added in v0.36.18.326**
+- Repeat Previous audit/polish for exact repeated operations â€” **Repeat Extrude / Repeat Inset pre-existed .327; redundant duplicate loader removed in v0.36.18.328**
+- Align / Flatten component tools â€” **existing Make Planar retained; Align X/Y/Z added in .329 and upgraded to explicit pick-anchor workflow in v0.36.18.330**
+- Circle / regularize selected components where topology permits â€” **simple closed Vertex/Edge loop Circle added in .331; single selected Face boundary support added in .333; UI moved from Selection to contextual Active Tools in .334; exact Vertex/Edge/Face Active Tools slots arranged in v0.36.18.336**
+- Edge Split canonical-Multi regression â€” **fixed in v0.36.18.335 by making Edge paint selection yield while Face Split is armed**
+- Edge Flip for manual topology-flow correction â€” **existing Rotate Edge audited as the same triangle-pair diagonal swap; consolidated under the clearer Flip Edge label in v0.36.18.337**
+- stronger structured Fill / Grid Fill / Cap workflows â€” **existing Fill is the current single-face Cap; conservative four-sided all-quad Grid Fill added in v0.36.18.338**
+- support-loop construction improvements â€” **existing Offset Loop audited as the support-loop tool; transactional validation, canonical rail selection and Multi-safe Pencil handoff added in v0.36.18.340**
+- **Edge Extrude** â€” **direct boundary/loose-edge ribbon workflow added in v0.36.18.423; repeated pulls automatically continue from the newly created outer rail; v0.36.18.425 adds Free/X/Y/Z/Auto directional constraints projected perpendicular to the source edge; v0.36.18.426 adds free Plane-constrained pulling perpendicular to the grabbed edge; v0.36.18.427 keeps the tool/constraint armed while tapping or switching boundary-edge selection**
+- preserve direct Pencil interaction and minimal mode switching
+
+## Phase C â€” Object / instance workflow
+
+**Active phase.**
+
+- linked-instance editing robustness â€” **explicit Linked Duplicate + shared-source manager foundation added in v0.36.18.343; ordinary Duplicate remains independent** â€” **v0.36.18.362 hardens the shared-geometry / independent-placement contract across activation and modelling edits**; **v0.36.18.363 makes linked-copy creation atomic so second-generation links are born attached before activation** â€” **v0.36.18.366 makes the live mesh bridge authoritative before every render so linked edits commit the visible mesh**
+- Make Unique audit/polish â€” **explicit Make Unique detach path added in v0.36.18.343; v0.36.18.641 materializes authoritative source+instance placement before detaching active/inactive instances, removing cached-mesh dependence**
+- cross-object reference/edit workflows â€” **Reference imports already served as snap targets; v0.36.18.344 hardens them as permanently read-only modelling guides across single/Multi/Group/history paths**
+- stronger multi-object editing â€” **audit confirmed Multi Move / Scale / Rotate / numeric transforms / grouping / Duplicate / Join / Boolean already existed; Multi Linked Duplicate + Multi Make Unique parity added in v0.36.18.346**
+- Join/Boolean workflow polish â€” **v0.36.18.347 consolidates both workflows onto the authoritative Object scene-history bridge; legacy parallel Boolean Undo/Redo wrapper removed while A/B UX, hidden originals, unique results, linked-instance metadata and Reference exclusions are preserved**
+- persistent object/region organization â€” **v0.36.18.348 makes Group metadata persistent; v0.36.18.349 makes Groups first-class; v0.36.18.350 compacts the tree; v0.36.18.351 centralizes Group ownership; v0.36.18.352 restores two-object viewport feedback + compact naming; v0.36.18.353 fixes focused Rename/live header refresh; v0.36.18.354 adds whole-Group visual context; v0.36.18.355 fixes grouped transform routing; v0.36.18.356 compacts Object/Group rows; v0.36.18.357â€“.358 harden upward More popovers; v0.36.18.359 restores per-object Delete and adds keyboard Delete/Backspace.; v0.36.18.360 makes Origin/Pivot contextual and compacts the Object Selection toolbar.; v0.36.18.361 adds direct per-object SubD Preview toggles to compact Outliner rows.**
+
+- Group Boolean convenience â€” **v0.36.18.368â€“.369:** two complete Groups can act as Boolean A/B operands; .369 replaces the naive disconnected Join operand with a shell-by-shell compound Boolean path, while source Groups remain intact/hidden for Undo.
+
+### Beta 3 release-candidate hardening
+
+**v0.36.18.371** is the approved **frozen Beta 3** checkpoint. The user completed the hands-on release gate on 2026-09-20 and the exact approved release tree is published under `/beta-3/`. Phase D may now resume on live `main` while Beta 3 remains immutable except for an explicitly approved emergency release fix.
+
+### Beta 5 release checkpoint
+
+**v0.36.18.538** is the approved **frozen Beta 5** checkpoint from source commit `343dc4dec00046762c7a9a11edaa92e0160a5a55`, snapshotted under `/beta-5/` by freeze commit `7667df2f889aca84b67bad56bf559d9c8d67478e`. The user completed the hands-on release gate on 2026-09-27. Normal development may resume on live `main`; Beta 5 remains immutable except for an explicitly approved emergency release fix.
+
+### Beta 4 release checkpoint
+
+**v0.36.18.427** is the Beta 4 checkpoint, frozen from main commit `ec45b3ba208ef3ffa40015d7a3b62666c63f379e` under `/beta-4/`. It captures the Phase D Tool Session consolidation plus the direct Edge Extrude ribbon workflow through Plane constraints and live edge-selection handoff. Normal development continues on live `main`; Beta 4 remains immutable except for an explicitly approved emergency fix.
+
+## Phase D â€” Construction tools
+- surface-relative Transform / Insert workflow â€” **Transform Tool foundation added in v0.36.18.436; v0.36.18.437 upgrades it to source-face â†’ target-face true face-to-face anchoring; v0.36.18.438 adds the linked-instance Insert Tool foundation using the same surface-frame controller and existing sourceId/instanceMatrix architecture.**
+
+
+Only add focused tools that suit BoxLab:
+- topology-aware Symmetry / Bisect / Apply â€” **origin-plane X/Y/Z foundation with Keep +/- and optional welded Mirror added in v0.36.18.428; movable X/Y/Z plane with Vertex/Edge/Midpoint/Face geometry snapping added in v0.36.18.433; arbitrary-plane rotation and transform ownership added in v0.36.18.434; Align to Face + Flip Plane added in v0.36.18.435**
+- Shell / Solidify
+- Array
+- Sweep where appropriate â€” **Sweep Path foundation added in v0.36.18.393; v0.36.18.394 added reliable Apply redraw + true 3D Geometry Snap; v0.36.18.395 changes Sweep to a profile-first workflow with a movable Profile Plane, Circle/Rectangle/custom profiles, editable construction state, and dual path sources: SketchUp-style Follow Edges or free Draw Path; v0.36.18.396 refines custom Draw with a compact Profile Plane and explicit Open/Closed profiles, including open-profile surface Sweep preview; v0.36.18.397 fixes profile closure/orientation mirroring; v0.36.18.398 hardens concave closed profiles and exact start-ring placement; v0.36.18.399 corrects side-face normals; v0.36.18.400 fixes Sweep edit ownership/transform disarm; v0.36.18.401 adds Use Selection for a preselected Face or closed Edge loop; v0.36.18.402 adds direct Face/Edge selection launch; v0.36.18.403 fixes closed-profile node insertion; v0.36.18.404 anchors selected profiles directly to the first rail edge; v0.36.18.405 unifies closed-shell normals; v0.36.18.406 moves Sweep into the new exclusive Tool Session UI with PROFILE / PATH / FINISH stages**
+- Lathe where appropriate
+- lightweight deformers only if they fit direct touch modelling
+
+## Phase E â€” Import / repair / handoff
+
+- Mesh Health / Inspect workflow â€” **foundation added in v0.36.18.439: non-destructive Object audit with Closed/Open clean states and topology issue counts; v0.36.18.440 adds transactional Safe Repair for exact duplicate faces, zero-area faces and accidental orphan vertices**
+- Auto Close / Make Watertight â€” **v0.36.18.441 adds conservative Auto Close for Open Â· Clean meshes made entirely of simple closed boundary loops, with cap orientation reuse and closed-topology validation**
+- stronger boundary diagnostics â€” **v0.36.18.442 classifies connected boundary groups as loops/chains/branched and hands boundary/non-manifold edges directly into native Edge selection**
+- normals / triangulation controls â€” **v0.36.18.443 adds Unify Winding, Flip Normals, and ear-clipped Triangulate controls inside Mesh Health**
+- export polish â€” **v0.36.18.444 adds evaluated-mesh OBJ preflight, per-object Mesh Health metadata, scene health summary, and OBJ group records while preserving permissive export**
+- OBJ facegroup / polygroup preservation â€” **v0.36.18.445 preserves OBJ `g` data as per-face metadata, keeps grouped meshes as one object by default, and adds optional Split objects by groups import**
+- viewport facegroup colours â€” **v0.36.18.446 adds a non-destructive Facegroups Render Look with stable per-group colours and neutral ungrouped faces**
+- facegroup colour controls â€” **v0.36.18.447 adds contextual palette, saturation, lightness, ungrouped colour, reseed and reset controls**
+- GLB export if useful for the Nomad/3D handoff workflow
+
+## Phase F â€” iPad UX polish
+
+- browser-selection interaction guard â€” **native Safari selection/callout suppressed across BoxLab UI while editable fields remain exempt in v0.36.18.345**
+- **Solidify/Shell migrated in .421; Revolve Profile migrated in .422**
+- persistent tool modes
+- viewport contextual Selection Hub â€” **Face-mode v1 added in v0.36.18.642: closed puck -> transform gizmo -> contextual tool ring -> closed puck; tool sectors proxy existing authoritative actions and hide during active modelling**
+- Edge contextual Selection Hub â€” **v1 added in v0.36.18.654 with Extrude / Bevel / Crease / Slide / Offset / Bridge / Dissolve / Delete proxies**
+- Radial contextual availability â€” **v0.36.18.658: Face + Edge sectors mirror authoritative enabled/disabled/active state**
+- Edge hold browser transactional preview â€” **v0.36.18.655: candidate probes restore original selection; scrub replaces rather than accumulates; loop enumeration covers both seed endpoints plus Boundary/Ring**
+- Edge hold closed Face Boundary candidates â€” **v0.36.18.657: each Face incident to the held Edge contributes its complete perimeter as a browsable closed candidate**
+- Edge hold additive base selection â€” **v0.36.18.659: pre-hold selection persists while the currently browsed candidate is replaced transactionally**
+- Direct-tool Pencil ownership handshake â€” **v0.36.18.660: main direct tools block Pencil orbit stealing; Bevel disarms after completion**
+- Bevel viewport session â€” **v0.36.18.662: radial Edge Bevel gets Width / Segments / Apply Exact / Cancel beside the model while existing Bevel owner remains authoritative**
+- Selection Hub session palettes â€” **Sweep viewport session proxy added in v0.36.18.643; Profile / Path / Finish controls mirror the existing authoritative Sweep owner beside the model**
+- Shell viewport session proxy â€” **added in v0.36.18.653; Thickness / Apply / Cancel mirror the existing Shell owner beside the model**
+- left-hand access
+- reduced tap count â€” **v0.36.18.406 makes Face/Edge â†’ Sweep jump directly to PATH/Follow Edges and removes the need to hunt through Object Active Tools**
+- consistent Pencil drag behaviour
+- selection-region workflow
+- numerical precision entry/readback
+- landscape-first layout
+- selection visibility at all zoom levels
+
+### Selection Hub / modeless UX checkpoint â€” v0.36.18.690
+
+- Edge radial lifecycle is complete and hands-on protected through .677.
+- Face radial lifecycle is complete and hands-on protected through .690; refreshed-shell Shell/Sweep exits and Knife regression confirmed PASS on 2026-10-03.
+- Protected Object-mode contract from .682:
+  - finger/Pencil background tap dismisses Object gizmo
+  - Pencil background drag still orbits
+  - tapping the object restores the gizmo reliably
+- Radial menu completion is the active priority: Face gaps â†’ Vertex â†’ Object â†’ final Edge. .691 Face neutral return is protected; .692 Edge parity is published with hands-on checks pending. Broader gestures are secondary.
+
+### Face contextual coverage / Vertex completion batch â€” .710
+
+- .694 outer-ring Join/Circle and existing eight inner sectors are hands-on PASS and protected.
+- .695 Poke/Make Planar are hands-on PASS and protected.
+- .696 Triangulate/Flip Faces are hands-on PASS and protected.
+- .697 Orient Faces/Orient Outward are hands-on PASS and protected.
+- .698 Face Bridge viewport preview and centred Ã— are hands-on PASS and protected.
+- .699 Extrude/Inset Exact/Repeat/Done are hands-on PASS and protected.
+- .700 shared top-centre session dock and Extrude/Inset background Done are hands-on PASS and protected.
+- .701 selection owners passed hands-on, but user clarified that radial menus are active tools only.
+- .702 removes Coplanar/Connected radial access and restores nine outer active tools; awaiting hands-on PASS.
+- .703 adds Close Holes / Quad Cleanup / Quadify N-gons through a top-centre whole-active-object Apply/Cancel panel, reusing existing owners. Successful rebuilding clears stale Face IDs; Cancel preserves selection. Hands-on pending.
+- .704 adds Clean Vertices to whole-object repair controls and Align to X/Y/Z anchor settings at top centre. Existing kernels reused; eight inner/fourteen outer tools. Hands-on pending; .702/.703 also remain pending.
+- .705 adds arbitrary-plane Align to Face in the existing Align pop-out; rigid planar group placement, fixed anchor, guarded candidate commit, one-step history. Hands-on PASS.
+- .706 exposes existing Merge by Distance through whole-object top-centre exact tolerance/Apply/Cancel, preserving Face mode and using existing safe scanner/weld owner. Fifteen outer tools; combined cluster validation, one history step and stale-ID cleanup. Hands-on pending.
+- .707 adds Face Bevel using existing Edge bevel controller/kernel and shared top-centre Width/Segments settings. Single Face or connected region outside boundary, same Pencil drag/exact, Face mode retained, one Undo and guarded cancellation. Sixteen outer tools; hands-on pending.
+- .708 responds to .707 Face drag FAIL: early owner dispatch/main fallback guard and Shell-like blue snapshot preview for Width/Segments/Pencil. Release retains preview; explicit Apply commits once, Cancel discards. Existing Edge/kernel/ring preserved; full manual list hands-on PASS and protected.
+- Populate complete Face tool coverage before deciding inner/main vs outer/secondary placement. More is an accepted fallback if the completed two-ring layout is crowded.
+- .709 Face owner/settings inventory accounted for all 24 active tools; Through already lives in inward Extrude. Pending Face repair confirmations and final placement review remain. Vertex starts with existing Merge Center / Merge First, same owner/history/chronology and puck lifecycle; hands-on pending. User requests all existing Vertex Active Tools in .710, followed by combined testing/refinement.
+
+### Vertex Active Tools radial coverage â€” .710
+
+All thirteen existing tools exposed: inner Add/Build Edge/Bevel/Slide/Join/Weld/
+Create Face/Delete; outer Circle/Merge Center/Merge First/Merge Dist/Clean Vertices.
+Existing owners/settings/history reused. Add/Build Done, Bevel Width/Exact/Cancel,
+Slide signed exact/Done, selected-only Merge tolerance/Apply/Cancel and whole-object
+Clean Apply/Cancel appear at top centre. No new modelling or pointer kernel.
+Align is in Selection controls, outside this explicitly Active-Tools-only batch.
+
+Bevel's inner90Â° /3-o'clock position is now consistent across Face, Edge and Vertex.
+Face Knife135Â°, Duplicate180Â°, Extract moves outer337.5Â°; Edge Slide45Â°/Crease135Â°.
+41 targeted PASS; full1169 tests/884 PASS and same285 failure names as .709.
+Hands-on .710 AWESOME / PASS; protected. Object .711 now complete; combined
+test/refinement before final Edge. Keep drawer fallbacks, .708 protected Face Bevel and earlier pending checks.
+
+## Strengthening list
+
+Concrete modelling cases to strengthen after the current Selection Hub / gizmo UX pass:
+
+- **Connected-chain Edge Bevel through ordinary quad valence** â€” current multi-edge chamfer routing rejects some open connected chains when affected vertices are normal 4-valence quad-mesh vertices. Example captured 2026-10-02: a continuous top-profile edge chain across a subdivided/reshaped quad strip should bevel as one connected chain. Treat this as a Bevel capability gap, not invalid user topology. Preserve existing single-edge, loop/perimeter and already-working connected bevel paths while extending support.
+
+## Protected product behaviour
+
+Preserve:
+- one-finger orbit
+- two-finger pan
+- pinch zoom
+- two-finger tap Undo
+- three-finger tap Redo
+- no-jump orbit pivot
+- persistent selections during navigation
+- Studio realtime default/behaviour
+- object management / Multi
+- current snapping
+- mature Through behaviour
+- existing core modelling tools
+- transactional topology operations
+
+## Deferred / intentionally not active
+
+- path tracing: abandoned in favour of Studio realtime
+- broad sculpting / voxel remesh: belongs in Nomad rather than BoxLab
+- Blender-scale scene-management complexity
+- speculative topology work without a user-facing failure
+
+- Tool-first UI/UX consolidation â€” **v0.36.18.450 hides inactive Tool Session settings, contextualises legacy Vertex settings, and moves Boolean behind a Tool Session launcher; planned as the pre-Beta-5 cleanup baseline.**
+
+
+## Recovery rule after .465
+
+- Current development restarts from the hands-on-good v0.36.18.449 runtime.
+- Reintroduce UI/UX cleanup one narrow slice at a time.
+- Each slice must pass hands-on interaction checks before the next UI slice begins.
+- Do not reapply the v0.36.18.450 bulk consolidation wholesale.
+
+- [ ] Complex logical-quad Loop Cut through multiple collinear boundary vertices â€” strengthen separately without changing protected v0.36.18.162 Loop Cut reconstruction / slide behaviour.
+
+### Object Active Tools radial coverage â€” .711
+
+All ten existing launchers now in two rings: Transform, Insert, Solidify, Array,
+Boolean, Join, Symmetry/Bisect, Mesh Health; outer Revolve Profile/Clean for SubD.
+Original owner controls docked top-centre in Object mode, intact settings/child
+controls/Apply/Cancel. Authoritative owner cancellation and completion/gizmo return.
+No parallel kernel/pointer owner; protected .710 Vertex and component Bevel positions.
+32 targeted PASS; full1181/897/284, no new failures versus .710. Hands-on pending.
+Next combined Object test/refine â†’ final Edge inventory/settings audit.
+
+
+### Coordinated popout / gizmo refinement â€” .712
+
+User sketches supersede centre-to-radial access: centre free transforms; corner
+shortcuts for Radial/Focus+Frame/Undo+Redo/Object Multi. All top tool popouts use
+wide settings + stacked right terminal actions through shared presentation owner.
+Original controls/geometry/history/gesture owners retained. .711 screenshots confirm
+load, but no full Object PASS. 41 targeted PASS; full1190/906/284, no new failures.
+Next .712 combined visual/tactile refinement before final Edge inventory/settings.
+
+
+### Final Edge Active Tools coverage â€” .713
+
+User .712 AWESOME PASS protects wide popouts/gizmo shortcuts/Object coverage.
+All nineteen existing Edge tools exposed, including eleven reported gaps. Loop/Split
+settings and Done reuse original owners; Edge Sweep uses existing staged proxy.
+One-shot handoffs and shared angular/tier slots aligned across component modes.
+No new kernel or protected Loop core changes. 46 targeted PASS; full1195/911/284,
+no new failures. Next combined .713 hands-on/refinement; retain drawer fallbacks
+until approved. No unrelated gesture/topology expansion.
+
+
+### Object List access in Focus â€” .714
+
+Object gizmo gets list icon beside Multi, reusing original Objects disclosure and
+Focus owner. Focus reveals only Objects, keeps Focus active, restores state on close
+or mode/Focus exit. No parallel outliner/selection owner. 29 targeted PASS; no new
+full-suite failure names. Next .714 hands-on plus pending .713 Edge combined checks.
+
+
+### Persistent Edge radial Loop / Bevel â€” .715
+
+.714 Object List PASS protected. Loop retains slide rail after placement; EXACT
+finalizes without closing, more cuts allowed. Radial Edge Bevel drag/exact stays
+ready for new selections. Background tap exits both; original navigation owner,
+kernels/history retained. .688/.162 Loop core and Face blue Bevel unchanged.
+50 targeted PASS; no new full-suite failure names. Next .715 hands-on and remaining
+Edge refinement, retaining drawer fallbacks.
+
+
+### Face preview / Boolean compact refinement â€” .716
+
+.715 repeat Edge sessions PASS protected. Blue Face Bevel render overlay now excludes
+unchanged polygons/other shells; original candidate and history remain unchanged.
+Boolean two-row operands/operations with Close right, original controls retained.
+51 targeted PASS; no new full-suite failure names. Next .716 visual/tactile checks.
+
+
+### Object Multi gizmo / Boolean access â€” .717
+
+Presentation anchor uses earliest surviving visible selected object from the actual
+selection Set. Scene picker shared with activation prevents inactive object taps
+from dismissing gizmo, including Pencil semantic guard. Genuine background dismissal
+and existing Multi transforms/pivots preserved; protected transform1.0 untouched.
+33 targeted PASS; full1210/926/284, no new failure names. .716 visuals remain pending.
+Next .717 iPad Multi/Boolean access checks, then radial refinement.
+
+
+### Combined viewport UI refinement â€” .718
+
+Viewport Multi repair stays in actual early activation owner; original transform
+file1.0 unchanged. Top icons share gizmo shapes, VIEW retained; original Snap/Lasso
+controls above mode buttons. Confirmed double-background tap inverts original set
+through selection owners with context guards. 61 targeted PASS; no new failures.
+Minimal-drawer audit in handoff: modifiers, selection depth/filters/bulk controls and
+Object List access with empty selection remain. Keep drawer available; user chooses
+remaining homes after .718 hands-on, no unsolicited radial selection items.
+
+### Lasso / Invert completion refinement â€” .719
+
+Follow-up to .718: stationary background tap ends Lasso through its original owner
+and existing main completion; semantic/canvas delivery is deduplicated per release.
+No new raw-pointer owner or modelling/history changes. Full regression has identical
+283 failure names to .718 (1219/936/283). Next iPad Lasso/Invert/Multi/navigation
+confirmation and pending .716/.713 checks; retain drawer fallbacks.
+
+### Edge Lasso / double-background timing refinement â€” .720
+
+.719 Edge/Lasso and timing FAIL recorded. Existing Edge Paint yields to Lasso;
+main background owner uses early window capture; native release timestamps replace
+Safari timer-based deduplication and drive500ms Invert. No new gesture owner or
+modelling kernel. Seven new regressions,38 targeted PASS; full1226/943/283, same
+failure names as .719. Next iPad Edge/Lasso/Invert/navigation confirmation; use
+Gesture Debug if still failing. Keep drawer and prior pending checks.
+
+### Object List Modifiers / double-tap diagnosis â€” .721
+
+.720 Lasso cancellation/drawing/finger navigation passed and protected. Slight
+Lasso selection tightening explicitly deferred MUCH LATER to final perfection.
+Double-background Invert still FAIL. .721 exposes original collapsed Modifiers
+below Objects in Focus Object List; original controls and disclosure restoration.
+Existing Invert matcher gains diagnostic-only reason/timing/count logs; behavior
+unchanged pending on-device Gesture Debug screenshot before further gesture fixes.
+21 targeted PASS; full1228/945/283, same failure names. Next Modifiers hand checks
+and double-tap debug capture. Keep other pending checks/drawer fallbacks.
+
+
+### Readable background-tap evidence â€” .722
+
+.721 screenshot flooded by Pencil hover/movement; no Invert decision visible.
+Pin last six BACKGROUND diagnostics and quiet repetitive logs, without gesture
+changes. 8 targeted PASS; full1231/948/283, same failures. Next one-finger then
+Pencil double-background trace; Invert and Modifiers device checks still pending.
+
+
+### Physical double-tap evidence â€” .723
+
+.722 screenshots do not identify second-contact failure. Preserve read-only
+physical down/up/cancel evidence alongside semantic decisions; no gesture change.
+10 targeted PASS; full1233/950/283, same failures. Invert and Modifiers device
+checks pending. Main/Pencil movement thresholds both8px; do not repeat mismatch claim.
+
+
+### Background hold replaces double-tap Invert â€” .724
+
+User chose500ms stationary background hold for current-selection Invert; short tap
+clears/exits Lasso, hold retains Lasso and survives release. Existing owner and
+original selection APIs, guarded against navigation/multiple contact/context/session
+changes. Double-tap retired.24 targeted PASS; full1237/954/283, same failures. Next
+iPad hold/tap/release/Lasso/navigation tests, then pending Modifiers/radial refinement.
+
+
+### Beta6 drawer access â€” .726
+
+VIEW Object List closes empty-selection/hidden-gizmo Focus access gap by reusing
+original mode/list owners. Original collapsed Modifiers included; busy tools guarded.
+12 targeted PASS; full1240/957/283, same failures. Next iPad list/Modifiers checks,
+remaining selection-depth/filter/bulk Object access audit, combined radial/session
+regression before Beta6 freeze. Keep drawer fallback and passed .724 interactions.
+
+
+### Beta6 viewport selection depth â€” .727
+
+.726 Object List access user PASS. Move original Visible/Through depth controls to
+viewport strip for normal/Focus access. Original owners/listeners and geometry math
+retained.27 targeted PASS; .726 full baseline1240/957/283 retained. Next iPad depth/
+layout sanity check, remaining advanced filters/bulk Object audit and release regression.
+
+
+### .728 Beta6 grouped build progress
+Selection-access batch implemented: viewport SELECT exposes complete original component filters/commands and contextual Object bulk controls; manual validation pending. Next batch: radial/session polish across all modes, then release-candidate navigation/transform/Multi/Boolean/history/object/file/Nomad regressions, then Beta6 freeze. Lasso tightening remains deferred until final polish.
+
+
+### .729 Beta6 grouped radial/session audit
+Batch2 implemented and automated: all modes' original inventory/availability/settings/lifecycle reviewed; fixed Face drag guards, Edge context/queued exits and puck suppression, Crease single Undo ownership, rejected launches/read-only actions and shared wide-panel spacing/hidden stages. Device acceptance pending. Next /nextbuild 3: release-candidate regression across navigation/transforms/type-in/Multi/Boolean/history/object management/files/Nomad; then combined passes and Beta6 freeze. .728 manual acceptance still pending; Lasso tightening deferred.
+
+
+### .730 Beta6 release-candidate audit / compact UI
+User supersedes fixed-width popouts and removes Visible/Through UI (retain Lasso/SELECT). Compact content-sized panels implemented; RC audit restores missing Extract closing brace, validates279 source modules and actual transform/export/Extract owners.53 focused PASS; full1265/982/283 with identical existing failures. Device/WebGL/Files/Nomad checks still pending; see BETA_6_RELEASE_CHECKLIST.md. Next grouped iPad smoke test and issue review, then Beta6 freeze/notes. No Beta6 release claimed yet.
+
+
+### .731 quick pre-finalization refinement â€” device checks pending
+
+Sweep Face/Edge uses one original staged viewport dock; Edge Slide persists until
+Done/background; Edge/Vertex popup blue bevel preview added through original owners,
+retaining viewport drag bevel. 86 focused PASS; no new full-suite failure names.
+Continue .730/.731 grouped iPad checks and Files/Nomad export acceptance; freeze Beta6
+only after user feedback and blocker review. Slight Lasso tightening deferred.
+
+## 2026-10-05 â€” Beta 6 released
+
+Accepted .736 frozen at /beta-6/. No more feature work in this snapshot.
+Next: final frozen-link device smoke, then choose post-Beta6 work separately.
+
+## 2026-10-05 â€” Post-Beta6 reliability path
+
+User approves reliability audit. Complete report/inventory in docs. Next batch
+repairs test contracts and visibility without changing accepted runtime/frozenbeta;
+then CI gate/coverage, varied Bevel/Knifeâ†’Loop, scene history and Nomad handoff.
+277 failures are check results, not confirmed app bugs; no blanket quarantine.
+
+## 2026-10-05 â€” .737 reliability batch1
+
+Release/cache contracts and historicalscope reconciled;333 named scriptchecks,
+full1610/1492/118/0skip. Modeller/frozenbetas unchanged. Next currentselection/
+Gizmo/tool lifecycle semantic fixtures and OBJgroups before algorithms; CI release
+gate follows genuine test reconciliation. See docs/reliability-build-737.md.
+
+
+### .773 publication verification â€” 2026-10-09
+
+Published32d70bb2e73151b3cb3b61f387e312d1d4371965; tree86adb0a691e79059379ac202554ac4c7a1d7f145 exactly matches tested checkout.
+Actual Node22 Topology37933050867/job113828237624:2050tests/1964PASS/86FAIL/0skip;
+all86 failure names match local. Pages37933050504 success. Live shell/version,
+unchanged Gizmo and frozenBeta6 version byte-match tested checkout. Focused74PASS.
+User .772 PASS recorded; .773 device sanity pending. Runtime source unchanged.
+
+## .778 publication verification â€” 2026-10-10
+
+Release commit `d0ba0fe19edee45b6a82f41b33d1a37b681d9e5f`, tree
+`620c4e497aaef5586a46ffe959a4d5209e00e9af` matches tested checkout.
+Actual Node22 Topology run38005274839/job114072505737:2055tests/2000PASS/55FAIL/
+0skip; all55 failure names exactly match local inventory. Pages38005274578 succeeded.
+Fresh live index.html/version.json, unchanged Face/main owners and frozenBeta6
+version byte-match repository. Focused65PASS. User .777 PASS recorded; .778 device
+sanity pending. Runtime/frozenBeta unchanged.
+
+## .779 publication verification â€” 2026-10-10
+
+Release commit `5b24a307f9239286ece4d9947ad6a3f79dfb5542`, tree
+`7fc73ef19749c57ec1c910724af03851d6f84905` matches tested checkout.
+Actual Node22 Topology run38006619712/job114076765987:2068tests/2013PASS/55FAIL/
+0skip; all55 failure names exactly match local inventory and778. Pages38006618687
+succeeded. Fresh live index/version/kernel/Face import owner, unchanged main and
+frozenBeta6 version byte-match repository.84focusedPASS. User .778 PASS recorded;
+.779 supplied-model device acceptance pending.
+
+## .780 publication verification â€” 2026-10-10
+
+Release commit `2f200c6bec86eebc417034619949923e14633e4a`, tree
+`ff10ed4fc279c5e7973b92d798461bc99a02218f` matches tested checkout.
+Actual Node22 Topology run38007376560/job114079177377:2071tests/2019PASS/52FAIL/
+0skip; all52 failure names exactly match local inventory. Pages38007376421 succeeded.
+Fresh live index/version, unchanged main/accepted Through779 and frozenBeta6 version
+byte-match repository.120focusedPASS. User .779 PASS recorded; .780 device sanity
+pending. Runtime/frozenBeta unchanged.
+
+## .781 publication verification â€” 2026-10-10
+
+Release commit `c49f57c40528236343c38671313868dc526c82a8`, tree
+`f45523d23b7618a672ca93c0c91497a614cfccc2` matches tested checkout.
+Actual Node22 Topology run38009270303/job114085236411:2072tests/2025PASS/47FAIL/
+0skip; all47 failure names exactly match local inventory. Pages38009270112 succeeded.
+Fresh live index/version, unchanged main/Face779 and frozenBeta6 version byte-match
+repository.115clean-focusedPASS; target group19PASS/1existing diagnostic FAIL.
+User .780 PASS recorded; .781 device sanity pending. Runtime/frozenBeta unchanged.
+
+## .782 publication verification â€” 2026-10-10
+
+Release commit `8b74b8c1107d1eda3778cca05afaddad0e085710`, tree
+`f9ad57892348ae6336d17a2bfae1fb93939f834c` matches tested checkout.
+Actual Node22 Topology run38011380865/job114091946863:2073tests/2033PASS/40FAIL/
+0skip; all40 failure names exactly match local inventory. Pages38011380490 succeeded.
+Fresh live index/version, unchanged central debug/Face779 and frozenBeta6 version
+byte-match repository.123focusedPASS; all five original .722 test bodies byte-identical.
+User .781 PASS recorded; .782 device sanity pending. Runtime/frozenBeta unchanged.
+
+
+### .783 publication verification â€” 2026-10-10
+
+Published release commit `30e2a9f0af57222ea24b27fb960cf486dac2f07d`, tree
+`9ef9c75b66c2456700cd3980d54ff4490b834bf0`. Pages run `38015557953`
+completed successfully. Topology CI run `38015558359`, job `114104912894`,
+completed with the expected active inventory: 2074 tests / 2038 PASS / 36 FAIL /
+0 skipped. All 36 failure identities match `docs/reliability-build-783.json`;
+four .782 failures removed and no new failures. Focused validation: 131 PASS.
+Fresh live `index.html`, `version.json`, `src/main.js`,
+`src/multi-face-direct.js`, and `beta-6/version.json` match repository bytes.
+Runtime owners and protected pins unchanged. User accepted .782; .783 device
+sanity remains pending.
+
+
+### .784 publication verification â€” 2026-10-10
+
+Release commit `1ed2807186c94684ff088a6ecdb1955f5f4dacc1`, tree
+`f05d5abf98191f9cb1e43a265e27c106480227f8` exactly matches tested checkout.
+Actual Node22 Topology run38017194089/job114109994738:2076tests/2041PASS/35FAIL/
+0skip; all35failure identities exactly match docs/reliability-build-784.json.
+Pages run38017193466 completed successfully.97focusedPASS. Runtime and frozenBeta
+unchanged; .783 user PASS protected; .784 device sanity pending.
+Fresh live index.html/version.json byte-match .784 repository. Unchanged main762,
+Face779 and frozenBeta6 version also byte-match live. Shell markers/recovery784
+coherent; reviewed runtime pins and hashes retained.
+
+
+### .785 publication verification â€” 2026-10-10
+
+Release commit `4437ecb4ab9e8223260b912163ee1310a2761732`, tree
+`e5aadf925fe9b39f57d9a00f32899a24b11f8f23` exactly matches tested checkout.
+Actual Node22 Topology run38018332508/job114113537665:2077tests/2045PASS/32FAIL/
+0skip; all32failure identities exactly match docs/reliability-build-785.json.
+Pages run38018332469 succeeded. Fresh live index.html/version.json byte-match785;
+unchanged main762/Face779 and frozenBeta6 version also match live repository bytes.
+110focusedPASS; source/frozenBeta unchanged. .784 user PASS protected; .785 device
+sanity pending. Shell markers/recovery785 coherent, original modelling pins retained.
+
+
+### .786 publication verification â€” 2026-10-10
+
+Release commit `d1bef467466ac66e08433e412686a399c8473f4a`, tree
+`bec9f248300ac1fcad0deaaf3b931d732fc7e190` exactly matches tested checkout.
+Actual Node22 Topology run38019322721/job114116561321:2081tests/2049PASS/32FAIL/
+0skip; all32failure identities exactly match docs/reliability-build-786.json.
+Pages run38019322728 succeeded. Fresh live index/version and changed main786/
+Face786/Vertex assist786 byte-match repository. Through779, protected Multi1.0 and
+frozenBeta6 version also match live repository bytes.267clean-focusedPASS; broader
+547/536PASS/11existingFAIL retained. .785 device FAIL and Edge acceptance recorded;
+.786 user retest pending. Shell/recovery and reviewed runtime module pins verified.
+
+
+### .791 publication verification â€” 2026-10-10
+
+Release commit `f1d134e077726ae88da6a9e6a19644894d8853e8`, tree
+`89ba5c3685e6e5cf9a71804e5e961df67d68a559` exactly matches tested checkout.
+Actual Node22 Topology run38032058820/job114154883205:2100tests/2081PASS/19FAIL/
+0skip; all19failure identities exactly match docs/reliability-build-791.json.
+Pages run38032058768 succeeded. Fresh live index/version/shared UI791 byte-match
+repository; accepted main/Face/Vertex786, Sweep789/Revolve788, Through779, protected
+Multi1.0 and frozenBeta6 version byte-match unchanged repository bytes.124focused
+PASS. .790 user PASS protected; .791 Face UI/history sanity pending. Shared UI
+cache pin/hash and shell/recovery791 reviewed; no kernel or frozenBeta changes.
+
+
+### .792 publication verification â€” 2026-10-10
+
+Release commit `e1372c9cc2c379eb8a4f261fca1728517b318551`, tree
+`c87dc4da613e0bb2941fec3a59ac1b50409259d6` exactly matches tested checkout.
+Actual Node22 Topology run38033318243/job114158546682:2104tests/2087PASS/17FAIL/
+0skip; all17failure identities exactly match docs/reliability-build-792.json.
+Pages run38033318385 succeeded. Fresh live index/version byte-match792. Unchanged
+Shell/Solidify cores, shared UI791/main/Face/Vertex786, Sweep789/Revolve788, Through779,
+protected Multi1.0 and frozenBeta6 version all byte-match repository.71focusedPASS.
+No runtime/frozenBeta changes. .791 user PASS protected; .792 Shell/Solidify device
+sanity pending. Shell markers/recovery792 coherent; exactly two reviewed recovery
+URLs changed with every runtime hash retained.
+
+
+### .793 publication verification â€” 2026-10-10
+
+Release commit `f098586bf7c2cf5eeb227d82cd408be294234714`, tree
+`f8f3a85abfcc64caa9b53f57cd3e9d2d73fab958` exactly matches tested checkout.
+Actual Node22 Topology run38034916611/job114163240465:2108tests/2094PASS/14FAIL/
+0skip; all14failure identities exactly match docs/reliability-build-793.json.
+Pages run38034916795 succeeded. Fresh live index/version byte-match793. Unchanged
+render owner568/colour core547, shared UI791/main/Face/Vertex786, Sweep789/Revolve788,
+Through779, protected Multi1.0 and frozenBeta6 version all byte-match repository.
+42focusedPASS. .792 user PASS protected; .793 Facegroups device sanity pending.
+No runtime/frozenBeta changes. Shell/recovery793 coherent; exactly two reviewed
+recovery URLs changed, all runtime hashes retained.
+
+
+### .794 publication verification â€” 2026-10-10
+
+Release commit `4ae051d79fc855f0ab4e8224e0d4fb83770c3322`, tree
+`4df564fce34f340b525fdcc8186825ebe6a0fd12` exactly matches tested checkout.
+Actual Node22 Topology run38036208096/job114167039767:2112tests/2101PASS/11FAIL/
+0skip; all11failure identities exactly match docs/reliability-build-794.json.
+Pages run38036207720 succeeded. Fresh live index/version byte-match794. Unchanged
+styles/topbar734/VIEW732, shared UI791/main/Face/Vertex786, Sweep789/Revolve788,
+Through779, protected Multi1.0 and frozenBeta6 version byte-match repository.
+48focusedPASS. .793 user PASS protected; .794 menus/modes device sanity pending.
+No runtime/frozenBeta changes; shell/recovery794 coherent and exactly two reviewed
+recovery URLs changed, all runtime hashes retained.
+
+
+## .859 local validation â€” 2026-10-14
+
+Full native Node regression:2300PASS/0FAIL/0skip, including three new duplicate-resource
+checks. Reviewed release/cache contract passes; protected Multi1.0 and frozen betas
+unchanged. Device859 duplicateâ†’projectâ†’Nomad gate pending. Publication proof follows
+in AI_HANDOFF/DEV_HISTORY after main/CI/Pages/live verification.
+
+
+## .859 publication status â€” 2026-10-14
+
+Complete local build3db33caa;2300PASS/0FAIL/0skip. Automatic approval review rejected
+push to main despite recorded repository standing approval; direct authorization for
+publication is now required by the review. Remote/live remain858.859 CI/Pages/live
+verification and device gate pending. See AI_HANDOFF publication block; do not claim859
+published or route around rejection through another tool.
+
+
+## .860 local validation â€” 2026-10-14
+
+Full native Node regression:2303PASS/0FAIL/0skip, including three new Live Array
+duplicate tests and retained859 resource coverage. Reviewed shell/cache contract passes.
+Protected Multi1.0/frozen betas unchanged; device860 gate and proven prior affine-tail
+roundoff remain separate. Publication verification pending.
+
+
+## .860 publication verified â€” 2026-10-14
+
+Release40f638db7033dff8b79469e880531055a051cc72; tested tree
+925bfba7f07e248a7c3ac58e0527ee693e3c68b7 exactly matches local.
+Node22 CI38541986782/job115778710723 SUCCESS2303PASS/0FAIL/0skip;
+Pages38541985896 build/deploy SUCCESS. Fresh live shell/manifest/manager860/
+management860/drawer860, protected Multi1.0 and frozenBeta7 version byte-match.
+Connected Git Data publication uses expected-main SHA and verified file/tree hashes.
+Device860 duplicate/source/file gate pending;859 imported-duplicate/Nomad gate
+not yet accepted. Next proven original-array affine-tail rounding repair remains queued.
+
+
+## .861 publication verified â€” 2026-10-14
+
+Releasef36b216a9c272a024e64f773279157858698cab2; tested tree
+c94fbe5d4dd85b79ca536df549c190f8931b2f3a exactly matches fetched main.
+Node22 CI38556571969/job115827100089 SUCCESS2306PASS/0FAIL/0skip.
+Pages38556564998 build/deploy SUCCESS. Fresh postdeployment live shell/manifest,
+core861/Array861/source-core861/source-editor861/codec861/management861/drawer861,
+protected Multi1.0 and frozenBeta7 version byte-match repository. Initial asset reads
+preceded completed deployment; complete postdeployment verification matches861.
+All four handoff files current; device861 gate pending,860 duplicate and859 imported
+resource/Nomad gates remain separately pending. No new user PASS inferred.
+
+
+## .862 publication verified â€” 2026-10-15
+
+Release47767d31bdcb54e23493fbe4a40adc4597592c1c; tested tree
+e0fe02a94a7be968f147ff487e4c616c480aab65 exactly matches fetched main.
+Node22 CI38658512748/job116173915714 SUCCESS2310PASS/0FAIL/0skip.
+Pages38658512404 build/deploy SUCCESS. Fresh live shell/manifest, MeshHealth862/
+inspection862 and protected Multi1.0/frozenBeta7 version byte-match repository.
+861 user PASS protected;862 iPad layout/UV/stale-Undo/project checks pending. Separate
+860 Duplicate and859 Nomad/resource gates not inferred. Four handoff files current.
+
+
+## .863 publication verified â€” 2026-10-15
+
+Release406cfd1f37ca9ab3e5eccaf7a6dd0c1ad59579ce; tested tree
+3a8b20c62f2c5c86c3b3ea4d91135761ec46960b exactly matches fetched main.
+Node22 CI38662867643/job116187970520 SUCCESS2314PASS/0FAIL/0skip.
+Pages38662867413 build/deploy SUCCESS. Fresh live shell/manifest, MeshHealth863/
+inspection863 and protected Multi1.0/frozenBeta7 version byte-match repository.
+862 user PASS protected;863 iPad island/seam/coordinate-vs-topology/Undo/project gate
+pending. Separate860 Duplicate and859 resource/Nomad gates not inferred. All four
+handoff files current; no new authoring/channel/kernel/history owner.
+
+
+## .864 publication verified â€” 2026-10-15
+
+Releasec84b5c1b48034be7e597459c9c276e6d51df0dd7; tested tree
+55358c7e8530028e071d44fbb502f01735e94ad6 exactly matches fetched main.
+Node22 CI38664362797/job116192739572 SUCCESS2318PASS/0FAIL/0skip.
+Pages38664361873 SUCCESS. Postdeployment live shell/manifest/MeshHealth864/edit864,
+unchanged inspector863 and protected Multi1.0/frozenBeta7 version byte-match repository.
+Initial reads preceded deployment; final complete graph matches864.863 user PASS
+protected;864 iPad rotation/history/project/BaseGLBâ†’Nomad gate pending. Separate860/859
+gates not inferred; all four handoff files current. No geometry/kernel/schema changes.
+
+
+## .865 publication verified â€” 2026-10-15
+
+Releaseb080c811a3b4e901b4a360fb314f63adc38034de; tested tree
+d548e4c2ff0bf1765933cbec32a9b511e6a06502 exactly matches fetched main.
+Node22 CI38665811583/job116197395797 SUCCESS2322PASS/0FAIL/0skip.
+Pages38665810713 build/deploy SUCCESS. Postdeployment live shell/manifest/export-panel865/
+native-core865 and protected Multi1.0/frozenBeta7 version byte-match repository.
+Initial reads preceded deployment; final complete graph matches865. Native Nomad UV
+layout/seam device gate pending;864 FAIL recorded specifically on File NOMAD.863 PASS
+retained; no native texture/material claim or new device acceptance inferred. Four
+handoff files current; frozen donor/protected geometry owners unchanged.
+
+
+## .866 publication verified â€” 2026-10-15
+
+Release8186bf45691bed9b173d8db1af5033c136edec34; tested tree
+cb39f28fdef41a49b0cb8bee2a05747cf3db611d exactly matches fetched main.
+Node22 CI38676132706/job116230036867 SUCCESS2326PASS/0FAIL/0skip.
+Pages38676132006 SUCCESS. Postdeployment live shell/manifest/MeshHealth866/edit866,
+unchanged inspector863/export-panel865/native-core865 and protected Multi1.0/frozen
+Beta7 version byte-match repository.865 native UV roundtrip user PASS protected;866
+flip/history/project/native-export device gate pending. All four handoff files current;
+no new device PASS inferred and no native schema/exporter/geometry changes.
+
+## .868 publication verified â€” 2026-10-15
+
+Release984c33265abc3118eb978121dac91737c8ac272c; tested tree
+eebfa006c906772b0cfb8773e1dd9fe5541fbea1 exactly matches fetched main.
+Node22 CI38696478096/job116294097328 SUCCESS2337PASS/0FAIL/0skip;
+Pages38696477599 SUCCESS. Live shell/version/MeshHealth/workspace/navigation/
+inspector/edit868, unchanged native865, protected Multi1.0 and frozenBeta7 marker
+byte-match repository. User867 PASS protected;868 island selection device gate
+pending. No selected-island transforms or new UV/history/resource/export schema.
+
+### .869 final scope-label correction
+
+Final source review caught a text replacement also changing the no-selection label;
+whole-layout maths stayed correct. Restore explicit whole-layout label when cleared,
+add actual workspace assertions at open/clear and refresh only MeshHealth/workspace
+cache keys to869.1 (shell/version869; internal MeshHealth stamp869). No new user PASS.
+
+## .869 publication verified â€” 2026-10-15
+
+Final release312e030d95bd582dcd641b1835ba13f77ef93e74; tested tree
+b72f182c44f1cfbf61d686e4dbf9ceaaf8f74970 matches fetched main. Node22 CI
+38724621405/job116387284480 SUCCESS2341PASS/0FAIL/0skip; Pages38724621331
+SUCCESS. Live shell/version869, MeshHealth/workspace869.1, edit/inspector869,
+nav868/native865/protected Multi1.0/frozenBeta7 marker byte-match repository.
+Final label correction included;868 user PASS protected.869 selected-island edit,
+UndoRedo and project/native Nomad device gate pending. Repeated /nextbuild during
+publication continued the active release; no869 PASS or later build is inferred.
+
+## .871 publication verified â€” 2026-10-16
+
+Release bb0191af0c7ee0266d95662b1ec2073f9eb12224; tested tree
+7d6ea21850ddeb29b9a4189cd25c5ba2cfa5b1d0 exactly matches fetched main.
+Actual Node22 CI38818127353/job116707802378 SUCCESS2349PASS/0FAIL/0skip;
+Pages38818126928 build/deploy SUCCESS. Postdeployment live shell/manifest,
+MeshHealth871/workspace871/edit871/inspector871, unchanged navigation868,
+protected Multi1.0 and frozenBeta7 version byte-match repository. Initial live reads
+preceded deployment and returned870; final complete graph matches871. All four
+handoff files current. User870 PASS protected;871 Pencil feel/navigation/history/
+project/native-export device gate pending. Scale remains numeric under Exact;
+Pencil Scale/Rotate follow feedback, no871 user PASS inferred.
+
+## .872 publication verified â€” 2026-10-16
+
+Release bbb8efdfa00b6ccc073400a9f36339fdb1c8808f; tested tree
+9a4a162fa38eaff472a1596fdc1204a612dc6ea8 exactly matches fetched main.
+Actual Node22 CI38823964047/job116726929368 SUCCESS2353PASS/0FAIL/0skip;
+Pages38823962841 build/deploy SUCCESS. Postdeployment live shell/manifest,
+MeshHealth872/workspace872/edit872/inspector872, unchanged navigation868,
+protected Multi1.0 and frozenBeta7 version byte-match repository. Initial live reads
+preceded deployment and returned871; final complete graph matches872. User871 PASS
+protected;872 Pencil Scale/navigation/history/project/native-export device gate
+pending. All four handoff files current; Pencil Rotate next after feedback.
+
+## .873 publication verified â€” 2026-10-16
+
+Release 0087d2cbe3d8fd00d586619ebd890c0f4668e4a9; tested tree
+015ab6da6fb23c90e3a9c1924faac9fac1f39927 exactly matches fetched main.
+Actual Node22 CI38826931252/job116736445051 SUCCESS2357PASS/0FAIL/0skip;
+Pages38826931247 build/deploy SUCCESS. Postdeployment live shell/manifest,
+MeshHealth873/workspace873/edit873/inspector873, unchanged navigation868,
+protected Multi1.0 and frozenBeta7 version byte-match repository. Initial live reads
+preceded deployment and returned872; final complete graph matches873. User872 PASS
+protected;873 Pencil Rotate/navigation/history/project/native-export device gate
+pending. All four handoff files current; next UV-authoring stage needs owner audit
+and873 feedback. No new unwrap/new-mesh channels/painting or device PASS inferred.
+
+## .874 publication verified â€” 2026-10-16
+
+Release 594de3e95bb49dccc8484be92030f6d80fe9ad7a; tested tree
+46c868ca785f9dc84744606f3345fd2becd14839 exactly matches fetched main.
+Actual Node22 CI38852645045/job116817062661 SUCCESS2361PASS/0FAIL/0skip;
+Pages38852644283 build/deploy SUCCESS. Postdeployment live shell/manifest,
+MeshHealth874/workspace874/edit874/inspector874, unchanged navigation868,
+protected Multi1.0 and frozenBeta7 version byte-match repository. Initial live reads
+preceded deployment and returned873; final complete graph matches874. User873 PASS
+protected;874 fit/aspect/isolation/history/navigation/project/native-export device
+gate pending. All four handoff files current; next native UV-channel/projection stage
+requires owner audit and874 feedback. Selected fit does not pack multiple islands.
+
+## .875 publication verified â€” 2026-10-16
+
+Release 6272110710d0a590c701d9c587c4cee3e6d12fdd; tested tree
+66fd86f936273230409adf6bb56e1e88a80b5b55 exactly matches fetched main.
+Actual Node22 CI38857230889/job116831332240 SUCCESS2368PASS/0FAIL/0skip;
+Pages38857230399 build/deploy SUCCESS. Postdeployment live shell/manifest,
+MeshHealth/edit/manager/codec/resource/management/drawer875, unchanged workspace874,
+GLB/native exporters865, protected Multi1.0 and frozenBeta7 version byte-match
+repository. Initial live reads preceded deployment and returned874; final complete
+published graph matches875. User874 PASS protected;875 native Planar/editor/history/
+project/native Nomad device gate pending. All four handoff files current. Native
+resource v3/sourceboxlab is explicit; no seam unwrap/painting/evaluated UV claim.
+
+## .876 publication verified â€” 2026-10-16
+
+Release 51e05f4cdccce9765ed3c3840680b19c520deb74; tested tree
+88afe5f38e4c0f1d853752c6b927ecc54591165f exactly matches fetched main.
+Actual Node22 CI38861934472/job116845958125 SUCCESS2373PASS/0FAIL/0skip;
+Pages38861934138 build/deploy SUCCESS. Fresh live shell/manifest, MeshHealth/edit876,
+unchanged workspace874/GLB+native exporters865/protected Multi1.0/frozenBeta7 version
+byte-match repository. Manager/codec/resources875 and all protected/frozen owners
+unchanged. User875 PASS protected;876 Box panels/selected edits/history/project/
+NOMAD Base device gate pending. All four handoff files current. No general seam
+unwrap/optimal packing/painting/evaluated UV claim; directional patches may overlap.
+
+## .877 publication verified â€” 2026-10-16
+
+Runtime release `e1d5ccffd03941b982df25d9463de9b0746e5e4a`; tested tree `c872ec647f8a7188f227d48c6cfc5459237a4328` matched fetched main exactly. Actual Node 22 topology CI run 38865991906 / job 116858835631 succeeded: **2378 PASS / 0 FAIL / 0 skipped**. Pages run 38865990703 build and deploy succeeded. Fresh live shell, manifest, Mesh Health/edit/GLB panel .877, unchanged UV workspace .874, native NOM core .865, protected Multi .1.0, and frozen beta-7 version all byte-matched repository files.
+
+User .876 PASS remains protected. The .877 device gate remains pending: upright round world-Y Cylinder UVs, independent Pencil edits, Undo/Redo, project persistence, NOMAD Base and native GLB seam checks. No general unwrap, elliptic mapping, painting, or evaluated-modifier UV claim. All four continuity documents are current.
+
+## .878 publication verified â€” 2026-10-16
+
+Release `7b7cf2751e371959437a6ad10601c930f727a64d`; tested tree `ef9e7b6005166f3c6e38eb93830963f11f513e36` exactly matches fetched main. Actual Node22 CI38867402179/job116863294620 SUCCESS **2381 PASS / 0 FAIL / 0 skipped**; Pages38867401881 build/deploy SUCCESS. Fresh live shell/manifest, MeshHealth/workspace/inspector/edit878, unchanged GLB panel877/protected Multi1.0/frozenBeta7 version byte-match repository. Native NOM865, manager/codec/resources875/nav868 and protected modelling owners unchanged. All four continuity documents current. User877 PASS protected;878 checker readability/navigation/Pencil/history/reopen device gate pending. This checker is a 2D reference only; 3D texture/stretch inspection remains the next audited stage.
+
+## .879 publication verified â€” 2026-10-16
+
+Release `6b20c3939a9ebe7b9847fdc0830adb565fd0a1ba`; tested tree `794865b855df33763e91136e5421b4933569507a` exactly matches fetched main. Actual Node22 CI38870113315/job116871955152 SUCCESS **2386 PASS / 0 FAIL / 0 skipped**; Pages38870112481 build/deploy SUCCESS. Final fresh live shell/manifest/render-owner/preview-child/export-panel879, unchanged workspace878/native NOM865/protected Multi1.0/frozenBeta7 version byte-match repository. Initial reads preceded deployment (old878/child404); final full graph matches879. All four continuity docs current. User878 PASS protected;879 surface checker/navigation/UV editâ†’session-exit/history/look-restoration device gate pending. Stored Base UVs only; unsupported/stale/over20k-corner objects use Solid; no painting/evaluated UV propagation claim.
+
+## .890 publication verified â€” 2026-10-17
+
+Runtime08f0256ef54901f205311b25d93b04b3250c2746; tested tree
+c7f3fd960f69b86bba150b377cc84646f18ced47 exactly matches fetched main.
+Actual Node22.23.3 CI38985850970/job117257022771 SUCCESS2440PASS/0FAIL/0skip;
+Pages38985850874 build/deploy SUCCESS. Fresh live shell/manifest/recovery/export-panel/
+packed-child/native-core890, unchanged scalar889/displacement888/protected Multi1.0
+and frozenBeta7 marker all byte-match repository. Initial reads preceded deployment;
+final graph matches890. All four continuity files current; proof changes docs only.
+User889 PASS protected;890 two-independent-import/UV/project native device gate PENDING.
+
+## .891 publication verified â€” 2026-10-17
+
+Runtime278b0042b4a1815e1765cf69edd1a2462862e669; tested tree
+fdf44a1b86e9faa474fe1b785e104a70a0a12a34 exactly matches fetched main.
+Actual Node22.23.3 CI38987566193/job117262477050 SUCCESS2443PASS/0FAIL/0skip;
+Pages38987566624 build/deploy SUCCESS. Fresh live shell/manifest/recovery/MeshHealth/
+workspace/preview/surface/render/export/native-parent graph891, scalar889, protected
+Multi1.0 and frozenBeta7 marker all byte-match repository. Initial reads preceded
+deployment; final complete graph matches891. All four continuity files current.
+User890 PASS protected;891 UV Normal/Emissive/Pencil/project/native device gate PENDING.
+Proof is documentation-only; tested runtime bytes unchanged.
+
+## .892 publication verified â€” 2026-10-17
+
+Runtime68ee2db64bf7b3bd6bb4df7433141fef48db44f7; tested tree
+ce6c0a21c0fd49925ed557d4997edbb5fa2e1b89 exactly matches fetched main.
+Actual Node22.23.3 CI38991841599/job117275721906 SUCCESS2447PASS/0FAIL/0skip;
+Pages38991841149 build/deploy SUCCESS. Fresh live shell/manifest/recovery/MeshHealth/
+workspace/preview/surface/render/export/native-parent graph892, scalar889, protected
+Multi1.0 and frozenBeta7 marker all byte-match repository. All four continuity files
+current. User891 PASS protected;892 grayscale/Pencil/project/native device gate PENDING.
+Proof is documentation-only; tested runtime bytes unchanged.
+
+## .893 publication verified â€” 2026-10-17
+
+Runtimebbc0e4b20d55a47fbac9fa3daaa1b4a0c226a3e0; tested tree
+efd82dfde462eca6e53e7ed61f23d8bf4332dc8b exactly matches fetched main.
+Actual Node22.23.3 CI39003980800/job117312549657 SUCCESS2452PASS/0FAIL/0skip;
+Pages39003980205 build/deploy SUCCESS. Fresh live shell/manifest/recovery/MeshHealth/
+workspace/edit893, unchanged inspector880/preview/render/native892, protected Multi1.0
+and frozenBeta7 marker all byte-match repository. All four continuity files current.
+User892 PASS protected;893 Pack all/framing/history/project/native UV device gate PENDING.
+Proof is documentation-only; tested runtime bytes unchanged.
+
+## .894 publication verified â€” 2026-10-17
+
+Runtime260817ff6794ce467346ad36dd8543978cdaf4d3; tested tree
+60b9ca959af6b1c0e04bf766ea1aee8225390eda exactly matches fetched main.
+Actual Node22.23.3 CI39005188711/job117316093356 SUCCESS2457PASS/0FAIL/0skip;
+Pages39005188424 build/deploy SUCCESS. Fresh postdeployment live shell/manifest/
+recovery/MeshHealth894/edit894, unchanged workspace893/inspector880/render892,
+protected Multi1.0 and frozenBeta7 marker all byte-match repository. Initial reads
+preceded deployment; final complete graph matches894. All four continuity files
+current. User893 PASS protected;894 Sphere layout/Pencil/history/project/native UV
+device gate PENDING. Proof is documentation-only; tested runtime bytes unchanged.
+
+## .895 publication verified â€” 2026-10-17
+
+Runtime6b1e003324e5e883d8a0f4625a1e69ba0336fde7; tested tree
+d972fde28ba3b85d3cda78c4f33afe5a97a727ac exactly matches fetched main.
+Actual Node22.23.3 CI39005809090/job117317939014 SUCCESS2462PASS/0FAIL/0skip;
+Pages39005808724 build/deploy SUCCESS. Fresh live shell/manifest/recovery/
+MeshHealth895/workspace895/edit895, unchanged inspector880/render892,
+protected Multi1.0 and frozenBeta7 marker all byte-match repository. All four
+continuity files current. User894 PASS protected;895 density/Pack/Pencil/history/
+project/native UV device gate PENDING. Proof changes documentation only; tested
+runtime bytes unchanged.
+
+## TexturePaint evaluation publication verified â€” 2026-10-17
+
+Evaluation commit ec7d0f6666a7b7713bece07c603ea0e976eb2634; tested tree
+f12d0461396b98f883acb279cb728bbc6d512c56 exactly matches fetched main.
+Node22.23.3 CI39006748131/job117320658726 SUCCESS2467PASS/0FAIL/0skip;
+Pages39006747665 build/deploy SUCCESS. Fresh live trial index/controller/adapter,
+byte-exact upstream source/licence and evaluation report match repository. Main
+index/version remain byte-identical .895. Rendered browser verification did not
+complete; iPad Pencil/navigation/seam/PNG tests remain pending, no device PASS inferred.
+All four continuity docs current. Next is hands-on trial feedback before production
+paint resource/history/gesture integration. Proof is documentation-only.
+
+## .896 publication verified â€” 2026-10-17
+
+Runtime81871e11aa9890747bea1ef337694a8666ce0eac; tested tree
+011024983673d1d5d40a1cfc448f4031491ddfdb matches fetched main/local exactly.
+Node22 topology CI39017673843/job117353013439 SUCCESS2474PASS/0FAIL/0skip;
+Pages39017673462 build117353014782/deploy117353094301 SUCCESS.
+Fresh live shell/version and all9 lab source/vendor assets byte-match repository.
+Main protected modelling/Multi/frozen beta bytes and original TexturePaint trial unchanged.
+Cloud Chrome loads lab modules/UI but WebGL context creation fails; unchanged original
+TexturePaint page fails identically. Thus rendered surface/Pencil/navigation/PNG device
+acceptance remains pending, not passed by browser inspection or Node adapters. No claim
+of an iPad WebGL failure; this is the observed cloud-browser limitation. No896 user PASS.
+Documentation proof changes no tested runtime bytes. Next: user paired-brush comparison,
+then selected refinement/resource/codec/global-history work per docs/uv-paint-lab-896.md.
+
+## .897 publication verified â€” 2026-10-17
+
+Runtime1db5769b9888e6f6d1c5cbda4e968ffd27afab1d; tested tree
+49fc268524ca308bb6dffcf0ca459346b87247fc matches fetched main/local exactly.
+Node22.23.3 topology CI39018873809/job117356495970 SUCCESS2477PASS/0FAIL/0skip;
+Pages39018873340 build117356496893/deploy117356596313 SUCCESS.
+Postdeployment live shell/version/export-parent897 and lab index/controller/sample897
+byte-match repository; protected Multi1.0/frozenBeta7 marker unchanged. Initial live
+reads preceded completed deployment and served896; final postdeployment graph matches897.
+User896PASS protects brush workflow with reported winding exception;897 fixes preview
+orientation only, device retest pending. No897PASS inferred. Prior cloud WebGL limitation
+remains separate from this actual Three geometry/raycast/source-winding test evidence.
+This verification updates documentation only; tested runtime bytes retained. Next:
+user orbit/paint sphere and cube all sides, plane/paired history sanity; then paint
+resource/codec/COW/global-history design per current roadmap. Ordinary file-export
+winding remains a separate audit item; no automatic general outward-repair promise.
+
+## .898 publication verified â€” 2026-10-17
+
+Runtime62849d782d40767f330adf79344c17b843bf8a34; tested tree
+4047f6d1c5ca540e14e605ca5897f6ddabb1821d matches fetched main/local exactly.
+Node22.23.3 topology CI39025253753/job117374865418 SUCCESS2483PASS/0FAIL/0skip;
+Pages39025253372 build117374867123/deploy117374959488 SUCCESS.
+Postdeployment shell/version and exact lab898 index/controller/sample/session plus
+paint-resource898 byte-match repository. Initial predeployment reads served897/404;
+final complete changed graph matches898. Main codec/native resources/export/brush core/
+winding/protected modelling and frozen beta bytes retained. User897PASS protected.
+Documentation proof changes no tested runtime bytes;898 filepicker/download/reload/
+Open/Pencil continuation gate pending, no898 device PASS inferred. No new cloud WebGL
+or Safari rendering proof. .boxpaint is a lab session, not main .boxlab/Nomad paint.
+Next: Save Paintâ†’Reset/reloadâ†’Open Paint from Downloads, compare both results/settings/
+view and continued UndoRedo; then original scene-resource/codec/COW/history integration.
+
+## .899 â€” project colour resource preservation; .898 user PASS â€” 2026-10-17
+
+User898PASS protects .boxpaint Save/Open/continued brush/history/settings/view;895
+not inferred. Audit37c77ab5 synchronous codec/actual history/manager/duplicates: no
+colour resource forwarding existed. Separate colourPaint owner, original scene
+snapshot/restore/ordinary single+Multi Duplicate share committed read-only buffers;
+replace resource for COW edits. Original .boxlab Save/Open handles explicit scenev2
+paint pool/ref envelopesv1 using existing canonical binary transport,8MiB unique raw
+budget; plain projects retain v1 exactly. Native UVv3 remains strictly UV-only.
+Owned decode/pool sharing/content+identity dedup; malformed/unknown/alpha/ref/budget/
+linked/procedural/reference owners refuse. Original exact roundtrip/atomic Open,
+render-failure rollback/history reset retained. Four tests + full2487PASS/0FAIL/0skip;
+focused4PASS includes added failed-render rollback assertions. No rendered/iPad claim.
+Binding opaque, no project SHA/current UV validity claim; .boxpaint SHA unchanged.
+Main Open says colour preserved but display/editing unavailable. No authoring/transfer
+UI/main paint/layers/UV propagation/GLB/Nomad paint export yet. Read
+ docs/project-paint-resources-899.md. Next bounded selected-object bridge through
+original preview/selection/history, explicit validity/rebinding/lifetime/refusals.
+Shell/recovery and changed owner graph899; original sample/resource898, brush896,
+preview897 and protected modelling/frozen bytes retained. Publication proof follows.
+
+## .899 publication verified â€” 2026-10-17
+
+Runtime47136701c9c667ecdb410d89ca6e8b751c773680; tested tree
+da7f9e98766dff998f71e60d6deb20947dc692e1 matches fetched main/local exactly.
+Node22.23.3 topology CI39028416328/job117383876628 SUCCESS2487PASS/0FAIL/0skip;
+Pages39028415912 build117383877465/deploy117383953976 SUCCESS.
+Postdeployment exact live shell/version, lab899 index/controller/session and changed
+manager/management/drawer/codec/project-GLB/new paint-codec graph899 byte-match repository;
+unchanged resource898 and recovery loader899 graph also match. Protected Multi-transform/
+frozen/modelling/brush/preview bytes retained. User898PASS protected;899 nearby lab/main
+project device sanity pending. No new rendered/Pencil proof or main paint authoring claim.
+Documentation proof changes no tested runtime bytes. Next bounded original-owner
+selected-object paint bridge requires validity/rebinding/lifetime/refusal rules before UI.
+
+## .900 â€” main viewport UV Paint; .899 user PASS â€” 2026-10-17
+
+Audit2c56d33f original native UV preview/raster/scene history/resource/render/input
+owners. File Paint selected object, actual main viewport, one plain native UV object,
+SubD/Mirror offâ‰¤20k corners. Original top-centre Tool Session/transform disarm/radial
+lifecycle. Reuse896 raster + both samplers unchanged; opaque512Â², Pencil paints/fingers
+navigate, occlusion/surface rays, one dirty upload/frame. Changed stroke checkpoints
+original scene then COW resource; UndoRedo original/exits Paint. Async UV-envelope binding
+uses original codec/signature; ordinary movement/deformation follows unchanged UVs,
+UV/topology changes hide/refuse stale. Preview/body/context/disposal/capture/controls/
+palm/interruption guards. Original render owner active/live + inactive/locked display
+in Studio/Solid/UV Image. Main .boxlab v2 persistence through899. Original export resolver
+now refuses painted OBJ/GLB/NOM rather than dropping paint; Quick OBJ catches; Join
+refuses pending resource propagation. No PBR/layers/imported paint base/seam-safe/export
+paint claim. Seven new tests; full2494PASS/0FAIL/0skip, no browser/Pencil proof inferred.
+Historical741 pin test uses reviewed contract and retains shell/dynamic equality.
+Read docs/viewport-paint-900.md. User899PASS protected;900 device gate pending.
+Next hands-on actual paint, then flattened colour export through original owners.
+Publication proof follows; protected Multi1.0/frozen/modelling/brush bytes retained.
+
+## .900 publication verified â€” 2026-10-17
+
+Runtimeeb26b99141af4a1e3a77d1f09fe559887880dd7e; tested tree
+b687f2b2f3665f389f67e02db1e67bf991b487bf matches fetched main/local exactly.
+Node22.23.3 topology CI39030804811/job117390693515 SUCCESS2494PASS/0FAIL/0skip;
+Pages39030803672 build117390693845/deploy117390798136 SUCCESS.
+Postdeployment exact shell/version, main viewport paint/target/core/render/radial/
+manager/management/drawer/export/refusal parent graph900 plus Lab900 index/controller
+and unchanged accepted raster/stroke896 byte-match repository. Recovery900 matches.
+Protected Multi-transform1.0/frozen/modelling algorithms/brush bytes retained. User899
+PASS protected;900 actual viewport/Pencil/navigation/project device gate pending.
+No rendered/iPad proof inferred from Node adapters or previous cloud WebGL limitation.
+Documentation proof changes no tested runtime. Next: device feedback, then flattened
+paint export through original GLB/NOM owners; painted export refusal remains meanwhile.
+
+## .901 â€” painted native Nomad / GLB export; .900 user PASS â€” 2026-10-17
+
+Audit50bcdb2a: original native image/material/UV/container writer and GLB patch already
+supply handoff; adapt export-local512Â² colour through them. New paint-export capture/
+UV binding guard/private prepared snapshot association, owned geometry/UV/pixels before
+await; no fake imported provenance/stored nativeUV material mutation. Existing PNG owner
+adds losslessRGB8/sRGB and reuses CRC/zlib; scalar remains unchanged. Rows follow native/
+glTF UV-v0-first convention, no Lab human PNG flip. Native white-factor colour image,
+original independent UV/polygon buffers/image pool24MiB/dedup/offset/header. GLB embedded
+PNG/neutral material/clamp sampler/original groups/seams/loader verification; painted
+path enables existing source-winding flag only. Nonpainted path retained. Painted OBJ/
+Join/raw unprepared sync export still refuse; .boxlab remains editable paint project.
+Six focused tests PASS: exact PNG/UV/material/geometry/dedup/winding/snapshots/refusals
+and both real File download actions. Full Node24 2500PASS/0FAIL/0skip; publication proof follows. User900PASS
+protects viewport/Pencil/history/persistence/COW; no new Nomad/device acceptance inferred.
+Read docs/paint-export-901.md. Next export feedback, then layer/compositor resource plan
+through original owners. No rendered/PBR/seam-safe/imported paint-base/NOM import claim.
+
+## .901 publication verified â€” 2026-10-17
+
+Runtime32cca00338fc3bcd8894fb9f0c7ed9a14171c223; tested tree
+5780a931a693f41bf4d72128d48289f014cad204 matches fetched main/local exactly.
+Node22.23.3 topology CI39036938146/job117408573676 SUCCESS2500PASS/0FAIL/0skip;
+Pages39036937708 build117408575029/deploy117408682503 SUCCESS.
+Postdeployment exact live shell/version and export-panel/native-core/packed-parent/
+PNG/new paint-export graph901 plus Lab901 index/controller byte-match repository.
+Unchanged main paint/binding900 and recovery901 match. Protected Multi1.0/frozen/
+modelling/raster/input bytes retained. User900PASS protected;901 external Nomad and
+GLB colour/orientation/placement device gate pending, no rendered proof inferred.
+Documentation proof changes no tested runtime. Next device export feedback, then layer/
+compositor design through original owners; .boxlab remains editable paint project.
+
+
+## .902 â€” layer/compositor foundation; .901 user PASS â€” 2026-10-18
+
+User901PASS protects painted NOMAD/GLB placement/orientation/colour, independent
+painted duplicates and continued painting/Undo/.boxlab. Audit main0bfb6819: raster896
+writes opaque bytes, resource898/project899/export901 have no editable layer stack.
+New isolated paint-layer-stack API: existing opaque base + up to3 straight-alpha
+512Â² overlays, bounded IDs/names, visible/opacity, owned capture/append/replace,
+byte-space source-over and flattened resource via ORIGINAL captureColourResource.
+No new history/input/kernel or app wiring. Strict schemas/budgets; typed buffers
+read-only by convention. Current copy-all API has no sparse/COW/performance claim.
+Five focused checks PASS: exact blending/order/visibility/opacity/rows, input/edit/
+output isolation, refusal/budgets/max stack, actual original project + native PNG
+flattened handoff; editable stack still refuses as project colourPaint.
+Read docs/paint-layer-stack-902.md. No layer UI/transparent brush/editable layer save
+claim. No new hands-on test; existing paint/export unchanged. Shell/recovery902;
+main paint900/export901/resource898/project899/lab901/protected/frozen bytes retained.
+Next separate layered scene resource/project codec + atomic Open/history/duplicate
+integration, then transparent raster/UI through current viewport owner. Publication
+and full-suite evidence follow; no902 device PASS inferred.
+
+.902 local validation: Node24.19.0 full suite **2505 PASS / 0 FAIL / 0 skipped**;
+five new focused compositor checks PASS. No new device/rendered layer proof.
+
+
+## .903 â€” masks/blend foundation and material direction â€” 2026-10-18
+
+User requests surface image placement/Project from View, Insert Moveâ†’Rotateâ†’Scale tap
+cycle, masks/blend modes and Nomad-style material slots with displacement placeholder.
+Read docs/paint-material-direction.md for requirements, sequencing and limitations.
+Audit787cfcb9:902 compositor Normal-only;900 paint/899 project/901 export opaque.
+Extend SAME isolated stack owner to v2 with owned per-overlay8-bit coverage masks,
+enable/invert and26 colour blend modes in paint-blend-modes903. v1 Normal upgrade
+byte-identical; strict unknown fields/invalid modes/masks and sparse arrays refuse.
+AlphaÃ—opacityÃ—mask gates blended RGB; Normal exact902; standard W3C colour formulas,
+extra modes explicitly defined in docs/paint-layers-903.md. Not Nomad bit-parity or
+normal-vector/scalar/PBR blending. Buffers read-only by convention; max4.75MiB stack
+plus copies/flat outputs, no measured performance claim.
+Seven focused903 checks PASS; existing902 semantic checks retained (unknown-mode
+refusal supersedes its obsolete Multiply refusal). Actual opaque project/native PNG
+handoff retained. No app/lab layer UI, mask drawing, image projection or editable
+layer persistence yet. Main resource/project/export continue refusing editable stack.
+Shell/recovery903, isolated child903; main900/export901/lab901/brush896/protected
+Multi1.0/frozen/modelling owners unchanged. No new hands-on test or user903PASS.
+Next explicit layered scene/project pool through original codec/history/duplicate
+owners, then transparent brush+layer/mask UI; image projection/Insert-cycle follows.
+Full suite/publication proof follows;901 userPASS remains latest accepted device gate.
+
+.903 local validation: Node24.19.0 full **2512 PASS / 0 FAIL / 0 skipped**;
+seven new focused checks + existing902 tests PASS. No rendered/device gate inferred.
+
+
+## .904 â€” editable layered project/history resources â€” 2026-10-18
+
+Audit5efdc7d9: existing colourPaint history/ordinary Duplicate already share read-only
+resources. New paint-layer-resource owner stores explicit layered resourcev2 in SAME
+colourPaint field: validated opaque preview + owned903 stack with exact masks/modes.
+Original colourPaintPool entryv2 and sceneprojectv3 transport all buffers through
+original canonical bytes, whole-resource dedup;8MiB aggregate BEFORE decode includes
+flat/base/overlays/masks. Plainv1/opaquev2 unchanged; strict field/version/ref/cache/
+budget/unsupported owner guards. Original nativeUVv3 remains UV-only.
+Same history/checkpoint/single+Multi Duplicate/atomic Open owners unchanged. Original
+surface display reads validated flat colour; export adapter validates/captures owned
+flatv1 BEFORE await and uses existing NOM/GLB writers. Editable layers persist only
+in.boxlab. Existing opaque painter refuses layered resource until controls land,
+preventing destructive flattening. No new layer UI/image sources/material authoring.
+Seven focused904 checks PASS: exact resource/project/pool, real history/duplicates,
+File Save/Open/corrupt input/render rollback, actual NOM/GLB+async snapshot and
+committed display/painter guard. Node transport adapters are not rendered/iPad proof.
+Read docs/paint-layer-resources-904.md. Changed codec/export/binding/paint/render+
+parent loader graph904; main modelling/Multi1.0/frozen/brush algorithms unchanged.
+No extra902/903/904 devicePASS inferred;901 userPASS remains protected.
+Next REAL layer UI/transparent brush through original viewport/history and this
+resource; do not add a parallel paintLayers property or history. Full suite and
+publication proof follow. Manual904: existing paint/save/reopen/Undo/Duplicate/export
+regression only; new layered fixtures automated, not user tasks.
+
+.904 local validation: Node24.19.0 full **2519 PASS / 0 FAIL / 0 skipped**;
+seven new resource/history/codec/export checks PASS. No device acceptance inferred.
+
+
+## .905 â€” visible main viewport colour layers; .904 PASS â€” 2026-10-18
+
+User904PASS protects paint Save/Open/Undo/Duplicate/NOM/GLB regression. Audit1d246735:
+connect existing900 painter/903 stack+26 blends/904 resource and original scene history.
+Layers panel: select/top-first, + Layer (max3), rename/reorder/delete, visibility,
+layer opacity and26 modes. Base paintable/opaque; existing v1 converts only on + Layer.
+Same raster gains optional straight-alpha layer mode with preserved opaque default,
+pressure/hardness/per-stroke cap/cancel; same stroke/input/raycast/navigation owners.
+Separate mutable layer/composite preview; original one dirty upload/frame; no measured
+M2 performance claim. Whole-stack copies/preflight remain, not sparse optimization.
+Every changed stroke/metadata operation checkpoints original scene and COW replaces
+resource; selection/no-op creates no history. Full-scene8MiB pool checked BEFORE
+checkpoint; invalid/budget/checkpoint failure restores original resource/preview.
+Stored masks persist; no mask/image/material UI claim. Save/Openv3 and flat NOM/GLB use
+original904 owners. Hidden/zero opacity layer refuses strokes while panel stays open.
+Seven focused905 checks PASS; all original900 assertions retained in extracted shared
+runtime.904 refusal assertion superseded by real layered opening/editable-path tests.
+Read docs/paint-layer-ui-905.md. Changed painter/shared raster and Lab loader graph905;
+compositor903/resource+project+export904/stroke896/protected/frozen owners retained.
+Next DEVICE layer/Pencil/navigation/persistence feedback, then mask paint/UI through
+same owners, followed by image projection/Insert cycle/material plan. Full suite and
+publication proof follow. No905 userPASS or rendered browser evidence inferred.
+
+.905 local validation: Node24.19.0 full **2526 PASS / 0 FAIL / 0 skipped**;
+seven new layer/raster/UI checks PASS, original semantic checks retained. iPad gate pending.
+
+
+## .906 â€” main viewport layer mask painting; .905 PASS â€” 2026-10-18
+
+User905PASS: layers work well; UI/UX polish after feature flows are present. Audit
+mainf8455236/local verified905 treefb902274: reuse903 masks/compositor,904 resource/
+project/history/export and905 raster/input. Add Mask selects Mask paint target; same
+opaque raster edits raw grey coverage, R8 committed, source colour pixels unchanged.
+Hide/Reveal/Grey brush presets account for inversion; raw value0â€“255 slider, size/
+hardness/pressure/opacity and both samplers retained. Colour picker preserved/disabled
+in Mask mode. Layer switch/reopen starts Colour; base has no mask. Enabled/invert/
+remove use COW + original checkpoints; selection/preset/no-op do not create history.
+Cancel/settings/target/layer/body-loss restore mask/preview/navigation. Parent layer
+must show/nonzero opacity and mask enabled to paint. Original8MiB preflight/rollback
+preserved. Same resourcev2/projectv3/flat NOM+GLB, no new schema/history/kernel.
+Seven focused906 tests PASS incl actual UI/core/source preservation, flags/UndoRedo,
+interruption/invalid/budget/checkpoint rollback, exact Save/Open/re-edit and native
+export. Full suite/publication proof follows; no rendered/iPad acceptance inferred.
+Read docs/paint-mask-ui-906.md. Only main painter + shell/recovery906; raster/Lab905,
+compositor903/resource+project+export904 and protected modelling/Multi/frozen untouched.
+Next DEVICE mask gate, then editable image sources/Project from View through original
+UV/geometry and Insert cycle. No material opacity/displacement or broad UI redesign
+claim. Product direction remains docs/paint-material-direction.md.
+
+.906 local validation: Node24.19.0 full **2533 PASS / 0 FAIL / 0 skipped**;
+seven new mask UI/core tests PASS. Device906 pending; no rendered proof inferred.
+
+
+## .907 â€” editable image source and placement foundation; .906 PASS â€” 2026-10-18
+
+User906PASS protects mask/Pencil/navigation/history/project behaviour. Audit remote
+4778567c and existing read-only UV image892/Insert437 owners. New isolated image
+source importer retains original encoded PNG/JPEG + owned decoded RGBA, preflight
+2MiB/1024Â² before bitmap decode, exact dimensions, async snapshot and cleanup.
+Camera placement snapshots original Three matrices plus NDC centre/size/rotation;
+projector clips camera/image bounds, returns top-first UVs. Original Insert cycle
+re-exported verbatim; no new pointer/mesh/history owner. Six focused tests PASS.
+Read docs/paint-image-source-907.md for browser colour/alpha/EXIF and memory limits.
+NOT connected to painter, layer/project schema or UI yet. Coordinate projection
+does NOT enforce facing/angle/scene occlusion; existing painter must do so before
+rasterization. No Project from View/surface placement/manual device claim.
+Main paint906/resource904/compositor903/protected Multi1.0/frozen unchanged.
+Next explicit image source+placement resource/pool versioning and original history/
+project/export integration, then picker/overlay/visible-front projection UI.
+No new hands-on gate this foundation build; .906 PASS is protected, not907 image UI.
+
+.907 local validation: Node24.19.0 full **2539 PASS / 0 FAIL / 0 skipped**; six new
+focused image source/placement checks PASS. No new image UI or device gate.
+
+
+## .908 â€” retained image layers in original resource/project owners â€” 2026-10-18
+
+Auditfa81af3d:907 input/placement isolated;903/904 strict raster-only storage. Extend
+SAME stack/resource/pool to explicitv3 and sceneprojectv4. Image recipe retains original
+encoded+decoded source, placement and affine capture frame, separate surface raster.
+Paired image+preview append/replace APIs; generic colour pixel edits refuse images.
+All source/cache/mask/flat/base bytes charged to existing8MiB pool BEFORE decode;
+legacy projects and nativeUVv3 unchanged. Original scene history/Undo/single+Multi
+Duplicate/atomic File Open and flattened NOM/GLB retained. Existing painter supports
+v3 controls/masks with image label and colour-stroke guard, no implicit bake.
+Eight focused actual codec/history/File/painter/UI/export checks PASS. No new image
+picker/Project UI, facing/occlusion rasterizer or rendered/device claim yet.
+Source+placement907/brush905/blend903/Insert437/protected modelling/Multi/frozen retained;
+changed owners and parent/Lab loader graph908. Read docs/paint-image-resources-908.md.
+Next visible picker/overlay/Project via original UV geometry and current viewport input,
+front/angle/scene/self-occlusion before texel acceptance, atomic recipe+raster commit.
+Manual: existing paint/masks Save/Open/continue, UndoRedo, duplicate/export sanity.
+Latest user906PASS protected; no907/908 devicePASS inferred.
+
+.908 local validation: Node24.19.0 full **2547 PASS / 0 FAIL / 0 skipped**; eight new
+image resource/history/project/UI/export checks PASS. Device gate remains separate.
+
+
+## .909 â€” duplicate paint release fix; .908 user FAIL â€” 2026-10-18
+
+User: duplicate paint disappears on Pencil release. Reproduced original Duplicate +
+actual UI,3layers: whole-resource quota double-charges unchanged base/layers/flat and
+refuses8MiB commit. Existing direct-assignment Duplicate tests missed actual release.
+Repair SAME paint pool: exact canonical buffer-content dedup,8MiB unique /16MiB
+expanded resource cap. Explicit scenev5 shared-byte transport only when inline>8MiB;
+old scenev1â€“4 encoding retained below limit, complete predecode/schema/ref guards.
+Original history/Undo/Duplicate/atomic File Open and flat NOM/GLB unchanged. All paint
+commits preflight same pool, including opaque; failed commit restores buffers and
+keeps Paint panel open. Five new regressions cover real single+Multi copy paint/release,
+committed display/history/actual SaveOpen/re-edit, corrupt pool+both budgets/atomic
+rollback, genuine limits/staged add and recoverable UI refusal.906 budget fixture
+now uses genuinely distinct data; quota/rollback assertions retained. See
+docs/paint-duplicate-909.md. Changed owners/parent/Lab cache909; stack/image908,
+source907/brush905/blend903/Insert437/protected Multi/frozen/modelling retained.
+Latest devicePASS906;908 duplicateFAIL recorded;909 device retest pending.
+Next device duplicate release/Done/SaveOpen/Undo, then resume Project from View UI.
+
+.909 local validation: Node24.19.0 full **2552 PASS / 0 FAIL / 0 skipped**; five new
+actual duplicate/pool/recovery regressions PASS. Device release retest pending.
+
+
+## .910 â€” native paint texture-name collisions; .909 viewport PASS â€” 2026-10-18
+
+User909PASS protects duplicate paint release/Done/SaveOpen/Undo; NOMAD exception:
+copy adopts original paint. Screenshots show909/green copy strokes in BoxLab, absent
+in Nomad. Auditc1b350e0: prepared PNGs/material+image indices already distinct, but all
+paint textures namedBoxLab paint.png. Repair authoritative native writer name registry:
+NFC/case-folded collision names get numeric suffix for DIFFERENT image indices; equal
+images keep sharing, unique names and existing aliases retained. Export-local only;
+source bytes/names,890 exact image dedup, factors/UV/offsets/24MiB budget unchanged.
+Four actual NOM/File/SaveOpen/async/dedup/mixed-name regression tests PASS. Consumer
+name caching is an inference; actual Nomad device retest remains required. Read
+docs/paint-nomad-duplicate-910.md. Native/File/Lab loader graph910; viewport/resource/
+history/pool909 and protected Multi/modelling/frozen unchanged.
+Next DEVICE re-export original+green copy from910; confirm distinct paint in Nomad,
+then second export after further copy painting. If persistent inspect actual NOM bytes;
+no invented native fields. Then resume original image projection UI plan.
+
+.910 local validation: Node24.19.0 full **2556 PASS / 0 FAIL / 0 skipped**; four new
+native paint/export/name regressions PASS. Actual Nomad retest remains pending.
+
+
+## .911 â€” retained image Project from View; .910 user PASS â€” 2026-10-18
+
+User910PASS protects independent duplicate paint in Nomad, clearing external gate.
+Audit b0fd19a8: source/placement907 + retained image stack908/pool909 already present;
+missing real picker/overlay/visible-front raster. Connect SAME painter/input/history.
++ Image PNG/JPEG â‰¤1024Â²/2MiB;65% screen guide, Pencil Moveâ†’Rotateâ†’Scale tap cycle uses
+original Insert437 function; fingers navigate behind image. Project captures current
+camera/body frame; original UV triangles/Three rays enforce75Â° front and scene/self
+occlusion BEFORE texels. Refuse sampled overlapping/cross-tile UVs and bounded work.
+Paired908 image recipe+raster append/replace, original preflight/checkpoint/COW; Edit
+image reprojects retained source FROM CURRENT VIEW, retains mask/blend/name/order.
+Cancel/layer change/close/stale async preserves committed work, original Undo exits
+Paint. Same .boxlab codec/source persistence/flat NOM+GLB; no new schema/history/kernel.
+Screen-projector gestures are not tangent-following surface decals. Three overlays,
+8MiB unique/16MiB expanded retained; complex scenes may refuse; no seam-safe/performance
+claim. Read docs/paint-image-project-911.md. Seven focused actual raster/UI/persistence/
+export tests PASS; Node24.19.0 full **2563 PASS / 0 FAIL / 0 skipped**. Publication
+verification follows. Changed painter/core+new projector/
+overlay graph911;907/908/909 storage,910 native exporter and protected modelling/Multi/
+frozen retained. Device911 gate pending. Next hands-on Project feedback then surface-
+relative placement; material slots/UI polish follow product direction.
+
+
+## .911 publication verified â€” 2026-10-18
+
+Runtime cf86b14a0585d6242a13b3007a60c7a7a9e1ac67; tested tree
+1f2b43401ec2245c392afa1d86d9067a39fad79d. All14 uploaded blob hashes and created
+tree match tested local source. Fetched origin/main has exactly the same tree;
+remote manifest/title/data/visible label and reviewed painter911 graph verified.
+Local Node24.19.0 full2563PASS/0FAIL/0skip; Node22 topology CI39102076649 /
+job117600224293 SUCCESS. Pages39102076118 build117600224532 /
+deploy117600313566 SUCCESS. All14 checked postdeployment live shell/version/
+painter/core/projector/overlay/source/placement/image/stack/pool/native writer/
+recovery files byte-match repository. Initial live manifest served910 before deploy;
+final complete checked graph matches911. Protected Multi1.0/modelling/frozen unchanged.
+All four continuity documents updated. This proof is documentation-only; tested
+runtime bytes retained. User910PASS recorded;911 actual Safari/Pencil/image picker/
+latency/front-only appearance gate remains pending. No rendered acceptance inferred
+from Node canvas adapters or byte verification. Next manual Project checklist in
+paint-image-project-911.md, then surface-relative placement from original Insert.
+
+
+## .912 â€” surface-relative retained images; .911 user PASS â€” 2026-10-18
+
+User911PASS protects Project from View/picker/Pencil/navigation/persistence/history.
+Audit a647d08f: reuse911 projector and908/909 storage/pool; new surface frame uses actual
+Insert437 alignment/cycle and907 orthographic camera capture, no new geometry kernel.
++ Image/Edit image â†’ On surface â†’ pick selected mesh. First tap places; then tap-cycle
+Move/Rotate/Scale, Move follows original hit/triangle normal. Planar65% contact guide;
+lift regenerates exact UV mesh preview, Apply commits ONE original scene checkpoint.
+Preview never assigns object colourPaint or enters Save/history; original preflight,
+commit/COW/export and .911 front/occlusion/UV/work limits retained. Cancel/close/layer/
+body loss restores committed work and controls, guide disposed. Back to view preserves
+accepted .911 path. Edit / On surface starts fresh anchor/default size; persisted source/
+projection/frame/cache support re-placement, not automatic old anchor/spin/scale resume.
+Same scene/project schema and flat native handoff. No continuous curved raster while
+contact, seam-safe wrapping, larger budgets or iPad performance claim. Read
+docs/paint-image-surface-912.md. Seven focused new checks cover actual frame/guide/
+preview/UI/history/limits/curved Sphere UV+Save/native PNG. Node24.19.0 full
+**2570 PASS / 0 FAIL / 0 skipped**; publication verification follows.
+Changed painter/core/new helper graph912; projector911/source907/stack908/pool909/native
+writer910/Insert437 and protected modelling/Multi/frozen retained. Device912 gate pending.
+Next surface interaction feedback, then audit material-channel slots/placeholder plan.
+
+
+## .912 publication verified â€” 2026-10-18
+
+Runtime7c5002a42016621916fb7874df570a7425638421; tested tree
+9264653aefcbbff915d09139391807bb393d5681. All13 uploaded blobs and created tree
+match tested local source; fetched origin/main has identical tree. Main version/
+shell/painter912 pin verified. Node24.19.0 local full2570PASS/0FAIL/0skip;
+Node22 topology CI39103377854/job117604045125 SUCCESS. Pages39103377692 /
+build117604047193/deploy117604136007 SUCCESS. All15 checked postdeployment live
+shell/version/painter/core/surface/projector/overlay/source/placement/stack/pool/
+native writer/Insert alignment/recovery files byte-match repository. Protected
+Multi1.0/modelling/frozen unchanged. All four continuity files current; this proof
+changes documentation only and retains tested runtime bytes. User911PASS protected;
+912 Safari/Pencil/guide appearance/release-preview latency gate pending, no rendered
+or M2 performance acceptance inferred. Next On surface manual gate, then material/
+channel owner audit per product direction. Original screen Project remains available.
+
+
+## .913 â€” repeated surface image quota repair; .912 partial PASS â€” 2026-10-18
+
+User912PASS first surface image; explicit second-add failure. Actual912 UI reproduced:
+16px second image works; second1024Â² source fails8MiB preflight (decoded source4MiB
+alone). No user's file supplied; quota explanation verified, device retest required.
+Same stack/resource/pool owners select bounded image-capablev3 profile24MiB unique /
+48MiB expanded; raster-only8/16 retained. Three1024Â² sources+encoded+cache+base/flat/
+masks fitâ‰¤23.75MiB resource. Original source dimensions/bytes,512Â² maps,three-overlay
+and32MiB file limits unchanged; no downsizing, new schema/history/kernel or performance
+claim. Original8MiB transport threshold retained: larger images use EXISTING scenev5
+shared-byte codec; strict per-resource/ref/canonical/predecode/atomic refusal retained.
+Failed pool upgrades cannot publish buffers or raise allowance. Image errors now also
+appear inside active panel. Read docs/paint-image-repeat-913.md. Four new focused real
+UI/same+different1024Â²/File/codec/native/quota checks added.908/912 image budget fixtures
+updated to genuine24MiB overflow; all raster-only8/16 assertions retained. Local
+Node24.19.0 full **2574 PASS / 0 FAIL / 0 skipped**; publication verification follows. Resource/pool and parent/Lab graph913; surface912/projector911/
+source907/Insert437/brush/protected modelling/Multi/frozen retained. Native writer only
+parent paint-export pin changed. Next DEVICE two/three adds in same session, edit second,
+UndoRedo/SaveOpen; material work follows acceptance, not an inferred blanket912PASS.
+
+
+## .913 publication verified â€” 2026-10-18
+
+Runtimeb4849c600938243311cdcbce7828b8a64869a072; tested tree
+8a859acf4b1d30b97fa3348dd9aa0efcddaa9514. All30 uploaded blob hashes/created tree
+match local tested source; fetched origin/main identical. Main913 shell/manifest/
+painter pin verified. Local Node24.19.0 full2574PASS/0FAIL/0skip; Node22 topology
+CI39105181178/job117609354728 SUCCESS. Pages39105180906 /
+build117609356689/deploy117609442669 SUCCESS. All26 postdeployment live shell/
+version/resource/pool/new budget/UI/parent/Lab/recovery plus unchanged surface/
+projector/source files byte-match source. Initial reads during deployment mixed912
+and new files/new budget404; final fresh complete graph26/26 matches913. Protected
+Multi1.0/frozen/modelling/brush/Insert algorithms retained; native writer only loader
+pin changes. All four continuity files current. This proof changes docs only; tested
+runtime bytes retained. User912 first-placement PASS protected; repeated-image device
+exception remains pending913 retest. No actual user source file, Safari latency or
+M2 RAM acceptance inferred from Node/source-byte checks. Next repeat-add SAME session,
+verify first preserved, edit second/UndoRedo/SaveOpen; material work stays queued.
+
+
+## .914 â€” Cylinder UVs for cones and upright Revolves â€” 2026-10-18
+
+User requested Cylinder UVs for Revolve/cylinders/cones and completion up to the
+next manual gate before pausing overnight. Audit: applied Revolve has revolveProfile
+(not curveProfile), already eligible in Mesh Health; constant-radius/axis-side
+checks in the original Cylinder mapper were the refusal. Extend THAT mapper only:
+ordinary cylinders retain exact measured-edge strip/two-cap layout; fallback recovers
+regular concentric world-Y rings and their single profile chain from Base topology.
+Angular seam plus measured radius/height profile distance supports taper, pointed
+ends, shoulders and return walls. Pole U splits per face wedge; n-gon caps stay planar.
+No geometry, recipe, modelling/gesture/history/export kernel changes. Same native
+corner payload, commit, original UV edits, Save/Open and GLB/NOM writers. UI explains
+upright cylinder/cone/Revolve scope. Tilted/elliptical/twisted/branching/malformed
+and procedural/modifier/imported contexts still refuse atomically. Not arbitrary-axis
+projection, remeshing, auto-bake, zero-distortion or automatic packing. Closed profile
+loops are unsupported. Four new tests cover native cone3â€“64 sides/multiple bands,
+huge/tiny scale, original Revolve owner output with poles/taper/shoulders/return walls,
+no geometry/metadata mutation, one Undo/Redo/idempotence, UV edits/codec/actual native
+and GLB values, atomic refusal and retained original cylinder layout. Entire changed
+UV/parent/Lab graph and shell/recovery keys914; other module pins retained.
+
+Next DEVICE: Add+ Cylinder and Cone â†’ Mesh Health â†’ UVs â†’ Cylinder UVs (Y), inspect
+UV Editor; apply upright Revolve and repeat; Undo/Redo and Save/Open, paint/export
+as desired. Also retest913 two images in SAME On surface session, first preserved,
+second independent. No new PASS inferred; first912 placement remains protected.
+Material-channel work stays queued behind these manual gates. User pausing overnight;
+continue from repository tomorrow, no further automatic build needed tonight.
+
+Local Node24.19.0 complete regression: **2578 PASS / 0 FAIL / 0 skipped**.
+Reviewed shell changes only Mesh Health and both recovery URLs; UV child and Lab
+parent chain914. Original913 painter/resource budget retained. An initial local
+cache-contract run caught an overbroad shell pin replacement during preparation;
+restored unrelated913 pins before FINAL full2578PASS run. No published bad graph.
+Publication evidence to follow; manual device gates remain pending.
+
+
+## .914 publication verified â€” 2026-10-18
+
+Runtime88315294db29a9046ace8cef4896c449a31166e9; tested tree
+ d5dcff41107bed86a43b34f7bf95240122cfa22e. Uploaded13 exact source blobs/tree,
+fetched main and aligned local equivalent tree. LocalNode24.19.0 and hostedNode22
+full2578PASS/0FAIL/0skip. TopologyCI39123430499/job117663549250 SUCCESS;
+Pages39123429994/build117663550431/deploy117663655310 SUCCESS. All12 checked
+live shell/manifest/UV owner/Mesh Health/Lab parents/recovery/Multi/painter/budget
+files byte-match source after deployment. Initial public proxy timeouts/old913
+manifest resolved on retried versioned fetch; final12/12 match914. Extra unversioned
+manifest request timed out at proxy; no evidence of app regression. Protected
+Multi1.0/frozen/modelling/paint kernels and unrelated913 pins retained. All four
+continuity files current; proof changes docs only. No device PASS inferred.
+Stop at manual gate: tomorrow914 Cylinder/Cone/upright Revolve UVs +913 repeat-image
+retake; first912 image placement PASS protected. Material-channel work stays queued.
+
+
+## .915 â€” precise paint RGB / HSB / hex; .914 user PASS â€” 2026-10-19
+
+User914PASS accepts preceding Cylinder/Cone/upright Revolve UVs, UV Editor/history/
+SaveOpen and repeated On surface images manual list. Protect914 UV +913 repeat-add
+behaviour and earlier surface placement, masks/layers/paint/native exports. Audit
+0a7ba302: production paint has only browser swatch, no numeric RGB/HSB editor.
+New small paint-colour-controls binds ORIGINAL input, sRGB0â€“255 / HSV hue0â€“360,
+saturation+brightness0â€“100%, hex optional#; shorthand only commits on change.
+Hue survives grey, saturation survives black; invalid/partial/range entries never
+publish and revert on commit. Same swatch input event owns stroke cancel/rollback;
+no pointer/history/paint kernel or resource/codec/export change. Numeric controls
+follow original mask/image disabled state. Collapsed foldout, original swatch retained.
+Brush preferences are session UI only, not object/save metadata. Three focused actual
+UI/pixel/history/project/native tests added; full suite/publication follows.
+Only painter UI/new helper and shell/recovery keys915; core/budgets913/UV914/frozen/
+Multi1.0 remain pinned. Read docs/paint-colour-controls-915.md for owner audit.
+Next DEVICE setRGB/HSB/hex, paint, picker sync and greyâ†’colour/blackâ†’colour; mask
+colour controls disabled; history/image placement remains accepted. Then independent
+roughness DATA-resource + explicit scene transport foundation through authoritative
+owners, followed by visible controls/preview; no sRGB blends for data/normal maps,
+no arbitrary native-UV material metadata or new writer. Other material slots queued.
+
+Local Node24.19.0 full regression **2581 PASS / 0 FAIL / 0 skipped**; existing905/906
+nearby14PASS and new915 focused3PASS. Original colour brush/resource/history/UV/
+image/export/Multi/frozen owners unchanged. Publication verification follows.
+
+
+## .915 publication verified â€” 19 October 2026 (Brisbane)
+
+Runtime6c094e8448dbbc324146af621a709b5581160e06; tested tree
+ e0d4f532e7c2a558d585d155ac1052769c797f95. Uploaded13 exact blobs and identical
+tested tree; main fetched/local equivalent tree aligned. Node24 local + Node22
+hosted full2581PASS/0FAIL/0skip. TopologyCI39167551114/job117793558051 SUCCESS;
+Pages39167550557/build117793559585/deploy117793690409 SUCCESS. Final12/12 checked
+live shell/manifest/painter/new colour helper/recovery/core/UV/Multi/budget/surface
+files byte-match source. Initial in-flight reads served914 and helper404 with proxy
+timeout; fresh postdeployment complete graph matches915. Only painter/new helper,
+three shell cache keys and reviewed fixture changed; all other algorithm pins retained.
+All four continuity files current, user914PASS protected. This proof is docs only;
+915 device colour/picker/grey-black recovery/paint gate pending. Next independent
+roughness data-resource/transport foundation per docs/paint-colour-controls-915.md;
+no extra material-channel parity or iPad performance claim inferred.
+
+
+## .916 â€” compact left Paint + Object radial UV; .915 PASS â€” 2026-10-19
+
+User915PASS protects linkedRGB/HSB/hex and prior paint/UV. User explicitly requests
+Paint left/tidy because bulky UI obstructs mesh, plus dedicatedUV in Object radial.
+This user direction takes priority over roughness work; audit only, no roughness
+resource/schema changes made. Same tool-session-ui owner special-casesuv-paint as
+left8px/top12px/272px bounded scrolling dock, keeps original footer/buttons intact,
+skips wide action reparenting; next tool clears width and original centred placement
+returns. Shared positioner/wide-layout732 unchanged. Painter re-groups SAME controls:
+colour/size/opacity/layer/Add exposed; brush/RGBHSB/layer settings/masks collapsed,
+image controls staged only; sticky UndoRedoDone. No pointer/brush/resource changes.
+UV outer90Â°/230px added preserving other Object sectors; newuvToolsBtn launches SAME
+Mesh Health UV owner inuv-tools session, titleUV and diagnostic nodes hidden. Projection/
+workspace/history/payload/Close owners unchanged; Refresh stays visible. Mesh Health
+mode hides UVs and retains repairs. UV-only reports skip health analysis and refresh
+on context/history changes. Close old mode before switching IDs; original radial/
+background close adapters includeuv-tools. No second editor/kernel/history.
+Two new integration checks + updated original radial/workspace harness retain semantic
+checks; full suite/publication follow. All6 changed owners+shell/recovery916; unchanged
+paint core/budgets913/colour915/UV mapper914/Multi/frozen/modelling/shared layouts retained.
+Read docs/paint-uv-layout-916.md. Next DEVICE left dock footprint/sections, paint/mask/
+image placement; ObjectUV project/editor/Back/Close and Mesh Health repair regression.
+Then resume independent roughness data-resource/explicit transport foundation.
+
+Local Node24.19.0 final full **2583 PASS / 0 FAIL / 0 skipped**. Initial full run
+caught two outdated test adapters:439 expected literal fixed Mesh Health ID,731
+Sweep host omitted real DOM style property. Updated fixtures to dual ID and actual
+host shape; kept all semantic/read-only/Sweep assertions. Focused9PASS, final full
+2583PASS; no runtime Sweep or shared positioner changes. Publication/visual proof follows.
+
+
+## .916 publication verified â€” 19 October 2026 (Brisbane)
+
+Runtime3295032ca2bd89cf7c4a7de3b870656d765fcd2f; tested tree
+5be85556700c13b08b8294e45082406f5e2b9759. All21 uploaded blobs/tree match tested
+local source; fetched main/local equivalent tree aligned. LocalNode24 + hostedNode22
+full2583PASS/0FAIL/0skip. TopologyCI39173064962/job117809986464 SUCCESS;
+Pages39173064486/build117809988186/deploy117810083028 SUCCESS. Live13/15 checked
+files byte-match, including shell/manifest and ALL6 changed runtime owners, recovery
+version/wide layout/Multi/colour/UV mapper. Two UNCHANGED files (release-bootstrap,
+shared positioner732) repeatedly proxy-timed-out on HTTP recheck; repository exact
+bytes/pins retained and previously verified. No claim those two were fetched916.
+Cloud browser loaded visible916 shell but WebGL context creation failed in unchanged
+main854/Three renderer; therefore no mesh/radial/Paint rendered acceptance claimed.
+Isolated test tab closed; no screenshot of a blank mesh returned as layout proof.
+Actual session/UV owner semantics and native paint/image flows remain tested by Node;
+iPad left-dock/section/scroll and UV navigation manual gate remains pending916.
+All four continuity files + workflow user exception updated. User915PASS protected;
+this proof changes docs only. Roughness audit read-only, implementation deferred.
+
+
+## .917 â€” roughness data / project foundation; .916 user PASS â€” 2026-10-19
+
+User916PASS protects compact LEFT Paint/sections/Done, colour/image Pencil cycle,
+Object radialUV projection/editor/exit and Mesh Health repair baseline. Audit current
+ddf240f6: only sRGB colour resources exist; imported scalar writers already own map
+export. Add separate R8roughness resource16â€“512 axes, linear data/UV-v0-first/binding,
+owned capture/encode/decode, committed read-only sharing convention. Exact schema,
+canonical original project bytes, dedup4MiB unique/8MiB expanded and predecode budget/
+ref validation. Scenev6 ONLY with roughness; mandatorycolourPaintVersion delegates
+original colourv1â€“5 envelope to unchanged owners. Without roughness exact legacyJSON/
+version retained. UV envelope stays UV-only; original32MiB file + colour budgets stay.
+Original scene snapshot/restore/addMesh/single+Multi Duplicate share resource, edits
+replace; atomic Open corruption and render failure retain scene/resources/history.
+Join refuses scalar-only paint; linked nativeUV guard retained. Shared export mesh
+resolver refuses roughness-bearing OBJ/GLB/NOM (including alongside colour) instead
+of silently dropping unsupported channel. No writer/provenance/geometry/brush/UI
+kernel added. Six new integration tests cover data bytes, all legacy colour transports,
+quotas/refs/predecode/ownership, actual history/Duplicate/File/Open/rollback and writer/
+Join refusals. Full suite/publication follow. Docs: roughness-resource-917.md.
+Actual resource/codec/metadata/guard + complete parent/Lab graph917; painter UI only
+parent pin, retains accepted916 left dock/UV access. Multi1.0/frozen/UV914/colour915/
+brush/projection/layout/modelling kernels unchanged. No roughness controls/render/
+export/layers/displacement parity claim. No new device roughness test possible yet.
+Next original scalarPNG + NOM/GLB material export adaptation with async capture/binding/
+combined material identity tests, then visible channel/preview through original painter.
+Manual nearby: existing colour paint SaveOpen/Duplicate; do not ask synthetic R8 fixtures.
+
+Local Node24.19.0 full **2589 PASS / 0 FAIL / 0 skipped**; six new917 checks and
+all existing colour/UV/left-dock/paint/image/native regressions pass. Reviewed complete
+parent/Lab cache graph, source stamps retained, protected Multi/frozen unchanged.
+Publication evidence follows; no new roughness device UI or render claim.
+
+
+### Build .917 publication verification
+
+Runtime commit `30f39970f808a022af054f0e4505d20eaef39772`, tested tree `0b4dc5441f3399232a36cdddfb1e458567eb641c`, is published. Hosted Node 22 regression run 39194785838 (job 117875081484) passed all 2,589 tests, with zero failures or skips. Pages run 39194785560 completed successfully (deploy job 117875216536). All 25 checked live runtime, Lab, release and protected Multi files matched repository bytes. Protected .916 user PASS remains in force; no rendered roughness UI acceptance is claimed.
+
+Hands-on .917 checks: paint a distinctive mark, Save .boxlab and reopen; duplicate a painted object, paint the copy, and Undo/Redo while confirming the original remains unchanged. Roughness has no controls yet; its resource/project/history foundation is covered by automated tests. Next narrow work remains scalar PNG and existing export-owner adaptation before visible roughness painting.
+
+
+## .918 â€” roughness export through existing writers; .917 user PASS â€” 19 October 2026
+
+User917PASS protects existing colour Save/Open, painted Duplicate isolation and
+Undo/Redo. Audit main0f040ed2/.917: scalarPNG/native material slots/GLB material patch
+already exist. Extend original paint-export capture with strict owned R8 copies
+before await, existing native Base UV key/digest for both channels, and scalarPNG G
+encoding (no gamma/flip/resample/factor bake). Original NOM roughness slot/factor1,
+UV/polygon/container/name/dedup/24MiB budget retained. GLB G roughnessFactor1 and
+metallicFactor0; image identity separate from combined colour+roughness material
+identity so shared colour cannot merge distinct roughness maps. Scalar-only and
+colour+scalar supported; unprepared sync native/OBJ/Join still refuse. No project
+schema/history/brush/UI/kernel/provenance changes. Five actual writer/File/PNG/async/
+binding/refusal/source-immutability regressions added; old917 async refusal updated
+to stale-binding validation, other guards retained. Changed owners and recursive
+parent/Lab cache graph918; protected Multi1.0/frozen/modelling and accepted Paint UI
+retained. Read docs/roughness-export-918.md. Full validation/publication follow.
+No roughness controls/preview yet; next original painter scalar channel integration.
+Manual nearby: export differently painted original/copy to NOMAD and GLB, confirm
+independent colour/UV placement; paint Save/Open/history remains protected917PASS.
+
+
+User reminder â€” 19 October 2026: every build completion must explicitly state
+whether there is something to test, with build/readiness and quick hands-on checks,
+or clearly state no new hands-on test is needed. Reaffirmed in AI_WORKFLOW.md.
+
+
+.918 final local validation: Node24.19.0 full **2,594 PASS / 0 FAIL / 0 skipped**.
+Five new export integrations and all existing paint/image/UV/modelling checks pass.
+Initial cache preparation accidentally repinned unchanged917 shell owners; regression
+checks caught this, unrelated pins were restored, reviewed contract passed, and the
+final complete suite above ran against corrected source. No bad graph published.
+Multi1.0 and frozen betas unchanged. Publication verification follows.
+
+
+## .918 publication verified â€” 19 October 2026 (Brisbane)
+
+Runtime commit `57a53f93ffb8c9a194bb1baaccbb738ab0d8b924`, tree
+`c15f998e6ecaa416e159bca959312370e419b048`, is published. Hosted topology
+regression run `39232675588`, job `117994153957`, completed successfully;
+Pages run `39232675125` completed successfully. The build's recorded local full
+suite is 2,594 PASS / 0 FAIL / 0 skipped; this continuation verified hosted success,
+without rerunning the local suite. All 19 checked live files byte-match main:
+shell/manifest, every changed runtime and Lab file, and protected Multi1.0.
+No runtime changes in this continuation and no .918 device PASS inferred.
+
+The app is ready for testing â€” build .918. Export differently colour-painted
+original/copy to NOMAD and GLB; check independent colour and UV placement. Repaint
+the copy and repeat NOMAD export to confirm the original remains unchanged.
+Roughness fixtures are automated; there are no roughness controls to test yet.
+Next narrow build: visible roughness channel/preview through existing compact Paint,
+raster/input/history owners, preserving scalar data semantics and existing exports.
+
+
+## .919 â€” Roughness Pencil painting and grayscale inspection â€” 19 October 2026
+
+User .918 PASS protects independent original/copy colour and UV placement in NOMAD
+and GLB, including repaint/re-export isolation. Audit c005f107: .917 resource/project/
+history and .918 original writers exist; no scalar channel in the painter. Extend
+original viewport-paint-core and compact left UI only. Channel Colour/Roughness,
+0â€“255 value slider, same size/hardness/opacity/pressure and BoxLab/Klecks samplers.
+Opaque raster's raw-byte interpolation carries equal RGB values; publish owned R8
+through original roughness resource/pool and scene checkpoint. White default =255;
+0 smooth /255 rough. No gamma conversion or colour blend modes in scalar math.
+Grayscale inspection is temporary and labelled; Done returns existing colour/Studio
+appearance. No lit material roughness preview yet. New maps512Â²; valid other sizes
+remain savable/exportable but painting refuses without resampling. Roughness channel
+has no layers/masks/image operations; original colour controls disabled, restored
+on Colour. Channel change cancels live contact/placement, never adds history.
+
+Scalar identity joins existing async/current-state guards. Invalid/stale binding,
+quota/checkpoint failure rolls back preview and leaves scene/shared resources intact.
+Original single/Multi Duplicate, history, scenev6 Save/Open and NOM/GLB writers remain
+owners. Only two painter modules and their shell pins change; new child references
+use existing918 resource/pool pins. Multi1.0/frozen/modelling/render/export kernels,
+Lab and brush sources unchanged. Six focused integration checks cover actual UI,
+bytes/cancel/coverage, history/project, actual single+Multi Duplicate and GLB/native
+PNG, quotas/rollback and stale/non512 refusals. Full validation/publication below.
+
+Next DEVICE: Paint â†’ Channel Roughness, paint value0 then255 elsewhere; inspect gray
+map. Colour returns original paint; reselect Roughness to inspect retained map.
+Done/Undo/Redo, Save/Open then Roughness; duplicate/repaint and export NOMAD to check
+smooth/rough regions under lighting. No rendered/iPad performance acceptance inferred
+from Node adapters. Next build: lit roughness preview through existing material/
+surface lifetime owner, retaining accepted colour appearance where no scalar exists.
+
+.919 final local validation: Node24.19.0 full **2,600 PASS / 0 FAIL / 0 skipped**.
+Six new scalar integration checks pass; reviewed release contract5PASS and original
+colour/mask checks retained. No runtime tests skipped, no protected/frozen changes.
+Publication verification follows; actual iPad/grayscale/native-lighting gate pending.
+
+
+## .919 publication verified â€” 19 October 2026 (Brisbane)
+
+Runtime `76e48e3b4ee5dc73018e566a5f8a4b323ca3bac9`, tested tree
+`e58d35ee563881ae74fefbb03c3cfbfe62f567b2`, is published. Connected Git Data
+created the identical local tested tree; fetched origin/main matched exactly.
+Local Node24 and hosted regression `39242723896` / job `118027165309` both pass
+2,600 tests, zero failures/skips; hosted complete logs verified counts. Pages
+`39242722754`, deploy job `118027373427`, completed all deployment steps successfully.
+Ten fresh live files byte-match tested source: shell/version, both changed painter
+owners, both recovery scripts, paint target, roughness resource/pool and Multi1.0.
+Initial predeployment requests served918; final complete graph matches919.
+Shell push lacked credentials; connected Git Data publication used expected-parent,
+non-forced ref update. No protected/frozen/modelling/export/render changes.
+
+All four continuity files are current; this proof changes docs only. User918PASS
+protected. .919 iPad Pencil/grayscale/navigation/native-lighting acceptance pending;
+no actual rendered proof inferred from Node adapters. Ready for hands-on checks in
+this build's entry. Next lit material preview through existing surface/lifetime owner.
+
+
+## .920 â€” lit roughness material preview â€” 19 October 2026
+
+User .919 PASS protects Roughness0/255 Pencil painting, Channel/grayscale retention,
+Undo/Redo, Save/Open and native smooth/rough map handoff. Audit fb7f928a: original
+paint-target surface is unlit Basic, render-modes owns existing Studio/base lighting.
+Extend SAME paint surface/lifetime; no new mesh, raycast, shader, light or history owner.
+Paint Preview select offers Channel(default, preserving919) / Lit material. Existing
+UI/input owner cancels active contact/placement on toggle; no scene/history metadata.
+Live Standard material receives current flattened colour(sRGB) and roughness(linear
+NoColorSpace/G), factor1/metalness0/white colour. Working roughness reads raw equal-RGB
+bytes from original opaque raster; no gamma/factor bake, resampling or source writes.
+Dirty updates coalesce with original frame tick; textures/materials reused until dispose.
+
+Committed valid roughness displays lit after Done/rebuild in original Studio/Solid/
+UV Image modes, active and inactive/locked objects. Scalar-only uses neutral white;
+colour-only remains original unlit appearance unless explicit Paint Lit preview.
+Both channel identities/UV binding checked after await; stale scalar is not sampled,
+valid colour can retain Basic fallback. Malformed scalar/unsupported owners safely
+fall back to original body; stale colour or all invalid channels dispose preview.
+Existing diagnostic modes clear through same lifetime owner. All surface textures
+are privately owned; dispose once on body/mode/session loss; original body restored.
+Non-square16â€“512 committed data maps display without resampling (editing512Â² rule
+retained). Auxiliary lit textures up to two512Â²RGBA buffers per surface, plus existing
+channel surface and GPU copies; not a measured device-performance/memory claim.
+
+Six focused integration checks cover exact data/sRGB/UV/material settings and lifetime,
+scalar-only/colour-only/stale fallback, actual UI toggle/cancel/dirty coalescing, live
+colour+scalar isolation/checkpoint rollback/body disposal, async/project/history and
+actual render owner active/inactive/mode behavior. Node uses real Three materials,
+geometry and pixels; no WebGL render, highlights, iPad latency or Nomad parity proof.
+Same source resources/projectv6/brushes/export algorithms retained. Four changed
+runtime owners plus recursive export/Lab cache graph; Multi1.0/frozen unchanged.
+Read docs/roughness-preview-920.md. Full regression/publication evidence below.
+
+Next DEVICE: Roughness â†’ Preview Lit material; paint0 then255, orbit in Studio to
+compare highlights. Channel returns retained grayscale, Lit returns colour/material.
+Done keeps lit roughness; Save/Open and select a different object retain appearance.
+Undo/Redo and duplicate isolation remain protected. Existing no-roughness colour
+objects retain original look. Then audit remaining material slots, starting Metalness
+resource/export/preview owners; keep stages narrow and data-aware, no parity claims.
+
+.920 FINAL local validation: Node24.19.0 full **2,606 PASS / 0 FAIL / 0 skipped**.
+Six new focused checks and all legacy semantics pass. Reviewed shell/cache-contract
+5PASS; other export/Lab parent edits verified pin-only; protected Multi1.0/frozen intact.
+Initial preparation run caught an incorrect temporary write target that replaced the
+local HTML shell with cache-fixture JSON. Restored shell from main, applied only reviewed
+pins/markers, corrected fixture destination, then reran the entire final suite above.
+No malformed shell published and no behavior checks relaxed. Publication proof follows.
+
+
+## .920 publication verified â€” 19 October 2026 (Brisbane)
+
+Runtime `b3aae5266bcff0f206500d2e5fea278825e5cd41`, tested tree
+`22b91cd354bb03f4acd9540adf4952b04a69b546`, is published. Connected Git Data
+created an identical local tested tree; fetched origin/main matched exactly.
+Local Node24 and hosted regression `39245427937` / job `118036074696` both pass
+2,606 tests, zero failures/skips (hosted complete logs verified). Pages run
+`39245427818` deploy job `118036289017` completed all deployment steps successfully.
+All18 fresh live shell/version, four runtime owners, complete changed export/Lab
+parent graph, recovery, protected Multi1.0, retained roughness resource/pool and
+project codec files byte-match tested source. Initial predeployment reads served919;
+final complete checked graph matches920. No frozen/modelling/brush/project/export
+algorithm changes. Source scalar bytes/data semantics retained; no custom lights.
+
+All four continuity documents updated; this proof is docs-only. User919PASS protected;
+920 actual iPad highlights/material appearance/latency acceptance remains pending,
+not established by Node Three material/texture tests. Ready for hands-on Paint
+Roughness â†’ Preview Lit material0/255/orbit, Channel return, Done/SaveOpen/selection
+and existing no-roughness colour appearance. Next remaining material-slot audit
+(Metalness candidate) follows device feedback, through original owners.
+
+
+## .921 â€” metalness data/project foundation via shared scalar owners â€” 19 October 2026
+
+User920PASS protects Lit/Channel roughness preview, highlights, Done/SaveOpen/selection
+appearance and original colour-only look. Audit main05ddf085: imported NOM/GLB metalness
+slots exist; editable resource/scene transport do not. Extract the accepted917 R8
+validation/canonical byte codec and dedup/quota/predecode pool into shared scalar
+owners; existing roughness API/descriptor/byte serialization/errors and4MiB unique /
+8MiB expanded budgets retained. Metalness uses separate strict linear R8 descriptor,
+16â€“512 axes, UV-v0-first, owned captures, read-only committed sharing. No RGB blending,
+new brush/kernel/history/writer or metalness UI/preview delivered.
+
+Explicit scenev7 ONLY when metalness exists: mandatorypaintProjectVersion1â€“6 delegates
+existing envelopes, roughnessv6 retainscolourPaintVersion1â€“5. Without metalness original
+legacy JSON/version retained exactly. Independent metalness pool4MiB unique/8MiB
+expanded, original32MiB file and colour/roughness budgets retained. Complete resource/
+ref/schema/size preflight before mesh creation; corruption/quota/unsupported owners
+refuse atomically. Native UV envelope remains UV-only. Original history snapshots/
+restore/addMesh/single+Multi Duplicate carry metalness by read-only reference; edits
+replace. Original File Save/Open and render-failure scene/history rollback retained.
+Join/linked operations and raw/async OBJ/GLB/NOM exports refuse metalness-bearing
+objects, even alongside accepted colour/roughness, so pending channels cannot vanish.
+No imported metalness export behavior changed; native paint export adaptation next.
+
+Six new integrations cover codec ownership/channel separation, all six legacy formats/
+exact removal/dedup, schemas/refs/quotas/owner guards, actual history+single/Multi
+Duplicate, actual File Save/Open/corrupt/render rollback, all writer/Join refusals.
+Existing917â€“920 scalar/paint/preview nearby23PASS. Complete reviewed resource/codec/
+metadata/export/parent/Lab graph921; UI/render/brush algorithms unchanged. Multi1.0,
+frozen betas and modelling kernels untouched. Read docs/metalness-resource-921.md.
+Full regression/publication evidence below. No new metalness device feature yet.
+
+No new hands-on test needed for921; user920PASS is protected. New foundation fixtures
+are automated, never a synthetic iPad task. Next narrow build: captured metalness
+through existing scalar PNG/NOM/GLB material owners, including combined colour+
+roughness+metalness identities/async capture and data semantics. Then visible Pencil
+channel and lit preview through existing compact Paint/material owners.
+
+.921 final local validation: Node24.19.0 full **2,612 PASS / 0 FAIL / 0 skipped**.
+Six new integrations + existing917â€“920 nearby23PASS; release contract5PASS.
+All other changed JS parents verified pin-only; protected Multi1.0/frozen/modelling
+and existing paint/preview/export algorithms retained. No behavior checks relaxed.
+No new hands-on gate; user920PASS protected. Publication verification follows.
+
+
+## .921 publication verified â€” 19 October 2026 (Brisbane)
+
+Runtime `21ea62ebddef2a404b14e029fdb0744a1bd0862f`, tested tree
+`f0d7a3f92abab520806a4ed5874f99f3b7cb25f2`, is published. Connected Git Data
+created an identical tested local tree; fetched origin/main matched exactly.
+Local Node24 and hosted regression `39248074915` / job `118044791985` both pass
+2,612 tests with zero failures/skips; hosted full logs verified. Pages run
+`39248074813`, deploy job `118045052264`, completed all steps successfully.
+All30 checked live files byte-match tested source: shell/version, every changed
+runtime/parent/Lab file, four new scalar modules, recovery, protected Multi1.0 and
+retained colour pool. Initial in-flight reads served920/new modules404; final whole
+checked graph matches921. No protected/frozen/modelling/brush/preview algorithm changes.
+
+All four continuity files current; this proof changes docs only. User920PASS protects
+existing lit roughness/Channel/Done/SaveOpen/selection/colour appearance. Build921 is
+complete; no new hands-on test needed because metalness controls/preview/export are
+not exposed yet. Fixture transport/history/atomic Open and refusal checks are automated.
+Next narrow build: captured metalness through original scalar PNG/NOM/GLB writers,
+then original Paint channel/material preview. No metalness visual acceptance claimed.
+
+
+## .922 â€” metalness export through original NOM/GLB owners â€” 20 October 2026
+
+Continue authorized921 foundation; no new device PASS inferred. User920PASS remains
+protected for paint/lit roughness/Channel/history/SaveOpen/selection/colour-only look.
+Audit main2c438348: existing native metalness slot, scalar PNG, paint capture and GLB
+material patch own required transport. Extend these owners; no new writer, schema,
+metadata provenance, history, modelling/paint kernel or UI controls.
+
+Capture owned metalness alongside colour/roughness/geometry/native UVs BEFORE await;
+original Base target digest validates all channels. Native metalness uses original
+lossless grayscalePNG + metalness slot/factor1; roughness factor1/default1 retained.
+Original names/content dedup/polygon UV pool/container/24MiB aggregate budget remain.
+GLB uses packed RGB data PNG G=roughness(or255), B=metalness, R=255, factors1; only
+roughness retains accepted grayscale PNG/metallicFactor0. Same PNG RGB/filter/CRC/zlib
+packager gets explicit no-colour-metadata path, not a canvas/gamma/resample encoder.
+Packed pair cache plus original colour image cache and full material key distinguish
+all colour/roughness/metalness combinations; shared exact resource pairs reuse images.
+Absent colour remains white. Independent non-square maps remain exact in NOM; GLB
+requires matching roughness/metalness dimensions and refuses rather than resizing.
+New data rows remain UV-v0-first, no factor baking or sRGB metadata on scalar data.
+
+Original File actions report metalness counts. Raw OBJ/unprepared sync native/Join
+still refuse metalness; invalid descriptor/stale binding/evaluated/imported/linked
+owners refuse. Async download captures never assign maps to source scene or native
+UV metadata. Resource/projectv7/history/brush/UI/lit preview algorithms unchanged.
+Complete changed PNG/export/parent/Lab graph922 only; Multi1.0/frozen unchanged.
+Old921 async blanket-refusal assertions now check stale binding; raw guards retained.
+
+Eight new integration tests cover actual NOM/GLB export+loader and File actions,
+independent PNG CRC/zlib/channel bytes, combinations/dedup, metal-only defaults,
+unequal-size refusal/NOM retention, async snapshots, invalid owners, original native
+24MiB preflight AND final writer cap, PNG data-vs-colour metadata/ownership.
+Native writer budget test imports its ACTUAL versioned paint-export dependency:
+prepared WeakMaps are module-local, so an unversioned Node helper cannot prepare
+another versioned module's writer. First fixture attempt hit the intended raw guard;
+corrected test wiring, not the runtime guard. Read docs/metalness-export-922.md.
+Full regression/publication evidence below; no renderer/Nomad appearance acceptance
+inferred from Node adapters. No new hands-on test needed: metalness has no controls
+yet. Next original Pencil scalar channel + material preview integration in narrow
+stages, preserving existing colour/roughness and independent resource semantics.
+
+.922 final local validation: Node24.19.0 full **2,620 PASS / 0 FAIL / 0 skipped**.
+Eight new integrations and all existing paint/preview/modelling/import/export checks
+pass; reviewed release contract5PASS. PNG data metadata path preserves old colour/
+scalar semantics; source resource/project/history/UI algorithms and Multi/frozen
+unchanged. No assertions excluded; old async refusal upgraded to binding contract.
+No new hands-on gate; publishing verification follows.
+
+
+## .922 publication verified â€” 20 October 2026 (Brisbane)
+
+Runtime `e550ae539d3a59789de95c6b9d18b800f4a7eb27`, tested tree
+`28860d5de9252cf60d31a11636082113f678bc95`, is published. Connected Git Data
+created an identical tested local tree; fetched origin/main matched exactly.
+Local Node24 and hosted regression `39335979744` / job `118345461602` both pass
+2,620 tests, zero failures/skips; complete hosted logs verified counts. Pages
+`39335978411`, deploy job `118345671446`, completed all steps successfully.
+All18 checked fresh live files byte-match source: shell/version, all five changed
+export/PNG runtime owners and Lab parents, recovery, protected Multi1.0 and retained
+scalar resources/project codec/painter UI/core/paint target. Initial in-flight reads
+served921; final complete checked graph matches922. No frozen/modelling/brush/
+project/history/preview algorithms changed; same native image budget and raw guards.
+
+All four continuity files current; this proof is docs-only. Build922 complete and
+published. No new hands-on test needed: editable metalness controls/preview remain
+next; export fixtures and actual File actions are automated, no rendered/native
+appearance acceptance inferred. User920PASS remains protected; no921/922 devicePASS
+invented. Next original scalar Pencil channel, then existing material preview owner.
+
+## .923 â€” Metalness Pencil channel and existing lit material preview â€” 20 October 2026
+
+Audit main f2cc8a38 / .922: scalar resources, codec/history/duplicate and native/GLB
+writers already exist; expose them through original compact LEFT Paint and surface
+owners. Shared scalar configuration reuses accepted raster, quota/checkpoint and
+cancellation paths. Metalness starts black0, brush defaults255; opaque raw equal-RGB
+working bytes publish independent linear R8 only. Colour/masks/images stay disabled
+while editing either scalar; returning Colour restores existing controls/layers.
+Non512 retained maps refuse painting rather than resampling. All identity/binding,
+body lifetime, budget and checkpoint refusal rules retained.
+
+Existing surface owns separate linear roughness G and metalness B textures; metal
+factor1 with a map, default0 otherwise. Existing lighting/UVs/colour sRGB remain.
+Live dirty uploads coalesce; switching Channel/Lit or scalars cancels contact without
+history. Committed active/inactive/locked overlays use same owner; disposal frees maps.
+No new brush/kernel/writer/history owner, lights, environment, or modelling changes.
+Reverse loader/cache graph reviewed and pinned923; protected Multi1.0/frozen intact.
+13 new integrations cover UI/raw0/255/opacity/no-op, cancellation, quota/checkpoint,
+identity/stale/non512, history/SaveOpen/single+Multi Duplicate, actual NOM/GLB bytes,
+linear B material, map independence/lifetime and active/inactive render ownership.
+Existing roughness/mask nearby19PASS. Read docs/metalness-paint-923.md.
+
+User920PASS remains protected; /nextbuild alone is not921/922/923 device acceptance.
+DEVICE923: Metalness0/255 Channel/Lit, low Roughness highlights, independent channels,
+Done/SaveOpen, UndoRedo and duplicate isolation; native Nomad material sanity check.
+Next: respond narrowly to923 device feedback before adding more material channels.
+
+.923 local validation: Node24.19.0 full **2,633 PASS / 0 FAIL / 0 skipped**;
+13 new integrations, nearby roughness/mask19PASS and release contract5PASS.
+No existing assertions relaxed; protected Multi1.0/frozen/modelling unchanged.
+Publication/hosted regression/live-byte verification follows. Device923 pending.
+
+## .923 publication verified â€” 20 October 2026 (Brisbane)
+
+Runtime `e505f232856a7d6581368de7f7cf29e45cc514da`, tested tree
+`342c4ca1282a98ab95abfe65a66bccdc311ac757`, is published. Connected Git Data
+created the identical tested local tree; fetched origin/main matched exactly.
+Local Node24 and hosted regression `39337186659` / job `118349490286` both pass
+2,633 tests, zero failures/skips; complete hosted logs verified. Pages run
+`39337186074`, deploy job `118349698451`, completed all steps successfully.
+All19 fresh live files byte-match source: shell/version, every changed runtime/
+export/parent/Lab file, recovery, protected Multi1.0, retained scalar resources/
+metalness pool and project codec. Initial in-flight reads served922; final complete
+checked graph matches923. No frozen/modelling/lighting/UV or writer algorithm changes.
+
+All four continuity files current; this proof is docs-only. Build923 complete and
+ready for hands-on Metalness0/255 Channel/Lit, low Roughness highlights and independent
+channels, Done/SaveOpen, UndoRedo and duplicate isolation. Optional native Nomad
+appearance sanity check. Actual GPU highlights/Pencil latency and923 device acceptance
+remain pending; user920PASS protected, no921/922/923 devicePASS inferred.
+Next: respond narrowly to923 device feedback before another material channel.
+
+## .924 â€” UV workspace layers contained beneath main toolbar â€” 20 October 2026
+
+User reports intermittent missing TOP-RIGHT MAIN APP buttons during UV Editor;
+clarified these are Frame/UndoRedo/Focus/Objects/VIEW, not UV-local controls.
+Audit main553ba061: no UV action deliberately hides the toolbar. Header stacking
+context is10; viewport had no stacking context, allowing workspace180 to overpaint
+header descendants (including VIEW dropdown200 trapped inside header10).
+Add one active-UV-only isolation rule in original uv-workspace stylesheet: viewport
+contains its own layers while visible workspace exists. Original header remains
+above it; closing/hiding UV automatically removes containment. No z-index arms race,
+DOM replacement, event/pointer/history/model/UV/paint algorithm changes. Refresh
+UV workspace + Mesh Health loader and shell/recovery924; unrelated pins retained.
+
+Source layering defect identified; exact intermittent iPad button disappearance
+not reproduced. Cloud main WebGL creation fails (same known environment limitation),
+so no full-app rendered acceptance claimed. Synthetic data-URL layout experiment
+blocked by browser URL policy; no workaround attempted. Nearby workspace navigation/
+history/lifetime/background/Focus + release20PASS. Initial prep contract caught an
+over-broad shell pin replacement; restored unrelated pins before final validation.
+No tests weakened, no user923PASS inferred; user920PASS and protected Multi1.0/frozen
+remain. DEVICE: repeatedly enter/exit UV, pan/pinch/edit/UndoRedo, check top-right
+buttons and VIEW dropdown while inside UV and after Back to3D. If disappearance
+persists, obtain screenshot and exact trigger before more presentation changes.
+Metalness923 device gate still pending. Next:924 device feedback, narrow repair only.
+
+.924 final local Node24.19.0 regression: **2,633 PASS / 0 FAIL / 0 skipped**;
+nearby UV/workspace/history/Focus/background/release20PASS. Final source contains
+only active-UV isolation + reviewed loader/release pins; no assertions relaxed.
+No rendered/device disappearance acceptance inferred; publication proof follows.
+
+## .924 publication verified â€” 20 October 2026 (Brisbane)
+
+Runtime `97a4d9e118e8a2bc71b66b90e393eec3818dc264`, tested tree
+`0413e5a8253f822d93154f1e4d145b69f0bb97f6`, is published. Connected Git Data
+created the identical tested local tree; fetched origin/main matched exactly.
+Local Node24 and hosted regression `39338873374` / job `118355146518` both pass
+2,633 tests, zero failures/skips; complete hosted logs verified. Pages
+`39338872454`, deploy job `118355375163`, completed all steps successfully.
+All16 fresh live files byte-match source: shell/version, UV workspace/Mesh Health
+loader, recovery, protected Multi1.0, original header/toolbar/view CSS and owners,
+painter, retained scalar resources/pool and project codec. Initial in-flight reads
+served923; final checked graph matches924. No UV/model/paint/history/input algorithm
+changes; only one active-UV CSS rule and reviewed release/cache references.
+
+All four continuity files current; this proof is docs-only. Build924 complete and
+ready for iPad retest: repeatedly enter UV Editor, pan/pinch/edit/history, use VIEW,
+then Back to3D; confirm main top-right buttons remain visible and usable. Source
+layering issue repaired; exact intermittent Safari disappearance still needs this
+device confirmation. Cloud main WebGL unavailable, no full-app rendered proof.
+If it persists obtain screenshot and exact trigger before further UI changes.
+User920PASS protected;923 Metalness device gate still pending, no inferred PASS.
+
+## Device feedback â€” .924 toolbar PASS; Metalness FAIL â€” 20 October 2026
+
+User: â€œPASS for the fix.â€ Protect .924 main top-right toolbar visibility through UV
+Editor; keep active-UV viewport isolation and original header/action owners intact.
+
+Metalness is NOT accepted: user reports whole model black in Channel, white draws
+black / black draws white, Lit paints black, and no metal channel in export.
+Treat all reported symptoms as an open device failure; do not infer Metalness PASS
+from the separate toolbar acceptance. No speculative inversion or resource migration.
+
+Audit current009d45f3: slider forwards integer0â€“255 directly; scalar raster publishes
+raw R8 independent of colour; Channel uses grayscale; Lit samples B with factor1;
+existing native slot and GLB packed B receive captured metalness. Rerun actual UI/
+painter/history/duplicate/preview/export suites:21PASS/0FAIL/0skip. Those fixtures
+write255 white/0black and contain exact metalness in NOM/GLB, so they do NOT yet
+reproduce user failure. Lit material/scene have no reflection environment; possible
+dark-metal appearance contributor, NOT a confirmed diagnosis of all symptoms.
+Cloud GPU limitation still prevents rendered-device reproduction.
+
+Next required evidence: affected .boxlab project and its exported .nom, plus screenshot
+with Channel/Preview selector and Value visible. Trace exact authored bytes/binding,
+actual exported slot/factors and displayed preview before changing slider semantics.
+Do not dismiss report because fixtures pass. Keep original owners; no parallel material
+or brush implementation. Runtime remains924, no new build or new manual gate yet.
+
+## .925 â€” painted metal Lit preview reflection input â€” 20 October 2026
+
+User clarified with924 screenshots + METAL TEST.boxlab/.nom: Channel255 draws white
+correctly; metal exports perfectly in Nomad. Smooth metallic patches turn black in
+BoxLab Lit, including when Roughness0 is painted over metal. Prior suspected byte
+inversion/export loss are superseded by concrete evidence. Decoded actual project
+has independent512Â² colour and metalness; metal contains0â€“255. Actual native material
+has color+metalness, metalness/factorMetalness1; exported grayscalePNG matches EVERY
+project metalness byte exactly. Supplied project predates shown roughness edit; no
+roughness map present in that snapshot, not proof of dropped roughness. Uploads remain
+unmodified and are not copied into runtime/repository.
+
+Root source omission: Standard painted metal had no scene/material reflection input.
+Direct lights give narrow highlights; smooth metal can otherwise show black. Keep raw
+0/nonmetal /255metal semantics and existing writers. Original surface/lifetime owner
+now acquires a local room PMREM only for metallic Lit material with no existing scene
+environment. Original Three179 RoomEnvironment + PMREMGenerator,128cube size, no HDR
+network fetch, custom shader or added live-scene lights. Independent envMap per material
+uses shared per-renderer/refcount pool; generator/room temporary assets disposed after
+creation, render target freed exactly once after last surface. Channel holds accepted
+unlit map, colour/roughness-only paths unchanged; explicit scene environment respected.
+Source paint/UVs/history/projects and export factors/maps unchanged. No inverted-slider
+workaround, source migration or scene-global lighting change.
+
+3new regressions cover original surface binding of reflection+exact scalar channels,
+Channel/Lit reuse/source preservation, colour-only/custom environment isolation,
+multiple surfaces/reference lifetime, renderer separation and failed-generation retry.
+Nearby new+roughness/metalness/export30PASS, release5PASS; full/publication below.
+Cloud GPU cannot render actual main; fake target verifies ownership only, not GPU look.
+Official API: threejs.org/docs/pages/RoomEnvironment.html and PMREMGenerator.html;
+pinned installed Three179 source verified supports fromScene options.size.
+
+User924 toolbar PASS protected; current runtime correction only painted material
+reflection path and reviewed reverse loader graph925. Metalness authoring/exports
+are confirmed by user clarification,925 visual acceptance pending. DEVICE: reopen
+saved painted cube, Lit + Metalness255 and Roughness0, orbit; should reflect studio
+panels rather than solid black. Compare Roughness255, Channel0/255, Done/reopen and
+NOMAD export. Next respond narrowly to925 visual feedback before new channels.
+
+.925 final local Node24.19.0: **2,636 PASS / 0 FAIL / 0 skipped**;
+nearby30PASS and release5PASS. Actual supplied NOM/project metalness compared byte
+for byte: identical. No test assertions relaxed; no source/user file modifications.
+Protected924 toolbar and Multi1.0/frozen retained. Publication proof follows;
+real GPU/925 iPad reflection appearance still pending.
+
+## .925 publication verified â€” 20 October 2026 (Brisbane)
+
+Runtime `597659e1889220b0a209c1028ec518cb526023c5`, tested tree
+`760f3a6e749949ced660cf536d5ead98daff0829`, is published. Connected Git Data
+created the identical tested local tree; fetched origin/main matched exactly.
+Local Node24 and hosted regression `39362761751` / job `118432489899` both pass
+2,636 tests, zero failures/skips; complete hosted logs verified. Pages
+`39362761578`, deploy job `118432624041`, completed all steps successfully.
+All20 fresh live files byte-match source: shell/version, new reflection helper,
+original paint surface and every changed runtime/export/parent/Lab file, recovery,
+protected Multi1.0, retained scalar/project owners and accepted924 UV isolation.
+Initial in-flight reads served924/new helper404; final checked graph matches925.
+Only painted material reflection behavior changed; native/GLB algorithms and source
+scalar values retain exact accepted bytes. Supplied project/native files unmodified.
+
+All four continuity files current; this proof is docs-only. Build925 complete and
+ready for iPad Lit material metal255/roughness0+orbit reflection check, rough255
+blur comparison, Channel0/255 and Done/SaveOpen. Existing Channel and native export
+confirmed correct by supplied files/user clarification, not reversed. Real GPU
+reflection appearance and latency remain device-pending; Node PMREM target adapter
+verifies binding/sharing/lifetime only. User924 toolbar PASS protected.
+Next:925 visual feedback, narrow fixes before further material-channel work.
+
+## .926 â€” whole-object Tap Fill; requested brush roadmap â€” 20 October 2026
+
+User925 feedback: reflections still not visible in BoxLab preview; Nomad export
+â€œgreatâ€ and protected.925 visual fix is NOT accepted. No further speculative lighting
+change in926; preserve raw maps and correct native handoff. Need actual925/926 preview
+version/state or renderer diagnostics before claiming another reflection repair.
+User requests Tap to Fill, alpha compatibility, delete-paint/eraser, blur and smudge.
+Clarified Tap Fill default WHOLE OBJECT, selected layer/channel, not island/flood region.
+Audit existing raster/input/stack/history and prior Klecks integration audit first.
+
+Original raster now shares exactly the same coverage/opaque/straight-alpha texel
+operation for brush and fill. New Tool selector Brush / Tap fill Â· whole object.
+Pencil/mouse down must hit visible selected mesh; whole512Â² selected layer/channel
+previews at current opacity/value, release commits once via original finish/preflight/
+checkpoint/COW. Size/pressure do not limit fill. Drag>8px, pointercancel/tool/channel
+switch/body loss cancel; fingers still navigate, background contacts never fill.
+Colour/image/hidden-layer/scalar eligibility guards retained; image colour remains
+read-only, editable masks fill normally. No-op adds no history; quota/checkpoint
+failure restores original resource/preview/navigation. No schema/writer changes.
+
+4new integrations: exact shared raster coverage/alpha/no-op/cancel; actual UI layer
+fill and source preservation/UndoRedo/SaveOpen/native PNG; independent scalar+mask
+fill; mesh miss/finger/drag/cancel/settings/body-loss/checkpoint rollback. Nearby19PASS;
+full and publication below. Original brush expectations retained, no frozen/Multi/kernel
+changes. Reviewed shared raster/main+Lab reverse cache graph926 only.
+
+Remaining requested brushes are accepted roadmap, not delivered buttons: eraser
+(transparent overlays/masks; explicit Base reset semantics), alpha tips (bounded PNG
+coverage/rotation with original brush), blur and smudge with UV-island/seam-aware
+sampling so neighbouring atlas islands cannot contaminate unrelated surfaces.
+No ABR import or general Nomad brush-format compatibility promised. Prefer audited
+Klecks algorithms in existing raster/input/history over another painting engine.
+Next narrow build: reflection diagnostic evidence plus eraser/alpha implementation;
+keep blur/smudge scope bounded and test before exposing. No new material channel work.
+DEVICE926: choose Tool Tap Fill, tap mesh with chosen colour; UndoRedo. Fill an overlay
+at50% opacity; confirm underlying paint retained. Fill Roughness/Metalness0/255 and
+check Channel/export independence; switch Brush and confirm normal Pencil strokes.
+
+.926 final local Node24.19.0 regression: **2,640 PASS / 0 FAIL / 0 skipped**;
+new fill4PASS, nearby19PASS, release5PASS. Initial preparation contract caught shared
+Lab raster omitted from loader closure; complete main/Lab graph reviewed and updated
+before final run. No assertions relaxed; protected Multi1.0/frozen/export retained.
+Reflection925 remains user-reported unresolved, no lighting fix claim in926.
+Publication and hosted/live verification follow.
+
+## .926 publication verified â€” 20 October 2026 (Brisbane)
+
+Runtime `3b01bce1d66b7a06b2286565811f5e67962ab91f`, tested tree
+`e606147e30b8f86de7b009b25c31af536963edec`, is published. Connected Git Data
+created the identical tested local tree; fetched origin/main matched exactly.
+Local Node24 and hosted regression `39365018326` / job `118439759937` both pass
+2,640 tests, zero failures/skips; complete hosted logs verified. Pages
+`39365017500`, deploy job `118439889747`, completed all steps successfully.
+All19 fresh live files byte-match source: shell/version, main painter/core, shared
+raster and complete changed Lab session/loader graph, recovery, protected Multi1.0,
+retained scalar/codec/native export/paint export/material/reflection/UV owners.
+Initial in-flight reads served925; final checked graph matches926. No frozen,
+modelling, project or export algorithm change; original brush semantics retained.
+
+All four continuity files current; proof is docs-only. Build926 complete and ready
+for Tool â†’ Tap fill Â· whole object: tap colour fill/UndoRedo, overlay50% preservation,
+scalar0/255 independence and return to Brush. Alpha tips, eraser, blur and smudge are
+requested pending stages, not implemented. Reflection preview remains user-reported
+unresolved despite925, no new lighting repair claimed. Nomad export confirmed great
+and protected;924 toolbar PASS protected. Next:926 device feedback, narrow eraser/
+alpha additions and evidence-led preview diagnosis through original owners.
+
+## .927 â€” explicit scalar label rows and Eraser â€” 20 October 2026
+
+User926PASS protects whole-object Tap Fill/opacity/history/channel workflow. Screenshot
+identifies earlier metal white/black confusion as inline hint text joining readout:
+â€œ255Blackâ€¦â€ / â€œ0Blackâ€¦â€. No inverted bytes. Shared scalar controls now grid rows:
+label + flexible slider + fixed3ch readout, then separate block hints. Explicit
+0=non-metal(black)/255=metal(white); roughness0=smooth(black)/255=rough(white).
+Help cannot sit beside numeric output. Compact LEFT dock/scroll/footer retained.
+No scalar/data/export/light semantic change; reflection925 remains separate unresolved
+report, not implied PASS from926 or this clarification. Native export protected.
+
+Next requested narrow brush: original Tool selector gains Eraser. Same samplers,
+pressure/size/hardness/maximum per-contact coverage and existing commit/checkpoint/
+COW/pools. Transparent colour overlays reduce alpha only, retaining RGB/source/base;
+Base resets white. Roughness resets255, Metalness0, masks reveal (raw0 if inverted,
+255 otherwise). Original image colour stays retained/read-only; erase its mask.
+No scene/material opacity, destructive image baking or deletion of layer/resource.
+Colour controls disable for Eraser and restore on return; colour brush setting retained.
+Cancellation/settings/body-loss/failed checkpoint retain original pixels/history.
+Original Brush and accepted Tap Fill retain semantics; no new pointer/history owner.
+
+3new integration tests cover alpha coverage/RGB/no-op/cancel; actual UI overlay/Base
+isolation + UndoRedo/SaveOpen/exact composed native PNG; defaults/mask inversion/
+scalar independence and refusal rollback. Existing fill/roughness/metalness/mask23PASS;
+full/cache/publication below. Shared main/Lab raster reverse graph repinned927 only;
+protected Multi1.0/frozen/modelling/UV/project/native writer unchanged.
+DEVICE927: read Metalness0/255 hint below slider with no joined text; erase a painted
+overlay to reveal lower paint, UndoRedo; erase Base/scalars, switch Brush/Fill back.
+Alpha PNG tips next, UV-safe blur/smudge remain queued. Reflection diagnosis remains
+open and should use device/version/renderer evidence, no further lighting guesses.
+
+.927 final local Node24.19.0: **2,643 PASS / 0 FAIL / 0 skipped**;
+3new eraser integrations, nearby23PASS and release5PASS. No tests relaxed.
+Protected926 Fill/924 toolbar/native export/Multi1.0/frozen retained. Scalar mapping
+unchanged; layout/device confirmation and Eraser hands-on gate pending.
+Publication/hosted regression/live verification follows.
+
+## .927 publication verified â€” 20 October 2026 (Brisbane)
+
+Runtime `2fab3eb743d00acdfb93c053957ad1d9be8f6f68`, tested tree
+`c97a8423f236aec542b314541b9a9529847b0413`, is published. Connected Git Data
+created the identical tested local tree; fetched origin/main matched exactly.
+Local Node24 and hosted regression `39369984553` / job `118455433985` both pass
+2,643 tests, zero failures/skips; complete hosted logs verified. Pages
+`39369984116`, deploy job `118455588608`, completed all steps successfully.
+All19 fresh live files byte-match source: shell/version, painter/core/shared raster,
+complete changed Lab graph, recovery, protected Multi1.0, retained scalar/codec/native
+and paint export/material/reflection/UV owners. Initial in-flight reads served926;
+final checked graph matches927. No frozen/modelling/UV/project/writer changes.
+
+All four continuity files current; proof is docs-only. Build927 complete and ready
+for label separation/explicit0-255 meaning and Tool Eraser overlay reveal/UndoRedo,
+Base white/scalar defaults and return to Brush/accepted Tap Fill. Actual iPad text
+layout and Eraser feel remain device-pending; automated tests are not visual proof.
+User926 Fill and924 toolbar PASS protected; native export correct. Alpha PNG tips
+next; UV-safe blur/smudge pending. Reflection925 remains independently unresolved,
+not a slider inversion or an inferred PASS from the corrected help text.
+
+## .928 â€” Paint stays open across Undo/Redo â€” 20 October 2026
+
+User .927 PASS protected: scalar hint layout and Eraser, alongside .926 Fill and
+.924 toolbar. Requested history gesture fix takes priority over PNG alpha tips.
+Audit: original main doUndo/doRedo restores scene/body and painter closes on disposal;
+Paint footer also explicitly closed. Original history owner now brackets restoration
+with painter preparation/resume. Cancel transient stroke/image before capture, close
+old display, reopen on rebuilt active body; retain layer if present, channel/mask if
+valid, Lit/Channel preview and existing brush/action/slider controls. No duplicate
+history or gesture owner/checkpoint. Empty history and rapid repeated history retain
+Paint; Done/other session/object changes defeat stale reopen. Original two/three-finger
+gestures, toolbar and footer share this path. Five regressions execute original main
+Undo/Redo and touch-end functions with real scene snapshots, paint resources and UI.
+Reflection preview remains unresolved; native Nomad export remains correct. Alpha
+PNG tips next, UV-safe blur/smudge pending. Device .928 acceptance pending.
+
+.928 local Node24 full regression: **2,648 PASS / 0 FAIL / 0 skipped**;
+five new history regressions and reviewed release contract5PASS. Protected Multi1.0
+and frozen builds unchanged. Publication/hosted/live-byte verification follows.
+
+## .928 publication verified â€” 20 October 2026 (Brisbane)
+
+Runtime `6584f8d060dbbe8a52f901d814d655cece4209ba`, tested tree
+`e554ccf0c77018eb4b3fd4134ab80f50a8bddd90`, published through connected Git Data
+with the exact locally tested tree; fetched origin/main matched and working tree clean.
+Local Node24 and hosted Node22 regression run `39373206187`, job `118465435842`,
+both **2,648 PASS / 0 FAIL / 0 skipped**; full hosted log totals verified. Pages run
+`39373205537`, deploy `118465573202`, completed successfully. All17 checked fresh
+live files byte-match: shell/version, changed main/painter, recovery, unchanged paint
+core/raster/scalar/project/export/reflection/UV and protected Multi1.0. Frozen builds
+unchanged. All four continuity files current; this proof is documentation-only.
+
+Build928 complete and ready for two-finger Undo / three-finger Redo while Paint stays
+open, continued Pencil strokes, retained channel/preview/brush controls and original
+Paint footer history. Done still closes. User927 PASS protected; actual928 iPad
+acceptance pending. Reflection preview remains independently unresolved; native export
+correct. Next bounded PNG alpha tips; UV-safe blur/smudge pending.
+
+## .929 â€” PNG alpha brush tips; .928 user PASS â€” 20 October 2026
+
+User .928 PASS protects Paint staying open across two/three-finger and footer
+Undo/Redo, retained controls and continued Pencil strokes. Audit main5ee8bb54:
+original shared raster/input/history already own brush and Eraser; no custom tip
+importer/sampler. Add bounded PNG coverage through those SAME owners, reusing907
+image preflight/decode. Brush settings: Load alpha PNG / rotation / Round tip.
+PNGâ‰¤256Â²/256KiB, luminanceÃ—alpha coverage; white paints, black/transparent skips.
+Owned R8 tipâ‰¤64KiB, copied per contact; top-first/aspect-preserving rotated bilinear
+sampling in UV texels. Alpha replaces round hardness, original pressure/opacity cap/
+source-over/erase/cancel retained. Whole-object Fill ignores tip. No new pointer,
+history, paint-resource/project/native writer or modelling kernel. Tips/rotation are
+session preferences, retained through928 reopen but not saved in.boxlab. Marks persist.
+Late/invalid imports retain previous tip and committed work; original decode cleanup.
+Read docs/paint-alpha-929.md. Four focused tests cover limits/cleanup/coverage ownership,
+rotation/aspect/cancel/erase, real UI/history/project/native PNG and async refusal.
+Original shared raster reverse main/Lab cache graph929 reviewed; Multi1.0/frozen intact.
+Reflection preview remains unresolved, native export correct. Alpha device gate pending.
+Next device alpha feedback, then UV-safe blur/smudge; viewport/baked AO and Edge-based
+seam-authoring remain queued for existing-owner audits, not delivered features.
+Validation/publication evidence follows; no rendered or device performance claim.
+
+.929 final local Node24.19.0: **2,652 PASS / 0 FAIL / 0 skipped**.
+Four new alpha tests and original nearby18PASS; release/cache checks included.
+No assertions relaxed. Shared raster main/Lab reverse graph929 reviewed; Multi1.0
+and frozen builds unchanged. Publication/hosted/live verification follows.
+
+## .929 publication verified â€” 20 October 2026 (Brisbane)
+
+Runtime `c9f29fa240fa87a4a3310138058b1cc6f906e58a`, tested tree
+`cafdf77c8cdcf612f411659ea1ff953b5ade692f`, published via connected Git Data.
+All18 uploaded blobs and tree match locally tested source; fetched main identical.
+Local Node24 and hosted Node22 regression39409570949/job118583708420 both
+**2,652 PASS / 0 FAIL / 0 skipped**; full hosted logs verified. Pages39409570873,
+deploy118583935503 completed successfully. All16 fresh checked live files byte-match:
+shell/version, every changed runtime/Lab owner, recovery, protected Multi1.0,
+retained image importer/export/paint surface. Frozen builds unchanged.
+
+All four continuity files current; proof is documentation-only. Build929 complete
+and ready for Brush settings â†’ Load alpha PNGâ‰¤256Â²/256KiB, rotate/paint/overlay
+Eraser, UndoRedo and continued painting, Round tip, SaveOpen/export retained marks.
+User928PASS protected;929 visible/Pencil/picker/latency acceptance remains pending.
+Reflection preview independently unresolved; native exports correct. Next alpha
+feedback then UV-safe blur/smudge; AO and Edge seam audits queued, not implemented.
+
+## .930 â€” solid Object-mode display, no modelling cage â€” 20 October 2026
+
+User requests removing the distracting Object-mode X-ray, especially while painting.
+Audit current6ce62fe3/.929: main addCage uses depthTest:false neutral axis-line material
+for every selected Object edge, drawn over solid body/paint. Actual VIEW X-Ray is a
+separate explicit diagnostic mode; do not confuse it with this automatic cage.
+Original cage batch gets optional showEdges(defaulttrue); main passes false in Object,
+showVertices remains Vertex-only. Surface cage geometry/batches are not allocated; isolated loose edges remain
+visible with ordinary depth-tested edgeMaterial so wire-only objects do not vanish;
+original invisible indexed edge/vertex picking proxies/bridge registry remain intact.
+Mirror cage is also omitted in Object; active SubD no longer evaluates spare mirrored
+base solely for that omitted wire. Original evaluated surface and its geometry cache
+are unchanged. Vertex/Edge/Face restore their original cages and material/order/selection
+semantics. Clean/Soft, Multi/group tints, gizmos, history, brush/paint/material/export
+owners untouched. Explicit VIEW Wire/X-Ray modes retain deliberate user control.
+No frame-rate or broad memory claim; removed visual cage draws/allocation only.
+
+Two new native-owner tests cover Objectâ†”component transitions, absent visual batches,
+actual Three raycast proxy IDs/disposal, mirrored SubD base-call counts and exact solid
+geometry. Existing810/851 Object visual-cage expectation replaced by new user request;
+all component/proxy assertions retained. Existing850/809/812 render fixtures now supply their real selectionMode='face'
+dependency;809 Object loose-wire material expectation follows the new depth-tested
+policy, all component/geometry/metadata/enumeration assertions retained. No production
+fallback or weakened cache/timing checks.
+Focused cage/cache/timing/release29PASS and earlier paint-history/tint/cage24PASS.
+Legacy809 loose-wire normalization inspects a CLONE: original loose edges() can add
+its historical faces[-1] sentinel. Original source-preservation assertion retained.
+Only main/cage batch and shell/recovery cache930; Multi1.0/frozen unchanged. Alpha929
+manual gate not inferred PASS. Reflection preview independently unresolved; exports correct.
+Next DEVICE Object orbit/paint no through-cage; component cages return; Multi/gizmo and
+Paint UndoRedo stay intact. Then resume alpha feedback/UV-safe blur/smudge; AO/seams queued.
+Full validation/publication follows; no rendered/iPad proof inferred from Node.
+
+.930 final local Node24.19.0 regression: **2,654 PASS / 0 FAIL / 0 skipped**.
+Focused native cage/cache/timing/release29PASS; original surface/proxy/metadata,
+history/paint/alpha/image/native export assertions retained. Only superseded Object
+visual cage and depth-tested loose-wire expectations changed. Multi1.0/frozen intact.
+Publication/hosted/live verification follows; iPad display acceptance pending.
+
+## .930 publication verified â€” 20 October 2026 (Brisbane)
+
+Runtime `defbd5b79b89166aaef3a8e479ab09e6bce1df63`, tested tree
+`d4234bfa273e1640ff515b9937f016f0849efb24`, is published. Connected Git Data
+uploaded all13 exact local blobs/tree; fetched main has identical tested files.
+Local Node24 and hosted Node22 regression39411220064/job118589175903 both pass
+**2,654 tests / 0 failures / 0 skipped**; complete hosted logs verified. Pages
+39411219467/deploy118589389324 completed successfully. All11 checked fresh live
+files byte-match: shell/version, main/cage batch, recovery, protected Multi1.0 and
+unchanged painter/raster/render/material surface. Frozen builds unchanged.
+
+All four continuity files current; this proof changes documentation only. Build930
+complete and ready for Object-mode solid orbit/paint without automatic through-cage,
+Vertex/Edge/Face cage restoration, Object return and Paint UndoRedo/continued marks.
+Loose wire geometry remains depth-tested; original picking/bridge/cache owners intact.
+No measured FPS claim or rendered iPad acceptance inferred. User928PASS protected;
+929 alpha gate remains pending. Reflection preview remains independently unresolved;
+native exports correct. Resume alpha feedback then UV-safe blur/smudge; AO/seams queued.
+
+## .931 â€” Blur within original polygon faces; .930 user PASS â€” 20 October 2026
+
+User930PASS protects solid Object display/component cages and Paint/history. Audit
+maina9f2a10d: original UV inspector owns islands, exporter owns triangle emission;
+no neighbour brush exists. First Blur clips BOTH reads and writes to picked polygon
+face; never samples adjacent atlas faces. Original preview builder gains opt-in frozen
+triangleâ†’source-face metadata from its existing emission loop (group order retained).
+Default previews/export bytes unchanged. Painter requests map; new small filter-domain
+raster labels original geometry,512Â²,2M scanned budget. Sampled interior overlaps,
+out-of-tile/degenerate/unsupported UVs refuse atomically; ambiguous borders excluded.
+No new triangulation/signature/UV editor/input/history/resource/writer owner.
+
+Tool Blur Â· within face uses original raster, samplers, raycast and commit/rollback.
+Fixed five-tap centre4/cardinal1 smoothing of stroke-start pixels; face-only reads and
+writes, renormalized clipped weights. Maximum per-contact coverage/opacity retained;
+lift/repeat for stronger smoothing. Same size/pressure/hardness/alpha tips. Transparent
+layers use premultiplied RGBA filtering/interpolation to avoid hidden-colour halos;
+scalar/mask raw values stay independent. Colour picker ignored/disabled. Base/layers/
+masks/Roughness/Metalness work; retained image colour remains read-only. No across-face
+or seamless/world-radius claim, no Smudge yet. Original scene checkpoint/COW/pools,
+SaveOpen/NOM/GLB and Paint history928 remain; domain1MiB/session+1MiB/contact is transient.
+Read docs/paint-blur-931.md. Five new regressions + nearby21=26PASS; release5PASS;
+full/publication below. Complete changed main/export/Lab reverse loader graph931;
+Multi1.0/frozen and accepted930 main/cage bytes unchanged. Alpha929 device gate not
+inferred PASS. Reflection remains unresolved; native export protected. Next DEVICE
+hard-edged markâ†’Blur brush/lift/repeat, overlay isolation, UndoRedo/continue, then
+similarly bounded Smudge. AO and Edge-seam audits remain queued, not delivered.
+
+.931 final local Node24.19.0 regression: **2,659 PASS / 0 FAIL / 0 skipped**.
+New Blur5 + nearby21=26PASS, release5PASS; no existing assertions relaxed.
+Default export/preview geometry and accepted930 main/cage/protected Multi/frozen bytes
+unchanged. Publication/hosted/live verification follows; actual iPad Blur gate pending.
+
+## .931 publication verified â€” 20 October 2026 (Brisbane)
+
+Runtime `0226dc19bdb401b4851bb9d84ee95acb8785b957`, tested tree
+`ed0b12770fc595035fbfebd435d398ac77d59e97`, is published. Connected Git Data
+uploaded all17 exact local blobs/tree; fetched main matches tested source.
+Local Node24 and hosted Node22 regression39416319307/job118606105355 both pass
+**2,659 tests / 0 failures / 0 skipped**; complete hosted logs verified. Pages
+39416319079/deploy118606303731 completed successfully. All18 fresh checked live
+files byte-match: shell/version, every changed runtime/export/Lab owner, new filter
+domain, recovery, accepted930 main/cage, protected Multi1.0 and retained paint surface/
+export/image projector. Frozen builds unchanged. No assertions relaxed.
+
+All four continuity files current; this proof changes documentation only. Build931
+complete and ready for Tool Blur within face on a hard-edged painted mark, larger
+Size, lift/repeat for stronger smoothing; overlay/channel isolation and UndoRedo stay
+in Paint, return Brush and continue. SaveOpen/native export retains results. User930
+PASS protected; actual931 appearance/Pencil feel/latency and929 alpha gate pending.
+No rendered/iPad performance claim. Reflection preview independently unresolved;
+native exports correct. Next Blur feedback then protected Smudge; AO/seams queued.
+
+## .932 â€” Connected-face Blur sampling; .931 user PASS â€” 20 October 2026
+
+User PASS protects .931 Blur and prior .930 solid Object display. Audit main05a790e8:
+original UV inspector already owns polygon edges, exporter owns triangle emission;
+reuse both via optional edgeOwners and original vertex IDs. Default reports/geometry/
+exports unchanged. New small read-only seam plan unfolds original triangle neighbours
+across real manifold edges, mapping into detached/rotated/mirrored UV islands. Atlas
+proximity never connects faces. Internal diagonals use the same original emission.
+Fixed centre4/cardinal1 stroke-start blur now reads mapped connected-face texels.
+Writes remain clipped to picked face: stroke BOTH sides of edge; brush footprint does
+not wrap automatically. No world-radius/full seamless-footprint claim, no Smudge.
+Boundary/nonmanifold/ambiguous corner/long walks clip; invalid/stale ownership and
+existing overlapping/degenerate/out-of-tile/complex UV refusals stay atomic. Max8
+crossings/sample and2M walk steps; lazy session plan512Â² labels1MiB+links4MiB,
+temporary triangle map1MiB; owned contact copies5MiB plus original stroke buffers.
+Premultiplied colour alpha, raw masks/scalars, capped coverage, original alpha tips,
+input/raycast/history/COW/SaveOpen/NOM/GLB owners retained. UI says connected faces
+and explicitly asks strokes over both sides. No modelling/UV authoring kernel added.
+Five new tests cover 12 fold/rotation/mirror layouts, disconnected atlas decoy,
+nonmanifold/stale metadata, exact raster alpha/cancel and actual UIâ†’historyâ†’SaveOpenâ†’
+exact native PNG. Focused20PASS incl release5; full/publication below. Complete changed
+reverse loader graph repinned932; retained main/cage/Multi1.0/frozen bytes unchanged.
+Read docs/paint-seams-932.md. Device932 seam appearance/latency pending; alpha929 gate
+not inferred. Reflection preview independently unresolved; native exports protected.
+Next device feedback then bounded Smudge through original paint owner; AO and UV seam
+AUTHORING remain queued. Seam sampling is not seam authoring.
+
+.932 final local Node24.19.0 regression: **2,664 PASS / 0 FAIL / 0 skipped**.
+Focused20PASS; no existing assertions relaxed. Hosted/Pages/live verification follows.
+
+## .932 publication verified â€” 20 October 2026
+
+Runtime `5bac11821f49d7d47c6ed99cd90755c05fded102`, tested tree
+`8a6f25d6e380442b8c2c7c89893d8f94d153404d`, is published on main.
+Connected Git Data uploaded24 exact local blobs; fetched main matches tested tree.
+Local Node24 and hosted Node22 regression39418615870/job118613691692 both pass
+**2,664 tests / 0 failures / 0 skipped**; complete hosted logs verified.
+Pages39418615854/deploy118613868578 succeeded. All22 fresh checked live files
+byte-match: shell/version, complete changed runtime/export/UV/Lab loader graph,
+new seam helper, recovery, accepted main, protected Multi1.0 and retained surface.
+Frozen builds unchanged; no assertions relaxed. All four continuity files updated.
+
+Build932 complete and ready for testing: paint different colours across a cube edge,
+Blur strokes over BOTH sides, lift/repeat, UndoRedo stay in Paint, SaveOpen retains.
+This connects sample reads across real face edges/UV seams; footprint does not wrap.
+User931PASS protected; actual932 Pencil feel/appearance/first-use latency pending.
+Alpha929 device gate remains independent. Reflection preview unresolved; native exports
+correct. Next feedback then bounded Smudge through original owner; AO/seam authoring
+remain queued. This proof changes documentation only, not the verified runtime.
+
+## .933 â€” Surface image wrapping; user priority â€” 21 October 2026 (Brisbane)
+
+User asks image placement to wrap connected surfaces rather than clip at one face.
+Audit main36845450/live932: .912 On surface follows anchor/normal but feeds flat
+orthographic .911 projector with75Â° facing/visibility cuts; no wrapping image owner.
+Extend that original path; preserve separate Project from View. Extract existing932
+read-only triangle graph into paint-triangle-graph.js; original UV inspector polygon
+edges and exporter face/vertex metadata stay authoritative. Blur uses exact same graph,
+existing sample walk unchanged. No duplicate adjacency/triangulation/modelling kernel.
+
+On surface retains raycast triangle index with point/normal; Move updates all three.
+Surface orientation still Insert's original helper. New paint-image-wrap.js carries a
+local image chart over real manifold triangle neighbours, unfolding common edges with
+world lengths and opposite-side third vertex; midpoint/centroid distance queue chooses
+one route per triangle. Reconcile shared canonical vertex coordinates to avoid cracks
+at local cycle closures; seed triangle pinned. Curved/closed patches necessarily stretch;
+not a globally distortion-free spherical unwrap. Stops expanding outside image rectangle,
+20K triangles/200K queue-pop cap. Boundaries/nonmanifold/disconnected components clip;
+no coordinate welding or atlas adjacency. Original .911 UV raster/source alpha sampling,
+overlap/tile/2M scan budgets and stack/pool/history/export owners remain. Wrapped samples
+follow connected target surfaces round corners even when not front-facing/visible from
+anchor projector; picked anchor still obeys original visible-target/occlusion hit guard.
+Flat Project from View retains original75Â°/scene/self occlusion/30M ray-work rules.
+
+Existing contact tangent guide remains planar; lift updates exact wrapped mesh preview.
+Apply recomputes current candidate then commits ONE original checkpoint/COW. Cancel,
+close, body loss, layer/target change and refusal preserve committed resource/history.
+Source/raster retained together through original recipe/codec: no schema/budget increase.
+Interactive wrap chart/anchor is transient, as912: Edit imageâ†’On surface repicks anchor;
+old flat matrix alone cannot regenerate a wrapped chart. Saved pixels/native exports
+retain exact wrapping; never auto-rasterize retained source from that matrix on Open.
+
+Six new regressions: exact asymmetric pixels across flat/oblique/90Â° + mirrored UVs,
+disconnected/nonmanifold exclusions, original view rules/stale anchor/UV refusal,
+transformed frame/rotation/scale, actual UI drag onto another face/cancel/cycleâ†’Applyâ†’
+historyâ†’SaveOpenâ†’exact native PNG, sphere/denied checkpoint and shared-vertex continuity.
+Focused image+seam25PASS and release5PASS; full/publication follows. Complete changed
+reverse loader graph933, retained exporter/inspector/main/cage/Multi/frozen unchanged.
+No932 device PASS inferred. Device933 wrap appearance/stretch/first-use latency pending.
+Read docs/paint-image-wrap-933.md. Independent reflection preview unresolved.
+
+Pending user requests explicitly retained: stronger Blur amount/radius separate from
+opacity; image raster conversion/editable blur; Merge Down/Flatten with blend/mask
+appearance preserved; staged texture/image/alpha resolution and layer-count choices
+with memory budgets. Current512Â² painted maps,1024Â² sources,256Â² tips,base+3 overlays
+unchanged. Smudge/AO/UV edge-seam authoring queued; this is image wrapping only.
+
+.933 final local Node24.19.0 regression: **2,670 PASS / 0 FAIL / 0 skipped**.
+Six new checks + nearby19 =25PASS; release5PASS. No existing assertions relaxed.
+Publication/hosted/live verification follows; actual iPad933 gate pending.
+
+## .933 publication verified â€” 21 October 2026 (Brisbane)
+
+Runtime `284f292306c06a857ffc047bd5dd497370312337`, tested tree
+`4209dda642676652b76feb89c3148ec55da2f9b2`, is published on main.
+Connected Git Data uploaded19 exact local blobs; fetched main matches tested tree.
+Local Node24 and hosted Node22 regression39510312183/job118929399272 both pass
+**2,670 tests / 0 failures / 0 skipped**; complete hosted logs verified.
+Pages39510311401/deploy118929589714 succeeded. All24 fresh checked live files
+byte-match: shell/version, complete changed image/Blur reverse loader graph,
+new shared graph/wrap chart, recovery, main/cage, protected Multi1.0 and retained
+exporter/UV inspector/raster/image-source/recipe owners. Frozen builds untouched;
+no assertions relaxed. All four continuity files updated.
+
+Build933 complete and ready: +Imageâ†’On surface, place near cube edge, lift and orbit
+to inspect continuation. Drag onto next face; rotate/scale, lift; try curved patch.
+Applyâ†’UndoRedo, SaveOpen retains exact result. Contact guide stays planar; wrapped
+mesh preview updates on lift. Interactive chart remains transient; Edit imageâ†’
+On surface repicks, as912. Curvature/large closed patches can stretch/reach boundary.
+No device933 appearance/latency PASS inferred;932 Blur and929 alpha gates pending.
+Next stronger Blur, image conversion/blur, Merge/Flatten, bounded resolution/layer
+options; Smudge/AO/seam authoring remain queued. Reflection preview independent.
+This proof changes documentation only; verified runtime remains byte-identical.
+
+## .934 â€” Blur Amount; .933 user PASS â€” 21 October 2026 (Brisbane)
+
+User933PASS protects image wrapping across cube edges/UV seams, Move/Rotate/Scale,
+Apply/history/SaveOpen. Audit main6688de17/live933: original paint-core has fixed
+centre4/cardinal1 one-pass blur, no stronger filter/slider owner. Extend original
+raster only; no new brush, adjacency, input, history, resource or writer implementation.
+
+Blur shows Amount1â€“32, default8. Amount repeats existing smoothing kernel over the
+stroke-start snapshot; Opacity mixes filtered target with original; Size controls brush
+footprint. Core filter.amount defaults1 (legacy calls/settings remain valid). Main
+UI passes optional blurAmount; shared brush defaults/Lab saved settings/native schemas
+unchanged. Existing original neighbour table handles connected faces/UV seams on every
+pass; no atlas-neighbour reads or new topology plan. Writes still clip to picked face:
+stroke both sides. One-pass exact accepted .931/.932 outputs retained; strong blur
+uses premultiplied RGBA through all passes (raw masks/scalars remain independent).
+
+Compute target once/contact, using two bounded Float64 RGBA buffers to avoid rounding
+between passes; one target retained for contact. At512Â² each buffer8MiB,16MiB filtering
+buffers total; target8MiB retained plus existing before/coverage/domain/pool resources.
+Uniform sources shortcut; opacity0 skips filtering. Max32*512Â² texel visits, no
+per-dab repeated filtering or unbounded feedback. Coverage remains max/contact;
+lift/repeat for more. Finish/cancel/dispose drops target; validation precedes contact
+state publication. Amount input cancels in-flight work and updates existing readout;
+original Paint history reopen retains tool/amount. Current selected layer/channel only.
+Image colour stays source-preserved/read-only pending explicit image conversion.
+
+Five new regressions: analytical one/two/32-pass impulse and independent opacity;
+alpha/raw scalar/domain/invalid/no-op/cancel; strong folded-seam sampling excludes
+atlas decoy and far-face writes; actual UI low/high softness, amount-change rollback,
+Paint UndoRedo and SaveOpen/exact native PNG; scalar/mask isolation/checkpoint refusal.
+Focused26PASS incl .933 wrapping6 and Paint-history5; release5PASS; full below.
+No old assertions relaxed. Complete changed raster/Lab/main reverse loader graph934;
+accepted933 wrap/graph/export/UV inspector, main/cage/Multi/frozen bytes unchanged.
+Device934 strength/first-contact latency pending; Node timings are not iPad evidence.
+Read docs/paint-blur-amount-934.md. Reflection preview independently unresolved.
+Next image-to-paint conversion/blur, then Merge Down/Flatten, staged resolutions/layer
+budgets; Smudge/AO/edge-seam authoring queued. Current512Â²/1024Â²/256Â²/base+3 unchanged.
+
+.934 final local Node24.19.0 regression: **2,675 PASS / 0 FAIL / 0 skipped**.
+Focused26PASS + release5PASS; no existing assertions relaxed. Hosted/Pages/live
+verification follows; actual iPad934 strength/latency gate pending.
+
+## .934 publication closed; user PASS â€” 21 October 2026 (Brisbane)
+
+Runtimebc84450ce760a54424938e0f2548d05eca0aaf1e, tested treee59b2bac3b9c531a815403f6bab1816d9e3a04ae,
+published. Hosted Node22 regression39512294347/job118936016708 logs confirm2675PASS/
+0FAIL/0skip, matching recorded local Node24 run. Pages39512293048/deploy118936225379
+succeeded. Live934 manifest and all27 checked runtime/protected files byte-match the
+published934 source (git-show snapshot used while935 working tree was dirty). User
+PASS934 protects dedicated Blur Amount1â€“32/default8, independent Opacity/Size, retained
+Paint history and earlier933 image wrapping. Prior interrupted publication proof is now
+closed; no new934 runtime changes. Alpha929 acceptance remains independently pending.
+
+## .935 â€” Image to paint conversion; .934 PASS â€” 21 October 2026 (Brisbane)
+
+Audit mainbc84450c/live934: source-preserved image cache and explicit paired replacement
+exist; no raster conversion. Extend original paint-layer-stack with explicit
+rasterizeImagePaintLayer: validated owned snapshot, same stack/version/order/ID/name/
+visibility/opacity/blend/mask/pixels; ONLY selected image recipe becomes null. Existing
+compositor verifies identical appearance, including every supported blend and inverted
+mask. No implicit compositing into base, extra layer, resampling, new writer/schema,
+brush, history, modelling or UV owner. Existing three-overlay/512Â² limits unchanged.
+
+Image-only Convert to paint button uses original layerAction/scene checkpoint/preflight/
+COW owner. Conversion selects Colour even when image mask was selected; Brush, Eraser,
+Fill and Blur then use original raster and accepted934 Amount. Other image layers keep
+source editing. Same pixels include933 wrapped placement. Edit image button disappears
+by original state when no recipe; name/slot retained. Undo restores retained source and
+placement editing, Redo restores raster conversion. After Save/Open converted layer is
+ordinary editable pixels; source recipe isn't serialized for that layer. Other objects
+sharing old resource and original saved image sources remain unchanged. Source release
+reduces committed resource bytes; Undo may still retain it in bounded scene history.
+
+Block conversion while staged image placement exists, keeping candidate/committed work
+intact; Apply/Cancel first. Missing/nonimage/scalar/stale target/checkpoint/pool errors
+leave committed resources/history untouched. Read-only image message keeps accepted
+'Image colour is retained' prefix and points to conversion. UI return/result reused for
+accurate success status, no separate input/listener/history system. Current Paint stays.
+
+Five new tests: all-blend/mask exact appearance and owned buffers/byte accounting;
+actual wrapped image UIâ†’convertâ†’strong Blurâ†’Paint UndoRedoâ†’SaveOpenâ†’exact native PNG;
+maskâ†’Colour and Brush/Eraser/full-stack/other-image/scalar behavior; staged/missing/stale/
+checkpoint/pool refusal; staged UI edit/cancel guard. Nearby908/933/934 and release5
+remain active; full/publication below. Complete changed stack/resource/project/export/
+Lab/main reverse loader graph935; functional change confined to original3 owners.
+Accepted raster934, wrap933/UV/mesh kernels/main/cage/Multi/frozen bytes unchanged.
+Read docs/paint-image-rasterize-935.md. Device935 conversion/blur/Undo feel pending.
+Next Merge Down/Flatten through existing compositor to free slots, then staged texture/
+source/alpha resolution and layer budgets. Smudge/AO/UV edge-seam authoring queued;
+reflection preview independently unresolved. Current512Â²/1024Â²/256Â²/base+3 retained.
+
+.935 final local Node24.19.0 regression: **2,680 PASS / 0 FAIL / 0 skipped**.
+Focused29PASS (new5, image908 eight, wrap933 six, Amount934 five, release5); no
+existing assertions relaxed. Hosted/Pages/live publication verification follows.
+
+## Permanent completion-instruction audit â€” 21 October 2026
+
+User repeated PASS /nextbuild while935 publication was pending and asked to audit
+manual-test instructions. AI_WORKFLOW already explicitly requires readiness/build
+number and3â€“6 quick device checks; AI_HANDOFF also contained the19 October reminder
+inside an older entry. Promoted the same rule to the TOP of AI_HANDOFF as a permanent
+section. It applies every build, including an explicit no-new-test statement when
+appropriate; never end with only progress. No runtime change in this audit. Current
+next build remains935 (published main was934 when PASS arrived); finish935 and its
+hands-on image conversion/Blur/Undo/SaveOpen list before declaring it ready.
+
+## .935 publication verified â€” 21 October 2026 (Brisbane)
+
+Runtime `44c4eccf036fd7fa1d61bbee4802a506166c49b3`, published tree
+`f3749803243107a097ecb798c56edb0ec73a1903`, matches local main exactly.
+Original local tested treeac566305 had identical runtime; only four continuity files
+changed to promote the permanent completion rule before publication. Git Data tree
+verified with all28 blobs. Local Node24 and hosted Node22 regression39586601556/
+job119176937360 both pass **2,680 tests / 0 failures / 0 skipped**; full hosted logs
+verified. Pages39586601079/deploy119177154130 succeeded. All37 fresh checked live
+files byte-match: shell/version, complete changed resource/project/export/Lab/paint
+loader graph and retained raster934, wrap933, UV inspector, main/cage/Multi1.0/recovery/
+image-source owners. Frozen builds untouched; no assertions relaxed.
+
+Handoff audit complete: permanent readiness/build/manual-test rule was already in
+AI_WORKFLOW and an older AI_HANDOFF entry; now prominently at TOP of AI_HANDOFF.
+Every finished build must give its readiness, build number and short device tests,
+or explicitly say no new test is needed. Never end with progress alone.
+All four continuity files current. This proof changes documentation only.
+
+Build935 complete and ready: applied image layerâ†’Convert to paint, appearance kept;
+Blur Amount/Brush/Eraser edits pixels; Undo edits and conversion restores Edit image;
+Redo then SaveOpen retains editable paint. Source recipe belongs to old Undo resource,
+not the converted saved layer; masks/blends/other image layers remain independent.
+User934PASS protected; actual935 appearance/feel gate pending. Next Merge Down/Flatten
+to free slots, then staged resolution/layer budgets; Smudge/AO/seam authoring queued.
+Reflection preview remains independent; alpha929 device gate not inferred.
+
+## .936 â€” Optional 1024 colour textures; .935 PASS â€” 21 October 2026 (Brisbane)
+
+User .935 PASS is protected. User priority moves resolution ahead of Merge/Flatten.
+Audit: colour resource already permits1024, but painter/stack/projection/display/export
+and Blur domain were512. Extend those SAME owners: Paint â†’ Texture resolution â†’
+Increase to1024Ã—1024, one original checkpoint, explicit per-object opt-in. Exact2Ã—
+nearest texel replication preserves old base/overlays/masks/blends/image raster and
+source; fresh paint/new projections use1,048,576 texels. Wrapped source is NOT silently
+reprojected from an insufficient flat recipe. Original Undo restores512; redo/reopen
+keeps1024. Sources1024Â²/2MiB and tips256Â² unchanged; scalars remain independently512.
+Original composite/scene codec/immutable sharing/native+GLB writers retained.
+
+Explicit layered1024v2/v3 dimensions select32/64MiB raster or48/96MiB image pool
+profiles (unique/expanded); original opaquev1 and5128/16 or24/48 unchanged. Enlargement
+uses existingv2 even with no overlays, no new schema. Existing content dedup/pooledv5,
+strict refs/canonical bytes/predecode/atomic errors and32MiB file/24MiB native cap
+retained. Unsupported dimensions/checkpoint/stale/budget/staged-placement refuse
+without changed resources/history. Larger full image scenes can still hit file limits.
+
+Original raster/filter size ceiling1024 only; accepted32-pass Blur math unchanged.
+At1024 Blur has two32MiB Float64 buffers (64MiB filtering peak;32MiB target retained)
+plus ownership/stroke/resource/GPU copies; no device RAM/FPS/latency claim. Original
+2M UV scan/2M seam-walk/30M projection ray-work guards retained, so complex high-res
+layouts can refuse atomically. Brush Size remains texel-based. Shared Lab remains512.
+All changed reverse-loader parents repinned936; main930/cage/Multi1.0/frozen unchanged.
+Read docs/paint-resolution-936.md for test scope and memory/transport distinctions.
+Validation/publication follow; .936 actual iPad feel remains pending.
+
+.936 final local Node24.19.0 regression: **2,687 PASS / 0 FAIL / 0 skipped**.
+Seven new resolution integrations plus every original test pass unchanged. Reviewed
+release/cache contract5PASS, original902 size513 refusal retained. Initial exploratory
+run admitted intermediate sizes; original guard now only adds exact1024Â² above512.
+GLB fixture follows actual primitive material ID; no production writer workaround.
+All four continuity files current. Publication/hosted/live verification follows;
+actual .936 iPad sharpness, brush/Blur latency and memory acceptance remain pending.
+
+## .936 publication verified â€” 21 October 2026 (Brisbane)
+
+Runtime `dd313a08a0163ea16ca86034b607553bff06e635`, tested tree
+`80165089f0ecde310eede444f7ebd972ffcf90d0`, is published on main. Connected Git
+Data uploaded31 exact blobs and created the identical tested tree; fetched main
+matched and local branch was aligned without file changes. Local Node24 and hosted
+Node22 regression39593356534/job119199545040 both pass **2,687 tests / 0 failures /
+0 skipped**; complete hosted logs verified. Pages39593355281/deploy119199756737
+succeeded. All31 checked runtime/Lab/shell/recovery/protected files byte-match.
+Initial fetch began during rollout and returned six .935 ancestors; fresh postdeploy
+rechecks closed all six. No frozen/main/cage/Multi edits. Eleven functional owners;
+eleven reverse-graph parent files contain cache-reference changes only.
+
+All four continuity files current. Proof is documentation-only, same runtime bytes.
+User .935 PASS protects conversion/Blur/edit/history/persistence; .936 device detail/
+latency/memory gate remains pending. Ready: Paint â†’ Texture resolution â†’ Increase
+to1024Ã—1024; fresh strokes/new image placement, Undo512/Redo1024, SaveOpen and NOMAD.
+Existing pixels enlarge exactly; re-place retained sources for fresh image detail.
+Independent512 scalars/source1024/alpha256/base+three limits retained. Next resolution
+feedback then Merge Down/Flatten; larger sources/maps/layers remain staged.
+
+## .937 â€” Actual1024 fresh Paint default; .936 pixelation feedback â€” 22 October 2026
+
+User: images still pixelated, then clarified fresh cube paint after refresh too.
+No .936 PASS inferred. Audit f1f13afc: fresh production painter still defaulted512;
+optional .936 Increase sat in collapsed details. Refresh does not select that control.
+Correct production makeController to explicitly request newColourSize1024 from SAME
+painter. Only no-colour-resource objects use default. Their temporary1024 base/stack
+remains uncommitted until first real paint/image edit; no blank resource or extra
+history on Open/Close. First edit uses accepted layeredv2/v3 and high-res pool profile.
+Existing512/1024 saved resources override default and retain exact bytes/history.
+Original reusable API512/Lab defaults remain; all production UI paths request1024.
+
+Move original resolution nodes into visible row near Channel/Tool, explicit Colour
+texture label; Increase exposed for512, hidden at1024, scalar channel guard retained.
+Open status reports actual size. No new listeners/history/kernel or automatic raster
+upscale/reprojection, source limits/UV/render/native-export/resource-budget/schema change. Original
+nearest image sample/linear texture display unchanged; no claim all zoomed pixelation
+is solved or that user was definitely painting512. 1024 is whole atlas, shared by faces.
+Two painter owners + existing File owner and parent shell/recovery pins937 only; main/Multi/frozen intact.
+
+Three new actual UI tests verify fresh1024 before paint, no Open history/payload,
+first-edit resource/UndoRedo/new-controller reopening; existing512 visible opt-in with
+one checkpoint; first image projectionâ†’SaveOpenâ†’exact native1024 PNG and512 scalar
+independence. Original .936 enlargement test now explicitly creates a legacy512 map.
+Existing alpha test samples actual paint.width; scalar UI tests compare every displayed
+texel to the exact512 source at current display size. Their old fixed512 display indices
+were incompatible with the newly requested production default; no raw-data assertions
+removed or weakened. Read docs/paint-default-resolution-937.md. Validation follows.
+
+DEVICE: new cube â†’ Paint; visible Colour texture1024Ã—1024 BEFORE first mark. Fresh
+fine strokes/new image; orbit/zoom and judge detail/latency. UndoRedo keeps Paint;
+SaveOpen retains1024; existing512 project offers Increase and remains512 until tapped.
+Actual iPad sharpness gate remains pending. Next device evidence before higher-map/
+source/UV-density work; Merge/Flatten and other queued requests preserved.
+
+.937 File-size follow-through: actual fresh1024 three-layer duplicate exceeded the
+old32MiB JSON file cap despite valid resource quotas. Original object-management
+Save/Open now permits96MiB ONLY for validated layeredv2/v3 colour1024Â² projects;
+legacy/ordinary projects retain32MiB. Open rejects>96MiB before reading; files32â€“96
+are parsed/staged, decoded with original strict resource/geometry guards, then must
+qualify BEFORE confirmation or scene/history replacement. Save qualifies only after
+original exact roundtrip validation. Original quota/predecode/canonical/ref rules,
+native24MiB cap, confirmation and failed-Open rollback remain. Raw JSON parsing is
+now bounded96MiB (not a total browser-memory guarantee). Three-layer512 duplicate
+regressions explicitly seed a legacy512 base to retain their8/16MiB assertions. A new
+actual1024 three-layer duplicate test verifies real Save/Open>32MiB, exact pixels,
+96MiB pre-read refusal, legacy32MiB rejection and unchanged scene/history on errors.
+No blanket file-limit increase for ordinary projects or invented schema fields.
+
+.937 final local validation: complete2,691-check run passed2,690; the new high-res
+File test had already saved/reopened exact pixels, then a test-only cross-realm
+empty-array comparator failed. Replaced that comparator with original history length/
+identity checks, retaining every assertion. Corrected focused high-res test now1PASS
+(69s), including actual>32MiB Save/Open,96MiB pre-read bound,32MiB legacy eligibility
+and unchanged scene/history on failures. No runtime failure remains from that run.
+New default+legacy resolution10PASS, nearby scalar/alpha16PASS; final release/cache
+contract5PASS after completing drawer-ui parent pin. No protected/frozen changes.
+Hosted full-suite rerun and publication/live evidence follow; device sharpness pending.
+
+## .937 publication verified â€” 22 October 2026 (Brisbane)
+
+Runtime `1bbb4d6d2620d6ff801259c02fe61c6df90fc9d5`, tree
+`3bbfe418d10a633e66f4580091f5f4f94f958edd`, is published. Connected Git Data
+uploaded18 exact local blobs/tree; fetched main matches local tested tree. Hosted
+Node22 regression39694120390/job119547225819 passes **2,691 tests / 0 failures /
+0 skipped**; complete job logs verify totals, including corrected high-res File test.
+Local complete run covered2,690 passing checks; corrected File case separately passed,
+and the hosted rerun closes the full final-tree proof. Pages39694119853 succeeded.
+All19 checked live shell/runtime/parent/recovery and retained paint/source/project/
+native-export/Multi files byte-match. Main/Multi/frozen bytes unchanged.
+
+This proof changes documentation only. User .935 PASS protected; .936 pixelation
+report remains a device issue awaiting .937 confirmation, not an inferred PASS.
+Ready for new cube â†’ Paint showing Colour texture1024Ã—1024 BEFORE first mark/image;
+compare fresh detail, then UndoRedo/SaveOpen. Existing512 saved textures stay512 until
+visible Increase. Higher-res project Save/Open96MiB (ordinary32MiB), scalar512 and
+source1024/tip256/base+three limits retained. No2K/4K or all-zoom pixel-free claim.
+Next confirmed1024 device feedback; inspect source/UV density if still coarse, then
+stage larger maps/sources/memory work. Merge/Flatten/Smudge/AO/seams remain queued.
+
+## Current direction â€” .938, 22 October 2026
+
+.937 accepted Perfect PASS: protect fresh1024/default/readout/detail and saved512
+optional Increase. .938 implements queued Merge to Base/Flatten colour through
+original compositor/history owners, retaining resolution/budgets/three overlays.
+Merge includes selected and all below; hidden merged layers removed; Undo restores.
+Local2697PASS; device .938 merge/flatten/history/SaveOpen gate pending. Follow that
+feedback before next narrow audited Smudge/AO/seam authoring step. Alpha929 and
+reflection preview gates remain independent; no 2K/4K or larger source promise.
+
+## .938 publication verified â€” 22 October 2026
+
+Runtime f441e92b0950f0e7b2ab1b46a8b67d9940a12396, tree
+239a55d76de49ddf840fa19abcdbfbb351b262d8, matches tested local tree.
+Hosted regression39699769504/job119565892975 succeeded; full job logs confirm
+2697PASS/0FAIL/0skip, matching complete local run. Pages39699769015 build119565895457/
+deploy119566078569 succeeded. All25 checked live shell/version, changed runtime/Lab,
+recovery and retained core/main/Multi files byte-match tested source. Reviewed pins938;
+protected main/cage/Multi/frozen unchanged. This proof updates documentation only.
+User .937 PASS protected; .938 device merge/flatten/UndoRedo/SaveOpen gate pending.
+
+## Current direction â€” .939, 22 October 2026
+
+User .938 Awesome PASS protects Merge/Flatten/free slots/history/SaveOpen. Explicit
+new priority delivered: UV-ready initial/reset cube and optionalUV Add for existing
+supported Cube/Plane/Cylinder/Cone/Sphere projection owners. Checkbox defaults ON;
+plain creation remains available. Torus/Text no automatic unwrap; special procedural
+launchers and saved objects unchanged. No geometry/projector duplication or larger
+paint budgets. Device .939 startup/reset/Add/UndoRedo/SaveOpen gate next. Follow
+feedback before queued Smudge/AO/edge-seam authoring. Torus/general unwrap candidate
+future bounded work; native topology/modifier/linked restrictions remain. Reflection
+and929 alpha gates independent. Publication/automated results follow.
+
+.939 final local Node24 full regression: **2,703 PASS / 0 FAIL / 0 skipped**.
+New creation6PASS, original nearby Add/Box/Sphere19PASS, reviewed release5PASS.
+No assertions removed or relaxed. Complete reviewed main/Lab reverse loader graph939;
+protected main930/cage/Multi1.0/frozen untouched. Hosted/Pages/live proof follows;
+actual iPad UV-ready creation/paint/persistence acceptance remains pending.
+
+## .939 publication verified â€” 22 October 2026 (Brisbane)
+
+Runtime e076ba40c61f1c5ad202112b60e67fd75a6a7ccd, tree
+52aaf4c3504f6c6e8ba2c44d98fdd8f6bf497bdc, is published on main.
+Connected Git Data uploaded20 exact blobs and matched tested tree; fetched main
+matched local source. Local Node24 and hosted Node22 regression39722181487/
+job119637927281 both pass **2703 tests / 0 failures / 0 skipped**; complete job
+logs verify totals. Pages39722181024 build119637930190/deploy119638067800 succeeded.
+All20 postdeployment checked shell/version, every changed runtime/Lab owner, recovery,
+retained main/cage/Multi1.0/primitive factory/paint owners and frozenBeta7 marker
+byte-match tested source. Main/cage/Multi1.0/frozen beta bytes unchanged. No assertion
+relaxed. This proof changes docs only; same runtime bytes. User .938 PASS protected;
+.939 actual iPad startup/reset/Add/UV checkbox/paint/history/SaveOpen gate pending.
+
+## Current direction â€” .940, 22 October 2026
+
+User .939 PASS protects UV-ready startup/reset, Add checkbox/plain path, paint/history/
+persistence. .940 closes remaining supported primitive Torus gap through original
+native UV owner: regular round worldY angular grid, two seams/one rectangle, Add
+UV checkbox defaultON, explicit Torus UVs (Y) for older plain tori. Text/procedural
+objects and existing projects not auto-unwrapped. No geometry or parallel kernel.
+Device .940 Add/Paint/UV/UndoRedo/SaveOpen next; follow feedback then bounded Smudge/
+AO/edge-seam authoring audits. General/Text unwrap future, alpha929 and reflection
+gates independent. Existing resolution/budgets/native restrictions retained.
+
+.940 final local Node24 full regression: **2,709 PASS / 0 FAIL / 0 skipped**.
+New Torus6 and expanded939 creation6 =12 focusedPASS; reviewed release5PASS.
+No original behaviour assertions relaxed; superseded Torus-unavailable checks now
+require mapped/optional plain Torus and exact project/NOM/GLB output. Protected
+main/cage/Multi1.0/frozen retained. Hosted/Pages/live proof follows; device940 pending.
+
+## .940 publication verified â€” 22 October 2026 (Brisbane)
+
+Runtime e3118c0fc6a27c61f4f199e35ce77eccd89c19c2, tree
+dbd5f70836152bafdf7a8b32cfc8e1504db2bdb7, published on main. Connected Git Data
+uploaded14 exact local blobs and matched tested tree; fetched main identical.
+Local Node24 and hosted Node22 regression39725820759/job119649340149 both pass
+**2709 tests / 0 failures / 0 skipped**; complete hosted logs verify totals.
+Pages39725820263 build119649342511/deploy119649486563 succeeded. All20 checked
+postdeployment shell/version, changed UV/Add/MeshHealth/Multi parent, recovery and
+retained main/cage/Multi1.0/factory/signature/import/export/paint/raster/frozenBeta7
+marker files byte-match tested source. Reviewed graph940; main/cage/Multi1.0/frozen
+bytes unchanged. No old behaviour assertions relaxed. This proof changes docs only;
+same runtime bytes. User .939 PASS protected; .940 Torus device gate pending.
+
+## .940 user PASS â€” 22 October 2026 (Brisbane)
+
+User PASS protects Torus automatic UVs/optional plain Add, Torus UVs (Y), Paint,
+UV Editor, UndoRedo and SaveOpen. .940 runtime/CI/Pages/live proof above is closed.
+Next authorized /nextbuild audits bounded Smudge through original paint owners.
+
+## Current direction â€” .941, 22 October 2026
+
+User940PASS protected. First bounded Smudge uses original paint owners, selected
+layer/channel only, tip-local premultiplied pickup, existing Size/Opacity/alpha and
+history/persistence. Face-confined reads/writes; face changes/misses restart pickup.
+No cross-face carry claim, original connected Blur unchanged.8M pickup-visit contact
+cap cancels atomically; original resource/File/native limits retained. Device941
+Smudge feel next, then refine from evidence before cross-face/AO/Edge seam work.
+Alpha929/reflection-preview gates remain independent. See docs/paint-smudge-941.md.
+
+.941 final local Node24.19.0 regression: **2,715 PASS / 0 FAIL / 0 skipped**.
+All six new Smudge integrations pass on final source, plus every existing assertion.
+Nearby Blur/seam15PASS and reviewed release5PASS also passed. No original assertions
+relaxed. Complete main/Lab reverse-loader closure941; protected main/cage/Multi1.0/
+frozen unchanged. Publication/hosted/live verification follows; device941 pending.
+
+## .941 publication verified â€” 22 October 2026 (Brisbane)
+
+Runtime a39c2db8a8aaa8e07fcd59025211b130a53e0e27, tested tree
+72e49c4433676a761c2ac5df662df18a1a7da87f, is published on main. Connected Git
+Data uploaded15 exact blobs; created tree and fetched main match local tested tree.
+Local Node24 and hosted Node22 regression39756577806/job119749968964 both pass
+**2715 tests / 0 failures / 0 skipped**; complete hosted log totals verified.
+Pages39756577517 build119749975949/deploy119750207283 succeeded. All20 checked
+postdeployment shell/version, every changed main/Lab runtime owner, recovery and
+retained main/Multi1.0/UV/filter/seam/graph/project/export/primitive/frozenBeta7 marker
+files byte-match tested source. No original assertions relaxed; protected/frozen
+bytes unchanged. This proof changes four continuity files only, same runtime bytes.
+
+Build941 is complete and ready for device testing: hard colour patch on cube â†’
+Tool Smudge within face, drag outward, compare Opacity, tap makes no mark; try an
+overlay, UndoRedo stays in Paint, SaveOpen retains result. Face edges/misses restart
+pickup. Actual iPad feel/latency remains pending. User940PASS protected; independent
+alpha929/reflection gates unchanged. Next device feedback before cross-face Smudge,
+AO or Edge-seam authoring; no automatic next runtime build before that gate.
+
+## Current direction â€” .942, 22 October 2026
+
+User941PASS protected. Original manifold seam graph now permits Smudge mean colour
+pickup across connected picked faces without atlas contamination. Same-face spatial
+pickup941 unchanged; detailed texture patch orientation is not transported at seam.
+Existing Size/Opacity/alpha/raw channels/history/persistence retained. Misses/unknown/
+nonmanifold/vertex-only restart; strict captured pairs and existing work caps. Device
+942 seam/Opacity/overlay/history/SaveOpen feedback next, then narrow refinements or
+AO/Edge seam owner audits. Alpha929/reflection gates independent; no new budgets.
+See docs/paint-smudge-seams-942.md. Full local2802PASS/0FAIL/0skip (97.20s); publication evidence follows.
+
+.942 final local Node24.19.0 full regression: **2,720 PASS / 0 FAIL / 0 skipped**.
+Five new connected-Smudge checks, original941+seam11 and reviewed release5 pass.
+No original assertions relaxed. Reviewed changed main/Lab reverse graph942; protected
+main/cage/Multi1.0/triangle graph/frozen unchanged. Hosted/Pages/live proof follows.
+User repeated PASS /nextbuild while942 was still local/in regression:941 acceptance
+remains protected; no942 device PASS inferred before publication/manual test list.
+
+## .942 publication verified â€” 22 October 2026 (Brisbane)
+
+Runtime b49bb81d67836a1c2cc569d9755cdd54abb7b5f9, tested tree
+5fbb934dae7594d22bc4a64438b0d5bc003097fd, is published on main. Connected Git
+Data uploaded17 exact blobs; created tree and fetched main match locally tested tree.
+Local Node24 and hosted Node22 regression39762188060/job119768813511 both pass
+**2720 tests / 0 failures / 0 skipped**; complete hosted log totals verified.
+Pages39762187055 build119768816536/deploy119769033835 succeeded. All20 checked
+postdeployment shell/version, changed main/Lab/filter/seam runtime graph, recovery,
+retained main/Multi1.0/triangle graph/UV/project/export/primitive and frozenBeta7
+marker files byte-match tested source. Original assertions retained; protected/frozen
+bytes unchanged. This publication proof changes four continuity files only.
+
+Build942 complete and ready: cube two faces visible, paint patch up to shared edge,
+Smudge across it, compare Opacity and painted overlay, UndoRedo retains Paint, SaveOpen
+retains result. Seam transition carries averaged colour, not detailed patch orientation.
+User941PASS protected. Repeated PASS/nextbuild arrived before942 publication: it is
+not942 device acceptance. Actual942 iPad seam feel gate remains next. Then refine from
+feedback before AO/Edge seam authoring; alpha929/reflection gates stay independent.
+
+## .942 user PASS â€” 22 October 2026 (Brisbane)
+
+A further PASS/nextbuild arrived AFTER942 deployment,20 live-file matches and hosted
+2720PASS verification. Accept this latest PASS for LIVE942 connected-face mean carry,
+Opacity/overlay/Paint UndoRedo/SaveOpen; earlier prepublication repetitions remain941.
+Protect942 alongside941. Next authorized943 narrow build begins bounded object-only
+AO bake foundation via original UV ownership/triangle geometry; visible controls follow
+validated bake pixels/work guards. No AO UI or rendered AO acceptance is inferred.
+
+## .943 â€” read-only object AO bake foundation â€” 22 October 2026 (Brisbane)
+
+User .942 PASS remains protected. Audit found no existing AO baker. New
+`src/paint-ao-bake.js` uses original preview triangle ownership/triangle graph,
+original paint-filter-domain texel raster and Three Ray.intersectTriangle. The
+filter domain optionally returns its existing transient triangle map; ordinary
+brush callers retain exact return shape and allocations. No second triangulator,
+UV rasterizer, adjacency, brush, history, scene resource or export owner.
+
+Pure synchronous object-local bake returns owned linear R8 visibility and separate
+coverage, UV-v0-first. White=unoccluded; uncovered texels white/coverage0. Deterministic
+cosine-weighted hemisphere samples, double-sided same-object blockers, source winding
+normal, normalized object-diagonal radius/bias. Size16â€“128/default64, samples4â€“64/
+default16, radius .001â€“2/default.25 of diagonal. Conservative8M ray/triangle-test
+preflight plus original2M UV scan cap; excess complexity refuses with no scene writes.
+Normalized private graph points only; source mesh/UV/geometry remain unchanged.
+No scene-neighbour, ground-plane, world-transform, rendered SSAO or albedo bake yet.
+No main-app AO import/button/resource/persistence/export change or device-performance
+claim. This intentionally low-resolution foundation is NOT a new paint resolution.
+
+Five new regression tests cover opt-in exact ownership, white open plane/coverage/
+determinism/copy isolation, facing blockers/radius/double-sided rays, supported scale/
+translation/rotated UVs, stale/invalid/overlap/work refusals and source preservation.
+Tiny1e-8 source fixture was rejected by the ORIGINAL preview builder before baking;
+scale tests use accepted .01â€“1e8 geometry instead, no builder tolerance change.
+Read `docs/paint-ao-foundation-943.md`. Main painter reverse loader chain + shell/
+recovery pins943 reviewed; Lab/main/cage/Multi1.0/frozen algorithms unchanged.
+
+Next: original Paint layer/history transaction for an explicit non-destructive AO
+Multiply layer, with cancellation/stale/pool/checkpoint guards and visible controls,
+then iPad appearance/latency testing. Do not imply AO UI acceptance from pure tests.
+Alpha929/reflection-preview gates remain independently unresolved. No new AO hands-on
+test exists in943; existing Smudge/Paint UndoRedo/SaveOpen remains the nearby baseline.
+Validation/publication evidence follows; do not infer completion before verification.
+
+.943 final local Node24.19.0 complete regression: **2,725 PASS / 0 FAIL / 0 skipped**.
+Five new AO/ownership checks, original Smudge941/942 eleven and release/cache five
+pass on final runtime. No original assertions relaxed; main/cage/Multi1.0/frozen
+unchanged. Hosted regression/Pages/live proof follows. No new AO device controls.
+
+## .943 publication verified â€” 22 October 2026 (Brisbane)
+
+Runtime `3feb36097fb677165b3162ac852c58c1e452f735`, tested tree
+`223e2d8e82855137f804faf9e95134614fcee51e`, is published on main. Connected Git
+Data uploaded13 exact local blobs and created the identical locally tested tree;
+fetched main matched, local branch aligned with no file changes. Local Node24 and
+hosted Node22 regression39765950426/job119781312111 both pass **2725 tests / 0
+failures / 0 skipped**; complete hosted log totals verified (hosted219.8s).
+Pages39765949659 build119781316369/deploy119781518834 succeeded. All20 checked
+postdeployment shell/version, every changed runtime owner, new AO module, recovery,
+retained main/cage/Multi1.0/triangle graph/UV/paint/project/export and frozenBeta7 marker
+files byte-match tested source. Reviewed pins943; protected/frozen bytes unchanged.
+No original assertion relaxed. This publication proof changes four continuity files
+only, with identical tested runtime bytes.
+
+Build943 complete: no new hands-on AO test needed because no AO controls are exposed.
+Pure bake/ownership/work/refusal coverage is automated. User942PASS remains protected;
+next narrow build integrates explicit AO Multiply-layer creation through original Paint
+history/pool/compositor with staged/cancel/stale/refusal guards and then visible controls.
+AO foundation is local-object16â€“128 samples only, not rendered SSAO, neighbour-object
+shadows, persistent AO resources or high-resolution albedo baking. Alpha929 and
+reflection-preview gates remain independent. Existing Smudge/Paint history/SaveOpen
+is optional nearby device sanity, not an invented AO acceptance gate.
+
+## .944 â€” editable AO Multiply layer preview â€” 22 October 2026 (Brisbane)
+
+Base main0a4e094 /943 audited. No existing AO UI/layer transaction found. New small
+paint-ao-layer helper calls the original943 baker at64Â²/16 rays and original UV
+filter-domain raster at64 and current512/1024. Same-face, coverage-aware bilinear
+transfer renormalizes only matching source-face samples; atlas neighbours never
+contribute. Uncovered/unsampled thin faces stay transparent. Radius remains a
+fraction of LOCAL object diagonal; no world-transform/scene-neighbour/ground/SSAO.
+Colour Multiply uses existing byte-space compositor, not a physically linear PBR AO
+slot or high-resolution ray bake. Current colour/scalar/source/tip budgets unchanged.
+
+Original painter owns transient AO preview, pool validation, one Apply checkpoint,
+COW resource assignment and selection. New layer is ordinary editable raster named
+AO n, Multiply, user Strength as Layer opacity; existing visibility/mask/eraser/paint/
+Delete/Merge/Flatten/history/SaveOpen and flattened native/GLB writers remain owners.
+No saved AO descriptor/recipe/schema or new writer/history/gesture/modelling kernel.
+Preview never assigns object colourPaint or enters Save/history; Cancel/Done/history/
+body loss discards it. Apply rechecks live positions/UV binding/current target and
+pool before checkpoint; failures keep committed resources/history unchanged.
+
+Compact LEFT Paint â†’ collapsed Ambient occlusion: Reach5â€“100% (default25%),
+Strength0â€“100% (default65%), Bake AO preview, Apply AO layer / Cancel AO. Preview
+blocks paint and layer/channel edits; fingers still navigate. Apply selects AO layer;
+existing layer opacity/visibility can change strength afterward. Existing Undo/Redo
+retains Paint with ORIGINAL selection rules (Redo may keep Base selected; select AO).
+Image placement must Apply/Cancel first; image sources/scalars stay independent.
+Three-overlay cap remains; merge/delete to free a slot. Bake defaults64/16 fixed;
+8M ray-work and2M UV-scan limits refuse complex/overlapping/out-of-tile layouts before
+resource/history changes. Final transferâ‰¤4 texel samples per512Â²/1024Â² destination.
+No interactive cancellation during the bounded synchronous calculation or iPad
+latency/RAM/appearance claim. Small low-poly UV meshes first; convex cube may show
+little/no darkening. Concave/recessed geometry is the meaningful appearance test.
+
+Important failed approach: manager.objects/target getters call saveActive and CLONE
+the active mesh. Reference identity cannot establish unchanged AO source. Original
+UV key plus exact serialized live vertex content guard the candidate; do not add an
+identity-only check or mutate the manager to make such a check pass. Temporary debug
+reason text removed. No accepted manager/mesh/export algorithm changed.
+
+Six new integrations pass:512/1024 domain-safe output/source preservation; transient
+preview/Cancel/Apply/opacity/visibility/scalar/peer isolation; actual1024 UI+original
+Paint history+SaveOpen+exact NOM/GLB PNG; checkpoint/pool/deformed-source/close refusal;
+scalar/mask/full stack/complexity guards; retained images/staged mutual exclusion and
+Done discarding unapplied AO. Original nearby943/938/942 tests16PASS; release5PASS.
+Read docs/paint-ao-layer-944.md. Full local2802PASS/0FAIL/0skip (97.20s); publication evidence follows. User942PASS remains
+protected; /nextbuild is not AO device acceptance. Alpha929/reflection gates separate.
+
+DEVICE944: simple recessed UV mesh â†’ Paint â†’ Ambient occlusion â†’ Bake; orbit,
+Cancel retains previous paint. Bakeâ†’Apply creates AO layer, adjust Layer opacity/
+Visible; UndoRedo keeps Paint, select AO if needed; SaveOpen/native export keeps shade.
+Next: actual iPad quality/latency feedback, then narrowly refine AO quality/coverage/
+work budget as evidence warrants. No automatic further AO feature before device gate.
+
+.944 final local Node24.19.0 full regression: **2,731 PASS / 0 FAIL / 0 skipped**.
+Six new AO integration checks + existing2725 pass on final source; original nearby
+943/938/942 sixteen and reviewed release five also pass. No existing assertions
+relaxed. Complete AO-helper/painter/shell reverse pins944 reviewed; main/cage/Multi1.0/
+frozen unchanged. Hosted/Pages/live publication proof follows; device944 pending.
+
+## .944 publication verified â€” 22 October 2026 (Brisbane)
+
+Runtime `e43997b122f7e29cb8dff29db8c6752deccc2d86`, tested tree
+`2331a0d86cd9e87771cf21f4ca9de67f581cfa04`, is published on main. Connected Git
+Data uploaded12 exact blobs and created identical tested tree; fetched main matched,
+local branch aligned cleanly. Local Node24 and hosted Node22 regression39772067820/
+job119801794196 both pass **2731 tests / 0 failures / 0 skipped**; complete hosted
+log totals verified (230.0s). Pages39772066609 build119801796950/deploy119801996752
+succeeded. All20 postdeployment checked shell/version, changed painter UI/core/new
+AO transfer helper, retained943 bake/domain, recovery/main/cage/Multi1.0/triangle
+geometry/UV/paint/project/export and frozenBeta7 marker byte-match tested source.
+Original assertions retained; protected/frozen algorithms unchanged. This proof
+updates four continuity files only; tested/published runtime bytes unchanged.
+
+Build944 is complete and ready for hands-on testing: simple recessed native UV mesh
+â†’ Paint â†’ Ambient occlusion â†’ Bake AO preview; orbit, Cancel retains prior paint.
+Bakeâ†’Apply creates selected editable AO Multiply layer; Layer opacity/visibility,
+Paint UndoRedo, SaveOpen and native shaded export sanity. Redo follows original
+selection rules and can keep Base selected; choose AO layer if needed. Convex cube
+may show little/no shadow; same-object/local64Â²/16-ray bake, not screen-space or
+neighbour-object AO. Work/refusal limits remain; small UV meshes first. Device944
+appearance/latency/persistence acceptance remains pending, not inferred from Node.
+User942 connected Smudge PASS protected; alpha929/reflection-preview independent.
+Next narrow runtime work follows actual944 device feedback rather than automatic
+AO quality/lighting changes. No new AO device PASS inferred from /nextbuild.
+
+## .945 â€” higher-resolution AO and cancellable quality jobs â€” 23 October 2026 (Brisbane)
+
+User944PASS with explicit poor/patchy AO quality exception. Protect the existing
+preview/Apply/Cancel/layer/history/persistence workflow; AO appearance is NOT accepted.
+User authorizes higher resolution /nextbuild. Audit main6ddd9d2: actual bake64Â²/16
+rays only;1024 colour texture was just interpolated shade. Existing pathtrace-only
+remote BVH is unrelated to this CPU baker; no additional kernel/library imported.
+
+Original baker now has ONE generator tracing kernel. Legacy bakePaintAO remains
+synchronous, exact64/16 outputs and8M work cap/128 maximum retained. Async high path
+permitsâ‰¤256Â²/64 rays with a separate FIXED128M conservative ray/triangle-work cap;
+original2M UV scan cap/20K triangle bound retained. No unbounded caller work limit.
+Chunk events every65,536 visited triangle candidates; runner checks AbortSignal and
+yields to browser timers after approximately8ms accumulated work between events.
+Ray preparation/UV raster remain bounded synchronous setup; no hard frame-time or
+M2 latency guarantee. Trace and final face-safe transfer share same scheduler.
+Cancellation drops staged data; source geometry untouched. Owned domain labels reused
+for transfer instead of rasterizing low grid twice. No new triangulation/UV raster/
+adjacency/ray kernel. Original hemisphere/radius/bias formulas and sampling pattern
+unchanged, merely more positions/directions. No denoiser or all-patchiness-solved claim.
+
+Paint AO Quality: High(default)256Â²/64 samples; Medium128Â²/64; Quick64Â²/16. High has
+16Ã— baked pixels and4Ã— sampled directions versus944 (up to64Ã— sampling work for the
+same coverage/mesh). Geometry/occlusion can require fewer actual intersection visits;
+cap refuses complicated layouts, suggest Medium/Quick or simpler mesh. Existing
+colour512/1024 textures, source/tip/scalar resolutions, layer/resource/File/export
+budgets and schemas unchanged. Old saved AO pixels stay as-is; hide/delete old AO
+layer and rebake to compare rather than stacking two shadow layers.
+
+Original Paint session stages async job with progress/Cancel; pending job blocks
+paint/layer/channel/quality edits while fingers navigate. Cancel, Done/close/body
+loss/history abort it; late results cannot publish into a new/stopped/replaced job.
+Fresh mesh-position/UV/current-resource and original pool guards precede preview;
+Apply remains ONE original checkpoint/COW commit to an editable Multiply layer.
+State flags are transient only; no persistent AO recipe or new history owner.
+Quality is session UI preference, not saved project metadata. Existing Quick remains
+byte-identical. Same-face coverage transfer still excludes atlas neighbours; thinner
+UV faces now get actual256-grid samples rather than borrowing another face's shade.
+
+Six new tests cover genuine256/64 grid and finer shade levels, exact asyncQuick parity,
+new thin-face coverage and isolation, progress/abort/pre-abort/invalid quality,
+actual painter cancel/close/stale/retry/checkpoint/pool/work refusal, actual UI default/
+Cancel while busy/Done late-result suppression/Quick comparison. Original943+944 eleven
+and reviewed release five pass. No original assertion relaxed; old943 size129 and
+8M refusal checks remain active. Read docs/paint-ao-quality-945.md. Full/publication
+proof follows. All changed AO/painter/shell reverse loader pins945 reviewed; main/
+cage/Multi1.0/frozen/modelling/UV/project/export algorithms unchanged.
+
+DEVICE945: on SAME recessed model hide old AO, Quality Quickâ†’Bake/inspect/Cancel;
+Highâ†’Bake/inspect at same Reach/Strength, compare detail/banding and wait time. Cancel
+DURING High and confirm no layer/history; rebake/Apply then Layer opacity/visibility,
+Paint UndoRedo and SaveOpen/native shading. Use Medium if work guard refuses High.
+Actual iPad smoother-result/latency acceptance pending; alpha929/reflection gates
+independent. Next narrow improvement follows user comparison; do not guess a light
+source or silently smooth unrelated UV islands to hide remaining defects.
+
+.945 final local Node24.19.0 full regression: **2,737 PASS / 0 FAIL / 0 skipped**.
+All original2731 and six new quality/cancellation checks pass on final source;
+original AO943/944 eleven and reviewed release five also pass. No assertions
+relaxed. Reviewed AO/painter/shell reverse graph945; protected main/cage/Multi1.0/
+frozen unchanged. Hosted/Pages/live publication proof follows; device quality pending.
+
+## .945 publication verified â€” 23 October 2026 (Brisbane)
+
+Runtime `bc04adb66457223c2a3654ecbd059ef41804a4bf`, tested tree
+`8ab57dcdbcfe0303c80932cfd8d4e5f91e951c40`, is published on main. Connected Git
+Data uploaded13 exact blobs and created identical tested tree; fetched main matched
+and local branch aligned cleanly. Local Node24 and hosted Node22 regression39887637934/
+job120199434595 both pass **2737 tests / 0 failures / 0 skipped**; complete hosted
+log totals verified (233.1s). Pages39887637391 build120199437013/deploy120199572392
+succeeded. All20 checked postdeployment shell/version, changed AO baker/transfer/
+painter UI/core, retained domain/triangle graph, recovery/main/cage/Multi1.0/UV/paint/
+project/export and frozenBeta7 marker byte-match tested source. Reviewed pins945;
+original assertions retained, protected/frozen algorithms unchanged. This proof
+changes four continuity files only; tested/published runtime bytes unchanged.
+
+Build945 complete and ready for SAME-model comparison: hide/delete old AO, Quality
+Quick64/16â†’Bake/inspect/Cancel; High256/64 at same Reach/Strength, compare finer shade
+and wait time. Medium128/64 remains available if High work cap refuses. Cancel during
+bake leaves no layer/history; retry/Apply, Layer opacity/visibility, Paint UndoRedo,
+SaveOpen/native shading. Old saved AO pixels do not automatically improve; rebake.
+User944PASS protects workflow with explicit poor/patchy appearance exception;945
+actual iPad quality/latency acceptance remains PENDING, not inferred from Node.
+Quality test proves actual higher grid/more levels/thin-face coverage, not perfect
+smoothness on every model. Alpha929/reflection gates remain independent. Next
+runtime refinement follows device comparison rather than unrelated lighting changes.
+
+## .946 â€” paint / UV restart; .945 user PASS â€” 23 October 2026
+
+User explicitly reports **945 = PASS**: protect higher-resolution AO and its existing
+preview/cancel/apply/history workflow. This supersedes earlier pending945 notes;
+no implication of perfect AO on all meshes or acceptance of unrelated open gates.
+
+Audit main d0c1400: original UV projections and Pack all exist, no paint reset and
+no general atlas unwrap. xatlas appears only in pathtrace dependency URL; Pack all
+arranges existing islands and does not generate an atlas. Keep atlas unwrap as a
+separate future narrow task through original UV/history owners.
+
+Object â†’ UV now exposes Clear paint (keeps UVs) and Clear paint + UVs (choose a
+projection again). Both work with stale geometry/UV bindings without opening Paint.
+All colour layers/masks/images/AO plus roughness and metalness resources detach in
+one original scene checkpoint; shared resources/copies remain intact. No rebind of
+old pixels, no geometry edits, no automatic discard on UV edits. Undo/Redo restores
+exact resources/UVs. Reset is for independent BoxLab meshes; imported GLB materials,
+linked/procedural/locked/reference objects are refused. Existing projection Base
+restrictions remain. Viewport refresh uses original render-mode owner. Stale paint
+errors now direct to Object â†’ UV â†’ Clear paint.
+
+Four new946 tests cover all-channel stale recovery and reopen, actual UndoRedo/COW,
+stale UV removal/reproject/repaint, blank native SaveOpen, no-op/refusal atomicity,
+and original panel callback/render delegation. New manual gate: reproduce stale
+paint â†’ Clear paint â†’ Paint; clear both â†’ Box/appropriate projection â†’ Paint;
+UndoRedo reset and SaveOpen blank/repainted result. Atlas generation not shipped.
+Release graph946 reviewed; Multi1.0/frozen files unchanged. Validation/publication
+results follow; no946 device PASS inferred.
+
+.946 runtime published: `9af9a37ebeb0913e3c50f76a0e5b198f89143fdf`, tested tree
+`318f420120392e573f463f8834af05103563c6fc`. Local Node24 full regression:
+**2,741 PASS / 0 FAIL / 0 skipped** (212.9s), including original2737 and four new
+recovery tests; no original assertions relaxed. Release contract five pass. Remote
+main fetched, exact tested tree matched and local branch aligned cleanly.
+Hosted regression39900966420 and Pages39900966243 verified below.
+
+.946 publication verified: hosted Node22 regression39900966420/job120242198371
+passes **2741 tests / 0 failures / 0 skipped** (full log totals verified), matching
+local Node24. Pages39900966243 build120242201383/deploy120242345149 SUCCESS.
+All20 checked postdeployment shell/version, reset/UV/painter/creation loaders,
+release-recovery/AO/main/Multi1.0/inspection/paint/project/export and frozenBeta7
+marker byte-match tested source. No tested runtime changed after validation.
+
+Build946 complete and ready for device testing: Object â†’ UV â†’ Clear paint keeps
+UVs and starts a blank paint session, including the old binding-error case. Clear
+paint + UVs permits fresh Box/appropriate projection and repaint. UndoRedo restores
+resources/UVs; SaveOpen retains cleared/repainted result. Device946 PENDING. User945
+PASS protected. General atlas unwrap remains a separate future build; Pack all only
+arranges existing islands. This proof changes continuity docs only.
+
+## .947 â€” visual Paint layer stack; user946PASS â€” 23 October 2026
+
+User reports946PASS: protect explicit undoable Clear paint / Clear paint + UVs,
+stale-binding recovery/reproject and original resources/history. User now prioritizes
+a Procreate-style layer list; atlas unwrap remains deferred, not implemented by Pack.
+Audit current8c98072: all layer operations already belong to original Paint core and
+UI controls; only dropdown presentation existed, no thumbnail/list owner.
+
+Replace visible layer dropdown with compact top-first list in existing272px LEFT
+dock:64px content thumbnails displayed40px over checkerboard, name, unique1â€“2-letter
+blend code, opacity%, visibility toggle, selected blue row and image/mask labels.
+Tap row to select; blend/opacity opens original Selected layer settings below list.
+Original hidden select/visibility nodes remain event transport for original owners
+and regression contracts, not duplicate visible controls. + Layer/+ Image remain
+beside heading; image edit/conversion moves into selected settings. Original rename,
+opacity, blend, order, delete, merge, flatten, masks and image actions retained.
+Base visibility/blend/opacity stay immutable; scalar channels hide colour stack;
+AO staging disables row edits. No new paint schema, budgets, history, compositor or
+modelling owner. All original protected gestures/Multi1.0/frozen files retained.
+
+src/paint-layer-list.js is presentation only; viewport painter exposes owned tiny
+layerThumbnail snapshots of committed raw colour/alpha, before layer opacity/blend/
+mask. Area reduction includes thin marks and alpha-weighted RGB, flips UVv0-first
+rows for top-up previews, caches by immutable pixel identity using session WeakMap.
+No full texture bytes exposed to DOM; no thumbnails serialized or history entries
+for browsing. Updates after original Pencil release/actions/history reopen, clears
+on close. Canvas thumbnails are content previews, not final composites or mask maps.
+
+Five new tests cover all26 unique blend codes, alpha/thin/orientation/ownership,
+actual UI row order/content/mask/rename/blend/opacity, visibility one checkpoint,
+UndoRedo/reopen/SaveOpen, stroke Cancel and scalar/AO/close guards. Original905/906/
+928 targeted19PASS. Headless Chromium rendering of actual markup/styles/list module
+with fixture metadata verified no overflow at272px dock /1024 and390 viewport widths,
+selection settings/visibility and screenshot inspection; real painter/history tested
+through original integration harness, no iPad acceptance inferred. Screenshot is QA
+fixture only; original app/session layout owners unchanged. Full/publication proof
+follows. DEVICE947: layer taps/strokes/previews; blend/opacity/visibility; ordering/
+image+mask selection; UndoRedo/SaveOpen and left dock scrolling/Done on iPad.
+
+.947 final local Node24 regression: **2,746 PASS / 0 FAIL / 0 skipped** (180.9s);
+original2741 and five new visual-list checks retained. Original905/906/928 targeted19
+and reviewed release five pass. No original assertion relaxed. Runtime published
+`789924e19b10cef2b81409d34290e3f5dccd82f0`, exact tested tree
+`bb97d1e5facc367b0f52feb040f2906eb336556e`. Fetched main matched that tree and
+local branch aligned cleanly. Hosted regression / Pages / live-file proof verified below.
+
+## .947 publication verified â€” 23 October 2026
+
+Runtime789924e19b10cef2b81409d34290e3f5dccd82f0 / tested tree
+bb97d1e5facc367b0f52feb040f2906eb336556e published and fetched main matched exactly.
+Local Node24 and hosted Node22 regression39903168453/job120249065878 both pass
+**2746 tests / 0 failures / 0 skipped**; full hosted log totals verified. Original
+checks retained. Pages39903167923 build120249067854/deploy120249209727 SUCCESS.
+All20 checked live shell/version, layer-list/painter/recovery, retained layer/blend/
+paint/project/export/AO/UV/reset/main/Multi1.0 and frozenBeta7 marker byte-match tested
+source. Reverse loader keys947 reviewed; no tested runtime changes after validation.
+This proof updates continuity documentation only.
+
+Build947 ready for iPad testing: open Paint with two or more layers, tap rows and
+paint distinct marks; previews update on Pencil lift. Blend code / opacity% opens
+selected settings; edit them and check row/mesh. Visibility check toggles selected
+row with one original Undo; Base immutable. Check image/mask rows, reorder Up/Down,
+UndoRedo/SaveOpen and bounded left dock scrolling/Done. Device947 PENDING;946 user
+PASS protected. General atlas unwrap remains deferred behind current UI request.
+
+
+## .948 â€” committed colour lighting; .947 user PASS â€” 23 October 2026 (Brisbane)
+
+User reports .947 PASS: protect visual layer selection/thumbnails, blend/opacity/
+visibility, history/persistence and bounded LEFT dock. Continue requested repair:
+colour-only UV paint/image/AO composites must rejoin scene lighting after Paint Done.
+Audit main d17be438: original createCommittedPaintSurface only selected Standard for
+valid roughness/metalness; colour-only intentionally stayed Basic. Studio shadow flags
+were queued after material creation and could be copied too early. No missing light,
+new rendering engine or second material owner is required for this specific defect.
+
+Original committed surface now always calls its existing Standard material path for
+valid channels. Colour remains exact sRGB albedo, white factor, default roughness1 /
+metalness0; no scalar maps/resources invented. Stale scalar is omitted; stale colour
+still refuses. Same original geometry/UV/lifetime and async identity guards. Studio
+sets original body cast/receive flags synchronously before async surface creation,
+so both active and inactive/locked paint replacements inherit shadows regardless of
+digest/frame order. Existing Studio lights/rig/floor and reflection pool unchanged.
+Paint Channel remains intentionally unlit while editing; Paint Lit preview unchanged.
+Existing saved colour projects gain lit display on reopen/rebuild without migration,
+resource/history/pixel/export changes. No new AO bake, general atlas unwrap or claim
+that the older smooth-metal reflection report is resolved by this colour-only fix.
+
+Four new integrations cover512/1024 exact owned sRGB pixels/UVs/shadow flags/disposal,
+original Studio active+inactive/locked path BEFORE queued refresh, rebuild/diagnostic
+cleanup, actual Paint Channelâ†’Doneâ†’lit and exact Save/Open without extra history,
+stale/replaced/body-loss suppression. Original920/923 colour-only Basic assertions now
+require requested Standard fallback while retaining exact pixels and absent stale
+scalar map; live Channel expectations remain Basic. Original904/909 committed display
+checks retain exact pixel equality and now require private lit texture ownership, as
+already used for scalar-lit surfaces. New+nearby paint/layers/scalar/
+reflection/release30PASS. Full regression/publication evidence follows.
+
+Reviewed entire surfaceâ†’painter/render/exportâ†’Lab reverse loader graph948 and shell/
+recovery keys; parent/export edits are cache pins only. Main930/cage/Multi1.0/frozen,
+brushes/history/project/export algorithms unchanged. Actual GPU/iPad shadows and
+appearance remain DEVICE948 gate, not established by Node material/texture tests.
+
+DEVICE948: paint a UV cube in Colour only, Doneâ†’Studio, orbit for shaded faces; add
+another mesh and switch selection, shadows/lighting remain on both. Reopen existing
+painted .boxlab; compare lit display and paint unchanged. Paint Channel remains flat;
+Lit preview/Done restore scene shading. UndoRedo remains in Paint; .947 layer list
+remains accepted. Next narrow work follows948 device feedback; keep independent
+alpha929/reflection gates and general atlas unwrap request visible.
+
+
+.948 final local Node24.19.0 full regression: **2,750 PASS / 0 FAIL / 0 skipped**
+(97.7s). Four new checks plus original2746 retained; targeted paint/material/layer/
+duplicate/project/release50PASS. Superseded unlit/sharing expectations in920/923 and
+904/909 were updated to requested lit/private-texture behavior; exact pixel, stale
+channel, duplicate isolation and persistence assertions retained. Initial exploratory
+full run hit those old expectations; this FINAL complete run closes all regressions.
+Reviewed loader closure948; main930/cage/Multi1.0/frozen unchanged. Hosted regression,
+Pages and postdeployment live-file verification follow. Device948 lighting pending.
+
+
+## .948 publication verified â€” 23 October 2026 (Brisbane)
+
+Runtime `a2453a6b1b12d49a310f99d281209624f4e40a61`, exact tested tree
+`6f937c9c3c25802fa57cc4a83b5bcf6f4290cb32`, is published on main. Connected
+Git Data uploaded22 exact blobs and created the identical local tree. Fetched main
+matched, local branch aligned cleanly. Local Node24 full regression and hosted
+Node22 regression39934931497/job120352039428 both pass **2750 tests / 0 failures /
+0 skipped**; complete hosted log totals verified (249.9s). Pages39934930737 build
+120352042059/deploy120352235264 succeeded. All19 checked postdeployment files
+(shell/version, complete changed runtime/Lab graph, recovery, retained947 layer list,
+main930/cage/Multi1.0 and frozenBeta7 marker) byte-match tested source. Reviewed pins;
+no protected/frozen changes. This proof updates four continuity files only and keeps
+tested/published runtime bytes unchanged. User947PASS is protected, not inferred948.
+
+Build948 complete and ready for device testing: Colour-only painted UV cube â†’ Done â†’
+VIEW Studio, orbit for shaded faces and scene shadows. Add another mesh/switch active
+selection; painted inactive objects remain scene-lit. Reopen existing painted.boxlab,
+confirm appearance and original colour; reopen Paint for Channel(unlit)/Lit and retained
+947 layer list, UndoRedo/continue painting. Standard material/shadow inheritance and
+exact bytes verified automatically; real GPU/iPad shadow/appearance acceptance pending.
+Older smooth-metal reflection and alpha929 gates remain independent; general atlas
+unwrap remains future work (Pack all arranges existing islands). No new light/brush/
+history/project/export/modelling owner or source pixel/schema changes.
+
+
+## .949 â€” bounded Face atlas UVs; .948 user PASS â€” 23 October 2026 (Brisbane)
+
+User PERFECT PASS948 protects committed colour-only scene lighting/Studio shadows,
+active/inactive appearance, existing paint/layers/history/persistence and Channel/Lit.
+Next audited deferred atlas request. Main e5bf44b3 has Box/Planar/Cylinder/Sphere/Torus,
+density equalization and Pack all, but no joined-chart/general atlas solver. xatlas
+is only an unused pathtrace dependency URL. No new external library/kernel imported.
+
+Object â†’ UV â†’ Face atlas now stages ORIGINAL Box directional per-face projection,
+ORIGINAL densityLayout with explicit one-island-per-polygon membership, then ORIGINAL
+packedLayout. Only final corners commit through commitNativeUV: one native checkpoint,
+read-only old/peer payloads, no source geometry/face-group changes. Repeat is an exact
+no-op. Original projections/Pack/density math and Add automatic choices unchanged.
+
+This is a FIRST bounded face atlas:1â€“128 planar polygons,â‰¤20K corners, one island per
+face, common average world-area density, existing .02 tile margins/gaps/grid packing.
+It cuts every face boundary; it does NOT join charts, optimize packing, author seams,
+or implement xatlas/general curved unwrap. Dominant-plane projection retains its
+existing angular distortion; equal density fixes average area, not angle distortion.
+Invalid/nonplanar/degenerate/over-limit and imported/procedural/modifier targets refuse.
+This scope is visible beside the button, not hidden behind a generic Unwrap claim.
+
+Any colour/roughness/metalness paint refuses BEFORE staging/history; UI disables Face
+atlas with paint present and points to explicit existing Clear paint / Clear paint +
+UVs. No silent paint discard, resampling or stale-resource rebind. Existing stale native
+UVs can be replaced after clearing paint. Undo restores old UVs; paint reset remains a
+separate undoable user action. Native codec, original Paint/Lit/SaveOpen/NOM/GLB owners
+handle unchanged version1 source:boxlab face-corner payload. No schema/writer/history
+or modelling kernel added; no automatic atlas on Add, no new UV pointer/UI owner.
+
+Six new integrations cover concave/tilted/disconnected/subdivided planar faces,
+non-overlapping separate bounds/equal average density/exact geometry,128-face limit/
+scale/refusals, real original UndoRedo/idempotence/peer COW, explicit paint refusal/
+clear/repaint, owner/history atomic refusal, exact native project/NOM/GLB UVs and
+actual UV panel target/context callback. New+Box/Pack/density/reset/release30PASS;
+no existing assertion changed. Full regression/publication follows; iPad949 pending.
+
+Surface audit found Lab samples' old914 UV import absent from the reviewed cache
+manifest. Added that REAL dependency and refreshed its samplesâ†’Labâ†’index ancestors,
+alongside original MeshHealth/Add/Multi UV import graph949 and shell/recovery keys.
+Only UV mapper + MeshHealth functionality changes; other source changes are pins.
+Main930/cage/Multi-transform1.0/frozen/948lighting/paint/export algorithms unchanged.
+
+DEVICE949: plain cube or small planar-faced extruded mesh â†’ Object â†’ UV â†’ Face atlas
+â†’ Open UV Editor: separate face islands inside tile. UndoRedo restores/reapplies UVs;
+Paint/Done retains accepted948 lit scene. Existing paint: explicitly Clear paint first,
+then Face atlas/repaint. SaveOpen and optional NOMAD retain new UVs/paint.128 planar
+faces maximum; nonplanar faces require other projection or future chart unwrap.
+Next:949 device feedback, then scoped atlas/chart improvements or Edge seam authoring
+audit. General joined-chart unwrap remains queued; no automatic kernel replacement.
+
+
+.949 final local Node24.19.0 full regression: **2,756 PASS / 0 FAIL / 0 skipped**
+(101.7s), retaining every original2750 check plus six new Face atlas integrations.
+New+nearby Box/Pack/density/reset/release30PASS. No existing behavior assertion changed
+or removed. Reviewed UV/Add/Multi/Lab reverse pins949 including newly recorded Lab
+sample import; main930/cage/Multi-transform1.0/frozen/948lighting unchanged. Hosted
+regression/Pages/live publication proof follows. DEVICE949 remains pending.
+
+
+## .949 publication verified â€” 23 October 2026 (Brisbane)
+
+Runtime `342f05b4a3b2822467d025dc19000f3281434492`, exact tested tree
+`57fd40f453c15363c607690fab4c6e26de538ab1`, is published on main. Connected
+Git Data uploaded15 exact blobs/tree; fetched main matched, local branch aligned
+cleanly. Local Node24 and hosted Node22 regression39937602575/job120360872192 both
+pass **2756 tests / 0 failures / 0 skipped**; complete hosted log totals verified
+(145.1s). Pages39937601356 build120360875053/deploy120361068122 succeeded. All20
+checked postdeployment shell/version, complete UV/Add/Multi/Lab graph, recovery,
+retained UV workspace/inspector/948 lit owners/main/cage/Multi-transform1.0/947 layer
+list/frozenBeta7 marker byte-match tested source. No existing assertions removed or
+changed. This proof updates four continuity files only, retaining tested runtime.
+
+Build949 complete and ready for device testing: plain cube or small planar-faced
+extruded mesh â†’ Object â†’ UV â†’ Face atlas â†’ Open UV Editor. Separate face islands,
+UndoRedo, Paint/Done retains accepted948 lighting, SaveOpen and optional NOMAD.
+Existing paint must be explicitly cleared first; action never discards it. Face atlas
+is one island per planar face, up to128 faces/20K corners; it is not joined-chart or
+general curved unwrap. Existing Box/Planar/Cylinder/Sphere/Torus/Pack/auto-Add retain
+original algorithms. DEVICE949 pending; user948 PERFECT PASS protected. Next actual
+949 feedback, then scoped atlas/chart/seam direction. Alpha929/reflection independent.
+
+
+## .950 â€” Face atlas warped-face repair; .949 device FAIL â€” 23 October 2026 (Brisbane)
+
+User949 reports the Equalize-density planar/non-degenerate error after ordinary
+extrusions/scales. Screenshot confirms949 and24verts/20faces, far below128-face cap.
+Exact supplied Extrude and scale.obj reproduces rejection: first four polygons are
+mildly warped (point-to-plane deviationsâ‰ˆ.010â€“.013 local units). This is949's atlas
+planarity restriction, not evidence of damaged modelling topology or a stale build.
+OBJ exporter header892 is the retained internal writer stamp, not shell release.
+Exact input retained as tests/fixtures/extrude-and-scale-950.obj; SHA256
+07178d51ab561392fa508624d088460f33b1da57ed87617ede4138c09272b46d, identical to upload.
+
+Original Face atlas first tries EXACT949 planar path. Only its planar/area refusal
+requests the ORIGINAL buildUVPreviewGeometry({faceIndices:true}) owner, forwarded
+explicitly by MeshHealth UV callback. Original triangleâ†’face/vertex metadata becomes
+transient local-corner lists; no triangulator, new adjacency or mesh mutation. Require
+complete nâˆ’2 triangles per polygon, valid unique corner ownership, finite nonzero UV
+triangle areas and consistent per-face UV orientation. Folded/collapsed candidates
+refuse with face number; absent/failed preview refuses. Temporary geometry disposes
+in finally on success/error. Same original density math optionally sums measured
+normalized 3D triangle areas; standalone Equalize density RETAINS strict planar rule.
+Original planar outputs/extreme scales remain exact; no blanket tolerance relaxation.
+
+Final atlas still uses original Pack/commit, one island per source face and one scene
+checkpoint; source quads/ngons/positions/groups and old/peer resources remain intact.
+No permanent triangulation or schema/export/history/brush/lighting changes. Original
+128faces/20Kcorner/pool/history/clear-paint guards retained. UI no longer calls atlas
+planar-only; says curved faces may stretch. This is still projected per-face atlas,
+not joined-chart/general UV optimization or a guarantee every folded face maps.
+
+Five new integrations exercise exact user file with20 separated equal-density islands,
+unchanged24 vertices/14quads/6ngons, temporary disposal and exact repeat; ordinary
+extrusion+axis-scale reproducer at .01/1/10000; original UndoRedo/Paint/exact SaveOpen/
+actual NOM and GLB UV+paint slots; unavailable/malformed/folded preview/refused history/
+paint atomicity; actual panel forwarding/target guards. Original949 negative unavailable
+warped-preview test retained; its UI wording expectation follows intended scope change.
+Original895 standalone nonplanar refusal stays active. Focused new/949/density/Pack/
+release26PASS; full validation/publication follows. Native test prepares through ACTUAL
+writer's versioned paint-export owner (module-local WeakMaps); canonical JSON handles
+cross-realm UV prototypes without weakening exact values. Bitmap shim is transport
+only, not GPU/Nomad visual proof. Main/cage/Multi-transform/frozen bytes unchanged.
+
+DEVICE950: SAME supplied model â†’ Object â†’ UV â†’ Face atlas â†’ Open UV Editor should
+map all20 faces. UndoRedo restores/reapplies original quads/UVs; Paint/Done remains
+scene-lit; SaveOpen and optional NOMAD sanity. Clear existing paint explicitly first.
+Exact uploaded mesh now maps in automated real-owner path; actual iPad950 gate pending,
+not inferred PASS.948 scene-lighting acceptance remains protected;949 warped failure
+recorded. Next actual950 retest; don't ask user to permanently triangulate a valid box
+model as a workaround or add a second modelling/UV kernel. Other chart/seam work queued.
+
+
+.950 final local Node24.19.0 full regression: **2,761 PASS / 0 FAIL / 0 skipped**
+(101.9s), retaining original2756 plus five new exact-file/warped-face integrations.
+Focused new/949/density/Pack/release26PASS. Old949 unavailable-preview/degeneracy
+refusals remain; its UI text expectation reflects new scope. Standalone density895
+planarity contract unchanged. Supplied OBJ fixture byte-identical; no source upload
+modified. Reviewed full UV/Add/Multi/Lab/recovery950 graph, main/cage/Multi-transform/
+frozen/accepted948lighting unchanged. Hosted/Pages/live proof follows; device950
+SAME-model atlas/paint/UndoRedo/SaveOpen acceptance pending, no949 PASS inferred.
+
+
+## .950 publication verified â€” 23 October 2026 (Brisbane)
+
+Runtime `dac0fc655727a68693aa761d87ede425e12abd00`, exact tested tree
+`4170c78794755c3f60417b4012d2f93d4ae65eda`, is published on main. Connected
+Git Data uploaded17 exact blobs/tree; fetched main matched and local branch aligned
+cleanly. Local Node24 and hosted Node22 regression39942759656/job120377956989 both
+pass **2761 tests / 0 failures / 0 skipped**; complete hosted log totals verified
+(247.2s). Pages39942759456 build120377961102/deploy120378158885 succeeded. All20
+checked postdeployment shell/version, complete UV/Add/Multi/Lab graph, recovery,
+retained UV workspace/inspector/948 lit owners/main/cage/Multi-transform1.0/947 layer
+list/frozenBeta7 marker byte-match tested source. Original895 planar-density guard
+retained;949 UI wording updated for intended warped-face support. This proof changes
+four continuity files only, retaining tested runtime. Original supplied OBJ unchanged.
+
+Build950 complete and ready: SAME extrusion/scale mesh â†’ Object â†’ UV â†’ Face atlas â†’
+Open UV Editor should map all20 faces. Original quads/ngons remain; UndoRedo restores
+UVs, paint/Done retains948 lighting, SaveOpen and optional NOMAD sanity. Exact supplied
+file now passes real-owner atlas/paint/history/transport integrations, but iPad950
+appearance/performance acceptance remains pending. Clear existing paint explicitly
+first. Source949 failure recorded, not accepted as PASS; user948 PERFECT PASS protected.
+Next actual950 feedback before unrelated features; no permanent triangulation workaround.
+
+
+## .951 â€” Optional Coplanar atlas; .950 user PASS protected â€” 23 October 2026
+
+User replies PASS /nextbuild after950: protect the supplied extrusion/scale Face atlas
+repair and existing948 lit-paint acceptance.949 original warped failure stays recorded.
+Audit: existing Box projection already gives matching UVs on adjacent same-direction
+faces; original imported-uv-inspection owns manifold adjacency/union; density/Pack and
+native UV commit/history already exist. No other live chart-joining atlas found; the
+pathtracer xatlas dependency is unrelated. Add optional Object â†’ UV â†’ Coplanar atlas.
+
+Both modes share original private Box â†’ density â†’ grid Pack â†’ ONE commit pipeline.
+Face atlas retains one island per face and exact950 outputs. Coplanar mode uses fixed
+seed planes (normalized finite coordinates, oriented normal/planarity tolerance1e-10,
+no accumulated neighbour drift), leaving warped faces isolated. Original inspector
+gets opt-in canJoinFaces predicate; default behavior unchanged. Join only opposite
+shared edge directions, matching Box UV endpoints, same seed plane and exactly two
+manifold owners. Disconnected/coincident vertex positions and ambiguous edges never
+join. No mesh edits, new triangulator/adjacency kernel, persistent chart metadata or
+UV schema. Original950 preview fallback handles warped area; standalone density895
+still planar.128-face/20K-corner limit and explicit clear-all-paint prerequisite stay.
+This is conservative coplanar grouping, not arbitrary unwrap or optimal packing;
+invalid self-overlapping geometry and general curved stretch are not solved.
+
+Six new tests951 cover connected patch/seam endpoints/island editing; bends/warps/
+same-winding duplicates/opposite faces/disconnected positions/nonmanifold boundaries;
+exact supplied20-face OBJ (14 islands versus Face atlas20), scale/translation and equal average island density/separate
+packed bounds; guards/refused history; actual UndoRedo/paint/project/GLB owner path;
+actual panel forwarding/current-target/history guards. Focused new/949/950/density/
+Pack/release32PASS. Full local/hosted and publication evidence follows below.
+
+Reviewed cache closure refreshes UV inspector/edit/panel, UV workspace, paint import
+ancestors and UV/Add/Multi/Lab loaders; functional changes ONLY inspector opt-in,
+atlas owner and existing panel. Main/cage/Multi-transform1.0/frozen bytes unchanged.
+Device951 remains pending: same unpainted supplied mesh â†’ Coplanar atlas â†’ UV Editor;
+compare Face atlas's20 islands; UndoRedo, paint across a flat patch and SaveOpen.
+Next act on951 feedback; alpha929/metal-reflection gates remain independent. Do not
+infer general curved unwrap, arbitrary overlap repair or optional NOMAD device PASS.
+
+
+.951 full local Node24 regression: **2767 PASS / 0 FAIL / 0 skipped** (99.0s),
+retaining all2761 plus six coplanar integrations. Focused32PASS. Reviewed19-file
+runtime loader closure, three functional owners only; retained main/cage/Multi1.0/
+frozen bytes and recovery owners unchanged. Source949/950 Face atlas outputs and
+standalone895 density guards stay protected. Hosted/Pages/live proof follows;
+DEVICE951 comparison/paint/UndoRedo/SaveOpen remains pending.
+
+
+## .951 publication verified â€” 23 October 2026
+
+Runtime `63f4c6986756d65dc6682b8c76f31f834d035aea`, exact tested tree
+`fc4050afa6437d9dca2127af0d0f2cdae9b310cd`, is published on main. All26 uploaded
+blobs and Git Data tree matched local hashes; fetched main matched and checkout clean.
+Local Node24 full regression2767PASS/0FAIL/0skipped (99.0s); hosted Node22 run
+39952990826/job120411804887 complete log verifies same2767/0/0 (198.0s).
+Pages39952990462 build120411810503/deploy120411996505 succeeded. All29 postdeployment
+shell/version, complete reviewed UV/Add/Multi/Lab/paint loader graph, recovery,
+retained948lit/main/cage/Multi-transform1.0/947layers/frozenBeta7 marker byte-match.
+Proof commit updates four continuity files only; tested runtime retained.
+
+User950 PASS is recorded/protected. Build951 complete/ready for device testing:
+same unpainted extrusion/scale mesh â†’ Object â†’ UV â†’ Coplanar atlas â†’ Open UV Editor.
+Exact fixture automatically gives14 islands versus Face atlas20, four warped faces
+stay isolated and all original24 vertices/20 quads/ngons unchanged. Compare charts,
+UndoRedo, paint across connected flat faces and SaveOpen. Clear existing paint
+explicitly first. DEVICE951 appearance/performance remains pending. Next follow951
+feedback before broader unwrap/seam tooling; keep original owners and protected
+modelling/navigation/lighting/frozen behavior. No general curved unwrap claim.
+
+
+## .952 â€” UV Editor layer/entry hardening; .951 atlas PASS protected â€” 23 October 2026
+
+User951 PASS /nextbuild, with separate intermittent iPad Pro UI-loss report. Supplied
+screenshot confirms951: workspace right section including Back to3D and main toolbar
+buttons missing, while UV tile remains drawn. Do NOT treat atlas acceptance as UI-loss
+acceptance or dismiss it because node tests pass. Original924 toolbar fix was accepted
+but this is a recurrence with screenshot evidence; protect its header-above-viewport
+intent. Exact intermittent iPad/WebKit compositor failure is NOT reproduced here.
+
+Audit: no action intentionally hides main toolbar; workspace was a large absolute
+canvas overlay inside WebGL viewport alongside backdrop/filter floating panels.
+Only ORIGINAL uv-workspace changes: mount its one existing section beside viewport
+under #app, use fixed viewport insets and header height variable with z9 below header10;
+active-only viewport isolation retained via updated sibling-host selector (old nested
+fallback retained for embedded/test host). Isolate/paint-contain canvas area; keep its
+original canvas, controls, listeners and MeshHealth context/session/history callbacks.
+Back to3D moves beside title; wrapping controls do not shrink out of short viewport,
+workspace scrolls when needed. No force-GPU transforms, z-index escalation, duplicate
+UI, modelling/UV/paint/history/navigation kernels or changes to original header owner.
+
+Open measures immediately and again once on next animation frame after launch hides
+source panel. Listen to visualViewport resize as well as window/ResizeObserver.
+Close cancels queued frame and removes both resize listeners; existing capture/gesture/
+image cancellation unchanged. Three new production-owner tests: real app/header/
+viewport siblings and twelve open/close cycles using same nodes/actions; deferred and
+visual resize pixel sizing/history neutrality/late frame/cleanup; CSS header ordering,
+canvas containment, bounded overflow and single left-side exit. Original tests retained.
+Cloud browser951 main fails WebGL context creation, so no full rendered or Safari/iPad
+reproduction claimed. Repair addresses layer topology and entry sizing; iPad retest is
+required before accepting intermittent disappearance as fixed.
+
+Reviewed cache closure ONLY workspace â†’ MeshHealth â†’ shell plus recovery loader keys;
+internal version stamps and unrelated951 UV/paint loader pins remain. Atlas950/951,
+paint948, main930, cage930, Multi-transform1.0 and frozen snapshots unchanged.
+DEVICE952: repeatedly open/Back to3D on iPadPro, verify full editor and main top-right
+buttons/VIEW; pan/pinch/Pencil island edit and UndoRedo; return to3D then reopen.
+Next follow952 UI feedback before further unwrap work; record exact repeat trigger if
+loss persists. Other alpha929/metal reflection gates remain independent.
+
+
+.952 local Node24 full regression: **2770 PASS / 0 FAIL / 0 skipped** (97.5s),
+all2767 retained plus three workspace layer/entry lifecycle tests. Focused UV/history/
+Pencil/island/image-reference/Pack/density/release53PASS. No assertions relaxed or old
+checks deleted. Functional changes only uv-workspace; MeshHealth import + reviewed
+shell/recovery cache keys952. Main/cage/Multi-transform1.0 and frozen bytes unchanged.
+Hosted/Pages/live publication evidence follows. DEVICE952 intermittent iPad UI-loss
+retest remains pending; no exact browser/GPU reproduction or device fix PASS claimed.
+
+
+## .952 publication verified â€” 24 October 2026 (Brisbane)
+
+Runtime `105b95ca8b0cd2b8ffde8a57a15c38074923943d`, tested tree
+`ea50e9e98994c4abcbc4f3829a0d1418938d0c35`, published on main. Ten uploaded
+blobs/tree matched local hashes; fetched main matched and checkout clean. Local
+Node24 regression2770PASS/0FAIL/0skipped (97.5s); hosted Node22 run39955713017 /
+job120420921065 complete logs verify2770/0/0 (248.6s). Pages39955712534 build
+120420925921/deploy120421167189 succeeded. All29 postdeployment checked shell/version,
+workspace/MeshHealth/UV/Add/Multi/Lab/paint loaders, recovery, retained main/cage/
+Multi-transform1.0/lit948/layers947/frozenBeta7 marker byte-match tested source.
+This proof changes four continuity files only; tested runtime retained.
+
+Build952 complete and ready for iPadPro retest. User951 atlas PASS protected; separate
+intermittent UV/main-toolbar disappearance is still pending DEVICE952 confirmation.
+Repeatedly open editor and Back to3D; check whole editor, exit beside title, main top-right
+buttons/VIEW, pan/pinch/Pencil island editing/UndoRedo and return/reopen. Original924
+header-above-viewport behavior preserved with sibling workspace layer. Cloud WebGL
+unavailable, no exact intermittent Safari reproduction or full-app rendered acceptance
+claimed. Next follow952 device feedback; don't infer that automated tests prove the
+reported intermittent disappearance resolved. No modelling/atlas/paint algorithm changes.
+
+
+## .953 â€” selected Edge Cut UVs; .952 user PASS â€” 24 October 2026 (Brisbane)
+
+User952 PASS protects repeated UV Editor entry/exit, main toolbar/VIEW and island
+Pencil/history workflow after sibling-layer hardening. Prior951 atlas PASS retained.
+No new acceptance of independent alpha929 or smooth-metal reflection gates inferred.
+
+Audit main6cb66f1c: original inspector already owns manifold adjacency/union and has
+canJoinFaces; original UV editor owns Pack and native commit/history. No authored
+Edge-cut command exists. Add Edge radial outer67.5Â° Cut UVs using current original
+SelectionBridge edge indices, with all previous tool positions preserved. Same
+MeshHealth module hosts the one-shot button; no new popup/input/history/kernel.
+
+Native unpainted independent Base meshes with complete matching UVs only. Exclude
+selected actual edges from ORIGINAL inspector connectivity, require each selected
+continuous UV edge's owners to end in different components, then original grid Pack
+and ONE native UV commit. Complete boundary-to-boundary cuts or closed loops split
+charts; incomplete slits refuse the whole action. Existing seams/boundaries no-op.
+Every unselected connection is verified unchanged before checkpoint. Coordinates
+persist as ordinary native UVs, not seam flags or a new schema. Repack affects ALL
+islands with one common scale; source polygons/positions/relative density untouched.
+No conformal unwrap, new flattening, persistent seam marking or stitch command.
+20K corners / original128 packed-island limits; ambiguous/nonmanifold/same-winding
+selected edges, stale target/history failure refuse before publication. Any colour/
+roughness/metalness paint refuses and points to explicit Object UV Clear paint.
+No silent pixel discard/rebind or imported material remapping.
+
+Six new integration checks cover complete cuts/closed loops, mixed partial refusal,
+existing seams/boundaries, original pack/work/target/history guards, read-only peers,
+unchanged geometry and unselected joins, actual scene UndoRedo/Paint/SaveOpen/GLB
+roundtrip, actual Edge callback/current selection/render and radial one-shot wiring.
+Old713/709 radial inventory now includes the new20th Edge action, retaining ALL old
+IDs and cross-mode placements. Other runtime source changes are reviewed reverse
+UV/Add/Multi/Lab cache pins and shell/recovery keys953 only. Workspace952/main930/
+cage/Multi-transform1.0/frozen bytes unchanged. Full/publication proof follows.
+
+DEVICE953: Add unpainted UV Plane with X density2, Y1. Edge mode select its centre
+shared edge â†’ radial Cut UVs. Object â†’ UV â†’ Open UV Editor shows2 separated islands;
+UndoRedo restores/reapplies cut; Pencil island move affects one side. Paint after cut,
+SaveOpen retains result. Repeat cut on same edge adds no history; painted targets
+refuse until explicit Clear paint. Existing cube face boundaries may already be seams
+and correctly no-op. For multi-edge paths select the whole cut, not an interior slit.
+Next follow953 tactile feedback; arbitrary seam marks/stitch/general curved unwrap
+remain queued through original owners. Keep952 UI-loss acceptance protected.
+
+.953 final local Node24.19.0 regression: **2776 PASS / 0 FAIL / 0 skipped**
+(91.6s), retaining original2770 plus six Edge-cut integrations. Focused new/atlas/
+workspace/release20PASS; radial709/713 retained all old IDs and now requires20 Edge
+actions. First full run's only failure was old713 inventory19; updated to intended
+20 and final COMPLETE rerun above passes. No behavior assertion dropped or skipped.
+Reviewed9-file runtime/loader closure + recovery keys953; main930/cage/Multi1.0/
+frozen unchanged. Actual953 iPad tactile acceptance pending. Hosted/Pages/live
+publication proof follows. Reprojecting UVs replaces cuts; no persistent seam recipe.
+
+
+## .953 publication verified â€” 24 October 2026 (Brisbane)
+
+Runtime `1d3185fb08ec44bd61dc01b00aa36078eaddab47`, tested tree
+`e31ab5696a9155691ae26b8b2a6313e74eebd8db`, published on main. All18 blobs
+and created tree matched local hashes; fetched main matched exactly and checkout
+aligned cleanly. Local Node24 full2776PASS/0FAIL/0skip (91.6s); hosted Node22 run
+40039584933/job120707236946 complete logs verify2776/0/0 (214.7s). Pages40039584537
+build120707240032/deploy120707397865 SUCCESS. All20 checked live files byte-match:
+shell/version, COMPLETE changed UV/Add/Multi/Lab/gizmo graph, recovery, retained
+workspace952/inspector951/main930/cage/Multi1.0/native writer/project/frozenBeta7.
+This proof changes four continuity documents only; tested runtime retained.
+
+Build953 ready for iPad testing: Add UV Plane X2/Y1 â†’ select centre shared Edge â†’
+radial Cut UVs â†’ Object UV Editor shows two islands. UndoRedo restores/reapplies;
+Pencil island move, Paint after cut and SaveOpen retain layout. Existing seam/boundary
+repeat no-ops; paint requires explicit Clear paint before cutting. Complete paths or
+closed loops only; partial slits refuse atomically. No general unwrap/stitch/persistent
+seam recipe. User952 UI/history PASS protected; DEVICE953 feel/visibility pending.
+Next actual953 feedback, then scoped seam/stitch/unwrap audit through original owners.
+
+
+## .954 â€” screen-proximity Edge picking; supplied convex-edge report â€” 24 October 2026 (Brisbane)
+
+User reports convex-position edges almost impossible to tap and newly flipped
+edges becoming unselectable. Screenshot clearly952; current953 retains SAME main930
+picker, so reproduced on current source, not dismissed as stale-shell behavior.
+No953 Cut UVs PASS inferred. User952 UV-editor acceptance remains protected.
+Exact uploaded Convex Edge.obj retained byte-for-byte at
+ tests/fixtures/convex-edge-954.obj; SHA256
+7822b8d3536771c3b5f80d73f3fac42110c385dd7a1723200d9e7a40c18778d4.
+60vertices/84faces matches screenshot. Camera pose is not in OBJ; test cameras are
+controlled reproductions, not a claim to recover exact screenshot view.
+
+Audit: original main pickKindHits uses Three Line threshold .09 world units then
+camera-distance order. On exact supplied geometry,12 chosen line midpoints ALL
+select another camera-nearer neighbouring edge. Original proxy/display batching
+and IDs are correct; no source topology/Flip kernel repair required. Selected-only
+component-tap helper also greedily chose any selected edge within20px, even when
+a different edge lay under the pointer. Pencil gate already delegates native pick.
+Edge-paint owner independently used the old world-radius ordering.
+
+Main's Edge-only branch now calls small read-only edge-screen-picking helper over
+SAME rendered indexed line proxies,12 CSS pixels, screen proximity first, camera
+depth for quantized quarter-pixel ties. Homogeneous frustum clipping before divide
+and perspective-correct world interpolation; parent transforms and orthographic
+cameras supported. No mesh.edges(), topology or source writes, cache/history/input
+owner. Material.visible=false proxy convention retained; object/ancestor visibility
+respected. Face/Vertex/Object ray paths unchanged. This is targeting, not a new
+surface occlusion/back-face/Through-selection policy; no new hidden-surface guarantee.
+
+Original selected-component Edge toggle now checks SAME native hit before removal;
+unselected neighbours pass to main. Original Edge paint visible/through uses native
+pickHits order and original dedup/first/all policy, retaining fallback for startup/
+non-Edge fixtures. Same original listeners, propagation and gesture owners; no new
+raw-pointer handler. Flip Edge geometry/history/radial/workspace/UV/paint/material
+algorithms unchanged. New MAIN cache pin954 is intentional actual picker repair;
+original main internal stamp and cage930/Multi1.0/frozen bytes remain unchanged.
+Direct-bevel changes ONLY component-tap child cache key; shell/recovery/manifest
+and reviewed main/child loader graph954. No blanket repinning.
+
+Seven new integrations: exact supplied12 pre-repair failuresâ†’correct native pick;
+ACTUAL original Flip Edge apply/rebuild/UndoRedo plus reselect new diagonal; scale/
+projection/parent/DPR/12px bounds; clip/hidden ancestor/subpixel-depth behavior;
+actual selected-toggle refusal/removal with no history; original Edge-paint native
+event/visible/through delegation; real Pencil gate/paint owner release/cancel/finger
+Orbit retention. Focused new+native Face/Vertex/floating-navigation/release38PASS.
+Original assertions retained; full and publication evidence follow. Node Three/input
+fixtures are not native iPad/WebGL rendered acceptance.
+
+DEVICE954: SAME supplied mesh, deselect and tap circled edge and neighbouring white
+edge; orbit/zoom and repeat. Flip eligible edge, deselect then reselect new diagonal;
+UndoRedo keeps both geometry and picking usable. Try nearby multi-edge selection,
+Pencil drag selection and finger orbit/pan/pinch without selection loss. Check953
+Cut UVs separately when practical; no953 acceptance inferred from this bug report.
+Next respond to954 device results before new seam/unwrap features. No topology
+repair/triangulation workaround or forced cache-clearing needed for reproduced bug.
+
+.954 final local Node24.19.0 regression: **2783 PASS / 0 FAIL / 0 skipped**
+(95.1s), original2776 retained plus seven supplied-file/picker/input integrations.
+Focused new/native Face/Vertex/floating-edge/gesture/release38PASS. No old assertions
+relaxed or removed. Uploaded OBJ fixture byte-identical. Main source changes only
+helper import and Edge picker branch; direct-bevel is pin-only. Component Edge toggle
+and Edge-paint use existing native owner; no new pointer/geometry/history implementation.
+Reviewed cache closure954; cage930/Multi1.0/frozen unchanged. Hosted/Pages/live-file
+publication proof follows; actual954 iPad tap/Flip/reselect acceptance pending.
+
+
+## .954 publication verified â€” 24 October 2026 (Brisbane)
+
+Runtime `989a1c1a0ef919a106e239ab6c85fafad788ecc1`, tested tree
+`07f00248ab50e88a0e50a82b712757da0e6339c6`, published on main. All15 blobs
+and Git Data tree matched local hashes; fetched main matched exact tested tree and
+checkout aligned cleanly. Local Node24 full2783PASS/0FAIL/0skip (95.1s); hosted
+Node22 run40041192199/job120712416004 complete logs verify2783/0/0 (244.4s).
+Pages40041191386 build120712417098/deploy120712558241 SUCCESS. All20 checked live
+files byte-match: shell/version, new picker + changed main/toggle/Edge-paint/Bevel
+loader graph, recovery, retained workspace952/UV953/gizmo953/Pencil gate/cage930/
+Multi1.0/Flip337/native writer/project/frozenBeta7. Original upload fixture unchanged.
+This proof changes four continuity files only; tested/published runtime retained.
+
+Build954 complete/ready for SAME-file iPad retest: unselected circled edge and its
+neighbours, orbit/zoom/reselect, original Flip Edgeâ†’deselectâ†’reselect new diagonal,
+UndoRedo, multi-edge selection and finger navigation. Automated exact-file/native
+picker and real Flip/history/input fixtures pass; actual iPad feel/appearance remains
+pending. Screenshot952 failure reproduced on same picker in953; no forced stale-cache
+workaround. User952 UI/history PASS protected;953 Cut UVs device gate remains separate.
+Next actual954 feedback before further unwrap/seam features; no new953/954 PASS inferred.
+
+
+## .955 â€” coplanar Stitch UVs; .953 and .954 user PASS â€” 24 October 2026 (Brisbane)
+
+User explicitly953PASS and954PASS /nextbuild. Protect complete Edge Cut UVs,
+UndoRedo/Paint/SaveOpen and screen-proximity Edge targeting, Flip/reselect, selected
+neighbour toggle/Pencil paint selection and finger navigation.952 editor UI acceptance
+also retained. Prior pending953/954 notes below are historical, superseded here.
+Independent alpha929/smooth-metal reflection gates are not implied accepted.
+
+Audit main488e34ee: no stitch exists. Original inspector owns manifold adjacency and
+island membership; original Box projection supplies a canonical plane mapping;
+original coplanar seed grouping951, grid Pack and native commit already exist.
+Add Edge radial outer112.5Â° Stitch UVs, with all prior positions unchanged. Single
+current selected shared edge; original button/action host in MeshHealth and original
+radial one-shot completion. No new popup/raw input/history/mesh/triangulation owner.
+
+First stitch supports TWO islands on SAME oriented flat source plane, native/plain/
+independent unpainted Base meshes only;128faces/20Kcorners. Existing current charts
+must each match canonical plane coordinates under uniform similarity/reflection.
+Moved/rotated/scaled/flipped charts supported; internally distorted/warped/bent/
+non-coplanar charts refuse. Original lower-face chart supplies the fit; move the other
+into its plane frame, snap common vertex-ID corners to ORIGINAL exact anchor values.
+All shared boundaries between that pair join; no spatial welding, per-face topology
+changes or saved seam flags. Original grid Pack then repacks ALL islands with common
+scale and commits ONCE. Moving chart density/orientation matches retained chart before
+Pack; untouched chart shapes/relative density retained. Final inspector must report
+EXACT intended two-to-one membership, no unrelated merges/splits. Same-island joined
+edge no-ops; an internal slit refuses, as no whole-chart join can repair it.
+
+All colour/roughness/metalness paint refuses before staging/history, with explicit
+Object UV Clear paint guidance. Original unsupported target/history/finite/collapse/
+Pack guards retained. No general curved unwrap, cube-net unfolding, optimal packing,
+arbitrary overlap repair or paint resampling. Native source:boxlab corner schema,
+geometry, project/history/export owners remain unchanged. Canonical Box is transient
+validation/alignment only, not a replacement live UV mapping or parallel kernel.
+
+Six new integrations: Cutâ†’Stitch exact endpoints/geometry/peer isolation/repeat no-op;
+rotated/scaled/mirrored either chart and source scale/translation; unrelated island
+membership; non-planar/distorted/boundary/ambiguous/refused targets and history/work
+atomicity; actual UndoRedo/Paint/SaveOpen/GLB; actual Edge callback and radial launch/
+puck restoration. Original953/954 semantic checks retained. Old713/709 Edge inventory
+now21, retaining all previous IDs and shared cross-mode positions. Focused new/Cut/
+picking/radial/release35PASS. Full and publication proof follows. ONLY UV edit,
+MeshHealth callback and gizmo functionality change; other runtime changes are reviewed
+UV/Add/Multi/Lab reverse loader pins955 and shell/recovery. Main954/picker954/cage930/
+Multi1.0/frozen bytes unchanged. No953/954 acceptance lost during seam work.
+
+DEVICE955: UV Plane X2/Y1 â†’ shared Edge Cut UVs â†’ select SAME edge â†’ Stitch UVs.
+UV Editor shows one joined island; Pencil move moves both faces. UndoRedo steps through
+stitch/cut separately. Move/rotate/scale an island before stitching; same flat patch
+joins/re-packs. Paint after stitch, SaveOpen retains result. Already-joined repeat
+no-ops; curved/same-cube-corner faces or painted targets refuse without changing work.
+Next actual955 device feedback before expanding stitch/general unwrap; preserve
+accepted953 cuts/954 picking/952 UI and all protected navigation/modelling behavior.
+
+.955 final local Node24.19.0 full regression: **2789 PASS / 0 FAIL / 0 skipped**
+(93.4s), original2783 retained plus six Stitch integrations. New/Cut/accepted954
+picking/radial/release35PASS. Original953 source-test boundaries kept intact after
+initial new-button placement exposed a fixture slice; button declarations precede
+both callbacks, and original assertions remain.713/709 inventory now21 with every
+old tool retained. No old behavior assertion removed or relaxed. Main/picker/toggle/
+Edge-paint954, cage930/Multi1.0/frozen bytes unchanged. Reviewed9-file reverse UV/
+Add/Multi/Lab/gizmo closure955 and recovery pins; full hosted/Pages/live proof follows.
+Actual955 iPad feel/flat-stitch workflow acceptance pending;953/954 user PASS protected.
+
+
+## .955 publication verified â€” 24 October 2026 (Brisbane)
+
+Runtime `0b1062de451327f9d685243af31bcbc2e44ba791`, tested tree
+`c82ffe358084236295770486d5a15f781f00e5c6`, published on main. All18 uploaded
+blobs and Git Data tree matched local hashes; fetched main matched exactly and local
+checkout aligned cleanly. Local Node24 full2789PASS/0FAIL/0skip (93.4s); hosted
+Node22 run40045851250/job120727280088 complete logs verify2789/0/0 (244.9s).
+Pages40045851225 build120727283788/deploy120727410695 SUCCESS. All20 checked live
+files byte-match: shell/version, COMPLETE changed UV/Add/Multi/Lab/gizmo graph,
+recovery, retained954 main/picker/component-toggle/Edge-paint, workspace952/cage930/
+Multi1.0/frozenBeta7. Actual original makePlane(2,2,1)+automatic XZ native UV owner
+also smoke-tested Cutâ†’Stitchâ†’one island. This proof changes four continuity files
+only; tested/published runtime retained. User953 and954 PASS recorded/protected.
+
+Build955 complete and ready: unpainted UV Plane X2/Y1 â†’ shared Edge Cut UVs â†’ SAME
+selected seam Stitch UVs â†’ Object UV Editor shows ONE joined island. Pencil island
+move moves both faces; UndoRedo restores/reapplies stitch separately from cut. Paint
+then SaveOpen retains layout/result. Whole two charts must share one flat source
+plane; curved/cube-corner/bent charts refuse, no general unwrap or seam recipe.
+Actual955 iPad appearance/feel remains pending. Next actual955 feedback before broader
+stitch/unwrap work; retain accepted953 cuts/954 picking/952 UI and original owners.
+
+
+## .956 â€” bounded angle-based Auto atlas; 4096-face limit â€” 24 October 2026 (Brisbane)
+
+User requests automatic connected-face stitching during atlas generation, a practical
+face limit, bounded runtime, then suggests edge angle. Also asks whether named
+.boxlab saves can overwrite existing Downloads files. No955 device PASS inferred;
+953 Cut UVs/954 picking/952 editor acceptance remain protected.
+
+Audit main393978b3: Coplanar atlas already joins flat charts through original
+inspector adjacency + Box projection, but was labelled secondary and capped128faces;
+Pack/density also128 with fixed2% gaps, and global plane seed search was quadratic.
+Reuse SAME existing button/owner as primary Auto atlas (before explicit Face atlas),
+add join angle0â€“30Â°/default15. API createCoplanarAtlasUV sixth optional angle defaults0,
+preserving accepted flat outputs and manual955 plane grouping.0Â° = exact prior
+coplanar policy. Positive angle requires BOTH adjacent average face-normal angle
+and a fixed seed-normal cone within cutoff, opposite manifold edge directions and
+EXACT original Box UV endpoints. No drift along curved chains, coordinate welding,
+second triangulator/adjacency/history owner or calls to manual Stitch in a loop.
+
+This is bounded projected-chart grouping, not conformal unwrap/relaxation or arbitrary
+cube-net unfolding. Different Box directions remain seams; higher angle may stretch.
+Warped faces stay separate at0Â°, may join in angle mode if original950 triangle/area
+validation succeeds. No source polygons/positions/groups or persistent schema changes.
+Original private Box â†’ grouped density â†’ Pack â†’ ONE native commit retained. All paint
+channels still require explicit Clear paint; unsupported/stale/history/work refusal
+atomic. Explicit Face atlas retains one island per face and exact small outputs.
+
+Atlas face cap4096 (32Ã—128), original20K face-corner budget retained. Shared Pack all
+and Equalize density support4096 islands so large atlas remains editable. Manual955
+Stitch still has its independent conservative128-face scope. Original <=128-island
+packing gap2% and exact output retained; larger layouts use gap .2/ceil(sqrt(count)),
+outer margin2%, SAME deterministic common-scale grid search (at most4096 columns).
+At4096 charts this is~3.2px gap on1024 maps; no larger texture resolution claimed.
+
+Same plane/cone grouping owner now indexes seed buckets for >128faces: max81 bucket
+lookups/64 seed candidates per face (27 lookups for positive angle), then ORIGINAL
+strict seed tests. Overloaded buckets conservatively leave extra charts separate.
+Small fixed-plane output path unchanged; no iterative stitching/relaxation/optimal
+packer. Host smoke4096-face original Add Plane:15Â° Auto34.6ms,0Â°44.4ms,Face16.7ms;
+these are single local CPU observations, NOT iPad latency or a timing promise.
+
+Seven new integrations cover4096-face Auto/Face, exact joins/geometry/peer ownership/
+repeat/one checkpoint; large Pack/density and reduced wasted UV area; warped fallback/
+disconnected planes; limits/refusals; actual1024-face history/paint/SaveOpen/GLB;
+primary existing UI/angle forwarding; exact same requested download filename twice;
+and shallow/sharp angle thresholds, fixed-cone drift and256-face fast path. Existing
+128-boundary refusal fixtures893/895/949/951/953 moved to4097 without dropping any
+atomicity assertion; prior128 success tests retained.951 panel fixture explicitly0Â°.
+Original other runtime algorithms retained; full and publication proof follows.
+
+Save audit: projectFileName/exportBasicProject already request EXACT chosen name,
+no appended counter. Safari/iOS Downloads collision naming is outside this download
+API. Current MDN primary compatibility data records showSaveFilePicker unsupported
+in Safari/iOS; Chrome's API documentation explicitly says anchor-download fallback
+cannot overwrite. No risky replacement/hidden internal save/new filesystem feature
+added. Existing Save/Open/codec unchanged; regression proves two identical requested
+names. Sources checked24Oct2026:
+https://raw.githubusercontent.com/mdn/browser-compat-data/main/api/Window.json
+https://developer.chrome.com/docs/capabilities/web-apis/file-system-access#polyfilling
+
+DEVICE956: previously over128-face unpainted mesh â†’ Object UV â†’ Auto atlas15Â°;
+check time and chart count. Compare0Â°/15Â° on shallow bends, sharper corners retain
+seams; greater angles may stretch. UV Editor/Pack/UndoRedo; Paint and SaveOpen result.
+New limits4096faces/20Kcorners, not unlimited. Next follow real iPad quality/latency
+feedback before broadening unwrap;955 manual Stitch device gate remains separate.
+
+## User product direction â€” Paint, facegroups and graphical UI â€” 24 October 2026
+
+User explicitly says these are FUTURE GUIDELINES, not immediate requests to implement
+all of them in956. Preserve current atlas build scope. Future direction:
+- Paint facegroups directly on the mesh: assign existing mesh.faceGroups per polygon,
+  not RGB texture pixels. Existing clone/history/project/OBJ/NOM group owners stay
+  authoritative. Reuse surface face picking/Pencil/navigation; a UV-free group-target
+  needs deliberate target validation rather than pretending current UV painter already
+  supports it. One scene checkpoint per stroke; no parallel mesh/group/history kernel.
+- Bring production Paint into mainstream app access; current viewport-paint.js launcher
+  is in File. Reconnect original painter/session, not a second painting implementation.
+- Contextual paint radial for brushes and layers/masks, retaining original controls/
+  action owners and the accepted left dock until deliberately migrated and tested.
+- More graphical UI: consistent function icons with SMALL VISIBLE text captions below,
+  inspired by user's uploaded Nomad Sculpt screenshot0D6C6D33-1097-419E-AC66-52B94B18D841.
+  Keep readable labels/accessibility/touch targets; coherent icon family and active state.
+  Stage changes in small reviewed surfaces; retain accepted radial locations, gestures,
+  Focus, history and modeller behavior. No wholesale reskin automatically authorized
+  as the next untested change. These directions remain in roadmap after atlas feedback.
+
+Audit: mesh.js stores string/null faceGroups and preserves them on clone; original
+facegroup-colours-core displays them. Preview already has source-face triangle mapping.
+956 does not ship facegroup brushes, new Paint entry, paint radial or icon redesign.
+
+.956 final local Node24.19.0 full regression: **2796 PASS / 0 FAIL / 0 skipped**
+(101.5s), original2789 plus seven new atlas/angle/save-name checks. Focused atlas949/
+950/951, cut953/stitch955, Pack/density/release51PASS. Only original limit-boundary
+fixtures moved to requested4097; atomic refusal and prior128 success retained.
+Original951 panel fixture explicitly chooses0Â° under new UI angle forwarding. No
+skipped behavior checks. Reviewed8-file UV/Add/Multi/Lab reverse cache closure956;
+main/picking954/gizmo955/workspace952/Multi1.0/frozen unchanged. Save/Open owner also
+unchanged; Safari external-download overwrite limitation verified from primary sources.
+Hosted/Pages/live proof follows. No955 or956 device PASS inferred.
+
+
+## .956 publication verified â€” 24 October 2026
+
+Runtime commit `f0b790fed52ebfb191699d5b9a30ee18792b995b` on main; exact tested tree
+`2702bb86c769e8ca854bf98ccf39d85ac4e482d8`. Local Node24.19.0:2796 PASS,
+0 FAIL/0 skipped (101501.6ms); focused atlas/pack/density/release:51 PASS.
+Hosted Node22 Topology regression run40047733605/job120733187764 SUCCESS:
+2796 PASS,0 FAIL/0 cancelled/0 skipped (146421.2ms), completed2026-10-24T01:02:46Z.
+https://github.com/CrisBezz/BoxLab/actions/runs/40047733605
+Pages run40047733370 SUCCESS. Cache-busted public GETs:20/20 byte-identical to tested
+checkout, including version/index, all8 reviewed UV/Add/Multi/Lab changed assets,
+release loaders, protected954 main/picker/toggle/edge-paint,952 workspace,955 gizmo,
+930 cage batching,Multi1.0 and frozen beta7 marker. First pre-deployment GET returned
+old runtime; fresh requests after deployment matched every file. No mixed live build.
+https://github.com/CrisBezz/BoxLab/actions/runs/40047733370
+
+Ready for DEVICE956: previously over128-face unpainted model â†’ Object UV â†’ Auto atlas
+15Â°; inspect islands/time. Compare0Â°/15Â° shallow bends and sharp seam retention.
+Undo/Redo, paint a new map, then .boxlab Save/Open should preserve UVs and paint.
+953/954/952 PASS protected. No955/956 device PASS inferred. Future facegroup brushes,
+mainstream Paint access, paint/layer radial and captioned icon UI remain recorded
+roadmap directions; none are part of956 runtime. Safari overwrite limitation remains
+browser-owned; Save/Open filename owner unchanged. Docs-only proof commit follows.
+
+## .957 â€” variable-size shelf packing; .956 PASS â€” 24 October 2026
+
+User .956 PASS /nextbuild protects angle Auto atlas and larger limits. Audit main
+82ddf0de: packedLayout allocates identical cells using largest chart bounds; original
+UV workspace still disabled Pack/density above128 despite4096-capable owner.
+Extend SAME packedLayout with height/width/ID sorted next-fit shelves and24 bounded
+common-scale trials. Choose only if common scale strictly improves over original
+grid; equal-sized charts retain original grid. No chart rotation, shape nesting,
+relaxation, seam changes or optimal-packing claim. Source geometry and original
+UV/history/paint refusal/numeric-collapse validation retained. All callers (Auto/
+Face atlas, Pack, Cut/Stitch repack) reuse original owner. Workspace Pack/density
+now enabled through4096 islands. Margin and count-dependent gaps unchanged.
+New tests verify mixed-size coverage, common relative density, separation, bounds,
+determinism, equal-size fallback and actual workspace129/4096/4097 control gating.
+Validation: full suite2797PASS/0FAIL/0skip (98.8s), plus two new shelf tests
+PASS separately (added after full run enumerated files);2799 distinct tests covered.
+Release+new packing/workspace focused11PASS. No assertions removed/relaxed.
+Published runtime cac6a27c2488700ae7c289c1d0fe3418ce41d370; exact tested tree
+c0b12d1cb6abfe78cc6439aab2800fdd8bb265a0 verified before updating main.
+Pages40067515702 SUCCESS;12/12 public files byte-match (all changed runtime/cache
+loaders plus protected main954/Multi1.0). Hosted regression40067515962/job120793756375 SUCCESS; complete hosted logs
+verify2799PASS/0FAIL/0skip. Local full and focused checks above passed.
+No device957 PASS inferred. Docs-only proof commit follows; runtime unchanged.
+Reviewed reverse cache graph957; main954/picker954/gizmo955/Multi1.0/frozen unchanged.
+DEVICE957: unpainted varied-size mesh â†’ Auto atlas â†’ inspect packing; existing UV
+layout â†’ Pack all; UndoRedo; paint then SaveOpen. Painted targets require Clear paint
+before UV repacking. Bigger chart bounding boxes do not guarantee tight concave nesting.
+Next follow actual packing quality/device timing before broader unwrap or UI changes.
+
+## .958 â€” UV popup clipping containment â€” 24 October 2026
+
+User screenshot FA9BB69D on957 shows right toolbar and bottom status disappearing
+at the SAME vertical boundary while UV TOOLS popup is open, before UV Workspace.
+Not stale shell; not evidence against957 packing. No957 device PASS inferred.
+Audit shared tool-session-ui begin: UV tools uses transformed scrolling shared dock.
+Existing952 Workspace sibling fix does not apply to this preceding popup.
+Narrow mitigation: original UV-tools host uses left/right8px + auto margins instead
+of translateX centring, local isolation and layout/paint containment. Original nodes,
+listeners, wide body/actions, history and all UV algorithms unchanged. Clear these
+UV-only styles before the next dock (including left Paint); ordinary tools keep
+shared placement. No new editor, pointer listener, resize polling or z-index escalation.
+Exact iPad/WebKit compositor failure is NOT reproduced here; this is a targeted
+containment repair requiring device acceptance, not a proven browser-engine diagnosis.
+New test executes original begin for UVâ†’Paintâ†’ordinary tool and verifies scoped clip,
+transform-free UV placement and style cleanup. Release contract/cache keys reviewed958;
+main954/picker954/Multi1.0/frozen and957 packing/workspace unchanged.
+DEVICE958: repeat Objectâ†’UV and Close, watch full top-right toolbar/status; Auto atlas,
+Open UV Editorâ†’Back to3D, then Paint and another tool to check popup positions.
+Next actual958 iPad clipping retest before further unrelated development.
+Initial full run found one old711 assertion requiring left50% for UV as well as
+ordinary tools; updated only UV expectation to inset8px/right8px/no-transform,
+retaining every other launch/close/history check. Focused20PASS. Final full-run2800PASS/0FAIL/0skip (94.95s). Publication evidence follows. No957 packing source changed.
+
+.958 publication: runtime8deba41d15d06825d28e0195fe486e0d1499b9e5 on main.
+Tested tree2a806a34735d045e057b2cb6f224e20a60cccbad matched uploaded Git tree exactly.
+Local final2800PASS/0FAIL/0skip; focused20PASS. Pages40068587680 SUCCESS.
+All13 checked public files byte-match tested checkout: shell/version/new session UI,
+retained957 UV/packing/loaders and protected main954/Multi1.0. No packing algorithm
+changes958. Hosted regression40068588195/job120796941024 SUCCESS:2800PASS/0FAIL/0skip.
+Actual intermittent iPad failure not reproduced; DEVICE958 popup/header/status retest
+required. No957/958 device PASS inferred. Docs-only publication proof follows.
+
+## .959 â€” reconnect production Paint in Object radial; .958 PASS â€” 24 October 2026
+
+User958 PASS /nextbuild protects UV-popup/header/status clipping repair and style
+cleanup across UVâ†’Paintâ†’ordinary tools. Prior pending958 device notes superseded.
+Audit main85544a7e: original object-radial-session already maps UV Paint to original
+viewportPaintBtn/uv-paint/__boxlabViewportPaint, but total-gizmo ring omitted button.
+Add UV Paint at outer45Â° radius230; every existing sector stays in place. Original
+adapter launches SAME production painter, owns cancellation/completion/gizmo hide;
+existing File launcher retained. Painter opens left dock and enforces original one
+active independent UV object/paint target guards. No new brush/layer/history/input
+owner, no painter changes or icon overhaul. Original left Paint exception retained.
+Extend original711 inventory/launch/close/spacing fixture with UV Paint; left8px
+expectation includes original Paint dock, all old assertions and positions retained.
+Local full2800PASS/0FAIL/0skip (95.99s); focused19PASS, final radial14PASS.
+No assertions removed. Publication evidence follows. Only runtime functionality: one radial
+button; shell/recovery/gizmo cache pin959 and reviewed asset contract. Session958,
+main954/picker954/Multi1.0/UV957/packing/frozen unchanged.
+DEVICE959: select one UV object â†’ Object radial â†’ UV Paint (outer upper-right);
+Pencil paint, fingers orbit/pan/pinch, UndoRedo stays in Paint; Doneâ†’radialâ†’reopen
+same layers. Try UV popupâ†’closeâ†’Paint and Paintâ†’Doneâ†’another tool. SaveOpen retains
+paint. File Paint entry still works. Invalid/no-UV targets retain original refusal.
+Next feedback on mainstream access before a separate paint-tool/layer radial build.
+
+.959 runtime57cb1ca5e86addf0d875e39fadd94fce8ac38088 published on main; uploaded
+tree0d80b7f3c25e805e9b422076e51921473cea5d66 exactly equals tested local tree.
+Local2800PASS/0FAIL/0skip, focused19PASS, final inventory/lifecycle14PASS. Hosted
+regression40069141161/job120798590171 SUCCESS:2800PASS/0FAIL/0skip;
+Pages40069140924 SUCCESS.
+All16 checked public files byte-match tested checkout (shell/version/new gizmo,
+original painter/adapter/session958/UV957/packing/main954/Multi1.0 and loader graph).
+User958 PASS explicitly protected;959 hands-on gate remains separate. No957 packing
+PASS inferred and no packing/paint/UV/session algorithm changed in959.
+
+## .960 â€” captioned brush-tool radial in Paint dock; .959 PASS â€” 24 October 2026
+
+User959 PASS /nextbuild protects original Object radial UV Paint access and accepted
+958 clipping fix. Audit current099f117d: painter's paint-action select owns tool
+settings/change cancellation, Brush/Fill/Eraser/Smudge/Blur already implemented.
+Replace visible select with native details Brush tools picker in SAME Paint dock;
+original select remains hidden as settings/event owner. Five66Ã—52px buttons on a
+220px radial, SVG function icons and visible captions; selected aria-pressed highlight
+and collapsed current-tool caption. Each click checks original active/disabled gate,
+sets original select and dispatches SAME change event (clear staged image/cancel live
+stroke/sync controls). Picker closes on choice and session end. AO disabled selection
+is mirrored. No new viewport input, brush raster/history/paint resource or layer owner.
+Accepted left dock/footer/layers/settings/gesture/tool positions retained. No layer
+radial, facegroups or broad reskin in960; staged graphical UI only on these5 tools.
+Two actual production UI integrations: all5 tools/caption/selection/blur controls/
+no history and disabled refusal; live Pencil strokeâ†’radial switch cancels original
+contact while retaining committed paint/history and navigation. Initial new fixture
+read aria-pressed from property instead of existing attributes map; corrected test
+access, no production workaround or original assertion removed. New+release7PASS,
+original900 UI/core+release12PASS. Full local2802PASS/0FAIL/0skip (97.20s); publication evidence follows.
+DEVICE960: Objectâ†’UV Paintâ†’Brush tools; inspect icons/captions, pick Brush/Eraser/
+Fill/Blur/Smudge; picker collapses and current tool caption follows. Paint/UndoRedo,
+finger navigation; Doneâ†’reopen and verify compact dock/layers. UV popup clipping
+and959 Object radial entry remain protected. Next feedback before layer/mask radial.
+
+.960 publication: runtime61f9d1b7944fa3417c8639e72ae3394b434e4b4b on main;
+exact tested treeb2ad8cc85e787509d6e3b6c6fc3d845f1069580f matched Git upload.
+Local2802PASS/0FAIL/0skip (97.20s); new/release7PASS and original900/release12PASS.
+Pages40071442619 SUCCESS;16/16 checked public files byte-identical to tested checkout:
+shell/version/new painter, retained959 gizmo/adapter,958 session host,957 UV/packing/
+loaders, main954/Multi1.0 and lab graph. Hosted40071442658/job120805544281 SUCCESS:2802PASS/0FAIL/0skip.
+User959PASS protected. DEVICE960 icon spacing/selection/paint/navigation/history
+acceptance pending; no device PASS inferred. Original layer/mask controls remain.
+
+## .961 â€” bound hidden gizmo projection and SVG compositor surface; .960 radial PASS
+
+24 October2026. User960 PASS for brush radial; separately reports giant red/green
+lines after Paint Done and recurring right-side UI disappearance following UV tools/
+map views, changing as gizmo/object orbits across screen. Prior958 clipping PASS is
+historical; recurrence is OPEN and not dismissed by prior PASS or Node results.
+Reviewed uploaded1EC44980 screenshot and9.7s ScreenRecording17-11-35 frames1s/7s.
+Video shows live model/gizmo while header/object UI disappears. Exact iPad compositor
+fault remains unreproduced locally; do not claim a proven WebKit engine diagnosis.
+Audit current13a0b4a9: total-gizmo sync sets root.hidden during Paint but still calls
+syncAxisVisuals. projectedRingPath uses SIZE196/max(1,hiddenRect.width0): hidden
+projection magnifies ring coordinates196Ã—; root drop-shadow filter and overflowing
+main SVG allow enormous paint/filter bounds. Both failures plausibly share this
+unbounded presentation surface, unlike previous popup-only mitigation.
+Repair SAME gizmo owner: no axis update while hidden; projectedRingPath returns empty
+for hidden/zero/nonfinite dimensions or any nonfinite/out-of-local196Ã—196 ring point.
+Degenerate rings clear both visible and hit paths through existing sync owner;
+hidden gizmos skip updates and recompute normally when shown.
+Remove root drop-shadow filter; bound only direct main SVG overflow. External radial
+sectors/corner shortcuts remain outside main SVG and keep original placement/input.
+No transform geometry, gesture, UV/paint/history/render kernel or Multi1.0 changes.
+959 radial/960 brush controls and958 popup containment unchanged. This targets the
+actual hidden sizing defect and constrains rendering; iPad retest is still required.
+Two tests execute original ring functions with realThree perspective camera: normal
+XYZ paths, hiddenâ†’zeroâ†’restore exact recovery, finite local coordinates, invalid
+projection refusal; hidden sync guard/main SVG/filter scope and retained external
+Paint button/shortcut contracts. Focused7PASS; local full2804PASS/0FAIL/0skip (104.73s). Publication evidence follows.
+DEVICE961: Paintâ†’Done on same model; no giant coloured lines. Repeat UV toolsâ†’UV
+Editorâ†’Back/Close; orbit model/gizmo into right side and watch entire toolbar/Object
+Browser/status remain visible. Move/Rotate/Scale and radial tools still usable;
+Paint/UndoRedo and finger navigation preserved. Next actual961 rendering feedback
+before unrelated features. If recurrence persists, keep independent clipping report
+open and inspect other filtered/overflowing layers; do not infer acceptance.
+
+## Paint UI direction clarified by user â€” 24 October2026
+
+User says960 dock-contained radial misunderstood intent. Desired SAME floating
+viewport radial theme as Vertex/Edge/Face/Object, with Paint context. Choose brush:
+radial disappears; compact, correctly sized contextual settings at TOP CENTRE;
+remaining viewport clear for painting. Hold EMPTY BACKGROUND to reopen Paint radial,
+choose Blur/etc, then radial disappears and contextual top panel changes. Layers,
+masks and image placement should open contextual panels only when requested.
+Existing left all-controls dock is transitional, not desired final Paint interface.
+User explicitly defers possible bottom-left Paint mode button alongside selection.
+Do not silently replace this request with another radial embedded in a dock.
+Stage migration using current painter/action/history/layer owners and shared panel
+position/compact layout; no new brush engine. Paint-context background hold must
+belong to single existing gesture owner and override modelling invert ONLY while
+painting; fingers still orbit/pan/pinch, Pencil paints, UndoRedo stays in Paint.
+Do not open a radial from a surface paint stroke or navigation; cancel pending hold
+on movement/multitouch. Scope regular modelling radial/gesture owners unchanged.
+This is documented direction;961 fixes rendering only and does not ship this UI.
+
+.961 publication verified: runtime5fb4a4fabeee8c8155b9dfc3cba918536b5bed23,
+exact tested tree00cbdf01bb0719b4dbcad13c4e180202937be354. Local2804PASS,
+0FAIL/0skip; focused7PASS. Pages40073818786 SUCCESS; hosted regression40073818564
+SUCCESS. All16 checked public runtime/loader/protected files byte-match tested tree.
+Device961 red/green lines and orbit-dependent clipping acceptance remains pending;
+no proof of iPad compositor root cause inferred from automated passes.
+
+## .962 â€” startup/lifecycle viewport sizing; .961 rendering FAIL â€” 24 October2026
+
+User961 FAIL: right-side UI broken immediately after refresh; portraitâ†’landscape
+restores it. Do NOT mark961 rendering fixed from2804 automated passes.960 brush
+radial acceptance is separate; user's clarified floating viewport Paint radial with
+compact TOP contextual settings remains recorded and is NOT implemented in962.
+Audit main5fb4a4fa: renderer resize runs once at startup and on window.resize only,
+DPR is set once. Later layout/container/visual viewport changes have no sizing owner.
+Original main resize now accepts measured width/height/cappedDPR and updates SAME
+renderer/camera/selection display. New small viewport-sizing scheduler coalesces
+ResizeObserver, window resize/orientation/pageshow, visualViewport resize and semantic
+tool-session transitions into one frame. Startup has an additional settling frame.
+Unchanged observer dimensions no-op; lifecycle transitions request one same-size
+canvas repaint. Zero sizes defer, DPR is capped2, no per-frame polling/synthetic
+resize events/temporary1px jiggle/forcedorientation/second renderer or input owner.
+This follows rotation's resize/repaint path but exact iPad compositor fault remains
+unreproduced;962 is a targeted lifecycle repair requiring device feedback.
+Main changes ONLY helper import, resize function and binding; internal main stamp
+retained. Main loader962 intentional.961 gizmo bounds retained; UV/paint/geometry/
+history, protectedMulti1.0 and frozen releases unchanged. Reviewed asset contract
+adds exact mainâ†’viewport-sizing import; shell/recovery/main pins962.
+Three integrations: original main resize callback preserves renderer/camera/position;
+startup/settled layout/container-only resize/DPR/coalescing/no
+polling; same-size pageshow/session/orientation repaint/zero-size/cleanup. Focused7PASS.
+Full/publication evidence follows. Prior961 proof and clarified Paint direction are
+included in this handoff, superseded by explicit961 FAIL above.
+DEVICE962: refresh in LANDSCAPE without rotation; inspect whole right toolbar/Object
+Browser/status. UV toolsâ†’Editorâ†’Back/Close, orbit to both sides. Paintâ†’Done checks
+lines independently, then Move/Rotate/Scale and UndoRedo. Report if rotation is still
+needed; do not infer device PASS from tests. Defer Paint layout migration until stable.
+
+.962 targeted validation30PASS/0FAIL/0skip (~1.1s): production sizing scheduler+
+main resize, release contract, original961 ring guards,954 picking,952 UV workspace,
+900 actual Paint/core and960 brush radial. Syntax checks main/helper pass. Prior full
+run was interrupted and temporary log unavailable; no full962 count claimed.
+User asks why builds slow: avoid blocking handover on duplicate local+hosted full
+suite for narrow changes; run relevant checks and verify deployment, report hosted
+full-suite status accurately. GitHub still runs full regression automatically.
+
+.962 published runtime9c3d22757255d582b9de06300b7467dd832972d4; exact uploaded
+and local tested treef46fcbb7020270aecb67c13c0e58066b6e05393a. Pages40095700923
+build/deploy SUCCESS; changed shell/version/main/sizing helper4/4 live byte-match.
+Thirty relevant checks PASS; no full962 pass count claimed. Hosted full regression
+40095701546 in progress at handover; not blocking device retest.961 user FAIL
+recorded, portraitâ†’landscape workaround is diagnostic only. DEVICE962 fresh-landscape
+load/UV-entry/return/orbit/right toolbar+Objects+status retest required. Paint radial
+redesign remains documented direction, not shipped. No device962 PASS inferred.
+
+
+## .963 â€” floating Paint radial and contextual controls; .962 PASS â€” 24 October 2026
+
+User confirms .962 PASS; protect fresh-landscape viewport sizing, UV workspace return,
+orbit visibility and Paint Done rendering. Ship the clarified Paint interaction using
+the existing viewport painter and original main background-hold owner. The floating
+radial offers Brush/Fill/Eraser/Smudge/Blur plus Layers/Mask/Image/AO/Texture pages.
+Choosing an item closes the radial; the original painter controls appear in a compact
+top-centre contextual panel. Holding empty background reopens the Paint radial. Pencil
+strokes, finger navigation, Undo/Redo, resource, AO and image placement continue through
+original owners. Paint hold is allowed only while idle (no stroke/image/AO preview); the
+original hold cancels on movement, multitouch, pointer cancel or session change.
+Paint settings use the shared panel position owner with a compact option; other popup
+layouts remain unchanged. iPad tactile acceptance remains pending.
+
+
+## .964 â€” left side compact Paint settings; user direction â€” 25 October 2026
+
+User requests Paint contextual popups at LEFT because top-centre settings obstruct the viewport. Keep the floating radial and existing painter/control owners from .963. Reuse shared position owner with compact layout; set Paint host 8px from left/top, width capped at320px, viewport-height scroll. Reduce gaps modestly while preserving readable labels and minimum tap heights. Other tool popups retain top-centre placement. DEVICE964: Brush/Blur left placement, spacing, radial hold/reopen, Pencil, finger navigation, UndoRedo, contextual pages and Done. Next: obtain iPad acceptance of radial + left popup before more controls; then prioritize facegroup painting.
+
+
+## .965 â€” Paint workflow and UI evidence â€” 25 October 2026
+
+User .964 PASS accepts LEFT compact Paint popup, but recurring inactive right-side UI
+remains OPEN. Do not infer rendering repaired. Current requested UI: bottom UV PAINT
+beside SELECT; native UV validation before entry; original Object radial Paint sector
+removed. File keeps no duplicate button once bottom bar is ready. Layers now always
+visible at top, selected contextual settings below. Radial choices stay visible until
+Pencil begins a valid surface stroke/image gesture; browsing choices adds no history.
+Repeated Paint entry reopens tools; empty background hold reuses main's single timer
+with explicit Paint background policy, bypassing modelling hit proxies. Done exits;
+Escape cancels live contact without leaving Paint; competing tool launch is refused.
+Invalid/deleted geometry may still close for resource safety.
+
+Smudge audit found bounded 8M-work guard threw and cancelled valid stroke pixels.
+Guard now pauses additional dabs at cap and exposes a lift-to-keep status; lifting
+commits the valid prefix normally. Cancellation/checkpoint refusal still restore.
+No unbounded raster work or changed cap. Map size replaces ambiguous Texture caption:
+colour resolution/legacy512-to1024 enlargement, not a brush.
+
+File â†’ UI Debug extends original opt-in gesture debug: bounded100 events, right-side
+hit-test stacks, bounds/styles/visibility, canvas/visualViewport, session, errors and
+context loss. Capture report then Copy report after inactive UI occurs; flag persists
+through refresh. Diagnostic reads and listeners never consume input. Exact iPad failure
+not reproduced; debug mode gathers evidence, does not claim a compositor repair.
+
+DEVICE965: no-UV object refuses Paint; UV object opens from bottom. Inspect top Layers
+and settings below, browse radial choices then Pencil paint hides it; background hold
+reopens. Long Smudge/lift keeps pixels. Fingers/UndoRedo and Done. Enable UI Debug,
+reproduce right-side failure, Capture report â†’ Copy report and send report.
+
+
+.965 validation: full local Node24 suite2810 PASS/0 FAIL/0 skipped (90.1s);
+focused production/UI/hold/debug/Smudge and release checks passed. Revised old tests
+only where user-directed UI changed (radial persistence, scalar-layer visibility,
+removed Object Paint sector); retained raster cancel/refusal and protected gizmo
+bounds/navigation assertions. Old fixed732 shared-dock pin assertion now uses reviewed
+cache contract; negative background test mutates BOTH native hold branches; debug
+fixture preserves multiple observers and existing runtime-error extraction boundary.
+.964 rendering issue remains OPEN; debug report is diagnostic evidence, not a fix.
+Runtime publication and hosted CI proof are verified separately after this commit.
+
+
+## .966 â€” continuing Smudge input windows; startup toolbar evidence â€” 25 October 2026
+
+User .965 PASS protects bottom Paint entry, persistent radial, Layers-first LEFT
+settings and kept Smudge pixels. User reports Smudge still stops after5â€“6 passes.
+Original8M raster work cap was contact-wide; renew ONLY its work counters per native
+Smudge input sample, retaining before snapshot/coverage/pickup/dirty pixels. A bounded
+sample may pause dabs, next input resumes. At original12000 path-dab cap, reseed same
+original path owner from last screen input while retaining the raster contact. No
+extra checkpoints or layer finish until physical lift: Undo remains one stroke.
+Cancel/checkpoint refusals retain atomic rollback. Brush/Fill/Eraser/Blur unchanged.
+
+User supplied .965 debug report from refresh failure:1366Ã—886, canvas1366Ã—826CSS /
+2732Ã—1652pixels atDPR2, paintfalse/sessionnull/controlsenabled; sampled right CANVAS
+contacts reach window bubble. No broad overlay in those canvas samples. This does NOT
+prove toolbar hit testing or compositor painting healthy: original grid startsY71
+below60px header and omitted .top-actions/right button rects. User confirms refresh
+can enter failed state directly. Extend existing debug report with exact right-button
+rect/styles/disabled/expanded/centre hit stacks; capture these on persisted-debug
+startup/pageshow/lifecycle and toolbar click. No root cause or rendering fix claimed.
+
+DEVICE966: long repeated Smudge passes under one Pencil contact continue; lift keeps
+result, ONE Undo/Redo restores whole contact, cancel restores pre-contact. All .965
+UI flow remains. Enable UI Debug, refresh directly into right failure, Capture/Copy
+new report containing controls and startup evidence; tap affected right button first
+if practical. Exact toolbar probe distinguishes offscreen/disabled/occlusion from
+DOM-healthy but visually broken UI; native iPad rendering gate remains OPEN.
+
+
+.966 validation: full local Node24 suite2813 PASS/0 FAIL/0 skipped (95.0s);
+focused Smudge/gesture/UI/debug/Lab/release41 PASS. New checks prove renewed work
+windows retain pixels and cancellation baseline; long actual surface-picked Smudge
+passes original12000 path budget, edits late pixels and commits ONE Undo/Redo entry;
+right toolbar centre probes include headerY30 and persist in pageshow evidence.
+Prior .965 hosted regression40181206048 has now completed SUCCESS. Exact supplied
+refresh report observations are archived in docs/ui-debug-refresh-965-report.md.
+Right-side native iPad failure remains OPEN; no rendering fix inferred.
+
+
+## .967 â€” canvas/UI composition boundary; .966 invisible clickable controls â€” 25 October 2026
+
+User reports right controls remain clickable while visually absent; switching away
+to ChatGPT and back restores appearance. Exact .966 report10:22:08Z shows right
+buttons on-screen/enabled/visible/opacity1, no transforms/filters/clip paths, exact
+button/SVG hit stacks; Undo click reaches window bubble. Paintfalse/sessionnull.
+Startup toolbar grows from134.56px wide at459ms to317.61px at649ms, with correct
+layout but reported invisible pixels. Evidence points to painting/compositing, not
+removed UI, offscreen layout, disabled controls or broad input interception. This
+is an inference, NOT a locally reproduced WebKit-engine diagnosis.
+
+Targeted repair in original stylesheet: viewportWrap isolated stack atz0, original
+canvas bounded by contain:paint with its ownz0; header remainsz10 above viewport.
+Header/status/Object Browser get isolated compositing hints via will-change:opacity,
+without transforms, opacity changes, clipping UI menus or reparenting any control.
+VIEW fixed popup remains viewport-relative; floating tools retain their own owners.
+Original viewport-sizing scheduler now coalesces focus and visible-document events
+through SAME resize/repaint owner; hidden-document events do not redraw. Teardown
+removes both listeners. No synthetic resize, per-frame polling, DOM hiding, reload,
+new renderer/history/input owner or modelling/paint changes. Debug snapshot records
+contain/isolation/will-change so .967 layer rules can be verified on device.
+
+.965 Paint UI PASS protected; .966 continuing-Smudge acceptance remains separate.
+DEVICE967: refresh in landscape repeatedly, verify all right buttons/status and
+Object Browser; interact before changing apps, enter/exit UV Editor and Paint,
+rotate/orbit. Switch away/back verifies recovery does not lose UI/work. If invisible
+controls recur, enable UI Debug before refresh and send Capture/Copy report plus
+screenshot if practical. Repair remains an iPad gate until explicit feedback.
+
+
+.967 validation: full local Node24 suite2815 PASS/0 FAIL/0 skipped (93.9s);
+focused release/sizing/UV/Paint/debug checks40 PASS. New coverage checks focus/visible
+return coalescing, hidden-document refusal and disposal; canvas containment and
+untransformed/unclipped VIEW popup contract retained. A local Chromium layout smoke
+was attempted but the installed Playwright package has no browser executable here;
+no rendered-browser or native WebKit proof claimed. User's .966 report is archived
+in docs/ui-debug-invisible-controls-966.md. Device visual gate remains OPEN.
+
+## .968 â€” selected Proof 03 icons in Face radial â€” 26 October 2026
+
+User approved in-app review after choosing all65 icons and refining Proofs02/03.
+Install first Face radial only per staged audit: all23 original buttons retain exact
+textContent, target selectors, event owners and angular slots (Extrude12/Bevel3).
+Scoped face-radial-icons.css supplies original SVG artwork as non-interactive CSS
+pseudo-elements above existing small labels; no SVG title/text contaminates routing.
+Inner radius112px/76Ã—60 targets accommodate32px icons; outer230px/86Ã—60 retained.
+No changes to geometry, gestures, history, Paint, Multi1.0, other radial modes or
+.967 accepted composition rules. Complete65-icon Proof03 artwork archived in
+ docs/radial-icons-proof-03.json for staged continuation. Bevel stray line removed;
+Bridge restored to Proof01, Map size C. No native iPad visual acceptance inferred.
+DEVICE968: Face selection â†’ tools; inspect all inner/outer labels and artwork,
+Extrude/Inset/Bevel actions and their popups; UndoRedo; finger orbit/pan/pinch;
+right toolbar remains visible. Next refine iPad size/contrast then remaining modes.
+
+## .969 â€” Vertex radial approved icons; .968 user PASS â€” 26 October 2026
+
+User says â€œGreat result! PASS /nextbuildâ€ for .968. Protect accepted Face icon
+artwork,32px size, small captions,60px target height and112px inner radius; retained
+Face CSS bytes/cache968. Next agreed mode is Vertex, followed by Object then Edge
+and Paint. All14 existing Vertex tools now use selected/refined Proof03 SVGs via
+scoped vertex-radial-icons.css, same accepted layout. Join uses Join (Vertex) art,
+not Object Join. Original labels/textContent, angular slots, targets, event/history/
+geometry owners and disabled-state styles remain untouched. Extrude12/Bevel3 retained.
+No runtime JavaScript or Multi1.0, .967 composition, Paint, Face/Edge/Object changes.
+.968 runtime17b3d57d; publication docs524ff168 were audited as current main.
+DEVICE969: Vertex selection â†’ radial; inspect14 icons/title size; tap Build Edge,
+Slide and Bevel and finish their original sessions; Join/Merge Center on suitable
+selections; UndoRedo/navigation; switch to Face to confirm accepted icons unchanged.
+Native .969 visual acceptance pending. Next Object icons after device feedback.
+
+## .970 â€” Object radial approved icons; .969 user PASS â€” 26 October 2026
+
+User â€œGreat PASS /nextbuildâ€ accepts .969 Vertex icons. Protect .968 Face and .969
+Vertex artwork, label format,32px icon size and original actions. Audit current main
+e1047fbf/runtime a88c5e14, shell969 and13 existing Object sectors; no parallel icon
+owner found. Add scoped object-radial-icons.css with approved Proof03 SVGs for all13
+original buttons. Join explicitly uses Object artwork, distinct from Vertex Join.
+Same60px height/112px inner radius/230px outer radius and small captions; Object
+padding3px/gap2px fits two-line Symmetry / Bisect title. Existing angular slots,
+labels/textContent, target IDs, tool availability/actions/history and Multi remain.
+Accepted Face/Vertex CSS bytes and pins retained; gizmo JS, composition stylesheet,
+Paint, geometry and frozen betas unchanged. Object Multi and gizmo shortcuts remain
+original owners. No whole-app reskin or new modelling functionality.
+DEVICE970: Object radial inspect inner/outer icons and longer labels; Duplicate
+and UndoRedo; Array or Solidify opens original settings; UV/Mesh Health panels;
+return to Face/Vertex and verify accepted appearance/navigation/right toolbar.
+Next Edge icons, then Paint, after device feedback; .970 not yet device accepted.
+
+## .971 â€” native-UV Array compatibility; right UI recurrence â€” 26 October 2026
+
+User .970 reports ordinary Array â€œlinked duplicate could not be createdâ€ and Live
+Array â€œrequires an independent geometry objectâ€ on default UV cube. Audit main
+ aa37c161/runtime cd3e6b5f: linkedDuplicateObject intentionally refuses native UV
+resources, Live Array blanket-rejects any glbPassthrough; default UVs introduced
+later now make both old Array paths refuse. No .970 PASS inferred; .968/.969 icon
+PASS retained. Pause Edge/Paint icon rollout for these fixes.
+
+Original Array owner now uses ordinary manager.addMesh for independent native-UV
+copies, keeping exact face-corner UVs/settings, original placements and ONE history
+checkpoint. Geometry-only Array retains linked path. New small array-native-uv helper
+reuses original UV inspector/topology signature, validates complete current native
+payloads, refuses paint/imported resources/stale UVs before mutation. Independent
+copy failure restores captured scene. No global linked/UV/mesh engine changes.
+Live Array repeats exact original source UVs per copy (deliberate UV overlap), stores
+nativeUV source payload in existing JSON recipe and updates native result payload.
+Count/END reopen/Convert/UndoRedo/project codec retain it; no schema bump, reprojection
+or texture loss. Paint remains refused; source editing for native-UV Live Arrays
+remains refused by original source editorâ€”Convert to Mesh before component changes.
+
+User .970 report00:27:56Z reopens right-side visual fault despite .967 safeguards:
+1366Ã—886,DPR2,canvas2732Ã—1652; no session/Paint, hidden gizmo; toolbar enabled/visible,
+in bounds and exact hit stacks. Canvas isolation/contain and header isolation active.
+Not disabled controls, missing DOM or stale967 pins. Two remaining per-SVG handle
+hover/active drop-shadow filters in original gizmo removed; stroke/opacity feedback,
+hit proxies, bounds, input and composition967 remain. This is a targeted reduction
+of filtered SVG surfaces, NOT proof of WebKit root cause or a guaranteed UI repair.
+Native .971 visibility retest required. See docs/ui-recurrence-970.md.
+
+DEVICE971: default cube ordinary Array6 copies; UndoRedo. New cube Live Array6,
+reopen/count edit/Convert, SaveOpen/UV preview. Repeat refresh/Array/Done/navigation,
+watch right toolbar and send UI Debug report if fault returns. Existing Face/Vertex/
+Object artwork unchanged. Next device feedback before Edge/Paint icons.
+
+## .972 â€” plain UI rendering; Array PASS, visual fault still open â€” 26 October 2026
+
+User says â€œArray now works but right hand side of screen is still failingâ€. Record
+Array971 acceptance only; do not infer971 visual PASS or close recurring visibility.
+Audit main c311992b/runtime13ad9e62. Array nativeUV helper and both paths untouched.
+.967 layer hints and971 SVG glow removal proved insufficient on real iPad.
+Current screenshot/report indicates visually absent but DOM-healthy controls;
+not locally reproduced, no confirmed browser-engine diagnosis.
+
+Audit found backdrop blur still active in floating panels/File/VIEW/bottom modes,
+legacy tool popups and rename dialog. Header/status/ObjectBrowser retain .967
+will-change:opacity hints. New single ui-stability.css default disables both
+prefixed/unprefixed backdrop filters under #app, decorative filters on buttons and
+gizmo SVGs, and extra opacity-layer hints on those three UI roots. Existing opacity,
+borders/fills/strokes still show disabled/active state. Opaque dark surfaces replace
+frosted panel backgrounds. Dynamic later tool styles are overridden via!important.
+No transforms, reparenting, polling, hiddenâ†’shown tricks, renderer/history/input
+changes, layout offsets, display/visibility, geometry or accepted icons changed.
+.967 canvas isolation/contain, header z10 and fixed VIEW popup placement retained.
+The plain profile is a controlled rendering reduction, not a proven engine fix.
+WebKit primary source explains backdrop filters composite background content and
+need extra rendering passes: https://webkit.org/blog/3632/introducing-backdrop-filters/ .
+This supports removing that rendering path; it does not identify this exact bug.
+
+DEVICE972: refresh landscape multiple times BEFORE switching apps; inspect right
+FrameAll/Undo/Redo/Focus/Objects/VIEW and right status. Open Objects and VIEW menus;
+Array preview/Apply/Undo, UV Editor enter/exit and orbit to right edge. If visual
+loss recurs, exact972 UI Debug report plus screenshot still needed; gate OPEN.
+Array971 PASS protected; Edge/Paint icon rollout remains paused for visibility.
+
+## .973 â€” opt-in canvas visibility probe; .972 visual FAIL â€” 26 October 2026
+
+User supplies .972 report01:18:45Z after recurring right-side fault. .972 plain
+profile is confirmed active: header/status willChange auto; all sampled filters and
+backdrop filters none. Layout/hits are still healthy, so blur/layer-hint removal did
+not repair visual loss. No stale-shell explanation or .972 visual PASS. Array971
+user PASS retained. Do not continue speculative cosmetic fixes or icon rollout.
+
+Audit main2646e5cb/runtimea799ee6a. Extend ONLY existing Fileâ†’UI Debug owner with
+â€œHide 3D onlyâ€ / â€œShow 3D againâ€. This explicit diagnostic temporarily sets original
+canvas inline visibility hidden!important, retaining layout/backing dimensions,
+renderer/model/history. Restore exact prior inline value/priority (or absence),
+on Show, Debug off and pagehide. Refuse entry during Paint, active tool or gizmo drag;
+restoration always works. No reload, second renderer, resize, polling or new raw
+pointer consumer. Disabled debug/default app unchanged. Existing CSS972 retained.
+
+While hidden, user chooses â€œRight UI visibleâ€ or â€œStill missingâ€; bounded evidence
+records subjective outcome plus canvas hidden flag and current toolbar probes.
+Capture/Copy includes canvasProbe state. Show clears cached report so next Copy
+includes both observation and restoration events. UI log controls remain on left.
+This is a diagnostic build, not a claim that controls are fixed. The outcome will
+separate canvas participation from UI-only painting; neither outcome alone proves
+an engine root cause. Tests cover exact restoration, busy refusal, actual buttons,
+observation, off/pagehide cleanup, and unchanged canvas dimensions/model/history.
+
+DEVICE973: while right controls visually missing, BEFORE app switching, use Fileâ†’
+UI Debugâ†’Hide 3D only. Inspect top-right toolbar; choose visible/missing result.
+Show3D againâ†’Copy report and send. Also say if restored3D makes rightUI disappear
+again. This is the next decision gate; Array remains accepted; no modelling changes.
+
+## .974 â€” approved Edge icons; user resumes icon rollout â€” 26 October 2026
+
+User cannot currently reproduce right-side fault on973 and explicitly requests
+â€œMove onto updating icons as before /nextbuildâ€. This authorizes resuming icons;
+NOT a proven compositor repair or broad973 PASS. Keep intermittent visibility OPEN,
+retain opt-in973 canvas probe and972 plain UI. Array971 PASS protected.
+Audit current main46dcc231/runtimecbc30cf5, shell973 and all21 existing Edge tools.
+Add only edge-radial-icons.css: approved Proof03 artwork,32px icons and original
+small captions. Includes revised Offset/MergeDist/FillFace/Dissolve and restored
+Bridge. Extrude12/Bevel3 and ALL source target IDs/labels/angular slots retained.
+Inner same76Ã—60/r112 as Face/Vertex; outer68Ã—58/r230 fits dense original spacing,
+9px titles/line-height1/padding2px allow two-line captions without enlarging ring.
+One-off rectangle check confirms0 pairwise button overlaps across21 targets.
+Exact original tool event/availability/UV/history owners and all runtimeJS retained.
+Face/Vertex/Object sheets, Array,973 debug and972 stability CSS/pins unchanged.
+
+DEVICE974: Edge selectionâ†’radial inspect icons/titles/dense outer spacing; try Slide,
+Bevel and Loop; Cut/Stitch UV access and UndoRedo on suitable mesh. Switch other
+modes to confirm accepted icons, navigation and right controls remain usable.
+Next Paint icons after Edge feedback. Keep canvas diagnostic if visibility recurs.
+
+## .975 â€” XY/XZ/YZ pads for Edge and Vertex Extrude; .974 icon PASS â€” 26 October 2026
+
+User .974 icons PASS protected; asks fixed world-plane choices via small square pads
+like main Move gizmo, in BOTH Edge and Vertex Extrude. Audit main2af7fe53/runtime
+17c1d910. Original gizmo already has XY/XZ/YZ polygons but Extrude hid their group;
+Vertex owner accepts only Free/XYZ and Edge accepts original edge-perpendicular
+Plane/XYZ. Extend these SAME owners, no new gesture/topology/history implementation.
+
+Expose existing three plane polygons during Extrude, original main plane colours,
+aria XY/XZ/YZ labels, selected-pad stroke/fill/opacity and â€œXY planeâ€ badge. Pad tap
+selects constraint only; drag original edge/vertex to extrude. Centre Free and XYZ
+arrows retain previous meanings and controls. Rotation/Scale remain hidden during
+Extrude; Done restores normal gizmo. Old direction row remains hidden (no duplicate).
+
+Shared extrude-plane-constraints helper supplies world normals, omitted-coordinate
+projection and Exact direction. XYâ†’Z fixed, XZâ†’Y fixed, YZâ†’X fixed at ORIGINAL
+component coordinates (not global zero). Original gesture owners raycast a plane
+through selected component centre; free-view and edge-perpendicular paths preserved.
+World-plane Edge drag uses named plane directly, not edge-perpendicular projection.
+Exact follows last pull projected into selected plane, or projected view-up/fallback;
+Edge skips collinear directions to avoid zero-area ribbons. Repeat also projects
+last vector after a plane change. Near-parallel ray refuses safely with orbit hint;
+no giant coordinates, extra history or lost navigation. Existing validation/metadata/
+selection/history commit and cancellation owners retained. Internal old version
+stamps retained intentionally; changed loader pins and reviewed hashes975 updated.
+
+Tests execute BOTH actual gesture owners with oblique cameras for all3 planes:
+multi-tip/edge ribbons, signedExact, Repeat, UndoRedo, cancel and constant omitted
+coordinate; true edge-on refusal/firstExact fallback; actual chooser callbacks and
+visible/highlighted pads. Existing757 show-selector assertion expanded to include
+newly exposed plane group; no behavioral protection dropped. Accepted icon CSS,
+Array971 and visibility972/973 safeguards untouched. Intermittent right fault remains
+unproven; user recently unable to reproduce. Next device plane-pad acceptance,
+then Paint icon rollout unless user reprioritizes.
+
+DEVICE975: Edge boundary/loose edgeâ†’Extrudeâ†’XY/XZ/YZ small squares, drag each; orbit
+obliquely if plane edge-on. Repeat in Vertex mode. Check XY holdsZ/XZ holdsY/YZ holdsX,
+Exact/Repeat/UndoRedo/Cancel and centreFree/XYZ still work. .974 icon PASS retained.
+
+
+## .976 â€” reconnect ready Edge Bridge selections â€” 26 October 2026
+
+Audit main81ba4afd/build975. User supplies screenshot975 and exact Edge Fail(1).obj
+(24 vertices/14 quads); retain unchanged fixture tests/fixtures/edge-bridge-976.obj.
+The highlighted boundary pair is OBJ vertices3â€“10 and23â€“24 (runtime edges12/35).
+Both have one face owner. Existing fully installed Open Chain Bridge accepts the pair,
+creates quad[3,23,24,10] (OBJ one-based) and passes original topology validation.
+Radial guided session676 incorrectly accepted ONLY one complete boundary loop in
+canStart/openFromHub, disconnecting already-supported ready pairs. Repair SAME
+session: delegate ready-pair eligibility to existing bridgeEdgeSelectionInfo, retain
+single-loop guided entry, sync Apply immediately, show ready status. Original UI,
+topology, winding/quality/transaction guards and history own Apply unchanged.
+Cancel retains initial pair; invalid/interior/missing/single-open-edge inputs refuse.
+No new kernel/gesture, gizmo changes, renderer fixes or icon work.975 pad acceptance
+not inferred from uploaded screenshot.974 icon/971 Array PASS and972/973 visual
+safeguards remain; intermittent right-side fault is still OPEN.
+
+Validation:225 focused Bridge/selection-hub/radial/release tests PASS,0FAIL/0skip.
+Four new real-owner integrations cover supplied pairâ†’actual radial availabilityâ†’
+original UI Applyâ†’one history step/UndoRedo, Cancel, guided single-loopâ†’second-loop,
+and invalid input atomic refusal. Node DOM adapters are not native iPad proof.
+Changed runtime ONLY selection-hub-bridge-session; reviewed session/recovery pins976,
+release markers976 and asset hashes updated; Multi1.0/frozen/icon/geometry unchanged.
+Publication verification follows separately. DEVICE976: same model/two red edges â†’
+Edge radial Bridge â†’ Apply Bridge: one closing quad. UndoRedo; reopen then Cancel
+retains pair/geometry. Also sanity-check existing two-loop Bridge. Next actual device
+feedback, then Paint icon rollout; preserve independent975 Extrude pad device gate.
+
+## .977 â€” radial wiring audit and near-front Exact Extrude â€” 26 October 2026
+
+User requests audit of all radial tools; orbit sometimes changes Through refusal.
+Audit current main563fede9/build976. Full route inventory81 entries (Face23/Edge21/
+Vertex14/Object13/Paint10), original targets/availability/context adapters/action owners:
+ docs/radial-wiring-audit-2026-10-26.md. No missing action owner or wrong-mode target
+found in source review; this is not exhaustive native-gesture/mesh certification.
+976 Bridge launcher defect repaired/published; all3 changed live files byte-match.
+Baseline976 FULL2833PASS/0FAIL/0skip (100.7s), focused225PASS.
+
+Confirmed separate Exact bug: precision-face projected-normal fallback threshold1e-5px
+versus actual multi-face-direct gesture1e-4px can invert sign in narrow near-front
+camera band. Existing bevel-inset750 face7, camera centre+normal*5+(0,1e-6,0): Exact
+-2.2 incorrectly extrudes+2.2; orbit.01 cuts inward. Align ORIGINAL precision cutoff
+to gesture1e-4 ONLY. No main/drag/kernel/geometry/history/inference/physical input change.
+Dynamic precision-face child and drawer-ui parent/shell keys977 refreshed; original
+internal stamps retained. Reviewed hashes and release recovery/shell markers977.
+Three new tests use actual precision projection + native controller/fallback:10 angles,
+exact closed output/UndoRedo, old-code mutation sensitivity, five physical drags and
+pure-plan invariance. Focused final128PASS/0FAIL/0skip, not full977 rerun.
+
+User's physical Through refusal remains unproven on affected model. Camera changes
+projected dragging and reference inference; no blanket refusal fix claimed. Audit
+also records two follow-ups: numeric synthetic input still traverses inference, and
+precision success/readback lacks downstream commit acknowledgement. Keep these OPEN
+for narrow result/constraint work; don't relax topology guards or replace kernel.
+
+New visibility evidence while977 prepared: exact976 report04:53:18Z shows hide canvas
+at24626, rightUI visible observation35014, restore37246. User confirms controls STAY
+visible after Show3D. Top-level hidden:false is restored state. Layout/styles/hits
+healthy throughout; noPaint/session, plain972 active. This implicates a canvas/UI
+painting interaction but no engine root cause or permanent fix is proven. Retain
+OPEN recurrence and device-proven manual Hide3Dâ†’Show3D recovery; no automatic blink,
+poll/reload/renderer change. See docs/ui-canvas-probe-976.md for precise evidence.
+
+DEVICE977: confirm977, same negative Exact on near-front then slightly orbited view;
+UndoRedo; retry original physical Through with inference off/on, send exact refusal
+and pre-attempt.boxlab if recurring. Bridge pair Apply/Cancel retained. If right UI
+fails use existing Hide3Dâ†’Show3D;977 does NOT claim to repair visibility. Next prioritize
+evidence-led canvas/UI diagnosis, then exact-result/inference follow-ups before more
+feature rollout.974 icon/971 Array acceptance and protectedMulti1.0/frozen unchanged.
+
+## .978 â€” Edge Bridge preview before Apply â€” 26 October 2026
+
+User clarifies976 commits after Apply but does not PREVIEW, unlike accepted Face
+Bridge. This is a missing interaction stage, not failed bridge topology. Prior976
+ready-pair launcher repair retained; no broad976/977 PASS inferred. Audit mainf6a3ff30,
+same guided Edge session had no preview owner; Face Bridge mutates preview mesh,
+while accepted Face/Vertex Bevel already shares a rendering-only blue ghost helper.
+Reuse existing createFaceBevelPreview/disposeFaceBevelPreview unchanged for Edge.
+
+SAME selection-hub-bridge-session builds original bridgeSelectedEdges on private
+clone and renders changed polygons with original blue translucent fill/wire helper.
+Original source/selection/metadata/history/project remain untouched until Apply;
+no new modelling/triangulation/history kernel, manager mesh replacement or renderer.
+Candidate clone calls preserve active state.mesh despite historical edges observers.
+Selection-key cache reuses preview during orbit; selected-boundary change rebuilds it,
+incompatible/quality-refused candidates clear it. Guided first loop shows no ghost
+until compatible second boundary selected. Apply disabled without actual preview.
+Apply runs original bridge-ui commit once; Cancel removes ghost and retains initial
+selection. Existing UndoRedo works. Preview renderer/helpers and Face Bridge unchanged.
+
+Session owns source snapshot key, object/mode/lock/scene context. External geometry/
+metadata changes, object/mode/tool change, pagehide dispose ghost WITHOUT restoring
+stale mesh/selection or closing newer tool UI. Original background-exit route still
+calls close; no new raw-pointer owner, per-frame polling or source rollback. Shared
+geometry/material disposal occurs once. Overlay is transient outside scene object
+manager and uses established Bevel blue style, not saved geometry or a second body.
+
+Focused232PASS/0FAIL/0skip (~0.67s): original Bridge/radial/selection contracts and977
+camera regressions; four added real-controller/Three scene tests prove visible ghost
+BEFORE Apply with no source/history changes, one-step commit+UndoRedo, selection
+update/removal/Cancel, source/object/mode/tool/pagehide cleanup, no-scene refusal and
+single geometry/two material disposal. Existing976 harness supplies real scene/shared
+preview functions; no old geometry/history assertion removed. No native iPad visual
+acceptance inferred. Runtime change ONLY original Edge Bridge session; session/recovery
+pins978, unchanged716 renderer import explicitly reviewed in asset contract.
+
+DEVICE978: select same two boundary edges â†’ Edge radial Bridge: BLUE span visible
+BEFORE Apply. Orbit to inspect; Apply keeps bridge and removes blue, UndoRedo.
+Cancel removes blue, preserves original mesh/selection. Guided two-loop selection
+updates preview as second boundary is selected. Face Bridge remains unchanged.
+Right-side fault stays OPEN with confirmed manual Hide3Dâ†’Show3D recovery; no rendering
+repair or other .977 exact/inference/readback follow-up included. Next native preview
+feedback, then evidence-led canvas/UI work and remaining audit follow-ups.
+
+## .979 â€” Exact inference isolation and truthful commit readback; Bridge978 PASS â€” 26 October 2026
+
+User explicitly PASSes978 Bridge preview before Apply/Cancel; protect its private
+clone/blue ghost/source-neutral preview/one-step original commit and lifecycle.
+User /nextbuild authorizes the two remaining Exact audit fixes. Audit remote/current
+main028718a9, release978. Existing numeric gestures already use reserved pointer9876;
+existing direct committed event owns successful geometry values. No new kernel needed.
+
+Original Face referenceUnderPointer now ignores ONLY numeric pointer9876. Physical
+Pencil/mouse inference and toggle state stay unchanged. Covers Extrude and Inset;
+original model-unit/direction mapping,977 aligned near-front projection, Through
+shell-exit snapping and inset safety clamp remain. Exact still enters original
+controller and guarded geometry/history owners; no separate modelling algorithm.
+
+Precision tracks one synchronous numeric request and listens to ORIGINAL
+boxlab-face-direct-committed. It records success/Repeat/readback only after that
+semantic acknowledgement, using ACTUAL committed value rather than requested input.
+Existing positive/recess/closed-negative/Inset events retained; old open-sheet
+Through success branch now emits same semantic event after original guarded commit.
+Example: requested-2.2 stopping at shell exit-2.0 records/displays-2.0. Inset request
+above safe range displays original clamped distance, never an unperformed100.
+
+No acknowledgement means false/refused status, no fake value-committed event, prior
+successful per-tool Repeat/value retained. Refusal readout survives subsequent status
+observer callbacks, even with no prior success; next physical press/Exact attempt/
+success clears it. Blank/zero/nonfinite input and absent history refuse before
+synthetic geometry dispatch. Original refusal/rollback/selection/history remain.
+Physical drag callbacks still record geometry normally. This is transaction reporting,
+not relaxation of topology refusal or proof of user's physical Through failure repair.
+
+Final517 focusedPASS/0FAIL/0skip (8.7s): new7 actual precision+direct-controller tests
+plus Face/Through/negative/repeat/radial/Bridge/release regression. New fixtures run
+original uniform-inset owner rather than centre-lerp fallback. Test exact.37 at3
+cameras, Through at4near/oblique views, actual exit depth, UndoRedo/one checkpoint,
+refused entire-solid cut with unchanged source/history/last value, actual clamped
+Inset, numeric invalid/no-history refusal, real physical vertex inference vs same
+numeric contact, persistent failure readout. No native iPad acceptance inferred.
+Changed functionality ONLY precision-face and3lines in original multi-face-direct;
+drawer-ui changes child pin only. Reviewed parent/child/direct/recovery pins979 and
+shell markers/asset hashes. Main/geometry/Through kernels/Bridge978/Multi1.0/frozen/
+icons/972plain/973probe remain unchanged. No duplicate history or input owner.
+
+DEVICE979: with inference ON, Face Exact.37 (or convenient value), orbit/Undo/retry;
+result should retain entered distance. Valid Through overshoot displays actual exit.
+Try a refused cut: explicit refusal, previous successful value retained; Undo must
+undo the last successful operation, not an invented failed action. Physical snap
+still works. Bridge preview978 remains accepted. Right-side fault still OPEN; manual
+Hide3Dâ†’Show3D recovery confirmed. Next evidence-led canvas/UI work or actual979
+feedback; no new feature/icon expansion before outstanding reliability direction.
+
+## .980 â€” explicit File Refresh display recovery; .979 user PASS â€” 26 October 2026
+
+User PASS979 protects Exact inference isolation, actual commit readback, refusal/
+last-value/history and existing physical snapping. Bridge978 PASS remains protected.
+Audit main2f2ee78a/release979. Next reliability focus is recurring right-side UI.
+976 device probe proved Hide3D restored controls and Show3D left them visible; this
+narrows canvas/UI painting interaction but does not establish root cause. No further
+speculative CSS/layer/renderer change or permanent repair claim in980.
+
+Add File â†’ Refresh display, available WITHOUT enabling debug. It uses SAME existing
+createCanvasVisibilityProbe inline visibility save/restore owner. Explicit user click
+hides ONLY original canvas for one presented frame (two RAF callbacks), then restores
+exact original visibility value/priority/absence.250ms timer fallback and pagehide/
+hidden-document/debug-off cancellation ensure restoration if animation frames stall.
+No reload, canvas re-creation/resize/DPR/model/history/selection mutation, new renderer,
+automatic recurring blink, idle polling, navigation or pointer owner. Debug off stays
+off; File closes after successful start, button resets after restore. Confirmation
+says Display refreshed, not that the fault is permanently fixed.
+
+Pending refresh rejects repeats and does not take over manually hidden debug probe.
+Existing probe busy guard now also checks main/Face/Edge/Vertex/Bevel live drags;
+Paint/tool session/gizmo guards retained. Refused entry leaves work untouched and
+asks to finish active operation or Show3D. Debug probe/observation buttons disabled
+briefly during recovery. Optional debug logs record start/end and invalidate stale
+cached reports. Original two-step diagnostic and user-observation flow unchanged.
+
+Final39 focusedPASS/0FAIL/0skip (0.28s): new4 recovery tests + existing debug/display/
+canvas973/Bridge978/Exact979/release contracts. Exact inline restoration across6
+initial states, hidden frame before restore, stalled-frame fallback, cancel/late-frame
+cleanup, busy/manual-probe refusal, scheduler failure restoration, actual File entry
+with debugOFF, pagehide/debug-off cleanup, unchanged backing dimensions and model/
+history identity tested. Original973 tests retained. Shared test helper only gains
+optional File host. No native iPad recovery-speed/visual acceptance inferred.
+Runtime change ONLY gesture-debug; direct shell/recovery pins980 and reviewed hashes.
+979 modelling/Exact,978 Bridge/shared renderer, main/Multi1.0/icons/frozen unchanged.
+
+DEVICE980: Fileâ†’Refresh display: canvas returns automatically, model/selection stay;
+UndoRedo still acts on actual prior modelling changes. No debug enable required.
+When right controls next disappear, use this one action; report if they return and
+stay visible. Existing manual Hide3Dâ†’Show3D remains available if brief refresh does
+not reproduce its recovery. This is convenient evidence-based RECOVERY, not a claim
+that intermittent painting fault is fixed. Next follow native feedback and investigate
+canvas/UI boundary from evidence; retain all protected979/978 interactions.
+
+## .981 â€” UV popup top layer and complete surface teardown; .980 recovery PASS only â€” 26 October 2026
+
+User980 PASS accepts explicit recovery, but rejects needing manual Refresh as a
+solution and supplies reproducible UV window report07:51:09Z. Keep right-side visual
+failure OPEN; don't misrecord980 as UI repair PASS.979 Exact and978 Bridge protected.
+Audit currentmaina00685a8: eventchain is Object UVtools88180â†’meshHealthClose92850â†’
+finalsessionnull, no UV Editor/paint/displayrefresh needed. Controls/geometry/hits
+healthy; hidden sharedhost remains viewport-contained with z134/overflowauto/
+containlayoutpaint/isolationisolate. Source end lacked viewport-style/placement
+cleanup. Exact evidence summary in docs/ui-uv-trigger-980.md; no proven engine cause.
+
+Repair original tool-session-ui owner, NOT an automatic workaround. UV tools uses
+manual native Popover top layer if supported; original host/control nodes remain in
+DOM so existing scoped wide CSS/listeners/actions survive. Fixed positioning follows
+viewport top+12px; dynamic viewport height bounds, window/visual resize listeners
+active only while shown. Original .958 transformfree position retained, but failed
+paint-containment layer removed. Transparent noninteractive backdrop, inherited text
+colour; no modal/inert/focus-trap or new raw-pointer owner. Other tools unchanged.
+
+On Close/context switch, hide/release native surface before returning original
+controls; clear popover/dock/wide flags and ALL inline viewport styles; park empty
+hidden host back in drawer. UV Editor handoff explicitly suspends source surface
+before first workspace paint while preserving original logicalsession until Back/
+Close. Thus no empty top-layer popup above2D editor. Existing workspace952 and all
+UV/atlas/history/math owners untouched. Native unsupported/throwing API falls back
+safely to original untransformed absolute panel, without containment; same cleanup.
+No canvasvisibility/refresh/resize/renderer reset, timer, per-frame polling or mesh
+change introduced. Existing manual recovery remains available but is not invoked.
+
+Existing debug snapshot now includes source-parent/popover/topLayer state plus
+meshHealthSession and boxlabUVWorkspace, so native rendering mode/clean close can be
+verified if recurrence persists. This is evidence, not replacement controls.
+364 targetedPASS/0FAIL/0skip (4.5s):5new controller/native-API-double tests cover15
+open/close cycles, exact original nodes/context, top-layer release/styles/parking,
+UV Editor handoff, resize/disposal, other-tool switch and unsupported/throw fallback.
+OriginalUV/workspace/session/health/debug/Bridge/Exact/release checks retained.958
+test now rejects old containment rather than preserving a mitigation that failed
+ondevice. No local native WebKit visual reproduction/guaranteed permanent repair
+claimed. Device must confirm this structural source fix prevents the trigger.
+
+Changed runtime only original sharedsession/meshhealth handoff/debug evidence; direct
+shell/recovery keys981 and reviewed hashes. Native API supported since Safari17;
+primary sources in incidentdoc. No shared layout/positioner edits, duplicate popup,
+UV kernel,main,980 recovery implementation,979Exact,978Bridge,Multi1.0 or frozen changes.
+
+DEVICE981: without Refresh/app-switch/rotation, repeatedly Objectâ†’UVâ†’Close, inspect
+right toolbar/status each cycle; then Auto atlas/Open UV Editor/Back and orbit to
+right edge. Controls must stay drawn and usable. UI Debug if recurrence: host parent
+should be drawer afterclose, popovernull/topLayerfalse, containnone; send new report.
+Do not close visual issue from automated PASS. Next actual981device result before
+unrelatedfeature rollout or speculative further CSS/engine fixes.
+
+## .982 â€” approved Paint radial icons; .981 user PASS â€” 26 October 2026
+
+User explicitly PASSes .981 and requests /nextbuild. Protect the accepted UV popup
+native-top-layer lifecycle, complete Close teardown and Editor handoff; this supersedes
+older pending DEVICE981 notes. No Refresh display is required for that accepted flow.
+Earlier .967 acceptance subsequently regressed, so retain diagnostics and investigate
+any recurrence from fresh evidence rather than declaring every rendering path proven.
+Bridge978, Exact979, Array971 and accepted modelling icons remain protected.
+
+Audit main24f53cc3/runtime dbe13368, matching live981 shell/manifest, recent commits,
+radial wiring inventory and selected65-tool Proof03 artwork. All confirmed audit
+repairs are accepted; physical Through refusal still lacks its affected source/gesture.
+Resume queued final Paint icon stage, not a speculative further rendering change.
+All10 existing Paint actions/pages already have original buttons, labels, placement,
+state and dispatch in viewport-paint.js. New scoped paint-radial-icons.css supplies
+EXACT approved Proof03 Brush/Fill/Eraser/Smudge/Blur/Layers/Mask/Image/AO/Map size SVGs
+as noninteractive32px pseudo-elements above original small captions. Hide their old
+22px inline artwork visually; original DOM/text/actions remain. Same76px button width,
+132px radius/350px surface/angles, explicit60px height; centre Paint control untouched.
+Ten valid SVGs byte-match selected artwork; all target boxes fit existing bounds with
+ZERO pairwise overlaps. Existing active/disabled feedback retained.
+
+Runtime JavaScript, Paint gestures/resource/history, left settings/Layers, all modelling
+icons and981 surface repair are byte-unchanged. Only new stylesheet, shell/recovery
+keys982, manifest and reviewed asset contract change. No automatic refresh, new popup,
+input owner, brush/kernel or frozen/Multi1.0 change. Native readability is DEVICE982.
+Validation:33 focused PASS/0 FAIL/0 skipped (4.9s), covering existing Paint tools/
+workflow/continuing Smudge, UV981 lifecycle, Bridge/Exact and release contracts.
+Ten SVG XML/exact-artwork and original radial bounds/overlap checks pass. No local
+rendered browser/native iPad appearance result claimed. Publication proof follows.
+
+DEVICE982: UV PAINT -> inspect10 icons/captions; choose Brush/Blur/Smudge and confirm
+left settings. Browse Layers/Mask/Image/AO/Map size; radial stays until Pencil touches
+mesh and background hold reopens it. Paint, UndoRedo, Done; UV open/Close still leaves
+right controls visible without refresh. Next await Paint icon acceptance, then audit
+queued UV-free facegroup painting through existing faceGroups/selection/history owners;
+do not invent a second painter or assume facegroups are absent.
+
+## .983 â€” stable startup toolbar; .982 Paint PASS, refresh visibility recurrence â€” 26 October 2026
+
+User: â€œPASS - refresh made the right controls disappear BUT several refreshes fixed
+the intermittent bug. /nextbuildâ€. Protect982 Paint icons/workflow. REOPEN right-side
+visual gate after refresh;981 accepted UV lifecycle is not blanket rendering repair.
+No new debug report/browser trace accompanies recurrence; exact engine cause remains
+unproven. Do not ask repeated refreshes as a solution or resume facegroup feature work.
+
+Audit current main940cc66a/runtime bc99a6f9, live982 markers, current script pins,
+original toolbar, View/Frame owners and967 composition/981 lifecycle. Shell initially
+has only Undo/Redo; direct-bevel later prepends Frame, view-modes appends Focus/Objects/
+VIEW, toolbar observer replaces their artwork and reorders them. Prior966 debug records
+right-toolbar width134.56px at459ms ->317.61px at649ms after canvas creation. This is
+confirmed staged startup DOM/layout, NOT proof that it causes native pixel loss.
+
+Seed final five original SVG buttons plus original VIEW markup in initial HTML,
+already in final order. New viewport-toolbar-shell.css makes established header/icon/
+VIEW-summary dimensions available before module/WebGL startup. Old selection modes
+inside header stay out of initial header flow until same topbar owner moves them to
+existing bottom dock. Existing main UndoRedo bindings retained. Original direct-bevel
+Frame All reuses/binds shell button once (old presence early-return would disconnect
+it); exact original camera fitting remains. Original view-modes adopts shell Focus/
+Objects/VIEW nodes, installs same handlers/CSS, preserves SVG/panel identity and order;
+creation fallback retained for embedded shells. Existing late toolbar observer sees
+already decorated/ordered nodes, so no startup button replacement/reorder is needed.
+No duplicate action, new pointer/history owner, WebGL delay/reset, canvas hide/refresh,
+polling, filter/layer hint or new top-layer chrome. UV981 implementation untouched.
+
+This removes a verified startup instability; native iPad visual gate stays OPEN.
+Do not call983 a proven permanent compositor repair. Right status path unchanged.
+Changed runtime functionality only two original action owners plus shell/early CSS;
+view-modes/direct-bevel/recovery pins983 and reviewed hashes. Paint icons982,
+Multi1.0/main/rendering/modelling/frozen implementations unchanged. Existing Focus
+literal733 pin test follows reviewed contract, behavior assertions retained. Bevel
+DOM fixture now supplies its ordinary real-shaped Frame button instead of bare{};
+all existing geometry/history/context assertions retained. New tests execute actual
+VIEW/Frame owners to prove original-node adoption, one click binding, fallback and
+camera fit; shell has single ordered IDs/artwork before module execution.
+Final319 focused PASS/0 FAIL/0 skipped (4.4s), including Bevel geometry/context/
+history, View/Focus/browser/toolbar, menu bounds, UV981 and release contracts.
+Syntax and diff checks pass. No hosted/full-suite/native visual result claimed.
+
+DEVICE983: reload several times and inspect right toolbar/status IMMEDIATELY before
+UV/app-switch/rotation; report any invisible controls. Frame All, UndoRedo, Focus,
+Objects and VIEW each perform original action once. UV tools -> Close and Editor ->
+Back keep981 behavior; Paint icons remain accepted. If visual loss recurs, copy fresh
+UI Debug report before recovery and say whether it occurred immediately on reload.
+Next actual startup feedback/evidence before further rendering changes or new features.
+
+## .983 device feedback â€” first-refresh visibility FAIL â€” 26 October 2026
+
+User: â€œPASS / First refresh still causes loss of right hand sideâ€. Record functional
+PASS separately; .983 startup rendering repair FAILED its native visual gate. Static
+initial toolbar did not eliminate the first-refresh problem. Do not keep presenting
+startup construction as the cause or .983 as a permanent fix. No new source/debug
+report supplied yet. Preserve accepted982 Paint icons, original toolbar actions and
+981 UV teardown; overall intermittent visual failure remains OPEN.
+
+Next evidence: enable File -> UI Debug before reproducing a browser reload; on the
+FIRST failed load, Capture report -> Copy report BEFORE another refresh, app-switch,
+rotation or Hide3D/Refresh display. This captures983 startup width/DOM/top-layer state
+for comparison with966/980. It cannot directly diagnose browser compositor pixels;
+if DOM is again healthy, don't claim the report proves an engine cause or repeat
+speculative CSS/layer tweaks. Need native rendering evidence for further source work.
+No new runtime/build in this feedback-only update; no new hands-on feature test.
+
+## .983 evidence â€” UI visible, right ground shading missing â€” 27 October 2026
+
+New user983 report at2026-10-26T21:36:08.875Z explicitly says UI IS VISIBLE but ground
+plane shading is missing on the right. Treat this capture as a ground/render symptom,
+not another visually absent toolbar. Earlier first-refresh UI failures remain separate
+OPEN evidence; this capture alone neither retracts them nor proves permanent UI repair.
+
+Toolbar width317.609375 at debug-startup1296ms and pageshow2814ms is stable. Canvas
+CSS1366x826/backing2732x1652/DPR2, sessionnull/Paintfalse, UV workspace absent. Hidden
+session host is unstyled/popovernull/topLayerfalse; no retained UV overlay in capture.
+No reported error/context-loss event in supplied bounded log. DOM/hit probes cannot
+show WebGL floor/shadow pixels or identify the browser compositor as root cause.
+
+Read-only source audit: render-modes owns a finite Studio floor (minimum24 world units)
+and finite directional shadow frustum; studio-scene-fix updates same floor/light;
+studio-polish adds contact shadow, atmosphere adds CSS multiply vignette. Multiple
+rendering contributors, no evidence yet which is missing. Do not enlarge floor,
+shadow bounds or change CSS/blending from this report alone. Request screenshot of
+actual missing region and whether its boundary stays at same SCREEN x during a small
+orbit or moves with ground. This separates screen-region loss from world-space floor/
+shadow extent; no further debug dump or recovery refresh required for this comparison.
+No runtime/build changes;983 remains current. Paint982/functional983 PASS protected.
+
+## .983 screenshot evidence follow-up â€” 27 October 2026
+
+Initial screenshot now inspected: visible toolbar, cast cube shadow, vertical tonal
+seam near right quarter while floor continues across it. Keep rendering issue OPEN;
+do not treat that seam as the floor's distant edge or assume a larger floor fixes it.
+Next small orbit comparison (fixed screen position / ground-relative / disappears),
+without refresh or app-switch, before selecting a rendering change. No new runtime
+build; .983 remains current. Accepted Paint icons and modelling behavior retained.
+
+## .984 â€” selected-face group authoring â€” 27 October 2026
+
+User cannot currently reproduce the right-region fault and authorizes resuming
+development. Keep it OPEN: seam was screen-fixed, returned after view switching,
+and user reports gizmo/UI disappears in that region while toolbar remains visible.
+Do not claim a vignette-only cause or permanent repair. Rendering is unchanged.
+
+First narrow step toward UV-free facegroup painting: VIEW > Facegroups now offers
+a group name plus Assign selected / Clear selected. Select faces in Face mode
+first. Existing selection/navigation owners remain; this is explicit selected-face
+authoring, NOT a continuous Pencil facegroup brush. Same names join an existing
+group; Clear restores ungrouped metadata. No UV requirement or texture modification.
+Original manager replaceActiveMesh and scene capture/checkpointSnapshot own the
+transaction. Refuse locked/reference/linked/recipe objects, active tools, invalid
+selection/name or missing history before mutation; no-op creates no checkpoint.
+Only faceGroups change on a clone; geometry/UV/resources retain original ownership.
+Existing Facegroups render, save and export paths display/persist the metadata.
+New module loaded by original render-modes; changed render/recovery pins984, shell
+markers and reviewed asset hashes. Protected Multi and rendering safeguards untouched.
+15 focused checks PASS including new metadata/no-op/refusal/checkpoint tests,
+existing Facegroups owner, toolbar and release contracts. Additional codec/UV tests
+reported separately. No native iPad or complete suite PASS claimed.
+
+DEVICE984: select two faces, VIEW > Facegroups, name and Assign selected. Select
+other faces and assign same/different name; Clear selected. UndoRedo and Save/Open
+retain groups; UV Paint and navigation stay usable. Next: device acceptance, then
+plan continuous group painting through existing selection/gesture ownership.
+
+## .985 â€” reuse existing facegroup names; .984 user PASS â€” 27 October 2026
+
+User PASS984 protects selected-face assignment/clear, UndoRedo and Save/Open.
+Next narrow authoring step reuses current names: VIEW > Facegroups has native name
+suggestions refreshed from authoritative live mesh whenever name input gains focus,
+and Use selected group name copies the uniform group of selected faces into input.
+Mixed groups, ungrouped/no/invalid selection and non-Face mode give explicit reason
+and keep current input. Names are inserted through option.value, never HTML. Reads
+change neither selection, mesh, texture nor history; Assign selected remains sole
+metadata transaction owner. Duplicate names deduplicated; no global remembered list.
+Original name length/validation and editable-object refusal remain. No new pointer
+listener, automatic assignment, new painter/history owner or rendering change.
+
+Audit found Pencil selection ownership shared by edge-paint-select and pencil-orbit
+gate/main. Continuous facegroup brush remains deferred until that existing ownership
+can be extended coherently;985 is group-name reuse, NOT Pencil facegroup painting.
+Runtime changes only facegroup-authoring/render-modes UI, their loader pins985 and
+release/recovery markers; reviewed hashes updated. Protected Multi,984 assignment
+transaction, gestures, UV/Paint/resources and rendering safeguards unchanged.
+24 targeted tests PASS/0FAIL/0skip: group reuse/refusal/read-only/text safety plus
+984 authoring, Facegroups owner, original toolbar, project codec, UV and release.
+Syntax/diff checks pass; native iPad suggestion UI and group-name use need review.
+No full-suite/native compositor proof claimed. Intermittent right-region fault OPEN.
+
+DEVICE985: select grouped faces > VIEW > Facegroups > Use selected group name;
+select different faces and Assign selected with retained name. Focus name field for
+current suggestions. Mixed/ungrouped selection refuses pickup without changing name.
+UndoRedo should affect assignment only, not name reads; Save/Open stays accepted.
+Next device result, then continuous facegroup gesture-owner audit.
+
+## .986 â€” Pencil facegroup strokes; .985 user PASS â€” 27 October 2026
+
+User PASS985 protects name reuse/suggestions and984 assignment/clear/UndoRedo/SaveOpen.
+VIEW > Facegroups > choose name > Pencil facegroup strokes closes VIEW and arms
+Pencil-only surface strokes in Face mode. Pending unique visible face hits are
+collected privately and count shown in status; GROUP COLOURS UPDATE ON PENCIL LIFT,
+not during contact. Lift commits through accepted assignSelectedFacegroup and
+original manager/scene history once. No UVs required. Existing selection is untouched.
+Reopen VIEW > Stop facegroup strokes; changing group name or picking another name
+stops old named brush; rearm to paint new group. Switching render look also stops.
+
+Original edge-paint-select owns down/move/end/cancel and visible first-hit raycast;
+no parallel raw-pointer brush owner. Existing Pencil gate recognizes armed Face
+brush as modelling intent on mesh; background Pencil navigation still forwards.
+Finger navigation remains; a secondary canvas contact cancels pending stroke.
+Capture loss, pointercancel, hidden/pagehide, orbit claim and Stop discard pending
+faces and restore exact prior controls.enabled. Coalesced contact samples and lift
+hit included; no interpolation/radius brush in this first build. Through selection
+depth does NOT assign hidden/back faces: uses nearest face only. Existing Lasso,
+FaceDirect/main direct tools and split/offset owners keep priority.
+
+Controller refuses unsafe objects/tools/context; completion rechecks object, mesh
+identity, geometry/groups signature, look/mode and original authoring gates. History
+or geometry changes during contact discard stroke. No source preview mutation or
+cancel rollback needed; duplicate/no-op faces do not create history. New pure stroke
+controller imports original authoring helper; render owner supplies existing globals.
+No geometry/UV/texture kernel or new history owner. Protected Multi untouched.
+
+84 targeted checks PASS/0FAIL/0skip; expanded stroke test also passes actual original
+selection-brush+Pencil gate with real Three face raycasts, lift, cancellation, secondary
+touch, lost capture, pagehide, restored controls and background navigation. Controller
+tests cover staging, unique faces, one checkpoint, refusal/stale context and no-op.
+Existing selection/Lasso/Pencil,954 picking,984/985 authoring, toolbar, Facegroups,
+project codec, UV and release contracts retained. Syntax/diff checks pass. No native
+iPad/full-suite or rendered proof claimed. Existing runtime tests' visibility mock
+lacks document events: visibility cleanup uses window capture, preserving fixture
+and Lasso checks unchanged. Mesh clone lazily initializes loose-element bookkeeping;
+source invariance test compares actual vertices/faces/groups, not auxiliary caches.
+
+Changed owners: edge-paint-select, Pencil gate, render-modes and new stroke controller;
+reviewed direct/child/recovery keys986 and hashes. Existing authoring helper stays985.
+Intermittent right-region rendering/gizmo fault remains OPEN; no rendering fix claimed.
+DEVICE986: Face mode > VIEW Facegroups > name > Pencil facegroup strokes; draw across
+faces, lift to see group. Multiple strokes, one Undo per stroke/Redo. Finger orbit,
+Stop, choose another name/rearm, SaveOpen. Clear selected remains984 behavior. Next
+follow device stroke acceptance before adding live previews, brush radius or eraser.
+
+## .987 â€” Pencil facegroup eraser; .986 user PASS â€” 27 October 2026
+
+User PASS986 protects Pencil assignment-on-lift, one-step history, cancellation,
+Stop/navigation and group persistence. Add Erase group strokes beside the original
+Pencil facegroup strokes button in VIEW > Facegroups. Same controller and SAME
+existing gesture owner; explicit null group requests accepted Clear metadata path.
+No second brush, pointer handler or history implementation. Eraser stages sampled
+visible faces and clears on lift; untouched groups/geometry/UV/resources preserved.
+Already-ungrouped strokes are no-ops without history. No typed name needed to erase.
+
+Assign/Erase controls show independent pressed/Stop labels through one shared
+sync function. Choosing the other mode cancels pending stroke and arms new mode;
+clicking active mode stops. Name edits/pickup and switching render look stop both.
+Controller reports clear/assign pending and completion distinctly; null group is
+separate from armed state, so Stop cannot accidentally enable erasing. Existing
+986 gesture/gate modules byte-unchanged; only stroke controller/render UI plus
+reviewed child/render/recovery987 pins, shell markers/hashes change.
+
+86 targeted checks PASS/0FAIL/0skip, including new eraser staging, untouched groups/
+geometry, one checkpoint, no-op, cancel/switch/Stop tests; retained actual986
+Pencil/selection owner integration, existing Lasso/Pencil/picking,984/985 metadata,
+Facegroups/toolbar/project/UV/release tests. Syntax/diff checks pass. No native/full
+suite proof claimed. Intermittent rendering/gizmo loss remains OPEN, not repaired.
+DEVICE987: group faces, arm Erase group strokes, draw and lift; only sampled faces
+become ungrouped. UndoRedo once per stroke; erase ungrouped face adds no Undo. Switch
+back to named Pencil strokes; stop and navigate. Save/Open retains groups. Next
+follow device eraser acceptance before live feedback/radius work.
+
+## .988 â€” explicit existing-group selector; .987 rendering recurrence â€” 27 October 2026
+
+User reports entire VIEW menu temporarily vanished (not reproducible now), following
+987 lower-right blank area/report and screenshot. No987 PASS inferred. Protect986
+strokes and985/984 accepted workflows; rendering issue OPEN. Evidence summarized
+in docs/ui-right-region-987.md, including limits of healthy DOM/hits and hidden
+gizmo in this specific capture. Do not claim Studio-only cause or UI repair.
+
+Independent actionable user failure: group list DOES NOT OPEN. Audit original
+985 name input+datalist: name suggestions are not an explicit dropdown. Replace
+with separate native Existing group select (same names from authoritative live
+mesh) and keep original editable Group input for new names. No custom popup or new
+pointer owner. Native select options have safe value/textContent, unique sorted
+names and empty-state prompt. Refresh on VIEW toggle, Facegroups UI sync and after
+assignment/clear, retaining current name when it exists. Choice copies name into
+original input and dispatches its accepted input event, stopping previous armed
+strokes/eraser; no mesh/selection/history change until actual assignment/stroke.
+This is a group-selector fix, not a viewport/compositor repair.
+
+Changed functionality ONLY render-modes UI; reviewed render/recovery988 pins and
+release markers/hashes. Gesture/gate/stroke/authoring/UV/geometry/Multi owners
+unchanged.88 targeted checks PASS/0FAIL/0skip: new actual picker population/change
+callbacks, fresh/empty/unsafe-text cases, plus retained metadata/stroke/eraser,
+Pencil/Lasso/picking,toolbar,project,UV and release tests. Syntax/diff checks pass.
+Native iPad select opening needs hands-on review; no full-suite/rendered proof claimed.
+DEVICE988: Face mode > VIEW Facegroups > Existing group opens real native list;
+choose group, select more faces and Assign selected. Type another name to create
+group, reopen VIEW and confirm listed; UndoRedo changes assignments only. Retest
+erase and Save/Open if convenient. If VIEW blanks again, note scroll behavior and
+whether explicit File Refresh display restores; no repeated debug dump required.
+Next native selector/eraser feedback; broader rendering diagnosis remains separate.
+
+## .989 â€” VIEW open/panel/scroll evidence; .988 user PASS â€” 27 October 2026
+
+User PASS988 protects real Existing group dropdown, assignment reuse and existing
+name/stroke/eraser workflows; functional acceptance does not close recurring VIEW
+rendering issue. Latest988 dump00:41:42Z proves Pencil down/up/click reaches VIEW
+summary without preventDefault, with same healthy1366x886/DPR2 layout and no UV
+top layer. It omits native details.open, panel rect/scroll and mode, so cannot tell
+closed menu from an open but unpainted panel. Do not request another identical dump
+or claim engine cause; same existing opt-in debug owner gains missing evidence.
+
+Snapshot now includes viewMenu: native open state (null if missing), actual active
+render button, selection mode, facegroup stroke armed/contact/assign-or-erase,
+group-picker option count/index/disabled (not group names), VIEW panel and selected
+facegroup-control bounds/visibility/overflow/scrollTop/scrollHeight/clientHeight,
+plus Studio overlay style including mixBlendMode. Existing control/DOM evidence
+retained. Native toggle captures final open state; panel scroll captures its current
+position. Both passive window-capture observers measure ONLY when debug enabled,
+append to existing bounded100-event buffer, never consume input, focus/open/scroll
+menus or invoke refresh. No polling, new popup or automatic repaint.
+
+Changed runtime ONLY gesture-debug; original source debug/recovery989 keys and
+release markers/reviewed hash. All rendering/CSS/VIEW/native selector/brush/history/
+modelling/Multi implementations unchanged. This is DIAGNOSTIC, not a rendering fix.
+29 focused checks PASS/0FAIL/0skip: new actual whole-debug report/observer tests
+(open/closed/missing, geometry/scroll, modes/picker, read-only/debug-off refusal),
+original probe/recovery/debug/release and984â€“988 authoring/stroke/selector tests.
+Syntax/diff checks pass; no native/full-suite or permanent repair proof claimed.
+
+DEVICE989: normal VIEW and Existing group remain accepted. If menu disappears or
+blanks, File > UI Debug > try VIEW once > Capture/Copy before Refresh display or
+app-switch. New viewMenu.open and panel nodes now separate native state from paint.
+Try scroll inside panel if possible, capture again only if changed. If fault does
+not recur, no forced reproduction required. Next native evidence; feature trajectory
+can resume after feedback while retaining this open rendering gate.
+
+## .990 â€” explicit closed VIEW surface removal â€” 27 October 2026
+
+User /nextbuild after two989 captures. At00:58:35Z canvasProbehiddenTRUE and two
+subjective rightUI:missing observations; at00:58:50Z canvas restored/hiddenFALSE.
+Both Studio/Face, no brush/session/UV workspace, native VIEW openFALSE, yet fixed
+panel rect982/114.5/360/756, scrollHeight/clientHeight754. No VIEW down/toggle in
+recorded interval: these do not diagnose an attempted open panel. Hiding3D no longer
+restored UI in this recurrence; do not repeat old canvas-only recovery guarantee.
+Computed layout/healthy hits are not proof of drawn pixels or engine root cause.
+
+Audit original view-modes: fixed overflowing panel relies entirely on native
+closed-details content suppression; no explicit closed display rule. Add scoped
+#viewModes:not([open]) > .viewport-menu-panel {display:none!important} in original
+early toolbar stylesheet AND original view-modes style fallback. Thus closed VIEW
+has zero panel layout/scrolling surface before hydration and after all native or
+programmatic closes. Opening removes ONLY this closed-state rule and uses original
+fixed panel/scroll/settings. Native details.open remains sole state owner; original
+nodes/listeners/control identity preserved. No JS toggle, reparent, extra menu, timer,
+refresh/blink, renderer/CSS-blend change or raw-pointer owner.
+
+This is a narrow closed-surface lifecycle hardening, NOT proof the nonzero closed
+box caused every right-region fault, or a guaranteed permanent compositor repair.
+Open-panel clipping/whole viewport rendering gate remains OPEN until native feedback.
+989 diagnostics retained. Only early toolbar CSS and original VIEW style function
+change; reviewed shell/VIEW/CSS/recovery990 pins/hashes. All geometry/brush/UV/Multi
+implementations unchanged. No989 PASS inferred from debug reports.988 acceptance
+retained.32 focused PASS/0FAIL/0skip: original startup toolbar/hydration/action
+identity, release, report/probe/recovery and984â€“988 authorship/stroke/selector.
+Syntax/diff pass; no native/rendered/full-suite proof claimed.
+DEVICE990: fresh reload, VIEW open/close several times; scroll and group picker.
+Closed VIEW debug panel rect should be zero/displaynone; open must show original
+settings. Watch right toolbar/footer/gizmo if visible, without forced reproduction.
+If recurrence, existing989 report plus visible symptom; no repeated hide/show needed.
+Next actual990 native feedback before speculative layer changes.
+
+## .991 â€” compact left facegroup paint dock; .990 user PASS â€” 27 October 2026
+
+User PASS990 protects explicit closed VIEW surface and original open/scroll/picker
+behavior; continue watching intermittent rendering rather than claiming engine root
+cause. User asks better facegroup painting UI/UX. Audit accepted authoring/stroke/
+VIEW/session/position owners on baseline990. Existing controls lived inside VIEW
+and stopped brush whenever revisited, requiring repeated menu cycling.
+
+VIEW > Facegroups now offers Open facegroup paint controls. Opens compact290px
+left dock8px from viewport top/left using ORIGINAL compact panel position helper;
+paints default current group and invokes ORIGINAL Face mode button if needed.
+Existing name input/native Existing group picker, Paint/Erase and selected-face
+commands are SAME DOM nodes reparented from hidden home in VIEW, not cloned/proxied.
+Palette/colour appearance stays in VIEW. Name and Existing group sit above two
+clear pressed Paint/Erase mode buttons; advanced Assign/Clear/Use selected commands
+collapse under Selected faces. Done is always at dock header; stops brush and parks
+original controls back in hidden home, dock displaynone. Facegroups look remains
+so user can inspect painted groups. No need to reopen VIEW between strokes/tools.
+
+Paint/Erase now persistent radio-style choices; Done exits. Existing group choice
+or completed name edit arms chosen named paint while dock open; typing pauses old
+brush until change/commit. Use selected group name also rearms named Paint in dock.
+Picker refreshes on focus and existing VIEW/assignment routes. Original stroke-on-
+lift, unique-face staging, one-step history/cancel/resource owners unchanged. No
+new raw-pointer/paint/history owner or UV requirement. Shared placement helper used
+compact with explicit Paint-left exception; no new filter/contain/layer/repaint hint.
+Dock closes on render-look change, non-Face mode click (read-only capture), or start
+of another original tool session. Opening refuses a current session rather than
+abandoning its preview. Scene/selection/history unaffected by dock close.
+
+Runtime changes only original render UI and small reparenting dock helper; original
+stroke/gate/geometry/UV/main/Multi/990 VIEW implementations byte-unchanged. Reviewed
+render/new-child/recovery991 pins and hashes. Picker test now queries document IDs
+for original controls after relocation, preserving its choice/input assertions.
+91 targeted PASS/0FAIL/0skip: new actual dock lifecycle/value/listener identity over
+12 reopen cycles, Done/unavailable parent, actual command routing/persistent modes/
+active-tool refusal; retained picker/stroke/eraser/metadata, native selection/Pencil/
+Lasso/picking,toolbar/project/UV/release. Syntax/diff checks pass. No native/rendered/
+full-suite proof claimed. Native dock spacing and typing/dropdown usability pending.
+
+DEVICE991: VIEW Facegroups > Open facegroup paint controls; verify left dock and
+automatic Face mode, close VIEW. Select group or type a name, Pencil stroke/lift;
+Paint/Erase without reopening VIEW. Selected faces advanced commands; UndoRedo.
+Done hides dock/stops brush, fingers navigate; reopen retains name; Save/Open.
+Next native UX feedback before extra cursor/radius/live colour feedback.
+
+## .991 right-region recurrence â€” 27 October 2026, 04:01:19Z
+
+User explicitly reports right-hand issue AGAIN on991. Do not treat990 functional
+PASS as permanent rendering acceptance; retain closed-panel lifecycle protection
+while reopening broad visibility gate.991 dock UX has NOT received user PASS.
+Supplied report: Facegroups/Face, no active stroke/session/texture Paint; canvas
+visible2732x1652, viewport1366x886/DPR2. Studio overlay opacity0. VIEW native
+toggle evidence at28391/29205/30086/31107 shows open true/false/true/false. Open
+panel rect998/66/360/811.984, scrollHeight980/clientHeight810; closed displaynone
+and zero rect. Thus native input and990 closed-surface removal work, but do NOT
+eliminate user's visual loss. Do not repeat native-toggle failure or retained closed
+VIEW panel as explanation for this capture. Transparent Studio layer remains in
+DOM; opacity0 weakens visible-vignette explanation without proving engine cause.
+Controls/DOM/hits healthy is not pixel evidence. Gizmo explicitly hidden here.
+
+In991 authoring nodes are parked in hidden home until Open facegroup paint controls.
+Their zero bounds even while VIEW open are EXPECTED; palette appearance controls
+remain in VIEW. Debug's groupPicker optionCount1 can simply mean empty named-group
+list plus placeholder. Do not infer selector regression or missing authoring nodes.
+Current debug does not sample new dock root. Source/UX991 remains pending device
+acceptance. Runtime remains991; no speculative rendering changes in this update.
+Live version/index/render-modes/dock byte-match verified;91 focused tests were
+validated before publication. Next test new left dock and compare its visibility
+with affected right region if recurrence persists; no repeated Hide3D/toggle dumps
+needed. Root cause remains unconfirmed.
+
+## .992 â€” facegroup colour/name list; .991 user PASS â€” 27 October 2026
+
+User confirms991 paint controls work great after refresh and explicitly PASS991.
+Protect compact left dock, original controls, persistent Paint/Erase, Done and stroke
+history/navigation. Screenshot D8EC492A shows right VIEW border/background with
+blank interior before refresh; keep intermittent rendering gate OPEN independently.
+
+992 replaces Existing group native dropdown with a bounded200px layer-style list:
+one tap target per named group, colour swatch + safe text name, selected-row highlight.
+Name field still creates new groups; choosing a row reuses original input and arms
+original Paint mode. Rows are presentation only, no mesh/history/material mutation.
+Shared faceGroupPalette exposes EXACT existing viewport mesh-order/golden-ratio
+colour map; both renderer and list use it. Palette/reseed/lightness/saturation update
+swatches, original rendering algorithm unchanged. Rows keep node/focus identity on
+selection/colour refresh; group membership rebuilds layout only when changed.
+Refresh current mesh on open, name/edit/selection, palette changes and queued original
+body rebuilds (stroke commit, active object switch, UndoRedo); no polling/new pointer
+owner. Names are textContent, never HTML. Empty list explains name + paint workflow.
+Legacy988 picker tests migrate to new list adapter preserving current-mesh/name/no
+mutation coverage; new renderer tests cover selection/identity/empty/text safety,
+original brush callback and swatch-to-render-attribute parity across all4 palettes.
+Stroke987/authoring985/dock991/UV/Paint/main/Multi1.0 and990 VIEW rule unchanged.
+Validation:93 targeted PASS/0FAIL/0skip; syntax and diff checks pass. Reviewed
+changed render/core/new-list and shell/recovery cache keys; no full-suite/native
+rendering proof claimed. The prior985 safe-text assertion now targets list labels
+instead of native option implementation.992 awaits iPad list acceptance.
+
+Future user goal: Facegroup boundaries define UV island seams, then group-targeted
+image/PBR assignment. Audit original UV atlas/seam/stitch and paint mask/material
+owners first. First likely route shared atlas with per-group masks/baking; separate
+material slots require renderer/save/OBJ/GLB/NOM audit. This build DOES NOT implement
+unwrap-by-groups or per-group materials, and must not imply they exist. Same-name
+disconnected face patches may yield multiple islands; geometry stays welded.
+
+DEVICE992: open Facegroups paint dock; paint2+ group names, inspect swatch/name rows.
+Tap rows and paint/erase; selected name/highlight and UndoRedo refresh list. Adjust
+VIEW palette/reseed and reopen dock: swatches follow viewport base colours (lighting
+can shade model). Long names/many groups stay compact; Done/finger navigation.
+
+## .993 â€” Face Apply Exact native-pointer capture repair â€” 27 October 2026
+
+User reports Apply Extrude Exact does not work and traps the user in Extrude.
+Audited current main5967db29/build992, original Face popup/precision/direct controller,
+Pencil gate and Through fallback. No new geometry, history or gesture owner needed.
+Confirmed regression: numeric Exact dispatches reserved synthetic pointer9876, but
+original pointerdown AND beginDirectDrag call native setPointerCapture for it. Browsers
+reject this nonexistent native pointer with NotFoundError. EventTarget reports handler
+exceptions and continues dispatch; begin had already set drag, leaving pending press
+alive too. Pointerup clears pending press first, leaving drag set; popup then disables
+Exact/input/Done indefinitely. Earlier tests used a no-op capture stub and missed it.
+
+Only runtime change: original multi-face-direct capture helper skips reserved numeric
+pointer9876 at all three existing capture sites. Physical contacts retain native capture,
+original window-capture completion, deliberate-drag threshold, selection, inference,
+geometry/topology/refusal/Through safety and history. Exact still runs original
+controller and semantic commit acknowledgement; no new numeric modelling kernel.
+Popup and precision code unchanged. Shell/direct/recovery keys993 reviewed; no dynamic
+child changes. Protected Multi1.0, main, accepted icons/Facegroup/Paint/UV/frozen unchanged.
+
+Test helper now optionally models browser capture rejection and EventTarget exception
+continuation; default fixtures still throw unexpected listener failures. Before runtime
+repair, new tests reproduced false Exact success result and stranded dragging state.
+After repair: repeated Extrude/Inset Exact, safe refusal then valid retry, no synthetic
+capture/no listener errors/no pending drag, actual popup Apply/Done lifecycle, one history
+step per success and UndoRedo pass. Physical capture/commit/cancel retained. Final191
+focused PASS/0FAIL/0skip (~5.2s), including original Face/repeat/popup/camera/Through/
+negative-extrude/release tests; syntax/diff checks pass. No full-suite or native proof claimed.
+
+Separate992 rendering recurrence at05:39:15Z: user observed rightUI missing with canvas
+hidden at47438, then restored canvas50523. Native VIEW open34532 had bounds998/66/360/
+811.984 and980px scroll content; closed panel is displaynone/zero bounds. Toolbar layout/
+hits healthy; gizmo present196x196 at752.75/443.234. Studio overlay opacity0. Group-list
+optionCount/selectedIndex null is expected for992 DIV list, not a native-select failure.
+No actual screenshot/affected region identified in this report; do not infer a new
+rendering cause or guaranteed Hide3D recovery. Intermittent right-region visibility
+remains OPEN; no rendering changes in993.992 list device acceptance still pending;
+991 PASS retained. Facegroup-seam UV/material work remains future, not shipped.
+
+DEVICE993: confirm993; select cube face, Extrude, enter0.2 (or convenient model units),
+Apply Exact twice; both operations commit and Done exits. UndoRedo each step. Reopen
+and try a valid negative recess; a refused value must still allow Done and later retry.
+Ordinary Pencil drag then Done; Inset Exact sanity check. Watch existing right-region
+fault separately. Next obtain device Exact/exit feedback before feature expansion.
+
+### .993 publication status
+
+Runtime/tested local commit b9fed522f95ae61fe82d58f912706acca194f8db, tree
+bd178a99b8bac3b0a4947e070cde16edcf84aed8. All191 focused tests pass. Push was
+blocked twice by automatic approval review. Live992/main5967db29 remains the last
+verified publication; do not describe993 as shipped or ask for device993 tests yet.
+Review rejected standing authorization in retrieved AI_WORKFLOW.md as insufficient
+end-user authorization in this transcript. Await explicit user confirmation to push
+and publish993 to main; do not bypass rejection with connector or alternate transport.
+After approval push pending local commits, fetch main, verify release/pins and live
+bytes, then give DEVICE993 checks. No runtime edits after validation.
+
+## .994 â€” distinct native NOM facegroup colours â€” 27 October 2026
+
+User reports six exported groups arrive in Nomad as near-identical colour pairs.
+Audit found native NOM meshPart cycles the donor template's THREE group colours;
+six generated groups therefore contain only three unique RGB triples. New test
+reproduces3-versus6 before repair. GLB already generates golden-ratio-spaced colours
+for new groups and deliberately preserves imported Nomad group colours; unchanged.
+
+Native NOM now reuses existing faceGroupPalette992 for all exported named groups,
+using original exported face order/names, default spaced palette and linear RGB.
+No new palette algorithm. This is facegroup display metadata, not paint, vertex
+colour, material or texture assignment. Group IDs/names/boundaries, welded geometry,
+UVs, PBR maps, donor template bytes, source mesh and history remain unchanged. Native
+unnamed faces still map to original Main group. Does not promise VIEW custom palette/
+reseed fidelity or change preserved GLB colours. Runtime change ONLY native exporter;
+packed-map/panel/Lab files change loader pins only to refresh the original graph.
+Reviewed994 shell/recovery/panel/packed/core/Lab keys and shared palette992 reference.
+Multi1.0/main/accepted992 list/993 Exact/frozen bytes unchanged.
+
+Validation139 focused PASS/0FAIL/0skip (~9.6s): native NOM/UV/colour/normal/emissive/
+scalar/packed/displacement/export tests,992 swatch list,993 Exact and release contracts.
+Six named cube groups now have six deterministic RGB triples with all pairwise RGB
+distances>.2; all six face-to-group IDs and source mesh retained. Existing binary/
+texture/group round-trip tests pass. Syntax/diff clean. No native Nomad or full-suite
+proof claimed. Intermittent right-region rendering remains OPEN, unrelated to this fix.
+
+LOCAL ONLY: includes pending993 Exact repair. Publication remains blocked by the
+prior automatic approval review; no attempt to bypass or repush. Await explicit user
+confirmation to push/publish994 to shared main/live app. Live992 is last verified.
+After approval, publish pending local commits and verify remote shell/pins/live bytes.
+DEVICE994 AFTER PUBLICATION: native NOM export of six differently named facegroups;
+open Nomad and enable Facegroup display, verify six distinct colours and six correct
+regions/names; geometry/texture appearance intact. Retest993 Exact twice/Done/UndoRedo.
+If user's actual export was GLB or OBJ, ask for format/file; native donor-cycle defect
+is confirmed, but do not claim it diagnoses every format's similar-colour behavior.
+
+## Standing publication approval â€” reaffirmed 27 October 2026
+
+User explicitly states in this development chat: â€œApproval is ALWAYS given - write
+that into the Handover notes.â€ This reaffirms standing authorization for BoxLab
+commits, pushes directly to main, and GitHub Pages publication, including pending
+build994 and its993 Exact repair. Complete validation, commit/push and verify release
+markers/live assets without asking for publishing approval again. Authorization is
+for BoxLab development; unrelated external actions are outside this scope.
+The earlier993/994 approval-block notes below are historical and superseded by this
+explicit user confirmation. They are not a continuing requirement to ask again.
+If a future automatic review still blocks publication, report its actual reason;
+do not misstate the user's standing authorization or bypass a rejection.
+
+Current delivery:994 runtime8096a013 includes native NOM distinct group colours and
+993 Face Exact capture repair.191 focused993 checks and139 focused994 checks passed;
+these overlapping sets are not a combined distinct test count. Device acceptance is
+pending. Intermittent right-region rendering remains OPEN. Publish pending commits,
+verify current main and live version/index/direct/export/packed/core/palette assets,
+then provide short DEVICE994 and DEVICE993 hands-on checks.
+
+## .994 publication verified â€” 27 October 2026
+
+Published runtime c5db2e56ad2a71d2590f4172b4efd1e76a9d1151, tree
+ad464a29e6750afc119407302aa6ffa9f2a074b8, exactly matches tested/uploaded local
+ca297398 tree. All17 changed blobs verified before atomic non-forced main update.
+Fetched origin/main confirms runtime commit/tree. Pages40458723639 completed SUCCESS.
+All10 fresh live checks byte-match: version.json,index.html,multi-face-direct,
+nomad-export-core,nomad-packed-maps,export-as-panel,facegroup-colours-core,Lab loader,
+AI_HANDOFF.md and AI_WORKFLOW.md. Seven final release checks pass. Hosted full
+Topology40458725555 was in progress when checked; no hosted full-suite PASS claimed.
+No runtime changes after focused validation. This publication proof is docs-only.
+User standing approval is reaffirmed in THIS chat and AI_WORKFLOW/AI_HANDOFF; no
+further publication permission question for BoxLab. Historical LOCAL ONLY/approval
+block entries are superseded. Build994 is LIVE and READY FOR TESTING, includes993.
+DEVICE994: native NOM six named groups have six distinct colours/correct regions;
+textures unchanged. DEVICE993: Face Apply Exact twice, Done, UndoRedo; Inset Exact
+and ordinary Pencil drag sanity.992 facegroup list acceptance still pending;991 PASS
+protected. Recurring right-region rendering remains OPEN. Next act on device feedback.
+
+## .995 â€” FACEGROUP Face radial and ADD+; .994 user PASS â€” 27 October 2026
+
+User explicitly PASSes994; protect native NOM distinct group colours and993 Exact
+Extrude/Inset capture/Done/UndoRedo repair. User asks Face radial FACEGROUP with
+linework cube/red-green-yellow faces, automatic Facegroups look, original left list,
+and ADD+ numbered new groups. Existing dock/stroke/authoring/palette remain owners.
+
+Face radial now has24 tools. FACEGROUP reuses original #facegroupOpenPaint target
+for inventory but launches original dock SEMANTICALLY (no hidden VIEW button click).
+It selects original Facegroups look, closes VIEW and opens same left dock/name/list/
+Paint/Erase/selected-face nodes. Original authoring editable-target gate is shared
+with Assign, not copied; locked/reference/linked/live-modifier/tool-session/active-
+drag targets refuse. Done stops brush, parks controls and emits original Face hub
+completion once; another radial tool or mode/session change closes the dock.
+
+All23 pre-existing Face targets, labels, icons, angles/radii and cross-mode shared
+placements remain EXACTLY unchanged. FACEGROUP fits between original rings at330Â°/
+r168 with74x60 target and original32px icon/small title format. Three SVG cube faces
+red/green/yellow with light linework. New button has no bounds overlap with any old
+button. A16-sector outer reflow was considered but rejected because it displaced
+shared cross-mode slots; not shipped. No unrelated icon reskin or pointer owner.
+
+ADD+ picks unique Group N, incrementing past current/existing/draft numbers; adds
+safe colour/name row and arms original Paint. Does NOT immediately reassign current
+selection or create history. Empty groups are UI drafts scoped by actual object
+identity in WeakMap, surviving dock close/reopen/object switches in this session.
+They are saved/exported ONLY after painting or Assign selected through existing
+faceGroups metadata. UI explicitly says paint/assign to save; no new project schema.
+Reload/project replacement drops unused drafts. Assigned groups retain original
+palette; drafts preview subsequent spaced colours via SAME palette helper. Painting
+out of draft order refreshes swatches to actual mesh-order colours (not fixed
+user-chosen group colours). Palette/reseed controls remain in VIEW. Safe names and
+integer-limit numbering tested; no HTML insertion/model/UV/material/paint changes.
+
+Validation165 targeted PASS/0FAIL/0skip (~1.7s), including8 new draft/real-control/
+semantic radial/real dock Done tests, all existing Facegroup data/palette/brush/
+eraser/authoring/selector/dock, radial modes/shared positions, accepted994 Exact/
+NOM, and reviewed release contracts. All24 embedded Face SVGs parse; syntax and
+diff clean. Existing709 Face count23â†’24 is sole radial contract expansion; original
+outer15Ã—24Â° and shared Edge/Vertex slots stay protected. Picker/dock fixtures adapted
+to the original shared open owner and draft adapter without dropping source/selection/
+refusal checks. No full-suite/rendered-browser/native iPad proof claimed.
+
+Changed runtime: original render-modes, small drafts helper, original list and shared
+editable-authoring gate; stroke changes import pin ONLY. Total Gizmo changes one
+button/availability/semantic launch/completion. Reviewed shell/render/stroke/author/
+list/drafts/gizmo/icon/recovery995 cache closure. Facegroup palette992 and native NOM994,
+993 Exact, main/Multi1.0/UV/Paint/geometry/frozen bytes unchanged.
+
+Right-hand rendering issue stays OPEN. Reviewed latest992 capture: VIEW native open/
+close and explicit zero-sized closed panel work; canvas hide did not restore rightUI;
+styles/hit stacks cannot establish visible pixels. This build adds direct LEFT dock
+access but DOES NOT claim a compositor/right-menu repair. Retain existing diagnostics
+and user File Refresh display; do not repeat proven-insufficient blur/closed-details/
+canvas-only explanations or force another identical dump. Further rendering work
+requires visible affected region/structural reproduction, not speculative CSS churn.
+
+Current runtime/publication evidence lives in docs/publication-995.md (commit/tree,
+Pages/live checks and hosted status); consult it before describing publication.
+Standing user push/publish approval remains active; do not ask again.
+DEVICE995: Face selectâ†’radial FACEGROUP cube; auto Facegroups look + original LEFT
+list. ADD+ two new numbered rows/different swatches, paint each/erase; UndoRedo one
+step per stroke. Doneâ†’radial again; ordinary Face Exact and finger navigation.
+SaveOpen painted groups; unused drafts are intentionally not saved. Watch right VIEW
+menu separately; if recurrence, screenshot/identify visible area, no forced recreation.
+Next follow native995 feedback; facegroup-seam UV/material work remains deferred.
+
+## .996 â€” File menu arrangement from user image â€” 27 October 2026
+
+User requests File menu order/format from attached IMG_8339.png. Audited current
+main44db0b9f/runtime995, existing shell/File/export/project/debug installers and
+viewport-contained menu styles. No995 PASS inferred;994 PASS remains protected.
+
+File menu now has four semantic sections in requested order: original Open .boxlab
+from Files and Save .boxlab; Import (Editable/Reference, split groups, import);
+Export (filename, Format OBJ/GLB, Geometry Base/SubD, Export/Save, NOMAD); utilities
+(Home Screen, Reset, UI Debug, Refresh display, Check project snapshot). Shell
+supplies named slots; original project/debug installers append SAME original buttons,
+inputs/status nodes/listeners there with existing-host fallbacks. No cloning, second
+menu/handler, observers, keyboard/tab-order CSS tricks or new save/export owners.
+Original Quick OBJ and Lab link nodes remain hidden for legacy owners; duplicate
+Quick OBJ/Lab entry is omitted from visible requested menu.
+
+Scoped file-menu.css gives consistent section rules/gaps/uppercase headings,320px
+viewport-bounded width,36px action targets,32px segmented controls, aligned filename
+field and readable12px text. Max-height tracks original topbar/safe area; vertical
+scroll/touch-pan/overscroll containment remain. Hidden attributes honored; empty
+slots/status do not leave gaps. No new blur/filter/transform/contain/compositor hint.
+Other UI styles unchanged. This does not repair recurring right-region rendering.
+
+Runtime changes only shell/layout stylesheet and original object-management/debug
+installer destinations. Project codec/history/save/open/geometry/selection, export/
+NOM/paint/UV/995 Facegroup/993 Exact/Multi1.0/frozen unchanged. Reviewed996 shell/new
+CSS/project-installer/debug/recovery pins and asset hashes; internal stamps retained.
+All original File action/input IDs retained once. HTML sections/order/unique IDs
+checked. Existing50 menu input/config/name/layout/toolbar/project Open/GLB/paint/
+display-refresh/release checks PASS/0FAIL/0skip (~1.12s); JS syntax/diff clean. No
+new cosmetic tests or full-suite/native rendered proof claimed. Publication commit/
+tree/live evidence is recorded in docs/publication-996.md before completion.
+
+DEVICE996: File shows Open/Save first, then Import/Export/utilities as image; spacing,
+filename/segmented controls readable. Scroll to bottom in landscape and portrait.
+Save/Open a test .boxlab; import/export and NOMAD original actions; Refresh display
+still available. Do not reset a working model to test styling. Right-menu rendering
+remains OPEN;995 Facegroup device acceptance still pending. Standing publication
+approval retained. Next follow996 menu/iPad spacing and995 tool feedback.
+
+## .997 â€” external original VIEW surface; .996 user PASS â€” 27 October 2026
+
+User996 PASS protects arranged File menu, original actions and spacing. User now
+identifies affected surface precisely: VIEW outer frame toggles but its contents
+never draw. Report996 at07:41:06Z shows open43289/47255, closed45303/54977. Open
+panel998/66/360/811.984,scrollHeight980/clientHeight810; actual saturation/lightness/
+reset controls have normal layout bounds. Closed displaynone/zero bounds works.
+This is drawn-content failure, not proof of missing nodes or a failed native toggle.
+Group-list null optionCount/index is expected DIV list; hidden gizmo in this capture
+is not evidence of gizmo painting failure. Do not request another identical report.
+
+User adds a useful chronology clue: current right VIEW trouble seemed to start when
+Facegroup items were added. Facegroup controls grow VIEW from earlier Studio754px
+content to980px and activate overflow at810px. That points to the fixed scrolling
+surface inside native details as a plausible trigger; it is NOT engine/root-cause
+proof and does not rewrite older966+ right-region reports as all starting at984.
+
+Existing VIEW panel is a fixed overflowing direct child of native <details>, whose
+browser-disclosed contents have a separate visibility/painting lifecycle. New small
+view-menu-surface moves that SAME panel ONCE under #app, outside native disclosure
+and header clipping/stacking ancestry. Original native #viewModes details.open is
+STILL sole open state. One attribute-filtered MutationObserver mirrors current open
+into explicit panel.hidden and summary aria-expanded/controls. No duplicate toggle,
+open boolean, new raw-pointer owner, second popup/content copy or automatic repaint.
+Closed external panel is displaynone/zero-layout from early shell stylesheet onward.
+Existing fixed position/width/max-height/scroll/touch styles remain; scroll offset
+restores on reopening. Same DOM IDs/values/listeners remain. Rehydration detects
+external panel rather than recreating contents. Keyboard Tab/ArrowDown from open
+summary enters panel; ShiftTab returns, Escape closes native owner/returns focus.
+
+Original view-modes click/pointerup delegation now binds original external panel;
+existing synthesized-click suppression retained. Outside-close accepts BOTH trigger
+and panel; active-view highlighting searches stable panel ID. Clean View uses new
+ID with legacy fallback, preserving original overlay owner. UI Debug samples new
+#viewModesPanel and parentId, retaining existing controls/mode/scroll/toggle evidence.
+No canvas/renderer/atmosphere/Paint/UV/facegroup/geometry/history/Multi1.0 changes.
+File996 stylesheet and functional owners unchanged. This is a targeted structural
+repair requiring native feedback, NOT a proven permanent WebKit/root-cause repair.
+
+Reviewed cache closure: view-modesâ†’new surface997; Clean Viewâ†’Face workflowâ†’drawer
+997; debug/early toolbar/shell/recovery997. Drawer also aligns its stale project-
+installer child key938 to accepted shell996, avoiding competing cached installer
+versions; no new project installer code. Existing old internal stamps retained.
+
+Final93 focused PASS/0FAIL/0skip (~0.75s):7 new surface identity/observer/idempotence/
+coalesced state/scroll/inside-outside activation/Pencil suppression/keyboard tests,
+original startup toolbar/FrameAll/menu/Clean View/Facegroup/brush/dock/File/debug/
+display/release contracts. JS syntax and diff clean. View scroll test parser now
+selects its two max-height-bearing base/media rules instead of also counting990's
+closed descendant-display selector; all height/overflow assertions retained, and
+997 has explicit closed-surface coverage. No CSS/rendered/native/full-suite proof
+claimed from controlled DOM tests. Later hosted status and exact publication/live
+proof recorded in docs/publication-997.md; consult before describing delivery.
+
+DEVICE997: fresh997 open VIEW: directions/looks/controls must visibly draw, not only
+frame. Compare Studio and Facegroups (overflow case); scroll to bottom, toggle looks
+and reopen with finger/Pencil. Close VIEW via trigger/outside tap; open File and
+return. Face radial FACEGROUP still opens original left dock. Confirm without app-
+switch/Refresh display workaround. .996 PASS is protected;995 acceptance not inferred.
+Current VIEW pixel acceptance remains pending; broader historical right-region issue
+stays OPEN until native feedback. Next assess997 iPad result before more rendering
+changes or facegroup-seam UV/material work. Standing push/publish approval applies.
+
+## .997 initial Studio success; Facegroups transition remains OPEN â€” 27 October 2026
+
+User: â€œView works great - there is still a patch on the right that's hiding the
+gizmo contents.â€ Accept/protect997 VIEW rendering repair specifically; do not infer
+broad right-region/gizmo acceptance. Keep996 File menu PASS and994 acceptance.
+
+New997 report08:04:53.110Z: Studio/Face, viewport1366x886,DPR2,canvas2732x1652,
+controls enabled, no tool session/texture Paint, canvasProbehiddenfalse. Final VIEW
+closed, external #viewModesPanel parentapp/hidden/displaynone/zero bounds, so no
+retained closed VIEW rectangle is established at capture. totalGizmo explicitly
+hidden/displaynone/zero bounds too: this report does NOT capture a visible partly
+clipped gizmo. Do not treat that intentional hidden state as spatial clipping proof.
+Studio atmosphere is active, opacity1/multiply, but this alone does not prove it
+causes the patch (older reports included non-Studio/opacity0 failures). Healthy
+right-toolbar layout/hits remain non-pixel evidence.
+
+Toggle-time records at29629/43262/44313 show openTRUE with panelhiddenTRUE; closes
+42140/43804/44827 show previous visible panel bounds. Debug observes toggle at window
+capture, while surface visibility is mirrored by MutationObserver. These transition
+samples can precede the visibility update; they are not by themselves persistent
+VIEW failure evidence. User explicitly confirms VIEW now works. Preserve accepted
+surface structure; if future reporting work is needed, sample settled state rather
+than claiming these transition records show a remaining visible closed panel.
+
+Source audit: Total Gizmo root remains original196px viewport child, translated to
+selection; its primary SVG intentionally clips to its own bounds while shortcut SVGs
+remain overflowvisible. No specific wrong screen-fixed clip rect or covering DOM node
+was established. Do not remove protected SVG clipping or move gizmo parent/coordinates
+speculatively. No code/build change from this update. Runtime remains997.
+
+Next useful native evidence: screenshot while gizmo is VISIBLE and crossing patch,
+so arrows/rings versus radial labels/buttons and fixed patch boundary can be compared.
+Quick Studioâ†’Solidâ†’Studio comparison may separate Studio presentation dependence;
+it is a diagnostic comparison, not a guaranteed recovery or engine diagnosis.
+No need for another identical dump with gizmo hidden. Preserve original navigation,
+selection/history and accepted VIEW owner until evidence supports a narrow repair.
+
+## `.1056` follow-up â€” loader and contract alignment
+
+- [x] Correct the stale nested `.1055` release-version import in `src/face-workflow-layout.js`.
+- [x] Refresh reviewed Total Gizmo and face-workflow asset hashes.
+- [ ] Confirm hosted Topology, Pages rollout and live asset bytes.
+- [ ] Confirm on device that Pencil orbit in Paint keeps the gizmo anchored and usable.
+
+- [x] Align the drawer owner and its shell cache pin with `.1056` after hosted checks exposed a remaining `.1055` cache hop.
+
+- [ ] Investigate the recorded multi-channel Doneâ†’UV Paint re-entry gizmo displacement. Colour-only Done/re-entry passes; multi-channel painting works until Done, then the gizmo is already displaced. The Pencil-orbit camera sync is not accepted as a complete fix until this sequence is verified.
+
+
+## `.1056` verification status
+
+- [x] Pages deployment succeeded; live `.1056` marker, shell and changed gizmo/drawer/face-layout assets match the repo.
+- [x] Hosted Topology `41305462939` passed 3,096 / 3,096.
+- [ ] Fix and device-check multi-channel Colour/Roughness/Metalness Doneâ†’UV Paint re-entry; the supplied recording shows the gizmo displaced before orbiting resumes.
+- [x] Preserve Colour-only Done/re-entry and prior Paint/map PASSes.
+
+
+## .1057 â€” keep the editor camera authoritative â€” 2 November 2026
+
+Repeated user FAIL: multi-channel Colour/Roughness/Metalness Paint â†’ Done â†’ re-enter displaces gizmo and turns paint contacts into orbit. Colour-only re-entry is protected PASS. Root cause found in `bridge-topology.js`: global PerspectiveCamera.updateProjectionMatrix observer overwrote bridge.camera for every perspective camera. Metallic PMREM generation constructs its own PerspectiveCamera, stealing the editor camera reference used by gizmo projection and painting raycasts. Main already publishes camera and OrbitControls together. Observer now accepts projection updates only from controls.object once controls exist; startup fallback remains. Existing modelling, Paint, PMREM and transform owners retained. The .1056 matrix refresh alone did not repair this camera identity fault.
+
+Regression uses real Three.js perspective cameras across three reflection/clone cycles and confirms the bridge retains editor identity. Focused camera/release/bootstrap checks: 37 PASS; material painting/reflections/orbit checks: 15 PASS. Full local suite ended without a final summary after reporting one bootstrap cache-pin assertion; that pin was corrected and its focused tests rerun successfully. No full-suite PASS claimed; hosted regression and deployment pending. Protected Multi1.0 unchanged. Device acceptance pending: multi-channel paint â†’ Done â†’ reopen â†’ paint; switch brushes and Pencil orbit; repeat three times; check Colour-only, previews and shadows.
+
+
+`.1057` publication: runtime commit `0694a15427d369ced3021d3d5342fb91bdc74413`; Pages `41380409300` succeeded. Cache-busted live version.json reports `.1057`; index and bridge-topology.js match local SHA-256 (bridge `5a9c0052639eb62abd7c3620c52ea42891f27901aa0e7c669d7ce645570c17f3`). Original observer was executed separately and reproduced replacement by the reflection camera; repaired regression retains editor camera. Hosted Topology `41380410101` is pending. Device acceptance remains pending for repeated multi-channel Paint â†’ Done â†’ reopen â†’ paint and Pencil orbit. Colour-only re-entry PASS protected.
+
+## .1058 â€” radial Material uses the working Brush entry â€” 2 November 2026
+
+User PASS protects .1057 editor-camera ownership repair, multi-channel Done/re-entry and aligned gizmo. New residual FAIL: opening Material from the Paint radial, changing colour then painting makes one blob and becomes unresponsive until Done/reopen. Selecting Brush before changing colour works. Audit: radial Material directly called showMaterialMenu, bypassing the Brush action change that clears image stage, cancels stroke/capture and synchronizes tool/fill state. Radial Material now calls the same selectPaintTool('paint') owner as Brush. Header Material still edits the current tool's material settings. No new Paint or navigation owner.
+
+Regression executes the real UI: Fillâ†’Material prepares Brush; Material cancels a stale active Pencil contact; colour edits plus two moving metallic strokes commit separately with controls restored and Paint active. Focused Paint/camera/release checks: 35 PASS; bootstrap/cache/release checks: 36 PASS after preserving the unchanged modelling bootstrap cache keys. Hosted Topology `41381820929` passed 3,098 / 3,098. Pages `41381821044` succeeded; live `.1058` marker, index and viewport-paint.js match the release source. Device acceptance pending for radial Material colour changes and repeated Metalness strokes. Device: radial Materialâ†’change colourâ†’paint continuous strokes with Metalness, repeat; then check Brush, Done/reopen and gizmo. .1057 hosted Topology had 3,096 PASS / 1 FAIL from old .1056 visible comparison labels; .1058 aligns those visible labels with the actual release. Earlier device PASS is protected, not inferred from CI.
+
+
+`.1058` publication verified: runtime commit `0c48392d9575de3d65a45b589cbc38ca434a3d09`. Hosted Topology `41381820929` passed 3,098 / 3,098. Pages `41381821044` succeeded; live `.1058` marker, index and viewport-paint.js match the release source. Device acceptance pending for radial Material colour changes and repeated Metalness strokes. Paint UI SHA-256 `507ccd1e34b2d4d6ce0c20ec13c6e34eabb5196b45fb98d757a8f7749db97696`; shell SHA-256 `8bdbb342678f7169ac9cc62cb75f94179e99a1c648bff14b7984dc450c37a1ff`. User .1057 PASS remains protected.
+
+## .1059 â€” Paint contact recovery after Material colour editing â€” 2 November 2026
+
+User FAIL on .1058: still one dab followed by lock-up. Do not protect .1058 as accepted; its menu equivalence test was insufficient to cover native pointer delivery. .1057 camera/Done-re-entry PASS remains protected.
+
+Audit of the existing viewport-paint pointer owner found: a retained contact causes all later pointerdown events to be swallowed; positive-pressure pen movement is rejected solely for buttons=0; intentional release clears contact only after calling releasePointerCapture; the native colour control can retain focus as the stroke begins. Repair within that owner: fresh Pencil down cancels an unfinished previous contact; clear stored contact before releasing capture; accept pressure-positive moves/coalesced samples even when buttons=0; blur focused palette input before beginning the stroke; capture the viewport before hiding the palette. Existing stroke cancellation, rollback, history, touch/palm and orbit owners retained.
+
+Regression executes the UI with missed pointerup, synchronous lostpointercapture on intentional release, native-input blur callback and pressure-positive/buttons-zero coalesced movement. It verifies a moving trail exceeds a dab, repeated metallic strokes commit, controls restore and Paint remains active. These reproduce code-level failure cases, not a confirmed trace of iPad native colour-picker events. Final focused run: 66 PASS / 0 FAIL across pointer recovery, radial Material, Paint tools/channels, Pencil pressure, camera ownership, release contracts, comparison UI and shared bootstrap tests. Hosted Topology `41384738678` passed 3,100 / 3,100. Pages `41384738314` succeeded; live `.1059` marker, index and viewport-paint.js match the release source. Native iPad Material/colour-picker lock-up acceptance remains pending; .1058 was FAIL and .1057 camera/Done-re-entry PASS stays protected. Device check: radial Materialâ†’change colourâ†’draw continuous strokes with Metalness; repeat colour changes without Done; then Done/reopen and gizmo/orbit.
+
+
+`.1059` publication verified: runtime commit `cc84d1ed2d41a9d54c5aab0dd0af52de1d7d1c98`. Hosted Topology `41384738678` passed 3,100 / 3,100. Pages `41384738314` succeeded; live `.1059` marker, index and viewport-paint.js match the release source. Native iPad Material/colour-picker lock-up acceptance remains pending; .1058 was FAIL and .1057 camera/Done-re-entry PASS stays protected. Paint UI SHA-256 `035c875a70252824de879d997cd0f8d55bd23e1d2389f08d858e14017e3c7bc2`; index SHA-256 `ae89054a73de08e924a624fc202d09c5587f6fc0a31d72288ed8004073447070`.
+
+.1060 hosted correction: Topology 41386888486 reported 3,100 PASS / 1 FAIL. Existing Face atlas test requires its original explanation â€œone island per face, up to 4096 facesâ€. Restored that wording inside Projection help while keeping atlas caps and clear-paint warning visible outside it; no test expectation was weakened. Bumped the corrected Mesh Health asset key to .1060.1 so the previously deployed .1060 asset cannot stay cached. Application release remains .1060. All 27 focused correction checks PASS; corrected hosted regression and deployment are verified below.
+
+
+`.1060` publication verified: corrected runtime commit `c59dff749b568fcc2a4f9dbbe08530e2df17b323`. Hosted Topology `41387557443` passed 3,101 / 3,101. Corrected Pages `41387557387` succeeded; live `.1060` marker, index, UV workspace and Mesh Health match the release sources. Device acceptance pending for UV help, Projection help, return/reopen and accepted Paint smoke. Index SHA-256 `7b8627d7f22c4610e72ada105dbb9b22839317fd1048ee58286444018751b9a8`; UV workspace `85a9a75ebff6930c4460179fdf4572233f2e503222b4c908da9b474a479a7aea`; Mesh Health (`.1060.1` cache key) `4d9a434a43737551e1b2f57aa3bfcf8976268ef0ba3e67978a38e4fcb5a9a429`. Paint `.1059` source/pin and user PASS remain protected. Next device list: toggle UV help and switch Move/Scale/Rotate; toggle Projection help and check visible warnings; Back to 3D/reopen and quick Material/Metalness paint.
+
+
+`.1061` publication verified: runtime commit `75b6c4dae4ba158414c3ccfc2abe472addd3c9cb`. Hosted Topology `41419359928` passed 3,103 / 3,103. Pages `41419359664` succeeded; live `.1061` marker, shell, viewport-paint.js, tool-session-ui.js and paint-palette-layout.js match the release tree. Device acceptance pending for right Layers dock, palette clearance/following, manual drag and accepted Paint workflow. SHA-256: shell `2c4cdb42ed8ff8ed99ea507c4a6bebc9bab3cb42153311897e8835c82714c5ef`; Paint UI `b94c721c229fa3ac46b9cc7cfb5ea165a9831b6d0e52498b8272d6358530cc71`; dock owner `1718ff6c3bc185010bafdbd7f37a85d5012f401fa6cd473843bdf75b75f027d1`; palette helper `e94fa66150f489701e5187e609daf095805242ff6505de385d7e89cf0811d59f`. .1060 help and .1059 Paint user PASSes are protected. Short device checks: open UV Paint and verify right Layers + clear palette; pan/orbit/zoom while menu visible, drag it then navigate; change Material colour and Metalness paint, Done/reopen and UV help smoke.
+
+
+`.1062` publication verified: runtime commit `421d6cca3f0326b2918bfdb23eaef4f062db8ac4`. Hosted Topology `41422973800` passed 3,106 / 3,106. Pages `41422972772` succeeded; live `.1062` marker, shell and all five repaired tool modules match the release commit. Device acceptance pending for convex Split taps, other edge-tool targeting, Undo/Redo/exit/navigation and accepted Paint layout. SHA-256: shell `7493f33e7f87a0abfc880e551704b2b84b1d1630eb1ccf1f3251a8712e26f597`; Split `ef7f92ead98ca96e1802f230c7b850e3955027d68c5d9ab524ec33effee56937`; Bevel `d25e7e87011a575987cf96f33f7cf4c3ea78bc05258f683376a21ec3a1ad69e0`; Extrude `1668e68282d8ad59dc6cfa871a88776841805b658754c36a7da30edd31b0ede7`; Slide `9ef0ddec79101115bc8cd252b6cb270683b40ffec6fbf7d260385ac925f39864`; Offset `e2110de1cf17b03c9dc3f94fe40e941f2150e35918d342a4c2eb7ff60e448280`. User .1061 Paint layout PASS and earlier Paint/help PASSes remain protected. Short device list: Split opposite convex-face edges after orbit/zoom; Bevel/Slide/Offset and boundary Extrude target the intended edge; Undo/Redo and Done/background exit, then navigation.
+
+## .1085 native Paint acceptance â€” 6 November 2026
+
+User PASS confirms clean Pencil stroke starts without blobs, normal size under steady pressure, working taps and Undo/Redo, and Colour/Roughness/Metalness/Opacity in one stroke. Protect this device result along with earlier Paint PASSes. Current release remains live at `.1085`; proceed to the next user-requested build from current main.
+# Current focus â€” .1151 validation and device acceptance â€” 12 November 2026
+
+.1151 addresses the screenshot-reproduced inward-extrusion shoulder issue using the existing guarded `through-kernel.js` planner, independently for eligible selected-face components. Next decision is the user's hands-on result; retain the .1131 single-region acceptance and conservative fallback for ineligible topology.
+
+The subdivision WASM lab now compares one additional 1,024-face, level-2 input under the existing 16,384-face output cap. This is an evaluation workload only: no new kernel/binary, live WASM route, production promotion or capacity claim. Keep JavaScript authoritative until complete-operation device speed, memory and reliability gates support a change. Preserve .1150 comparison workflow PASS and keep raw user reports private.
+
+---
