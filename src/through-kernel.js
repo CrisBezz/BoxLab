@@ -293,11 +293,40 @@ function straightAt(vertices,f,i,eps){
   const p=vertices[f[(i+f.length-1)%f.length]],q=vertices[f[i]],r=vertices[f[(i+1)%f.length]],a=q.clone().sub(p),b=r.clone().sub(q);
   return a.dot(b)>0&&a.clone().cross(b).length()<=eps*(a.length()+b.length());
 }
-// Retopologize only a proven convex four-corner annulus around a one-row band.
-// Concave/unequal boundaries, authored internal creases and mixed wall groups
-// keep the original cut. The clipping/classification and solid volume never change.
+function selectedFaceComponents(mesh,ids){
+  const selected=new Set(ids),adjacency=new Map(ids.map(id=>[id,new Set()])),owners=new Map();
+  for(const fi of ids){const face=mesh.faces[fi];for(let i=0;i<face.length;i++){
+    const key=topology().edgeKey(face[i],face[(i+1)%face.length]);
+    if(!owners.has(key))owners.set(key,[]);owners.get(key).push(fi);
+  }}
+  for(const faces of owners.values())for(let i=0;i<faces.length;i++)for(let j=i+1;j<faces.length;j++){
+    if(selected.has(faces[i])&&selected.has(faces[j])){adjacency.get(faces[i]).add(faces[j]);adjacency.get(faces[j]).add(faces[i]);}
+  }
+  const unseen=new Set(ids),components=[];
+  for(const seed of ids){if(!unseen.delete(seed))continue;const component=[],pending=[seed];
+    while(pending.length){const fi=pending.pop();component.push(fi);for(const next of adjacency.get(fi)||[])if(unseen.delete(next))pending.push(next);}
+    components.push(component);
+  }
+  return components;
+}
+// Retopologize only proven convex four-corner annuli around one-row bands.
+// Multi-region selections are partitioned by shared edges, then each independent
+// band uses the same conservative planner. Concave/unequal boundaries, authored
+// internal creases and mixed wall groups retain the original cut geometry.
 function rebuildInwardBandFrames(before,trial,ids,eps){
   if(ids.length<4||ids.some(i=>before.faces[i].length!==4))return trial;
+  const components=selectedFaceComponents(before,ids);
+  if(components.length===1)return rebuildSingleInwardBandFrame(before,trial,components[0],eps);
+  let rebuilt=trial;
+  for(const component of components){
+    if(component.length<4||patchLoops(component.map(i=>before.faces[i]))?.length!==2)continue;
+    rebuilt=rebuildSingleInwardBandFrame(before,rebuilt,component,eps);
+  }
+  return rebuilt;
+}
+// Retopologize one connected convex four-corner annulus around a one-row band.
+// The clipping/classification and solid volume never change.
+function rebuildSingleInwardBandFrame(before,trial,ids,eps){
   const sourceLoops=patchLoops(ids.map(i=>before.faces[i]));if(sourceLoops?.length!==2)return trial;
   const sourceVertices=new Set(ids.flatMap(i=>before.faces[i]));
   if(sourceLoops.flat().length!==sourceVertices.size)return trial;

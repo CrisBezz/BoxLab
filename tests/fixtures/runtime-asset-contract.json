@@ -161,9 +161,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1150",
+      "url": "./src/drawer-ui.js?v=0.36.18.1151",
       "target": "src/drawer-ui.js",
-      "sha256": "8d5e8ec4b15ee7e0b4d33251495d4bd9db051c7a80ad7e156fd7f4db610db9fd"
+      "sha256": "4b453c5bee30da1b852e6f9978b719af1319cfffe8713a3d0e60c5d2fa6475b1"
     },
     {
       "owner": "index.html",
@@ -311,9 +311,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/multi-face-direct.js?v=0.36.18.1132",
+      "url": "./src/multi-face-direct.js?v=0.36.18.1151",
       "target": "src/multi-face-direct.js",
-      "sha256": "7bfd2709578f1d3e3a275af2eeeeefc86d89e45e223034b9e73809d53137f86f"
+      "sha256": "c469a5542025600e80580874dadc2368f73bccb1969783bb7d3cb697f6778c41"
     },
     {
       "owner": "index.html",
@@ -378,7 +378,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1150",
+      "url": "./src/release-version.js?v=0.36.18.1151",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -866,7 +866,7 @@
       "owner": "src/drawer-ui.js",
       "url": "./face-workflow-layout.js?v=0.36.18.1150",
       "target": "src/face-workflow-layout.js",
-      "sha256": "1846a505bfbd497d4505310c1966eaf9252847930d90f378710ddbf0468c4d1f"
+      "sha256": "1e4d9709ae723d7f5bf2c48dd1f01deb1fa9dcac1e3531e6e249cb77ccd5783e"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1135,9 +1135,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./sequential-through-fallback.js?v=0.36.18.1132",
+      "url": "./sequential-through-fallback.js?v=0.36.18.1151",
       "target": "src/sequential-through-fallback.js",
-      "sha256": "0f0fe1dd630f0ee64b53746d8fae2b849bac7cd9ce2250c8e347baafde76c32e"
+      "sha256": "e534821aae423fb5c2cba1ca2dd6ca927806dcfda3a6eddb4826c569fe6616cb"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1361,7 +1361,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1150",
+      "url": "./release-version.js?v=0.36.18.1151",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -1785,9 +1785,9 @@
     },
     {
       "owner": "src/multi-face-direct.js",
-      "url": "./through-kernel.js?v=0.36.18.1132",
+      "url": "./through-kernel.js?v=0.36.18.1151",
       "target": "src/through-kernel.js",
-      "sha256": "5cf48e4b55309663b3db7faa8b077b51e1457b568329c85b2a0deba057ad8f99"
+      "sha256": "1ec43cf746eaca04989a22942f1f8c113f525422b4ac7f539fbe479d4355b429"
     },
     {
       "owner": "src/multi-face-direct.js",
@@ -1951,9 +1951,9 @@
     },
     {
       "owner": "src/sequential-through-fallback.js",
-      "url": "./through-kernel.js?v=0.36.18.1132",
+      "url": "./through-kernel.js?v=0.36.18.1151",
       "target": "src/through-kernel.js",
-      "sha256": "5cf48e4b55309663b3db7faa8b077b51e1457b568329c85b2a0deba057ad8f99"
+      "sha256": "1ec43cf746eaca04989a22942f1f8c113f525422b4ac7f539fbe479d4355b429"
     },
     {
       "owner": "src/sequential-through-fallback.js",
@@ -2240,9 +2240,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/performance-monitor.js?v=0.36.18.1150",
+      "url": "./src/performance-monitor.js?v=0.36.18.1151",
       "target": "src/performance-monitor.js",
-      "sha256": "02fb66591013ece752aa143f5f62a5061f757b11241e4a690ecb08af2541b287"
+      "sha256": "0e6ea79f12973440b2236fae356aa46c4c78f7049c626c1d9c13060375cdb0c7"
     },
     {
       "owner": "src/performance-monitor.js",
@@ -3326,9 +3326,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1150",
+      "url": "./src/shell-comparison.js?v=0.36.18.1151",
       "target": "src/shell-comparison.js",
-      "sha256": "b780dcda29e7fd03efeef023c4d673caa592e3edc2af86427db1c57e7773c662"
+      "sha256": "0e25a981ef479fc428227c4f5e1b4e9486d2920984e0236ab4142f9e049470c9"
     },
     {
       "owner": "src/main.js",
@@ -3626,9 +3626,9 @@
     },
     {
       "owner": "src/performance-monitor.js",
-      "url": "./performance-lab-ui.js?v=0.36.18.1150",
+      "url": "./performance-lab-ui.js?v=0.36.18.1151",
       "target": "src/performance-lab-ui.js",
-      "sha256": "57281b4124eb25273698413654ea2ea102b2f3b38f2417a1d83d98a539cd9faf"
+      "sha256": "a8520897a0147ac20de7ff4c7b1305f2c39b2e5c56335089cd72fdcf937c94c7"
     },
     {
       "owner": "src/performance-lab-ui.js",
@@ -3746,9 +3746,9 @@
     },
     {
       "owner": "src/performance-lab-ui.js",
-      "url": "./docs/subdivision-benchmark-1036.html?v=0.36.18.1150",
+      "url": "./docs/subdivision-benchmark-1036.html?v=0.36.18.1151",
       "target": "docs/subdivision-benchmark-1036.html",
-      "sha256": "f8ce110cf52ced8b782421b38eae6dca3d2b3c41976ef0d0fc9d293dcd30394c"
+      "sha256": "f7966f9440de5910cb773a5a52ebae13a9b0cf607c910716e4e292b92e89ea4e"
     },
     {
       "owner": "docs/subdivision-benchmark-1036.html",
