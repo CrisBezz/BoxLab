@@ -15,7 +15,7 @@ function grid(side){
 
 test('1151 higher-input benchmark case remains at the 16384-face cap with exact output parity',async()=>{
  const page=await fs.readFile(new URL('../docs/subdivision-benchmark-1036.html',import.meta.url),'utf8');
- assert.match(page,/<title>BoxLab subdivision benchmark \.1151<\/title>/);
+ assert.match(page,/<title>BoxLab subdivision benchmark \.1152<\/title>/);
  assert.match(page,/\{side:32,level:2\}/);
  assert.match(page,/workloadPlan:wasmCases\.map/);
  const source=grid(32),before=JSON.stringify({vertices:source.vertices.map(v=>v.toArray()),faces:source.faces});

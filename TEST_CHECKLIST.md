@@ -1,14 +1,22 @@
-# .1151 — four-region inward corners and bounded high-input comparison — 12 November 2026
+# .1152 — dense-input WASM comparison at output cap — 12 November 2026
+
+- [x] Preserve .1151 user-PASS inward shoulder corner repair and single-region behavior.
+- [x] Add 4,096 source faces at level 1, exactly 16,384 output faces, alongside 1,024 source faces at level 2; original nine workloads and phase-profile run remain unchanged.
+- [x] Compiled candidate test verifies exact JS output parity, 5 samples, source immutability, 16MiB linear memory cap and source/output bounds.
+- [x] Focused release/comparison checks 22/22 PASS. Full local suite 3,435/3,435 PASS (245.152s); hosted validation pending.
+- [ ] Device: Performance Lab > Profile subdivision > Compare JS / WASM; verify new 4,096/level-1 row completes with exact parity; optional compare 1,024/level-2 row. No timing reruns to chase green.
+- [ ] User PASS/FAIL pending; keep raw device report private.
+
+---
+
+# .1151 — four-region inward corners and bounded high-input comparison — protected PASS — 12 November 2026
 
 - [x] Existing .1131 single-band inward corner behavior remains protected; new four-disconnected-band regression verifies diagonal shoulder joins, source immutability, valid topology and preserved volume.
 - [x] Comparison page adds 1,024 source faces at level 2 (16,384 outputs); original nine comparisons and phase-profile run remain unchanged. Candidate stays .1150, binary .1148 and production subdivision JavaScript.
 - [x] Focused tests 19/19 PASS, including release pins, legacy nine-case parity/binary, new high-input exact parity, and both inward corner suites.
 - [x] Full local suite 3,434/3,434 PASS (86.804s), zero failures/cancelled/skips after updating current release/cache expectations and the intentionally expanded comparison page.
 - [x] Hosted Topology run `43216291191` passes 3,434/3,434 (324.024s); Pages build/deploy run `43216644179` succeeds; 11 live release/cache-busted assets byte-match source.
-- [ ] Device: repeat the inward four-region setup and verify each eligible shoulder has diagonals; verify single-region inward extrusion; optional new comparison row reaches exact parity.
-- [ ] User PASS/FAIL pending. Keep any native comparison JSON private.
-
----
+- [x] User confirms PASS. Protect four-region diagonal joins and existing single-region inward-corner behavior. Keep raw native comparison JSON private.
 
 # .1150 — direct WASM input-span population — 12 November 2026
 

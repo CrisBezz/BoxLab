@@ -21,7 +21,7 @@ test('.1036 browser benchmark calls the existing subdivision owner and keeps a b
  assert.match(page,/const presets = \[4, 8, 16\]/);
  assert.match(page,/const maxFaces = 16384/);
  assert.match(page,/const stopMs = 1200/);
- assert.match(shell,/Open subdivision timing benchmark · \.1151/);
+ assert.match(shell,/Open subdivision timing benchmark · \.1152/);
  assert.match(shell,/\.\/docs\/subdivision-benchmark-1036\.html/);
 });
 

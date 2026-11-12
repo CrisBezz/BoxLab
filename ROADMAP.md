@@ -1,10 +1,9 @@
-# Current focus — .1151 validation and device acceptance — 12 November 2026
+# Current focus — .1152 compare larger input at the same output cap — 12 November 2026
 
-.1151 addresses the screenshot-reproduced inward-extrusion shoulder issue using the existing guarded `through-kernel.js` planner, independently for eligible selected-face components. Local and hosted regression both pass 3,434/3,434; final Pages deploy and 11 live byte checks pass. Next decision is the user's hands-on result; retain the .1131 single-region acceptance and conservative fallback for ineligible topology.
-
-The subdivision WASM lab now compares one additional 1,024-face, level-2 input under the existing 16,384-face output cap. This is an evaluation workload only: no new kernel/binary, live WASM route, production promotion or capacity claim. Keep JavaScript authoritative until complete-operation device speed, memory and reliability gates support a change. Preserve .1150 comparison workflow PASS and keep raw user reports private.
+User .1151 PASS is protected for disconnected inward-corner diagonals and the existing single-region repair. .1152 adds a bounded 4,096-source-face, level-1 comparison beside 1,024-source-face, level-2; both stop at 16,384 outputs. This measures a different source-topology size while keeping output work fixed. Existing WASM candidate and binary remain .1150/.1148; production subdivision remains JavaScript. Focused tests pass22/22; full local suite passes3,435/3,435 (245.152s); hosted release validation pending. Next device check is the new comparison row, with exact parity and bounds; do not infer performance/capacity or promote WASM from this case.
 
 ---
+
 
 # Current direction — .1150 native validation
 

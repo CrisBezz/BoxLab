@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#111318">
-  <title>BoxLab subdivision benchmark .1151</title>
+  <title>BoxLab subdivision benchmark .1152</title>
   <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.179.1/build/three.module.js","../src/mesh.js":"../src/mesh.js?v=0.12.1140"}}</script>
   <style>
     :root{color-scheme:dark;font:16px/1.45 system-ui,-apple-system,sans-serif;background:#191c22;color:#eef1f7}
@@ -20,10 +20,10 @@
   </style>
 </head>
 <body>
-  <h1>Subdivision timing · BoxLab .1151</h1>
+  <h1>Subdivision timing · BoxLab .1152</h1>
   <p>This page profiles BoxLab’s existing Catmull–Clark subdivision owner on regular quad grids. Reports split cloning, edge construction, face/edge/vertex points, adjacency and output assembly. It does not touch your open project.</p>
   <section class="card">
-    <p><strong>Bound:</strong> Run benchmark retains 16, 64 and 256 source faces at levels 1–3. Compare JS / WASM adds one higher-input case: 1,024 source faces at level 2. Every comparison output stays at or below 16,384 faces. It performs two warm-up pairs and five alternating measured pairs, including bridge and reconstruction costs. If one run exceeds 1.2 seconds, larger cases stop.</p>
+    <p><strong>Bound:</strong> Run benchmark retains 16, 64 and 256 source faces at levels 1–3. Compare JS / WASM adds two high-input cases: 1,024 source faces at level 2 and 4,096 source faces at level 1. Both reach the same output cap; every comparison output stays at or below 16,384 faces. It performs two warm-up pairs and five alternating measured pairs, including bridge and reconstruction costs. If one run exceeds 1.2 seconds, larger cases stop.</p>
     <p class="muted">This measures mesh creation only. It does not include UV interpolation, displacement image decode/sampling, GPU upload/rendering, actual device memory, or frame-time impact. A quick timing result cannot qualify displacement preview by itself.</p>
     <div class="actions"><button id="run" type="button">Run benchmark</button><button id="wasm" type="button">Compare JS / WASM</button><button id="cancel" type="button" disabled>Cancel</button><button id="download" type="button" disabled>Download JSON</button><button id="copy" type="button" disabled>Copy report</button></div>
     <p id="progress" role="status" aria-live="polite">Ready. Keep the browser open and BoxLab orientation/resolution unchanged while it runs.</p>
@@ -33,7 +33,7 @@
     </table>
     <textarea id="report" readonly hidden aria-label="Benchmark report"></textarea>
   </section>
-  <p class="muted">To open from BoxLab: File → Screen comparison / test list → Subdivision timing. Also available from VIEW → Diagnostics → Performance Lab. The added higher-input case tests the existing lab candidate only; JavaScript remains the production subdivision owner. The candidate kernel and binary are unchanged in .1151.</p>
+  <p class="muted">To open from BoxLab: File → Screen comparison / test list → Subdivision timing. Also available from VIEW → Diagnostics → Performance Lab. The added high-input cases test the existing lab candidate only; JavaScript remains the production subdivision owner. The candidate kernel and binary are unchanged in .1152.</p>
   <script type="module">
     import * as THREE from 'three';
     import { EditableMesh } from '../src/mesh.js';
@@ -42,7 +42,7 @@
     const loadSubdivisionTrial=()=>import('../src/subdivision-wasm-lab.js?v=0.36.18.1150');
     const wasmButton=document.querySelector('#wasm');
     const presets = [4, 8, 16];
-    const wasmCases=[...presets.flatMap(side=>[1,2,3].map(level=>({side,level}))),{side:32,level:2}];
+    const wasmCases=[...presets.flatMap(side=>[1,2,3].map(level=>({side,level}))),{side:32,level:2},{side:64,level:1}];
     const maxFaces = 16384;
     const stopMs = 1200;
     const samples = 5;
@@ -128,7 +128,7 @@
         }
       }
       const ended = new Date().toISOString();
-      reportData = { benchmark: 'BoxLab subdivision phase profile .1151', release:'0.36.18.1151', protocol:'subdivision-phases-v1', decision:'BASELINE_ONLY', warmup:2, started, ended, userAgent: navigator.userAgent, devicePixelRatio: window.devicePixelRatio, source: 'src/subdivision.js · profileSubdivide uses same catmullClarkStep as subdivide', sourceFaceCases: presets.map(side => side * side), levels: [1, 2, 3], outputFaceCap: maxFaces, stopAfterSingleRunMs: stopMs, timedSamplesPerCase: samples, results, stoppedEarly: stopped, scope: 'Instrumented CPU subdivision baseline only, with per-phase clock/observer overhead. Phase wall times include allocation/GC within each span; not arithmetic-only cost. No WASM candidate, speed improvement, gesture lag or editable-capacity result. Excludes UV interpolation, GPU, complete rebuild and total memory. Millisecond timer quantization may produce zero spans; do not infer zero cost or sum phase medians.' };
+      reportData = { benchmark: 'BoxLab subdivision phase profile .1152', release:'0.36.18.1152', protocol:'subdivision-phases-v1', decision:'BASELINE_ONLY', warmup:2, started, ended, userAgent: navigator.userAgent, devicePixelRatio: window.devicePixelRatio, source: 'src/subdivision.js · profileSubdivide uses same catmullClarkStep as subdivide', sourceFaceCases: presets.map(side => side * side), levels: [1, 2, 3], outputFaceCap: maxFaces, stopAfterSingleRunMs: stopMs, timedSamplesPerCase: samples, results, stoppedEarly: stopped, scope: 'Instrumented CPU subdivision baseline only, with per-phase clock/observer overhead. Phase wall times include allocation/GC within each span; not arithmetic-only cost. No WASM candidate, speed improvement, gesture lag or editable-capacity result. Excludes UV interpolation, GPU, complete rebuild and total memory. Millisecond timer quantization may produce zero spans; do not infer zero cost or sum phase medians.' };
       progress.textContent = stopped ? 'Benchmark stopped at the 1.2-second guard. Copy the partial results if useful.' : `Done · ${results.length} cases measured. Copy the report and share it.`;
       copyButton.disabled = results.length === 0; runButton.disabled = false;
       report.value = JSON.stringify(reportData, null, 2);downloadButton.disabled=results.length===0;
@@ -150,13 +150,13 @@
           const item=await compareSubdivision(source,level,{kernel:loaded.exports,stopMs,yieldFrame:nextFrame,cancelled:()=>cancelled||document.visibilityState==='hidden'});
           results.push(item);addRow(item.sourceFaces,level,{faces:{length:item.outputFaces},vertices:{length:(side*2**level+1)**2}},0,`JS ${fmt(item.metrics.js.medianMs)} · WASM ${fmt(item.metrics.wasm.medianMs)} · ${item.decision}`);
         }
-        reportData={schemaVersion:1,protocol:'subdivision-wasm-v1',release:'0.36.18.1151',timestamp:new Date().toISOString(),userAgent:navigator.userAgent,devicePixelRatio:window.devicePixelRatio,initialization:{binaryBytes:loaded.binaryBytes,milliseconds:loaded.initializationMs,scope:'Fetch/cache + compile + instantiate; excluded from warm pairs'},outputFaceCap:maxFaces,stopMs,workloadPlan:wasmCases.map(({side,level})=>({sourceFaces:side*side,level,outputFaces:side*side*4**level})),results,decision:'LAB_ONLY',notes:'Candidate revision 1150 and 1148 WASM binary are unchanged. Added one 1024-source-face, level-2 case (16384 output faces) to the original nine bounded workloads. Candidate writes coordinates, edge fields and face-edge IDs into WASM spans and creates independently owned Vector3 output. Complete CPU comparison includes initial clone, real mesh.edges, validation, CSR preparation, bulk copies, WASM face/edge/vertex points and quad indices, independent EditableMesh reconstruction, creases/groups. Source and output exact on every pair. Excludes UV interpolation, scene/cage/GPU, gestures, editable capacity and total memory. JS temporary staging and object heaps not measured; per-step linear-memory and numeric-output bytes are proxies only. >=25% total median reduction REVIEW;10–24% CONDITIONAL;<10% FAIL; unresolved timers INCONCLUSIVE. No promotion without target iPad memory/reliability gates. No live WASM route.'};
+        reportData={schemaVersion:1,protocol:'subdivision-wasm-v1',release:'0.36.18.1152',timestamp:new Date().toISOString(),userAgent:navigator.userAgent,devicePixelRatio:window.devicePixelRatio,initialization:{binaryBytes:loaded.binaryBytes,milliseconds:loaded.initializationMs,scope:'Fetch/cache + compile + instantiate; excluded from warm pairs'},outputFaceCap:maxFaces,stopMs,workloadPlan:wasmCases.map(({side,level})=>({sourceFaces:side*side,level,outputFaces:side*side*4**level})),results,decision:'LAB_ONLY',notes:'Candidate revision 1150 and 1148 WASM binary are unchanged. Preserves the 1024-source-face, level-2 case and adds a 4096-source-face, level-1 case; both produce 16384 faces, separating source-topology size at the same output cap. Candidate writes coordinates, edge fields and face-edge IDs into WASM spans and creates independently owned Vector3 output. Complete CPU comparison includes initial clone, real mesh.edges, validation, CSR preparation, bulk copies, WASM face/edge/vertex points and quad indices, independent EditableMesh reconstruction, creases/groups. Source and output exact on every pair. Excludes UV interpolation, scene/cage/GPU, gestures, editable capacity and total memory. JS temporary staging and object heaps not measured; per-step linear-memory and numeric-output bytes are proxies only. >=25% total median reduction REVIEW;10–24% CONDITIONAL;<10% FAIL; unresolved timers INCONCLUSIVE. No promotion without target iPad memory/reliability gates. No live WASM route.'};
         report.value=JSON.stringify(reportData,null,2);copyButton.disabled=downloadButton.disabled=false;progress.textContent='Comparison complete. Download JSON; REVIEW is not production approval.';
       }catch(error){reportData=null;progress.textContent=error.message;}finally{runButton.disabled=wasmButton.disabled=false;cancelButton.disabled=true;}
     });
 
     cancelButton.addEventListener('click',()=>{cancelled=true;cancelButton.disabled=true;});
-    downloadButton.addEventListener('click',()=>{if(!reportData)return;const url=URL.createObjectURL(new Blob([JSON.stringify(reportData,null,2)],{type:'application/json'}));const link=document.createElement('a');link.href=url;link.download=reportData.protocol==='subdivision-wasm-v1'?'BoxLab-subdivision-wasm-1151.json':'BoxLab-subdivision-profile-1151.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
+    downloadButton.addEventListener('click',()=>{if(!reportData)return;const url=URL.createObjectURL(new Blob([JSON.stringify(reportData,null,2)],{type:'application/json'}));const link=document.createElement('a');link.href=url;link.download=reportData.protocol==='subdivision-wasm-v1'?'BoxLab-subdivision-wasm-1152.json':'BoxLab-subdivision-profile-1152.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
 
     copyButton.addEventListener('click', async () => {
       if (!reportData) return;

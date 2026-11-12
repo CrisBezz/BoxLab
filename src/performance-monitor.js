@@ -48,7 +48,7 @@ function setEnabled(value){
   const actions=document.createElement('div');actions.style.cssText='display:flex;gap:6px;margin-top:6px';
   for(const [label,action] of [['Reset',()=>{monitor.reset();refresh();}],['Close',()=>setEnabled(false)]]){const b=document.createElement('button');b.type='button';b.textContent=label;b.addEventListener('click',action);actions.append(b);}
   panel.append(title,output,note,actions);document.querySelector('#viewportWrap')?.append(panel);
-  const currentPanel=panel;import('./performance-lab-ui.js?v=0.36.18.1151').then(m=>{if(panel===currentPanel&&panel.isConnected)m.installPerformanceLab(panel,monitor);}).catch(()=>{if(panel===currentPanel)note.textContent+=' Lab could not load; reopen to retry.';});
+  const currentPanel=panel;import('./performance-lab-ui.js?v=0.36.18.1152').then(m=>{if(panel===currentPanel&&panel.isConnected)m.installPerformanceLab(panel,monitor);}).catch(()=>{if(panel===currentPanel)note.textContent+=' Lab could not load; reopen to retry.';});
  }
  refresh();timer=setInterval(refresh,500);heartbeatTimer=setInterval(()=>{if(document.visibilityState==='hidden'){monitor.pause();return;}monitor.heartbeat();},100);return true;
 }

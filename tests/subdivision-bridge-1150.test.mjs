@@ -27,10 +27,10 @@ test('1150 direct WASM edge and face-edge spans retain canonical edge order and 
 
 test('1151 page adds higher-input comparison while retaining candidate parity/export coverage',async()=>{
  const page=await fs.readFile(new URL('../docs/subdivision-benchmark-1036.html',import.meta.url),'utf8');
- assert.match(page,/<title>BoxLab subdivision benchmark \.1151<\/title>/);
+ assert.match(page,/<title>BoxLab subdivision benchmark \.1152<\/title>/);
  assert.match(page,/subdivision-wasm-lab\.js\?v=0\.36\.18\.1150/);
  assert.match(page,/Candidate revision 1150/);
- assert.match(page,/BoxLab-subdivision-wasm-1151\.json/);
+ assert.match(page,/BoxLab-subdivision-wasm-1152\.json/);
  assert.match(page,/let reportData = null/);
  assert.match(page,/Compare JS \/ WASM/);
 });
