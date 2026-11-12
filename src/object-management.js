@@ -238,7 +238,7 @@ function auditProjectSnapshot(){
 }
 function projectFileName(){
  const input=document.querySelector('#exportFileName');
- const name=String(input?.value||'BoxLab_Project').replace(/[^a-zA-Z0-9 _.-]/g,'_').replace(/\.boxlab$/i,'').trim();
+ const name=String(input?.value||'BoxLab_Project').replace(/[^a-zA-Z0-9 _.-]/g,'_').replace(/\.boxlab(?:\.json)?$/i,'').trim();
  return (name||'BoxLab_Project')+'.boxlab';
 }
 function exportBasicProject(button,output){
@@ -261,7 +261,8 @@ function exportBasicProject(button,output){
   const text=JSON.stringify(data);
   const restored=decodeBoxlabScene(JSON.parse(text),(v,f,c,g)=>new EditableMesh(v,f,c,g));
   if(JSON.stringify(encodeBoxlabScene(restored))!==text)throw Error('Project round-trip verification failed');
-  const blob=new Blob([text],{type:'application/json'});
+  // Keep JSON content, but avoid application/json: Safari appends .json to the custom .boxlab suffix.
+  const blob=new Blob([text],{type:'application/octet-stream'});
   const limit=restored.objects.some(o=>o.colourPaint?.version>=2&&o.colourPaint.width===1024&&o.colourPaint.height===1024)?96:32;
   if(blob.size>limit*1024*1024)throw Error('Project exceeds the '+limit+' MB Open limit');
   url=URL.createObjectURL(blob);
@@ -277,7 +278,7 @@ function exportBasicProject(button,output){
 async function openBasicProject(file,output){
  if(!file)return;
  try{
-  if(!/\.boxlab$/i.test(file.name)||file.size>96*1024*1024)throw Error('Choose a .boxlab file smaller than 96 MB');
+  if(!/\.boxlab(?:\.json)?$/i.test(file.name)||file.size>96*1024*1024)throw Error('Choose a .boxlab project (or Safari-suffixed .boxlab.json) smaller than 96 MB');
   const source=JSON.parse(await file.text());
   const incoming=decodeBoxlabScene(source,(v,f,c,g)=>new EditableMesh(v,f,c,g));
   // Eligibility follows validated resources, never a filename or unchecked flag.
@@ -305,7 +306,7 @@ async function openBasicProject(file,output){
   selectedIds=new Set(incoming.selected.filter(id=>ids.has(id)));
   updateUI();
   const nameInput=globalThis.document?.querySelector?.('#exportFileName');
-  if(nameInput)nameInput.value=file.name.replace(/\.boxlab$/i,'');
+  if(nameInput)nameInput.value=file.name.replace(/\.boxlab(?:\.json)?$/i,'');
   output.textContent='Opened .boxlab · '+incoming.objects.length+' objects · Undo history reset.'+(incoming.objects.some(o=>o.colourPaint)?' Colour paint preserved; Studio / Solid / UV Image display requires matching Base UVs.':'')+(incoming.objects.some(o=>o.roughnessPaint)?' Roughness data preserved.':'')+(incoming.objects.some(o=>o.metalnessPaint)?' Metalness data preserved.':'')+(incoming.objects.some(o=>o.opacityPaint)?' Opacity data preserved.':'');
  }catch(error){output.textContent='Open refused · '+(error?.message||error);}
 }
@@ -330,9 +331,9 @@ function installProjectAudit(){
   output.textContent=report.ok?`Project snapshot: ${n.objects} objects · ${n.vertices} vertices · ${n.faces} faces · ${n.groups} groups · ${n.booleanRecipes} Boolean recipes · ${n.curveProfiles} Curve profiles · ${n.linkedObjects} links · ${n.referenceObjects} references. Ready for .boxlab Save.`:`Project snapshot issues: ${report.issues.slice(0,3).join('; ')||report.reason}`;
  });
  const save=document.createElement('button');save.id='projectSaveBasicBtn';save.type='button';save.textContent='Save .boxlab';save.title='Download scene geometry, metadata, UV channels and imported GLB resources; Undo history is not saved';save.addEventListener('click',()=>exportBasicProject(save,output));
- const open=document.createElement('button');open.id='projectOpenBasicBtn';open.type='button';open.textContent='Open .boxlab from Files';open.title='Choose your downloaded .boxlab from iPad Files; opening directly from Files requires a native app';
+ const open=document.createElement('button');open.id='projectOpenBasicBtn';open.type='button';open.textContent='Open .boxlab from Files';open.title='Choose your downloaded .boxlab (or Safari-suffixed .boxlab.json) from iPad Files';
  const input=document.createElement('input');input.id='projectOpenBasicInput';input.type='file';input.accept='';input.hidden=true;
- open.addEventListener('click',()=>{output.textContent='Choose a .boxlab file in the picker (Browse → Downloads). Other files will be refused.';input.click();});
+ open.addEventListener('click',()=>{output.textContent='Choose a .boxlab file in the picker (Browse → Downloads). Older Safari .boxlab.json downloads are accepted too.';input.click();});
  input.addEventListener('change',()=>{const file=input.files?.[0];input.value='';void openBasicProject(file,output);});
  (menu.querySelector('#fileProjectActions')||menu).append(open,save,input);
  (menu.querySelector('#fileProjectCheck')||menu).append(button,output);

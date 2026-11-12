@@ -1,6 +1,12 @@
+# Current focus — .1153 Safari project-file suffix — 13 November 2026
+
+Fix the observed iOS Safari filename `BoxLab_Model.boxlab.json` by keeping the existing JSON codec/payload and changing only the downloaded Blob MIME to `application/octet-stream`. Open retains compatibility with already-suffixed `.boxlab.json` files. Focused save/open + release checks pass30/30. Full local suite passes 3,435/3,435 (79.436s); hosted release validation and physical Safari check remain pending. Manual Safari filename/open check remains necessary because automated CI cannot access the user's physical iPad; no further benchmark rerun is needed. .1152 native results remain LAB_ONLY, with production subdivision in JavaScript.
+
+---
+
 # Current focus — .1152 compare larger input at the same output cap — 12 November 2026
 
-User .1151 PASS is protected for disconnected inward-corner diagonals and the existing single-region repair. .1152 adds a bounded 4,096-source-face, level-1 comparison beside 1,024-source-face, level-2; both stop at 16,384 outputs. This measures a different source-topology size while keeping output work fixed. Existing WASM candidate and binary remain .1150/.1148; production subdivision remains JavaScript. Focused tests pass22/22; full local suite passes3,435/3,435 (245.152s); hosted Topology run `43223351459` passes3,435/3,435 (261.364s) and Pages `43223344279` succeeds; eight changed live assets byte-match. Next device check is the new comparison row, with exact parity and bounds; do not infer performance/capacity or promote WASM from this case.
+User .1151 PASS is protected for disconnected inward-corner diagonals and the existing single-region repair. .1152 adds a bounded 4,096-source-face, level-1 comparison beside 1,024-source-face, level-2; both stop at 16,384 outputs. This measures a different source-topology size while keeping output work fixed. Existing WASM candidate and binary remain .1150/.1148; production subdivision remains JavaScript. Focused tests pass22/22; full local suite passes3,435/3,435 (245.152s); hosted Topology run `43223351459` passes3,435/3,435 (261.364s) and Pages `43223344279` succeeds; eight changed live assets byte-match. Native iPad comparison is complete: all 11 workload parity checks pass, but the new 4,096/level-1 row is 7 ms median for both JS and WASM (0% reduction; row FAIL for speed). The 1,024/level-2 row is CONDITIONAL (9 ms JS, 8 ms WASM; matching 11 ms p95). The full result remains LAB_ONLY. Keep production subdivision in JavaScript; do not repeat the same timing workload or infer capacity from the memory proxy.
 
 ---
 
