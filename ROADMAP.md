@@ -1,5 +1,7 @@
 # .1149 — reduce subdivision bridge coordinate allocations — 12 November 2026
 
+Publication: runtime `b995e595`, Pages43186272095 SUCCESS; nine live assets byte-match source, local3,430/3,430 PASS. Hosted regression43186273655 SUCCESS:3,430/3,430 PASS; native1149 benchmark remains the next gate.
+
 Current next step: measure .1149 bridge allocation reduction on the same bounded native iPad comparison. Production integration remains gated on complete native performance, memory and reliability evidence. .1149 removes coordinate staging/triplet arrays around the unchanged existing lab kernel; JS remains authoritative in the app. Desktop largest REVIEW43.55% is only a reason to collect native evidence, with unchanged extra linear-memory requirements. Preserve honest FAIL/INCONCLUSIVE results and full-operation gates; do not optimize the chart until green. If native benefit remains conditional or memory/control gates fail, reject this bridge for production and follow measured existing-owner bottlenecks before another port. No larger editable-capacity, viewport/gesture, UV or GPU claim.
 
 DEVICE1149: VIEW > Diagnostics > Performance Lab > Profile subdivision > Compare JS / WASM; let all9 finish, Download JSON and share. FAIL/INCONCLUSIVE are valid results. Return to model: SubD preview, Move/UndoRedo and edge DRAG -> puck -> gizmo smoke. No larger stress fixture or packing repeat required. Do not promote from desktop or short timing-only wins.

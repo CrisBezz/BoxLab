@@ -6,7 +6,8 @@
 - [x] Same complete timing boundary, two warm-up/five alternating measured pairs, caps, zero-median INCONCLUSIVE, unavailable/cancel recovery and all9-case export retained. Candidate revision1149 is identified in JSON notes; binary stays1148.
 - [x] Focused32/32 PASS. Desktop timing mixed; largest REVIEW is not promotion.
 - [x] Final full local3,430/3,430 PASS, zero failures/cancelled/skips (89.699s); syntax/diff/protected byte checks PASS.
-- [ ] Publication evidence (see current handoff).
+- [x] Pages43186272095 SUCCESS; nine cache-busted live assets byte-match source.
+- [x] Hosted topology43186273655/job131074093956 SUCCESS:3,430/3,430 PASS, zero failures/cancelled/skips; runtime checkout verified. See publication1149 evidence.
 - [ ] Native1149 comparison JSON, then SubD/Move/UndoRedo/edge DRAG/puck smoke. No device PASS inferred from .1148 correctness or desktop REVIEW.
 
 Audited main `5de50994` (runtime .1148 `d90e98a1`), current release markers, live shell, cache graph and existing subdivision/mesh/lab owners. User `/nextbuild` authorizes this narrow follow-up. Existing public .1147 profiling and .1148 complete-operation trial identify bridge preparation/reconstruction as candidate overhead; this build removes specific temporary coordinate arrays found by source audit. Device evidence was reviewed privately and is not part of this publication. No overall UI PASS, safe capacity or promotion inferred. .1146 packing remains rejected. Protect .1145 edge selection and .1142 puck/gizmo acceptance.

@@ -1,0 +1,87 @@
+{
+  "release": "0.36.18.1149",
+  "runtimeCommit": "b995e59566f9ca414d27f734613a6de7afa297ba",
+  "runtimeTree": "f4e725d6a61d5d32d47b43b26aff4a29f5f3c0ed",
+  "localFocused": {
+    "tests": 32,
+    "pass": 32,
+    "fail": 0,
+    "skipped": 0
+  },
+  "localFull": {
+    "tests": 3430,
+    "pass": 3430,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "durationMs": 89698.987737
+  },
+  "hostedRegression": {
+    "run": 43186273655,
+    "job": 131074093956,
+    "status": "completed",
+    "conclusion": "success",
+    "checkedOutCommit": "b995e59566f9ca414d27f734613a6de7afa297ba",
+    "tests": 3430,
+    "passCount": 3430,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "durationMs": 308870.484936,
+    "evidence": "Decoded workflow job checkout and final TAP totals inspected"
+  },
+  "pages": {
+    "run": 43186272095,
+    "buildJob": 131074094611,
+    "deployJob": 131074296564,
+    "conclusion": "success"
+  },
+  "liveByteMatches": [
+    {
+      "path": "version.json",
+      "matches": true,
+      "sha256": "73abf1f1c08d57424bb06ec69db95675e575dd774d9bd6a21e11e308f84b6ad4"
+    },
+    {
+      "path": "index.html",
+      "matches": true,
+      "sha256": "85c1e3af1442b2a37cb8793ae0cf365f578155d0dba282f9f0ae6cc0687a351b"
+    },
+    {
+      "path": "src/performance-monitor.js",
+      "matches": true,
+      "sha256": "a418f531cc15aa545dbb71782839c13a2a28ffbfcef8b9e331de371533387406"
+    },
+    {
+      "path": "src/performance-lab-ui.js",
+      "matches": true,
+      "sha256": "21a0d99586caa3633eedbe7760ed2942aab42c4c2052fbb3595dde556cfa4c45"
+    },
+    {
+      "path": "docs/subdivision-benchmark-1036.html",
+      "matches": true,
+      "sha256": "da7e7933b628bd011f66e95ad7227ca14ff281b1670e83e023b7083f81f24baf"
+    },
+    {
+      "path": "src/subdivision-wasm-lab.js",
+      "matches": true,
+      "sha256": "29e97e89c102a82403a7d1e4cc80496ddcf7ebada8115093d258e9aef380b631"
+    },
+    {
+      "path": "src/wasm/subdivision-step.wasm",
+      "matches": true,
+      "sha256": "54df9d79add511230bd7dfb1d11ed31eb57f5eac64fbd6f7f00de9d09aa316ba"
+    },
+    {
+      "path": "src/subdivision.js",
+      "matches": true,
+      "sha256": "800b106071706b359d97cf9266c008c7801a5e704ebdad025e58df604a8362a4"
+    },
+    {
+      "path": "src/shell-comparison.js",
+      "matches": true,
+      "sha256": "c279f06150b0f7cbcaf1a82026fcaebcdea4eda441c4d5e974d47322ca546c2d"
+    }
+  ],
+  "scope": "Opt-in bridge allocation reduction only; unchanged 1148 WASM binary, authoritative production JS/mesh/selection/gizmo/Paint/Multi. Complete-operation desktop comparison mixed, largest REVIEW43.55%, target iPad1149 speed/memory/reliability pending. No production speed/capacity/gesture claim. Full tests completed before documentation-only publication sanitization; runtime/tests unchanged. Public evidence includes generated synthetic desktop report only."
+}
