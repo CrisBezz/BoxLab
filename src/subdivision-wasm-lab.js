@@ -1,5 +1,6 @@
 // Lab-only batch port. Production remains src/subdivision.js; no live route or UV path.
 import {EditableMesh} from './mesh.js';
+import {Vector3} from 'three';
 import {subdivide} from './subdivision.js?v=0.36.18.1147';
 import {latencyStats} from './performance-lab-core.js?v=0.36.18.1096';
 export const SUBDIVISION_WASM_URL=new URL('./wasm/subdivision-step.wasm?v=0.36.18.1148',import.meta.url);
@@ -19,24 +20,30 @@ export function wasmSubdivisionStep(mesh,kernel,now=()=>performance.now()){
  let corners=0;for(const f of mesh.faces){if(f.length<3)throw Error('Lab requires polygon faces');corners+=f.length;}
  if(corners>MAX_FACES)throw Error('Lab output face cap exceeded');
  const edges=mesh.edges(),ne=edges.length,ve=Array.from({length:nv},()=>[]),vf=Array.from({length:nv},()=>[]),edgeIds=new Map(),edgeData=[];
- const values=[];for(const v of mesh.vertices){if(![v.x,v.y,v.z].every(Number.isFinite))throw Error('Invalid lab coordinate');values.push(v.x,v.y,v.z);}
+ for(const v of mesh.vertices)if(!Number.isFinite(v.x)||!Number.isFinite(v.y)||!Number.isFinite(v.z))throw Error('Invalid lab coordinate');
  edges.forEach((e,i)=>{const w=mesh.creases.get(key(e.a,e.b))||0;if(!Number.isFinite(w))throw Error('Invalid crease');edgeIds.set(key(e.a,e.b),i);ve[e.a]?.push(i);ve[e.b]?.push(i);edgeData.push(e.a,e.b,e.faces.length,e.faces[0]??0,e.faces[1]??0,w);});
  const faceEdges=[];
  mesh.faces.forEach((face,fi)=>face.forEach((vi,i)=>{if(!Number.isInteger(vi)||vi<0||vi>=nv)throw Error('Invalid vertex index');vf[vi].push(fi);faceEdges.push(edgeIds.get(key(vi,face[(i+1)%face.length])));}));
  const fcsr=csr(mesh.faces),vecsr=csr(ve),vfcsr=csr(vf),arrays=[];let size=0;
  const reserve=(Type,data)=>{size=Math.ceil(size/8)*8;const pointer=size;size+=(typeof data==='number'?data:data.length)*Type.BYTES_PER_ELEMENT;arrays.push({Type,data,pointer});return pointer;};
- const v=reserve(Float64Array,values),fo=reserve(Uint32Array,fcsr.offsets),fi=reserve(Uint32Array,fcsr.indices),e=reserve(Float64Array,edgeData),veo=reserve(Uint32Array,vecsr.offsets),vei=reserve(Uint32Array,vecsr.indices),vfo=reserve(Uint32Array,vfcsr.offsets),vfi=reserve(Uint32Array,vfcsr.indices),fe=reserve(Uint32Array,faceEdges),out=reserve(Float64Array,(nv+ne+nf)*3),q=reserve(Uint32Array,corners*4);
+ const v=reserve(Float64Array,nv*3),fo=reserve(Uint32Array,fcsr.offsets),fi=reserve(Uint32Array,fcsr.indices),e=reserve(Float64Array,edgeData),veo=reserve(Uint32Array,vecsr.offsets),vei=reserve(Uint32Array,vecsr.indices),vfo=reserve(Uint32Array,vfcsr.offsets),vfi=reserve(Uint32Array,vfcsr.indices),fe=reserve(Uint32Array,faceEdges),out=reserve(Float64Array,(nv+ne+nf)*3),q=reserve(Uint32Array,corners*4);
  if(size>MAX_BYTES)throw Error('Lab WASM memory budget exceeded');const memory=kernel.memory;
  if(memory.buffer.byteLength<size)memory.grow(Math.ceil((size-memory.buffer.byteLength)/65536));
  for(const a of arrays)if(typeof a.data!=='number')new a.Type(memory.buffer,a.pointer,a.data.length).set(a.data);
+ // Write coordinates once into their final input span; no growable JS staging array.
+ const inputPositions=new Float64Array(memory.buffer,v,nv*3);
+ for(let i=0;i<nv;i++){const p=mesh.vertices[i],offset=i*3;inputPositions[offset]=p.x;inputPositions[offset+1]=p.y;inputPositions[offset+2]=p.z;}
  const packed=now();kernel.step(nv,nf,ne,v,fo,fi,e,veo,vei,vfo,vfi,fe,out,q);const computed=now();
- const positions=new Float64Array(memory.buffer,out,(nv+ne+nf)*3),quads=new Uint32Array(memory.buffer,q,corners*4),vertices=[],faces=[],groups=[],creases=new Map();
- for(let i=0;i<positions.length;i+=3)vertices.push([positions[i],positions[i+1],positions[i+2]]);
+ const positions=new Float64Array(memory.buffer,out,(nv+ne+nf)*3),quads=new Uint32Array(memory.buffer,q,corners*4),faces=[],groups=[],creases=new Map();
  for(let i=0;i<quads.length;i+=4)faces.push([quads[i],quads[i+1],quads[i+2],quads[i+3]]);
  mesh.faces.forEach((face,fi)=>{for(let i=0;i<face.length;i++)groups.push(mesh.faceGroups?.[fi]??null);});
  edges.forEach((edge,i)=>{const w=mesh.creases.get(key(edge.a,edge.b))||0;if(w<=0)return;const ep=nv+i;creases.set(key(edge.a,ep),w);creases.set(key(ep,edge.b),w);});
- const output=new EditableMesh(vertices,faces,creases,groups),end=now();
- return {mesh:output,totalMs:end-start,stages:{prepareAndCopyMs:packed-start,kernelMs:computed-packed,reconstructMs:end-computed},memory:{requiredBytes:size,committedBytes:memory.buffer.byteLength},outputCoordinateBytes:vertices.length*24,outputIndexBytes:faces.length*16};
+ // Keep constructor-owned face/crease/group normalization. Create independently owned
+ // Vector3 values directly instead of triplet arrays that the constructor discards.
+ const output=new EditableMesh([],faces,creases,groups);
+ for(let i=0;i<positions.length;i+=3)output.vertices.push(new Vector3(positions[i],positions[i+1],positions[i+2]));
+ const end=now();
+ return {mesh:output,totalMs:end-start,stages:{prepareAndCopyMs:packed-start,kernelMs:computed-packed,reconstructMs:end-computed},memory:{requiredBytes:size,committedBytes:memory.buffer.byteLength},outputCoordinateBytes:output.vertices.length*24,outputIndexBytes:faces.length*16};
 }
 export function wasmSubdivide(mesh,levels,kernel,now=()=>performance.now()){
  const start=now();

@@ -1,0 +1,1882 @@
+{
+  "schemaVersion": 1,
+  "protocol": "subdivision-wasm-v1",
+  "release": "0.36.18.1149",
+  "timestamp": "2026-11-12T08:44:46.720Z",
+  "userAgent": "Desktop Node v24.22.1; not iPad acceptance",
+  "devicePixelRatio": 1,
+  "initialization": {
+    "binaryBytes": 1733,
+    "milliseconds": 0.650621000000001,
+    "scope": "Fetch/cache + compile + instantiate; excluded from warm pairs"
+  },
+  "outputFaceCap": 16384,
+  "stopMs": 1200,
+  "results": [
+    {
+      "sourceFaces": 16,
+      "levels": 1,
+      "outputFaces": 64,
+      "warmup": 2,
+      "repeats": 5,
+      "orders": [
+        [
+          "js",
+          "wasm"
+        ],
+        [
+          "wasm",
+          "js"
+        ],
+        [
+          "js",
+          "wasm"
+        ],
+        [
+          "wasm",
+          "js"
+        ],
+        [
+          "js",
+          "wasm"
+        ]
+      ],
+      "samplesMs": {
+        "js": [
+          0.13050499999999943,
+          0.09117600000000436,
+          0.07071500000000697,
+          0.1060979999999887,
+          0.0798989999999975
+        ],
+        "wasm": [
+          0.1279310000000038,
+          0.7517519999999962,
+          0.07526200000000927,
+          0.07265900000000158,
+          0.09970900000000427
+        ]
+      },
+      "metrics": {
+        "js": {
+          "medianMs": 0.09117600000000436,
+          "p95Ms": 0.13050499999999943,
+          "minMs": 0.07071500000000697,
+          "maxMs": 0.13050499999999943
+        },
+        "wasm": {
+          "medianMs": 0.09970900000000427,
+          "p95Ms": 0.7517519999999962,
+          "minMs": 0.07265900000000158,
+          "maxMs": 0.7517519999999962
+        },
+        "medianReductionPercent": -9.358822497147816
+      },
+      "steps": [
+        [
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.07976899999999887,
+              "kernelMs": 0.0239350000000087,
+              "reconstructMs": 0.015743999999997982
+            },
+            "memory": {
+              "requiredBytes": 6856,
+              "committedBytes": 65536
+            },
+            "outputCoordinateBytes": 1944,
+            "outputIndexBytes": 1024
+          }
+        ],
+        [
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.06421500000000435,
+              "kernelMs": 0.01537299999999675,
+              "reconstructMs": 0.014592000000007488
+            },
+            "memory": {
+              "requiredBytes": 6856,
+              "committedBytes": 65536
+            },
+            "outputCoordinateBytes": 1944,
+            "outputIndexBytes": 1024
+          }
+        ],
+        [
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.04132099999999639,
+              "kernelMs": 0.014993000000004031,
+              "reconstructMs": 0.012968999999998232
+            },
+            "memory": {
+              "requiredBytes": 6856,
+              "committedBytes": 65536
+            },
+            "outputCoordinateBytes": 1944,
+            "outputIndexBytes": 1024
+          }
+        ],
+        [
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.03842699999999866,
+              "kernelMs": 0.014691999999996597,
+              "reconstructMs": 0.012378999999995699
+            },
+            "memory": {
+              "requiredBytes": 6856,
+              "committedBytes": 65536
+            },
+            "outputCoordinateBytes": 1944,
+            "outputIndexBytes": 1024
+          }
+        ],
+        [
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.062122999999999706,
+              "kernelMs": 0.015051999999997179,
+              "reconstructMs": 0.016315000000005853
+            },
+            "memory": {
+              "requiredBytes": 6856,
+              "committedBytes": 65536
+            },
+            "outputCoordinateBytes": 1944,
+            "outputIndexBytes": 1024
+          }
+        ]
+      ],
+      "correctness": {
+        "passed": true,
+        "scope": "Exact coordinates/order/indices/creases/groups on every pair, source unchanged; no UV path"
+      },
+      "decision": "FAIL"
+    },
+    {
+      "sourceFaces": 16,
+      "levels": 2,
+      "outputFaces": 256,
+      "warmup": 2,
+      "repeats": 5,
+      "orders": [
+        [
+          "js",
+          "wasm"
+        ],
+        [
+          "wasm",
+          "js"
+        ],
+        [
+          "js",
+          "wasm"
+        ],
+        [
+          "wasm",
+          "js"
+        ],
+        [
+          "js",
+          "wasm"
+        ]
+      ],
+      "samplesMs": {
+        "js": [
+          0.3539180000000073,
+          0.36532499999999857,
+          0.23442999999998904,
+          0.21822600000000136,
+          0.2909439999999961
+        ],
+        "wasm": [
+          0.42378300000000024,
+          0.3043839999999989,
+          0.3081200000000024,
+          0.26027900000001125,
+          0.43416799999999967
+        ]
+      },
+      "metrics": {
+        "js": {
+          "medianMs": 0.2909439999999961,
+          "p95Ms": 0.36532499999999857,
+          "minMs": 0.21822600000000136,
+          "maxMs": 0.36532499999999857
+        },
+        "wasm": {
+          "medianMs": 0.3081200000000024,
+          "p95Ms": 0.43416799999999967,
+          "minMs": 0.26027900000001125,
+          "maxMs": 0.43416799999999967
+        },
+        "medianReductionPercent": -5.903541575013242
+      },
+      "steps": [
+        [
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.05531299999999817,
+              "kernelMs": 0.015732999999997332,
+              "reconstructMs": 0.036725000000004115
+            },
+            "memory": {
+              "requiredBytes": 6856,
+              "committedBytes": 65536
+            },
+            "outputCoordinateBytes": 1944,
+            "outputIndexBytes": 1024
+          },
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.13567199999999957,
+              "kernelMs": 0.10400599999999827,
+              "reconstructMs": 0.06798100000000318
+            },
+            "memory": {
+              "requiredBytes": 25032,
+              "committedBytes": 65536
+            },
+            "outputCoordinateBytes": 6936,
+            "outputIndexBytes": 4096
+          }
+        ],
+        [
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.04185300000000325,
+              "kernelMs": 0.015011999999998693,
+              "reconstructMs": 0.015883999999999787
+            },
+            "memory": {
+              "requiredBytes": 6856,
+              "committedBytes": 65536
+            },
+            "outputCoordinateBytes": 1944,
+            "outputIndexBytes": 1024
+          },
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.12124099999999771,
+              "kernelMs": 0.050255000000007044,
+              "reconstructMs": 0.05346000000000117
+            },
+            "memory": {
+              "requiredBytes": 25032,
+              "committedBytes": 65536
+            },
+            "outputCoordinateBytes": 6936,
+            "outputIndexBytes": 4096
+          }
+        ],
+        [
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.035252999999997314,
+              "kernelMs": 0.01565300000000036,
+              "reconstructMs": 0.01293899999998871
+            },
+            "memory": {
+              "requiredBytes": 6856,
+              "committedBytes": 65536
+            },
+            "outputCoordinateBytes": 1944,
+            "outputIndexBytes": 1024
+          },
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.12078999999999951,
+              "kernelMs": 0.07632399999999961,
+              "reconstructMs": 0.04277400000000853
+            },
+            "memory": {
+              "requiredBytes": 25032,
+              "committedBytes": 65536
+            },
+            "outputCoordinateBytes": 6936,
+            "outputIndexBytes": 4096
+          }
+        ],
+        [
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.032148000000006505,
+              "kernelMs": 0.016183999999995535,
+              "reconstructMs": 0.02002000000000237
+            },
+            "memory": {
+              "requiredBytes": 6856,
+              "committedBytes": 65536
+            },
+            "outputCoordinateBytes": 1944,
+            "outputIndexBytes": 1024
+          },
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.0977760000000103,
+              "kernelMs": 0.0514569999999992,
+              "reconstructMs": 0.03674499999999625
+            },
+            "memory": {
+              "requiredBytes": 25032,
+              "committedBytes": 65536
+            },
+            "outputCoordinateBytes": 6936,
+            "outputIndexBytes": 4096
+          }
+        ],
+        [
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.04365500000000111,
+              "kernelMs": 0.019068000000004304,
+              "reconstructMs": 0.017797000000001617
+            },
+            "memory": {
+              "requiredBytes": 6856,
+              "committedBytes": 65536
+            },
+            "outputCoordinateBytes": 1944,
+            "outputIndexBytes": 1024
+          },
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.22197099999999637,
+              "kernelMs": 0.08446600000000615,
+              "reconstructMs": 0.04270400000000052
+            },
+            "memory": {
+              "requiredBytes": 25032,
+              "committedBytes": 65536
+            },
+            "outputCoordinateBytes": 6936,
+            "outputIndexBytes": 4096
+          }
+        ]
+      ],
+      "correctness": {
+        "passed": true,
+        "scope": "Exact coordinates/order/indices/creases/groups on every pair, source unchanged; no UV path"
+      },
+      "decision": "FAIL"
+    },
+    {
+      "sourceFaces": 16,
+      "levels": 3,
+      "outputFaces": 1024,
+      "warmup": 2,
+      "repeats": 5,
+      "orders": [
+        [
+          "js",
+          "wasm"
+        ],
+        [
+          "wasm",
+          "js"
+        ],
+        [
+          "js",
+          "wasm"
+        ],
+        [
+          "wasm",
+          "js"
+        ],
+        [
+          "js",
+          "wasm"
+        ]
+      ],
+      "samplesMs": {
+        "js": [
+          1.0425149999999945,
+          1.0557649999999938,
+          1.7876469999999927,
+          1.113422,
+          1.2938510000000036
+        ],
+        "wasm": [
+          0.7919919999999934,
+          0.7529640000000057,
+          1.4891619999999932,
+          0.9705979999999954,
+          1.3083529999999968
+        ]
+      },
+      "metrics": {
+        "js": {
+          "medianMs": 1.113422,
+          "p95Ms": 1.7876469999999927,
+          "minMs": 1.0425149999999945,
+          "maxMs": 1.7876469999999927
+        },
+        "wasm": {
+          "medianMs": 0.9705979999999954,
+          "p95Ms": 1.4891619999999932,
+          "minMs": 0.7529640000000057,
+          "maxMs": 1.4891619999999932
+        },
+        "medianReductionPercent": 12.827481404176002
+      },
+      "steps": [
+        [
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.03550300000000561,
+              "kernelMs": 0.011206000000001382,
+              "reconstructMs": 0.013820999999992978
+            },
+            "memory": {
+              "requiredBytes": 6856,
+              "committedBytes": 131072
+            },
+            "outputCoordinateBytes": 1944,
+            "outputIndexBytes": 1024
+          },
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.07478100000000154,
+              "kernelMs": 0.03842799999999613,
+              "reconstructMs": 0.035112000000012245
+            },
+            "memory": {
+              "requiredBytes": 25032,
+              "committedBytes": 131072
+            },
+            "outputCoordinateBytes": 6936,
+            "outputIndexBytes": 4096
+          },
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.28294199999999137,
+              "kernelMs": 0.10385500000001002,
+              "reconstructMs": 0.1905450000000002
+            },
+            "memory": {
+              "requiredBytes": 95560,
+              "committedBytes": 131072
+            },
+            "outputCoordinateBytes": 26136,
+            "outputIndexBytes": 16384
+          }
+        ],
+        [
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.0388279999999952,
+              "kernelMs": 0.010255000000000791,
+              "reconstructMs": 0.012128000000004135
+            },
+            "memory": {
+              "requiredBytes": 6856,
+              "committedBytes": 131072
+            },
+            "outputCoordinateBytes": 1944,
+            "outputIndexBytes": 1024
+          },
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.08817200000000014,
+              "kernelMs": 0.03017499999999984,
+              "reconstructMs": 0.028481999999996788
+            },
+            "memory": {
+              "requiredBytes": 25032,
+              "committedBytes": 131072
+            },
+            "outputCoordinateBytes": 6936,
+            "outputIndexBytes": 4096
+          },
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.2825909999999965,
+              "kernelMs": 0.1356530000000049,
+              "reconstructMs": 0.1052970000000073
+            },
+            "memory": {
+              "requiredBytes": 95560,
+              "committedBytes": 131072
+            },
+            "outputCoordinateBytes": 26136,
+            "outputIndexBytes": 16384
+          }
+        ],
+        [
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.04686000000000945,
+              "kernelMs": 0.011977999999999156,
+              "reconstructMs": 0.017736999999996783
+            },
+            "memory": {
+              "requiredBytes": 6856,
+              "committedBytes": 131072
+            },
+            "outputCoordinateBytes": 1944,
+            "outputIndexBytes": 1024
+          },
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.17706499999999892,
+              "kernelMs": 0.017035000000007017,
+              "reconstructMs": 0.07065500000000213
+            },
+            "memory": {
+              "requiredBytes": 25032,
+              "committedBytes": 131072
+            },
+            "outputCoordinateBytes": 6936,
+            "outputIndexBytes": 4096
+          },
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.7298389999999984,
+              "kernelMs": 0.05966899999999953,
+              "reconstructMs": 0.3480299999999943
+            },
+            "memory": {
+              "requiredBytes": 95560,
+              "committedBytes": 131072
+            },
+            "outputCoordinateBytes": 26136,
+            "outputIndexBytes": 16384
+          }
+        ],
+        [
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.03972900000000834,
+              "kernelMs": 0.01942899999998815,
+              "reconstructMs": 0.010055000000008363
+            },
+            "memory": {
+              "requiredBytes": 6856,
+              "committedBytes": 131072
+            },
+            "outputCoordinateBytes": 1944,
+            "outputIndexBytes": 1024
+          },
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.08490700000000118,
+              "kernelMs": 0.017635999999995988,
+              "reconstructMs": 0.026028999999994085
+            },
+            "memory": {
+              "requiredBytes": 25032,
+              "committedBytes": 131072
+            },
+            "outputCoordinateBytes": 6936,
+            "outputIndexBytes": 4096
+          },
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.5035319999999928,
+              "kernelMs": 0.07868700000000217,
+              "reconstructMs": 0.18208199999999408
+            },
+            "memory": {
+              "requiredBytes": 95560,
+              "committedBytes": 131072
+            },
+            "outputCoordinateBytes": 26136,
+            "outputIndexBytes": 16384
+          }
+        ],
+        [
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.058396999999999366,
+              "kernelMs": 0.008693000000008055,
+              "reconstructMs": 0.011386999999999148
+            },
+            "memory": {
+              "requiredBytes": 6856,
+              "committedBytes": 131072
+            },
+            "outputCoordinateBytes": 1944,
+            "outputIndexBytes": 1024
+          },
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.10734000000000776,
+              "kernelMs": 0.01632399999999734,
+              "reconstructMs": 0.034711999999998966
+            },
+            "memory": {
+              "requiredBytes": 25032,
+              "committedBytes": 131072
+            },
+            "outputCoordinateBytes": 6936,
+            "outputIndexBytes": 4096
+          },
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.8555170000000061,
+              "kernelMs": 0.08620799999999917,
+              "reconstructMs": 0.12270399999999881
+            },
+            "memory": {
+              "requiredBytes": 95560,
+              "committedBytes": 131072
+            },
+            "outputCoordinateBytes": 26136,
+            "outputIndexBytes": 16384
+          }
+        ]
+      ],
+      "correctness": {
+        "passed": true,
+        "scope": "Exact coordinates/order/indices/creases/groups on every pair, source unchanged; no UV path"
+      },
+      "decision": "CONDITIONAL"
+    },
+    {
+      "sourceFaces": 64,
+      "levels": 1,
+      "outputFaces": 256,
+      "warmup": 2,
+      "repeats": 5,
+      "orders": [
+        [
+          "js",
+          "wasm"
+        ],
+        [
+          "wasm",
+          "js"
+        ],
+        [
+          "js",
+          "wasm"
+        ],
+        [
+          "wasm",
+          "js"
+        ],
+        [
+          "js",
+          "wasm"
+        ]
+      ],
+      "samplesMs": {
+        "js": [
+          0.18829100000000665,
+          0.2556110000000018,
+          0.27644300000000044,
+          0.2846150000000023,
+          0.15059399999999812
+        ],
+        "wasm": [
+          0.1920860000000033,
+          0.23156600000000083,
+          0.21136599999999817,
+          0.2211199999999991,
+          0.10868200000000172
+        ]
+      },
+      "metrics": {
+        "js": {
+          "medianMs": 0.2556110000000018,
+          "p95Ms": 0.2846150000000023,
+          "minMs": 0.15059399999999812,
+          "maxMs": 0.2846150000000023
+        },
+        "wasm": {
+          "medianMs": 0.21136599999999817,
+          "p95Ms": 0.23156600000000083,
+          "minMs": 0.10868200000000172,
+          "maxMs": 0.23156600000000083
+        },
+        "medianReductionPercent": 17.30950545946901
+      },
+      "steps": [
+        [
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.10485599999999806,
+              "kernelMs": 0.015083000000004176,
+              "reconstructMs": 0.05154699999999934
+            },
+            "memory": {
+              "requiredBytes": 25032,
+              "committedBytes": 131072
+            },
+            "outputCoordinateBytes": 6936,
+            "outputIndexBytes": 4096
+          }
+        ],
+        [
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.15718499999999835,
+              "kernelMs": 0.025638000000000716,
+              "reconstructMs": 0.038787999999996714
+            },
+            "memory": {
+              "requiredBytes": 25032,
+              "committedBytes": 131072
+            },
+            "outputCoordinateBytes": 6936,
+            "outputIndexBytes": 4096
+          }
+        ],
+        [
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.13164600000000348,
+              "kernelMs": 0.013861000000005674,
+              "reconstructMs": 0.05794599999998695
+            },
+            "memory": {
+              "requiredBytes": 25032,
+              "committedBytes": 131072
+            },
+            "outputCoordinateBytes": 6936,
+            "outputIndexBytes": 4096
+          }
+        ],
+        [
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.11552199999999857,
+              "kernelMs": 0.017346000000003414,
+              "reconstructMs": 0.07772599999999841
+            },
+            "memory": {
+              "requiredBytes": 25032,
+              "committedBytes": 131072
+            },
+            "outputCoordinateBytes": 6936,
+            "outputIndexBytes": 4096
+          }
+        ],
+        [
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.06546799999999564,
+              "kernelMs": 0.013169000000004871,
+              "reconstructMs": 0.024196000000003437
+            },
+            "memory": {
+              "requiredBytes": 25032,
+              "committedBytes": 131072
+            },
+            "outputCoordinateBytes": 6936,
+            "outputIndexBytes": 4096
+          }
+        ]
+      ],
+      "correctness": {
+        "passed": true,
+        "scope": "Exact coordinates/order/indices/creases/groups on every pair, source unchanged; no UV path"
+      },
+      "decision": "CONDITIONAL"
+    },
+    {
+      "sourceFaces": 64,
+      "levels": 2,
+      "outputFaces": 1024,
+      "warmup": 2,
+      "repeats": 5,
+      "orders": [
+        [
+          "js",
+          "wasm"
+        ],
+        [
+          "wasm",
+          "js"
+        ],
+        [
+          "js",
+          "wasm"
+        ],
+        [
+          "wasm",
+          "js"
+        ],
+        [
+          "js",
+          "wasm"
+        ]
+      ],
+      "samplesMs": {
+        "js": [
+          0.7229379999999992,
+          1.1623539999999934,
+          1.1446880000000021,
+          1.1045579999999973,
+          0.647736999999978
+        ],
+        "wasm": [
+          0.5183639999999912,
+          0.48619500000000926,
+          0.49567900000002396,
+          0.5150989999999922,
+          0.5097810000000038
+        ]
+      },
+      "metrics": {
+        "js": {
+          "medianMs": 1.1045579999999973,
+          "p95Ms": 1.1623539999999934,
+          "minMs": 0.647736999999978,
+          "maxMs": 1.1623539999999934
+        },
+        "wasm": {
+          "medianMs": 0.5097810000000038,
+          "p95Ms": 0.5183639999999912,
+          "minMs": 0.48619500000000926,
+          "maxMs": 0.5183639999999912
+        },
+        "medianReductionPercent": 53.84751185542044
+      },
+      "steps": [
+        [
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.06684000000001333,
+              "kernelMs": 0.013860999999991463,
+              "reconstructMs": 0.025818000000015218
+            },
+            "memory": {
+              "requiredBytes": 25032,
+              "committedBytes": 131072
+            },
+            "outputCoordinateBytes": 6936,
+            "outputIndexBytes": 4096
+          },
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.23520099999998934,
+              "kernelMs": 0.08195200000000114,
+              "reconstructMs": 0.08889300000001299
+            },
+            "memory": {
+              "requiredBytes": 95560,
+              "committedBytes": 131072
+            },
+            "outputCoordinateBytes": 26136,
+            "outputIndexBytes": 16384
+          }
+        ],
+        [
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.07226699999998232,
+              "kernelMs": 0.009585000000015498,
+              "reconstructMs": 0.04494700000000762
+            },
+            "memory": {
+              "requiredBytes": 25032,
+              "committedBytes": 131072
+            },
+            "outputCoordinateBytes": 6936,
+            "outputIndexBytes": 4096
+          },
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.23249699999999507,
+              "kernelMs": 0.03073600000001875,
+              "reconstructMs": 0.09072599999998943
+            },
+            "memory": {
+              "requiredBytes": 95560,
+              "committedBytes": 131072
+            },
+            "outputCoordinateBytes": 26136,
+            "outputIndexBytes": 16384
+          }
+        ],
+        [
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.07528200000001561,
+              "kernelMs": 0.010405999999989035,
+              "reconstructMs": 0.026630000000011478
+            },
+            "memory": {
+              "requiredBytes": 25032,
+              "committedBytes": 131072
+            },
+            "outputCoordinateBytes": 6936,
+            "outputIndexBytes": 4096
+          },
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.2570230000000038,
+              "kernelMs": 0.03157799999999611,
+              "reconstructMs": 0.08433500000001004
+            },
+            "memory": {
+              "requiredBytes": 95560,
+              "committedBytes": 131072
+            },
+            "outputCoordinateBytes": 26136,
+            "outputIndexBytes": 16384
+          }
+        ],
+        [
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.061902000000003454,
+              "kernelMs": 0.00927400000000489,
+              "reconstructMs": 0.02358499999999708
+            },
+            "memory": {
+              "requiredBytes": 25032,
+              "committedBytes": 131072
+            },
+            "outputCoordinateBytes": 6936,
+            "outputIndexBytes": 4096
+          },
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.22895200000002092,
+              "kernelMs": 0.031165999999984706,
+              "reconstructMs": 0.15087500000001342
+            },
+            "memory": {
+              "requiredBytes": 95560,
+              "committedBytes": 131072
+            },
+            "outputCoordinateBytes": 26136,
+            "outputIndexBytes": 16384
+          }
+        ],
+        [
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.07290899999998146,
+              "kernelMs": 0.010255999999998267,
+              "reconstructMs": 0.02527700000001687
+            },
+            "memory": {
+              "requiredBytes": 25032,
+              "committedBytes": 131072
+            },
+            "outputCoordinateBytes": 6936,
+            "outputIndexBytes": 4096
+          },
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.2507940000000133,
+              "kernelMs": 0.03113700000000108,
+              "reconstructMs": 0.11271800000000098
+            },
+            "memory": {
+              "requiredBytes": 95560,
+              "committedBytes": 131072
+            },
+            "outputCoordinateBytes": 26136,
+            "outputIndexBytes": 16384
+          }
+        ]
+      ],
+      "correctness": {
+        "passed": true,
+        "scope": "Exact coordinates/order/indices/creases/groups on every pair, source unchanged; no UV path"
+      },
+      "decision": "REVIEW"
+    },
+    {
+      "sourceFaces": 64,
+      "levels": 3,
+      "outputFaces": 4096,
+      "warmup": 2,
+      "repeats": 5,
+      "orders": [
+        [
+          "js",
+          "wasm"
+        ],
+        [
+          "wasm",
+          "js"
+        ],
+        [
+          "js",
+          "wasm"
+        ],
+        [
+          "wasm",
+          "js"
+        ],
+        [
+          "js",
+          "wasm"
+        ]
+      ],
+      "samplesMs": {
+        "js": [
+          3.606882000000013,
+          5.599626000000001,
+          3.610582999999991,
+          2.7573540000000207,
+          3.284421000000009
+        ],
+        "wasm": [
+          2.9463360000000023,
+          2.740170000000006,
+          2.261844999999994,
+          2.5691229999999905,
+          1.9617170000000215
+        ]
+      },
+      "metrics": {
+        "js": {
+          "medianMs": 3.606882000000013,
+          "p95Ms": 5.599626000000001,
+          "minMs": 2.7573540000000207,
+          "maxMs": 5.599626000000001
+        },
+        "wasm": {
+          "medianMs": 2.5691229999999905,
+          "p95Ms": 2.9463360000000023,
+          "minMs": 1.9617170000000215,
+          "maxMs": 2.9463360000000023
+        },
+        "medianReductionPercent": 28.771637109282167
+      },
+      "steps": [
+        [
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.11823699999999349,
+              "kernelMs": 0.012828999999982216,
+              "reconstructMs": 0.05546300000000315
+            },
+            "memory": {
+              "requiredBytes": 25032,
+              "committedBytes": 393216
+            },
+            "outputCoordinateBytes": 6936,
+            "outputIndexBytes": 4096
+          },
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.37047300000000405,
+              "kernelMs": 0.02596900000000346,
+              "reconstructMs": 0.16001799999997957
+            },
+            "memory": {
+              "requiredBytes": 95560,
+              "committedBytes": 393216
+            },
+            "outputCoordinateBytes": 26136,
+            "outputIndexBytes": 16384
+          },
+          {
+            "stages": {
+              "prepareAndCopyMs": 1.7756499999999846,
+              "kernelMs": 0.0991380000000106,
+              "reconstructMs": 0.3080699999999865
+            },
+            "memory": {
+              "requiredBytes": 373320,
+              "committedBytes": 393216
+            },
+            "outputCoordinateBytes": 101400,
+            "outputIndexBytes": 65536
+          }
+        ],
+        [
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.16537700000000655,
+              "kernelMs": 0.09250900000000684,
+              "reconstructMs": 0.0494239999999877
+            },
+            "memory": {
+              "requiredBytes": 25032,
+              "committedBytes": 393216
+            },
+            "outputCoordinateBytes": 6936,
+            "outputIndexBytes": 4096
+          },
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.27599200000000224,
+              "kernelMs": 0.027880999999979394,
+              "reconstructMs": 0.09082600000002117
+            },
+            "memory": {
+              "requiredBytes": 95560,
+              "committedBytes": 393216
+            },
+            "outputCoordinateBytes": 26136,
+            "outputIndexBytes": 16384
+          },
+          {
+            "stages": {
+              "prepareAndCopyMs": 1.372318000000007,
+              "kernelMs": 0.09706500000001483,
+              "reconstructMs": 0.5537759999999992
+            },
+            "memory": {
+              "requiredBytes": 373320,
+              "committedBytes": 393216
+            },
+            "outputCoordinateBytes": 101400,
+            "outputIndexBytes": 65536
+          }
+        ],
+        [
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.09945799999999849,
+              "kernelMs": 0.012529000000000678,
+              "reconstructMs": 0.030075000000010732
+            },
+            "memory": {
+              "requiredBytes": 25032,
+              "committedBytes": 393216
+            },
+            "outputCoordinateBytes": 6936,
+            "outputIndexBytes": 4096
+          },
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.2563829999999996,
+              "kernelMs": 0.02711999999999648,
+              "reconstructMs": 0.10954399999999964
+            },
+            "memory": {
+              "requiredBytes": 95560,
+              "committedBytes": 393216
+            },
+            "outputCoordinateBytes": 26136,
+            "outputIndexBytes": 16384
+          },
+          {
+            "stages": {
+              "prepareAndCopyMs": 1.1990499999999997,
+              "kernelMs": 0.11170599999999808,
+              "reconstructMs": 0.3964019999999948
+            },
+            "memory": {
+              "requiredBytes": 373320,
+              "committedBytes": 393216
+            },
+            "outputCoordinateBytes": 101400,
+            "outputIndexBytes": 65536
+          }
+        ],
+        [
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.07446100000001366,
+              "kernelMs": 0.0095540000000085,
+              "reconstructMs": 0.038446999999990794
+            },
+            "memory": {
+              "requiredBytes": 25032,
+              "committedBytes": 393216
+            },
+            "outputCoordinateBytes": 6936,
+            "outputIndexBytes": 4096
+          },
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.24643699999998603,
+              "kernelMs": 0.02541800000000194,
+              "reconstructMs": 0.08036000000001309
+            },
+            "memory": {
+              "requiredBytes": 95560,
+              "committedBytes": 393216
+            },
+            "outputCoordinateBytes": 26136,
+            "outputIndexBytes": 16384
+          },
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.989877000000007,
+              "kernelMs": 0.0968639999999823,
+              "reconstructMs": 0.9928110000000174
+            },
+            "memory": {
+              "requiredBytes": 373320,
+              "committedBytes": 393216
+            },
+            "outputCoordinateBytes": 101400,
+            "outputIndexBytes": 65536
+          }
+        ],
+        [
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.08365399999999568,
+              "kernelMs": 0.01101699999998118,
+              "reconstructMs": 0.02479700000000662
+            },
+            "memory": {
+              "requiredBytes": 25032,
+              "committedBytes": 393216
+            },
+            "outputCoordinateBytes": 6936,
+            "outputIndexBytes": 4096
+          },
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.2525569999999959,
+              "kernelMs": 0.02631900000000087,
+              "reconstructMs": 0.0816820000000007
+            },
+            "memory": {
+              "requiredBytes": 95560,
+              "committedBytes": 393216
+            },
+            "outputCoordinateBytes": 26136,
+            "outputIndexBytes": 16384
+          },
+          {
+            "stages": {
+              "prepareAndCopyMs": 1.0084949999999822,
+              "kernelMs": 0.0972150000000056,
+              "reconstructMs": 0.3628610000000094
+            },
+            "memory": {
+              "requiredBytes": 373320,
+              "committedBytes": 393216
+            },
+            "outputCoordinateBytes": 101400,
+            "outputIndexBytes": 65536
+          }
+        ]
+      ],
+      "correctness": {
+        "passed": true,
+        "scope": "Exact coordinates/order/indices/creases/groups on every pair, source unchanged; no UV path"
+      },
+      "decision": "REVIEW"
+    },
+    {
+      "sourceFaces": 256,
+      "levels": 1,
+      "outputFaces": 1024,
+      "warmup": 2,
+      "repeats": 5,
+      "orders": [
+        [
+          "js",
+          "wasm"
+        ],
+        [
+          "wasm",
+          "js"
+        ],
+        [
+          "js",
+          "wasm"
+        ],
+        [
+          "wasm",
+          "js"
+        ],
+        [
+          "js",
+          "wasm"
+        ]
+      ],
+      "samplesMs": {
+        "js": [
+          0.45592999999999506,
+          0.4773330000000158,
+          0.44436300000000983,
+          0.4400760000000048,
+          0.5021189999999933
+        ],
+        "wasm": [
+          0.3701419999999871,
+          0.367399000000006,
+          0.342930999999993,
+          0.3679390000000069,
+          0.3682290000000137
+        ]
+      },
+      "metrics": {
+        "js": {
+          "medianMs": 0.45592999999999506,
+          "p95Ms": 0.5021189999999933,
+          "minMs": 0.4400760000000048,
+          "maxMs": 0.5021189999999933
+        },
+        "wasm": {
+          "medianMs": 0.3679390000000069,
+          "p95Ms": 0.3701419999999871,
+          "minMs": 0.342930999999993,
+          "maxMs": 0.3701419999999871
+        },
+        "medianReductionPercent": 19.299234531614307
+      },
+      "steps": [
+        [
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.25006300000001147,
+              "kernelMs": 0.024907000000013113,
+              "reconstructMs": 0.0820929999999862
+            },
+            "memory": {
+              "requiredBytes": 95560,
+              "committedBytes": 393216
+            },
+            "outputCoordinateBytes": 26136,
+            "outputIndexBytes": 16384
+          }
+        ],
+        [
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.23816600000000676,
+              "kernelMs": 0.032098000000019056,
+              "reconstructMs": 0.08333399999997937
+            },
+            "memory": {
+              "requiredBytes": 95560,
+              "committedBytes": 393216
+            },
+            "outputCoordinateBytes": 26136,
+            "outputIndexBytes": 16384
+          }
+        ],
+        [
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.2159719999999936,
+              "kernelMs": 0.024246000000005097,
+              "reconstructMs": 0.08999500000001603
+            },
+            "memory": {
+              "requiredBytes": 95560,
+              "committedBytes": 393216
+            },
+            "outputCoordinateBytes": 26136,
+            "outputIndexBytes": 16384
+          }
+        ],
+        [
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.24100999999998862,
+              "kernelMs": 0.03241800000000694,
+              "reconstructMs": 0.08209300000001463
+            },
+            "memory": {
+              "requiredBytes": 95560,
+              "committedBytes": 393216
+            },
+            "outputCoordinateBytes": 26136,
+            "outputIndexBytes": 16384
+          }
+        ],
+        [
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.242873000000003,
+              "kernelMs": 0.024687000000000126,
+              "reconstructMs": 0.07953800000001365
+            },
+            "memory": {
+              "requiredBytes": 95560,
+              "committedBytes": 393216
+            },
+            "outputCoordinateBytes": 26136,
+            "outputIndexBytes": 16384
+          }
+        ]
+      ],
+      "correctness": {
+        "passed": true,
+        "scope": "Exact coordinates/order/indices/creases/groups on every pair, source unchanged; no UV path"
+      },
+      "decision": "CONDITIONAL"
+    },
+    {
+      "sourceFaces": 256,
+      "levels": 2,
+      "outputFaces": 4096,
+      "warmup": 2,
+      "repeats": 5,
+      "orders": [
+        [
+          "js",
+          "wasm"
+        ],
+        [
+          "wasm",
+          "js"
+        ],
+        [
+          "js",
+          "wasm"
+        ],
+        [
+          "wasm",
+          "js"
+        ],
+        [
+          "js",
+          "wasm"
+        ]
+      ],
+      "samplesMs": {
+        "js": [
+          2.8625809999999774,
+          4.932479999999998,
+          2.9797760000000153,
+          5.741637000000026,
+          2.7634199999999964
+        ],
+        "wasm": [
+          2.736604,
+          2.7206290000000024,
+          2.520740999999987,
+          3.1532250000000204,
+          2.0439799999999764
+        ]
+      },
+      "metrics": {
+        "js": {
+          "medianMs": 2.9797760000000153,
+          "p95Ms": 5.741637000000026,
+          "minMs": 2.7634199999999964,
+          "maxMs": 5.741637000000026
+        },
+        "wasm": {
+          "medianMs": 2.7206290000000024,
+          "p95Ms": 3.1532250000000204,
+          "minMs": 2.0439799999999764,
+          "maxMs": 3.1532250000000204
+        },
+        "medianReductionPercent": 8.696861777529975
+      },
+      "steps": [
+        [
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.2463780000000213,
+              "kernelMs": 0.028742999999991525,
+              "reconstructMs": 0.08196200000000431
+            },
+            "memory": {
+              "requiredBytes": 95560,
+              "committedBytes": 393216
+            },
+            "outputCoordinateBytes": 26136,
+            "outputIndexBytes": 16384
+          },
+          {
+            "stages": {
+              "prepareAndCopyMs": 1.5882699999999943,
+              "kernelMs": 0.0987869999999873,
+              "reconstructMs": 0.6738560000000007
+            },
+            "memory": {
+              "requiredBytes": 373320,
+              "committedBytes": 393216
+            },
+            "outputCoordinateBytes": 101400,
+            "outputIndexBytes": 65536
+          }
+        ],
+        [
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.34245100000001116,
+              "kernelMs": 0.026569999999992433,
+              "reconstructMs": 0.12470600000000331
+            },
+            "memory": {
+              "requiredBytes": 95560,
+              "committedBytes": 393216
+            },
+            "outputCoordinateBytes": 26136,
+            "outputIndexBytes": 16384
+          },
+          {
+            "stages": {
+              "prepareAndCopyMs": 1.3898539999999855,
+              "kernelMs": 0.1628830000000221,
+              "reconstructMs": 0.6424279999999953
+            },
+            "memory": {
+              "requiredBytes": 373320,
+              "committedBytes": 393216
+            },
+            "outputCoordinateBytes": 101400,
+            "outputIndexBytes": 65536
+          }
+        ],
+        [
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.24780999999998699,
+              "kernelMs": 0.02729000000002202,
+              "reconstructMs": 0.08586799999997652
+            },
+            "memory": {
+              "requiredBytes": 95560,
+              "committedBytes": 393216
+            },
+            "outputCoordinateBytes": 26136,
+            "outputIndexBytes": 16384
+          },
+          {
+            "stages": {
+              "prepareAndCopyMs": 1.4141099999999938,
+              "kernelMs": 0.11511200000001054,
+              "reconstructMs": 0.5835609999999747
+            },
+            "memory": {
+              "requiredBytes": 373320,
+              "committedBytes": 393216
+            },
+            "outputCoordinateBytes": 101400,
+            "outputIndexBytes": 65536
+          }
+        ],
+        [
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.44381299999997736,
+              "kernelMs": 0.026409000000001015,
+              "reconstructMs": 0.13589300000001003
+            },
+            "memory": {
+              "requiredBytes": 95560,
+              "committedBytes": 393216
+            },
+            "outputCoordinateBytes": 26136,
+            "outputIndexBytes": 16384
+          },
+          {
+            "stages": {
+              "prepareAndCopyMs": 1.6431119999999737,
+              "kernelMs": 0.21586200000001554,
+              "reconstructMs": 0.663960999999972
+            },
+            "memory": {
+              "requiredBytes": 373320,
+              "committedBytes": 393216
+            },
+            "outputCoordinateBytes": 101400,
+            "outputIndexBytes": 65536
+          }
+        ],
+        [
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.25800499999996873,
+              "kernelMs": 0.030175000000042473,
+              "reconstructMs": 0.08511699999996836
+            },
+            "memory": {
+              "requiredBytes": 95560,
+              "committedBytes": 393216
+            },
+            "outputCoordinateBytes": 26136,
+            "outputIndexBytes": 16384
+          },
+          {
+            "stages": {
+              "prepareAndCopyMs": 1.2304670000000328,
+              "kernelMs": 0.09399999999999409,
+              "reconstructMs": 0.3241429999999923
+            },
+            "memory": {
+              "requiredBytes": 373320,
+              "committedBytes": 393216
+            },
+            "outputCoordinateBytes": 101400,
+            "outputIndexBytes": 65536
+          }
+        ]
+      ],
+      "correctness": {
+        "passed": true,
+        "scope": "Exact coordinates/order/indices/creases/groups on every pair, source unchanged; no UV path"
+      },
+      "decision": "FAIL"
+    },
+    {
+      "sourceFaces": 256,
+      "levels": 3,
+      "outputFaces": 16384,
+      "warmup": 2,
+      "repeats": 5,
+      "orders": [
+        [
+          "js",
+          "wasm"
+        ],
+        [
+          "wasm",
+          "js"
+        ],
+        [
+          "js",
+          "wasm"
+        ],
+        [
+          "wasm",
+          "js"
+        ],
+        [
+          "js",
+          "wasm"
+        ]
+      ],
+      "samplesMs": {
+        "js": [
+          61.16585900000001,
+          26.26440100000002,
+          29.775029000000018,
+          37.02230999999995,
+          13.598382000000015
+        ],
+        "wasm": [
+          11.719927999999982,
+          24.31048500000003,
+          16.80737899999997,
+          9.983377000000019,
+          17.086617000000047
+        ]
+      },
+      "metrics": {
+        "js": {
+          "medianMs": 29.775029000000018,
+          "p95Ms": 61.16585900000001,
+          "minMs": 13.598382000000015,
+          "maxMs": 61.16585900000001
+        },
+        "wasm": {
+          "medianMs": 16.80737899999997,
+          "p95Ms": 24.31048500000003,
+          "minMs": 9.983377000000019,
+          "maxMs": 24.31048500000003
+        },
+        "medianReductionPercent": 43.55209863943387
+      },
+      "steps": [
+        [
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.731130999999948,
+              "kernelMs": 0.12740000000002283,
+              "reconstructMs": 0.15744499999999562
+            },
+            "memory": {
+              "requiredBytes": 95560,
+              "committedBytes": 1507328
+            },
+            "outputCoordinateBytes": 26136,
+            "outputIndexBytes": 16384
+          },
+          {
+            "stages": {
+              "prepareAndCopyMs": 1.6630810000000338,
+              "kernelMs": 0.09132599999998092,
+              "reconstructMs": 0.29866600000002563
+            },
+            "memory": {
+              "requiredBytes": 373320,
+              "committedBytes": 1507328
+            },
+            "outputCoordinateBytes": 101400,
+            "outputIndexBytes": 65536
+          },
+          {
+            "stages": {
+              "prepareAndCopyMs": 6.0019249999999715,
+              "kernelMs": 0.42871999999999844,
+              "reconstructMs": 2.1867429999999786
+            },
+            "memory": {
+              "requiredBytes": 1475656,
+              "committedBytes": 1507328
+            },
+            "outputCoordinateBytes": 399384,
+            "outputIndexBytes": 262144
+          }
+        ],
+        [
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.3090710000000172,
+              "kernelMs": 0.027910999999960495,
+              "reconstructMs": 0.08459700000003068
+            },
+            "memory": {
+              "requiredBytes": 95560,
+              "committedBytes": 1507328
+            },
+            "outputCoordinateBytes": 26136,
+            "outputIndexBytes": 16384
+          },
+          {
+            "stages": {
+              "prepareAndCopyMs": 1.7860650000000078,
+              "kernelMs": 0.08944400000001451,
+              "reconstructMs": 0.6624780000000214
+            },
+            "memory": {
+              "requiredBytes": 373320,
+              "committedBytes": 1507328
+            },
+            "outputCoordinateBytes": 101400,
+            "outputIndexBytes": 65536
+          },
+          {
+            "stages": {
+              "prepareAndCopyMs": 10.77106299999997,
+              "kernelMs": 0.38425300000000107,
+              "reconstructMs": 10.164026000000035
+            },
+            "memory": {
+              "requiredBytes": 1475656,
+              "committedBytes": 1507328
+            },
+            "outputCoordinateBytes": 399384,
+            "outputIndexBytes": 262144
+          }
+        ],
+        [
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.44187900000002855,
+              "kernelMs": 0.029864999999972497,
+              "reconstructMs": 0.5487989999999741
+            },
+            "memory": {
+              "requiredBytes": 95560,
+              "committedBytes": 1507328
+            },
+            "outputCoordinateBytes": 26136,
+            "outputIndexBytes": 16384
+          },
+          {
+            "stages": {
+              "prepareAndCopyMs": 3.4154359999999997,
+              "kernelMs": 0.09507200000001603,
+              "reconstructMs": 4.351312000000007
+            },
+            "memory": {
+              "requiredBytes": 373320,
+              "committedBytes": 1507328
+            },
+            "outputCoordinateBytes": 101400,
+            "outputIndexBytes": 65536
+          },
+          {
+            "stages": {
+              "prepareAndCopyMs": 5.810960999999907,
+              "kernelMs": 0.38631600000007893,
+              "reconstructMs": 1.6232929999999897
+            },
+            "memory": {
+              "requiredBytes": 1475656,
+              "committedBytes": 1507328
+            },
+            "outputCoordinateBytes": 399384,
+            "outputIndexBytes": 262144
+          }
+        ],
+        [
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.2719759999999951,
+              "kernelMs": 0.028682000000003427,
+              "reconstructMs": 0.10534799999993538
+            },
+            "memory": {
+              "requiredBytes": 95560,
+              "committedBytes": 1507328
+            },
+            "outputCoordinateBytes": 26136,
+            "outputIndexBytes": 16384
+          },
+          {
+            "stages": {
+              "prepareAndCopyMs": 1.1256799999999885,
+              "kernelMs": 0.09015499999998156,
+              "reconstructMs": 0.35684200000002875
+            },
+            "memory": {
+              "requiredBytes": 373320,
+              "committedBytes": 1507328
+            },
+            "outputCoordinateBytes": 101400,
+            "outputIndexBytes": 65536
+          },
+          {
+            "stages": {
+              "prepareAndCopyMs": 5.784810999999991,
+              "kernelMs": 0.4027810000000045,
+              "reconstructMs": 1.7837919999999485
+            },
+            "memory": {
+              "requiredBytes": 1475656,
+              "committedBytes": 1507328
+            },
+            "outputCoordinateBytes": 399384,
+            "outputIndexBytes": 262144
+          }
+        ],
+        [
+          {
+            "stages": {
+              "prepareAndCopyMs": 0.3092910000000302,
+              "kernelMs": 0.03764599999999518,
+              "reconstructMs": 0.09916799999996329
+            },
+            "memory": {
+              "requiredBytes": 95560,
+              "committedBytes": 1507328
+            },
+            "outputCoordinateBytes": 26136,
+            "outputIndexBytes": 16384
+          },
+          {
+            "stages": {
+              "prepareAndCopyMs": 1.2150229999999738,
+              "kernelMs": 0.11163699999997334,
+              "reconstructMs": 0.3386649999999918
+            },
+            "memory": {
+              "requiredBytes": 373320,
+              "committedBytes": 1507328
+            },
+            "outputCoordinateBytes": 101400,
+            "outputIndexBytes": 65536
+          },
+          {
+            "stages": {
+              "prepareAndCopyMs": 13.020159000000035,
+              "kernelMs": 0.40556599999990794,
+              "reconstructMs": 1.5171430000000328
+            },
+            "memory": {
+              "requiredBytes": 1475656,
+              "committedBytes": 1507328
+            },
+            "outputCoordinateBytes": 399384,
+            "outputIndexBytes": 262144
+          }
+        ]
+      ],
+      "correctness": {
+        "passed": true,
+        "scope": "Exact coordinates/order/indices/creases/groups on every pair, source unchanged; no UV path"
+      },
+      "decision": "REVIEW"
+    }
+  ],
+  "decision": "LAB_ONLY",
+  "notes": "Candidate revision 1149 (direct coordinate input writes and direct independently owned Vector3 output; unchanged 1148 WASM binary). Complete CPU subdivision comparison: initial clone, real mesh.edges, validation, CSR preparation, bulk copies, WASM face/edge/vertex points and quad indices, independent EditableMesh reconstruction, creases/groups. Source and output exact on every pair. Excludes UV interpolation, scene/cage/GPU, gestures, editable capacity and total memory. JS temporary staging and object heaps not measured; per-step linear-memory and numeric-output bytes are proxies only. >=25% total median reduction REVIEW;10–24% CONDITIONAL;<10% FAIL; unresolved timers INCONCLUSIVE. No promotion without target iPad memory/reliability gates. No live WASM route."
+}

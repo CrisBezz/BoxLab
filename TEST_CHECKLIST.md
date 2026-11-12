@@ -1,3 +1,18 @@
+# .1149 — reduce subdivision bridge coordinate allocations — 12 November 2026
+
+- [x] Existing bounded nine-case irregular geometry/creases/groups parity and source immutability coverage remains active; original WAT binary reproducibility unchanged.
+- [x] Real output is EditableMesh with distinct mutable Three Vector3 instances; no source or WASM alias after explicit memory growth/overwrite; clone/Move and metadata independence verified.
+- [x] NaN/+Infinity/-Infinity on every input axis refuses before kernel execution.
+- [x] Same complete timing boundary, two warm-up/five alternating measured pairs, caps, zero-median INCONCLUSIVE, unavailable/cancel recovery and all9-case export retained. Candidate revision1149 is identified in JSON notes; binary stays1148.
+- [x] Focused32/32 PASS. Desktop timing mixed; largest REVIEW is not promotion.
+- [x] Final full local3,430/3,430 PASS, zero failures/cancelled/skips (89.699s); syntax/diff/protected byte checks PASS.
+- [ ] Publication evidence (see current handoff).
+- [ ] Native1149 comparison JSON, then SubD/Move/UndoRedo/edge DRAG/puck smoke. No device PASS inferred from .1148 correctness or desktop REVIEW.
+
+Audited main `5de50994` (runtime .1148 `d90e98a1`), current release markers, live shell, cache graph and existing subdivision/mesh/lab owners. User `/nextbuild` authorizes this narrow follow-up. Existing public .1147 profiling and .1148 complete-operation trial identify bridge preparation/reconstruction as candidate overhead; this build removes specific temporary coordinate arrays found by source audit. Device evidence was reviewed privately and is not part of this publication. No overall UI PASS, safe capacity or promotion inferred. .1146 packing remains rejected. Protect .1145 edge selection and .1142 puck/gizmo acceptance.
+
+---
+
 # .1148 — complete bounded subdivision JS/WASM trial; .1147 iPad profile recorded — 12 November 2026
 
 FINAL .1148 local validation/publication: focused84/84 PASS including unchanged1140 mesh-loading contract; final clean full local3,428/3,428 PASS,0 failures/cancelled/skips (110.041s). This supersedes the pre-fix one-failure run, without weakening that test. Runtimed90e98a1633ee48a52af64c3df4a10daeffcfba2, tested tree060c56e95301c6e194171b89969685bbdd576198. Pages43123360382 build130869138330/deploy130869342489 SUCCESS. Eight checked live cache-busted assets byte-match source: version.json, index.html, Performance monitor, lab UI, original benchmark page, new lab module, actual1733-byte WASM kernel and unchanged production subdivision owner. Protected main/mesh/subdivision/Edge sweep/gizmo/Multi remain byte-identical to1147. docs/publication-1148.json records hosted regression43123361515/job130869137926 status and exact evidence. Desktop mixed/largest FAIL, native iPad comparison pending; no production promotion or speed/capacity claim. Ready for Profile subdivision -> Compare JS / WASM -> Download JSON, then ordinary modelling smoke. This final proof update changes documents only, retaining tested runtime bytes.
