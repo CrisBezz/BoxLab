@@ -40,3 +40,14 @@ jobs:
           node-version: 22
       - run: npm install --no-audit --no-fund
       - run: npm test
+      - name: Install headless Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Run subdivision comparison in headless browser
+        run: npm run benchmark:subdivision:headless -- --output "benchmark-artifacts/subdivision-wasm-${{ github.run_id }}.json"
+      - name: Upload subdivision comparison report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: subdivision-wasm-headless-${{ github.run_id }}
+          path: benchmark-artifacts/subdivision-wasm-${{ github.run_id }}.json
+          if-no-files-found: warn
