@@ -17,6 +17,7 @@ function serveRepository(){
     try{
       if(req.method!=='GET'&&req.method!=='HEAD'){res.writeHead(405);res.end();return;}
       const pathname=decodeURIComponent(new URL(req.url,'http://127.0.0.1').pathname);
+      if(pathname==='/favicon.ico'){res.writeHead(204,{'cache-control':'no-store'});res.end();return;}
       const file=path.resolve(root,`.${pathname}`);
       if(file!==root&&!file.startsWith(root+path.sep)){res.writeHead(403);res.end('Forbidden');return;}
       const info=await fs.stat(file);
@@ -45,6 +46,7 @@ try{
   page.on('pageerror',error=>pageErrors.push(error.message));
   page.on('console',message=>{if(message.type()==='error')pageErrors.push(message.text());});
   page.on('requestfailed',request=>pageErrors.push(`${request.url()} ${request.failure()?.errorText||'request failed'}`));
+  page.on('response',response=>{if(response.status()>=400)pageErrors.push(`HTTP ${response.status()} ${response.url()}`);});
   const pageUrl=`http://127.0.0.1:${port}/docs/subdivision-benchmark-1036.html?headless=1`;
   const response=await page.goto(pageUrl,{waitUntil:'load',timeout:30000});
   if(!response?.ok())throw new Error(`Benchmark page returned HTTP ${response?.status()??'no response'}`);
