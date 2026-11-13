@@ -1,6 +1,8 @@
+import * as THREE from 'three';
+
 const wrap=document.querySelector('#viewportWrap');
 const status=document.querySelector('#selectionStatus');
-const HELIOS_BUNDLE='./helios-tracer.bundle.js?v=0.36.18.1156';
+const HELIOS_BUNDLE='./helios-tracer.bundle.js?v=0.36.18.1157';
 
 let active=false;
 let interacting=false;
@@ -15,6 +17,7 @@ let lastCameraSignature='';
 let lastHudUpdate=0;
 let animationFrame=0;
 let resizeObserver=null;
+let savedControls=null;
 
 function state(){return globalThis.__boxlabBridgeState||null;}
 function getCamera(){return state()?.camera||null;}
@@ -87,6 +90,7 @@ function releaseTracer(){
 
 async function rebuild(runId=generation){
   if(!active||runId!==generation)return;
+  publishControlState(false);
   message('building current BoxLab GLB…');
   releaseTracer();
   try{
@@ -101,6 +105,8 @@ async function rebuild(runId=generation){
     const next=await helios.createBoxLabHeliosTrace(renderer,glb);
     if(!active||runId!==generation){next.dispose();return;}
     tracer=next;
+    if(savedControls)tracer.applyPreferences(savedControls);
+    publishControlState();
     camera=source.clone();
     camera.matrixAutoUpdate=true;
     syncCamera();
@@ -173,6 +179,52 @@ function deactivate(){
   resizeObserver?.disconnect();resizeObserver=null;
   if(hud)hud.style.display='none';
   releaseTracer();
+  document.dispatchEvent(new CustomEvent('boxlab-helios-trace-state',{detail:{active:false,ready:false,state:null}}));
+}
+
+function publishControlState(isReady=Boolean(tracer)){
+  const current=tracer?.getState?.()||null;
+  if(current)savedControls=current;
+  const base=current||savedControls;
+  const stateWithCamera=base?{...base,cameraFov:getCamera()?.fov||42}:null;
+  document.dispatchEvent(new CustomEvent('boxlab-helios-trace-state',{detail:{active,ready:isReady,state:stateWithCamera}}));
+}
+
+function applyDockAction(detail={}){
+  if(!active||!tracer)return;
+  const stateNow=tracer.getState();
+  if(detail.action==='light'){
+    const lights=stateNow.lights.map(light=>light.id===detail.id?{...light,...detail.patch}:light);
+    tracer.updateLights(lights);
+  }else if(detail.action==='material')tracer.updateMaterial(detail.id,detail.patch||{});
+  else if(detail.action==='material-preset')tracer.applyMaterialPreset(detail.id,detail.presetId);
+  else if(detail.action==='settings')tracer.updateSettings(detail.patch||{});
+  else if(detail.action==='lighting-rig')tracer.applyLightingRig(detail.id);
+  else if(detail.action==='restart')tracer.reset();
+  else if(detail.action==='camera')applyCameraPreset(detail.preset);
+  else if(detail.action==='camera-fov'){
+    const source=getCamera();
+    if(source){source.fov=Math.max(20,Math.min(65,Number(detail.value)||42));source.updateProjectionMatrix();tracer.reset();}
+  }
+  publishControlState();
+}
+
+function applyCameraPreset(preset){
+  const source=getCamera(),controls=state()?.controls;
+  if(!source||!controls?.target)return;
+  const directions={
+    hero:[.58,.42,.70],front:[0,0,1],side:[1,.08,0],top:[.03,1,.08],closeup:[.58,.42,.70],
+  };
+  const direction=directions[preset];
+  if(!direction)return;
+  const target=controls.target.clone();
+  const currentDistance=Math.max(.25,source.position.distanceTo(target));
+  const distance=preset==='closeup'?currentDistance*.48:currentDistance;
+  const vector=new THREE.Vector3(...direction).normalize();
+  source.position.copy(target).addScaledVector(vector,distance);
+  source.fov=preset==='closeup'?30:preset==='hero'?38:preset==='top'?40:36;
+  source.updateProjectionMatrix();
+  controls.update();
 }
 
 function animate(time){
@@ -183,7 +235,7 @@ function animate(time){
   const changed=syncCamera();
   try{
     const samples=tracer.render(camera,interacting);
-    if(hud&&time-lastHudUpdate>250){lastHudUpdate=time;hud.textContent=`Helios Ray Trace • ${samples} spp\n${interacting?'Interactive preview':'PBR materials • studio lighting'}`;}
+    if(hud&&time-lastHudUpdate>250){lastHudUpdate=time;const sampleLimit=tracer.getState?.().settings?.maxSamples||128;hud.textContent=`Helios Ray Trace • ${samples}/${sampleLimit} spp\n${interacting?'Interactive preview':'PBR materials • studio lighting'}`;}
   }catch(error){
     message('render failed',error?.message||String(error));
     console.error('[BoxLab Helios Trace render]',error);
@@ -192,6 +244,7 @@ function animate(time){
 }
 
 window.addEventListener('resize',()=>resize());
+document.addEventListener('boxlab-helios-dock-action',event=>applyDockAction(event.detail||{}));
 window.addEventListener('boxlab-core-mesh-published',scheduleRebuild);
 document.addEventListener('boxlab-render-mode-change',event=>{
   if(event.detail?.mode==='pathtrace')activate();

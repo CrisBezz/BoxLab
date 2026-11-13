@@ -3,7 +3,13 @@ import { buildSceneBVH } from './engine/bvh';
 import { importModelFromFile } from './engine/models';
 import { GPUPathTracer } from './engine/pathTracer';
 import { PbrTextureManager } from './engine/textures';
-import { DEFAULT_LIGHTS, DEFAULT_RAYTRACER_SETTINGS } from './data/presets';
+import {
+  DEFAULT_LIGHTS,
+  DEFAULT_RAYTRACER_SETTINGS,
+  LIGHTING_RIG_PRESETS,
+  MATERIAL_PRESETS,
+} from './data/presets';
+import { PRESET_TO_LAYER } from './engine/textures';
 
 function softwareRenderer(renderer: THREE.WebGLRenderer): boolean {
   try {
@@ -43,13 +49,77 @@ export async function createBoxLabHeliosTrace(
     pathTracer.setTextureArrays(textureManager);
     pathTracer.setBVH(bvh);
 
-    const settings = { ...DEFAULT_RAYTRACER_SETTINGS, maxSamples: 128, maxBounces: 4 };
+    const settings = { ...DEFAULT_RAYTRACER_SETTINGS };
     const lights = DEFAULT_LIGHTS.map((light) => ({ ...light }));
     const transform = {
       scale: project.rayTransform.scale,
       offset: project.rayTransform.offset.clone(),
     };
     const importedProject = project;
+
+    function getState() {
+      return {
+        settings: { ...settings },
+        lights: lights.map((light) => ({ ...light })),
+        materials: importedProject.materials.map((material) => ({ ...material })),
+        samples: pathTracer?.getSamples() ?? 0,
+        resolution: pathTracer?.getResolution() ?? [0, 0],
+      };
+    }
+
+    function updateLights(next: typeof lights) {
+      for (let index = 0; index < lights.length; index++) {
+        if (next[index]) Object.assign(lights[index], next[index]);
+      }
+      pathTracer?.resetAccumulation();
+    }
+
+    function updateMaterial(id: string, patch: Partial<(typeof importedProject.materials)[number]>) {
+      const material = importedProject.materials.find((item) => item.id === id);
+      if (!material) return;
+      const safePatch: Partial<(typeof importedProject.materials)[number]> = {};
+      for (const key of ['color', 'roughness', 'metalness', 'ior', 'transmission', 'clearcoat', 'emissiveIntensity', 'texturePreset', 'uvScale', 'normalStrength'] as const) {
+        if (patch[key] !== undefined) Object.assign(safePatch, { [key]: patch[key] });
+      }
+      const hasImportedMaps = Boolean(
+        material.hasCustomAlbedo || material.hasCustomNormal ||
+        material.hasCustomRoughness || material.hasCustomMetalness,
+      );
+      if (hasImportedMaps) delete safePatch.texturePreset;
+      Object.assign(material, safePatch);
+      if (!hasImportedMaps && safePatch.texturePreset) {
+        materialLayerMap.set(id, PRESET_TO_LAYER[safePatch.texturePreset]);
+      }
+      pathTracer?.resetAccumulation();
+    }
+
+    function applyMaterialPreset(id: string, presetId: string) {
+      const material = importedProject.materials.find((item) => item.id === id);
+      const preset = MATERIAL_PRESETS.find((item) => item.id === presetId);
+      if (!material || !preset) return;
+      updateMaterial(id, { ...preset });
+    }
+
+    function updateSettings(patch: Partial<typeof settings>) {
+      Object.assign(settings, patch);
+      pathTracer?.resetAccumulation();
+    }
+
+    function applyLightingRig(id: string) {
+      const preset = LIGHTING_RIG_PRESETS.find((item) => item.id === id);
+      if (!preset) return;
+      updateLights(preset.lights.map((light) => ({ ...light })));
+      updateSettings({ environment: preset.environment, envIntensity: preset.envIntensity });
+    }
+
+    function applyPreferences(saved: ReturnType<typeof getState>) {
+      updateSettings(saved.settings);
+      updateLights(saved.lights);
+      for (const material of importedProject.materials) {
+        const prior = saved.materials.find((item) => item.id === material.id);
+        if (prior) updateMaterial(material.id, prior);
+      }
+    }
 
     function dispose() {
       pathTracer?.dispose();
@@ -60,6 +130,13 @@ export async function createBoxLabHeliosTrace(
 
     return {
       transform,
+      getState,
+      updateLights,
+      updateMaterial,
+      applyMaterialPreset,
+      updateSettings,
+      applyLightingRig,
+      applyPreferences,
       render(camera: THREE.PerspectiveCamera, interacting = false) {
         if (!pathTracer) return 0;
         const cap = interacting ? 1 : settings.maxSamples;

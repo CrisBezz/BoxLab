@@ -13988,7 +13988,7 @@ Regression executes the UI with missed pointerup, synchronous lostpointercapture
 User confirms `.1085` PASS. Protect this acceptance and the existing `.1077` menu/four-channel, `.1076` two-sided opacity, `.1075` opacity authoring and `.1074` brush-controls PASSes. `.1085` local suite: 3,166 PASS / 0 FAIL. Published app remains `0.36.18.1085`.
 
 
-## .1156 Helios ray-trace view — pending device acceptance
+## .1156 Helios ray-trace view — user PASS protected
 
 - [ ] Open VIEW > Helios on a textured BoxLab model. Confirm the trace appears and retains base colour plus supported GLB PBR maps.
 - [ ] Orbit, pan and zoom; confirm an interactive preview appears and accumulation resumes when navigation stops.
@@ -13996,4 +13996,15 @@ User confirms `.1085` PASS. Protect this acceptance and the existing `.1077` men
 - [ ] Return to Studio and verify normal viewport rendering and editing resume without a stale tracer image or locked controls.
 - [ ] Reopen Helios, then leave it again; confirm no repeated rebuild or lingering overlay after deactivation.
 
-Automated status for .1156: tracer bundle build, changed JavaScript syntax checks and `git diff --check` pass; full local regression passes 3,438/3,438 and focused render-look/release/live-mesh checks pass 48/48. Hosted Topology/Pages checks and device acceptance are pending. Build .1156 is not yet published; no user PASS is recorded.
+User confirms .1156 PASS; protect the existing trace activation, GLB texture/PBR retention, navigation, live edit rebuild, Studio recovery and repeat activation behavior. Hosted `.1156` Pages run `43435484477` and Topology run `43435484777` succeeded; Topology passed 3,438/3,438.
+
+## .1157 Helios bottom render dock — hands-on acceptance pending
+
+- [ ] Open Helios and switch Lights, Materials, Ray Tracer and Camera tabs; confirm the bottom dock is readable, usable and collapsible/reopenable on iPad.
+- [ ] Toggle/select lights; change temperature/color, intensity, angle and softness; apply a lighting rig and confirm the trace updates.
+- [ ] Change material sliders and presets; verify imported GLB texture maps still show and returning to Studio/reopening the BoxLab file preserves the saved project material.
+- [ ] Change environment, exposure, bounce/fill, denoiser, clay and sample target; restart accumulation and confirm the sample count restarts.
+- [ ] Use camera presets and FOV; confirm framing is around the current orbit target and remains responsive to orbit/pan/zoom.
+- [ ] Edit the model to trigger trace rebuild; verify dock settings survive. Return to Studio and re-enter Helios; confirm controls and tracing recover.
+
+Automated .1157 status: Helios bundle rebuilt; JavaScript syntax and diff checks pass; focused dock/release checks 27/27 pass; full local regression passes 3,440/3,440 (84.629s), zero failures/cancelled/skips. Hosted Topology/Pages and device acceptance are pending. No `.1157` user PASS is inferred.
