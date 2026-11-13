@@ -21,7 +21,8 @@ function serveRepository(){
       if(file!==root&&!file.startsWith(root+path.sep)){res.writeHead(403);res.end('Forbidden');return;}
       const info=await fs.stat(file);
       const target=info.isDirectory()?path.join(file,'index.html'):file;
-      const body=req.method==='HEAD'?null:await fs.readFile(target);
+      let body=req.method==='HEAD'?null:await fs.readFile(target);
+      if(body&&pathname==='/docs/subdivision-benchmark-1036.html')body=Buffer.from(body.toString('utf8').replaceAll('https://cdn.jsdelivr.net/npm/three@0.179.1/','../node_modules/three/'));
       res.writeHead(200,{'content-type':mime[path.extname(target)]||'application/octet-stream','cache-control':'no-store'});
       res.end(body);
     }catch{res.writeHead(404);res.end('Not found');}
@@ -43,14 +44,7 @@ try{
   const pageErrors=[];
   page.on('pageerror',error=>pageErrors.push(error.message));
   page.on('console',message=>{if(message.type()==='error')pageErrors.push(message.text());});
-  await page.route('https://cdn.jsdelivr.net/npm/three@0.179.1/build/**',async route=>{
-    const url=new URL(route.request().url());
-    const name=path.basename(url.pathname);
-    if(!/^three(?:\.core)?\.js$/.test(name)){await route.abort();return;}
-    const asset=path.join(root,'node_modules/three/build',name);
-    if(!existsSync(asset)){await route.abort();return;}
-    await route.fulfill({path:asset,contentType:'text/javascript; charset=utf-8',headers:{'Access-Control-Allow-Origin':'*'}});
-  });
+  page.on('requestfailed',request=>pageErrors.push(`${request.url()} ${request.failure()?.errorText||'request failed'}`));
   const pageUrl=`http://127.0.0.1:${port}/docs/subdivision-benchmark-1036.html?headless=1`;
   const response=await page.goto(pageUrl,{waitUntil:'load',timeout:30000});
   if(!response?.ok())throw new Error(`Benchmark page returned HTTP ${response?.status()??'no response'}`);

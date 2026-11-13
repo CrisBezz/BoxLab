@@ -17,7 +17,9 @@ test('headless Chromium runs the real subdivision comparison page and saves its 
  assert.match(runner,/report\.results\?\.length!==11/);
  assert.match(runner,/browserVersion:browser\.version\(\)/);
  assert.match(runner,/await fs\.writeFile\(outputPath/);
- assert.match(runner,/Access-Control-Allow-Origin/);
+ assert.match(runner,/node_modules\/three/);
+ assert.match(runner,/replaceAll\('https:\/\/cdn\.jsdelivr\.net\/npm\/three@0\.179\.1\//);
+ assert.match(runner,/requestfailed/);
  assert.match(runner,/Comparison button did not start/);
  assert.match(runner,/Comparison did not complete/);
  assert.match(workflow,/playwright install --with-deps chromium/);
