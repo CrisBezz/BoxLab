@@ -11,9 +11,9 @@ test('Helios bottom dock exposes the original render control families inside Box
   }
   assert.match(ui,/lighting-rig/);assert.match(ui,/material-preset/);assert.match(ui,/boxlab-helios-dock-action/);
   assert.match(ui,/!state\|\|!ready/,'controls stay unavailable while the trace is rebuilding');
-  assert.match(css,/safe-area-inset-bottom/);assert.match(css,/max-height:min\(/);
-  assert.match(index,/helios-dock\.css\?v=0\.36\.18\.1157/);
-  assert.match(index,/src\/helios-dock\.js\?v=0\.36\.18\.1157/);
+  assert.match(css,/safe-area-inset-bottom/);assert.match(css,/max-height:min\(/);assert.match(css,/--helios-accent:#60b5ff/);assert.match(css,/--helios-panel:rgba\(18,21,27/);assert.doesNotMatch(css,/#f59e0b|#f5b332/);assert.match(ui,/Ray Trace/);
+  assert.match(index,/helios-dock\.css\?v=0\.36\.18\.1158/);
+  assert.match(index,/src\/helios-dock\.js\?v=0\.36\.18\.1158/);
   assert.ok(index.indexOf('src/pathtrace-mode.js?')<index.indexOf('src/helios-dock.js?'),'tracer event owner loads before dock');
 });
 

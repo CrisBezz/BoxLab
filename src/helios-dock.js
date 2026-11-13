@@ -14,7 +14,7 @@ function button(label,attrs='',selected=false){return `<button type="button" cla
 function makeDock(){
   if(dock||!wrap)return;
   dock=document.createElement('section');dock.id='boxlabHeliosDock';dock.className='helios-dock';dock.hidden=true;dock.setAttribute('aria-label','Helios render controls');
-  dock.innerHTML='<button type="button" class="helios-dock-toggle" aria-expanded="true"><span class="helios-chevron">⌄</span><span>Helios Studio Controls</span><span class="helios-status">Loading…</span></button><div class="helios-dock-panel"><nav class="helios-tabs" role="tablist" aria-label="Helios controls"></nav><div class="helios-panel-body"></div></div>';
+  dock.innerHTML='<button type="button" class="helios-dock-toggle" aria-expanded="true"><span class="helios-chevron">⌄</span><span>Ray Trace</span><span class="helios-status">Loading…</span></button><div class="helios-dock-panel"><nav class="helios-tabs" role="tablist" aria-label="Helios controls"></nav><div class="helios-panel-body"></div></div>';
   wrap.append(dock);
   dock.addEventListener('pointerdown',event=>event.stopPropagation());
   dock.addEventListener('touchstart',event=>event.stopPropagation(),{passive:true});

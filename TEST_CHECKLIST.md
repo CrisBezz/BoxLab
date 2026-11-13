@@ -14008,3 +14008,11 @@ User confirms .1156 PASS; protect the existing trace activation, GLB texture/PBR
 - [x] Edit the model, verify dock settings survive rebuild, return to Studio and re-enter Helios.
 
 User confirms `.1157 PASS`; protect all checks above. Automated status: Helios bundle build and changed JavaScript syntax/diff checks pass; focused dock/release checks 27/27; local and hosted Node regression 3,440/3,440, zero failures/cancelled/skips. Hosted Topology `43441747837` ran headless Chromium: 11 subdivision comparisons, 11/11 parity, decision `LAB_ONLY`; artifact ID `14045519451` uploaded. Pages `43441747701` succeeded. Runtime commit `bb233cf25112f9c228f47a55836808eb64498e20`. No WASM performance promotion is inferred.
+
+## .1158 BoxLab-style Helios dock — hands-on appearance check
+
+- [ ] Open VIEW > Helios; confirm the dock uses BoxLab's dark surfaces, blue active/focus treatment and concise “Ray Trace” heading. It should feel like part of BoxLab rather than a separate Helios panel.
+- [ ] Check the dock at iPad portrait/landscape widths; confirm tabs and controls remain legible and do not cover the bottom mode controls or interfere with orbit/pan/zoom.
+- [ ] Switch all four tabs and exercise one light control, one material control, one tracer setting and a camera preset; confirm `.1157` functionality remains unchanged.
+
+Automated status: focused dock, release-pin and saved shell-comparison checks pass 27/27 after the theme change; full local suite passes 3,440/3,440 (74.554s), zero failures/cancelled/skips; changed-module syntax and diff checks pass. Hosted checks and Pages status are recorded in DEV_HISTORY when complete. `.1157 PASS` remains protected; do not infer `.1158` appearance acceptance.
