@@ -14015,4 +14015,4 @@ User confirms `.1157 PASS`; protect all checks above. Automated status: Helios b
 - [ ] Check the dock at iPad portrait/landscape widths; confirm tabs and controls remain legible and do not cover the bottom mode controls or interfere with orbit/pan/zoom.
 - [ ] Switch all four tabs and exercise one light control, one material control, one tracer setting and a camera preset; confirm `.1157` functionality remains unchanged.
 
-Automated status: focused dock, release-pin and saved shell-comparison checks pass 27/27 after the theme change; full local suite passes 3,440/3,440 (74.554s), zero failures/cancelled/skips; changed-module syntax and diff checks pass. Hosted checks and Pages status are recorded in DEV_HISTORY when complete. `.1157 PASS` remains protected; do not infer `.1158` appearance acceptance.
+Automated status: focused dock, release-pin and saved shell-comparison checks pass 27/27; local and hosted suites pass 3,440/3,440, zero failures/cancelled/skips; hosted Chromium comparison parity 11/11 (`LAB_ONLY`); Pages deployed. `.1157 PASS` remains protected; `.1158` appearance acceptance remains pending.

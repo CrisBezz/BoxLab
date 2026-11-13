@@ -1,6 +1,6 @@
 # Current focus — .1158 BoxLab-style Helios dock — 14 November 2026
 
-The .1156 ray-trace view and .1157 Helios bottom dock received user PASS and remain protected. .1158 aligns the existing dock's palette, surfaces, button shape and heading with BoxLab's dark/cool-blue interface. Control families, selection behavior, preview-only material edits and project ownership remain unchanged. Focused dock/release checks pass 27/27 and full local regression passes 3,440/3,440. Pages and hosted checks remain pending. Hands-on review should focus on consistent styling at desktop/iPad widths and retained `.1157` dock behavior.
+The .1156 ray-trace view and .1157 Helios bottom dock received user PASS and remain protected. .1158 aligns the existing dock's palette, surfaces, button shape and heading with BoxLab's dark/cool-blue interface. Control families, selection behavior, preview-only material edits and project ownership remain unchanged. Focused checks pass 27/27; local and hosted suites pass 3,440/3,440, hosted Chromium comparison parity 11/11, Pages deployed. User .1158 appearance acceptance remains pending. Hands-on review should focus on styling at desktop/iPad widths and retained `.1157` behavior.
 
 ---
 
