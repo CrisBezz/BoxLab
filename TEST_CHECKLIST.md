@@ -13998,13 +13998,13 @@ User confirms `.1085` PASS. Protect this acceptance and the existing `.1077` men
 
 User confirms .1156 PASS; protect the existing trace activation, GLB texture/PBR retention, navigation, live edit rebuild, Studio recovery and repeat activation behavior. Hosted `.1156` Pages run `43435484477` and Topology run `43435484777` succeeded; Topology passed 3,438/3,438.
 
-## .1157 Helios bottom render dock — hands-on acceptance pending
+## .1157 Helios bottom render dock — user PASS protected
 
-- [ ] Open Helios and switch Lights, Materials, Ray Tracer and Camera tabs; confirm the bottom dock is readable, usable and collapsible/reopenable on iPad.
-- [ ] Toggle/select lights; change temperature/color, intensity, angle and softness; apply a lighting rig and confirm the trace updates.
-- [ ] Change material sliders and presets; verify imported GLB texture maps still show and returning to Studio/reopening the BoxLab file preserves the saved project material.
-- [ ] Change environment, exposure, bounce/fill, denoiser, clay and sample target; restart accumulation and confirm the sample count restarts.
-- [ ] Use camera presets and FOV; confirm framing is around the current orbit target and remains responsive to orbit/pan/zoom.
-- [ ] Edit the model to trigger trace rebuild; verify dock settings survive. Return to Studio and re-enter Helios; confirm controls and tracing recover.
+- [x] Open Helios and switch Lights, Materials, Ray Tracer and Camera tabs; confirm the dock usability and collapse/reopen behavior.
+- [x] Test light selection/toggles, temperature/color, intensity, angle, softness and lighting rigs.
+- [x] Test material sliders/presets, imported GLB texture retention and unchanged saved BoxLab project materials.
+- [x] Test environment, exposure, bounce/fill, denoiser, clay, sample target and accumulation restart.
+- [x] Test camera presets/FOV and orbit/pan/zoom responsiveness.
+- [x] Edit the model, verify dock settings survive rebuild, return to Studio and re-enter Helios.
 
-Automated .1157 status: Helios bundle rebuilt; JavaScript syntax and diff checks pass; focused dock/release checks 27/27 pass; full local regression passes 3,440/3,440 (84.629s), zero failures/cancelled/skips. Hosted Topology/Pages and device acceptance are pending. No `.1157` user PASS is inferred.
+User confirms `.1157 PASS`; protect all checks above. Automated status: Helios bundle build and changed JavaScript syntax/diff checks pass; focused dock/release checks 27/27; local and hosted Node regression 3,440/3,440, zero failures/cancelled/skips. Hosted Topology `43441747837` ran headless Chromium: 11 subdivision comparisons, 11/11 parity, decision `LAB_ONLY`; artifact ID `14045519451` uploaded. Pages `43441747701` succeeded. Runtime commit `bb233cf25112f9c228f47a55836808eb64498e20`. No WASM performance promotion is inferred.

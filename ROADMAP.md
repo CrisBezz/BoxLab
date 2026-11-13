@@ -1,6 +1,6 @@
 # Current focus — .1157 Helios render controls — 13 November 2026
 
-The .1156 ray-trace view received user PASS and is protected. .1157 restores Helios Lights, Materials, Ray Tracer and Camera panels in a BoxLab-styled bottom dock. Controls act on the trace preview; imported GLB maps stay connected and BoxLab saved material/project data is unchanged. BoxLab remains the owner of project and scene management. Dock settings persist across trace rebuilds and mode re-entry. Focused checks pass 27/27; full local suite and hosted publish status are tracked in DEV_HISTORY and TEST_CHECKLIST. Next: publish, then hands-on device review of dock usability, lighting/material fidelity, camera presets and persistence. Keep the original render and modelling owners authoritative; do not add a second scene/project workflow.
+The .1156 ray-trace view and .1157 Helios bottom dock both received user PASS and are protected. .1157 restores Helios Lights, Materials, Ray Tracer and Camera panels in a BoxLab-styled bottom dock. Controls act on the trace preview; imported GLB maps stay connected and BoxLab saved material/project data is unchanged. BoxLab remains the owner of project and scene management. Dock settings persist across trace rebuilds and mode re-entry. Focused checks pass 27/27; local/hosted Node suites pass 3,440/3,440; hosted Chromium and Pages succeeded. See DEV_HISTORY and TEST_CHECKLIST for run IDs. Continue with the next user-requested build; keep the original render and modelling owners authoritative and do not add a second scene/project workflow.
 
 ---
 
