@@ -2,7 +2,7 @@
 
 - [x] Playwright driver targets the actual subdivision comparison HTML page, starts Compare, and validates all 11 workload rows, exact-parity flags, five measured pairs and output cap.
 - [x] Topology workflow installs Chromium, runs the headless benchmark automatically and uploads the JSON report as a run artifact. The report labels Chromium/headless/runner metadata and keeps the comparison `LAB_ONLY`.
-- [ ] Hosted verification: confirm Topology passes and the subdivision report artifact is attached. Local `npm test` passes 3,436/3,436; local browser launch is sandbox-blocked, so hosted Chromium execution is the actual-browser gate.
+- [x] Hosted Topology `43338162446` passed; actual headless Chromium completed 11 comparisons with 11/11 parity and aggregate `LAB_ONLY`. Artifact `subdivision-wasm-headless-43338162446` is attached (artifact ID `13998632102`). Pages `43338163067` succeeded for runtime commit `8cb57348f6e840d0c08cbdeba3de144588274a7a`. Local Chromium launch is sandbox-blocked; hosted run provides the browser proof. Full local suite: 3,436/3,436 PASS.
 - [x] User .1153 PASS protects Safari `.boxlab` save/open, including `.boxlab.json` compatibility. No manual benchmark click/download/upload is required for CI evidence.
 
 ---
