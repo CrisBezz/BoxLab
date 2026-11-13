@@ -49,17 +49,20 @@ try{
     if(!/^three(?:\.core)?\.js$/.test(name)){await route.abort();return;}
     const asset=path.join(root,'node_modules/three/build',name);
     if(!existsSync(asset)){await route.abort();return;}
-    await route.fulfill({path:asset,contentType:'text/javascript; charset=utf-8'});
+    await route.fulfill({path:asset,contentType:'text/javascript; charset=utf-8',headers:{'Access-Control-Allow-Origin':'*'}});
   });
   const pageUrl=`http://127.0.0.1:${port}/docs/subdivision-benchmark-1036.html?headless=1`;
   const response=await page.goto(pageUrl,{waitUntil:'load',timeout:30000});
   if(!response?.ok())throw new Error(`Benchmark page returned HTTP ${response?.status()??'no response'}`);
   await page.locator('#wasm').click();
+  try{await page.waitForFunction(()=>!document.querySelector('#cancel')?.disabled,null,{timeout:10000});}
+  catch{throw new Error(`Comparison button did not start; ${pageErrors.join(' | ')||'the page did not attach its module handler'}`);}
   await page.waitForFunction(()=>{
-    const status=document.querySelector('#progress')?.textContent||'';
-    const report=document.querySelector('#report')?.value||'';
-    return status.startsWith('Comparison complete.')&&report.length>0;
+    const cancel=document.querySelector('#cancel'),wasm=document.querySelector('#wasm'),run=document.querySelector('#run');
+    return !!cancel?.disabled&&!wasm?.disabled&&!run?.disabled;
   },null,{timeout:360000});
+  const status=await page.locator('#progress').innerText();
+  if(!status.startsWith('Comparison complete.'))throw new Error(`Comparison did not complete: ${status}`);
   if(pageErrors.length)throw new Error(`Browser reported errors: ${pageErrors.join(' | ')}`);
   const report=JSON.parse(await page.locator('#report').inputValue());
   if(report.protocol!=='subdivision-wasm-v1')throw new Error(`Unexpected benchmark protocol: ${report.protocol}`);
