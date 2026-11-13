@@ -161,9 +161,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1155",
+      "url": "./src/drawer-ui.js?v=0.36.18.1156",
       "target": "src/drawer-ui.js",
-      "sha256": "9bc3341f247a5f35955663f2fa4dff4bfaecf1c6173411d9d7d61a0b7dc2feb2"
+      "sha256": "c17826ec2a1c72ebbca41e0d9ef47264f0f9e471350f34821c114425e3b5a3d6"
     },
     {
       "owner": "index.html",
@@ -378,15 +378,15 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1155",
+      "url": "./src/release-version.js?v=0.36.18.1156",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
     {
       "owner": "index.html",
-      "url": "./src/render-modes.js?v=0.36.18.1099",
+      "url": "./src/render-modes.js?v=0.36.18.1156",
       "target": "src/render-modes.js",
-      "sha256": "ecfef3052711c8fe76ffe60ed519cab551371ed65282c131c77cedfb0a2c9515"
+      "sha256": "54f0597f3c7a390ac6f18cc0a87e8514697325104f8dd67f1ce2faff5cf5ebe3"
     },
     {
       "owner": "index.html",
@@ -864,9 +864,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1155",
+      "url": "./face-workflow-layout.js?v=0.36.18.1156",
       "target": "src/face-workflow-layout.js",
-      "sha256": "d7cc39c3ca2a16b281aa03aaddec4b39378a0bc9d2c9bf22ad38a67493798c02"
+      "sha256": "7b91d541d63d9a8d172f4cbf1ed51d911151b55cca4f4b69dfae63e0a9277f9b"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1305,7 +1305,7 @@
       "owner": "src/face-workflow-layout.js",
       "url": "./live-mesh-bridge.js?v=0.36.18.840",
       "target": "src/live-mesh-bridge.js",
-      "sha256": "5d8aa0c0e9c17b38f58283eb18c652c82f4bf39a40fb24bbf1ed24c3eb72b0cf"
+      "sha256": "f7482b0f278f1160bae8fc639bfec09b765bae42a852ab01caa05c5e0408f56e"
     },
     {
       "owner": "src/face-workflow-layout.js",
@@ -1361,7 +1361,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1155",
+      "url": "./release-version.js?v=0.36.18.1156",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -3326,9 +3326,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1155",
+      "url": "./src/shell-comparison.js?v=0.36.18.1156",
       "target": "src/shell-comparison.js",
-      "sha256": "5c68ed14c0ea56e2135d0577823d851ec295b6bd3141802f5ded4ebe89d7bd0e"
+      "sha256": "29c118034b538ac0f0320633ea9780a03614cd1140fa63fd642522eadb9c05a2"
     },
     {
       "owner": "src/main.js",
@@ -3791,6 +3791,24 @@
       "url": "./mesh.js",
       "target": "src/mesh.js",
       "sha256": "ad561a54f87f87446c26a1d8ac864f0d3d7e5554e547df1f39c5c01be458a09c"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/pathtrace-preload.js?v=0.36.18.1156",
+      "target": "src/pathtrace-preload.js",
+      "sha256": "4031c0dbd113081a757a68258874dce2e0375283b8a4e7a9316c8f06def8c4ea"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/pathtrace-mode.js?v=0.36.18.1156",
+      "target": "src/pathtrace-mode.js",
+      "sha256": "e3fdb89c4c02f2d51ac8b5d61d881e75ac2c8c6887a0368da61a18e838592852"
+    },
+    {
+      "owner": "src/pathtrace-mode.js",
+      "url": "./helios-tracer.bundle.js?v=0.36.18.1156",
+      "target": "src/helios-tracer.bundle.js",
+      "sha256": "bb6d93a3b3cfe7b9b5341e1177751850ad97344e7134d4aead6e6b7b44ccaf6e"
     }
   ]
 }

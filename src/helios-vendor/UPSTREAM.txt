@@ -1,0 +1,3 @@
+Upstream: CrisBezz/HeliosStudio
+Commit: 3ca8ac22b011f42ed83555720cc6cd71e6b57329
+Imported modules: GPU path tracer, BVH, texture manager, model importer, UV cleanup, presets, types, color helpers.

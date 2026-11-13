@@ -20,7 +20,7 @@ test('839 published main world mesh remains authoritative despite intervening in
  // Real inverse-placement calculation invokes edges() on a different local mesh.
  const local=localMeshFromWorld(world,placement);local.edges();f.root.add(f.edge());
  assert.equal(f.state.mesh,world);assert.equal(f.c.__boxlabLiveMeshBridge.mesh(),world);assert(meshesNear(localMeshFromWorld(f.state.mesh,placement),base));
- const next=world.clone();f.c.__boxlabLiveMeshBridge.publishCoreMesh?.(next);f.state.mesh=next;local.edges();f.root.add(f.body());assert.equal(f.state.mesh,next);assert.equal(f.events.length,2);
+ const next=world.clone();f.c.__boxlabLiveMeshBridge.publishCoreMesh?.(next);f.state.mesh=next;local.edges();f.root.add(f.body());assert.equal(f.state.mesh,next);assert.equal(f.events.filter(event=>event.type==='boxlab-bridge-state').length,2);assert.equal(f.events.filter(event=>event.type==='boxlab-core-mesh-published').length,2);
 });
 test('839 repeated cage events cannot subtract instance placement again from shared source',()=>{
  const f=fixture(),base=f.cube(),placement=new THREE.Matrix4().makeTranslation(0,0,1.6875733),world=transformEditableMesh(base,placement);let shared=base.clone();
@@ -44,6 +44,6 @@ test('839 actual linked save owner and bridge-state observers retain world ident
  f.c.__boxlabLiveMeshBridge.publishCoreMesh?.(world);f.state.mesh=world;
  for(let i=0;i<20;i++){f.root.add(f.body());f.c.saveActive();localMeshFromWorld(world,placement).edges();f.root.add(f.edge());assert.equal(f.state.mesh,world);assert(meshesNear(pool.mesh,base));assert(meshesNear(original.mesh,base));}
  for(let i=0;i<1000;i++)f.c.saveActive();assert.equal(f.state.mesh,world);
- assert.equal(pool.revision,0);assert.equal(f.events.length,1);
+ assert.equal(pool.revision,0);assert.equal(f.events.filter(event=>event.type==='boxlab-bridge-state').length,1);assert.equal(f.events.filter(event=>event.type==='boxlab-core-mesh-published').length,1);
  world.vertices[0].z+=.1;f.c.saveActive();assert.equal(pool.revision,1);assert(meshesNear(original.mesh,pool.mesh));
 });

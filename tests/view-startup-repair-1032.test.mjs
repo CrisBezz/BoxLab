@@ -13,14 +13,14 @@ function runtime(initial=[],ready=false){
  return {c,modes,listeners,get host(){return host;},replace(value){host=value;},toggle(){for(const [name,fn] of listeners)if(name==='toggle')fn({target:{id:'viewModes',open:true}});}};
 }
 test('1032 actual render installer preserves early Cavity/Silhouette nodes and binds original look actions exactly once',()=>{
- const cavity=button('cavity'),silhouette=button('silhouette'),r=runtime([cavity,silhouette]);assert(r.host.children.includes(cavity));assert(r.host.children.includes(silhouette));assert.equal(r.host.children.length,12);
- r.c.installUI();r.c.installUI();assert.equal(r.host.children.length,12);assert.equal(r.host.handlers.length,1);
+ const cavity=button('cavity'),silhouette=button('silhouette'),r=runtime([cavity,silhouette]);assert(r.host.children.includes(cavity));assert(r.host.children.includes(silhouette));assert.equal(r.host.children.length,13);
+ r.c.installUI();r.c.installUI();assert.equal(r.host.children.length,13);assert.equal(r.host.handlers.length,1);
  for(const mode of ['studio','solid','wire','facegroups','uvchecker','uvimage']){const target=r.host.children.find(b=>b.dataset.render===mode);assert(target);r.host.handlers[0]({target,preventDefault(){},stopPropagation(){}});}
  assert.deepEqual(r.modes,['studio','solid','wire','facegroups','uvchecker','uvimage']);
 });
 test('1032 native VIEW opening repairs a cleared ready host without timers, duplicate actions or disturbing remaining optional controls',()=>{
- const r=runtime([],true);assert.equal(r.host.children.length,10);const studio=r.host.children.find(b=>b.dataset.render==='studio');r.host.children=r.host.children.filter(b=>b.dataset.render!=='solid');const cavity=button('cavity');r.host.children.push(cavity);r.toggle();assert.equal(r.host.children.length,11);assert(r.host.children.includes(studio));assert(r.host.children.includes(cavity));assert.equal(r.host.handlers.length,1);
- r.host.children=[];r.toggle();r.toggle();assert.equal(r.host.children.length,10);assert.equal(r.host.handlers.length,1);
+ const r=runtime([],true);assert.equal(r.host.children.length,11);const studio=r.host.children.find(b=>b.dataset.render==='studio');r.host.children=r.host.children.filter(b=>b.dataset.render!=='solid');const cavity=button('cavity');r.host.children.push(cavity);r.toggle();assert.equal(r.host.children.length,12);assert(r.host.children.includes(studio));assert(r.host.children.includes(cavity));assert.equal(r.host.handlers.length,1);
+ r.host.children=[];r.toggle();r.toggle();assert.equal(r.host.children.length,11);assert.equal(r.host.handlers.length,1);
 });
 test('1032 shared 3D image resolver has no native inspection dependency; workspace alone supplies its native adapter',()=>{
  const root=new URL('../',import.meta.url),read=f=>fs.readFileSync(new URL(f,root),'utf8'),s=read('src/uv-image-preview.js');assert.doesNotMatch(s,/^import /m);assert.match(s,/resolveChoices=importedUVImageChoices/);

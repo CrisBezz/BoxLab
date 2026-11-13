@@ -4,7 +4,8 @@
 - [x] The headless runner appends the summary to `GITHUB_STEP_SUMMARY` only after successful completion, and continues writing the JSON artifact.
 - [x] Focused summary/release/cache and shell-comparison checks 27/27 PASS.
 - [x] Full local suite 3,438/3,438 PASS (84.158s); zero failures/cancelled/skips.
-- [ ] Hosted `.1155`: verify Topology run contains the 11-row summary and uploaded JSON artifact; verify Pages deployment and `.1155` live marker.
+- [x] Hosted Topology `43418568813` / job `131862526521` on `.1155` commit `59875276abd4a5164eb99add9698bb5d45a3e060` passed 3,438/3,438 and ran headless Chromium. Logs confirm the Actions summary table was emitted, 11/11 parity and `LAB_ONLY`; artifact `subdivision-wasm-headless-43418568813` (ID `14033257675`, 4,153 bytes) uploaded.
+- [x] Pages run `43418568589` succeeded for `.1155`; `version.json`, HTML title, `#appVersion` data/visible label and release-version/cache pins in the deployed source are `.1155`.
 - [x] Existing `.1154` hosted actual Chromium run and `.1153` Safari PASS remain protected. No user interaction with the app is needed to validate this reporting addition.
 
 ---
@@ -13985,3 +13986,14 @@ Regression executes the UI with missed pointerup, synchronous lostpointercapture
 - [x] Colour, Roughness, Metalness and Opacity paint in the same stroke.
 
 User confirms `.1085` PASS. Protect this acceptance and the existing `.1077` menu/four-channel, `.1076` two-sided opacity, `.1075` opacity authoring and `.1074` brush-controls PASSes. `.1085` local suite: 3,166 PASS / 0 FAIL. Published app remains `0.36.18.1085`.
+
+
+## .1156 Helios ray-trace view — pending device acceptance
+
+- [ ] Open VIEW > Helios on a textured BoxLab model. Confirm the trace appears and retains base colour plus supported GLB PBR maps.
+- [ ] Orbit, pan and zoom; confirm an interactive preview appears and accumulation resumes when navigation stops.
+- [ ] Edit the model while Helios is selected; after the short debounce, confirm the traced scene reflects the edit.
+- [ ] Return to Studio and verify normal viewport rendering and editing resume without a stale tracer image or locked controls.
+- [ ] Reopen Helios, then leave it again; confirm no repeated rebuild or lingering overlay after deactivation.
+
+Automated status for .1156: tracer bundle build, changed JavaScript syntax checks and `git diff --check` pass; full local regression passes 3,438/3,438 and focused render-look/release/live-mesh checks pass 48/48. Hosted Topology/Pages checks and device acceptance are pending. Build .1156 is not yet published; no user PASS is recorded.

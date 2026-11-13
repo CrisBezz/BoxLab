@@ -239,7 +239,7 @@ Object.assign(globalThis.__boxlabRenderModes ||= {},{
 });
 function rebuild(){document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));}
 function applyToSceneBodies(){const scene=bridge()?.scene;if(!scene)return false;let found=false;scene.traverse(object=>{const kind=object?.userData?.kind;if(kind==='body'||kind==='boxlab-inactive-body'){applyMode(object);found=true;}});return found;}
-function modeLabel(){if(mode==='uvimage')return'UV Image · active Base; up to 4 mapped opaque materials; unavailable objects use Solid';if(mode==='uvchecker')return'UV Checker · Base UVs; unavailable objects use Solid';if(mode==='wire')return'Wire + Solid';if(mode==='matcap')return'MatCap';if(mode==='normals')return'Normals';if(mode==='studio')return'Studio';if(mode==='facegroups')return'Facegroups';return mode[0].toUpperCase()+mode.slice(1);}
+function modeLabel(){if(mode==='uvimage')return'UV Image · active Base; up to 4 mapped opaque materials; unavailable objects use Solid';if(mode==='uvchecker')return'UV Checker · Base UVs; unavailable objects use Solid';if(mode==='wire')return'Wire + Solid';if(mode==='matcap')return'MatCap';if(mode==='normals')return'Normals';if(mode==='studio')return'Studio';if(mode==='pathtrace')return'Helios Ray Trace';if(mode==='facegroups')return'Facegroups';return mode[0].toUpperCase()+mode.slice(1);}
 
 function retryPendingFacegroup(body,attempts=8){
   if(mode!=='facegroups'||!body?.isMesh||attempts<=0)return;
@@ -418,7 +418,7 @@ function installUI(){
   const host=document.querySelector('#viewportRenderLooks');
   if(!host)return false;
   const template=document.createElement('template');
-  template.innerHTML='<button type="button" data-render="studio" class="active">Studio</button><button type="button" data-render="solid">Solid</button><button type="button" data-render="clay">Clay</button><button type="button" data-render="matcap">MatCap</button><button type="button" data-render="normals">Normals</button><button type="button" data-render="wire">Wire</button><button type="button" data-render="xray">X-Ray</button><button type="button" data-render="facegroups">Facegroups</button><button type="button" data-render="uvchecker">UV Checker</button><button type="button" data-render="uvimage">UV Image</button>';
+  template.innerHTML='<button type="button" data-render="studio" class="active">Studio</button><button type="button" data-render="solid">Solid</button><button type="button" data-render="clay">Clay</button><button type="button" data-render="matcap">MatCap</button><button type="button" data-render="normals">Normals</button><button type="button" data-render="wire">Wire</button><button type="button" data-render="xray">X-Ray</button><button type="button" data-render="facegroups">Facegroups</button><button type="button" data-render="uvchecker">UV Checker</button><button type="button" data-render="uvimage">UV Image</button><button type="button" data-render="pathtrace">Helios</button>';
   // Preserve Cavity/Silhouette and existing original nodes/listeners when their
   // owners initialize first. Restore missing controls instead of clearing host.
   const existing=new Set([...host.querySelectorAll('button[data-render]')].map(button=>button.dataset.render));
@@ -517,6 +517,7 @@ function syncFacegroupStrokeControls(){
   }
 }
 document.addEventListener('boxlab-render-mode-change',event=>{if(event.detail?.mode!=='facegroups'){facegroupDock?.close();facegroupStroke.stop();syncFacegroupStrokeControls();}});
+document.addEventListener('boxlab-pathtrace-failed',()=>{if(mode==='pathtrace')setMode('studio');});
 
 document.addEventListener('click',event=>{const modeButton=event.target?.closest?.('#selectionModes button');if(modeButton&&modeButton.dataset.mode!=='face')facegroupDock?.close();},true);
 window.addEventListener('boxlab-tool-session-change',event=>{if(event.detail?.active)facegroupDock?.close();});

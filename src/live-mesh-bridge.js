@@ -64,4 +64,4 @@ if(!THREE.Group.prototype.__boxlabLiveMeshBridgeAdd169){
 // Force one cage rebuild so the bridge captures the actual core cage owner.
 queueMicrotask(()=>document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true})));
 
-globalThis.__boxlabLiveMeshBridge={version:'0.36.18.840',mesh:liveMesh,publishCoreMesh(value){if(!value)return false;explicitCoreMesh=value;fallbackMesh=value;return true;}};
+globalThis.__boxlabLiveMeshBridge={version:'0.36.18.840',mesh:liveMesh,publishCoreMesh(value){if(!value)return false;explicitCoreMesh=value;fallbackMesh=value;window.dispatchEvent(new Event('boxlab-core-mesh-published'));return true;}};

@@ -5,6 +5,10 @@ if(!THREE.WebGLRenderer.prototype.__boxlabPathTracePreloadInstalled){
   THREE.WebGLRenderer.prototype.render=function(scene,camera){
     if(this?.domElement?.id==='viewport'&&scene?.isScene&&camera?.isCamera){
       globalThis.__boxlabPathTraceBridge={renderer:this,scene,camera};
+      // Helios presents its fullscreen accumulation on BoxLab's existing
+      // renderer. Skip only the editor scene while that mode owns the canvas;
+      // Helios's fullscreen quad render still passes through this wrapper.
+      if(globalThis.__boxlabHeliosTraceActive&&scene===globalThis.__boxlabBridgeState?.scene)return;
     }
     return originalRender.call(this,scene,camera);
   };
