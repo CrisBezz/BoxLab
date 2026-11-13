@@ -4,6 +4,7 @@ import http from 'node:http';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {chromium} from 'playwright';
+import {formatSubdivisionActionsSummary} from './subdivision-headless-summary.mjs';
 
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const reportArg=process.argv.slice(2).find(value=>value.startsWith('--output='))?.slice('--output='.length)
@@ -68,6 +69,10 @@ try{
   report.execution={kind:'headless-browser',browser:'Chromium',browserVersion:browser.version(),headless:true,runner:process.env.GITHUB_ACTIONS==='true'?'GitHub Actions':'local',capturedAt:new Date().toISOString(),pageUrl};
   await fs.mkdir(path.dirname(outputPath),{recursive:true});
   await fs.writeFile(outputPath,JSON.stringify(report,null,2)+'\n');
+  if(process.env.GITHUB_STEP_SUMMARY){
+    await fs.appendFile(process.env.GITHUB_STEP_SUMMARY,formatSubdivisionActionsSummary(report),'utf8');
+    console.log('Added the per-workload comparison table to the GitHub Actions run summary.');
+  }
   console.log(`Completed ${report.results.length} subdivision JS/WASM comparisons in headless Chromium.`);
   console.log(`Parity: ${report.results.length}/${report.results.length}; decision: ${report.decision} (lab only).`);
   for(const row of report.results)console.log(`${row.sourceFaces} faces · L${row.levels} · JS ${row.metrics.js.medianMs.toFixed(2)} ms · WASM ${row.metrics.wasm.medianMs.toFixed(2)} ms · ${row.decision}`);

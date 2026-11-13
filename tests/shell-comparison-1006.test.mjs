@@ -131,3 +131,9 @@ test('1101 preserves an existing .1099 screen-comparison record when opening the
  const data=new Map([[key,JSON.stringify({version:1,release:'0.36.18.1099',runs:[prior]})]]),f=fixture('current',{data});
  const runs=f.api.report().runs;assert.equal(runs[0].id,prior.id);assert.equal(runs[0].release,prior.release);assert.equal(runs[0].notes,prior.notes);assert.equal(runs[0].ratings.startup,'pass');assert.equal(runs.at(-1).release,release);
 });
+
+test('1155 keeps .1154 shell-comparison records with their original release label',()=>{
+ const prior={id:'native1154',release:'0.36.18.1154',mode:'current',ratings:{startup:'pass'},notes:'accepted on .1154'};
+ const data=new Map([[key,JSON.stringify({version:1,release:'0.36.18.1154',runs:[prior]})]]),f=fixture('current',{data});
+ const runs=f.api.report().runs;assert.deepEqual(JSON.parse(JSON.stringify(runs[0])),prior);assert.equal(runs.at(-1).release,'0.36.18.1155');
+});

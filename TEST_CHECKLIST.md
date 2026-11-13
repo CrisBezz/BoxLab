@@ -1,3 +1,14 @@
+# .1155 — subdivision comparison table in Actions summary — 13 November 2026
+
+- [x] Formatter generates the 11-row source-face/level/JS median/WASM median/decision table and repeats parity count plus the host-timing `LAB_ONLY` caveat.
+- [x] The headless runner appends the summary to `GITHUB_STEP_SUMMARY` only after successful completion, and continues writing the JSON artifact.
+- [x] Focused summary/release/cache and shell-comparison checks 27/27 PASS.
+- [x] Full local suite 3,438/3,438 PASS (84.158s); zero failures/cancelled/skips.
+- [ ] Hosted `.1155`: verify Topology run contains the 11-row summary and uploaded JSON artifact; verify Pages deployment and `.1155` live marker.
+- [x] Existing `.1154` hosted actual Chromium run and `.1153` Safari PASS remain protected. No user interaction with the app is needed to validate this reporting addition.
+
+---
+
 # .1154 — automatic headless subdivision comparison — 13 November 2026
 
 - [x] Playwright driver targets the actual subdivision comparison HTML page, starts Compare, and validates all 11 workload rows, exact-parity flags, five measured pairs and output cap.
