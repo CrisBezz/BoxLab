@@ -12,9 +12,7 @@
 - [ ] Reconfirm 512 spp and the selected light/material reset icons from protected
   `.1160` PASS.
 
-Automated status: focused Helios/gallery and release checks are being finalized;
-run the full BoxLab suite and Helios lint/build before publication. WebGL/iPad visual
-acceptance remains with Cris. `.1160 PASS` is protected.
+Automated status: local and hosted BoxLab suites pass 3,440/3,440; focused gallery/release checks pass 27/27. BoxLab Pages run `43555938878` and hosted Topology run `43555939108` succeed. Headless subdivision comparison has 11/11 exact rows, aggregate `LAB_ONLY`; artifact `subdivision-wasm-headless-43555939108` (ID `14097768683`). Helios Studio type-check/build pass; Pages run `43555517307` succeeds. WebGL/iPad visual acceptance remains with Cris. `.1160 PASS` is protected.
 
 # .1155 — subdivision comparison table in Actions summary — 13 November 2026
 
