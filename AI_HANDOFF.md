@@ -3,34 +3,33 @@
 ## GitHub publication method — verified 14 November 2026
 
 Use the connected GitHub tools for publication when shell HTTPS git push has no credentials. A shell username/token error does not mean repository access is missing. The connected GitHub create_blob write route was verified in this session. Upload exact tested file bytes with create_blob, create_tree on the freshly inspected main tree, create_commit with current main as parent, then update_ref with expected_sha and force=false. Verify Actions/Pages and live release/cache markers afterward. For large files, read local bytes in bounded base64 chunks, concatenate them in the tool runtime, then create one complete blob per file. Never publish separate partial file chunks. Preserve concurrent remote work; inspect main again if the expected SHA fails. Standing push/publish authorization is already granted. Do not repeatedly retry an unauthenticated shell or ask the user for access again while the connected route works.
-# Current handoff — BoxLab .1162 + Helios Studio 0.1.2 — 14 November 2026
+# Current handoff — BoxLab .1163 + Helios Studio 0.1.3 — 14 November 2026
 
 The apps develop side by side from independent repositories and release histories:
-`CrisBezz/BoxLab` (this repo; current main release `.1162`, published; native scroll acceptance pending)
-and `CrisBezz/HeliosStudio` (standalone release `0.1.2`, user PASS protected).
+`CrisBezz/BoxLab` (this repo; current main release `.1163`) and
+`CrisBezz/HeliosStudio` (standalone release `0.1.3`, user PASS protected).
 Helios Studio is live at https://crisbezz.github.io/HeliosStudio/ and BoxLab at
-https://crisbezz.github.io/BoxLab/. BoxLab runtime scroll-repair commit is
-`0d5f17ccdcdeab1fbcb6f1ef35cca3ed7671b973`; the UTF-8 fixture correction is
-`8d56f9f9dd86640e6b8f2bf455257fa6b40ac090`.
+https://crisbezz.github.io/BoxLab/. BoxLab `.1163` runtime commit is
+`dc2fa6ed53d280f2db8ff98dc29dfb18d23c20ce`; the integrated upstream Helios
+Studio source is `44a7565e24ee96ea7907716dc67b1b97a810a63d`.
 
-Cris confirms BoxLab `.1161 PASS` and Helios Studio `.1.2 PASS`. The 512 spp and
-light/material reset controls, canvas-only PNG capture, twenty material previews,
-and render-session-only preset application are protected. BoxLab's `.1161`
-gallery contained the full material catalogue, but Cris found that its presets
-menu does not scroll on iPad. The standalone Helios `.1.2` has the accepted fix:
-one touch-scroll owner on the panel body, no nested gallery scroller, and an
-expanded panel while the gallery is open. BoxLab `.1162` ports this UI-only repair
-to the existing `src/helios-dock.js` / `helios-dock.css` owners; no material or
-renderer port is needed.
+Cris confirms BoxLab `.1162 PASS` for the single-owner scrolling material gallery,
+and Helios Studio `0.1.3 PASS` for its expanded material set and previews. Protect
+the prior clean PNG capture, 512 spp, light/material resets, render-session-only
+material application, and `.1162` iPad gallery scrolling. Helios Studio `.1.3`
+provides 28 presets, including Warm Limestone, Red Clay Brick, Spotted Gum,
+Terrazzo, Glazed Ceramic Tile, Lime Plaster, Weathered Corten Steel, and Polished
+Concrete. Its six new procedural texture families are limestone, brick, terrazzo,
+ceramic tile, plaster, and corten steel; Spotted Gum reuses the wood texture family
+and Polished Concrete reuses concrete.
 
-BoxLab's vendored preset data and `materialPreviewSvg.ts` byte-match the Helios
-Studio `.1.1` catalogue/helper. Presets affect only the selected render-session
-material; BoxLab scene/material data and imported maps remain unchanged. Render
-capture saves the tracer canvas after the selected sample target converges, without
-the app UI. Keep BoxLab as owner of modelling, saved projects, mesh state and scene
-serialization; Helios owns ray tracing, lighting, render materials and previews.
-Do not add a second renderer or modelling kernel. Keep the repositories
-independently versioned, tested and published.
+BoxLab `.1163` ports the accepted `.1.3` catalogue, procedural texture layers,
+and SVG previews through BoxLab's existing Helios adapter and bundle builder.
+Presets update only the selected render-session material. Imported custom maps and
+BoxLab saved project/material data remain untouched. BoxLab owns modelling,
+projects, mesh state and serialization; Helios owns ray tracing, lighting,
+render materials and previews. Do not add a second renderer or modelling kernel.
+Both repos remain independently versioned, tested and published.
 
 ## Shared-repo handoff rules
 
@@ -43,20 +42,13 @@ independently versioned, tested and published.
 - Preserve `src/multi-object-transform.js?v=0.36.1.0` and all unrelated modelling,
   Paint and UV owners.
 
-## Current release target — .1162
+## Current release — .1163
 
-Fix the BoxLab material gallery's nested scroll container using the already accepted
-Helios `.1.2` pattern. The panel body becomes the sole vertical scroll owner and
-expands while the preset gallery is open; the gallery grid itself has no overflow
-or height cap. Only BoxLab's Helios dock JS/CSS, release markers/pins, focused test
-and handover records should change. Verify that 512 spp, reset, render capture,
-material targeting, saved scene state and imported maps remain intact.
-
-`.1162` is published. Focused release/gallery checks pass 23/23; the full local suite
-passes 3,441/3,441 (116.973s), and hosted Topology run `43565280205` passes
-3,441/3,441 with zero failures. Pages run `43565279997` succeeds; the live version
-marker is `.1162`. Native touch acceptance remains pending until the final-row scroll
-and preset application are checked in portrait and landscape.
+Cris's `.1162 PASS` is protected. `.1163` integrates the upstream Helios Studio
+`0.1.3` material catalogue and preview/texture support in BoxLab. Automated
+focused checks pass 29/29; full local suite passes 3,444/3,444. Complete the
+hands-on material acceptance in TEST_CHECKLIST and record Cris's result before
+starting another build. Preserve the single scrolling panel owner from `.1162`.
 
 ---
 

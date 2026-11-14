@@ -1,6 +1,23 @@
+# .1163 — integrate Helios Studio 0.1.3 materials into BoxLab — 14 November 2026
+
+Cris confirms BoxLab `.1162 PASS`, protecting the gallery's single-owner touch
+scrolling. Helios Studio `.1.3 PASS` protects the 28-preset catalogue and its
+visible previews. BoxLab `.1163` ports the eight architectural materials and six
+new procedural texture families from Helios commit
+`44a7565e24ee96ea7907716dc67b1b97a810a63d` through the existing BoxLab Helios
+adapter/bundle owner. Spotted Gum and Polished Concrete reuse the existing wood and
+concrete texture families. Presets still affect only the selected render-session
+material; imported maps and saved BoxLab material/project data stay unchanged.
+
+Focused BoxLab material/gallery/release checks pass 29/29. Full local regression
+passes 3,444/3,444; `npm run build:helios-tracer` and `git diff --check` pass.
+Runtime release commit: `dc2fa6ed53d280f2db8ff98dc29dfb18d23c20ce`. Record
+hosted Actions and Pages verification, then Cris's hands-on result in the release
+checklist. BoxLab `.1162 PASS` and Helios Studio `.1.3 PASS` are protected.
+
 # .1162 — BoxLab material preset gallery scroll repair — 14 November 2026
 
-Cris confirms BoxLab `.1161 PASS` and Helios Studio `.1.2 PASS`, then reports the
+Cris confirms BoxLab `.1162 PASS` and Helios Studio `.1.3 PASS`, then reports the
 BoxLab material preset menu still cannot scroll on iPad. Audit found the BoxLab dock
 already had a scrollable `.helios-panel-body`, but `.helios-material-gallery` also
 owned a nested constrained scroller (`max-height:32vh; overflow:auto`). Reuse the

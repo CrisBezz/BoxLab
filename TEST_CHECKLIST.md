@@ -1,20 +1,29 @@
-## .1162 BoxLab material gallery scroll repair — hands-on check
+## .1163 BoxLab Helios Studio 0.1.3 material integration — hands-on check
 
-- [ ] Open VIEW > Helios > Materials > preset grid and scroll to the last material
-  card; the full panel should scroll without a nested, stuck gallery.
-- [ ] Repeat in iPad portrait and landscape; verify the preset menu stays open while
-  scrolling and the panel remains bounded to the available viewport.
-- [ ] Apply a preset near the bottom; confirm it applies to the selected render
-  material and the gallery closes.
-- [ ] Switch tabs and reopen the gallery; confirm scrolling still works and the
-  existing material preview/capture controls remain available.
+- [ ] Open VIEW > Helios > Materials > preset gallery; confirm all 28 preview cards
+  appear, including the eight architectural additions.
+- [ ] Scroll to the last cards in iPad portrait and landscape; gallery stays open,
+  the parent panel scrolls, and the final card is selectable.
+- [ ] Apply Warm Limestone, Red Clay Brick, Spotted Gum, Terrazzo, Glazed Ceramic
+  Tile, Lime Plaster, Weathered Corten Steel, and Polished Concrete one at a time;
+  confirm each visibly changes the selected render material.
+- [ ] Confirm the selection affects only the Helios render session; BoxLab's saved
+  material/project and imported custom maps remain unchanged.
+- [ ] Reconfirm clean PNG capture at the selected sample target, 512 spp, and
+  light/material reset controls.
 
-Automated `.1162` focused gallery/Helios/release checks pass 23/23. The complete
-local suite passes 3,441/3,441 (116.973s), zero failures/cancelled/skips. Hosted
-Topology `43565280205` passes 3,441/3,441; Pages `43565279997` succeeds and the
-live version marker is `.1162`. Automated checks cover
-single-scroll ownership, adaptive panel height, current release pins and existing
-Helios dock behavior; device touch acceptance requires Cris's hands-on check.
+Automated focused checks pass 29/29 and full local suite passes 3,444/3,444. Build
+and diff checks pass. Runtime release `.1163` is published; record hosted Pages and
+Topology status plus Cris's device result here before the next build.
+
+## .1162 BoxLab material gallery scroll repair — protected PASS
+
+Cris confirms BoxLab `.1162 PASS`. Protect the single parent-panel touch-scroll
+owner, adaptive panel height, final-row scrolling, and preset application. The
+automated focused checks pass 23/23; full local suite passes 3,441/3,441. Hosted
+Topology `43565280205` and Pages `43565279997` succeeded; live marker is
+`.1162`. Existing Helios capture, twenty previews, material isolation, 512 spp,
+and reset controls remain protected.
 
 ## .1161 BoxLab clean render capture and material gallery — protected PASS
 

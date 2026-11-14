@@ -1,35 +1,32 @@
-# BoxLab Roadmap — .1162
+# BoxLab Roadmap — .1163
 
 ## Current coordinated releases
 
-- BoxLab `.1161` is user-PASS for the twenty material previews, render-only preset
-  application, clean render output, 512 spp and reset controls. `.1162` ships the
-  material-gallery scroll repair; native touch acceptance remains pending.
-- Helios Studio `.1.2` fixes the same gallery issue with a single scroll owner;
-  Cris confirmed Helios `.1.2 PASS`.
+- BoxLab `.1162 PASS` protects the scrolling preset gallery. BoxLab `.1163` ports
+  the accepted Helios Studio `0.1.3` catalogue and previews: 28 presets, eight
+  architectural additions, and six new procedural texture families.
+- Helios Studio `0.1.3 PASS` protects the expanded preset gallery and previews.
 - BoxLab and Helios Studio remain independently versioned/published. BoxLab owns
   projects and modelling; Helios owns ray tracing, lighting, render materials and
   previews.
 
 ## Current focus
 
-`.1162` scroll repair is published. Focused gallery/Helios/release checks pass 23/23;
-full local and hosted suites pass 3,441/3,441 with zero failures/cancelled/skips.
-Pages `43565279997` and Topology `43565280205` succeed. Cris to verify final-row touch
-scrolling and preset selection in portrait and landscape. Preserve `.1161` render capture, all
-twenty preview presets, selected render-session material targeting, scene/map
-isolation, 512 spp and reset controls.
+Cris's `.1162 PASS` is protected. BoxLab runtime release `.1163` integrates Helios
+Studio source commit `44a7565e24ee96ea7907716dc67b1b97a810a63d` through the existing
+adapter and bundle build. Focused checks pass 29/29; full local suite passes
+3,444/3,444. Finish hosted and hands-on acceptance listed in TEST_CHECKLIST before
+starting a new feature. Preserve render-only material changes, imported maps, clean
+PNG capture, 512 spp, reset controls and the single scroll owner.
 
 ## Next-build ideas
 
-1. After `.1162` passes on device, expand the architectural material set in Helios
-   Studio and port the accepted catalogue to BoxLab: distinct stone/limestone,
-   brick, spotted gum, terrazzo, tile, plaster and weathered metal finishes. Each
-   preset should have matching visible preview and usable ray-traced appearance.
-2. Add material category/filter controls to the existing preset grid if the expanded
-   catalogue becomes difficult to browse on iPad.
-3. Keep the render-session-only boundary: applying presets must not write into the
-   BoxLab saved project or replace imported texture maps.
+1. After `.1163` passes on device, consider category filters for the 28-card preset
+   grid if browsing now feels slow; keep the grid and scroll owner authoritative.
+2. Keep new materials in Helios Studio first, then port accepted source through
+   BoxLab's existing bundle/adapter when intended for both applications.
+3. Preserve the render-session-only boundary: applying presets must not write into
+   the BoxLab saved project or replace imported texture maps.
 
 ---
 
