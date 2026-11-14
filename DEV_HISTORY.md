@@ -1,3 +1,11 @@
+# BoxLab .1161 PASS — Helios catalog parity confirmed — 14 November 2026
+
+Cris confirms BoxLab `.1161 PASS`; protect the clean PNG capture, twenty-preset preview grid, render-only material edits, and the existing 512 spp/reset controls. Verified the BoxLab vendored `data/presets.ts` and `materialPreviewSvg.ts` SHA-256 values exactly match Helios Studio's `.1.1` source. Helios Studio `.1.2` fixes only touch scrolling by using the expanded parent dock panel as the single scroll owner, so there is no additional catalog/runtime code to port into BoxLab until Helios adds new preset data.
+
+# .1161 user PASS — Helios materials confirmed in BoxLab — 14 November 2026
+
+Cris confirms BoxLab `.1161 PASS`; clean ray-trace image capture and Helios controls are protected. The complete twenty-preset catalogue is already integrated: BoxLab `src/helios-vendor/data/presets.ts` matches Helios Studio `src/data/presets.ts` byte-for-byte, as does the shared SVG preview helper. No parallel material owner or duplicate BoxLab runtime change is needed for this PASS. Helios Studio `.1.2` separately repairs scrolling of its material grid; keep the repositories independently versioned and verify upstream before any future catalog port.
+
 # .1161 — BoxLab clean output and Helios materials — 14 November 2026
 
 Cris confirmed `.1160` PASS; the 512 spp option and light/material reset actions are
@@ -14,8 +22,7 @@ material kernel, or modelling implementation was added. Updated the BoxLab relea
 markers, asset pins/contract, cross-repo handoff, roadmap and hands-on checklist.
 Keep both repositories independently versioned and published. Focused Helios/release checks pass 27/27 and the full BoxLab suite passes 3,440/3,440
 (73.1s), zero failures/cancelled/skips. Helios Studio type-check/build pass and Pages
-workflow run `43555517307` succeeds. BoxLab Pages publication and native device checks
-for `.1161` remain pending.
+workflow run `43555517307` succeeds. BoxLab Pages run `43555938878` and hosted Topology run `43555939108` pass. Hosted subdivision comparison has 11/11 exact parity rows, aggregate `LAB_ONLY`, artifact `subdivision-wasm-headless-43555939108` (ID `14097768683`); no WASM promotion. Native device checks for `.1161` remain pending.
 
 # .1133 — tighter modelling radial orbits; .1132 protected PASS — 11 November 2026
 

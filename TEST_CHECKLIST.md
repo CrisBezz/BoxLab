@@ -1,18 +1,20 @@
 ## .1161 BoxLab clean render capture and material gallery — hands-on check
 
-- [ ] In VIEW > Helios > Ray Tracer, confirm the image-save button is disabled
+**User PASS protected:** Cris confirms `.1161` PASS. The capture and twenty-material integration checks below are protected. The same catalogue and SVG helper byte-match Helios Studio `.1.1`; standalone `.1.2` changes scrolling only.
+
+- [x] **Protected PASS:** In VIEW > Helios > Ray Tracer, confirm the image-save button is disabled
   until the chosen sample target completes; capture after convergence.
-- [ ] Open the saved PNG and confirm it contains the ray-traced canvas without
+- [x] **Protected PASS:** Open the saved PNG and confirm it contains the ray-traced canvas without
   BoxLab/Helios controls or surrounding UI.
-- [ ] Open Materials > presets grid; confirm the twenty material cards show clear
+- [x] **Protected PASS:** Open Materials > presets grid; confirm the twenty material cards show clear
   previews and names, and the grid fits/scrolls in portrait and landscape.
-- [ ] Select a material slot, apply a preset, and confirm only that render-session
+- [x] **Protected PASS:** Select a material slot, apply a preset, and confirm only that render-session
   material changes. Verify the saved BoxLab scene/material and imported texture maps
   remain unchanged.
-- [ ] Reconfirm 512 spp and the selected light/material reset icons from protected
+- [x] **Protected PASS:** Reconfirm 512 spp and the selected light/material reset icons from protected
   `.1160` PASS.
 
-Automated status: local and hosted BoxLab suites pass 3,440/3,440; focused gallery/release checks pass 27/27. BoxLab Pages run `43555938878` and hosted Topology run `43555939108` succeed. Headless subdivision comparison has 11/11 exact rows, aggregate `LAB_ONLY`; artifact `subdivision-wasm-headless-43555939108` (ID `14097768683`). Helios Studio type-check/build pass; Pages run `43555517307` succeeds. WebGL/iPad visual acceptance remains with Cris. `.1160 PASS` is protected.
+Automated status: local and hosted BoxLab suites pass 3,440/3,440; focused gallery/release checks pass 27/27. BoxLab Pages run `43555938878` and hosted Topology run `43555939108` succeed. Headless subdivision comparison has 11/11 exact rows, aggregate `LAB_ONLY`; artifact `subdivision-wasm-headless-43555939108` (ID `14097768683`). Helios Studio type-check/build pass; Pages run `43555517307` succeeds. Cris confirmed `.1161 PASS`; all five checks above are protected. The current HeliosStudio `.1.2` scroll repair will be checked separately in that repository.
 
 # .1155 — subdivision comparison table in Actions summary — 13 November 2026
 

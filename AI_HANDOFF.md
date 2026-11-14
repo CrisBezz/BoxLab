@@ -6,14 +6,14 @@ Use the connected GitHub tools for publication when shell HTTPS git push has no 
 # Current handoff — BoxLab .1161 + Helios Studio 0.1.1 — 14 November 2026
 
 The apps develop side by side from independent repositories and release histories:
-`CrisBezz/BoxLab` (this repo; target `.1161`) and
-`CrisBezz/HeliosStudio` (standalone release `0.1.1`, code commit `33fd410`). Inspect both repos before
+`CrisBezz/BoxLab` (this repo; shipped `.1161`, user PASS protected) and
+`CrisBezz/HeliosStudio` (standalone release `0.1.2`, scroll-fix commit `d323550`). Inspect both repos before
 shared Helios work. Helios Studio is live at
 https://crisbezz.github.io/HeliosStudio/ and BoxLab at
 https://crisbezz.github.io/BoxLab/.
 
-Cris confirmed BoxLab `.1160` PASS. Record 512 spp and the light/material reset
-controls as protected. `.1161` adds a clean PNG render capture action in VIEW >
+Cris confirmed BoxLab `.1160` and `.1161` PASS. The 512 spp/reset controls and the
+`.1161` capture/material gallery are protected. `.1161` added a clean PNG render capture action in VIEW >
 Helios > Ray Tracer and ports Helios Studio's twenty preset materials into an icon-
 opened graphical preview grid. Presets apply to the selected render material in the
 Helios trace session only; saved BoxLab scene/materials and imported maps remain
@@ -24,7 +24,7 @@ Continue using the existing BoxLab renderer, verified GLB export/import path and
 path-trace adapter; Helios Studio remains the source for the preset catalog and the
 shared lightweight preview renderer. Do not add a second renderer or modelling
 kernel. Both releases require separate builds, test runs and Pages publication.
-Local BoxLab regression is 3,440/3,440 with zero failures/cancellations/skips; HeliosStudio `npm run lint` and `npm run build` pass, and Pages workflow run `43555517307` succeeds. Native device checks for `.1161` remain pending.
+Local and hosted BoxLab regression pass 3,440/3,440 with zero failures/cancellations/skips. BoxLab Pages run `43555938878` and Topology run `43555939108` succeed. The BoxLab preset file and preview helper byte-match Helios Studio `.1.1` (20 physical presets), so the catalogue is already fully integrated; no duplicate or redundant BoxLab runtime build is needed. HeliosStudio `.1.2` repairs the standalone gallery scroll using its existing parent scroll owner. BoxLab `.1161` already matches the full 20-preset catalog and SVG preview helper byte-for-byte; the `.1.2` change is UI-only, so no BoxLab runtime port is needed until the upstream material catalog changes.
 
 ## Shared-repo handoff rules
 
@@ -37,7 +37,7 @@ Local BoxLab regression is 3,440/3,440 with zero failures/cancellations/skips; H
 - Keep BoxLab as owner of modelling, saved projects, export and mesh state; Helios
   owns ray tracing, lighting, render materials and their preview controls.
 
-## Current release target — .1161
+## Current shipped release — .1161 (protected PASS)
 
 Adds clean canvas-only PNG output and the upstream 20-material graphical preset
 gallery to BoxLab's existing Helios dock. `.1160` 512 spp/reset controls are

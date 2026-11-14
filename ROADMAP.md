@@ -3,7 +3,7 @@
 ## Current coordinated releases
 
 - BoxLab `.1161`: clean PNG ray-trace capture and a graphical material gallery.
-- Helios Studio `0.1.1`: twenty material presets with previews and icon-opened grid.
+- Helios Studio `0.1.2`: twenty material presets with previews and a scrollable icon-opened grid.
 - BoxLab `.1160` 512 spp and selected light/material reset controls are user-PASS
   protected.
 - Helios presets in BoxLab modify only the render-session material of the selected
@@ -11,7 +11,7 @@
 
 ## Current validation
 
-- Automated BoxLab suite passes 3,440/3,440; Helios Studio type-check, production build and Pages run `43555517307` pass. Native device acceptance is pending.
+- BoxLab `.1161` is user-PASS protected; its 20 material presets and preview helper already match Helios Studio `.1.1` exactly. Local/hosted tests pass 3,440/3,440. Helios Studio `.1.2` is addressing gallery scrolling; test on iPad after publication.
 
 ## Next
 
