@@ -161,9 +161,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1159",
+      "url": "./src/drawer-ui.js?v=0.36.18.1160",
       "target": "src/drawer-ui.js",
-      "sha256": "4f64cbcbefd7abc4eed4a7d469d456259d7803e609cbc3cae2844c4de787cbc3"
+      "sha256": "41c82c3b1a501a397f137f834a5fd9471a5f747ce4d2b9226b91074237696dac"
     },
     {
       "owner": "index.html",
@@ -378,7 +378,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1159",
+      "url": "./src/release-version.js?v=0.36.18.1160",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -864,9 +864,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1159",
+      "url": "./face-workflow-layout.js?v=0.36.18.1160",
       "target": "src/face-workflow-layout.js",
-      "sha256": "8b32ffa35e5af66650b650e4b26f6e542fff4976d4bc8248119d7c38f3440b70"
+      "sha256": "8b60aa31b92b7f831b8a56ed93fd0a849024c20bd3ee67fe0335af0ca6815280"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1361,7 +1361,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1159",
+      "url": "./release-version.js?v=0.36.18.1160",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -3326,9 +3326,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1159",
+      "url": "./src/shell-comparison.js?v=0.36.18.1160",
       "target": "src/shell-comparison.js",
-      "sha256": "394c9a07df735d32eedade55fa1f48140ac932b131f7be630acf837c8701f4a8"
+      "sha256": "c2f008416225f04f2b28a6ee80de9027433023af1db220873f49f241dc84d5d7"
     },
     {
       "owner": "src/main.js",
@@ -3800,9 +3800,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/pathtrace-mode.js?v=0.36.18.1159",
+      "url": "./src/pathtrace-mode.js?v=0.36.18.1160",
       "target": "src/pathtrace-mode.js",
-      "sha256": "e800f8c82d5175ea4d8c17f6f4cd16e8babb63b1a6f068b342e86b29572d7331"
+      "sha256": "7b4a9423231cb033aad81b8579030af741320bd52d45dd1abdc5f18e9d725b18"
     },
     {
       "owner": "src/pathtrace-mode.js",
@@ -3812,15 +3812,15 @@
     },
     {
       "owner": "index.html",
-      "url": "./helios-dock.css?v=0.36.18.1159",
+      "url": "./helios-dock.css?v=0.36.18.1160",
       "target": "helios-dock.css",
-      "sha256": "2d19cbf6711f280a882dee1bd653b5889cc1296b022aa7d037b389284a6c2e46"
+      "sha256": "96b76950fab4398f142a1f287d9f4432cf21c86da491f2306e1b1cf63b787b91"
     },
     {
       "owner": "index.html",
-      "url": "./src/helios-dock.js?v=0.36.18.1159",
+      "url": "./src/helios-dock.js?v=0.36.18.1160",
       "target": "src/helios-dock.js",
-      "sha256": "e2d38f8ca534713c3042d484ee8d1314f23672a78bc1584e05fc476df404a8ad"
+      "sha256": "0757c7023d2b58b15fa8ce9ff09322b660aa6e55da20aab77857fad770037937"
     }
   ]
 }

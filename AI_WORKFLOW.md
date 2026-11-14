@@ -9,7 +9,18 @@ This file defines the handover protocol for every AI-assisted BoxLab development
 
 ## Core rule
 
-The repository is the source of truth.
+The repository is the source of truth. BoxLab and Helios Studio are now maintained
+side by side in separate repositories: `CrisBezz/BoxLab` and
+`CrisBezz/HeliosStudio`. Each repo's `main`, release markers, handoff and test
+checklist are authoritative for that app; never assume the two releases or commits
+match.
+
+For features shared with BoxLab's Helios VIEW integration, inspect both repos before
+editing. Keep Helios Studio independently runnable and keep BoxLab as the owner of
+modelling, project files and scene serialization. Record the current cross-repo
+status and upstream commit in BoxLab's `AI_HANDOFF.md` whenever an integration is
+changed. Coordinate code through the existing Helios bundle and BoxLab adapter;
+preserve each app's current implementation owners.
 
 A brand-new ChatGPT conversation with no access to earlier BoxLab chats must be able to continue development by reading this file, `AI_HANDOFF.md`, `TEST_CHECKLIST.md`, the relevant recent entries in `DEV_HISTORY.md`, and inspecting current `main`.
 

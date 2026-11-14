@@ -1,4 +1,23 @@
-# Current focus — .1159 Helios right-side controls — 14 November 2026
+# Current focus — .1160 Helios controls in BoxLab; paired repo development — 14 November 2026
+
+BoxLab and standalone Helios Studio now develop side by side from separate main
+branches. Helios Studio `CrisBezz/HeliosStudio` is at release `0.1.0` (main
+`c381ddc`), live on GitHub Pages with Actions publishing; the refreshed render
+passed user review. Its 512 spp choice and reset-to-default light/material controls
+are carried into BoxLab's existing Helios right-side panel in `.1160`. This build
+keeps 128 spp as the default; one-tap reset restores the selected light's factory
+values or the selected material's imported GLB values, preserving uploaded maps and
+BoxLab's saved scene/material data. `.1160` is awaiting native iPad acceptance.
+
+Next shared Helios work: standalone material preview cards, then expand its preset
+catalogue and port the agreed catalogue into BoxLab after preview behavior is
+reviewed. Keep each app independently usable, releases independent, and BoxLab as
+owner of modeling, projects, and mesh serialization. See current cross-repo status
+and workflow in `AI_HANDOFF.md` and `AI_WORKFLOW.md`.
+
+---
+
+# .1159 — Helios right-side controls — 14 November 2026
 
 User accepts the `.1158` BoxLab palette/type styling and reports the bottom dock is obscured by the mode controls. `.1159` keeps the same authoritative dock/action owner and moves its panel to the familiar upper-right BoxLab menu position with a scrollable body and safe-area spacing. The `.1156` ray-trace view and `.1157` controls remain protected; saved scene/material ownership is unchanged. Focused Helios/release checks pass 17/17; full local and hosted Topology suites pass 3,440/3,440, zero failures/cancelled/skips; syntax and diff checks pass. Pages run `43535834843` succeeds and runtime commit is `a328e77a4350cece6a690e0e0f3623bc50898510`. Hosted Chromium comparison completes 11/11 parity (`LAB_ONLY`). Live browser confirms the upper-right panel; native iPad panel/trace acceptance remains pending. Hands-on acceptance should check panel visibility, tabs/actions, scroll and coexistence with viewport controls at iPad portrait/landscape sizes.
 

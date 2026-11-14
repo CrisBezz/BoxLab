@@ -8,6 +8,8 @@ let active=false;
 let interacting=false;
 let tracer=null;
 let camera=null;
+let defaultLights=[];
+let defaultMaterials=new Map();
 let hud=null;
 let modulePromise=null;
 let generation=0;
@@ -105,6 +107,9 @@ async function rebuild(runId=generation){
     const next=await helios.createBoxLabHeliosTrace(renderer,glb);
     if(!active||runId!==generation){next.dispose();return;}
     tracer=next;
+    const defaults=tracer.getState?.()||{};
+    defaultLights=(defaults.lights||[]).map(light=>({...light}));
+    defaultMaterials=new Map((defaults.materials||[]).map(material=>[material.id,{...material}]));
     if(savedControls)tracer.applyPreferences(savedControls);
     publishControlState();
     camera=source.clone();
@@ -196,7 +201,18 @@ function applyDockAction(detail={}){
   if(detail.action==='light'){
     const lights=stateNow.lights.map(light=>light.id===detail.id?{...light,...detail.patch}:light);
     tracer.updateLights(lights);
+  }else if(detail.action==='reset-light'){
+    const defaults=defaultLights.find(light=>light.id===detail.id);
+    if(defaults)tracer.updateLights(stateNow.lights.map(light=>light.id===detail.id?{...defaults}:light));
   }else if(detail.action==='material')tracer.updateMaterial(detail.id,detail.patch||{});
+  else if(detail.action==='reset-material'){
+    const defaults=defaultMaterials.get(detail.id);
+    if(defaults){
+      const keys=['color','roughness','metalness','ior','transmission','clearcoat','emissiveIntensity','texturePreset','uvScale','normalStrength'];
+      const patch=Object.fromEntries(keys.filter(key=>defaults[key]!==undefined).map(key=>[key,defaults[key]]));
+      tracer.updateMaterial(detail.id,patch);
+    }
+  }
   else if(detail.action==='material-preset')tracer.applyMaterialPreset(detail.id,detail.presetId);
   else if(detail.action==='settings')tracer.updateSettings(detail.patch||{});
   else if(detail.action==='lighting-rig')tracer.applyLightingRig(detail.id);

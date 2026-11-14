@@ -14021,3 +14021,13 @@ User reports the styling is much better and no longer obscures mode controls, bu
 - [ ] On iPad portrait and landscape, check right safe-area spacing, panel scrolling and orbit/pan/zoom outside the panel.
 
 Automated status: focused Helios/release and shell-comparison checks pass 17/17; full local and hosted Topology suites pass 3,440/3,440 (0 failures/cancelled/skips); changed JavaScript syntax and `git diff --check` pass. Hosted Chromium subdivision comparison completes 11/11 parity, aggregate `LAB_ONLY`; artifact `subdivision-wasm-headless-43535835773` (ID `14088514733`). Pages `43535834843` succeeds. Live shell reports `.1159`; the right panel is visibly upper-right. Native iPad portrait/landscape panel, scrolling, controls and trace acceptance remain pending. User `.1157 PASS` and `.1158` styling acceptance are protected.
+
+## .1160 Helios 512 spp and reset controls — hands-on check
+
+- [ ] In VIEW > Helios > Ray Tracer, select **512 spp** and confirm the sample count accumulates to 512 and then converges.
+- [ ] Change the selected light's settings, tap its circular-arrow reset once, and confirm that light returns to its default values while other lights remain unchanged.
+- [ ] Change a material's albedo and PBR sliders, tap its reset arrow once, and confirm its values return to the current GLB's initial values.
+- [ ] Repeat material reset on an imported GLB with texture maps; confirm textures remain connected and the saved BoxLab project material is unchanged.
+- [ ] Confirm the right-side panel remains usable in portrait/landscape and the reset targets are easy to tap.
+
+Automated status: focused release/dock/comparison checks pass 20/20; full local Node suite passes 3,440/3,440 (71.944s), zero failures/cancelled/skips; changed JavaScript syntax and cache-contract checks pass. Publication and iPad PASS/FAIL remain pending. Helios Studio standalone is release `0.1.0`, and the independent BoxLab and HeliosStudio repos now develop side by side; see `AI_HANDOFF.md`.

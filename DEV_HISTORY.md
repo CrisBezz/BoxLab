@@ -13613,3 +13613,30 @@ Release/cache closure .1158 updates shell/version markers and direct/loader pins
 User reports `.1158` styling is much better and no longer obscures mode controls, but the bottom dock is obscured by them. Preserve the accepted visual language; replace the bottom placement with a familiar BoxLab right-side menu. Audited the existing Helios dock/action owner and BoxLab right-panel precedent (`#objectBrowserPanel`); moved the existing dock shell to the viewport upper-right with safe-area inset, bounded width and scrollable body. The four original tabs and all action/event owners remain unchanged. No ray tracer, scene manager or modelling kernel duplication.
 
 Release/cache pins updated to `.1159`; runtime asset contract hashes refreshed for changed files. Focused Helios/release and shell-comparison checks pass 17/17; full local suite passes 3,440/3,440 with zero failures/cancelled/skips; changed JavaScript syntax and `git diff --check` pass. Hosted Topology run `43535835773` passes 3,440/3,440 with zero failures/cancelled/skips; headless Chromium completes 11/11 comparison parity, aggregate `LAB_ONLY`, artifact `subdivision-wasm-headless-43535835773` (ID `14088514733`). Pages run `43535834843` succeeds. Runtime commit `a328e77a4350cece6a690e0e0f3623bc50898510`; live shell title/version and changed cache pins are `.1159`. Browser confirms the right panel renders above the lower mode controls; cloud WebGL is unavailable, so ray-trace visuals are not validated here. Native iPad portrait/landscape panel, scroll, control and trace acceptance remain pending. `.1157 PASS` and `.1158` styling acceptance are protected; `.1158` bottom placement is recorded as failed.
+
+# .1160 — port 512 spp and light/material resets into BoxLab — 14 November 2026
+
+User asks for Helios Studio to be developed alongside BoxLab, with its current
+status recorded in BoxLab's handover, and requests the 512 spp choice and reset
+arrows in the BoxLab app. Audited BoxLab main `.1159`: existing Helios right-side
+dock and `pathtrace-mode.js` are authoritative; the UI listed up to 256 spp and had
+no reset actions. Standalone `CrisBezz/HeliosStudio` main `c381ddc` is release
+`0.1.0`, includes 512 spp and circular-arrow resets, publishes via GitHub Actions,
+and Cris confirmed the refreshed live render PASS.
+
+Added 512 spp to the existing sample-target select. Added one-tap light/material
+reset icons. Resetting a light restores that light's Helios factory defaults;
+resetting a material restores the values imported from the current GLB. The existing
+adapter refuses preset texture replacement when imported maps are present, and
+reset patches only material properties, so maps stay connected. Settings remain
+render-only; BoxLab's saved materials/project are unchanged. Existing Three.js
+renderer, GLB export/import path, dock and ray-tracer module owners are reused.
+
+Release target `.1160`; updated shell/manifest and direct cache pins for the changed
+dock, tracer controller and dock stylesheet. Runtime asset contract entries refreshed
+for those owners. Updated the cross-repo workflow/handoff/roadmap and added the
+hands-on checklist. Multi transform and all modelling/Paint/UV owners remain
+untouched. Focused release, dock and comparison tests pass 20/20; the full local Node suite
+passes 3,440/3,440 (71.944s), zero failures/cancelled/skips. Changed-module syntax,
+release cache-contract checks and `git diff --check` pass. Pages publication and
+user iPad acceptance remain pending.

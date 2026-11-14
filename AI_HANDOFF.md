@@ -3,6 +3,55 @@
 ## GitHub publication method — verified 14 November 2026
 
 Use the connected GitHub tools for publication when shell HTTPS git push has no credentials. A shell username/token error does not mean repository access is missing. The connected GitHub create_blob write route was verified in this session. Upload exact tested file bytes with create_blob, create_tree on the freshly inspected main tree, create_commit with current main as parent, then update_ref with expected_sha and force=false. Verify Actions/Pages and live release/cache markers afterward. For large files, read local bytes in bounded base64 chunks, concatenate them in the tool runtime, then create one complete blob per file. Never publish separate partial file chunks. Preserve concurrent remote work; inspect main again if the expected SHA fails. Standing push/publish authorization is already granted. Do not repeatedly retry an unauthenticated shell or ask the user for access again while the connected route works.
+# Current handoff — BoxLab .1160 + Helios Studio 0.1.0 — 14 November 2026
+
+The apps now develop side by side in separate source-of-truth repositories:
+`CrisBezz/BoxLab` (this repo; current target `.1160`) and
+`CrisBezz/HeliosStudio` (standalone release `0.1.0`, main `c381ddc`). Inspect both
+repositories at the start of shared Helios work; keep their version numbers and
+release histories independent. Helios Studio is live at
+https://crisbezz.github.io/HeliosStudio/ and BoxLab at
+https://crisbezz.github.io/BoxLab/.
+
+Standalone Helios `0.1.0` includes selectable 512 spp and one-tap circular-arrow
+resets for the selected light and material. Material reset restores the initially
+loaded values while preserving uploaded maps. GitHub Pages source was corrected to
+GitHub Actions, the fresh deployment succeeded, and Cris confirmed the refreshed
+render is visible (protected PASS). Next in the standalone repo: graphical previews
+for current material presets, then expand the catalogue.
+
+BoxLab `.1160` carries those two controls into the existing VIEW > Helios right-side
+panel. The dock action owner resets the selected Helios light to its factory
+lighting default and the selected material to the values imported from the current
+GLB; imported texture maps stay connected and BoxLab's saved material/scene remain
+unchanged. 512 spp is an available sample target; the existing default remains
+128 spp. Focused release, dock and comparison checks pass 20/20; the full local Node suite
+passes 3,440/3,440 with zero failures, cancellations or skips. Publication is the
+remaining release step; `.1160` then awaits Cris's hands-on iPad acceptance. The
+Helios ray tracer continues using BoxLab's existing renderer/canvas and verified
+GLB exporter; do not add another renderer or modelling kernel.
+
+## Shared-repo handoff rules
+
+- Read both repos' current handoff/checklist and inspect each repo's `main` before
+  changing integrated features.
+- Make standalone features usable in Helios Studio and update the BoxLab adapter
+  separately when the feature is intended in both apps.
+- Record the upstream Helios commit and the BoxLab runtime/cache pins whenever the
+  integration changes. Publish and test each app from its own repo/workflow.
+- Keep BoxLab as owner of modelling, saved projects, export and mesh state; Helios
+  owns ray tracing, lighting, render materials and their preview controls.
+
+## Current release target — .1160
+
+Adds the 512 spp choice and per-light/per-material reset arrows to the existing
+Helios dock. `.1156` tracer and `.1157` controls PASSes remain protected; `.1158`
+styling acceptance remains protected; `.1159` right-panel placement is awaiting
+native iPad acceptance. The current sample default stays at 128 spp. Preserve
+`src/multi-object-transform.js?v=0.36.1.0` and all modelling/Paint/UV owners.
+
+---
+
 # .1159 — Helios right-side menu — 14 November 2026
 
 Current release target `.1159` moves the Helios controls from the bottom dock into a right-side BoxLab-style panel. User says `.1158` styling is much better and does not obscure the mode controls, but the bottom dock is itself obscured by them. Treat palette/type styling as accepted and bottom placement as failed. The right panel uses the existing BoxLab right-panel pattern, upper-right safe-area placement and a scrollable body. Existing Lights, Materials, Ray Tracer and Camera controls/actions remain owned by `src/helios-dock.js` and the Helios adapter; no duplicate renderer or project/scene workflow.
