@@ -13636,7 +13636,12 @@ Release target `.1160`; updated shell/manifest and direct cache pins for the cha
 dock, tracer controller and dock stylesheet. Runtime asset contract entries refreshed
 for those owners. Updated the cross-repo workflow/handoff/roadmap and added the
 hands-on checklist. Multi transform and all modelling/Paint/UV owners remain
-untouched. Focused release, dock and comparison tests pass 20/20; the full local Node suite
-passes 3,440/3,440 (71.944s), zero failures/cancelled/skips. Changed-module syntax,
-release cache-contract checks and `git diff --check` pass. Pages publication and
-user iPad acceptance remain pending.
+untouched. Focused release, dock and comparison tests pass 20/20; the full local Node
+suite passes 3,440/3,440 (71.944s), zero failures/cancelled/skips. Changed-module syntax,
+release cache-contract checks and `git diff --check` pass. Runtime commit
+`b9abd9dfa059d9c2d9faae5a5bca9d9e89c45a86` is on main; Pages `43552236354` and
+hosted Topology `43552236764` succeed. The hosted Node suite succeeds; Chromium
+records 11/11 exact parity rows, aggregate `LAB_ONLY`; artifact
+`subdivision-wasm-headless-43552236764` (ID `14096229662`). Live title/version is
+`.1160`. Cloud browser WebGL is unavailable, so iPad controls/render acceptance
+remains pending.

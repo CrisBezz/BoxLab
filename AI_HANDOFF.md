@@ -25,11 +25,16 @@ panel. The dock action owner resets the selected Helios light to its factory
 lighting default and the selected material to the values imported from the current
 GLB; imported texture maps stay connected and BoxLab's saved material/scene remain
 unchanged. 512 spp is an available sample target; the existing default remains
-128 spp. Focused release, dock and comparison checks pass 20/20; the full local Node suite
-passes 3,440/3,440 with zero failures, cancellations or skips. Publication is the
-remaining release step; `.1160` then awaits Cris's hands-on iPad acceptance. The
-Helios ray tracer continues using BoxLab's existing renderer/canvas and verified
-GLB exporter; do not add another renderer or modelling kernel.
+128 spp. Release commit
+`b9abd9dfa059d9c2d9faae5a5bca9d9e89c45a86` is on BoxLab `main`. Pages run
+`43552236354` and Topology run `43552236764` succeeded; full local and hosted
+Node regression passes 3,440/3,440 with zero failures/cancellations/skips. Hosted
+Chromium produced 11/11 exact subdivision parity rows (aggregate `LAB_ONLY`; artifact
+`subdivision-wasm-headless-43552236764`, ID `14096229662`), with no WASM promotion.
+The live title/version marker is `.1160`. The cloud browser cannot create WebGL
+contexts, so the render and device controls still need Cris's hands-on iPad
+acceptance. The Helios ray tracer continues using BoxLab's existing renderer/canvas
+and verified GLB exporter; do not add another renderer or modelling kernel.
 
 ## Shared-repo handoff rules
 

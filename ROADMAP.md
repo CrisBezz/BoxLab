@@ -7,7 +7,9 @@ passed user review. Its 512 spp choice and reset-to-default light/material contr
 are carried into BoxLab's existing Helios right-side panel in `.1160`. This build
 keeps 128 spp as the default; one-tap reset restores the selected light's factory
 values or the selected material's imported GLB values, preserving uploaded maps and
-BoxLab's saved scene/material data. `.1160` is awaiting native iPad acceptance.
+BoxLab's saved scene/material data. `.1160` is published; local and hosted regression
+pass 3,440/3,440 and Pages deployment succeeds. The cloud browser cannot create
+WebGL contexts, so hands-on iPad acceptance remains pending.
 
 Next shared Helios work: standalone material preview cards, then expand its preset
 catalogue and port the agreed catalogue into BoxLab after preview behavior is
