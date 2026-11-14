@@ -29,6 +29,18 @@ function patternMarkup(preset: MaterialPreset, id: string): string {
       return `<pattern id="${id}" width="15" height="15" patternUnits="userSpaceOnUse"><path d="M0 3C4 1 10 5 15 2M0 10C5 7 10 12 15 9" ${stroke} stroke-width="1"/></pattern>`;
     case 'travertine':
       return `<pattern id="${id}" width="18" height="18" patternUnits="userSpaceOnUse"><path d="M-2 5C3 1 9 9 20 3M-2 13C4 9 11 17 20 11" ${stroke} stroke-width="1.1"/></pattern>`;
+    case 'limestone':
+      return `<pattern id="${id}" width="16" height="14" patternUnits="userSpaceOnUse"><path d="M0 3C4 1 9 5 16 2M0 9C5 7 11 11 16 8" ${stroke} stroke-width="1"/><circle cx="4" cy="12" r=".7" fill="#000" fill-opacity=".2"/><circle cx="13" cy="5" r=".55" fill="#fff" fill-opacity=".32"/></pattern>`;
+    case 'brick':
+      return `<pattern id="${id}" width="20" height="14" patternUnits="userSpaceOnUse"><path d="M0 0H20M0 7H20M0 14H20M10 0V7M0 7V14" stroke="#eee2d3" stroke-opacity=".5" stroke-width="1.2"/><path d="M1 1H9V6H1ZM11 1H19V6H11ZM1 8H9V13H1ZM11 8H19V13H11Z" fill="#000" fill-opacity=".08"/></pattern>`;
+    case 'terrazzo':
+      return `<pattern id="${id}" width="18" height="18" patternUnits="userSpaceOnUse"><path d="M2 4L5 2 7 5 4 7ZM11 3L14 2 15 5 12 6ZM8 11L11 9 13 12 10 14ZM1 14L3 12 5 14 3 16ZM15 15L17 13 18 16Z" fill="#66584c" fill-opacity=".58"/><circle cx="7" cy="3" r="1" fill="#a47758" fill-opacity=".65"/><circle cx="14" cy="10" r=".8" fill="#737b70" fill-opacity=".58"/></pattern>`;
+    case 'ceramic-tile':
+      return `<pattern id="${id}" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M0 0H20V20H0Z" fill="none" stroke="#fff" stroke-opacity=".62" stroke-width="1.5"/><path d="M2 2H18V18H2Z" fill="none" stroke="#000" stroke-opacity=".08" stroke-width=".7"/></pattern>`;
+    case 'plaster':
+      return `<pattern id="${id}" width="16" height="16" patternUnits="userSpaceOnUse"><path d="M1 4C4 2 8 5 12 3M3 12C7 9 11 13 15 10M7 1L8 2M13 7L14 8" ${stroke} stroke-width=".75"/></pattern>`;
+    case 'corten-steel':
+      return `<pattern id="${id}" width="16" height="16" patternUnits="userSpaceOnUse"><circle cx="3" cy="4" r="2.2" fill="#411d16" fill-opacity=".24"/><circle cx="11" cy="3" r="1.5" fill="#e09a62" fill-opacity=".38"/><circle cx="8" cy="12" r="3" fill="#59271a" fill-opacity=".2"/><path d="M0 9C4 7 10 11 16 8" stroke="#f2bd84" stroke-opacity=".28" fill="none" stroke-width="1"/></pattern>`;
     default:
       return '';
   }

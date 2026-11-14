@@ -3,7 +3,7 @@ import { PbrTexturePresetId, TextureSlot } from '../types/studio';
 import { GeometryUVInfo, processTextureAtlasEdges } from './uvCleanup';
 
 export const PBR_TEX_SIZE = 256;
-export const PRESET_LAYER_COUNT = 8; // 0..7 reserved for procedural presets
+export const PRESET_LAYER_COUNT = 14; // 0 is neutral; 1..13 are procedural presets
 export const CUSTOM_TEX_SIZE = 1024;
 export const MAX_CUSTOM_LAYERS = 8;
 export const CUSTOM_LAYER_OFFSET = 100;
@@ -23,6 +23,12 @@ export const PBR_TEXTURE_PRESETS: PbrTexturePresetMeta[] = [
   { id: 'concrete', label: 'Board Concrete', layerIndex: 5 },
   { id: 'cedar-wood', label: 'Cedar Timber', layerIndex: 6 },
   { id: 'travertine', label: 'Honed Marble', layerIndex: 7 },
+  { id: 'limestone', label: 'Sedimentary Limestone', layerIndex: 8 },
+  { id: 'brick', label: 'Running Bond Brick', layerIndex: 9 },
+  { id: 'terrazzo', label: 'Terrazzo Aggregate', layerIndex: 10 },
+  { id: 'ceramic-tile', label: 'Glazed Ceramic Tile', layerIndex: 11 },
+  { id: 'plaster', label: 'Lime Plaster', layerIndex: 12 },
+  { id: 'corten-steel', label: 'Weathered Steel', layerIndex: 13 },
 ];
 
 export const PRESET_TO_LAYER: Record<PbrTexturePresetId, number> = {
@@ -34,6 +40,12 @@ export const PRESET_TO_LAYER: Record<PbrTexturePresetId, number> = {
   concrete: 5,
   'cedar-wood': 6,
   travertine: 7,
+  limestone: 8,
+  brick: 9,
+  terrazzo: 10,
+  'ceramic-tile': 11,
+  plaster: 12,
+  'corten-steel': 13,
 };
 
 // Periodic hash for seamless tileable 2D value noise
@@ -168,7 +180,7 @@ export class PbrTextureManager {
       this.fillNeutralPresetLayer(l);
     }
 
-    // Generate built-in procedural PBR texture packs (layers 1..7)
+    // Generate built-in procedural PBR texture packs (layers 1..13)
     this.generatePresetLayer('brushed-metal', 1);
     this.generatePresetLayer('carbon-weave', 2);
     this.generatePresetLayer('vulcanite', 3);
@@ -176,6 +188,12 @@ export class PbrTextureManager {
     this.generatePresetLayer('concrete', 5);
     this.generatePresetLayer('cedar-wood', 6);
     this.generatePresetLayer('travertine', 7);
+    this.generatePresetLayer('limestone', 8);
+    this.generatePresetLayer('brick', 9);
+    this.generatePresetLayer('terrazzo', 10);
+    this.generatePresetLayer('ceramic-tile', 11);
+    this.generatePresetLayer('plaster', 12);
+    this.generatePresetLayer('corten-steel', 13);
 
     this.albedoArray = this.createArrayTexture(this.albedoBytes, PBR_TEX_SIZE, PRESET_LAYER_COUNT);
     this.normalArray = this.createArrayTexture(this.normalBytes, PBR_TEX_SIZE, PRESET_LAYER_COUNT);
@@ -423,6 +441,90 @@ export class PbrTextureManager {
           h = vein * 0.6 + pores * 0.4 - pit * 0.7;
           roughMult = 0.72 + pit * 0.6 + (1 - vein) * 0.25;
           normalStrength = 2.6;
+        } else if (preset === 'limestone') {
+          const sediment = fbmTileAniso(u, v, 4, 9, 3);
+          const grain = fbmTile(u, v, 30, 24);
+          const seam = Math.pow(Math.max(0, Math.cos((v * 5 + sediment * 0.7) * Math.PI * 2)), 16);
+          const pore = grain < 0.29 ? (0.29 - grain) * 1.4 : 0;
+          const val = Math.max(0.56, Math.min(1, 0.83 + (sediment - 0.5) * 0.18 + seam * 0.08 - pore * 0.22));
+          r = Math.round(val * 255);
+          g = Math.round(val * 0.99 * 255);
+          b = Math.round(val * 0.95 * 255);
+          h = sediment * 0.62 + grain * 0.38 - pore * 0.5;
+          roughMult = 0.82 + pore * 0.45 + (1 - seam) * 0.12;
+          normalStrength = 2.0;
+        } else if (preset === 'brick') {
+          const rows = 6;
+          const row = Math.floor(v * rows);
+          const rowV = (v * rows) % 1;
+          const columns = 4;
+          const offset = row % 2 ? 0.5 : 0;
+          const columnPosition = u * columns + offset;
+          const columnU = columnPosition % 1;
+          const mortar = rowV < 0.045 || rowV > 0.955 || columnU < 0.035 || columnU > 0.965;
+          const grain = fbmTile(u, v, 28, 22);
+          const face = mortar ? 0.67 + grain * 0.08 : 0.88 + grain * 0.12;
+          r = g = b = Math.round(face * 255);
+          h = mortar ? 0.12 + grain * 0.12 : 0.62 + grain * 0.2;
+          roughMult = mortar ? 1.14 : 0.92 + (1 - grain) * 0.18;
+          normalStrength = 3.4;
+        } else if (preset === 'terrazzo') {
+          const cells = 18;
+          const cx = u * cells;
+          const cy = v * cells;
+          const ix = Math.floor(cx);
+          const iy = Math.floor(cy);
+          const fx = cx - ix;
+          const fy = cy - iy;
+          const seed = hash2Periodic(ix, iy, cells, cells);
+          const centerX = 0.22 + hash2Periodic(ix + 17, iy, cells, cells) * 0.56;
+          const centerY = 0.22 + hash2Periodic(ix, iy + 31, cells, cells) * 0.56;
+          const radiusX = 0.11 + seed * 0.12;
+          const radiusY = 0.09 + hash2Periodic(ix + 7, iy + 13, cells, cells) * 0.15;
+          const dx = (fx - centerX) / radiusX;
+          const dy = (fy - centerY) / radiusY;
+          const chip = dx * dx + dy * dy < 1;
+          const fleck = fbmTile(u, v, 35, 35);
+          const val = chip ? 0.62 + seed * 0.32 : 0.93 + fleck * 0.07;
+          r = Math.round(val * 255);
+          g = Math.round(val * (chip ? 0.96 : 0.99) * 255);
+          b = Math.round(val * (chip ? 0.91 : 0.97) * 255);
+          h = chip ? 0.35 + seed * 0.42 : 0.52 + fleck * 0.08;
+          roughMult = chip ? 0.9 + seed * 0.35 : 0.94 + fleck * 0.12;
+          normalStrength = 1.8;
+        } else if (preset === 'ceramic-tile') {
+          const tiles = 4;
+          const tileU = (u * tiles) % 1;
+          const tileV = (v * tiles) % 1;
+          const edge = Math.min(tileU, 1 - tileU, tileV, 1 - tileV);
+          const grout = edge < 0.025;
+          const glaze = fbmTile(u, v, 16, 16);
+          const val = grout ? 0.62 : 0.96 + glaze * 0.04;
+          r = g = b = Math.round(val * 255);
+          h = grout ? 0.25 : 0.48 + glaze * 0.04;
+          roughMult = grout ? 1.14 : 0.88 + glaze * 0.12;
+          normalStrength = 1.35;
+        } else if (preset === 'plaster') {
+          const base = fbmTile(u, v, 14, 13);
+          const fine = tileNoise(u, v, 62);
+          const trowel = Math.pow(Math.max(0, Math.sin((u * 8 + base * 1.4) * Math.PI)), 5);
+          const val = 0.82 + (base - 0.5) * 0.16 + (fine - 0.5) * 0.11 + trowel * 0.025;
+          r = g = b = Math.round(Math.max(0.62, Math.min(1, val)) * 255);
+          h = base * 0.56 + fine * 0.34 + trowel * 0.1;
+          roughMult = 0.91 + (1 - fine) * 0.2;
+          normalStrength = 1.5;
+        } else if (preset === 'corten-steel') {
+          const cloud = fbmTile(u, v, 7, 7);
+          const mottling = fbmTile(u, v, 27, 24);
+          const streak = fbmTileAniso(u, v, 5, 28, 3);
+          const patina = Math.max(0, cloud * 0.72 + mottling * 0.28 - 0.56);
+          const val = Math.max(0.58, Math.min(1, 0.91 - patina * 0.36 + (streak - 0.5) * 0.08));
+          r = Math.round(val * 255);
+          g = Math.round(val * (0.97 - patina * 0.04) * 255);
+          b = Math.round(val * (0.91 - patina * 0.1) * 255);
+          h = cloud * 0.5 + mottling * 0.35 + streak * 0.15;
+          roughMult = 0.88 + patina * 0.38;
+          normalStrength = 2.3;
         }
 
         heights[pIdx] = h;

@@ -42,7 +42,13 @@ export type PbrTexturePresetId =
   | 'guilloche'
   | 'concrete'
   | 'cedar-wood'
-  | 'travertine';
+  | 'travertine'
+  | 'limestone'
+  | 'brick'
+  | 'terrazzo'
+  | 'ceramic-tile'
+  | 'plaster'
+  | 'corten-steel';
 
 export type TextureSlot = 'albedo' | 'normal' | 'roughness';
 
