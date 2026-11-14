@@ -15,9 +15,11 @@
 Cris's `.1162 PASS` is protected. BoxLab runtime release `.1163` integrates Helios
 Studio source commit `44a7565e24ee96ea7907716dc67b1b97a810a63d` through the existing
 adapter and bundle build. Focused checks pass 29/29; full local suite passes
-3,444/3,444. Finish hosted and hands-on acceptance listed in TEST_CHECKLIST before
-starting a new feature. Preserve render-only material changes, imported maps, clean
-PNG capture, 512 spp, reset controls and the single scroll owner.
+3,444/3,444. The live Pages app serves `.1163` and the release marker is verified. The browser QA
+host cannot create WebGL, and hosted Topology status is unverified; finish device and
+available hosted acceptance listed in TEST_CHECKLIST before starting a new feature.
+Preserve render-only material changes, imported maps, clean PNG capture, 512 spp,
+reset controls and the single scroll owner.
 
 ## Next-build ideas
 

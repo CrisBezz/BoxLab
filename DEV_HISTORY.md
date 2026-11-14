@@ -11,9 +11,11 @@ material; imported maps and saved BoxLab material/project data stay unchanged.
 
 Focused BoxLab material/gallery/release checks pass 29/29. Full local regression
 passes 3,444/3,444; `npm run build:helios-tracer` and `git diff --check` pass.
-Runtime release commit: `dc2fa6ed53d280f2db8ff98dc29dfb18d23c20ce`. Record
-hosted Actions and Pages verification, then Cris's hands-on result in the release
-checklist. BoxLab `.1162 PASS` and Helios Studio `.1.3 PASS` are protected.
+Runtime release commit: `dc2fa6ed53d280f2db8ff98dc29dfb18d23c20ce`. The live Pages
+app serves `.1163`; the browser QA host cannot create WebGL, so render appearance is
+left to device acceptance. The connected GitHub Actions capability does not expose
+push workflow run IDs/status; do not report a hosted Topology result without checking
+it in GitHub. Record Cris's hands-on result in the release checklist. BoxLab `.1162 PASS` and Helios Studio `.1.3 PASS` are protected.
 
 # .1162 — BoxLab material preset gallery scroll repair — 14 November 2026
 

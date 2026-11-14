@@ -13,8 +13,11 @@
   light/material reset controls.
 
 Automated focused checks pass 29/29 and full local suite passes 3,444/3,444. Build
-and diff checks pass. Runtime release `.1163` is published; record hosted Pages and
-Topology status plus Cris's device result here before the next build.
+and diff checks pass. Runtime `.1163` is live on GitHub Pages (title and visible
+release marker verified). The browser QA host cannot create WebGL; ray-trace output
+and material appearance need iPad acceptance. Hosted Topology status has not been
+verified. Record Cris's device result and any available hosted run here before the
+next build.
 
 ## .1162 BoxLab material gallery scroll repair — protected PASS
 
