@@ -9,7 +9,8 @@ The apps develop side by side from independent repositories and release historie
 `CrisBezz/BoxLab` (this repo; current main release `.1162`, published; native scroll acceptance pending)
 and `CrisBezz/HeliosStudio` (standalone release `0.1.2`, user PASS protected).
 Helios Studio is live at https://crisbezz.github.io/HeliosStudio/ and BoxLab at
-https://crisbezz.github.io/BoxLab/. Current BoxLab main is
+https://crisbezz.github.io/BoxLab/. BoxLab runtime scroll-repair commit is
+`0d5f17ccdcdeab1fbcb6f1ef35cca3ed7671b973`; the UTF-8 fixture correction is
 `8d56f9f9dd86640e6b8f2bf455257fa6b40ac090`.
 
 Cris confirms BoxLab `.1161 PASS` and Helios Studio `.1.2 PASS`. The 512 spp and
