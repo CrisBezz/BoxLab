@@ -6,11 +6,11 @@ Use the connected GitHub tools for publication when shell HTTPS git push has no 
 # Current handoff — BoxLab .1162 + Helios Studio 0.1.2 — 14 November 2026
 
 The apps develop side by side from independent repositories and release histories:
-`CrisBezz/BoxLab` (this repo; current main release `.1161`, user PASS protected; `.1162` scroll repair ready for publication)
+`CrisBezz/BoxLab` (this repo; current main release `.1162`, published; native scroll acceptance pending)
 and `CrisBezz/HeliosStudio` (standalone release `0.1.2`, user PASS protected).
 Helios Studio is live at https://crisbezz.github.io/HeliosStudio/ and BoxLab at
-https://crisbezz.github.io/BoxLab/. Current BoxLab main before `.1162` is
-`af5a7fcb96723e2dd3611f8feddd3eb1a2b8b89b`.
+https://crisbezz.github.io/BoxLab/. Current BoxLab main is
+`8d56f9f9dd86640e6b8f2bf455257fa6b40ac090`.
 
 Cris confirms BoxLab `.1161 PASS` and Helios Studio `.1.2 PASS`. The 512 spp and
 light/material reset controls, canvas-only PNG capture, twenty material previews,
@@ -51,11 +51,11 @@ or height cap. Only BoxLab's Helios dock JS/CSS, release markers/pins, focused t
 and handover records should change. Verify that 512 spp, reset, render capture,
 material targeting, saved scene state and imported maps remain intact.
 
-Cris has reported the gallery scroll defect; `.1162` native touch acceptance remains
-pending until the final-row scroll and preset application are checked in portrait
-and landscape. Focused release/gallery checks pass 23/23; the full local suite passes
-3,441/3,441 (116.973s), zero failures/cancelled/skips. Pages and hosted workflow
-proof are recorded in the `.1162` checklist/history after publication.
+`.1162` is published. Focused release/gallery checks pass 23/23; the full local suite
+passes 3,441/3,441 (116.973s), and hosted Topology run `43565280205` passes
+3,441/3,441 with zero failures. Pages run `43565279997` succeeds; the live version
+marker is `.1162`. Native touch acceptance remains pending until the final-row scroll
+and preset application are checked in portrait and landscape.
 
 ---
 

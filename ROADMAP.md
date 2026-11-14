@@ -3,8 +3,8 @@
 ## Current coordinated releases
 
 - BoxLab `.1161` is user-PASS for the twenty material previews, render-only preset
-  application, clean render output, 512 spp and reset controls. Its material gallery
-  scroll is a newly reported iPad defect, targeted for `.1162`.
+  application, clean render output, 512 spp and reset controls. `.1162` ships the
+  material-gallery scroll repair; native touch acceptance remains pending.
 - Helios Studio `.1.2` fixes the same gallery issue with a single scroll owner;
   Cris confirmed Helios `.1.2 PASS`.
 - BoxLab and Helios Studio remain independently versioned/published. BoxLab owns
@@ -13,10 +13,10 @@
 
 ## Current focus
 
-`.1162` scroll repair is implemented. Focused gallery/Helios/release checks pass
-23/23; full local suite passes 3,441/3,441 with zero failures/cancelled/skips.
-Pages and hosted workflow proof are pending. Cris to verify final-row touch scrolling
-and preset selection in portrait and landscape. Preserve `.1161` render capture, all
+`.1162` scroll repair is published. Focused gallery/Helios/release checks pass 23/23;
+full local and hosted suites pass 3,441/3,441 with zero failures/cancelled/skips.
+Pages `43565279997` and Topology `43565280205` succeed. Cris to verify final-row touch
+scrolling and preset selection in portrait and landscape. Preserve `.1161` render capture, all
 twenty preview presets, selected render-session material targeting, scene/map
 isolation, 512 spp and reset controls.
 

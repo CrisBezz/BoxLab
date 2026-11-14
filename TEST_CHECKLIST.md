@@ -10,8 +10,9 @@
   existing material preview/capture controls remain available.
 
 Automated `.1162` focused gallery/Helios/release checks pass 23/23. The complete
-local suite passes 3,441/3,441 (116.973s), zero failures/cancelled/skips. Pages and
-hosted workflow runs are recorded here after publication. Automated checks cover
+local suite passes 3,441/3,441 (116.973s), zero failures/cancelled/skips. Hosted
+Topology `43565280205` passes 3,441/3,441; Pages `43565279997` succeeds and the
+live version marker is `.1162`. Automated checks cover
 single-scroll ownership, adaptive panel height, current release pins and existing
 Helios dock behavior; device touch acceptance requires Cris's hands-on check.
 

@@ -16,8 +16,12 @@ adaptive panel sizing; focused Helios/release checks pass 18/18. The first full-
 run caught a stale `.1161` screen-comparison version stamp and release-loader/cache
 chain. Refresh those existing owners, preserve `.1161` comparison records and verify
 the protected Multi pin. Focused scroll/Helios/release checks pass 23/23; final full
-local suite passes 3,441/3,441 (116.973s), zero failures/cancelled/skips. Pages and
-hosted-workflow verification follow.
+local suite passes 3,441/3,441 (116.973s), zero failures/cancelled/skips. Hosted Topology `43565280205` passes 3,441/3,441 with zero failures/cancelled/skips;
+Pages run `43565279997` succeeds for runtime `.1162` (scroll repair commit
+`0d5f17ccdcdeab1fbcb6f1ef35cca3ed7671b973`). A follow-up fixture-only commit
+`8d56f9f9dd86640e6b8f2bf455257fa6b40ac090` corrected the uploaded UTF-8 fixture and
+triggered the successful verification. Live release marker is `.1162`; native iPad
+touch acceptance remains pending.
 
 # BoxLab .1161 PASS — Helios catalog parity confirmed — 14 November 2026
 
