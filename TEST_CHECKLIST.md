@@ -14009,10 +14009,15 @@ User confirms .1156 PASS; protect the existing trace activation, GLB texture/PBR
 
 User confirms `.1157 PASS`; protect all checks above. Automated status: Helios bundle build and changed JavaScript syntax/diff checks pass; focused dock/release checks 27/27; local and hosted Node regression 3,440/3,440, zero failures/cancelled/skips. Hosted Topology `43441747837` ran headless Chromium: 11 subdivision comparisons, 11/11 parity, decision `LAB_ONLY`; artifact ID `14045519451` uploaded. Pages `43441747701` succeeded. Runtime commit `bb233cf25112f9c228f47a55836808eb64498e20`. No WASM performance promotion is inferred.
 
-## .1158 BoxLab-style Helios dock — hands-on appearance check
+.1158 BoxLab-style Helios dock — partial appearance PASS; placement FAIL
 
-- [ ] Open VIEW > Helios; confirm the dock uses BoxLab's dark surfaces, blue active/focus treatment and concise “Ray Trace” heading. It should feel like part of BoxLab rather than a separate Helios panel.
-- [ ] Check the dock at iPad portrait/landscape widths; confirm tabs and controls remain legible and do not cover the bottom mode controls or interfere with orbit/pan/zoom.
-- [ ] Switch all four tabs and exercise one light control, one material control, one tracer setting and a camera preset; confirm `.1157` functionality remains unchanged.
+User reports the styling is much better and no longer obscures mode controls, but the bottom dock itself is obscured by them. Keep the `.1158` palette/type styling accepted while replacing its bottom placement in `.1159`.
 
-Automated status: focused dock, release-pin and saved shell-comparison checks pass 27/27; local and hosted suites pass 3,440/3,440, zero failures/cancelled/skips; hosted Chromium comparison parity 11/11 (`LAB_ONLY`); Pages deployed. `.1157 PASS` remains protected; `.1158` appearance acceptance remains pending.
+## .1159 Helios right-side menu — hands-on check
+
+- [ ] Open VIEW > Helios; confirm the panel sits at the viewport upper-right and shares BoxLab panel color, typography, spacing and corners. Confirm it no longer intersects the bottom mode controls.
+- [ ] Expand/collapse; confirm the header remains reachable. Scroll the panel body and switch Lights, Materials, Ray Tracer and Camera.
+- [ ] Exercise one light control, one material control, a tracer setting and camera preset; confirm `.1157` behavior remains intact.
+- [ ] On iPad portrait and landscape, check right safe-area spacing, panel scrolling and orbit/pan/zoom outside the panel.
+
+Automated status: focused Helios/release and shell-comparison checks pass 17/17; full local suite passes 3,440/3,440 (0 failures/cancelled/skips); changed JavaScript syntax and `git diff --check` pass. Hosted regression/Pages pending. User `.1157 PASS` and `.1158` styling acceptance are protected; `.1159` placement is pending hands-on review.

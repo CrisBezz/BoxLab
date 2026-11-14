@@ -29,7 +29,7 @@ function syncVisibility(){
   dock.classList.toggle('is-collapsed',collapsed);
   const toggle=dock.querySelector('.helios-dock-toggle');
   toggle.setAttribute('aria-expanded',String(!collapsed));
-  dock.querySelector('.helios-chevron').textContent=collapsed?'⌃':'⌄';
+  dock.querySelector('.helios-chevron').textContent=collapsed?'⌄':'⌃';
   dock.querySelector('.helios-status').textContent=ready?'Helios ready':'Preparing trace…';
 }
 function drawTabs(){

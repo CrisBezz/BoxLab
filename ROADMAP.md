@@ -1,6 +1,6 @@
-# Current focus — .1158 BoxLab-style Helios dock — 14 November 2026
+# Current focus — .1159 Helios right-side controls — 14 November 2026
 
-The .1156 ray-trace view and .1157 Helios bottom dock received user PASS and remain protected. .1158 aligns the existing dock's palette, surfaces, button shape and heading with BoxLab's dark/cool-blue interface. Control families, selection behavior, preview-only material edits and project ownership remain unchanged. Focused checks pass 27/27; local and hosted suites pass 3,440/3,440, hosted Chromium comparison parity 11/11, Pages deployed. User .1158 appearance acceptance remains pending. Hands-on review should focus on styling at desktop/iPad widths and retained `.1157` behavior.
+User accepts the `.1158` BoxLab palette/type styling and reports the bottom dock is obscured by the mode controls. `.1159` keeps the same authoritative dock/action owner and moves its panel to the familiar upper-right BoxLab menu position with a scrollable body and safe-area spacing. The `.1156` ray-trace view and `.1157` controls remain protected; saved scene/material ownership is unchanged. Focused Helios/release checks pass 17/17; full local suite passes 3,440/3,440, zero failures/cancelled/skips; syntax and diff checks pass. Hosted publication and user right-panel acceptance are pending. Hands-on acceptance should check right-panel visibility, tabs/actions and coexistence with viewport controls at iPad portrait/landscape sizes.
 
 ---
 
