@@ -1,3 +1,27 @@
+# BoxLab Roadmap — .1161
+
+## Current coordinated releases
+
+- BoxLab `.1161`: clean PNG ray-trace capture and a graphical material gallery.
+- Helios Studio `0.1.1`: twenty material presets with previews and icon-opened grid.
+- BoxLab `.1160` 512 spp and selected light/material reset controls are user-PASS
+  protected.
+- Helios presets in BoxLab modify only the render-session material of the selected
+  surface; the saved BoxLab scene and imported texture maps remain unchanged.
+
+## Current validation
+
+- Automated BoxLab suite passes 3,440/3,440; Helios Studio type-check, production build and Pages run `43555517307` pass. Native device acceptance is pending.
+
+## Next
+
+1. Cris hands-on check: converged image capture excludes interface and downloads
+   successfully; confirm the action waits until the selected sample target.
+2. Check the preset grid and visible previews, selection/material targeting, and
+   render-only behavior on desktop and iPad.
+3. Confirm the standalone Helios Studio material gallery on desktop and iPad.
+4. Continue each repo from its own handoff, checklist and current main.
+
 # Current focus — .1160 Helios controls in BoxLab; paired repo development — 14 November 2026
 
 BoxLab and standalone Helios Studio now develop side by side from separate main

@@ -3,38 +3,28 @@
 ## GitHub publication method — verified 14 November 2026
 
 Use the connected GitHub tools for publication when shell HTTPS git push has no credentials. A shell username/token error does not mean repository access is missing. The connected GitHub create_blob write route was verified in this session. Upload exact tested file bytes with create_blob, create_tree on the freshly inspected main tree, create_commit with current main as parent, then update_ref with expected_sha and force=false. Verify Actions/Pages and live release/cache markers afterward. For large files, read local bytes in bounded base64 chunks, concatenate them in the tool runtime, then create one complete blob per file. Never publish separate partial file chunks. Preserve concurrent remote work; inspect main again if the expected SHA fails. Standing push/publish authorization is already granted. Do not repeatedly retry an unauthenticated shell or ask the user for access again while the connected route works.
-# Current handoff — BoxLab .1160 + Helios Studio 0.1.0 — 14 November 2026
+# Current handoff — BoxLab .1161 + Helios Studio 0.1.1 — 14 November 2026
 
-The apps now develop side by side in separate source-of-truth repositories:
-`CrisBezz/BoxLab` (this repo; current target `.1160`) and
-`CrisBezz/HeliosStudio` (standalone release `0.1.0`, main `c381ddc`). Inspect both
-repositories at the start of shared Helios work; keep their version numbers and
-release histories independent. Helios Studio is live at
+The apps develop side by side from independent repositories and release histories:
+`CrisBezz/BoxLab` (this repo; target `.1161`) and
+`CrisBezz/HeliosStudio` (standalone release `0.1.1`, code commit `33fd410`). Inspect both repos before
+shared Helios work. Helios Studio is live at
 https://crisbezz.github.io/HeliosStudio/ and BoxLab at
 https://crisbezz.github.io/BoxLab/.
 
-Standalone Helios `0.1.0` includes selectable 512 spp and one-tap circular-arrow
-resets for the selected light and material. Material reset restores the initially
-loaded values while preserving uploaded maps. GitHub Pages source was corrected to
-GitHub Actions, the fresh deployment succeeded, and Cris confirmed the refreshed
-render is visible (protected PASS). Next in the standalone repo: graphical previews
-for current material presets, then expand the catalogue.
+Cris confirmed BoxLab `.1160` PASS. Record 512 spp and the light/material reset
+controls as protected. `.1161` adds a clean PNG render capture action in VIEW >
+Helios > Ray Tracer and ports Helios Studio's twenty preset materials into an icon-
+opened graphical preview grid. Presets apply to the selected render material in the
+Helios trace session only; saved BoxLab scene/materials and imported maps remain
+owned by BoxLab and unchanged. Capture downloads the tracer canvas after the chosen
+sample target converges; browser UI is not part of the image.
 
-BoxLab `.1160` carries those two controls into the existing VIEW > Helios right-side
-panel. The dock action owner resets the selected Helios light to its factory
-lighting default and the selected material to the values imported from the current
-GLB; imported texture maps stay connected and BoxLab's saved material/scene remain
-unchanged. 512 spp is an available sample target; the existing default remains
-128 spp. Release commit
-`b9abd9dfa059d9c2d9faae5a5bca9d9e89c45a86` is on BoxLab `main`. Pages run
-`43552236354` and Topology run `43552236764` succeeded; full local and hosted
-Node regression passes 3,440/3,440 with zero failures/cancellations/skips. Hosted
-Chromium produced 11/11 exact subdivision parity rows (aggregate `LAB_ONLY`; artifact
-`subdivision-wasm-headless-43552236764`, ID `14096229662`), with no WASM promotion.
-The live title/version marker is `.1160`. The cloud browser cannot create WebGL
-contexts, so the render and device controls still need Cris's hands-on iPad
-acceptance. The Helios ray tracer continues using BoxLab's existing renderer/canvas
-and verified GLB exporter; do not add another renderer or modelling kernel.
+Continue using the existing BoxLab renderer, verified GLB export/import path and
+path-trace adapter; Helios Studio remains the source for the preset catalog and the
+shared lightweight preview renderer. Do not add a second renderer or modelling
+kernel. Both releases require separate builds, test runs and Pages publication.
+Local BoxLab regression is 3,440/3,440 with zero failures/cancellations/skips; HeliosStudio `npm run lint` and `npm run build` pass, and Pages workflow run `43555517307` succeeds. Native device checks for `.1161` remain pending.
 
 ## Shared-repo handoff rules
 
@@ -47,12 +37,11 @@ and verified GLB exporter; do not add another renderer or modelling kernel.
 - Keep BoxLab as owner of modelling, saved projects, export and mesh state; Helios
   owns ray tracing, lighting, render materials and their preview controls.
 
-## Current release target — .1160
+## Current release target — .1161
 
-Adds the 512 spp choice and per-light/per-material reset arrows to the existing
-Helios dock. `.1156` tracer and `.1157` controls PASSes remain protected; `.1158`
-styling acceptance remains protected; `.1159` right-panel placement is awaiting
-native iPad acceptance. The current sample default stays at 128 spp. Preserve
+Adds clean canvas-only PNG output and the upstream 20-material graphical preset
+gallery to BoxLab's existing Helios dock. `.1160` 512 spp/reset controls are
+protected by Cris's PASS. The default sample target remains 128 spp. Preserve
 `src/multi-object-transform.js?v=0.36.1.0` and all modelling/Paint/UV owners.
 
 ---

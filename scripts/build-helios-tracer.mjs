@@ -13,6 +13,6 @@ await build({
   sourcemap: false,
   minify: true,
   banner: {
-    js: '/* HeliosStudio integration bundle; source commit 3ca8ac22b011f42ed83555720cc6cd71e6b57329. Rebuild with npm run build:helios-tracer. */',
+    js: '/* HeliosStudio integration bundle; source commit 33fd410091aed8f9ea251c1f7f0fd42bb4be5b4e. Rebuild with npm run build:helios-tracer. */',
   },
 });

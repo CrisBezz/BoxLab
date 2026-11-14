@@ -1,3 +1,22 @@
+# .1161 — BoxLab clean output and Helios materials — 14 November 2026
+
+Cris confirmed `.1160` PASS; the 512 spp option and light/material reset actions are
+protected. Continued coordinated development with `CrisBezz/HeliosStudio`.
+HeliosStudio `0.1.1` adds twelve presets to its existing eight and a graphical,
+icon-opened grid. BoxLab consumes those presets and the same SVG preview renderer
+through its vendored adapter. Presets update only the selected Helios render-session
+material; BoxLab scene data and imported custom maps stay unchanged.
+
+Added a clean PNG capture action to BoxLab's existing Helios Ray Tracer dock. The
+path-trace adapter exports only the rendered canvas after the selected sample target
+converges; the image download excludes interface overlays. No duplicate renderer,
+material kernel, or modelling implementation was added. Updated the BoxLab release
+markers, asset pins/contract, cross-repo handoff, roadmap and hands-on checklist.
+Keep both repositories independently versioned and published. Focused Helios/release checks pass 27/27 and the full BoxLab suite passes 3,440/3,440
+(73.1s), zero failures/cancelled/skips. Helios Studio type-check/build pass and Pages
+workflow run `43555517307` succeeds. BoxLab Pages publication and native device checks
+for `.1161` remain pending.
+
 # .1133 — tighter modelling radial orbits; .1132 protected PASS — 11 November 2026
 
 User .1132 PASS is protected. User requests tighter orbit distances without shrinking icon artwork, and explicitly authorizes this build plus the following /nextbuild. Split requested presentation work into modelling rings .1133, then Paint wheel .1134. Audit baseline main6a42d5068dd210bcb46f4e9ad4f10fee2085d4b5 and live .1132, original total-gizmo markup, final radial CSS, compact placement and existing geometry/action tests. Previous .1130 layout dimensions are intentionally superseded only where this request requires closer spacing; accepted selection/DRAG/puck, painted highlight, FRONT, gestures and all modelling/Paint kernels remain protected.

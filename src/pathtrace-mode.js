@@ -2,7 +2,7 @@ import * as THREE from 'three';
 
 const wrap=document.querySelector('#viewportWrap');
 const status=document.querySelector('#selectionStatus');
-const HELIOS_BUNDLE='./helios-tracer.bundle.js?v=0.36.18.1157';
+const HELIOS_BUNDLE='./helios-tracer.bundle.js?v=0.36.18.1161';
 
 let active=false;
 let interacting=false;
@@ -216,6 +216,14 @@ function applyDockAction(detail={}){
   else if(detail.action==='material-preset')tracer.applyMaterialPreset(detail.id,detail.presetId);
   else if(detail.action==='settings')tracer.updateSettings(detail.patch||{});
   else if(detail.action==='lighting-rig')tracer.applyLightingRig(detail.id);
+  else if(detail.action==='render-output'){
+    const dataUrl=tracer.captureSnapshot?.();
+    if(!dataUrl){message('render not complete','Wait for the selected sample target before saving the image.');return;}
+    const link=document.createElement('a');
+    link.href=dataUrl;
+    link.download=`BoxLab-raytrace-${new Date().toISOString().replace(/[:.]/g,'-')}.png`;
+    link.click();
+  }
   else if(detail.action==='restart')tracer.reset();
   else if(detail.action==='camera')applyCameraPreset(detail.preset);
   else if(detail.action==='camera-fov'){
@@ -251,7 +259,7 @@ function animate(time){
   const changed=syncCamera();
   try{
     const samples=tracer.render(camera,interacting);
-    if(hud&&time-lastHudUpdate>250){lastHudUpdate=time;const sampleLimit=tracer.getState?.().settings?.maxSamples||128;hud.textContent=`Helios Ray Trace • ${samples}/${sampleLimit} spp\n${interacting?'Interactive preview':'PBR materials • studio lighting'}`;}
+    if(time-lastHudUpdate>250){lastHudUpdate=time;const sampleLimit=tracer.getState?.().settings?.maxSamples||128;publishControlState();if(hud)hud.textContent=`Helios Ray Trace • ${samples}/${sampleLimit} spp\n${interacting?'Interactive preview':'PBR materials • studio lighting'}`;}
   }catch(error){
     message('render failed',error?.message||String(error));
     console.error('[BoxLab Helios Trace render]',error);

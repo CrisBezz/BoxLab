@@ -10,6 +10,7 @@ import {
   MATERIAL_PRESETS,
 } from './data/presets';
 import { PRESET_TO_LAYER } from './engine/textures';
+import { createMaterialPreviewSvg } from './utils/materialPreviewSvg';
 
 function softwareRenderer(renderer: THREE.WebGLRenderer): boolean {
   try {
@@ -64,6 +65,7 @@ export async function createBoxLabHeliosTrace(
         materials: importedProject.materials.map((material) => ({ ...material })),
         samples: pathTracer?.getSamples() ?? 0,
         resolution: pathTracer?.getResolution() ?? [0, 0],
+        materialPresets: MATERIAL_PRESETS.map((preset) => ({ ...preset, previewSvg: createMaterialPreviewSvg(preset, 'boxlab-material') })),
       };
     }
 
@@ -150,6 +152,11 @@ export async function createBoxLabHeliosTrace(
         const dpr = softwareRenderer(renderer) ? 1 : Math.min(window.devicePixelRatio || 1, 1.5);
         const scale = interacting ? settings.interactiveScale : 1;
         pathTracer?.resize(Math.floor(width * dpr * scale), Math.floor(height * dpr * scale));
+      },
+      captureSnapshot() {
+        if (!pathTracer || pathTracer.getSamples() < settings.maxSamples) return null;
+        pathTracer.displayToScreen(settings);
+        return renderer.domElement.toDataURL('image/png');
       },
       reset() { pathTracer?.resetAccumulation(); },
       dispose,

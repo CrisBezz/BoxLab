@@ -1,3 +1,21 @@
+## .1161 BoxLab clean render capture and material gallery — hands-on check
+
+- [ ] In VIEW > Helios > Ray Tracer, confirm the image-save button is disabled
+  until the chosen sample target completes; capture after convergence.
+- [ ] Open the saved PNG and confirm it contains the ray-traced canvas without
+  BoxLab/Helios controls or surrounding UI.
+- [ ] Open Materials > presets grid; confirm the twenty material cards show clear
+  previews and names, and the grid fits/scrolls in portrait and landscape.
+- [ ] Select a material slot, apply a preset, and confirm only that render-session
+  material changes. Verify the saved BoxLab scene/material and imported texture maps
+  remain unchanged.
+- [ ] Reconfirm 512 spp and the selected light/material reset icons from protected
+  `.1160` PASS.
+
+Automated status: focused Helios/gallery and release checks are being finalized;
+run the full BoxLab suite and Helios lint/build before publication. WebGL/iPad visual
+acceptance remains with Cris. `.1160 PASS` is protected.
+
 # .1155 — subdivision comparison table in Actions summary — 13 November 2026
 
 - [x] Formatter generates the 11-row source-face/level/JS median/WASM median/decision table and repeats parity count plus the host-timing `LAB_ONLY` caveat.
