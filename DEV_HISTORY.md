@@ -1,3 +1,24 @@
+# .1162 — BoxLab material preset gallery scroll repair — 14 November 2026
+
+Cris confirms BoxLab `.1161 PASS` and Helios Studio `.1.2 PASS`, then reports the
+BoxLab material preset menu still cannot scroll on iPad. Audit found the BoxLab dock
+already had a scrollable `.helios-panel-body`, but `.helios-material-gallery` also
+owned a nested constrained scroller (`max-height:32vh; overflow:auto`). Reuse the
+accepted Helios `.1.2` pattern: make the existing parent panel the only vertical
+touch-scroll owner, enable iOS momentum, remove gallery height/overflow clipping,
+and expand the panel up to `min(60dvh, 440px)` while the gallery is open. Preset,
+render, project, material and modelling owners remain unchanged.
+
+Release `.1162` refreshes the direct Helios dock and screen-comparison cache pins and
+visible release labels. The comparison test verifies legacy `.1161` results remain
+readable. New focused regression checks ensure single-owner touch scrolling and
+adaptive panel sizing; focused Helios/release checks pass 18/18. The first full-suite
+run caught a stale `.1161` screen-comparison version stamp and release-loader/cache
+chain. Refresh those existing owners, preserve `.1161` comparison records and verify
+the protected Multi pin. Focused scroll/Helios/release checks pass 23/23; final full
+local suite passes 3,441/3,441 (116.973s), zero failures/cancelled/skips. Pages and
+hosted-workflow verification follow.
+
 # BoxLab .1161 PASS — Helios catalog parity confirmed — 14 November 2026
 
 Cris confirms BoxLab `.1161 PASS`; protect the clean PNG capture, twenty-preset preview grid, render-only material edits, and the existing 512 spp/reset controls. Verified the BoxLab vendored `data/presets.ts` and `materialPreviewSvg.ts` SHA-256 values exactly match Helios Studio's `.1.1` source. Helios Studio `.1.2` fixes only touch scrolling by using the expanded parent dock panel as the single scroll owner, so there is no additional catalog/runtime code to port into BoxLab until Helios adds new preset data.

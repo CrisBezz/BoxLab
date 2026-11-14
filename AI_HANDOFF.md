@@ -3,28 +3,33 @@
 ## GitHub publication method — verified 14 November 2026
 
 Use the connected GitHub tools for publication when shell HTTPS git push has no credentials. A shell username/token error does not mean repository access is missing. The connected GitHub create_blob write route was verified in this session. Upload exact tested file bytes with create_blob, create_tree on the freshly inspected main tree, create_commit with current main as parent, then update_ref with expected_sha and force=false. Verify Actions/Pages and live release/cache markers afterward. For large files, read local bytes in bounded base64 chunks, concatenate them in the tool runtime, then create one complete blob per file. Never publish separate partial file chunks. Preserve concurrent remote work; inspect main again if the expected SHA fails. Standing push/publish authorization is already granted. Do not repeatedly retry an unauthenticated shell or ask the user for access again while the connected route works.
-# Current handoff — BoxLab .1161 + Helios Studio 0.1.1 — 14 November 2026
+# Current handoff — BoxLab .1162 + Helios Studio 0.1.2 — 14 November 2026
 
 The apps develop side by side from independent repositories and release histories:
-`CrisBezz/BoxLab` (this repo; shipped `.1161`, user PASS protected) and
-`CrisBezz/HeliosStudio` (standalone release `0.1.2`, scroll-fix commit `d323550`). Inspect both repos before
-shared Helios work. Helios Studio is live at
-https://crisbezz.github.io/HeliosStudio/ and BoxLab at
-https://crisbezz.github.io/BoxLab/.
+`CrisBezz/BoxLab` (this repo; current main release `.1161`, user PASS protected; `.1162` scroll repair ready for publication)
+and `CrisBezz/HeliosStudio` (standalone release `0.1.2`, user PASS protected).
+Helios Studio is live at https://crisbezz.github.io/HeliosStudio/ and BoxLab at
+https://crisbezz.github.io/BoxLab/. Current BoxLab main before `.1162` is
+`af5a7fcb96723e2dd3611f8feddd3eb1a2b8b89b`.
 
-Cris confirmed BoxLab `.1160` and `.1161` PASS. The 512 spp/reset controls and the
-`.1161` capture/material gallery are protected. `.1161` added a clean PNG render capture action in VIEW >
-Helios > Ray Tracer and ports Helios Studio's twenty preset materials into an icon-
-opened graphical preview grid. Presets apply to the selected render material in the
-Helios trace session only; saved BoxLab scene/materials and imported maps remain
-owned by BoxLab and unchanged. Capture downloads the tracer canvas after the chosen
-sample target converges; browser UI is not part of the image.
+Cris confirms BoxLab `.1161 PASS` and Helios Studio `.1.2 PASS`. The 512 spp and
+light/material reset controls, canvas-only PNG capture, twenty material previews,
+and render-session-only preset application are protected. BoxLab's `.1161`
+gallery contained the full material catalogue, but Cris found that its presets
+menu does not scroll on iPad. The standalone Helios `.1.2` has the accepted fix:
+one touch-scroll owner on the panel body, no nested gallery scroller, and an
+expanded panel while the gallery is open. BoxLab `.1162` ports this UI-only repair
+to the existing `src/helios-dock.js` / `helios-dock.css` owners; no material or
+renderer port is needed.
 
-Continue using the existing BoxLab renderer, verified GLB export/import path and
-path-trace adapter; Helios Studio remains the source for the preset catalog and the
-shared lightweight preview renderer. Do not add a second renderer or modelling
-kernel. Both releases require separate builds, test runs and Pages publication.
-Local and hosted BoxLab regression pass 3,440/3,440 with zero failures/cancellations/skips. BoxLab Pages run `43555938878` and Topology run `43555939108` succeed. The BoxLab preset file and preview helper byte-match Helios Studio `.1.1` (20 physical presets), so the catalogue is already fully integrated; no duplicate or redundant BoxLab runtime build is needed. HeliosStudio `.1.2` repairs the standalone gallery scroll using its existing parent scroll owner. BoxLab `.1161` already matches the full 20-preset catalog and SVG preview helper byte-for-byte; the `.1.2` change is UI-only, so no BoxLab runtime port is needed until the upstream material catalog changes.
+BoxLab's vendored preset data and `materialPreviewSvg.ts` byte-match the Helios
+Studio `.1.1` catalogue/helper. Presets affect only the selected render-session
+material; BoxLab scene/material data and imported maps remain unchanged. Render
+capture saves the tracer canvas after the selected sample target converges, without
+the app UI. Keep BoxLab as owner of modelling, saved projects, mesh state and scene
+serialization; Helios owns ray tracing, lighting, render materials and previews.
+Do not add a second renderer or modelling kernel. Keep the repositories
+independently versioned, tested and published.
 
 ## Shared-repo handoff rules
 
@@ -32,17 +37,25 @@ Local and hosted BoxLab regression pass 3,440/3,440 with zero failures/cancellat
   changing integrated features.
 - Make standalone features usable in Helios Studio and update the BoxLab adapter
   separately when the feature is intended in both apps.
-- Record the upstream Helios commit and the BoxLab runtime/cache pins whenever the
-  integration changes. Publish and test each app from its own repo/workflow.
-- Keep BoxLab as owner of modelling, saved projects, export and mesh state; Helios
-  owns ray tracing, lighting, render materials and their preview controls.
+- Record upstream Helios commits and BoxLab runtime/cache pins whenever integration
+  code changes. Publish and test each app using its own repo/workflow.
+- Preserve `src/multi-object-transform.js?v=0.36.1.0` and all unrelated modelling,
+  Paint and UV owners.
 
-## Current shipped release — .1161 (protected PASS)
+## Current release target — .1162
 
-Adds clean canvas-only PNG output and the upstream 20-material graphical preset
-gallery to BoxLab's existing Helios dock. `.1160` 512 spp/reset controls are
-protected by Cris's PASS. The default sample target remains 128 spp. Preserve
-`src/multi-object-transform.js?v=0.36.1.0` and all modelling/Paint/UV owners.
+Fix the BoxLab material gallery's nested scroll container using the already accepted
+Helios `.1.2` pattern. The panel body becomes the sole vertical scroll owner and
+expands while the preset gallery is open; the gallery grid itself has no overflow
+or height cap. Only BoxLab's Helios dock JS/CSS, release markers/pins, focused test
+and handover records should change. Verify that 512 spp, reset, render capture,
+material targeting, saved scene state and imported maps remain intact.
+
+Cris has reported the gallery scroll defect; `.1162` native touch acceptance remains
+pending until the final-row scroll and preset application are checked in portrait
+and landscape. Focused release/gallery checks pass 23/23; the full local suite passes
+3,441/3,441 (116.973s), zero failures/cancelled/skips. Pages and hosted workflow
+proof are recorded in the `.1162` checklist/history after publication.
 
 ---
 

@@ -1,45 +1,35 @@
-# BoxLab Roadmap — .1161
+# BoxLab Roadmap — .1162
 
 ## Current coordinated releases
 
-- BoxLab `.1161`: clean PNG ray-trace capture and a graphical material gallery.
-- Helios Studio `0.1.2`: twenty material presets with previews and a scrollable icon-opened grid.
-- BoxLab `.1160` 512 spp and selected light/material reset controls are user-PASS
-  protected.
-- Helios presets in BoxLab modify only the render-session material of the selected
-  surface; the saved BoxLab scene and imported texture maps remain unchanged.
+- BoxLab `.1161` is user-PASS for the twenty material previews, render-only preset
+  application, clean render output, 512 spp and reset controls. Its material gallery
+  scroll is a newly reported iPad defect, targeted for `.1162`.
+- Helios Studio `.1.2` fixes the same gallery issue with a single scroll owner;
+  Cris confirmed Helios `.1.2 PASS`.
+- BoxLab and Helios Studio remain independently versioned/published. BoxLab owns
+  projects and modelling; Helios owns ray tracing, lighting, render materials and
+  previews.
 
-## Current validation
+## Current focus
 
-- BoxLab `.1161` is user-PASS protected; its 20 material presets and preview helper already match Helios Studio `.1.1` exactly. Local/hosted tests pass 3,440/3,440. Helios Studio `.1.2` is addressing gallery scrolling; test on iPad after publication.
+`.1162` scroll repair is implemented. Focused gallery/Helios/release checks pass
+23/23; full local suite passes 3,441/3,441 with zero failures/cancelled/skips.
+Pages and hosted workflow proof are pending. Cris to verify final-row touch scrolling
+and preset selection in portrait and landscape. Preserve `.1161` render capture, all
+twenty preview presets, selected render-session material targeting, scene/map
+isolation, 512 spp and reset controls.
 
-## Next
+## Next-build ideas
 
-1. Cris hands-on check: converged image capture excludes interface and downloads
-   successfully; confirm the action waits until the selected sample target.
-2. Check the preset grid and visible previews, selection/material targeting, and
-   render-only behavior on desktop and iPad.
-3. Confirm the standalone Helios Studio material gallery on desktop and iPad.
-4. Continue each repo from its own handoff, checklist and current main.
-
-# Current focus — .1160 Helios controls in BoxLab; paired repo development — 14 November 2026
-
-BoxLab and standalone Helios Studio now develop side by side from separate main
-branches. Helios Studio `CrisBezz/HeliosStudio` is at release `0.1.0` (main
-`c381ddc`), live on GitHub Pages with Actions publishing; the refreshed render
-passed user review. Its 512 spp choice and reset-to-default light/material controls
-are carried into BoxLab's existing Helios right-side panel in `.1160`. This build
-keeps 128 spp as the default; one-tap reset restores the selected light's factory
-values or the selected material's imported GLB values, preserving uploaded maps and
-BoxLab's saved scene/material data. `.1160` is published; local and hosted regression
-pass 3,440/3,440 and Pages deployment succeeds. The cloud browser cannot create
-WebGL contexts, so hands-on iPad acceptance remains pending.
-
-Next shared Helios work: standalone material preview cards, then expand its preset
-catalogue and port the agreed catalogue into BoxLab after preview behavior is
-reviewed. Keep each app independently usable, releases independent, and BoxLab as
-owner of modeling, projects, and mesh serialization. See current cross-repo status
-and workflow in `AI_HANDOFF.md` and `AI_WORKFLOW.md`.
+1. After `.1162` passes on device, expand the architectural material set in Helios
+   Studio and port the accepted catalogue to BoxLab: distinct stone/limestone,
+   brick, spotted gum, terrazzo, tile, plaster and weathered metal finishes. Each
+   preset should have matching visible preview and usable ray-traced appearance.
+2. Add material category/filter controls to the existing preset grid if the expanded
+   catalogue becomes difficult to browse on iPad.
+3. Keep the render-session-only boundary: applying presets must not write into the
+   BoxLab saved project or replace imported texture maps.
 
 ---
 

@@ -39,6 +39,7 @@ function drawTabs(){
 function drawPanel(){
   if(!dock)return;
   const body=dock.querySelector('.helios-panel-body');
+  body.style.maxHeight=tab==='materials'&&presetsOpen?'min(60dvh, 440px)':'';
   if(!state||!ready){body.innerHTML=`<p class="helios-note">${state?'The current model changed; Helios is rebuilding the trace controls…':'Helios is preparing the current BoxLab model…'}</p>`;return;}
   if(tab==='lights')body.innerHTML=drawLights();
   else if(tab==='materials')body.innerHTML=drawMaterials();
