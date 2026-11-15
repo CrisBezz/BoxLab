@@ -3,13 +3,9 @@
 ## GitHub publication method — verified 15 November 2026
 
 Use connected GitHub tools when shell HTTPS git push has no credentials. A shell username/token error does not mean repository access is missing. `github_create_blob` silently truncated file contents above 20,000 bytes in a verified `.1166` publication, even when base64 was supplied in chunks. For files over 20,000 bytes, use `github_update_file` with the complete UTF-8 file content and current file SHA; verify the returned Git blob SHA against local `git hash-object` and fetch it again from `main`. Use create_blob/tree/commit/ref only for smaller assets or when their final tree has been verified. Never publish partial content chunks. Preserve concurrent remote work; inspect `main` again if the expected SHA fails. Verify Actions/Pages and live release/cache markers afterward. Standing push/publish authorization is already granted; do not ask again for routine BoxLab releases.
-# Current handoff — BoxLab .1167 + Helios Studio 0.1.4 — 15 November 2026
+# Current handoff — BoxLab .1168 + Helios Studio 0.1.4 — 15 November 2026
 
-BoxLab `.1167` repairs the integrated VIEW > Helios map lifecycle after the user reported `.1166` upload PASS but a PBR → Helios round trip restored the original map. The existing `src/pathtrace-mode.js` owner now retains uploaded `File` objects for the current render session and replays them after the tracer is rebuilt. “Restore preset maps” is also retained and replayed before any later per-slot replacements. Overrides are scoped to the current BoxLab object identity set and imported material name; they are transient, are not written into project files or saved BoxLab materials, and the standalone Helios Studio repo remains unchanged. The Metalness preview/replacement behavior from `.1166` is retained. The standalone Helios Studio source remains the
-accepted `0.1.4` base commit `0e79c5163e5d87703d369250e1a9fff9e2b9085f`; `.1167` is
-a BoxLab integration lifecycle repair and does not change the standalone repo. BoxLab still
-owns modelling, project files and saved scene materials. Keep the existing Helios
-texture arrays, importer, dock, adapter and bundled tracer as the feature owners.
+BoxLab `.1167 PASS` protects replacement-map persistence through PBR/Helios mode changes, Restore ordering and scene identity scoping. Build `.1168` adds a separate scalar Surface opacity control for non-emissive imported materials in the existing VIEW > Helios Materials dock. It uses the imported GLB material's scalar opacity as its initial value, updates the Three.js PBR preview and GPU path tracer (including shadow visibility), and remains render-session-only. Emissive surfaces continue to use their independent Emitter opacity setting and pass-through behavior. This does not add an opacity texture map or change BoxLab project materials. The standalone Helios Studio repo remains at its accepted `0.1.4` base commit `0e79c5163e5d87703d369250e1a9fff9e2b9085f`; `.1168` is an integrated BoxLab extension. BoxLab owns modelling, project files and saved scene materials. Keep the existing Helios importer, dock, adapter, Three.js material owner and bundled tracer as feature owners.
 
 ## .1166 packed metalness map behavior
 
@@ -32,9 +28,25 @@ texture arrays, importer, dock, adapter and bundled tracer as the feature owners
   documented BoxLab extension in `src/helios-vendor/UPSTREAM.txt`. Preserve
   `src/multi-object-transform.js?v=0.36.1.0` and all modelling/Paint/UV owners.
 
-## .1167 validation and hands-on status
+## .1168 validation and hands-on status
 
-Focused lifecycle regressions cover mode-switch replacement persistence, Restore ordering and stale scene identity: 29/29 Helios/release tests pass. Full local `npm test` passes 3,453/3,453 (118.807s), zero failures/cancelled/skips. Changed-module syntax checks and `git diff --check` pass. `.1166` map upload itself is recorded PASS; the round-trip failure is addressed in `.1167` and awaits device confirmation. Keep `.1165 PASS` and `.1164 PASS` protected. Hosted Topology regression `43692331821` passes 3,453/3,453; the headless Chromium subdivision comparison reports 11/11 exact parity, aggregate `LAB_ONLY`. Pages run `43692331687` succeeded on runtime commit `79b644d1cbf4c150215c624daa7a653e582aa0f1`. Main/live release markers are `.1167`; user hands-on acceptance remains pending.
+Focused regressions cover the opacity control/adapter, PBR material transparency,
+path-tracer coverage/shadow attenuation, emitter opacity separation, existing map
+controls, `.1167` mode-switch persistence and release cache closure. Focused Helios
+and release tests pass 36/36; full local `npm test` passes 3,455/3,455 (118.917s),
+zero failures/cancelled/skips. The tracer bundle rebuild, changed-JS syntax checks,
+release asset contract and `git diff --check` pass. Hosted Topology, Pages deployment
+and user device acceptance are pending. Hands-on checks are in TEST_CHECKLIST.md.
+
+## .1167 protected PASS
+
+Cris confirms `.1167 PASS`. Protect replacement-map persistence through PBR/Helios
+switches, Restore-before-replacement replay order, and discarding overrides after the
+BoxLab object identity set changes. Map overrides remain transient.
+
+## .1167 validation
+
+Focused lifecycle regressions cover mode-switch replacement persistence, Restore ordering and stale scene identity: 29/29 Helios/release tests pass. Full local `npm test` passes 3,453/3,453 (118.807s), zero failures/cancelled/skips. Changed-module syntax checks and `git diff --check` pass. Hosted Topology regression `43692331821` passes 3,453/3,453; the headless Chromium subdivision comparison reports 11/11 exact parity, aggregate `LAB_ONLY`. Pages run `43692331687` succeeded on runtime commit `79b644d1cbf4c150215c624daa7a653e582aa0f1`. Main/live release markers were `.1167`; user confirms `.1167 PASS` and it is protected.
 
 ## Mapping and limits
 
@@ -44,7 +56,7 @@ shading and does not displace the silhouette. True geometric displacement needs 
 bounded subdivision/BVH update design and representative iPad memory/performance
 checks. Material map changes remain render-session-only.
 
-The `.1166` baseline validation was focused 26/26 and full `npm test` 3,450/3,450; its bundle/build and hosted Topology `43688283714` plus Pages `43688546947` passed. See DEV_HISTORY.md for the full `.1166` release record. `.1167` runtime changes: `src/pathtrace-mode.js`, release/cache pins in `index.html`, `drawer-ui.js`, `face-workflow-layout.js`, and `shell-comparison.js`; tracer bundle and Helios dock remain at `.1166`. Live deployment evidence will be recorded here after publication.
+The `.1166` baseline validation was focused 26/26 and full `npm test` 3,450/3,450; its bundle/build and hosted Topology `43688283714` plus Pages `43688546947` passed. See DEV_HISTORY.md for the full `.1166` release record. `.1168` runtime changes: `helios-dock.js`, `helios-vendor/boxlab-entry.ts`, `helios-vendor/engine/models.ts`, `helios-vendor/engine/pathTracer.ts`, `helios-vendor/types/studio.ts`, and rebuilt `helios-tracer.bundle.js`; release/cache closure also refreshes `index.html`, `pathtrace-mode.js`, `drawer-ui.js`, `face-workflow-layout.js`, and `shell-comparison.js`. Preserve `src/multi-object-transform.js?v=0.36.1.0`. Live deployment evidence will be recorded here after publication.
 
 ---
 
