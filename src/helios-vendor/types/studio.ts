@@ -70,6 +70,7 @@ export interface MaterialSpec {
   uvOffsetY?: number;
   uvRotation?: number;
   normalStrength: number;
+  surfaceOpacity?: number;
   emissiveOpacity?: number;
   hasCustomAlbedo?: boolean;
   hasCustomNormal?: boolean;
