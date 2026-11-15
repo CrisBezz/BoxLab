@@ -1,4 +1,4 @@
-# BoxLab Roadmap — .1166
+# BoxLab Roadmap — .1167
 
 ## Current coordinated releases
 
@@ -7,11 +7,20 @@
 - BoxLab `.1165 PASS` protects the 0.1.4 texture replacement/previews, mapping,
   relief, emitter transparency and `.1164` menu styling; `.1163 PASS` protects the
   28-material gallery.
-- BoxLab `.1166` adds a dedicated Metalness preview/replacement slot while preserving
-  the existing packed glTF scalar texture owner. It does not modify standalone Helios
-  or saved BoxLab project material data. Device acceptance is pending.
+- BoxLab `.1166` adds a dedicated Metalness preview/replacement slot; the user confirms
+  map addition/replacement passes. `.1167` fixes the reported PBR → Helios reset by
+  restoring render-session map files after the existing tracer rebuild. The fix does not
+  modify standalone Helios or saved BoxLab project material data. Device acceptance is pending.
 
 ## Current focus
+
+## .1167 focus — Helios render-map session persistence
+
+The existing pathtrace lifecycle now reapplies uploaded map Files after PBR/Helios
+rebuilds and preserves Restore preset maps ordering. It scopes transient overrides to
+the current BoxLab object identity set and imported material name. No model or project
+serialization changes. Hands-on acceptance: replace map → PBR → Helios, Restore → PBR
+→ Helios, later replacement after Restore, and saved material unchanged.
 
 The importer now transfers both source glTF scalar maps independently into packed
 roughness G and metalness B, instead of silently selecting one when both exist. The
@@ -19,10 +28,9 @@ existing dock offers separate grayscale previews and replacement controls. Each
 replacement updates only its own channel; the other channel and the preset below it
 remain. The path tracer uses its existing custom-metalness flag, and the PBR preview
 shares one packed texture between Three.js roughnessMap and metalnessMap. No second
-texture array, renderer, project schema or UV unwrap was added. Focused Helios/release
-checks pass 26/26; full local suite passes 3,450/3,450. Tracer bundle and syntax checks
-pass. Hosted Topology `43688283714` and Pages `43688546947` succeed; all nine live
-cache-busted assets byte-match source. Hands-on acceptance is pending.
+texture array, renderer, project schema or UV unwrap was added. The `.1166` packed-channel checks passed 26/26 and its full suite passed 3,450/3,450.
+`.1167` focused Helios/release checks pass 29/29; full local suite passes 3,453/3,453.
+Changed-module syntax and diff checks pass; hosted validation follows publication.
 
 ## Next-build ideas
 
@@ -32,7 +40,7 @@ cache-busted assets byte-match source. Hands-on acceptance is pending.
 
 Continue shared ray-trace development in standalone Helios before porting accepted
 changes through BoxLab's vendor bundle/adapter, except BoxLab-specific integration
-repairs like `.1166`. Keep render-only material changes out of saved BoxLab scene data.
+repairs like `.1166` and `.1167`. Keep render-only material changes out of saved BoxLab scene data.
 
 ---
 
