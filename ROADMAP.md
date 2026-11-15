@@ -30,7 +30,10 @@ remain. The path tracer uses its existing custom-metalness flag, and the PBR pre
 shares one packed texture between Three.js roughnessMap and metalnessMap. No second
 texture array, renderer, project schema or UV unwrap was added. The `.1166` packed-channel checks passed 26/26 and its full suite passed 3,450/3,450.
 `.1167` focused Helios/release checks pass 29/29; full local suite passes 3,453/3,453.
-Changed-module syntax and diff checks pass; hosted validation follows publication.
+Changed-module syntax and diff checks pass. Hosted Topology `43692331821` passes
+3,453/3,453 and Chromium comparison is 11/11 parity (`LAB_ONLY`); Pages
+`43692331687` succeeds on runtime commit `79b644d1cbf4c150215c624daa7a653e582aa0f1`.
+User device acceptance remains pending.
 
 ## Next-build ideas
 
