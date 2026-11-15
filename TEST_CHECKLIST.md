@@ -1,23 +1,53 @@
-## .1163 BoxLab Helios Studio 0.1.3 material integration — hands-on check
+## .1164 BoxLab Helios menu visual normalization — hands-on check
 
-- [ ] Open VIEW > Helios > Materials > preset gallery; confirm all 28 preview cards
-  appear, including the eight architectural additions.
-- [ ] Scroll to the last cards in iPad portrait and landscape; gallery stays open,
-  the parent panel scrolls, and the final card is selectable.
-- [ ] Apply Warm Limestone, Red Clay Brick, Spotted Gum, Terrazzo, Glazed Ceramic
-  Tile, Lime Plaster, Weathered Corten Steel, and Polished Concrete one at a time;
-  confirm each visibly changes the selected render material.
-- [ ] Confirm the selection affects only the Helios render session; BoxLab's saved
-  material/project and imported custom maps remain unchanged.
-- [ ] Reconfirm clean PNG capture at the selected sample target, 512 spp, and
-  light/material reset controls.
+Cris confirms `.1164 PASS`; protect this visual normalization and the `.1163 PASS` behavior. Protect the 28 material presets, render-session-only
+application, imported texture-map retention, clean PNG capture, 512 spp and reset
+controls. `.1164` changes only the Helios dock appearance in BoxLab.
 
-Automated focused checks pass 29/29 and full local suite passes 3,444/3,444. Build
-and diff checks pass. Runtime `.1163` is live on GitHub Pages (title and visible
-release marker verified). The browser QA host cannot create WebGL; ray-trace output
-and material appearance need iPad acceptance. Hosted Topology status has not been
-verified. Record Cris's device result and any available hosted run here before the
-next build.
+- [x] Open VIEW > Helios and visit Lights, Materials, Ray Tracer and Camera. Confirm
+  active tabs and selected choices use BoxLab's white active-button style without a
+  blue border.
+- [x] Check material/light controls, numeric values, reset, gallery and render
+  buttons. Confirm colors and corners match BoxLab's standard menus; focus remains
+  visibly indicated with a neutral outline.
+- [x] In portrait and landscape, confirm the dock still scrolls and the controls
+  remain usable while orbiting outside the panel.
+- [x] Confirm Helios still becomes ready and the render controls work when tested
+  on the iPad.
+
+GitHub Pages run `43659303518` built and deployed successfully. The live title and visible marker report
+`.1164`; browser observation confirms the active Materials tab has the white
+selected fill and no blue border. Hosted Topology run `43659304210` passed, including
+`npm test` and the headless Chromium subdivision comparison. Cris confirms `.1164 PASS`.
+No local tests were run in this session.
+
+### Helios material mapping note
+
+The renderer uses UV-space maps for preset albedo/normal/roughness. It keeps an
+imported mesh's existing UV attribute; only a mesh with no UV attribute gets
+generated box-projected UVs. It does not unwrap a mesh automatically. See the
+handoff's “Helios material texture mapping audit” before changing mapping behavior.
+
+---
+
+## .1163 BoxLab Helios Studio 0.1.3 material integration — protected PASS
+
+Cris confirms `.1163 PASS`. Protect the 28 preview cards, all eight architectural
+additions, single parent-panel scroll owner, render-session-only preset application,
+imported custom maps, clean PNG capture, 512 spp, and light/material reset controls.
+
+- [x] All 28 previews are visible; the gallery scrolls to the final cards in portrait
+  and landscape.
+- [x] Warm Limestone, Red Clay Brick, Spotted Gum, Terrazzo, Glazed Ceramic Tile,
+  Lime Plaster, Weathered Corten Steel and Polished Concrete apply visibly.
+- [x] Presets leave saved BoxLab project/material data and imported maps unchanged.
+- [x] Clean render capture, sample target including 512 spp, and reset controls work.
+
+Focused checks 29/29 and full local suite 3,444/3,444 were recorded for the .1163
+release. Live Pages marker and title were verified at .1163 before this build.
+Hosted Topology status for .1163 was not recorded.
+
+---
 
 ## .1162 BoxLab material gallery scroll repair — protected PASS
 
