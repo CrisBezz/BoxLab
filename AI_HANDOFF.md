@@ -45,9 +45,12 @@ The `.1166` source includes a packed-channel helper regression, glTF import/PBR/
 checks, four-map dock coverage, release/cache contracts and shell-comparison history
 preservation. Local validation passed: focused Helios/release checks 26/26, full
 `npm test` 3,450/3,450 (zero failures/cancelled/skips), `npm run build:helios-tracer`,
-changed-module syntax checks and `git diff --check`. Hosted checks and Pages deployment
-remain pending until the release commit is pushed. See TEST_CHECKLIST.md for device
-acceptance; `.1166` remains pending hands-on acceptance after publication.
+changed-module syntax checks and `git diff --check`. Hosted Topology regression
+`43688283714` passed, including `npm test` and 11/11 headless Chromium subdivision
+parity (benchmark decision remains LAB_ONLY). Pages run `43688546947` deployed the
+latest `.1166` main tip successfully. Live version is `.1166`; all nine refreshed
+cache-busted assets match their source hashes. See TEST_CHECKLIST.md for device
+acceptance; `.1166` remains pending hands-on acceptance.
 
 ---
 
