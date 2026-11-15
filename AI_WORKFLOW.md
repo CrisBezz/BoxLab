@@ -1,8 +1,8 @@
 
 
-## GitHub publication method — verified 14 November 2026
+## GitHub publication method — verified 15 November 2026
 
-Use the connected GitHub tools for publication when shell HTTPS git push has no credentials. A shell username/token error does not mean repository access is missing. The connected GitHub create_blob write route was verified in this session. Upload exact tested file bytes with create_blob, create_tree on the freshly inspected main tree, create_commit with current main as parent, then update_ref with expected_sha and force=false. Verify Actions/Pages and live release/cache markers afterward. For large files, read local bytes in bounded base64 chunks, concatenate them in the tool runtime, then create one complete blob per file. Never publish separate partial file chunks. Preserve concurrent remote work; inspect main again if the expected SHA fails. Standing push/publish authorization is already granted. Do not repeatedly retry an unauthenticated shell or ask the user for access again while the connected route works.
+Use connected GitHub tools when shell HTTPS git push has no credentials. A shell username/token error does not mean repository access is missing. `github_create_blob` silently truncated file contents above 20,000 bytes in a verified `.1166` publication, even when base64 was supplied in chunks. For files over 20,000 bytes, use `github_update_file` with the complete UTF-8 file content and current file SHA; verify the returned Git blob SHA against local `git hash-object` and fetch it again from `main`. Use create_blob/tree/commit/ref only for smaller assets or when their final tree has been verified. Never publish partial content chunks. Preserve concurrent remote work; inspect `main` again if the expected SHA fails. Verify Actions/Pages and live release/cache markers afterward. Standing push/publish authorization is already granted; do not ask again for routine BoxLab releases.
 # BoxLab AI Development Workflow
 
 This file defines the handover protocol for every AI-assisted BoxLab development session.
