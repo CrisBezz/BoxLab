@@ -19,8 +19,12 @@ Release markers and loader/cache closure target `.1168`; the rebuilt tracer bund
 pinned `.1168`. `src/multi-object-transform.js?v=0.36.1.0` remains unchanged. Focused
 Helios/release checks pass 36/36. Full local `npm test` passes 3,455/3,455 (118.917s),
 zero failures/cancelled/skips. `npm run build:helios-tracer`, changed-module syntax,
-release asset-contract checks and `git diff --check` pass. Hosted Topology/Pages and
-hands-on acceptance are pending.
+release asset-contract checks and `git diff --check` pass. Hosted Topology `43696493623`
+passes 3,455/3,455 on runtime commit `b0097ecfd7e0a2cc11378c25252da2faa6008a2e`;
+headless Chromium comparison reports 11/11 exact parity, aggregate `LAB_ONLY`, with
+artifact `subdivision-wasm-headless-43696493623` (ID `14155021519`). Pages run
+`43696493446` succeeds on the same release commit; main `version.json` is `.1168`.
+Native iPad visual acceptance remains pending.
 
 # .1167 — Helios map-session persistence — protected PASS — 15 November 2026
 
