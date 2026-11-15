@@ -13,6 +13,6 @@ await build({
   sourcemap: false,
   minify: true,
   banner: {
-    js: '/* HeliosStudio 0.1.4 integration base 0e79c5163e5d87703d369250e1a9fff9e2b9085f; BoxLab .1166 adds separate packed Metalness map handling. Rebuild with npm run build:helios-tracer. */',
+    js: '/* HeliosStudio 0.1.4 integration base 0e79c5163e5d87703d369250e1a9fff9e2b9085f; BoxLab .1168 adds render-session surface opacity. Rebuild with npm run build:helios-tracer. */',
   },
 });
