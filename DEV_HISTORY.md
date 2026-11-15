@@ -19,8 +19,11 @@ records remain accepted. Preserve Multi `0.36.1.0`.
 
 Focused Helios/release tests pass 26/26; full local regression passes 3,450/3,450,
 zero failures/cancelled/skips (121.741s). `npm run build:helios-tracer`, changed JS
-syntax checks and `git diff --check` pass. Hosted Topology and Pages are pending
-publication. User `.1166` hands-on acceptance remains pending.
+syntax checks and `git diff --check` pass. Hosted Topology regression `43688283714`
+passes `npm test` and headless Chromium subdivision parity 11/11; benchmark remains
+LAB_ONLY. Pages run `43688546947` succeeds on the latest main tip. The live `.1166`
+marker and all nine refreshed cache-busted asset hashes match source. User `.1166`
+hands-on acceptance remains pending.
 
 ---
 
