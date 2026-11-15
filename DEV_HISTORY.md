@@ -1,3 +1,31 @@
+# .1167 — persist Helios map replacements through PBR mode switches — 15 November 2026
+
+Cris reports `.1166` map addition/replacement PASS, with one lifecycle FAIL: switching
+from Helios to PBR and back recreated the tracer from the BoxLab GLB, restoring the
+source texture in place of the render-session replacement. Audit confirmed that
+`src/pathtrace-mode.js` is the existing lifecycle owner and that `boxlab-entry.ts` owns
+map upload/Restore. The fix keeps the selected per-material `File` objects in transient
+pathtrace-session state and reapplies them to the rebuilt tracer. Restore preset maps is
+replayed first, then any subsequent slot replacements. State is discarded if the BoxLab
+object identity set or imported material name no longer matches, avoiding an override
+being attached to a different imported material index. No BoxLab project schema, saved
+material, standalone Helios source or tracer bundle change.
+
+Release `.1167` refreshes the pathtrace owner and its shell marker; the unchanged Helios
+dock and tracer bundle remain pinned to `.1166`. Multi remains pinned at
+`src/multi-object-transform.js?v=0.36.1.0`. A dedicated VM regression covers map replay,
+Restore ordering and scene identity. Focused Helios/release tests pass 29/29; full local
+`npm test` passes 3,453/3,453 (118.807s), zero failures/cancelled/skips. Changed-module
+syntax checks and `git diff --check` pass. Hosted Topology and Pages evidence will be
+added after publication. User hands-on `.1167` acceptance is pending.
+
+Publication route correction: in the `.1166` release, GitHub `create_blob` silently
+truncated files over 20,000 bytes. The verified publication workflow now uses complete
+`github_update_file` content for oversized files and checks returned blob hashes against
+local content.
+
+---
+
 # .1166 — expose and preserve the packed Metalness map — 15 November 2026
 
 Cris confirmed BoxLab `.1165 PASS`; protect the integrated Helios .1.4 mapping port.
