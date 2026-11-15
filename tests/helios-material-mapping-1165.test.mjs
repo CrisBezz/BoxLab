@@ -38,6 +38,6 @@ test('Helios UV rotation and emissive opacity keep the tracer and PBR material o
   assert.match(tracer,/spec\.emissiveOpacity \?\? 1/);
   assert.match(tracer,/throughput \*= 1\.0 - emitterOpacity/);
   assert.match(models,/getThreeMapsForLayer\([\s\S]*spec\.uvRotation \?\? 0/);
-  assert.match(models,/transparent = emitterOpacity < 0\.999/);
+  assert.match(models,/transparent = materialOpacity < 0\.999/);
   assert.match(models,/mat\.normalScale\.set\(spec\.normalStrength, spec\.normalStrength\)/);
 });
