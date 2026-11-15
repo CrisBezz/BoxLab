@@ -22,12 +22,15 @@ export interface BuiltProject {
 }
 
 function createMaterialFromSpec(spec: MaterialSpec, isSoftwareGl: boolean): THREE.MeshPhysicalMaterial {
-  const emitterOpacity = spec.emissiveIntensity > 0.01 ? (spec.emissiveOpacity ?? 1) : 1;
+  const isEmissive = spec.emissiveIntensity > 0.01;
+  const emitterOpacity = isEmissive ? (spec.emissiveOpacity ?? 1) : 1;
+  const surfaceOpacity = !isEmissive ? (spec.surfaceOpacity ?? 1) : 1;
+  const materialOpacity = emitterOpacity * surfaceOpacity;
   const mat = new THREE.MeshPhysicalMaterial({
     color: new THREE.Color(spec.color),
-    opacity: emitterOpacity,
-    transparent: emitterOpacity < 0.999,
-    depthWrite: emitterOpacity >= 0.999,
+    opacity: materialOpacity,
+    transparent: materialOpacity < 0.999,
+    depthWrite: materialOpacity >= 0.999,
     roughness: spec.roughness,
     metalness: spec.metalness,
     ior: spec.ior,
@@ -39,13 +42,13 @@ function createMaterialFromSpec(spec: MaterialSpec, isSoftwareGl: boolean): THRE
   if (spec.transmission > 0.05) {
     if (isSoftwareGl) {
       mat.transparent = true;
-      mat.opacity = Math.max(0.28, 1 - spec.transmission * 0.65) * emitterOpacity;
+      mat.opacity = Math.max(0.28, 1 - spec.transmission * 0.65) * materialOpacity;
       mat.depthWrite = false;
     } else {
       mat.transmission = spec.transmission;
-      mat.opacity = emitterOpacity;
-      mat.transparent = emitterOpacity < 0.999;
-      mat.depthWrite = emitterOpacity >= 0.999;
+      mat.opacity = materialOpacity;
+      mat.transparent = materialOpacity < 0.999;
+      mat.depthWrite = materialOpacity >= 0.999;
       mat.thickness = 0.65;
       mat.attenuationColor = new THREE.Color(spec.color);
       mat.attenuationDistance = 1.6;
@@ -116,26 +119,29 @@ export function syncThreeMaterials(
         mat.roughnessMap = maps.roughnessMap;
         mat.metalnessMap = spec.hasCustomMetalness ? maps.metalnessMap : null;
 
-        const emitterOpacity = spec.emissiveIntensity > 0.01 ? (spec.emissiveOpacity ?? 1) : 1;
+        const isEmissive = spec.emissiveIntensity > 0.01;
+        const emitterOpacity = isEmissive ? (spec.emissiveOpacity ?? 1) : 1;
+        const surfaceOpacity = !isEmissive ? (spec.surfaceOpacity ?? 1) : 1;
+        const materialOpacity = emitterOpacity * surfaceOpacity;
         if (spec.transmission > 0.05) {
           if (isSoftwareGl) {
             mat.transmission = 0;
             mat.transparent = true;
-            mat.opacity = Math.max(0.28, 1 - spec.transmission * 0.65) * emitterOpacity;
+            mat.opacity = Math.max(0.28, 1 - spec.transmission * 0.65) * materialOpacity;
             mat.depthWrite = false;
           } else {
-            mat.transparent = emitterOpacity < 0.999;
-            mat.opacity = emitterOpacity;
-            mat.depthWrite = emitterOpacity >= 0.999;
+            mat.transparent = materialOpacity < 0.999;
+            mat.opacity = materialOpacity;
+            mat.depthWrite = materialOpacity >= 0.999;
             mat.transmission = spec.transmission;
             mat.thickness = 0.65;
             mat.attenuationColor.set(spec.color);
           }
         } else {
           mat.transmission = 0;
-          mat.transparent = emitterOpacity < 0.999;
-          mat.opacity = emitterOpacity;
-          mat.depthWrite = emitterOpacity >= 0.999;
+          mat.transparent = materialOpacity < 0.999;
+          mat.opacity = materialOpacity;
+          mat.depthWrite = materialOpacity >= 0.999;
         }
 
         if (spec.emissiveIntensity > 0.01) {
@@ -1075,6 +1081,7 @@ export async function importModelFromFile(
           color: col,
           roughness: Math.max(0.03, Math.min(1, roughness)),
           metalness: Math.max(0, Math.min(1, metalness)),
+          surfaceOpacity: Math.max(0, Math.min(1, stdMat && typeof stdMat.opacity === 'number' ? stdMat.opacity : 1)),
           ior: 1.5,
           transmission: 0,
           clearcoat: 0.1,
