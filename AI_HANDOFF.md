@@ -35,8 +35,13 @@ path-tracer coverage/shadow attenuation, emitter opacity separation, existing ma
 controls, `.1167` mode-switch persistence and release cache closure. Focused Helios
 and release tests pass 36/36; full local `npm test` passes 3,455/3,455 (118.917s),
 zero failures/cancelled/skips. The tracer bundle rebuild, changed-JS syntax checks,
-release asset contract and `git diff --check` pass. Hosted Topology, Pages deployment
-and user device acceptance are pending. Hands-on checks are in TEST_CHECKLIST.md.
+release asset contract and `git diff --check` pass. Hosted Topology `43696493623`
+passes 3,455/3,455 on runtime commit `b0097ecfd7e0a2cc11378c25252da2faa6008a2e`;
+headless Chromium comparison reports 11/11 exact parity, aggregate `LAB_ONLY`, with
+artifact `subdivision-wasm-headless-43696493623` (ID `14155021519`). Pages run
+`43696493446` succeeds on the same release commit. Repository `version.json` on main
+is `.1168`. Native iPad visual acceptance remains pending. Hands-on checks are in
+TEST_CHECKLIST.md.
 
 ## .1167 protected PASS
 
