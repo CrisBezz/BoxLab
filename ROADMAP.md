@@ -21,7 +21,8 @@ remain. The path tracer uses its existing custom-metalness flag, and the PBR pre
 shares one packed texture between Three.js roughnessMap and metalnessMap. No second
 texture array, renderer, project schema or UV unwrap was added. Focused Helios/release
 checks pass 26/26; full local suite passes 3,450/3,450. Tracer bundle and syntax checks
-pass. Hosted validation awaits publication; hands-on acceptance is pending.
+pass. Hosted Topology `43688283714` and Pages `43688546947` succeed; all nine live
+cache-busted assets byte-match source. Hands-on acceptance is pending.
 
 ## Next-build ideas
 
