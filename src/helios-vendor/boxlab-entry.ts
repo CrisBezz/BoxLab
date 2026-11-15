@@ -98,7 +98,7 @@ export async function createBoxLabHeliosTrace(
       const safePatch: Partial<(typeof importedProject.materials)[number]> = {};
       for (const key of [
         'color', 'roughness', 'metalness', 'ior', 'transmission', 'clearcoat',
-        'emissiveIntensity', 'emissiveOpacity', 'texturePreset', 'uvScale',
+        'emissiveIntensity', 'emissiveOpacity', 'surfaceOpacity', 'texturePreset', 'uvScale',
         'uvScaleX', 'uvScaleY', 'uvOffsetX', 'uvOffsetY', 'uvRotation',
         'normalStrength',
       ] as const) {
