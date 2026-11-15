@@ -1,34 +1,31 @@
-# BoxLab Roadmap — .1163
+# BoxLab Roadmap — .1164
 
 ## Current coordinated releases
 
-- BoxLab `.1162 PASS` protects the scrolling preset gallery. BoxLab `.1163` ports
-  the accepted Helios Studio `0.1.3` catalogue and previews: 28 presets, eight
-  architectural additions, and six new procedural texture families.
-- Helios Studio `0.1.3 PASS` protects the expanded preset gallery and previews.
-- BoxLab and Helios Studio remain independently versioned/published. BoxLab owns
-  projects and modelling; Helios owns ray tracing, lighting, render materials and
-  previews.
+- BoxLab `.1163 PASS` protects Helios's 28 material presets, architectural
+  additions, texture previews, render-only preset application, imported maps,
+  clean capture, 512 spp and reset controls.
+- BoxLab `.1164` normalizes the integrated VIEW > Helios menu theme. Standalone
+  Helios Studio remains independently released at `0.1.3`; its source and UI
+  were not changed.
+- BoxLab owns modelling/projects; Helios owns ray tracing/material data. Both apps
+  retain their existing render and control owners.
 
 ## Current focus
 
-Cris's `.1162 PASS` is protected. BoxLab runtime release `.1163` integrates Helios
-Studio source commit `44a7565e24ee96ea7907716dc67b1b97a810a63d` through the existing
-adapter and bundle build. Focused checks pass 29/29; full local suite passes
-3,444/3,444. The live Pages app serves `.1163` and the release marker is verified. The browser QA
-host cannot create WebGL, and hosted Topology status is unverified; finish device and
-available hosted acceptance listed in TEST_CHECKLIST before starting a new feature.
-Preserve render-only material changes, imported maps, clean PNG capture, 512 spp,
-reset controls and the single scroll owner.
+Runtime `.1164` style commit `789e8f3ab31f3acdc68e1d5590b9b9c0697c7d45` is live. The existing Helios dock now uses
+BoxLab's neutral menu theme: white active controls without blue borders, neutral
+values and focus/hover states, and shared button corners/borders. The direct dock
+stylesheet pin and all release markers are `.1164`. Pages run `43659303518` deployed successfully; the browser confirmed the live title and selected Materials-tab style. Hosted Topology run `43659304210` passed, including `npm test` and headless Chromium subdivision comparison. Cris confirms `.1164 PASS`, so protect the menu normalization and the `.1163 PASS` material/render behavior. No local tests were run in this session. Mapping audit: Helios preset textures use UV coordinates and preset repeat scaling; imported UVs are preserved, while missing UVs get box-projected UVs. Diagnose actual mismatches from the mesh UVs and preset scale before changing that behavior.
 
 ## Next-build ideas
 
-1. After `.1163` passes on device, consider category filters for the 28-card preset
-   grid if browsing now feels slow; keep the grid and scroll owner authoritative.
-2. Keep new materials in Helios Studio first, then port accepted source through
-   BoxLab's existing bundle/adapter when intended for both applications.
-3. Preserve the render-session-only boundary: applying presets must not write into
-   the BoxLab saved project or replace imported texture maps.
+1. If preset browsing later feels slow, consider category filters for the 28-card preset grid if
+   browsing feels slow; keep the existing grid and parent-panel scroll owner.
+2. Add future materials to standalone Helios Studio first, then port accepted
+   source through BoxLab's existing bundle/adapter when intended for both apps.
+3. Keep presets render-session-only; never replace imported maps or write to saved
+   BoxLab project/material data.
 
 ---
 
