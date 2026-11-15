@@ -22,8 +22,12 @@ export interface BuiltProject {
 }
 
 function createMaterialFromSpec(spec: MaterialSpec, isSoftwareGl: boolean): THREE.MeshPhysicalMaterial {
+  const emitterOpacity = spec.emissiveIntensity > 0.01 ? (spec.emissiveOpacity ?? 1) : 1;
   const mat = new THREE.MeshPhysicalMaterial({
     color: new THREE.Color(spec.color),
+    opacity: emitterOpacity,
+    transparent: emitterOpacity < 0.999,
+    depthWrite: emitterOpacity >= 0.999,
     roughness: spec.roughness,
     metalness: spec.metalness,
     ior: spec.ior,
@@ -35,10 +39,13 @@ function createMaterialFromSpec(spec: MaterialSpec, isSoftwareGl: boolean): THRE
   if (spec.transmission > 0.05) {
     if (isSoftwareGl) {
       mat.transparent = true;
-      mat.opacity = Math.max(0.28, 1 - spec.transmission * 0.65);
+      mat.opacity = Math.max(0.28, 1 - spec.transmission * 0.65) * emitterOpacity;
       mat.depthWrite = false;
     } else {
       mat.transmission = spec.transmission;
+      mat.opacity = emitterOpacity;
+      mat.transparent = emitterOpacity < 0.999;
+      mat.depthWrite = emitterOpacity >= 0.999;
       mat.thickness = 0.65;
       mat.attenuationColor = new THREE.Color(spec.color);
       mat.attenuationDistance = 1.6;
@@ -67,7 +74,14 @@ export function syncThreeMaterials(
     const layer = materialLayerMap?.get(spec.id) ?? PRESET_TO_LAYER[spec.texturePreset] ?? 0;
     const maps =
       !clayMode && textureManager && layer > 0
-        ? textureManager.getThreeMapsForLayer(layer, spec.uvScale)
+        ? textureManager.getThreeMapsForLayer(
+            layer,
+            spec.uvScaleX ?? spec.uvScale,
+            spec.uvScaleY ?? spec.uvScale,
+            spec.uvOffsetX ?? 0,
+            spec.uvOffsetY ?? 0,
+            spec.uvRotation ?? 0,
+          )
         : { map: null, normalMap: null, roughnessMap: null };
 
     for (const mesh of meshes) {
@@ -100,25 +114,26 @@ export function syncThreeMaterials(
         mat.normalScale.set(spec.normalStrength, spec.normalStrength);
         mat.roughnessMap = maps.roughnessMap;
 
+        const emitterOpacity = spec.emissiveIntensity > 0.01 ? (spec.emissiveOpacity ?? 1) : 1;
         if (spec.transmission > 0.05) {
           if (isSoftwareGl) {
             mat.transmission = 0;
             mat.transparent = true;
-            mat.opacity = Math.max(0.28, 1 - spec.transmission * 0.65);
+            mat.opacity = Math.max(0.28, 1 - spec.transmission * 0.65) * emitterOpacity;
             mat.depthWrite = false;
           } else {
-            mat.transparent = false;
-            mat.opacity = 1.0;
-            mat.depthWrite = true;
+            mat.transparent = emitterOpacity < 0.999;
+            mat.opacity = emitterOpacity;
+            mat.depthWrite = emitterOpacity >= 0.999;
             mat.transmission = spec.transmission;
             mat.thickness = 0.65;
             mat.attenuationColor.set(spec.color);
           }
         } else {
           mat.transmission = 0;
-          mat.transparent = false;
-          mat.opacity = 1.0;
-          mat.depthWrite = true;
+          mat.transparent = emitterOpacity < 0.999;
+          mat.opacity = emitterOpacity;
+          mat.depthWrite = emitterOpacity >= 0.999;
         }
 
         if (spec.emissiveIntensity > 0.01) {

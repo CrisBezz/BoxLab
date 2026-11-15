@@ -161,9 +161,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1164",
+      "url": "./src/drawer-ui.js?v=0.36.18.1165",
       "target": "src/drawer-ui.js",
-      "sha256": "e12e24a7fa2146e0d48215cec19e57a64f97139c073b863650e8c5f07e9b73dd"
+      "sha256": "6e2e92f1fbf1b6b638dd8ced80e8c73635565e465c5906388a0c72555d2787a5"
     },
     {
       "owner": "index.html",
@@ -378,7 +378,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1164",
+      "url": "./src/release-version.js?v=0.36.18.1165",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -864,9 +864,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1164",
+      "url": "./face-workflow-layout.js?v=0.36.18.1165",
       "target": "src/face-workflow-layout.js",
-      "sha256": "f879500167dbe63a553552595194111200466f8730e50dfbff375e9ca5a17d4d"
+      "sha256": "5931d77583b5a80b20cf58b1faee2ba961a7787e7d15319482032f4fcbe24b5a"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1361,7 +1361,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1164",
+      "url": "./release-version.js?v=0.36.18.1165",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -3326,9 +3326,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1164",
+      "url": "./src/shell-comparison.js?v=0.36.18.1165",
       "target": "src/shell-comparison.js",
-      "sha256": "56d552220523646433e608bc8be3f30cdfca9993bf725929343bd0a3277d90ac"
+      "sha256": "a99fa391d8f5aee504ce1ac80e2ee5e584c0ea32f2f2cd96b462dc670a75df78"
     },
     {
       "owner": "src/main.js",
@@ -3800,27 +3800,27 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/pathtrace-mode.js?v=0.36.18.1163",
+      "url": "./src/pathtrace-mode.js?v=0.36.18.1165",
       "target": "src/pathtrace-mode.js",
-      "sha256": "7ef60997adb49a0037f1c7d335dc6bfbb6deccaddca8289418ef472f1f52b2e4"
+      "sha256": "96d386416b1e411ff694164bcda5f97ace2082728caf05bd9b9eeb8eb7ca670b"
     },
     {
       "owner": "src/pathtrace-mode.js",
-      "url": "./helios-tracer.bundle.js?v=0.36.18.1163",
+      "url": "./helios-tracer.bundle.js?v=0.36.18.1165",
       "target": "src/helios-tracer.bundle.js",
-      "sha256": "aa9953f526c54a005333e1448e2a69352479a5d6963a8c5c10611a2de078d16c"
+      "sha256": "7868bd2b41a76ec0ec3ce1dccd1e56902a02555fed55ded7cadc38ef9d9410c0"
     },
     {
       "owner": "index.html",
-      "url": "./helios-dock.css?v=0.36.18.1164",
+      "url": "./helios-dock.css?v=0.36.18.1165",
       "target": "helios-dock.css",
-      "sha256": "1c51f2590feaa8ffbb6f06d63a74ece13ced31be9952f0b6fab458f870628f56"
+      "sha256": "e3f08746743f58315f5c3cdb559134f64c42904a0dca0642b5c563b23dc8ccd7"
     },
     {
       "owner": "index.html",
-      "url": "./src/helios-dock.js?v=0.36.18.1162",
+      "url": "./src/helios-dock.js?v=0.36.18.1165",
       "target": "src/helios-dock.js",
-      "sha256": "5bfe9069a67376ffcffb1fb79ba3c29552e607e98e84b9cfbca0db80940f198f"
+      "sha256": "85da03e04b34070360680adba5eddb110c36ef0a6047b95e841cd57b9920074a"
     }
   ]
 }

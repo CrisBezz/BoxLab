@@ -63,15 +63,19 @@ uniform float uAspect;
 uniform vec4 uLightPosRadius[${MAX_LIGHTS}];
 uniform vec4 uLightColorEnabled[${MAX_LIGHTS}];
 
-// Material uniforms: 4 vec4s per material
+// Material uniforms: 6 vec4s per material
 // matA = (albedo.r, albedo.g, albedo.b, roughness)
 // matB = (metalness, ior, transmission, clearcoat)
-// matC = (emissiveIntensity, 0, 0, 0)
-// matD = (texSlice, uvScale, normalStrength, modeFlag: 0=preset, 1=custom tile, 2=custom atlas)
+// matC = (emissiveIntensity, emitterOpacity, 0, 0)
+// matD = (texSlice, legacyScale, normalStrength, modeFlag: 0=preset, 1=custom tile, 2=custom atlas)
+// matE = (scaleU, scaleV, rotationRadians, offsetU)
+// matF = (offsetV, customMetalnessFlag, 0, 0)
 uniform vec4 uMatA[${MAX_MATERIALS}];
 uniform vec4 uMatB[${MAX_MATERIALS}];
 uniform vec4 uMatC[${MAX_MATERIALS}];
 uniform vec4 uMatD[${MAX_MATERIALS}];
+uniform vec4 uMatE[${MAX_MATERIALS}];
+uniform vec4 uMatF[${MAX_MATERIALS}];
 
 const float PI = 3.14159265359;
 const float INF = 1e20;
@@ -595,6 +599,7 @@ void main() {
     float transmission = 0.0;
     float clearcoat = 0.0;
     float emissiveIntensity = 0.0;
+    float emitterOpacity = 1.0;
 
     if (hit.isFloor) {
       albedo = hit.floorAlbedo;
@@ -619,10 +624,17 @@ void main() {
       transmission = clamp(mB.z, 0.0, 1.0);
       clearcoat = clamp(mB.w, 0.0, 1.0);
       emissiveIntensity = mC.x;
+      emitterOpacity = clamp(mC.y, 0.0, 1.0);
 
       if (mD.w > 0.5 || mD.x > 0.5) {
-        vec2 tiledUv = hit.uv * mD.y;
-        if (mD.w > 1.5 && abs(mD.y - 1.0) < 0.02) {
+        vec4 mE = uMatE[safeMatIdx];
+        vec4 mF = uMatF[safeMatIdx];
+        vec2 centeredUv = hit.uv - vec2(0.5);
+        float uvCos = cos(mE.z);
+        float uvSin = sin(mE.z);
+        centeredUv = mat2(uvCos, uvSin, -uvSin, uvCos) * centeredUv;
+        vec2 tiledUv = centeredUv * mE.xy + vec2(0.5 + mE.w, 0.5 + mF.x);
+        if (mD.w > 1.5) {
           tiledUv = clamp(tiledUv, vec2(0.5 / 1024.0), vec2(1.0 - 0.5 / 1024.0));
         }
         vec3 texCoords = vec3(tiledUv, mD.x);
@@ -634,7 +646,7 @@ void main() {
           : texture(uRoughMetalArray, texCoords);
         albedo *= texAlbedo;
         roughness = clamp(roughness * rm.g, 0.025, 1.0);
-        if (mC.y > 0.5) metalness = clamp(metalness * rm.b, 0.0, 1.0);
+        if (mF.y > 0.5) metalness = clamp(metalness * rm.b, 0.0, 1.0);
 
         if (mD.z > 0.01) {
           vec3 nSample = mD.w > 0.5
@@ -653,7 +665,9 @@ void main() {
           } else {
             buildONB(N, T, B);
           }
-          vec3 perturbedN = normalize(T * nMap.x + B * nMap.y + N * max(0.08, nMap.z));
+          vec3 mapTangent = normalize(T * uvCos + B * uvSin);
+          vec3 mapBitangent = normalize(B * uvCos - T * uvSin);
+          vec3 perturbedN = normalize(mapTangent * nMap.x + mapBitangent * nMap.y + N * max(0.08, nMap.z));
           if (dot(perturbedN, V) < 0.02) {
             perturbedN = normalize(mix(N, perturbedN, 0.25));
           }
@@ -665,7 +679,13 @@ void main() {
     }
 
     if (emissiveIntensity > 0.01) {
-      radiance += throughput * albedo * emissiveIntensity;
+      radiance += throughput * albedo * emissiveIntensity * emitterOpacity;
+      if (emitterOpacity < 0.999) {
+        throughput *= 1.0 - emitterOpacity;
+        if (max(throughput.r, max(throughput.g, throughput.b)) < 0.002) break;
+        ro = hit.pos + rd * 0.002;
+        continue;
+      }
       break;
     }
 
@@ -916,6 +936,8 @@ export class GPUPathTracer {
     const matBArr = Array.from({ length: MAX_MATERIALS }, () => new THREE.Vector4(0.0, 1.5, 0.0, 0.0));
     const matCArr = Array.from({ length: MAX_MATERIALS }, () => new THREE.Vector4(0.0, 0.0, 0.0, 0.0));
     const matDArr = Array.from({ length: MAX_MATERIALS }, () => new THREE.Vector4(0.0, 1.0, 1.0, 0.0));
+    const matEArr = Array.from({ length: MAX_MATERIALS }, () => new THREE.Vector4(1.0, 1.0, 0.0, 0.0));
+    const matFArr = Array.from({ length: MAX_MATERIALS }, () => new THREE.Vector4(0.0, 0.0, 0.0, 0.0));
 
     this.dummyTex = new THREE.DataTexture(new Float32Array(4), 1, 1, THREE.RGBAFormat, THREE.FloatType);
     this.dummyTex.needsUpdate = true;
@@ -964,6 +986,8 @@ export class GPUPathTracer {
         uMatB: { value: matBArr },
         uMatC: { value: matCArr },
         uMatD: { value: matDArr },
+        uMatE: { value: matEArr },
+        uMatF: { value: matFArr },
       },
     });
 
@@ -1093,6 +1117,8 @@ export class GPUPathTracer {
     const matB = this.traceMat.uniforms.uMatB.value as THREE.Vector4[];
     const matC = this.traceMat.uniforms.uMatC.value as THREE.Vector4[];
     const matD = this.traceMat.uniforms.uMatD.value as THREE.Vector4[];
+    const matE = this.traceMat.uniforms.uMatE.value as THREE.Vector4[];
+    const matF = this.traceMat.uniforms.uMatF.value as THREE.Vector4[];
 
     for (const spec of materials) {
       const idx = this.bvhData.materialIdToIndex.get(spec.id);
@@ -1104,9 +1130,15 @@ export class GPUPathTracer {
         : { slice: layer >= 100 ? layer - 100 : layer, modeFlag: layer >= 100 ? 1.0 : 0.0 };
       matA[idx].set(r, g, b, spec.roughness);
       matB[idx].set(spec.metalness, spec.ior, spec.transmission, spec.clearcoat);
-      matC[idx].set(spec.emissiveIntensity, 0, 0, 0);
-      matC[idx].y = spec.hasCustomMetalness ? 1 : 0;
+      matC[idx].set(spec.emissiveIntensity, spec.emissiveOpacity ?? 1, 0, 0);
       matD[idx].set(slice, spec.uvScale, spec.normalStrength, modeFlag);
+      matE[idx].set(
+        spec.uvScaleX ?? spec.uvScale,
+        spec.uvScaleY ?? spec.uvScale,
+        ((spec.uvRotation ?? 0) * Math.PI) / 180,
+        spec.uvOffsetX ?? 0,
+      );
+      matF[idx].set(spec.uvOffsetY ?? 0, spec.hasCustomMetalness ? 1 : 0, 0, 0);
     }
   }
 

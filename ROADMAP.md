@@ -1,31 +1,38 @@
-# BoxLab Roadmap — .1164
+# BoxLab Roadmap — .1165
 
 ## Current coordinated releases
 
-- BoxLab `.1163 PASS` protects Helios's 28 material presets, architectural
-  additions, texture previews, render-only preset application, imported maps,
-  clean capture, 512 spp and reset controls.
-- BoxLab `.1164` normalizes the integrated VIEW > Helios menu theme. Standalone
-  Helios Studio remains independently released at `0.1.3`; its source and UI
-  were not changed.
-- BoxLab owns modelling/projects; Helios owns ray tracing/material data. Both apps
-  retain their existing render and control owners.
+- Standalone Helios Studio `0.1.4 PASS` is the protected upstream source for map
+  previews/replacement, independent UV transforms, relief strength and emissive
+  opacity. Upstream runtime commit: `0e79c5163e5d87703d369250e1a9fff9e2b9085f`.
+- BoxLab `.1165` ports those controls through its existing VIEW > Helios dock,
+  adapter and bundled tracer. The BoxLab device result is pending.
+- BoxLab `.1164 PASS` protects normalized Helios menu styling; `.1163 PASS` protects
+  its 28-material gallery and render-session-only behavior.
 
 ## Current focus
 
-Runtime `.1164` style commit `789e8f3ab31f3acdc68e1d5590b9b9c0697c7d45` is live. The existing Helios dock now uses
-BoxLab's neutral menu theme: white active controls without blue borders, neutral
-values and focus/hover states, and shared button corners/borders. The direct dock
-stylesheet pin and all release markers are `.1164`. Pages run `43659303518` deployed successfully; the browser confirmed the live title and selected Materials-tab style. Hosted Topology run `43659304210` passed, including `npm test` and headless Chromium subdivision comparison. Cris confirms `.1164 PASS`, so protect the menu normalization and the `.1163 PASS` material/render behavior. No local tests were run in this session. Mapping audit: Helios preset textures use UV coordinates and preset repeat scaling; imported UVs are preserved, while missing UVs get box-projected UVs. Diagnose actual mismatches from the mesh UVs and preset scale before changing that behavior.
+`.1165` adds active albedo/normal/roughness previews, image replacement, preset-map
+restore, independent U/V scale, offset and rotation, normal/height relief strength,
+and emitter opacity/pass-through. Both GPU tracing and PBR preview use the same UV
+transform. Existing GLB UVs remain authoritative; missing UVs use the existing box
+projection. No geometry displacement or automatic unwrapping is introduced, and the
+BoxLab project material remains unchanged. Local focused checks pass 14/14, full Node
+regression passes 3,446/3,446, and the Helios bundle builds. Device acceptance and hosted
+Pages/Topology results are pending; see TEST_CHECKLIST.md.
 
 ## Next-build ideas
 
-1. If preset browsing later feels slow, consider category filters for the 28-card preset grid if
-   browsing feels slow; keep the existing grid and parent-panel scroll owner.
-2. Add future materials to standalone Helios Studio first, then port accepted
-   source through BoxLab's existing bundle/adapter when intended for both apps.
-3. Keep presets render-session-only; never replace imported maps or write to saved
-   BoxLab project/material data.
+1. Consider an explicit metalness map card if Helios moves beyond its current packed
+   roughness/metalness map, preserving the imported-map conversion owner.
+2. Evaluate true height displacement only with a bounded subdivision/BVH rebuild
+   design and a representative iPad memory/performance gate.
+3. Consider opacity/alpha maps and a dedicated non-emissive transparency control
+   after the emitter-opacity workflow is accepted.
+
+Continue developing shared ray-trace capabilities in standalone Helios first, then
+port accepted changes through the existing BoxLab vendor bundle and adapter. Keep
+ray-trace material edits out of saved BoxLab scene data.
 
 ---
 

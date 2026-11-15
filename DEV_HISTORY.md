@@ -1,3 +1,31 @@
+# .1165 — port Helios Studio 0.1.4 material mapping controls — 15 November 2026
+
+Cris confirms standalone Helios Studio `0.1.4 PASS`; protect its active map previews,
+per-slot replacement, UV transforms, normal/height relief strength and emissive
+opacity/pass-through. BoxLab `.1164 PASS` neutral View > Helios styling and `.1163
+PASS` material catalogue remain protected. Audit confirmed the existing render dock,
+`boxlab-entry.ts`, texture arrays, material importer and GPU path tracer are the
+owners; no second dock, renderer or BoxLab project-material path was added.
+
+BoxLab release `.1165` ports albedo/normal/roughness map previews, image replacement
+and preset-map restoration; independent U/V scale, offset and rotation; normal/height
+shading strength; and emitter opacity with remaining ray throughput continuing behind
+the emissive surface. Existing custom texture arrays store uploads at their current
+resolution. A safe refusal prevents a ninth live custom texture-array layer from
+recycling a layer used by another material. BoxLab's imported custom-metalness flag
+was moved from matC.y into matF.y to preserve it alongside the new emitter-opacity
+uniform. Both tracing and Three.js PBR owners apply the same UV transform. Relief
+remains shading-only; geometry displacement and automatic UV unwrapping are outside
+this build. Changes remain render-session-only.
+
+Focused Helios/release checks pass14/14; full local suite passes3,446/3,446,0
+failures/cancelled/skips. `npm run build:helios-tracer`, changed JS syntax checks and
+`git diff --check` pass. Hosted Topology and Pages deployment are pending publication;
+BoxLab `.1165` is ready for the hands-on checks in TEST_CHECKLIST.md. Upstream source is
+Helios Studio runtime commit `0e79c5163e5d87703d369250e1a9fff9e2b9085f`.
+
+---
+
 # .1164 — normalize the BoxLab Helios menu theme — 15 November 2026
 
 Cris confirms BoxLab `.1163 PASS`. Normalize the existing integrated Helios dock

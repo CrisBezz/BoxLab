@@ -7,19 +7,21 @@ let dock=null;
 
 function emit(action){document.dispatchEvent(new CustomEvent('boxlab-helios-dock-action',{detail:action}));}
 function field(label,group,key,min,max,step,value,suffix=''){
-  return `<label class="helios-field"><span>${label}<output>${Number(value).toFixed(step<1?2:0)}${suffix}</output></span><input type="range" data-group="${group}" data-key="${key}" min="${min}" max="${max}" step="${step}" value="${value}" aria-label="${label}"/></label>`;
+  const display=key==='emissiveOpacity'?`${Math.round(Number(value)*100)}%`:`${Number(value).toFixed(step<1?2:0)}${suffix}`;
+  return `<label class="helios-field"><span>${label}<output>${display}</output></span><input type="range" data-group="${group}" data-key="${key}" min="${min}" max="${max}" step="${step}" value="${value}" aria-label="${label}"/></label>`;
 }
 function button(label,attrs='',selected=false){return `<button type="button" class="helios-choice${selected?' is-selected':''}" ${attrs}>${label}</button>`;}
 function makeDock(){
   if(dock||!wrap)return;
   dock=document.createElement('section');dock.id='boxlabHeliosDock';dock.className='helios-dock';dock.hidden=true;dock.setAttribute('aria-label','Helios render controls');
-  dock.innerHTML='<button type="button" class="helios-dock-toggle" aria-expanded="true"><span class="helios-chevron">⌄</span><span>Ray Trace</span><span class="helios-status">Loading…</span></button><div class="helios-dock-panel"><nav class="helios-tabs" role="tablist" aria-label="Helios controls"></nav><div class="helios-panel-body"></div></div>';
+  dock.innerHTML='<button type="button" class="helios-dock-toggle" aria-expanded="true"><span class="helios-chevron">⌄</span><span>Ray Trace</span><span class="helios-status">Loading…</span></button><div class="helios-dock-panel"><nav class="helios-tabs" role="tablist" aria-label="Helios controls"></nav><div class="helios-panel-body"></div></div><input class="helios-map-file" type="file" accept="image/*" aria-label="Choose a material map"/>';
   wrap.append(dock);
   dock.addEventListener('pointerdown',event=>event.stopPropagation());
   dock.addEventListener('touchstart',event=>event.stopPropagation(),{passive:true});
   dock.querySelector('.helios-dock-toggle').addEventListener('click',()=>{collapsed=!collapsed;syncVisibility();});
   dock.addEventListener('click',onClick);
   dock.addEventListener('input',onInput);
+  dock.addEventListener('change',onChange);
   drawTabs();
 }
 function syncVisibility(){
@@ -61,14 +63,20 @@ function syncPanelValues(){
     }
   }
   for(const buttonNode of dock.querySelectorAll('[data-do="environment"]'))buttonNode.classList.toggle('is-selected',buttonNode.dataset.id===state.settings.environment);
+  const material=state.materials.find(item=>item.id===selectedMaterial);
+  if(material?.mapPreviews)for(const preview of dock.querySelectorAll('[data-map-preview]')){
+    const source=material.mapPreviews[preview.dataset.mapPreview];
+    if(source&&preview.src!==source)preview.src=source;
+  }
   const note=dock.querySelector('.helios-sample-note');
   if(note)note.textContent=`${state.samples} samples accumulated at ${state.resolution[0]} × ${state.resolution[1]}.`;
   const capture=dock.querySelector('[data-do="render-output"]');
   if(capture){const complete=state.samples>=(state.settings.maxSamples||128);capture.disabled=!complete;capture.title=complete?'Download the clean render without interface controls':'Wait for the selected sample target';}
 }
 function formatValue(key,value){
-  const digits=['roughness','metalness','transmission','ior','clearcoat','emissiveIntensity','exposure','envIntensity'].includes(key)?2:0;
-  const suffix={intensity:' lm',kelvin:' K',azimuth:'°',elevation:'°',radius:' m',exposure:' EV'}[key]||'';
+  if(key==='emissiveOpacity')return `${Math.round(Number(value)*100)}%`;
+  const digits=['roughness','metalness','transmission','ior','clearcoat','emissiveIntensity','exposure','envIntensity','uvScaleX','uvScaleY','uvOffsetX','uvOffsetY','normalStrength'].includes(key)?2:0;
+  const suffix={intensity:' lm',kelvin:' K',azimuth:'°',elevation:'°',radius:' m',exposure:' EV',uvScaleX:'×',uvScaleY:'×',uvRotation:'°'}[key]||'';
   return `${Number(value).toFixed(digits)}${suffix}`;
 }
 function drawLights(){
@@ -83,7 +91,9 @@ function drawMaterials(){
   if(!current)return '<p class="helios-note">No material slots were found in the current BoxLab scene.</p>';
   selectedMaterial=current.id;
   const customMaps=current.hasCustomAlbedo||current.hasCustomNormal||current.hasCustomRoughness||current.hasCustomMetalness;
-  return `<div class="helios-stack"><div class="helios-scroll-row">${state.materials.map(material=>button(`<span class="helios-swatch" style="--swatch:${material.color}"></span>${escapeText(material.name)}`,`data-do="select-material" data-id="${material.id}"`,material.id===current.id)).join('')}</div><div class="helios-settings-heading"><span>Material properties</span><button type="button" class="helios-reset" data-do="reset-material" title="Reset ${escapeText(current.name)} to default" aria-label="Reset ${escapeText(current.name)} to default"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8 8 0 0 0-14.9-3M4 4v4h4M4 13a8 8 0 0 0 14.9 3M20 20v-4h-4"/></svg></button></div><div class="helios-grid"><label class="helios-colour"><span>Albedo</span><input type="color" data-group="material" data-key="color" value="${current.color}" aria-label="Albedo colour"/></label>${field('Roughness','material','roughness',0.02,1,0.01,current.roughness)}${field('Metalness','material','metalness',0,1,0.01,current.metalness)}${field('Transmission','material','transmission',0,1,0.01,current.transmission)}${field('IOR','material','ior',1.1,2.2,0.01,current.ior)}${field('Clearcoat','material','clearcoat',0,1,0.01,current.clearcoat)}${field('Emission','material','emissiveIntensity',0,4,0.05,current.emissiveIntensity)}</div><div class="helios-settings-heading"><span>Preset gallery</span><button type="button" class="helios-gallery-toggle" data-do="toggle-presets" aria-label="${presetsOpen?'Close':'Open'} material preset gallery" aria-expanded="${presetsOpen}" title="Browse material presets"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></button></div>${presetsOpen?`<div class="helios-material-gallery">${(state.materialPresets||[]).map(preset=>`<button type="button" class="helios-material-card" data-do="material-preset" data-id="${preset.id}" aria-label="Apply ${escapeText(preset.name)} to ${escapeText(current.name)}"><span class="helios-material-preview">${preset.previewSvg}</span><span>${escapeText(preset.name)}</span></button>`).join('')}</div>`:''}<p class="helios-note">Render-only controls. BoxLab’s saved material is unchanged.${customMaps?' Imported GLB texture maps stay connected to preserve their detail.':' Preset patterns are available where the source has no texture maps.'}</p></div>`;
+  const maps=[['albedo','Albedo / Color',current.hasCustomAlbedo],['normal','Normal',current.hasCustomNormal],['roughness','Roughness',current.hasCustomRoughness]];
+  const mapCards=maps.map(([slot,label,custom])=>`<article class="helios-map-card"><img class="helios-map-preview" data-map-preview="${slot}" src="${current.mapPreviews?.[slot]||''}" alt="${label} map preview"/><div class="helios-map-info"><strong>${label}</strong><span>${custom?'Uploaded map':'Active map'}</span><button type="button" class="helios-choice" data-do="upload-map" data-slot="${slot}">Change map</button></div></article>`).join('');
+  return `<div class="helios-stack"><div class="helios-scroll-row">${state.materials.map(material=>button(`<span class="helios-swatch" style="--swatch:${material.color}"></span>${escapeText(material.name)}`,`data-do="select-material" data-id="${material.id}"`,material.id===current.id)).join('')}</div><div class="helios-settings-heading"><span>Material properties</span><button type="button" class="helios-reset" data-do="reset-material" title="Reset ${escapeText(current.name)} to default" aria-label="Reset ${escapeText(current.name)} to default"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8 8 0 0 0-14.9-3M4 4v4h4M4 13a8 8 0 0 0 14.9 3M20 20v-4h-4"/></svg></button></div><div class="helios-grid"><label class="helios-colour"><span>Albedo</span><input type="color" data-group="material" data-key="color" value="${current.color}" aria-label="Albedo colour"/></label>${field('Roughness','material','roughness',0.02,1,0.01,current.roughness)}${field('Metalness','material','metalness',0,1,0.01,current.metalness)}${field('Transmission','material','transmission',0,1,0.01,current.transmission)}${field('IOR','material','ior',1.1,2.2,0.01,current.ior)}${field('Clearcoat','material','clearcoat',0,1,0.01,current.clearcoat)}${field('Emission','material','emissiveIntensity',0,4,0.05,current.emissiveIntensity)}${current.emissiveIntensity>0.01?field('Emitter opacity','material','emissiveOpacity',0.05,1,0.01,current.emissiveOpacity??1,'%'):''}</div><div class="helios-settings-heading"><span>Texture maps</span>${customMaps?'<button type="button" class="helios-choice" data-do="restore-maps">Restore preset maps</button>':''}</div><div class="helios-map-grid">${mapCards}</div><div class="helios-settings-heading"><span>UV mapping</span><button type="button" class="helios-choice" data-do="reset-mapping">Reset</button></div><div class="helios-grid">${field('Scale U','material','uvScaleX',0.1,12,0.05,current.uvScaleX??current.uvScale)}${field('Scale V','material','uvScaleY',0.1,12,0.05,current.uvScaleY??current.uvScale)}${field('Offset U','material','uvOffsetX',-1,1,0.01,current.uvOffsetX??0)}${field('Offset V','material','uvOffsetY',-1,1,0.01,current.uvOffsetY??0)}${field('Rotation','material','uvRotation',-180,180,1,current.uvRotation??0,'°')}${field('Normal / height relief','material','normalStrength',0,4,0.05,current.normalStrength)}</div><div class="helios-settings-heading"><span>Preset gallery</span><button type="button" class="helios-gallery-toggle" data-do="toggle-presets" aria-label="${presetsOpen?'Close':'Open'} material preset gallery" aria-expanded="${presetsOpen}" title="Browse material presets"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></button></div>${presetsOpen?`<div class="helios-material-gallery">${(state.materialPresets||[]).map(preset=>`<button type="button" class="helios-material-card" data-do="material-preset" data-id="${preset.id}" aria-label="Apply ${escapeText(preset.name)} to ${escapeText(current.name)}"><span class="helios-material-preview">${preset.previewSvg}</span><span>${escapeText(preset.name)}</span></button>`).join('')}</div>`:''}<p class="helios-note">Render-only controls; BoxLab’s saved material is unchanged. Height relief affects shading only and does not alter the mesh silhouette.</p></div>`;
 }
 function drawRaytracer(){
   const settings=state.settings;
@@ -104,6 +114,9 @@ function onClick(event){
   else if(action==='reset-light')emit({action:'reset-light',id:selectedLight});
   else if(action==='select-material'){selectedMaterial=id;drawPanel();}
   else if(action==='reset-material')emit({action:'reset-material',id:selectedMaterial});
+  else if(action==='upload-map'){const input=dock.querySelector('.helios-map-file');if(input){input.dataset.slot=buttonNode.dataset.slot||'albedo';input.value='';input.click();}}
+  else if(action==='restore-maps')emit({action:'restore-maps',id:selectedMaterial});
+  else if(action==='reset-mapping'){const material=state?.materials.find(item=>item.id===selectedMaterial);if(material)emit({action:'material',id:selectedMaterial,patch:{uvScaleX:material.uvScale,uvScaleY:material.uvScale,uvOffsetX:0,uvOffsetY:0,uvRotation:0}});}
   else if(action==='lighting-rig')emit({action,id});
   else if(action==='material-preset'){emit({action,id:selectedMaterial,presetId:id});presetsOpen=false;drawPanel();}
   else if(action==='toggle-presets'){presetsOpen=!presetsOpen;drawPanel();}
@@ -112,6 +125,12 @@ function onClick(event){
   else if(action==='restart')emit({action:'restart'});
   else if(action==='camera')emit({action:'camera',preset:id});
 }
+function onChange(event){
+  const input=event.target.closest('.helios-map-file');
+  const file=input?.files?.[0];
+  if(!file)return;
+  emit({action:'upload-map',id:selectedMaterial,slot:input.dataset.slot||'albedo',file});
+}
 function onInput(event){
   const input=event.target.closest('[data-group][data-key]');
   if(!input)return;
@@ -119,7 +138,7 @@ function onInput(event){
   const value=input.type==='checkbox'?input.checked:input.type==='range'||input.tagName==='SELECT'?Number(input.value):input.value;
   if(input.type==='range'){
     const output=input.closest('.helios-field')?.querySelector('output');
-    if(output)output.textContent=`${Number(value).toFixed(Number(input.step)<1?2:0)}${key==='intensity'?' lm':key==='kelvin'?' K':key==='azimuth'||key==='elevation'?'°':key==='radius'?' m':key==='exposure'?' EV':''}`;
+    if(output)output.textContent=formatValue(key,value);
   }
   if(group==='light')emit({action:'light',id:selectedLight,patch:{[key]:value,...(key==='kelvin'?{useKelvin:true}:key==='color'?{useKelvin:false}:{})}});
   else if(group==='material')emit({action:'material',id:selectedMaterial,patch:{[key]:value}});

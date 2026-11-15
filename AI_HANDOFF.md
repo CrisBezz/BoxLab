@@ -3,61 +3,66 @@
 ## GitHub publication method — verified 14 November 2026
 
 Use the connected GitHub tools for publication when shell HTTPS git push has no credentials. A shell username/token error does not mean repository access is missing. The connected GitHub create_blob write route was verified in this session. Upload exact tested file bytes with create_blob, create_tree on the freshly inspected main tree, create_commit with current main as parent, then update_ref with expected_sha and force=false. Verify Actions/Pages and live release/cache markers afterward. For large files, read local bytes in bounded base64 chunks, concatenate them in the tool runtime, then create one complete blob per file. Never publish separate partial file chunks. Preserve concurrent remote work; inspect main again if the expected SHA fails. Standing push/publish authorization is already granted. Do not repeatedly retry an unauthenticated shell or ask the user for access again while the connected route works.
-# Current handoff — BoxLab .1164 + Helios Studio 0.1.3 — 15 November 2026
+# Current handoff — BoxLab .1165 + Helios Studio 0.1.4 — 15 November 2026
 
-BoxLab `CrisBezz/BoxLab` is at release `.1164`; standalone Helios Studio
-`CrisBezz/HeliosStudio` remains at accepted `0.1.3`. Live apps:
-https://crisbezz.github.io/BoxLab/ and https://crisbezz.github.io/HeliosStudio/.
-BoxLab runtime commit: `789e8f3ab31f3acdc68e1d5590b9b9c0697c7d45`. The upstream Helios source remains
-`44a7565e24ee96ea7907716dc67b1b97a810a63d`; no standalone Helios files changed.
+BoxLab build `.1165` ports the user-accepted Helios Studio 0.1.4 material-mapping
+work into VIEW > Helios. Standalone Helios Studio remains at `0.1.4`; the accepted
+upstream runtime commit is `0e79c5163e5d87703d369250e1a9fff9e2b9085f`. BoxLab
+owns modelling, files and saved scene materials. Helios owns the ray tracer,
+texture arrays and render-only material state. Keep using the existing BoxLab
+Helios dock, adapter and bundled renderer.
 
-Cris confirms BoxLab `.1163 PASS`, protecting the 28-preset catalogue,
-architectural materials, texture previews, render-session-only application,
-imported-map retention, clean capture, 512 spp and reset controls.
+## .1165 integration state
 
-## Shared integration and style ownership
+- Material cards show the active albedo, normal and roughness map previews; each
+  slot accepts image replacement, and Restore preset maps returns to its current
+  Helios preset/import baseline. Uploaded maps remain render-session-only.
+- Mapping controls independently set U/V scale, U/V offset and rotation. The same
+  transform is applied by the existing GPU path tracer and Three.js PBR material
+  preview. Normal / height relief controls shading only; it does not displace the
+  mesh silhouette.
+- Emissive materials expose emitter opacity. The path tracer adds the attenuated
+  emission and continues the remaining ray throughput behind the emitter; the PBR
+  preview uses matching material opacity.
+- The 0.1.4 source changes are integrated through `src/helios-vendor/engine/`
+  and `types/studio.ts`; `boxlab-entry.ts` remains the BoxLab adapter. BoxLab's
+  imported custom-metalness flag uses `matF.y` so it stays separate from the new
+  emitter-opacity uniform in `matC.y`.
+- Preview data URLs are cached by material texture layer/slot; transformed Three.js
+  texture sets are cached by full UV transform. Uploaded data is written through the
+  existing custom texture-array owner. The eight-layer limit refuses a ninth live
+  custom layer rather than overwriting another material. No scene UV unwrap or second
+  renderer was added.
+- Shell/version markers and the release owners are `.1165`. Cache chain: shell ->
+  `src/pathtrace-mode.js?v=0.36.18.1165` ->
+  `src/helios-tracer.bundle.js?v=0.36.18.1165`; shell also repins the dock CSS/UI,
+  release-version owner, shell-comparison and drawer -> Face workflow -> release
+  owner. Preserve `src/multi-object-transform.js?v=0.36.1.0`.
 
-- BoxLab owns modelling, scene/project serialization and the integrated VIEW >
-  Helios dock. Helios Studio owns the ray tracer, material data, procedural
-  textures and previews. Continue using `src/helios-dock.js` and
-  `helios-dock.css`; do not add another renderer or control dock.
-- `.1164` normalizes the existing dock to BoxLab's shared button theme: selected
-  tabs and choices use the standard white active fill with no blue border; output
-  text and hover/reset states are neutral; focus indication remains visible in
-  neutral white; borders and button corners match the base BoxLab controls.
-- The control layout, scroll owner, ray-trace state/actions and upstream Helios
-  source are unchanged. The only changed runtime files are `helios-dock.css`,
-  `index.html` and `version.json`. Direct stylesheet pin is
-  `helios-dock.css?v=0.36.18.1164`.
-- Preserve `src/multi-object-transform.js?v=0.36.1.0` and unrelated modelling,
-  Paint and UV owners.
+Cris confirms standalone Helios Studio `0.1.4 PASS`, protecting its texture
+previews/replacement, UV transforms, relief strength and emitter transparency. BoxLab
+`.1165` is awaiting hands-on acceptance. BoxLab `.1164 PASS` neutral menu styling and
+`.1163 PASS` 28-material catalogue remain protected. Local focused Helios/release checks
+pass 14/14 and the full Node suite passes 3,446/3,446; `npm run build:helios-tracer`,
+changed-module syntax checks and `git diff --check` pass. Pages/hosted Topology are pending
+publication. See TEST_CHECKLIST.md for device checks and current release status.
 
-## Helios material texture mapping audit
+## Mapping behavior and limits
 
-The Helios procedural preset maps are UV-space textures. The renderer attaches
-albedo, normal and roughness DataTextures to the Three.js material and applies
-the preset's `uvScale` as texture repeat; this is not world-space or triplanar
-projection. In `src/helios-vendor/engine/models.ts`, imported mesh UVs are kept
-when a `uv` attribute exists. Only meshes without that attribute receive
-generated box-projected UVs via `applyCleanBoxUVs(rawGeom, 1.0)`; there is no
-automatic unwrap in this path. A UV attribute that exists but has degenerate,
-incorrect or differently scaled coordinates is still preserved. For imported
-custom PBR maps, `applyMaterialPreset` preserves those maps rather than
-replacing them with a Helios preset map. The exact reason for any apparent
-mismatch needs the affected asset's UV data and the chosen preset's repeat scale.
+Procedural maps use UV coordinates. Imported UV attributes are preserved; BoxLab
+Helios generates box-projected UVs only for meshes without UVs and does not unwrap.
+Normal / height relief changes shading, not geometry. Real displacement would need
+an explicit geometry/BVH update strategy and memory limits; keep it separate from
+this port. Preset/map edits are render-only and do not write BoxLab project data.
 
-## Current release — .1164
+---
 
-Cris confirms `.1164 PASS`. Protect the normalized View > Helios menu styling.
-Cris's `.1163 PASS` is also protected. Runtime style commit `789e8f3ab31f3acdc68e1d5590b9b9c0697c7d45` is on
-`main`; release-contract follow-up commit is `12c148e3c8095b7a86011536933e6e22f98b1792`.
-Pages run `43659303518` deployed successfully; the live app reports title/version
-`.1164`, and the Materials tab displays the neutral white selected style without
-a blue border. Hosted Topology workflow run `43659304210` completed successfully, including
-`npm test` and the headless Chromium subdivision comparison. GitHub Pages run
-`43659303518` built and deployed successfully. Cris confirms `.1164 PASS`; protect
-the neutral Helios menu styling alongside `.1163` material behavior. No local test
-run was performed in this session. See `TEST_CHECKLIST.md` for the acceptance record.
+# .1164 BoxLab Helios menu visual normalization — 15 November 2026
+
+Cris confirms `.1164 PASS`. The integrated dock uses neutral BoxLab active-button
+colors, no blue selected border, neutral outputs/focus states and shared control
+corners. Protect this with the `.1163 PASS` material behavior. Earlier detailed
+history below retains the original release evidence and previous cross-repo status.
 
 ---
 

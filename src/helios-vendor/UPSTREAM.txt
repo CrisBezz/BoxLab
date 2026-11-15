@@ -1,4 +1,4 @@
 Upstream: CrisBezz/HeliosStudio
-Release: 0.1.3
-Commit: 44a7565e24ee96ea7907716dc67b1b97a810a63d
-Imported modules: GPU path tracer, BVH, texture manager, model importer, UV cleanup, material preset catalog, shared SVG material preview helper, types, color helpers.
+Release: 0.1.4
+Commit: 0e79c5163e5d87703d369250e1a9fff9e2b9085f
+Imported modules: GPU path tracer with independent UV transforms and emissive opacity, BVH, texture manager with map previews and replacement, model importer, UV cleanup, material preset catalog, shared SVG material preview helper, types, color helpers.

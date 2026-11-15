@@ -2,7 +2,8 @@ import * as THREE from 'three';
 import { buildSceneBVH } from './engine/bvh';
 import { importModelFromFile } from './engine/models';
 import { GPUPathTracer } from './engine/pathTracer';
-import { PbrTextureManager } from './engine/textures';
+import { MAX_CUSTOM_LAYERS, PbrTextureManager } from './engine/textures';
+import { TextureSlot } from './types/studio';
 import {
   DEFAULT_LIGHTS,
   DEFAULT_RAYTRACER_SETTINGS,
@@ -62,7 +63,19 @@ export async function createBoxLabHeliosTrace(
       return {
         settings: { ...settings },
         lights: lights.map((light) => ({ ...light })),
-        materials: importedProject.materials.map((material) => ({ ...material })),
+        materials: importedProject.materials.map((material) => {
+          const layer = materialLayerMap.get(material.id)
+            ?? PRESET_TO_LAYER[material.texturePreset]
+            ?? 0;
+          return {
+            ...material,
+            mapPreviews: {
+              albedo: textureManager.getMapPreviewDataUrl(layer, 'albedo'),
+              normal: textureManager.getMapPreviewDataUrl(layer, 'normal'),
+              roughness: textureManager.getMapPreviewDataUrl(layer, 'roughness'),
+            },
+          };
+        }),
         samples: pathTracer?.getSamples() ?? 0,
         resolution: pathTracer?.getResolution() ?? [0, 0],
         materialPresets: MATERIAL_PRESETS.map((preset) => ({ ...preset, previewSvg: createMaterialPreviewSvg(preset, 'boxlab-material') })),
@@ -80,7 +93,12 @@ export async function createBoxLabHeliosTrace(
       const material = importedProject.materials.find((item) => item.id === id);
       if (!material) return;
       const safePatch: Partial<(typeof importedProject.materials)[number]> = {};
-      for (const key of ['color', 'roughness', 'metalness', 'ior', 'transmission', 'clearcoat', 'emissiveIntensity', 'texturePreset', 'uvScale', 'normalStrength'] as const) {
+      for (const key of [
+        'color', 'roughness', 'metalness', 'ior', 'transmission', 'clearcoat',
+        'emissiveIntensity', 'emissiveOpacity', 'texturePreset', 'uvScale',
+        'uvScaleX', 'uvScaleY', 'uvOffsetX', 'uvOffsetY', 'uvRotation',
+        'normalStrength',
+      ] as const) {
         if (patch[key] !== undefined) Object.assign(safePatch, { [key]: patch[key] });
       }
       const hasImportedMaps = Boolean(
@@ -92,6 +110,38 @@ export async function createBoxLabHeliosTrace(
       if (!hasImportedMaps && safePatch.texturePreset) {
         materialLayerMap.set(id, PRESET_TO_LAYER[safePatch.texturePreset]);
       }
+      pathTracer?.resetAccumulation();
+    }
+
+    async function uploadMaterialMap(id: string, slot: TextureSlot, file: File) {
+      const material = importedProject.materials.find((item) => item.id === id);
+      if (!material || !file.type.startsWith('image/')) return;
+      let layer = materialLayerMap.get(id);
+      if (layer === undefined || layer < 100) {
+        const usedLayers = new Set(
+          [...materialLayerMap.values()].filter((value) => value >= 100),
+        );
+        if (usedLayers.size >= MAX_CUSTOM_LAYERS) {
+          throw new Error('All eight custom Helios texture layers are in use; restore an uploaded layer before adding another.');
+        }
+        layer = textureManager.allocateCustomLayer(material.texturePreset, false);
+        materialLayerMap.set(id, layer);
+      }
+      await textureManager.writeFileToLayer(layer, slot, file);
+      if (slot === 'albedo') material.hasCustomAlbedo = true;
+      else if (slot === 'normal') material.hasCustomNormal = true;
+      else material.hasCustomRoughness = true;
+      pathTracer?.resetAccumulation();
+    }
+
+    function restoreMaterialPresetMaps(id: string) {
+      const material = importedProject.materials.find((item) => item.id === id);
+      if (!material) return;
+      materialLayerMap.delete(id);
+      material.hasCustomAlbedo = false;
+      material.hasCustomNormal = false;
+      material.hasCustomRoughness = false;
+      material.hasCustomMetalness = false;
       pathTracer?.resetAccumulation();
     }
 
@@ -135,6 +185,8 @@ export async function createBoxLabHeliosTrace(
       getState,
       updateLights,
       updateMaterial,
+      uploadMaterialMap,
+      restoreMaterialPresetMaps,
       applyMaterialPreset,
       updateSettings,
       applyLightingRig,

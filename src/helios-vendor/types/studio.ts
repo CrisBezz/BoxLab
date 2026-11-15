@@ -64,7 +64,13 @@ export interface MaterialSpec {
   emissiveIntensity: number;
   texturePreset: PbrTexturePresetId;
   uvScale: number;
+  uvScaleX?: number;
+  uvScaleY?: number;
+  uvOffsetX?: number;
+  uvOffsetY?: number;
+  uvRotation?: number;
   normalStrength: number;
+  emissiveOpacity?: number;
   hasCustomAlbedo?: boolean;
   hasCustomNormal?: boolean;
   hasCustomRoughness?: boolean;

@@ -6,7 +6,7 @@ const read=path=>fs.readFileSync(new URL(`../${path}`,import.meta.url),'utf8');
 const presetSource=read('src/helios-vendor/data/presets.ts');
 const presetBlock=presetSource.split('export const MATERIAL_PRESETS: MaterialPreset[] = [')[1]?.split('export const DEFAULT_RAYTRACER_SETTINGS')[0]||'';
 
-test('BoxLab Helios .1163 integrates the complete 28-card Helios Studio .1.3 catalog',()=>{
+test('BoxLab Helios .1165 retains the complete 28-card Helios Studio catalog',()=>{
   const ids=[...presetBlock.matchAll(/^\s+id: '([^']+)'/gm)].map(match=>match[1]);
   const expected=[
     'brushed-titanium','polished-chrome','anodized-gold','optical-crystal','smoked-acrylic',
@@ -45,7 +45,7 @@ test('the BoxLab adapter applies presets only through the selected render-sessio
   assert.match(entry,/createMaterialPreviewSvg\(preset, 'boxlab-material'\)/);
   assert.match(entry,/function applyMaterialPreset\(id: string, presetId: string\)/);
   assert.match(entry,/hasImportedMaps[\s\S]*delete safePatch\.texturePreset/,'imported PBR maps remain protected');
-  assert.match(mode,/helios-tracer\.bundle\.js\?v=0\.36\.18\.1163/,'the rebuilt tracer bundle gets a fresh cache key');
-  assert.match(read('index.html'),/pathtrace-mode\.js\?v=0\.36\.18\.1163/,'the parent loader gets a fresh cache key');
-  assert.match(read('src/helios-vendor/UPSTREAM.txt'),/Commit: 44a7565e24ee96ea7907716dc67b1b97a810a63d/);
+  assert.match(mode,/helios-tracer\.bundle\.js\?v=0\.36\.18\.1165/,'the rebuilt tracer bundle gets a fresh cache key');
+  assert.match(read('index.html'),/pathtrace-mode\.js\?v=0\.36\.18\.1165/,'the parent loader gets a fresh cache key');
+  assert.match(read('src/helios-vendor/UPSTREAM.txt'),/Commit: 0e79c5163e5d87703d369250e1a9fff9e2b9085f/);
 });

@@ -2,7 +2,7 @@ import * as THREE from 'three';
 
 const wrap=document.querySelector('#viewportWrap');
 const status=document.querySelector('#selectionStatus');
-const HELIOS_BUNDLE='./helios-tracer.bundle.js?v=0.36.18.1163';
+const HELIOS_BUNDLE='./helios-tracer.bundle.js?v=0.36.18.1165';
 
 let active=false;
 let interacting=false;
@@ -195,7 +195,7 @@ function publishControlState(isReady=Boolean(tracer)){
   document.dispatchEvent(new CustomEvent('boxlab-helios-trace-state',{detail:{active,ready:isReady,state:stateWithCamera}}));
 }
 
-function applyDockAction(detail={}){
+async function applyDockAction(detail={}){
   if(!active||!tracer)return;
   const stateNow=tracer.getState();
   if(detail.action==='light'){
@@ -205,10 +205,15 @@ function applyDockAction(detail={}){
     const defaults=defaultLights.find(light=>light.id===detail.id);
     if(defaults)tracer.updateLights(stateNow.lights.map(light=>light.id===detail.id?{...defaults}:light));
   }else if(detail.action==='material')tracer.updateMaterial(detail.id,detail.patch||{});
+  else if(detail.action==='upload-map'){
+    try{await tracer.uploadMaterialMap(detail.id,detail.slot,detail.file);}
+    catch(error){message('map upload failed',error?.message||String(error));}
+  }
+  else if(detail.action==='restore-maps')tracer.restoreMaterialPresetMaps(detail.id);
   else if(detail.action==='reset-material'){
     const defaults=defaultMaterials.get(detail.id);
     if(defaults){
-      const keys=['color','roughness','metalness','ior','transmission','clearcoat','emissiveIntensity','texturePreset','uvScale','normalStrength'];
+      const keys=['color','roughness','metalness','ior','transmission','clearcoat','emissiveIntensity','emissiveOpacity','texturePreset','uvScale','uvScaleX','uvScaleY','uvOffsetX','uvOffsetY','uvRotation','normalStrength'];
       const patch=Object.fromEntries(keys.filter(key=>defaults[key]!==undefined).map(key=>[key,defaults[key]]));
       tracer.updateMaterial(detail.id,patch);
     }

@@ -1,3 +1,29 @@
+## Helios Studio 0.1.4 PASS and BoxLab .1165 mapping port — 15 November 2026
+
+Cris confirms standalone Helios Studio `0.1.4 PASS`; this source behavior is
+protected. BoxLab `.1165` ports the accepted mapping controls and is pending device
+acceptance.
+
+- [ ] Open VIEW > Helios > Materials and verify albedo, normal and roughness map
+  previews match the active material. Change each map with an image and confirm its
+  preview and rendered surface update. Restore preset maps and confirm they return.
+- [ ] Change Scale U and V independently; then test Offset U/V and Rotation. Confirm
+  each changes the ray-traced texture placement/orientation without changing the
+  BoxLab object's UV layout or saved material.
+- [ ] Adjust Normal / height relief and confirm shading depth changes. Confirm the
+  mesh silhouette does not change (true geometry displacement is not in this build).
+- [ ] On an emissive preset, lower Emitter opacity and confirm the light source
+  remains visible through the surface while less emission contributes. Return it to
+  full opacity; confirm other non-emissive material controls remain usable.
+- [ ] Switch away from Helios and return, and orbit/pan while the dock is open. Confirm
+  the render controls remain responsive and BoxLab project/material data are intact.
+
+Automated: focused Helios/release checks passed 14/14; full local regression passed
+3,446/3,446. `npm run build:helios-tracer`, changed-module syntax checks and
+`git diff --check` passed. Hosted Topology/Pages results are pending publication.
+
+---
+
 ## .1164 BoxLab Helios menu visual normalization — hands-on check
 
 Cris confirms `.1164 PASS`; protect this visual normalization and the `.1163 PASS` behavior. Protect the 28 material presets, render-session-only

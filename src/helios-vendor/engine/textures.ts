@@ -163,7 +163,8 @@ export class PbrTextureManager {
   private customRoughMetalBytes: Uint8Array | null = null;
   private readonly customIsAtlas = new Array<boolean>(MAX_CUSTOM_LAYERS).fill(false);
 
-  private readonly threeMapsCache = new Map<number, ThreePbrMaps>();
+  private readonly threeMapsCache = new Map<string, ThreePbrMaps>();
+  private readonly previewCache = new Map<string, string>();
   private nextCustomSlice = 0;
   private readonly maxAnisotropy: number;
 
@@ -671,13 +672,27 @@ export class PbrTextureManager {
     };
   }
 
+  private disposeMapSet(maps: ThreePbrMaps) {
+    maps.map?.dispose();
+    maps.normalMap?.dispose();
+    maps.roughnessMap?.dispose();
+  }
+
+  public clearThreeMapsCache() {
+    for (const maps of this.threeMapsCache.values()) this.disposeMapSet(maps);
+    this.threeMapsCache.clear();
+  }
+
   private invalidateLayer(layer: number) {
-    const cached = this.threeMapsCache.get(layer);
-    if (cached) {
-      cached.map?.dispose();
-      cached.normalMap?.dispose();
-      cached.roughnessMap?.dispose();
-      this.threeMapsCache.delete(layer);
+    const prefix = String(layer) + ':';
+    for (const [key, maps] of this.threeMapsCache) {
+      if (key.startsWith(prefix)) {
+        this.disposeMapSet(maps);
+        this.threeMapsCache.delete(key);
+      }
+    }
+    for (const key of this.previewCache.keys()) {
+      if (key.startsWith(prefix)) this.previewCache.delete(key);
     }
     this.albedoArray.needsUpdate = true;
     this.normalArray.needsUpdate = true;
@@ -687,7 +702,60 @@ export class PbrTextureManager {
     this.customRoughMetalArray.needsUpdate = true;
   }
 
-  public getThreeMapsForLayer(layer: number, uvScale: number): ThreePbrMaps {
+  public getMapPreviewDataUrl(layer: number, slot: TextureSlot): string | null {
+    const key = String(layer) + ':' + slot;
+    const cached = this.previewCache.get(key);
+    if (cached) return cached;
+    const isCustom = layer >= CUSTOM_LAYER_OFFSET;
+    const slice = isCustom ? layer - CUSTOM_LAYER_OFFSET : layer;
+    const size = isCustom ? CUSTOM_TEX_SIZE : PBR_TEX_SIZE;
+    const source = slot === 'albedo'
+      ? (isCustom ? this.customAlbedoBytes : this.albedoBytes)
+      : slot === 'normal'
+        ? (isCustom ? this.customNormalBytes : this.normalBytes)
+        : (isCustom ? this.customRoughMetalBytes : this.roughMetalBytes);
+    if (!source) return null;
+    const previewSize = 72;
+    const canvas = document.createElement('canvas');
+    canvas.width = previewSize;
+    canvas.height = previewSize;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return null;
+    const image = ctx.createImageData(previewSize, previewSize);
+    const sliceOffset = slice * size * size * 4;
+    for (let y = 0; y < previewSize; y++) {
+      const sy = Math.min(size - 1, Math.floor((y / previewSize) * size));
+      for (let x = 0; x < previewSize; x++) {
+        const sx = Math.min(size - 1, Math.floor((x / previewSize) * size));
+        const src = sliceOffset + (sy * size + sx) * 4;
+        const dst = (y * previewSize + x) * 4;
+        if (slot === 'roughness') {
+          const value = source[src + 1];
+          image.data[dst] = value;
+          image.data[dst + 1] = value;
+          image.data[dst + 2] = value;
+        } else {
+          image.data[dst] = source[src];
+          image.data[dst + 1] = source[src + 1];
+          image.data[dst + 2] = source[src + 2];
+        }
+        image.data[dst + 3] = 255;
+      }
+    }
+    ctx.putImageData(image, 0, 0);
+    const dataUrl = canvas.toDataURL('image/png');
+    this.previewCache.set(key, dataUrl);
+    return dataUrl;
+  }
+
+  public getThreeMapsForLayer(
+    layer: number,
+    uvScaleX: number,
+    uvScaleY = uvScaleX,
+    offsetX = 0,
+    offsetY = 0,
+    rotationDegrees = 0,
+  ): ThreePbrMaps {
     if (layer === 0) {
       return { map: null, normalMap: null, roughnessMap: null };
     }
@@ -696,8 +764,9 @@ export class PbrTextureManager {
     const slice = isCustom ? layer - CUSTOM_LAYER_OFFSET : layer;
     const size = isCustom ? CUSTOM_TEX_SIZE : PBR_TEX_SIZE;
     const isAtlas = isCustom && Boolean(this.customIsAtlas[slice]);
+    const cacheKey = [layer, uvScaleX, uvScaleY, offsetX, offsetY, rotationDegrees].join(':');
 
-    let maps = this.threeMapsCache.get(layer);
+    let maps = this.threeMapsCache.get(cacheKey);
     if (!maps) {
       const srcAlbedo = isCustom ? this.customAlbedoBytes : this.albedoBytes;
       const srcNormal = isCustom ? this.customNormalBytes : this.normalBytes;
@@ -715,7 +784,7 @@ export class PbrTextureManager {
         sliceCopy.set(src.subarray(offset, offset + sliceBytes));
         const tex = new THREE.DataTexture(sliceCopy, size, size, THREE.RGBAFormat);
         tex.colorSpace = isSrgb ? THREE.SRGBColorSpace : THREE.NoColorSpace;
-        const wrap = isAtlas && uvScale <= 1.02 ? THREE.ClampToEdgeWrapping : THREE.RepeatWrapping;
+        const wrap = isAtlas && uvScaleX <= 1.02 && uvScaleY <= 1.02 ? THREE.ClampToEdgeWrapping : THREE.RepeatWrapping;
         tex.wrapS = wrap;
         tex.wrapT = wrap;
         tex.minFilter = THREE.LinearMipmapLinearFilter;
@@ -731,13 +800,19 @@ export class PbrTextureManager {
         normalMap: makeTex(srcNormal, false),
         roughnessMap: makeTex(srcRough, false),
       };
-      this.threeMapsCache.set(layer, maps);
+      this.threeMapsCache.set(cacheKey, maps);
     }
 
-    const desiredWrap = isAtlas && uvScale <= 1.02 ? THREE.ClampToEdgeWrapping : THREE.RepeatWrapping;
+    const desiredWrap = isAtlas && uvScaleX <= 1.02 && uvScaleY <= 1.02
+      ? THREE.ClampToEdgeWrapping
+      : THREE.RepeatWrapping;
     [maps.map, maps.normalMap, maps.roughnessMap].forEach((t) => {
       if (t) {
-        t.repeat.set(uvScale, uvScale);
+        t.repeat.set(uvScaleX, uvScaleY);
+        t.offset.set(offsetX, offsetY);
+        t.center.set(0.5, 0.5);
+        t.rotation = (rotationDegrees * Math.PI) / 180;
+        t.updateMatrix();
         if (t.wrapS !== desiredWrap || t.wrapT !== desiredWrap) {
           t.wrapS = desiredWrap;
           t.wrapT = desiredWrap;
@@ -752,12 +827,9 @@ export class PbrTextureManager {
   public resetCustomCounter() {
     this.nextCustomSlice = 0;
     this.customIsAtlas.fill(false);
-    for (const key of Array.from(this.threeMapsCache.keys())) {
-      if (key >= CUSTOM_LAYER_OFFSET) {
-        const cached = this.threeMapsCache.get(key);
-        cached?.map?.dispose();
-        cached?.normalMap?.dispose();
-        cached?.roughnessMap?.dispose();
+    for (const [key, maps] of this.threeMapsCache) {
+      if (Number(key.split(':')[0]) >= CUSTOM_LAYER_OFFSET) {
+        this.disposeMapSet(maps);
         this.threeMapsCache.delete(key);
       }
     }
@@ -770,11 +842,6 @@ export class PbrTextureManager {
     this.customAlbedoArray.dispose();
     this.customNormalArray.dispose();
     this.customRoughMetalArray.dispose();
-    for (const cached of this.threeMapsCache.values()) {
-      cached.map?.dispose();
-      cached.normalMap?.dispose();
-      cached.roughnessMap?.dispose();
-    }
-    this.threeMapsCache.clear();
+    this.clearThreeMapsCache();
   }
 }
