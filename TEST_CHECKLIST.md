@@ -14181,4 +14181,6 @@ the existing pathtrace lifecycle owner; user acceptance is pending.
 Automated lifecycle coverage verifies map replay, Restore ordering, stale-scene cleanup
 and release pins. Focused Helios/release checks pass 29/29; full local suite passes
 3,453/3,453 (118.807s). Changed-module syntax checks and `git diff --check` pass.
-Hosted validation and Pages publication status will be added to AI_HANDOFF.md.
+Hosted Topology `43692331821` passes 3,453/3,453; headless Chromium subdivision parity
+is 11/11 (`LAB_ONLY`). Pages `43692331687` deployed runtime commit
+`79b644d1cbf4c150215c624daa7a653e582aa0f1`. iPad acceptance remains pending.
