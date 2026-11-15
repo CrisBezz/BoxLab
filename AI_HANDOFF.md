@@ -34,7 +34,7 @@ texture arrays, importer, dock, adapter and bundled tracer as the feature owners
 
 ## .1167 validation and hands-on status
 
-Focused lifecycle regressions cover mode-switch replacement persistence, Restore ordering and stale scene identity: 29/29 Helios/release tests pass. Full local `npm test` passes 3,453/3,453 (118.807s), zero failures/cancelled/skips. Changed-module syntax checks and `git diff --check` pass. `.1166` map upload itself is recorded PASS; the round-trip failure is addressed in `.1167` and awaits device confirmation. Keep `.1165 PASS` and `.1164 PASS` protected. Hosted Topology/Pages evidence is pending publication.
+Focused lifecycle regressions cover mode-switch replacement persistence, Restore ordering and stale scene identity: 29/29 Helios/release tests pass. Full local `npm test` passes 3,453/3,453 (118.807s), zero failures/cancelled/skips. Changed-module syntax checks and `git diff --check` pass. `.1166` map upload itself is recorded PASS; the round-trip failure is addressed in `.1167` and awaits device confirmation. Keep `.1165 PASS` and `.1164 PASS` protected. Hosted Topology regression `43692331821` passes 3,453/3,453; the headless Chromium subdivision comparison reports 11/11 exact parity, aggregate `LAB_ONLY`. Pages run `43692331687` succeeded on runtime commit `79b644d1cbf4c150215c624daa7a653e582aa0f1`. Main/live release markers are `.1167`; user hands-on acceptance remains pending.
 
 ## Mapping and limits
 
