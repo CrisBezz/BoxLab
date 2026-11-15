@@ -132,12 +132,12 @@ test('1101 preserves an existing .1099 screen-comparison record when opening the
  const runs=f.api.report().runs;assert.equal(runs[0].id,prior.id);assert.equal(runs[0].release,prior.release);assert.equal(runs[0].notes,prior.notes);assert.equal(runs[0].ratings.startup,'pass');assert.equal(runs.at(-1).release,release);
 });
 
-test('1167 keeps prior shell-comparison records with their original release labels',()=>{
+test('1168 keeps prior shell-comparison records with their original release labels',()=>{
   const prior={id:'native1154',release:'0.36.18.1154',mode:'current',ratings:{startup:'pass'},notes:'accepted on .1154'};
   const older={id:'native1161',release:'0.36.18.1161',mode:'separated',ratings:{startup:'pass'},notes:'accepted on .1161'};
   const recent={id:'native1162',release:'0.36.18.1162',mode:'current',ratings:{startup:'pass'},notes:'accepted on .1162'};
   const previous={id:'native1163',release:'0.36.18.1163',mode:'separated',ratings:{startup:'pass'},notes:'accepted on .1163'};
   const currentPrior={id:'native1165',release:'0.36.18.1165',mode:'current',ratings:{startup:'pass'},notes:'accepted on .1165'};
   const data=new Map([[key,JSON.stringify({version:1,release:'0.36.18.1165',runs:[prior,older,recent,previous,currentPrior]})]]),f=fixture('current',{data});
-  const runs=f.api.report().runs;assert.deepEqual(JSON.parse(JSON.stringify(runs.slice(0,5))),[prior,older,recent,previous,currentPrior]);assert.equal(runs.at(-1).release,'0.36.18.1167');
+  const runs=f.api.report().runs;assert.deepEqual(JSON.parse(JSON.stringify(runs.slice(0,5))),[prior,older,recent,previous,currentPrior]);assert.equal(runs.at(-1).release,'0.36.18.1168');
 });
