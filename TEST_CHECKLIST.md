@@ -1,3 +1,37 @@
+## BoxLab .1168 — separate surface opacity for non-emissive materials — 15 November 2026
+
+`.1167 PASS` remains protected for map replacement persistence through PBR/Helios
+switches. `.1168` adds scalar opacity in the existing integrated Helios material dock;
+all adjustments remain render-session-only.
+
+- [ ] On an imported material with no emission, lower Surface opacity and confirm the
+  object becomes see-through in the ray trace and shadows behind it become lighter.
+- [ ] Compare the PBR preview and ray trace at full, partial and zero Surface opacity;
+  confirm it affects only the selected material.
+- [ ] Raise Emission and confirm Surface opacity is replaced by the separate Emitter
+  opacity control. Lower Emitter opacity and confirm the emitting surface remains
+  visible while rays continue through it.
+- [ ] Switch between Helios and PBR and confirm Surface opacity remains during the
+  current render session; confirm BoxLab saved material/project data is unchanged.
+- [ ] Recheck `.1167` map replacement through a PBR → Helios round trip and the
+  normalized Helios menus and material map controls.
+
+Automated: focused Helios/release checks pass 36/36; full local `npm test` passes
+3,455/3,455 (118.917s), zero failures/cancelled/skips. Tracer bundle build, changed-JS
+syntax, release asset contract and `git diff --check` pass. Hosted Topology and Pages
+release verification plus native iPad visual acceptance are pending.
+
+## BoxLab .1167 — Helios map-session persistence — protected PASS
+
+Cris confirms `.1167 PASS`. Protect map replacement persistence when switching from
+Helios to PBR and back, Restore preset maps replay before later replacements, and
+discarding overrides when the BoxLab object identity set changes. The behavior stays
+transient and does not alter saved material/project data.
+
+- [x] Replace a map, switch to PBR and return to Helios; confirm the replacement remains.
+- [x] Use Restore preset maps, switch modes, then replace again; confirm replay ordering.
+- [x] `.1165 PASS` mapping controls and `.1164 PASS` neutral menu styling remain protected.
+
 ## Helios Studio 0.1.4 PASS and BoxLab .1165 mapping port — 15 November 2026
 
 Cris confirms standalone Helios Studio `0.1.4 PASS`; this source behavior is
