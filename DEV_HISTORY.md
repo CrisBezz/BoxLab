@@ -1,3 +1,22 @@
+# .1164 — normalize the BoxLab Helios menu theme — 15 November 2026
+
+Cris confirms BoxLab `.1163 PASS`. Normalize the existing integrated Helios dock
+to BoxLab's established menu treatment. The dock used a blue active-tab border,
+blue selected-choice fill, blue numeric values and blue focus/hover accents.
+Update the authoritative `helios-dock.css`: selected tabs/choices now use the
+shared white active-button fill without a blue border; hover/reset and focus states
+use neutral white; output text uses the same subdued neutral treatment as BoxLab;
+button corners and borders use the shared ten-pixel / neutral-edge values. Native
+range and checkbox accents retain the browser default used by the rest of BoxLab.
+
+The panel geometry, responsive rules, scrolling, controls, render actions and Helios
+adapter remain unchanged. The standalone Helios Studio `0.1.3` repo was inspected
+and left untouched; the styling request applies only to BoxLab's integrated dock.
+Updated `helios-dock.css` direct cache pin and release markers to `.1164`.
+Runtime style commit `789e8f3ab31f3acdc68e1d5590b9b9c0697c7d45`; follow-up release-contract commits bring main to `12c148e3c8095b7a86011536933e6e22f98b1792`. Pages `43659303518` deployed successfully; hosted Topology `43659304210` passed, including `npm test` and headless Chromium subdivision comparison. Cris confirms `.1164 PASS`, protecting the normalized menus. No local tests were run. The renderer uses existing UVs when present and box-projects only when UVs are absent; details and limitations are recorded in AI_HANDOFF. User `.1163 PASS` remains protected.
+
+---
+
 # .1163 — integrate Helios Studio 0.1.3 materials into BoxLab — 14 November 2026
 
 Cris confirms BoxLab `.1162 PASS`, protecting the gallery's single-owner touch
