@@ -3,6 +3,7 @@ import * as THREE from 'three';
 const wrap=document.querySelector('#viewportWrap');
 const status=document.querySelector('#selectionStatus');
 const HELIOS_BUNDLE='./helios-tracer.bundle.js?v=0.36.18.1166';
+const savedMaterialMaps=new Map();
 
 let active=false;
 let interacting=false;
@@ -70,6 +71,41 @@ function visibleEditableObjects(){
   return (manager?.objects||[]).filter(object=>object?.kind!=='reference'&&object?.mesh&&object.visible!==false);
 }
 
+function materialMapSceneKey(){
+  const manager=globalThis.__boxlabObjectManager;
+  manager?.saveActive?.();
+  return (manager?.objects||[])
+    .filter(object=>object?.kind!=='reference')
+    .map(object=>String(object?.id??''))
+    .sort()
+    .join('|');
+}
+
+function materialMapState(material){
+  const sceneKey=materialMapSceneKey();
+  let saved=savedMaterialMaps.get(material.id);
+  if(!saved||saved.sceneKey!==sceneKey||saved.materialName!==material.name){
+    saved={sceneKey,materialName:material.name,restorePresetMaps:false,files:new Map()};
+    savedMaterialMaps.set(material.id,saved);
+  }
+  return saved;
+}
+
+async function reapplyMaterialMaps(target){
+  const materials=target.getState?.().materials||[];
+  const byId=new Map(materials.map(material=>[material.id,material]));
+  const sceneKey=materialMapSceneKey();
+  for(const [id,saved] of savedMaterialMaps){
+    const material=byId.get(id);
+    if(!material||saved.sceneKey!==sceneKey||saved.materialName!==material.name){
+      savedMaterialMaps.delete(id);
+      continue;
+    }
+    if(saved.restorePresetMaps)target.restoreMaterialPresetMaps(id);
+    for(const [slot,file] of saved.files)await target.uploadMaterialMap(id,slot,file);
+  }
+}
+
 async function buildCurrentGLB(){
   const owner=globalThis.__boxlabExportAs;
   if(typeof owner?.buildGLB!=='function')throw new Error('BoxLab GLB exporter is not ready');
@@ -106,11 +142,13 @@ async function rebuild(runId=generation){
     if(!active||runId!==generation)return;
     const next=await helios.createBoxLabHeliosTrace(renderer,glb);
     if(!active||runId!==generation){next.dispose();return;}
-    tracer=next;
-    const defaults=tracer.getState?.()||{};
+    const defaults=next.getState?.()||{};
     defaultLights=(defaults.lights||[]).map(light=>({...light}));
     defaultMaterials=new Map((defaults.materials||[]).map(material=>[material.id,{...material}]));
-    if(savedControls)tracer.applyPreferences(savedControls);
+    if(savedControls)next.applyPreferences(savedControls);
+    await reapplyMaterialMaps(next);
+    if(!active||runId!==generation){next.dispose();return;}
+    tracer=next;
     publishControlState();
     camera=source.clone();
     camera.matrixAutoUpdate=true;
@@ -206,10 +244,18 @@ async function applyDockAction(detail={}){
     if(defaults)tracer.updateLights(stateNow.lights.map(light=>light.id===detail.id?{...defaults}:light));
   }else if(detail.action==='material')tracer.updateMaterial(detail.id,detail.patch||{});
   else if(detail.action==='upload-map'){
-    try{await tracer.uploadMaterialMap(detail.id,detail.slot,detail.file);}
+    try{
+      await tracer.uploadMaterialMap(detail.id,detail.slot,detail.file);
+      const material=stateNow.materials.find(item=>item.id===detail.id);
+      if(material)materialMapState(material).files.set(detail.slot,detail.file);
+    }
     catch(error){message('map upload failed',error?.message||String(error));}
   }
-  else if(detail.action==='restore-maps')tracer.restoreMaterialPresetMaps(detail.id);
+  else if(detail.action==='restore-maps'){
+    tracer.restoreMaterialPresetMaps(detail.id);
+    const material=stateNow.materials.find(item=>item.id===detail.id);
+    if(material){const saved=materialMapState(material);saved.restorePresetMaps=true;saved.files.clear();}
+  }
   else if(detail.action==='reset-material'){
     const defaults=defaultMaterials.get(detail.id);
     if(defaults){
