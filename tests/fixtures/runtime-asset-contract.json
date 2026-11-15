@@ -161,9 +161,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1166",
+      "url": "./src/drawer-ui.js?v=0.36.18.1167",
       "target": "src/drawer-ui.js",
-      "sha256": "e2246c746abc5a531d63345423a1a43b7e69f8f3c50a229ee9f87d2d7ee166cd"
+      "sha256": "7fef77697c8564a1a4cacd5860fed9cbb8e9a0dd253dd90443fc262689b6f80e"
     },
     {
       "owner": "index.html",
@@ -378,7 +378,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1166",
+      "url": "./src/release-version.js?v=0.36.18.1167",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -864,9 +864,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1166",
+      "url": "./face-workflow-layout.js?v=0.36.18.1167",
       "target": "src/face-workflow-layout.js",
-      "sha256": "d5011b87ba142a578082a806f63f5c2f6afcda5683f88f72e8d70a99bd0cdfbf"
+      "sha256": "bcbfa56116614e96cdc652b3f11efa95284f53a4ee55a9f76a637d15ee7f95b0"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1361,7 +1361,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1166",
+      "url": "./release-version.js?v=0.36.18.1167",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -3326,9 +3326,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1166",
+      "url": "./src/shell-comparison.js?v=0.36.18.1167",
       "target": "src/shell-comparison.js",
-      "sha256": "f2fd693978eac75316c371a6263c1ff52a3ee61787a42c565d855d75ba9a5823"
+      "sha256": "8e7a2337673e05e3f834ae02d8c5b372942726e60413bc71efa6206988698f1c"
     },
     {
       "owner": "src/main.js",
@@ -3800,9 +3800,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/pathtrace-mode.js?v=0.36.18.1166",
+      "url": "./src/pathtrace-mode.js?v=0.36.18.1167",
       "target": "src/pathtrace-mode.js",
-      "sha256": "ba56fe4bc651267bb9aae04a1d37ab7f7fd2ce04d3bb6ed28e04c8d6729cbf67"
+      "sha256": "d0ee46ec1f708726dd132e24af677e0aafe942f353af85bef2529b7de79a25f2"
     },
     {
       "owner": "src/pathtrace-mode.js",
