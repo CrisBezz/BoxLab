@@ -1,3 +1,34 @@
+# .1168 — add non-emissive Helios surface opacity — 15 November 2026
+
+User confirms `.1167 PASS`, protecting replacement-map persistence after PBR/Helios
+switches, Restore ordering and object-identity scoping. Roadmap's next narrow render
+control is scalar surface transparency. Audit found existing material, PBR preview,
+ray-tracer uniform, shadow visibility, Helios dock and adapter owners; extend those
+owners without adding a renderer or project-material path.
+
+The integrated Materials tab now shows Surface opacity for non-emissive materials and
+retains Emitter opacity for emissive materials. Imported GLB scalar alpha initializes
+the control; missing values default to 1. Three.js preview applies transparency and
+depth-write state. The path tracer uses stochastic coverage for primary/bounce rays and
+matches opacity in shadow visibility. Emissive materials continue using their prior
+independent radiance/throughput behavior. Adjustments are render-session-only and do
+not change BoxLab project data. Opacity texture maps and geometric displacement remain
+future work; standalone Helios Studio stays at 0.1.4.
+
+Release markers and loader/cache closure target `.1168`; the rebuilt tracer bundle is
+pinned `.1168`. `src/multi-object-transform.js?v=0.36.1.0` remains unchanged. Focused
+Helios/release checks pass 36/36. Full local `npm test` passes 3,455/3,455 (118.917s),
+zero failures/cancelled/skips. `npm run build:helios-tracer`, changed-module syntax,
+release asset-contract checks and `git diff --check` pass. Hosted Topology/Pages and
+hands-on acceptance are pending.
+
+# .1167 — Helios map-session persistence — protected PASS — 15 November 2026
+
+Cris confirms `.1167 PASS`. Protect uploaded map replacements across PBR → Helios
+rebuilds, Restore preset maps replay before any later slot replacement, and dropping
+transient overrides when the BoxLab object identity set changes. BoxLab saved scene
+materials and project files remain unchanged.
+
 # .1167 — persist Helios map replacements through PBR mode switches — 15 November 2026
 
 Cris reports `.1166` map addition/replacement PASS, with one lifecycle FAIL: switching
