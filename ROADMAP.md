@@ -1,4 +1,4 @@
-# BoxLab Roadmap — .1167
+# BoxLab Roadmap — .1168
 
 ## Current coordinated releases
 
@@ -8,19 +8,21 @@
   relief, emitter transparency and `.1164` menu styling; `.1163 PASS` protects the
   28-material gallery.
 - BoxLab `.1166` adds a dedicated Metalness preview/replacement slot; the user confirms
-  map addition/replacement passes. `.1167` fixes the reported PBR → Helios reset by
-  restoring render-session map files after the existing tracer rebuild. The fix does not
-  modify standalone Helios or saved BoxLab project material data. Device acceptance is pending.
+  map addition/replacement passes. Cris confirms `.1167 PASS`, protecting uploaded-map
+  persistence and Restore ordering through PBR/Helios rebuilds.
+- BoxLab `.1168` adds separate render-session scalar Surface opacity for non-emissive
+  materials, with matching PBR and ray-trace behavior. Emitter opacity stays separate.
+  Standalone Helios remains at the accepted 0.1.4 base; no saved BoxLab material is changed.
 
 ## Current focus
 
-## .1167 focus — Helios render-map session persistence
+## .1168 focus — non-emissive surface opacity
 
-The existing pathtrace lifecycle now reapplies uploaded map Files after PBR/Helios
-rebuilds and preserves Restore preset maps ordering. It scopes transient overrides to
-the current BoxLab object identity set and imported material name. No model or project
-serialization changes. Hands-on acceptance: replace map → PBR → Helios, Restore → PBR
-→ Helios, later replacement after Restore, and saved material unchanged.
+The Materials tab exposes Surface opacity only when emission is off. Its default is the
+imported GLB material alpha (or fully opaque when absent); changes apply to the existing
+PBR preview and path tracer/shadow rays, remain transient, and are not exported to
+BoxLab project materials. Emissive surfaces retain their independent Emitter opacity
+and pass-through behavior. Opacity texture maps remain a separate future step.
 
 The importer now transfers both source glTF scalar maps independently into packed
 roughness G and metalness B, instead of silently selecting one when both exist. The
@@ -29,21 +31,24 @@ replacement updates only its own channel; the other channel and the preset below
 remain. The path tracer uses its existing custom-metalness flag, and the PBR preview
 shares one packed texture between Three.js roughnessMap and metalnessMap. No second
 texture array, renderer, project schema or UV unwrap was added. The `.1166` packed-channel checks passed 26/26 and its full suite passed 3,450/3,450.
-`.1167` focused Helios/release checks pass 29/29; full local suite passes 3,453/3,453.
-Changed-module syntax and diff checks pass. Hosted Topology `43692331821` passes
-3,453/3,453 and Chromium comparison is 11/11 parity (`LAB_ONLY`); Pages
-`43692331687` succeeds on runtime commit `79b644d1cbf4c150215c624daa7a653e582aa0f1`.
-User device acceptance remains pending.
+`.1167` focused checks pass 29/29 and the full local suite passes 3,453/3,453; hosted
+Topology `43692331821` and Pages `43692331687` succeed. Cris confirms `.1167 PASS`.
+For `.1168`, focused checks pass 36/36 and full local `npm test` passes 3,455/3,455
+(118.917s), zero failures/cancelled/skips. Bundle build, changed-JS syntax, release
+asset contract and `git diff --check` pass. Hosted Topology and Pages verification
+remain pending.
 
 ## Next-build ideas
 
-1. Consider opacity/alpha maps and a separate non-emissive transparency control.
+1. Consider an opacity/alpha map slot with preview, replacement and map-persistence
+   behavior matching the existing Helios texture owners.
 2. Evaluate true height displacement only with a bounded subdivision/BVH rebuild
    design and representative iPad memory/performance gates.
 
-Continue shared ray-trace development in standalone Helios before porting accepted
-changes through BoxLab's vendor bundle/adapter, except BoxLab-specific integration
-repairs like `.1166` and `.1167`. Keep render-only material changes out of saved BoxLab scene data.
+The `.1168` scalar-opacity extension is BoxLab VIEW integration work; keep its
+render-session state out of saved BoxLab scene data. Develop any future standalone
+material-map feature in Helios Studio first, then port its accepted behavior through
+BoxLab's vendor bundle/adapter.
 
 ---
 
