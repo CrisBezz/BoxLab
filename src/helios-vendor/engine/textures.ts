@@ -501,4 +501,354 @@ export class PbrTextureManager {
           const tileV = (v * tiles) % 1;
           const edge = Math.min(tileU, 1 - tileU, tileV, 1 - tileV);
           const grout = edge < 0.025;
-          const glaze = fbmTile(u, v, 16,
+          const glaze = fbmTile(u, v, 16, 16);
+          const val = grout ? 0.62 : 0.96 + glaze * 0.04;
+          r = g = b = Math.round(val * 255);
+          h = grout ? 0.25 : 0.48 + glaze * 0.04;
+          roughMult = grout ? 1.14 : 0.88 + glaze * 0.12;
+          normalStrength = 1.35;
+        } else if (preset === 'plaster') {
+          const base = fbmTile(u, v, 14, 13);
+          const fine = tileNoise(u, v, 62);
+          const trowel = Math.pow(Math.max(0, Math.sin((u * 8 + base * 1.4) * Math.PI)), 5);
+          const val = 0.82 + (base - 0.5) * 0.16 + (fine - 0.5) * 0.11 + trowel * 0.025;
+          r = g = b = Math.round(Math.max(0.62, Math.min(1, val)) * 255);
+          h = base * 0.56 + fine * 0.34 + trowel * 0.1;
+          roughMult = 0.91 + (1 - fine) * 0.2;
+          normalStrength = 1.5;
+        } else if (preset === 'corten-steel') {
+          const cloud = fbmTile(u, v, 7, 7);
+          const mottling = fbmTile(u, v, 27, 24);
+          const streak = fbmTileAniso(u, v, 5, 28, 3);
+          const patina = Math.max(0, cloud * 0.72 + mottling * 0.28 - 0.56);
+          const val = Math.max(0.58, Math.min(1, 0.91 - patina * 0.36 + (streak - 0.5) * 0.08));
+          r = Math.round(val * 255);
+          g = Math.round(val * (0.97 - patina * 0.04) * 255);
+          b = Math.round(val * (0.91 - patina * 0.1) * 255);
+          h = cloud * 0.5 + mottling * 0.35 + streak * 0.15;
+          roughMult = 0.88 + patina * 0.38;
+          normalStrength = 2.3;
+        }
+
+        heights[pIdx] = h;
+        this.albedoBytes[idx + 0] = r;
+        this.albedoBytes[idx + 1] = g;
+        this.albedoBytes[idx + 2] = b;
+        this.albedoBytes[idx + 3] = 255;
+
+        const rByte = Math.max(12, Math.min(255, Math.round(roughMult * 255)));
+        this.roughMetalBytes[idx + 0] = rByte;
+        this.roughMetalBytes[idx + 1] = rByte;
+        this.roughMetalBytes[idx + 2] = 255;
+        this.roughMetalBytes[idx + 3] = 255;
+      }
+    }
+
+    heightToNormalBytes(heights, size, normalStrength, this.normalBytes, sliceOffset);
+  }
+
+  public allocateCustomLayer(basePreset: PbrTexturePresetId = 'none', isAtlas = false): number {
+    this.ensureCustomAllocated();
+    const slice = this.nextCustomSlice;
+    this.nextCustomSlice =
+      this.nextCustomSlice >= MAX_CUSTOM_LAYERS - 1 ? 0 : this.nextCustomSlice + 1;
+    const srcLayer = PRESET_TO_LAYER[basePreset];
+    if (srcLayer === 0) {
+      this.fillNeutralCustomSlice(slice);
+    } else {
+      this.upscalePresetToCustomSlice(srcLayer, slice);
+    }
+    this.customIsAtlas[slice] = isAtlas;
+    const encoded = CUSTOM_LAYER_OFFSET + slice;
+    this.customAlbedoArray.addLayerUpdate(slice);
+    this.customNormalArray.addLayerUpdate(slice);
+    this.customRoughMetalArray.addLayerUpdate(slice);
+    this.invalidateLayer(encoded);
+    return encoded;
+  }
+
+  public writeImageToLayer(
+    encodedLayer: number,
+    slot: TextureSlot,
+    image: CanvasImageSource,
+    flipY = false,
+    uvInfo?: GeometryUVInfo,
+  ) {
+    if (encodedLayer < CUSTOM_LAYER_OFFSET) return;
+    this.ensureCustomAllocated();
+    if (!this.customAlbedoBytes || !this.customNormalBytes || !this.customRoughMetalBytes) return;
+
+    const slice = encodedLayer - CUSTOM_LAYER_OFFSET;
+    if (slice < 0 || slice >= MAX_CUSTOM_LAYERS) return;
+
+    if (uvInfo) {
+      this.customIsAtlas[slice] = uvInfo.isAtlas;
+    }
+
+    const size = CUSTOM_TEX_SIZE;
+    const canvas = document.createElement('canvas');
+    canvas.width = size;
+    canvas.height = size;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = 'high';
+
+    if (flipY) {
+      ctx.save();
+      ctx.translate(0, size);
+      ctx.scale(1, -1);
+      ctx.drawImage(image, 0, 0, size, size);
+      ctx.restore();
+    } else {
+      ctx.drawImage(image, 0, 0, size, size);
+    }
+
+    const imgData = ctx.getImageData(0, 0, size, size).data;
+    const totalPixels = size * size;
+    const sliceBytes = totalPixels * 4;
+    const offset = slice * sliceBytes;
+
+    const sliceCopy = new Uint8Array(sliceBytes);
+    const origAlpha = new Uint8Array(totalPixels);
+    for (let i = 0; i < totalPixels; i++) {
+      const p = i * 4;
+      origAlpha[i] = imgData[p + 3];
+      sliceCopy[p + 0] = imgData[p + 0];
+      sliceCopy[p + 1] = imgData[p + 1];
+      sliceCopy[p + 2] = imgData[p + 2];
+      sliceCopy[p + 3] = 255;
+    }
+
+    processTextureAtlasEdges(sliceCopy, origAlpha, size, slot === 'normal', uvInfo);
+
+    if (slot === 'albedo') {
+      this.customAlbedoBytes.set(sliceCopy, offset);
+      this.customAlbedoArray.addLayerUpdate(slice);
+      this.customAlbedoArray.needsUpdate = true;
+    } else if (slot === 'normal') {
+      this.customNormalBytes.set(sliceCopy, offset);
+      this.customNormalArray.addLayerUpdate(slice);
+      this.customNormalArray.needsUpdate = true;
+    } else {
+      // Roughness and metalness share the glTF packed texture: G carries
+      // roughness and B carries metalness. Updating one map must preserve the
+      // other channel (including an imported map or the preset underneath it).
+      const channel = slot === 'roughness' ? 1 : 2;
+      copyPackedScalarChannel(this.customRoughMetalBytes, offset, sliceCopy, 0, totalPixels, channel);
+      this.customRoughMetalArray.addLayerUpdate(slice);
+      this.customRoughMetalArray.needsUpdate = true;
+    }
+
+    this.invalidateLayer(encodedLayer);
+  }
+
+  public async writeFileToLayer(
+    encodedLayer: number,
+    slot: TextureSlot,
+    file: File,
+    uvInfo?: GeometryUVInfo,
+  ): Promise<void> {
+    const url = URL.createObjectURL(file);
+    try {
+      const img = await new Promise<HTMLImageElement>((resolve, reject) => {
+        const el = new Image();
+        el.onload = () => resolve(el);
+        el.onerror = () => reject(new Error(`Unable to decode image ${file.name}`));
+        el.src = url;
+      });
+      this.writeImageToLayer(encodedLayer, slot, img, false, uvInfo);
+    } finally {
+      URL.revokeObjectURL(url);
+    }
+  }
+
+  public getLayerShaderInfo(encodedLayer: number): { slice: number; modeFlag: number } {
+    if (encodedLayer >= CUSTOM_LAYER_OFFSET) {
+      const slice = Math.max(0, Math.min(MAX_CUSTOM_LAYERS - 1, encodedLayer - CUSTOM_LAYER_OFFSET));
+      return {
+        slice,
+        modeFlag: this.customIsAtlas[slice] ? 2.0 : 1.0,
+      };
+    }
+    return {
+      slice: encodedLayer,
+      modeFlag: 0.0,
+    };
+  }
+
+  private disposeMapSet(maps: ThreePbrMaps) {
+    new Set([maps.map, maps.normalMap, maps.roughnessMap, maps.metalnessMap])
+      .forEach((map) => map?.dispose());
+  }
+
+  public clearThreeMapsCache() {
+    for (const maps of this.threeMapsCache.values()) this.disposeMapSet(maps);
+    this.threeMapsCache.clear();
+  }
+
+  private invalidateLayer(layer: number) {
+    const prefix = String(layer) + ':';
+    for (const [key, maps] of this.threeMapsCache) {
+      if (key.startsWith(prefix)) {
+        this.disposeMapSet(maps);
+        this.threeMapsCache.delete(key);
+      }
+    }
+    for (const key of this.previewCache.keys()) {
+      if (key.startsWith(prefix)) this.previewCache.delete(key);
+    }
+    this.albedoArray.needsUpdate = true;
+    this.normalArray.needsUpdate = true;
+    this.roughMetalArray.needsUpdate = true;
+    this.customAlbedoArray.needsUpdate = true;
+    this.customNormalArray.needsUpdate = true;
+    this.customRoughMetalArray.needsUpdate = true;
+  }
+
+  public getMapPreviewDataUrl(layer: number, slot: TextureSlot): string | null {
+    const key = String(layer) + ':' + slot;
+    const cached = this.previewCache.get(key);
+    if (cached) return cached;
+    const isCustom = layer >= CUSTOM_LAYER_OFFSET;
+    const slice = isCustom ? layer - CUSTOM_LAYER_OFFSET : layer;
+    const size = isCustom ? CUSTOM_TEX_SIZE : PBR_TEX_SIZE;
+    const source = slot === 'albedo'
+      ? (isCustom ? this.customAlbedoBytes : this.albedoBytes)
+      : slot === 'normal'
+        ? (isCustom ? this.customNormalBytes : this.normalBytes)
+        : (isCustom ? this.customRoughMetalBytes : this.roughMetalBytes);
+    if (!source) return null;
+    const previewSize = 72;
+    const canvas = document.createElement('canvas');
+    canvas.width = previewSize;
+    canvas.height = previewSize;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return null;
+    const image = ctx.createImageData(previewSize, previewSize);
+    const sliceOffset = slice * size * size * 4;
+    for (let y = 0; y < previewSize; y++) {
+      const sy = Math.min(size - 1, Math.floor((y / previewSize) * size));
+      for (let x = 0; x < previewSize; x++) {
+        const sx = Math.min(size - 1, Math.floor((x / previewSize) * size));
+        const src = sliceOffset + (sy * size + sx) * 4;
+        const dst = (y * previewSize + x) * 4;
+        if (slot === 'roughness' || slot === 'metalness') {
+          const value = source[src + (slot === 'roughness' ? 1 : 2)];
+          image.data[dst] = value;
+          image.data[dst + 1] = value;
+          image.data[dst + 2] = value;
+        } else {
+          image.data[dst] = source[src];
+          image.data[dst + 1] = source[src + 1];
+          image.data[dst + 2] = source[src + 2];
+        }
+        image.data[dst + 3] = 255;
+      }
+    }
+    ctx.putImageData(image, 0, 0);
+    const dataUrl = canvas.toDataURL('image/png');
+    this.previewCache.set(key, dataUrl);
+    return dataUrl;
+  }
+
+  public getThreeMapsForLayer(
+    layer: number,
+    uvScaleX: number,
+    uvScaleY = uvScaleX,
+    offsetX = 0,
+    offsetY = 0,
+    rotationDegrees = 0,
+  ): ThreePbrMaps {
+    if (layer === 0) {
+      return { map: null, normalMap: null, roughnessMap: null, metalnessMap: null };
+    }
+
+    const isCustom = layer >= CUSTOM_LAYER_OFFSET;
+    const slice = isCustom ? layer - CUSTOM_LAYER_OFFSET : layer;
+    const size = isCustom ? CUSTOM_TEX_SIZE : PBR_TEX_SIZE;
+    const isAtlas = isCustom && Boolean(this.customIsAtlas[slice]);
+    const cacheKey = [layer, uvScaleX, uvScaleY, offsetX, offsetY, rotationDegrees].join(':');
+
+    let maps = this.threeMapsCache.get(cacheKey);
+    if (!maps) {
+      const srcAlbedo = isCustom ? this.customAlbedoBytes : this.albedoBytes;
+      const srcNormal = isCustom ? this.customNormalBytes : this.normalBytes;
+      const srcRough = isCustom ? this.customRoughMetalBytes : this.roughMetalBytes;
+
+      if (!srcAlbedo || !srcNormal || !srcRough) {
+        return { map: null, normalMap: null, roughnessMap: null, metalnessMap: null };
+      }
+
+      const sliceBytes = size * size * 4;
+      const offset = slice * sliceBytes;
+
+      const makeTex = (src: Uint8Array, isSrgb: boolean) => {
+        const sliceCopy = new Uint8Array(sliceBytes);
+        sliceCopy.set(src.subarray(offset, offset + sliceBytes));
+        const tex = new THREE.DataTexture(sliceCopy, size, size, THREE.RGBAFormat);
+        tex.colorSpace = isSrgb ? THREE.SRGBColorSpace : THREE.NoColorSpace;
+        const wrap = isAtlas && uvScaleX <= 1.02 && uvScaleY <= 1.02 ? THREE.ClampToEdgeWrapping : THREE.RepeatWrapping;
+        tex.wrapS = wrap;
+        tex.wrapT = wrap;
+        tex.minFilter = THREE.LinearMipmapLinearFilter;
+        tex.magFilter = THREE.LinearFilter;
+        tex.generateMipmaps = true;
+        tex.anisotropy = this.maxAnisotropy;
+        tex.needsUpdate = true;
+        return tex;
+      };
+
+      const roughMetalMap = makeTex(srcRough, false);
+      maps = {
+        map: makeTex(srcAlbedo, true),
+        normalMap: makeTex(srcNormal, false),
+        roughnessMap: roughMetalMap,
+        metalnessMap: roughMetalMap,
+      };
+      this.threeMapsCache.set(cacheKey, maps);
+    }
+
+    const desiredWrap = isAtlas && uvScaleX <= 1.02 && uvScaleY <= 1.02
+      ? THREE.ClampToEdgeWrapping
+      : THREE.RepeatWrapping;
+    new Set([maps.map, maps.normalMap, maps.roughnessMap, maps.metalnessMap]).forEach((t) => {
+      if (t) {
+        t.repeat.set(uvScaleX, uvScaleY);
+        t.offset.set(offsetX, offsetY);
+        t.center.set(0.5, 0.5);
+        t.rotation = (rotationDegrees * Math.PI) / 180;
+        t.updateMatrix();
+        if (t.wrapS !== desiredWrap || t.wrapT !== desiredWrap) {
+          t.wrapS = desiredWrap;
+          t.wrapT = desiredWrap;
+          t.needsUpdate = true;
+        }
+      }
+    });
+
+    return maps;
+  }
+
+  public resetCustomCounter() {
+    this.nextCustomSlice = 0;
+    this.customIsAtlas.fill(false);
+    for (const [key, maps] of this.threeMapsCache) {
+      if (Number(key.split(':')[0]) >= CUSTOM_LAYER_OFFSET) {
+        this.disposeMapSet(maps);
+        this.threeMapsCache.delete(key);
+      }
+    }
+  }
+
+  public dispose() {
+    this.albedoArray.dispose();
+    this.normalArray.dispose();
+    this.roughMetalArray.dispose();
+    this.customAlbedoArray.dispose();
+    this.customNormalArray.dispose();
+    this.customRoughMetalArray.dispose();
+    this.clearThreeMapsCache();
+  }
+}
