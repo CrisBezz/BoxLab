@@ -1,14 +1,13 @@
 
 
-## GitHub publication method — verified 14 November 2026
+## GitHub publication method — verified 15 November 2026
 
-Use the connected GitHub tools for publication when shell HTTPS git push has no credentials. A shell username/token error does not mean repository access is missing. The connected GitHub create_blob write route was verified in this session. Upload exact tested file bytes with create_blob, create_tree on the freshly inspected main tree, create_commit with current main as parent, then update_ref with expected_sha and force=false. Verify Actions/Pages and live release/cache markers afterward. For large files, read local bytes in bounded base64 chunks, concatenate them in the tool runtime, then create one complete blob per file. Never publish separate partial file chunks. Preserve concurrent remote work; inspect main again if the expected SHA fails. Standing push/publish authorization is already granted. Do not repeatedly retry an unauthenticated shell or ask the user for access again while the connected route works.
-# Current handoff — BoxLab .1166 + Helios Studio 0.1.4 — 15 November 2026
+Use connected GitHub tools when shell HTTPS git push has no credentials. A shell username/token error does not mean repository access is missing. `github_create_blob` silently truncated file contents above 20,000 bytes in a verified `.1166` publication, even when base64 was supplied in chunks. For files over 20,000 bytes, use `github_update_file` with the complete UTF-8 file content and current file SHA; verify the returned Git blob SHA against local `git hash-object` and fetch it again from `main`. Use create_blob/tree/commit/ref only for smaller assets or when their final tree has been verified. Never publish partial content chunks. Preserve concurrent remote work; inspect `main` again if the expected SHA fails. Verify Actions/Pages and live release/cache markers afterward. Standing push/publish authorization is already granted; do not ask again for routine BoxLab releases.
+# Current handoff — BoxLab .1167 + Helios Studio 0.1.4 — 15 November 2026
 
-BoxLab `.1166` extends the integrated VIEW > Helios texture cards with a separate
-Metalness preview/replacement slot. The standalone Helios Studio source remains the
-accepted `0.1.4` base commit `0e79c5163e5d87703d369250e1a9fff9e2b9085f`; `.1166` is
-a BoxLab integration extension and does not change the standalone repo. BoxLab still
+BoxLab `.1167` repairs the integrated VIEW > Helios map lifecycle after the user reported `.1166` upload PASS but a PBR → Helios round trip restored the original map. The existing `src/pathtrace-mode.js` owner now retains uploaded `File` objects for the current render session and replays them after the tracer is rebuilt. “Restore preset maps” is also retained and replayed before any later per-slot replacements. Overrides are scoped to the current BoxLab object identity set and imported material name; they are transient, are not written into project files or saved BoxLab materials, and the standalone Helios Studio repo remains unchanged. The Metalness preview/replacement behavior from `.1166` is retained. The standalone Helios Studio source remains the
+accepted `0.1.4` base commit `0e79c5163e5d87703d369250e1a9fff9e2b9085f`; `.1167` is
+a BoxLab integration lifecycle repair and does not change the standalone repo. BoxLab still
 owns modelling, project files and saved scene materials. Keep the existing Helios
 texture arrays, importer, dock, adapter and bundled tracer as the feature owners.
 
@@ -33,6 +32,10 @@ texture arrays, importer, dock, adapter and bundled tracer as the feature owners
   documented BoxLab extension in `src/helios-vendor/UPSTREAM.txt`. Preserve
   `src/multi-object-transform.js?v=0.36.1.0` and all modelling/Paint/UV owners.
 
+## .1167 validation and hands-on status
+
+Focused lifecycle regressions cover mode-switch replacement persistence, Restore ordering and stale scene identity: 29/29 Helios/release tests pass. Full local `npm test` passes 3,453/3,453 (118.807s), zero failures/cancelled/skips. Changed-module syntax checks and `git diff --check` pass. `.1166` map upload itself is recorded PASS; the round-trip failure is addressed in `.1167` and awaits device confirmation. Keep `.1165 PASS` and `.1164 PASS` protected. Hosted Topology/Pages evidence is pending publication.
+
 ## Mapping and limits
 
 Imported UV attributes remain authoritative; only missing UVs receive the existing
@@ -41,16 +44,7 @@ shading and does not displace the silhouette. True geometric displacement needs 
 bounded subdivision/BVH update design and representative iPad memory/performance
 checks. Material map changes remain render-session-only.
 
-The `.1166` source includes a packed-channel helper regression, glTF import/PBR/tracer
-checks, four-map dock coverage, release/cache contracts and shell-comparison history
-preservation. Local validation passed: focused Helios/release checks 26/26, full
-`npm test` 3,450/3,450 (zero failures/cancelled/skips), `npm run build:helios-tracer`,
-changed-module syntax checks and `git diff --check`. Hosted Topology regression
-`43688283714` passed, including `npm test` and 11/11 headless Chromium subdivision
-parity (benchmark decision remains LAB_ONLY). Pages run `43688546947` deployed the
-latest `.1166` main tip successfully. Live version is `.1166`; all nine refreshed
-cache-busted assets match their source hashes. See TEST_CHECKLIST.md for device
-acceptance; `.1166` remains pending hands-on acceptance.
+The `.1166` baseline validation was focused 26/26 and full `npm test` 3,450/3,450; its bundle/build and hosted Topology `43688283714` plus Pages `43688546947` passed. See DEV_HISTORY.md for the full `.1166` release record. `.1167` runtime changes: `src/pathtrace-mode.js`, release/cache pins in `index.html`, `drawer-ui.js`, `face-workflow-layout.js`, and `shell-comparison.js`; tracer bundle and Helios dock remain at `.1166`. Live deployment evidence will be recorded here after publication.
 
 ---
 
