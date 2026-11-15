@@ -50,7 +50,7 @@ export type PbrTexturePresetId =
   | 'plaster'
   | 'corten-steel';
 
-export type TextureSlot = 'albedo' | 'normal' | 'roughness';
+export type TextureSlot = 'albedo' | 'normal' | 'roughness' | 'metalness';
 
 export interface MaterialSpec {
   id: string;

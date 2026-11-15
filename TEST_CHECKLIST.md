@@ -1,26 +1,52 @@
 ## Helios Studio 0.1.4 PASS and BoxLab .1165 mapping port — 15 November 2026
 
 Cris confirms standalone Helios Studio `0.1.4 PASS`; this source behavior is
-protected. BoxLab `.1165` ports the accepted mapping controls and is pending device
-acceptance.
+protected. BoxLab `.1165 PASS` protects the accepted mapping controls and render-only behavior.
 
-- [ ] Open VIEW > Helios > Materials and verify albedo, normal and roughness map
+- [x] Open VIEW > Helios > Materials and verify albedo, normal and roughness map
   previews match the active material. Change each map with an image and confirm its
   preview and rendered surface update. Restore preset maps and confirm they return.
-- [ ] Change Scale U and V independently; then test Offset U/V and Rotation. Confirm
+- [x] Change Scale U and V independently; then test Offset U/V and Rotation. Confirm
   each changes the ray-traced texture placement/orientation without changing the
   BoxLab object's UV layout or saved material.
-- [ ] Adjust Normal / height relief and confirm shading depth changes. Confirm the
+- [x] Adjust Normal / height relief and confirm shading depth changes. Confirm the
   mesh silhouette does not change (true geometry displacement is not in this build).
-- [ ] On an emissive preset, lower Emitter opacity and confirm the light source
+- [x] On an emissive preset, lower Emitter opacity and confirm the light source
   remains visible through the surface while less emission contributes. Return it to
   full opacity; confirm other non-emissive material controls remain usable.
-- [ ] Switch away from Helios and return, and orbit/pan while the dock is open. Confirm
+- [x] Switch away from Helios and return, and orbit/pan while the dock is open. Confirm
   the render controls remain responsive and BoxLab project/material data are intact.
 
 Automated: focused Helios/release checks passed 14/14; full local regression passed
 3,446/3,446. `npm run build:helios-tracer`, changed-module syntax checks and
-`git diff --check` passed. Hosted Topology/Pages results are pending publication.
+`git diff --check` passed. Hosted Topology `43670538811` and Pages `43670537933` passed; live marker `.1165` was verified.
+
+## BoxLab .1166 — separate Metalness map preview/replacement — 15 November 2026
+
+BoxLab `.1165 PASS` remains protected. `.1166` exposes the packed glTF metalness
+channel in the existing VIEW > Helios map controls and retains the independent
+roughness/metalness image channels.
+
+- [ ] Open VIEW > Helios > Materials and inspect all four map previews. On an
+  imported GLB with both scalar maps, confirm Roughness and Metalness show distinct
+  grayscale previews; replace each and confirm the other map remains visually intact.
+- [ ] Replace only Metalness on a preset or imported material. Confirm the rendered
+  metallic response changes while Roughness stays the same; use Restore preset maps
+  and confirm the override is cleared.
+- [ ] Switch between Ray Trace and PBR preview and confirm the metalness map applies
+  in both. Reopen the material card and confirm the Metalness preview remains current.
+- [ ] Save/inspect the BoxLab project material and confirm this render-only override
+  has not changed the modelling material. Verify `.1165` map controls and menu layout
+  still appear as accepted.
+
+Automated coverage: scalar-channel helper, both glTF map imports, shared packed map
+render owners, map-card wiring and release/cache contracts. Focused Helios/release
+checks pass 26/26; full local suite passes 3,450/3,450 (121.741s), zero
+failures/cancelled/skips. Tracer bundle build, changed-module syntax checks and
+`git diff --check` pass. Hosted checks await publication. This checklist remains
+pending iPad acceptance.
+
+---
 
 ---
 

@@ -4,7 +4,7 @@ import fs from 'node:fs';
 
 const read=path=>fs.readFileSync(new URL(`../${path}`,import.meta.url),'utf8');
 
-test('BoxLab Helios .1165 exposes replaceable texture previews and independent UV transforms',()=>{
+test('BoxLab Helios .1166 exposes replaceable texture previews and independent UV transforms',()=>{
   const ui=read('src/helios-dock.js');
   const css=read('helios-dock.css');
   const types=read('src/helios-vendor/types/studio.ts');
@@ -12,7 +12,7 @@ test('BoxLab Helios .1165 exposes replaceable texture previews and independent U
   const adapter=read('src/helios-vendor/boxlab-entry.ts');
   const mode=read('src/pathtrace-mode.js');
   for(const key of ['uvScaleX','uvScaleY','uvOffsetX','uvOffsetY','uvRotation','emissiveOpacity'])assert.match(types,new RegExp(`${key}\\?: number`));
-  for(const slot of ['albedo','normal','roughness'])assert.match(ui,new RegExp(`'${slot}'`));
+  for(const slot of ['albedo','normal','roughness','metalness'])assert.match(ui,new RegExp(`'${slot}'`));
   assert.match(ui,/data-map-preview/);
   assert.match(ui,/data-do="upload-map"/);
   assert.match(ui,/data-do="restore-maps"/);

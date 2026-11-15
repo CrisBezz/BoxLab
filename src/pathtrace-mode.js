@@ -2,7 +2,7 @@ import * as THREE from 'three';
 
 const wrap=document.querySelector('#viewportWrap');
 const status=document.querySelector('#selectionStatus');
-const HELIOS_BUNDLE='./helios-tracer.bundle.js?v=0.36.18.1165';
+const HELIOS_BUNDLE='./helios-tracer.bundle.js?v=0.36.18.1166';
 
 let active=false;
 let interacting=false;

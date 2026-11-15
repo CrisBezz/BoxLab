@@ -1,4 +1,5 @@
 Upstream: CrisBezz/HeliosStudio
-Release: 0.1.4
-Commit: 0e79c5163e5d87703d369250e1a9fff9e2b9085f
+Base release: 0.1.4
+Base commit: 0e79c5163e5d87703d369250e1a9fff9e2b9085f
+BoxLab integration extension: release .1166 adds an explicit Metalness map preview/replacement card, stores scalar data in the packed glTF B channel while preserving Roughness G, and converts both imported glTF maps independently. BoxLab-only UI/adapter changes are in src/helios-dock.js and src/helios-vendor/boxlab-entry.ts.
 Imported modules: GPU path tracer with independent UV transforms and emissive opacity, BVH, texture manager with map previews and replacement, model importer, UV cleanup, material preset catalog, shared SVG material preview helper, types, color helpers.

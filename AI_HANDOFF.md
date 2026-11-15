@@ -3,57 +3,51 @@
 ## GitHub publication method — verified 14 November 2026
 
 Use the connected GitHub tools for publication when shell HTTPS git push has no credentials. A shell username/token error does not mean repository access is missing. The connected GitHub create_blob write route was verified in this session. Upload exact tested file bytes with create_blob, create_tree on the freshly inspected main tree, create_commit with current main as parent, then update_ref with expected_sha and force=false. Verify Actions/Pages and live release/cache markers afterward. For large files, read local bytes in bounded base64 chunks, concatenate them in the tool runtime, then create one complete blob per file. Never publish separate partial file chunks. Preserve concurrent remote work; inspect main again if the expected SHA fails. Standing push/publish authorization is already granted. Do not repeatedly retry an unauthenticated shell or ask the user for access again while the connected route works.
-# Current handoff — BoxLab .1165 + Helios Studio 0.1.4 — 15 November 2026
+# Current handoff — BoxLab .1166 + Helios Studio 0.1.4 — 15 November 2026
 
-BoxLab build `.1165` ports the user-accepted Helios Studio 0.1.4 material-mapping
-work into VIEW > Helios. Standalone Helios Studio remains at `0.1.4`; the accepted
-upstream runtime commit is `0e79c5163e5d87703d369250e1a9fff9e2b9085f`. BoxLab
-owns modelling, files and saved scene materials. Helios owns the ray tracer,
-texture arrays and render-only material state. Keep using the existing BoxLab
-Helios dock, adapter and bundled renderer.
+BoxLab `.1166` extends the integrated VIEW > Helios texture cards with a separate
+Metalness preview/replacement slot. The standalone Helios Studio source remains the
+accepted `0.1.4` base commit `0e79c5163e5d87703d369250e1a9fff9e2b9085f`; `.1166` is
+a BoxLab integration extension and does not change the standalone repo. BoxLab still
+owns modelling, project files and saved scene materials. Keep the existing Helios
+texture arrays, importer, dock, adapter and bundled tracer as the feature owners.
 
-## .1165 integration state
+## .1166 packed metalness map behavior
 
-- Material cards show the active albedo, normal and roughness map previews; each
-  slot accepts image replacement, and Restore preset maps returns to its current
-  Helios preset/import baseline. Uploaded maps remain render-session-only.
-- Mapping controls independently set U/V scale, U/V offset and rotation. The same
-  transform is applied by the existing GPU path tracer and Three.js PBR material
-  preview. Normal / height relief controls shading only; it does not displace the
-  mesh silhouette.
-- Emissive materials expose emitter opacity. The path tracer adds the attenuated
-  emission and continues the remaining ray throughput behind the emitter; the PBR
-  preview uses matching material opacity.
-- The 0.1.4 source changes are integrated through `src/helios-vendor/engine/`
-  and `types/studio.ts`; `boxlab-entry.ts` remains the BoxLab adapter. BoxLab's
-  imported custom-metalness flag uses `matF.y` so it stays separate from the new
-  emitter-opacity uniform in `matC.y`.
-- Preview data URLs are cached by material texture layer/slot; transformed Three.js
-  texture sets are cached by full UV transform. Uploaded data is written through the
-  existing custom texture-array owner. The eight-layer limit refuses a ninth live
-  custom layer rather than overwriting another material. No scene UV unwrap or second
-  renderer was added.
-- Shell/version markers and the release owners are `.1165`. Cache chain: shell ->
-  `src/pathtrace-mode.js?v=0.36.18.1165` ->
-  `src/helios-tracer.bundle.js?v=0.36.18.1165`; shell also repins the dock CSS/UI,
-  release-version owner, shell-comparison and drawer -> Face workflow -> release
-  owner. Preserve `src/multi-object-transform.js?v=0.36.1.0`.
+- glTF metallic-roughness data uses packed G for roughness and B for metalness. The
+  importer now writes both source maps independently into those channels instead of
+  choosing one map when both are present.
+- The dock shows an active grayscale Metalness preview; Change replaces only packed
+  B. Roughness replacement updates only G. Atlas edge processing, the remaining
+  scalar channel, albedo, normal and the preset underneath the edited channel stay
+  intact. Restore preset maps clears the render-session overrides.
+- The existing texture-array layer is reused. Tracing reads B through the established
+  `hasCustomMetalness` flag; the PBR preview shares one packed DataTexture for both
+  Three.js roughnessMap and metalnessMap. No second texture owner or duplicate image
+  allocation was added. This remains render-only; BoxLab project material data is
+  unchanged.
+- BoxLab `.1165 PASS` protects the accepted 0.1.4 map preview/replacement, UV
+  transforms, relief, emitter opacity and `.1164` menu styling. `.1163 PASS` protects
+  the 28-material gallery and its render-session-only behavior.
+- The `.1166` bundle is built from the `.1165` vendored Helios 0.1.4 base plus the
+  documented BoxLab extension in `src/helios-vendor/UPSTREAM.txt`. Preserve
+  `src/multi-object-transform.js?v=0.36.1.0` and all modelling/Paint/UV owners.
 
-Cris confirms standalone Helios Studio `0.1.4 PASS`, protecting its texture
-previews/replacement, UV transforms, relief strength and emitter transparency. BoxLab
-`.1165` is awaiting hands-on acceptance. BoxLab `.1164 PASS` neutral menu styling and
-`.1163 PASS` 28-material catalogue remain protected. Local focused Helios/release checks
-pass 14/14 and the full Node suite passes 3,446/3,446; `npm run build:helios-tracer`,
-changed-module syntax checks and `git diff --check` pass. Pages/hosted Topology are pending
-publication. See TEST_CHECKLIST.md for device checks and current release status.
+## Mapping and limits
 
-## Mapping behavior and limits
+Imported UV attributes remain authoritative; only missing UVs receive the existing
+box projection. Nothing unwraps the mesh automatically. Normal/height relief changes
+shading and does not displace the silhouette. True geometric displacement needs a
+bounded subdivision/BVH update design and representative iPad memory/performance
+checks. Material map changes remain render-session-only.
 
-Procedural maps use UV coordinates. Imported UV attributes are preserved; BoxLab
-Helios generates box-projected UVs only for meshes without UVs and does not unwrap.
-Normal / height relief changes shading, not geometry. Real displacement would need
-an explicit geometry/BVH update strategy and memory limits; keep it separate from
-this port. Preset/map edits are render-only and do not write BoxLab project data.
+The `.1166` source includes a packed-channel helper regression, glTF import/PBR/tracer
+checks, four-map dock coverage, release/cache contracts and shell-comparison history
+preservation. Local validation passed: focused Helios/release checks 26/26, full
+`npm test` 3,450/3,450 (zero failures/cancelled/skips), `npm run build:helios-tracer`,
+changed-module syntax checks and `git diff --check`. Hosted checks and Pages deployment
+remain pending until the release commit is pushed. See TEST_CHECKLIST.md for device
+acceptance; `.1166` remains pending hands-on acceptance after publication.
 
 ---
 

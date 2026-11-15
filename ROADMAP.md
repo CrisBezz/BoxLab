@@ -1,38 +1,37 @@
-# BoxLab Roadmap — .1165
+# BoxLab Roadmap — .1166
 
 ## Current coordinated releases
 
-- Standalone Helios Studio `0.1.4 PASS` is the protected upstream source for map
-  previews/replacement, independent UV transforms, relief strength and emissive
-  opacity. Upstream runtime commit: `0e79c5163e5d87703d369250e1a9fff9e2b9085f`.
-- BoxLab `.1165` ports those controls through its existing VIEW > Helios dock,
-  adapter and bundled tracer. The BoxLab device result is pending.
-- BoxLab `.1164 PASS` protects normalized Helios menu styling; `.1163 PASS` protects
-  its 28-material gallery and render-session-only behavior.
+- Standalone Helios Studio `0.1.4 PASS` remains the protected upstream base at
+  `0e79c5163e5d87703d369250e1a9fff9e2b9085f`.
+- BoxLab `.1165 PASS` protects the 0.1.4 texture replacement/previews, mapping,
+  relief, emitter transparency and `.1164` menu styling; `.1163 PASS` protects the
+  28-material gallery.
+- BoxLab `.1166` adds a dedicated Metalness preview/replacement slot while preserving
+  the existing packed glTF scalar texture owner. It does not modify standalone Helios
+  or saved BoxLab project material data. Device acceptance is pending.
 
 ## Current focus
 
-`.1165` adds active albedo/normal/roughness previews, image replacement, preset-map
-restore, independent U/V scale, offset and rotation, normal/height relief strength,
-and emitter opacity/pass-through. Both GPU tracing and PBR preview use the same UV
-transform. Existing GLB UVs remain authoritative; missing UVs use the existing box
-projection. No geometry displacement or automatic unwrapping is introduced, and the
-BoxLab project material remains unchanged. Local focused checks pass 14/14, full Node
-regression passes 3,446/3,446, and the Helios bundle builds. Device acceptance and hosted
-Pages/Topology results are pending; see TEST_CHECKLIST.md.
+The importer now transfers both source glTF scalar maps independently into packed
+roughness G and metalness B, instead of silently selecting one when both exist. The
+existing dock offers separate grayscale previews and replacement controls. Each
+replacement updates only its own channel; the other channel and the preset below it
+remain. The path tracer uses its existing custom-metalness flag, and the PBR preview
+shares one packed texture between Three.js roughnessMap and metalnessMap. No second
+texture array, renderer, project schema or UV unwrap was added. Focused Helios/release
+checks pass 26/26; full local suite passes 3,450/3,450. Tracer bundle and syntax checks
+pass. Hosted validation awaits publication; hands-on acceptance is pending.
 
 ## Next-build ideas
 
-1. Consider an explicit metalness map card if Helios moves beyond its current packed
-   roughness/metalness map, preserving the imported-map conversion owner.
+1. Consider opacity/alpha maps and a separate non-emissive transparency control.
 2. Evaluate true height displacement only with a bounded subdivision/BVH rebuild
-   design and a representative iPad memory/performance gate.
-3. Consider opacity/alpha maps and a dedicated non-emissive transparency control
-   after the emitter-opacity workflow is accepted.
+   design and representative iPad memory/performance gates.
 
-Continue developing shared ray-trace capabilities in standalone Helios first, then
-port accepted changes through the existing BoxLab vendor bundle and adapter. Keep
-ray-trace material edits out of saved BoxLab scene data.
+Continue shared ray-trace development in standalone Helios before porting accepted
+changes through BoxLab's vendor bundle/adapter, except BoxLab-specific integration
+repairs like `.1166`. Keep render-only material changes out of saved BoxLab scene data.
 
 ---
 

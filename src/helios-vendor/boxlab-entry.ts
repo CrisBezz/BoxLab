@@ -73,6 +73,9 @@ export async function createBoxLabHeliosTrace(
               albedo: textureManager.getMapPreviewDataUrl(layer, 'albedo'),
               normal: textureManager.getMapPreviewDataUrl(layer, 'normal'),
               roughness: textureManager.getMapPreviewDataUrl(layer, 'roughness'),
+              metalness: material.hasCustomMetalness
+                ? textureManager.getMapPreviewDataUrl(layer, 'metalness')
+                : null,
             },
           };
         }),
@@ -130,7 +133,8 @@ export async function createBoxLabHeliosTrace(
       await textureManager.writeFileToLayer(layer, slot, file);
       if (slot === 'albedo') material.hasCustomAlbedo = true;
       else if (slot === 'normal') material.hasCustomNormal = true;
-      else material.hasCustomRoughness = true;
+      else if (slot === 'roughness') material.hasCustomRoughness = true;
+      else if (slot === 'metalness') material.hasCustomMetalness = true;
       pathTracer?.resetAccumulation();
     }
 

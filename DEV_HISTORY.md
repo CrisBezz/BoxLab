@@ -1,3 +1,29 @@
+# .1166 — expose and preserve the packed Metalness map — 15 November 2026
+
+Cris confirmed BoxLab `.1165 PASS`; protect the integrated Helios .1.4 mapping port.
+Roadmap audit found the existing importer detected both glTF `roughnessMap` and
+`metalnessMap` but selected only one for the shared packed layer. Extend that owner:
+copy roughness into G and metalness into B independently, preserve the other channel,
+and expose a matching Metalness preview/Change card. The packed channel helper is
+unit-covered for independent writes and bounds; glTF import retains both maps. The
+PBR preview reuses one DataTexture for Three.js roughnessMap/metalnessMap, and the
+existing tracer gates the B multiplier through `hasCustomMetalness`. No schema, saved
+BoxLab material, second texture array or renderer change. Upstream Helios Studio stays
+at accepted 0.1.4; this is a BoxLab-only integration extension.
+
+The right dock changes from three to two columns for four map cards, retaining the
+existing compact one-column breakpoint and scrolling owner. Release `.1166` refreshes
+the shell markers, direct Helios dock/pathtrace pins, pathtrace bundle key, drawer to
+Face workflow to release-version chain, and shell-comparison label. `.1165` comparison
+records remain accepted. Preserve Multi `0.36.1.0`.
+
+Focused Helios/release tests pass 26/26; full local regression passes 3,450/3,450,
+zero failures/cancelled/skips (121.741s). `npm run build:helios-tracer`, changed JS
+syntax checks and `git diff --check` pass. Hosted Topology and Pages are pending
+publication. User `.1166` hands-on acceptance remains pending.
+
+---
+
 # .1165 — port Helios Studio 0.1.4 material mapping controls — 15 November 2026
 
 Cris confirms standalone Helios Studio `0.1.4 PASS`; protect its active map previews,
