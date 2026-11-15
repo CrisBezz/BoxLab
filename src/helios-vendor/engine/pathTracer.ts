@@ -66,7 +66,7 @@ uniform vec4 uLightColorEnabled[${MAX_LIGHTS}];
 // Material uniforms: 6 vec4s per material
 // matA = (albedo.r, albedo.g, albedo.b, roughness)
 // matB = (metalness, ior, transmission, clearcoat)
-// matC = (emissiveIntensity, emitterOpacity, 0, 0)
+// matC = (emissiveIntensity, emitterOpacity, surfaceOpacity, 0)
 // matD = (texSlice, legacyScale, normalStrength, modeFlag: 0=preset, 1=custom tile, 2=custom atlas)
 // matE = (scaleU, scaleV, rotationRadians, offsetU)
 // matF = (offsetV, customMetalnessFlag, 0, 0)
@@ -302,12 +302,14 @@ vec3 intersectShadow(vec3 ro, vec3 rd, float maxT) {
             return vec3(0.0);
           }
           float trans = uMatB[matIdx].z;
-          if (trans < 0.15) {
+          float surfaceOpacity = uMatC[matIdx].x > 0.01 ? 1.0 : clamp(uMatC[matIdx].z, 0.0, 1.0);
+          if (trans < 0.15 && surfaceOpacity >= 0.999) {
             return vec3(0.0);
           }
-          // Glass lets tinted shadow light pass through (caustic approximation)
+          // Surface alpha coverage and glass transmission both attenuate shadow visibility.
           vec3 tint = mix(vec3(0.85), uMatA[matIdx].rgb, 0.35);
-          visibility *= tint * (0.45 + 0.45 * trans);
+          vec3 glassVisibility = trans >= 0.15 ? tint * (0.45 + 0.45 * trans) : vec3(0.0);
+          visibility *= mix(vec3(1.0), glassVisibility, surfaceOpacity);
           if (max(visibility.r, max(visibility.g, visibility.b)) < 0.02) {
             return vec3(0.0);
           }
@@ -600,6 +602,7 @@ void main() {
     float clearcoat = 0.0;
     float emissiveIntensity = 0.0;
     float emitterOpacity = 1.0;
+    float surfaceOpacity = 1.0;
 
     if (hit.isFloor) {
       albedo = hit.floorAlbedo;
@@ -625,6 +628,7 @@ void main() {
       clearcoat = clamp(mB.w, 0.0, 1.0);
       emissiveIntensity = mC.x;
       emitterOpacity = clamp(mC.y, 0.0, 1.0);
+      surfaceOpacity = emissiveIntensity > 0.01 ? 1.0 : clamp(mC.z, 0.0, 1.0);
 
       if (mD.w > 0.5 || mD.x > 0.5) {
         vec4 mE = uMatE[safeMatIdx];
@@ -687,6 +691,13 @@ void main() {
         continue;
       }
       break;
+    }
+
+    // Stochastic alpha coverage keeps partially transparent surfaces unbiased and
+    // lets the existing ray continue through without creating a second transport path.
+    if (surfaceOpacity < 0.999 && rand() >= surfaceOpacity) {
+      ro = hit.pos + rd * 0.002;
+      continue;
     }
 
     // Dielectric glass / crystal refraction
@@ -934,7 +945,7 @@ export class GPUPathTracer {
     const lightColArr = Array.from({ length: MAX_LIGHTS }, () => new THREE.Vector4());
     const matAArr = Array.from({ length: MAX_MATERIALS }, () => new THREE.Vector4(0.8, 0.8, 0.8, 0.4));
     const matBArr = Array.from({ length: MAX_MATERIALS }, () => new THREE.Vector4(0.0, 1.5, 0.0, 0.0));
-    const matCArr = Array.from({ length: MAX_MATERIALS }, () => new THREE.Vector4(0.0, 0.0, 0.0, 0.0));
+    const matCArr = Array.from({ length: MAX_MATERIALS }, () => new THREE.Vector4(0.0, 1.0, 1.0, 0.0));
     const matDArr = Array.from({ length: MAX_MATERIALS }, () => new THREE.Vector4(0.0, 1.0, 1.0, 0.0));
     const matEArr = Array.from({ length: MAX_MATERIALS }, () => new THREE.Vector4(1.0, 1.0, 0.0, 0.0));
     const matFArr = Array.from({ length: MAX_MATERIALS }, () => new THREE.Vector4(0.0, 0.0, 0.0, 0.0));
@@ -1130,7 +1141,7 @@ export class GPUPathTracer {
         : { slice: layer >= 100 ? layer - 100 : layer, modeFlag: layer >= 100 ? 1.0 : 0.0 };
       matA[idx].set(r, g, b, spec.roughness);
       matB[idx].set(spec.metalness, spec.ior, spec.transmission, spec.clearcoat);
-      matC[idx].set(spec.emissiveIntensity, spec.emissiveOpacity ?? 1, 0, 0);
+      matC[idx].set(spec.emissiveIntensity, spec.emissiveOpacity ?? 1, spec.surfaceOpacity ?? 1, 0);
       matD[idx].set(slice, spec.uvScale, spec.normalStrength, modeFlag);
       matE[idx].set(
         spec.uvScaleX ?? spec.uvScale,
