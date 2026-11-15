@@ -16,8 +16,10 @@ dock and tracer bundle remain pinned to `.1166`. Multi remains pinned at
 `src/multi-object-transform.js?v=0.36.1.0`. A dedicated VM regression covers map replay,
 Restore ordering and scene identity. Focused Helios/release tests pass 29/29; full local
 `npm test` passes 3,453/3,453 (118.807s), zero failures/cancelled/skips. Changed-module
-syntax checks and `git diff --check` pass. Hosted Topology and Pages evidence will be
-added after publication. User hands-on `.1167` acceptance is pending.
+syntax checks and `git diff --check` pass. Hosted Topology `43692331821` passes 3,453/3,453; headless Chromium subdivision
+comparison reports 11/11 parity, aggregate `LAB_ONLY`. Pages `43692331687` succeeded
+on runtime commit `79b644d1cbf4c150215c624daa7a653e582aa0f1`; `.1167` live markers are
+verified. User hands-on `.1167` acceptance is pending.
 
 Publication route correction: in the `.1166` release, GitHub `create_blob` silently
 truncated files over 20,000 bytes. The verified publication workflow now uses complete
