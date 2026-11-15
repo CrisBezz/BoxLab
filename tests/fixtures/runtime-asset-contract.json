@@ -378,7 +378,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1163",
+      "url": "./src/release-version.js?v=0.36.18.1164",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -3326,9 +3326,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1163",
+      "url": "./src/shell-comparison.js?v=0.36.18.1164",
       "target": "src/shell-comparison.js",
-      "sha256": "81c86c746f801d0df335034f2c089a4f1773e7c795fe2c2906a95362501bd109"
+      "sha256": "ebe9ff41a78b6653a98468b52d1f491ecb56c7c7e6f6790f81cc5969b4a971d4"
     },
     {
       "owner": "src/main.js",
@@ -3812,9 +3812,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./helios-dock.css?v=0.36.18.1162",
+      "url": "./helios-dock.css?v=0.36.18.1164",
       "target": "helios-dock.css",
-      "sha256": "c4327c739c28affa820ec4f4e22b95155d906da1f5e70395007dd18759375d96"
+      "sha256": "1c51f2590feaa8ffbb6f06d63a74ece13ced31be9952f0b6fab458f870628f56"
     },
     {
       "owner": "index.html",
