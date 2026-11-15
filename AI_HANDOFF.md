@@ -3,52 +3,61 @@
 ## GitHub publication method — verified 14 November 2026
 
 Use the connected GitHub tools for publication when shell HTTPS git push has no credentials. A shell username/token error does not mean repository access is missing. The connected GitHub create_blob write route was verified in this session. Upload exact tested file bytes with create_blob, create_tree on the freshly inspected main tree, create_commit with current main as parent, then update_ref with expected_sha and force=false. Verify Actions/Pages and live release/cache markers afterward. For large files, read local bytes in bounded base64 chunks, concatenate them in the tool runtime, then create one complete blob per file. Never publish separate partial file chunks. Preserve concurrent remote work; inspect main again if the expected SHA fails. Standing push/publish authorization is already granted. Do not repeatedly retry an unauthenticated shell or ask the user for access again while the connected route works.
-# Current handoff — BoxLab .1163 + Helios Studio 0.1.3 — 14 November 2026
+# Current handoff — BoxLab .1164 + Helios Studio 0.1.3 — 15 November 2026
 
-The apps develop side by side from independent repositories and release histories:
-`CrisBezz/BoxLab` (this repo; current main release `.1163`) and
-`CrisBezz/HeliosStudio` (standalone release `0.1.3`, user PASS protected).
-Helios Studio is live at https://crisbezz.github.io/HeliosStudio/ and BoxLab at
-https://crisbezz.github.io/BoxLab/. BoxLab `.1163` runtime commit is
-`dc2fa6ed53d280f2db8ff98dc29dfb18d23c20ce`; the integrated upstream Helios
-Studio source is `44a7565e24ee96ea7907716dc67b1b97a810a63d`.
+BoxLab `CrisBezz/BoxLab` is at release `.1164`; standalone Helios Studio
+`CrisBezz/HeliosStudio` remains at accepted `0.1.3`. Live apps:
+https://crisbezz.github.io/BoxLab/ and https://crisbezz.github.io/HeliosStudio/.
+BoxLab runtime commit: `789e8f3ab31f3acdc68e1d5590b9b9c0697c7d45`. The upstream Helios source remains
+`44a7565e24ee96ea7907716dc67b1b97a810a63d`; no standalone Helios files changed.
 
-Cris confirms BoxLab `.1162 PASS` for the single-owner scrolling material gallery,
-and Helios Studio `0.1.3 PASS` for its expanded material set and previews. Protect
-the prior clean PNG capture, 512 spp, light/material resets, render-session-only
-material application, and `.1162` iPad gallery scrolling. Helios Studio `.1.3`
-provides 28 presets, including Warm Limestone, Red Clay Brick, Spotted Gum,
-Terrazzo, Glazed Ceramic Tile, Lime Plaster, Weathered Corten Steel, and Polished
-Concrete. Its six new procedural texture families are limestone, brick, terrazzo,
-ceramic tile, plaster, and corten steel; Spotted Gum reuses the wood texture family
-and Polished Concrete reuses concrete.
+Cris confirms BoxLab `.1163 PASS`, protecting the 28-preset catalogue,
+architectural materials, texture previews, render-session-only application,
+imported-map retention, clean capture, 512 spp and reset controls.
 
-BoxLab `.1163` ports the accepted `.1.3` catalogue, procedural texture layers,
-and SVG previews through BoxLab's existing Helios adapter and bundle builder.
-Presets update only the selected render-session material. Imported custom maps and
-BoxLab saved project/material data remain untouched. BoxLab owns modelling,
-projects, mesh state and serialization; Helios owns ray tracing, lighting,
-render materials and previews. Do not add a second renderer or modelling kernel.
-Both repos remain independently versioned, tested and published.
+## Shared integration and style ownership
 
-## Shared-repo handoff rules
-
-- Read both repos' current handoff/checklist and inspect each repo's `main` before
-  changing integrated features.
-- Make standalone features usable in Helios Studio and update the BoxLab adapter
-  separately when the feature is intended in both apps.
-- Record upstream Helios commits and BoxLab runtime/cache pins whenever integration
-  code changes. Publish and test each app using its own repo/workflow.
-- Preserve `src/multi-object-transform.js?v=0.36.1.0` and all unrelated modelling,
+- BoxLab owns modelling, scene/project serialization and the integrated VIEW >
+  Helios dock. Helios Studio owns the ray tracer, material data, procedural
+  textures and previews. Continue using `src/helios-dock.js` and
+  `helios-dock.css`; do not add another renderer or control dock.
+- `.1164` normalizes the existing dock to BoxLab's shared button theme: selected
+  tabs and choices use the standard white active fill with no blue border; output
+  text and hover/reset states are neutral; focus indication remains visible in
+  neutral white; borders and button corners match the base BoxLab controls.
+- The control layout, scroll owner, ray-trace state/actions and upstream Helios
+  source are unchanged. The only changed runtime files are `helios-dock.css`,
+  `index.html` and `version.json`. Direct stylesheet pin is
+  `helios-dock.css?v=0.36.18.1164`.
+- Preserve `src/multi-object-transform.js?v=0.36.1.0` and unrelated modelling,
   Paint and UV owners.
 
-## Current release — .1163
+## Helios material texture mapping audit
 
-Cris's `.1162 PASS` is protected. `.1163` integrates the upstream Helios Studio
-`0.1.3` material catalogue and preview/texture support in BoxLab. Automated
-focused checks pass 29/29; full local suite passes 3,444/3,444. Complete the
-hands-on material acceptance in TEST_CHECKLIST and record Cris's result before
-starting another build. Preserve the single scrolling panel owner from `.1162`.
+The Helios procedural preset maps are UV-space textures. The renderer attaches
+albedo, normal and roughness DataTextures to the Three.js material and applies
+the preset's `uvScale` as texture repeat; this is not world-space or triplanar
+projection. In `src/helios-vendor/engine/models.ts`, imported mesh UVs are kept
+when a `uv` attribute exists. Only meshes without that attribute receive
+generated box-projected UVs via `applyCleanBoxUVs(rawGeom, 1.0)`; there is no
+automatic unwrap in this path. A UV attribute that exists but has degenerate,
+incorrect or differently scaled coordinates is still preserved. For imported
+custom PBR maps, `applyMaterialPreset` preserves those maps rather than
+replacing them with a Helios preset map. The exact reason for any apparent
+mismatch needs the affected asset's UV data and the chosen preset's repeat scale.
+
+## Current release — .1164
+
+Cris confirms `.1164 PASS`. Protect the normalized View > Helios menu styling.
+Cris's `.1163 PASS` is also protected. Runtime style commit `789e8f3ab31f3acdc68e1d5590b9b9c0697c7d45` is on
+`main`; release-contract follow-up commit is `12c148e3c8095b7a86011536933e6e22f98b1792`.
+Pages run `43659303518` deployed successfully; the live app reports title/version
+`.1164`, and the Materials tab displays the neutral white selected style without
+a blue border. Hosted Topology workflow run `43659304210` completed successfully, including
+`npm test` and the headless Chromium subdivision comparison. GitHub Pages run
+`43659303518` built and deployed successfully. Cris confirms `.1164 PASS`; protect
+the neutral Helios menu styling alongside `.1163` material behavior. No local test
+run was performed in this session. See `TEST_CHECKLIST.md` for the acceptance record.
 
 ---
 
