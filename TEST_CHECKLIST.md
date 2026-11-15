@@ -43,7 +43,9 @@ Automated coverage: scalar-channel helper, both glTF map imports, shared packed 
 render owners, map-card wiring and release/cache contracts. Focused Helios/release
 checks pass 26/26; full local suite passes 3,450/3,450 (121.741s), zero
 failures/cancelled/skips. Tracer bundle build, changed-module syntax checks and
-`git diff --check` pass. Hosted checks await publication. This checklist remains
+`git diff --check` pass. Hosted Topology `43688283714` passes `npm test` and its
+headless Chromium comparison; Pages `43688546947` succeeds. The live marker reports
+`.1166`, and nine cache-busted assets byte-match source. This checklist remains
 pending iPad acceptance.
 
 ---
