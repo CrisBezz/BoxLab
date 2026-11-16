@@ -55,6 +55,7 @@ export function mountGeneralSettings(panel){
 .general-settings-list{display:grid;gap:4px}
 .general-settings-list label{display:flex;align-items:center;gap:9px;min-height:38px;padding:3px 8px;border:1px solid rgba(255,255,255,.08);border-radius:7px;background:rgba(255,255,255,.025);font-size:12px;touch-action:manipulation}
 .general-settings-list input{width:18px;height:18px;margin:0;accent-color:#83b8ff;flex:0 0 auto}
+html:not(.boxlab-snap-top) #viewportSnapControls{top:auto!important;bottom:calc(var(--viewport-action-bottom) + var(--boxlab-snap-bottom-offset,214px))!important}
 html.boxlab-mode-top #viewportWrap > #selectionModes{top:8px!important;bottom:auto!important;left:8px!important}
 html.boxlab-snap-top #viewportSnapControls{top:var(--boxlab-snap-top,8px)!important;bottom:auto!important;left:8px!important}
 html.boxlab-select-top #viewportActionControls{top:var(--boxlab-select-top,8px)!important;bottom:auto!important;left:8px!important;max-height:calc(100% - 16px)}
@@ -71,6 +72,8 @@ apply();
 // Measure the original panels; preserve their nodes, listeners and visibility owners.
 function layoutTopPanels(){
   const root=document.documentElement;
+  const actions=document.querySelector?.('#viewportActionControls');
+  root.style?.setProperty('--boxlab-snap-bottom-offset',current.selectTop?'0px':((actions?.getBoundingClientRect().height||206)+8)+'px');
   let top=8;
   for(const [key,id,property] of [['modeTop','selectionModes',null],['snapTop','viewportSnapControls','--boxlab-snap-top'],['selectTop','viewportActionControls','--boxlab-select-top']]){
     const panel=document.querySelector?.('#'+id);
