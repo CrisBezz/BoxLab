@@ -1,8 +1,9 @@
 import * as THREE from 'three';
+import {installProjection} from './logo-viewcube.js?v=0.36.18.1169';
 
 const wrap=document.querySelector('#viewportWrap');
 const status=document.querySelector('#selectionStatus');
-const HELIOS_BUNDLE='./helios-tracer.bundle.js?v=0.36.18.1168';
+const HELIOS_BUNDLE='./helios-tracer.bundle.js?v=0.36.18.1169';
 const savedMaterialMaps=new Map();
 
 let active=false;
@@ -58,6 +59,8 @@ function syncCamera(){
   camera.aspect=source.aspect;
   camera.near=Math.max(0.001,source.near*transform.scale);
   camera.far=Math.max(camera.near+1,source.far*transform.scale);
+  installProjection(camera).set(!!source.isOrthographicCamera,(source.top-source.bottom)*transform.scale);
+  camera.zoom=source.zoom;
   camera.updateProjectionMatrix();
   camera.updateMatrixWorld(true);
   const signature=cameraSignature(source);
