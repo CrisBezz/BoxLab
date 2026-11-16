@@ -1,3 +1,7 @@
+## .1180 publication verified
+
+Runtime `8e51ea121756f7f033b4451c007f302bb07e852b` on main; Pages `43858930604` completed SUCCESS. Cache-busted live version.json, index.html, main.js and new viewport-grid.js byte-match tested checkout. Full local suite 3,469/3,469 PASS, zero failures/cancelled/skips (126.170s); focused grid geometry/floor/ortho/release 11/11 PASS; syntax/diff pass. New factory/test Git blob hashes verified against release branch. Hosted Topology `43858931353` was in progress at last query; no hosted PASS claimed. Native startup flash/major-minor contrast checks ready. .1179 PASS protected; six orthographic orientations and 3D ground grid remain accepted baseline.
+
 # .1180 — startup grid hidden and decimal subdivisions — 16 November 2026
 
 User confirms .1179 PASS for stronger grid, all six orthographic planes and 3D floor replacement; reports initial grid flash and requests 0.1 subdivisions / white 1-unit major lines. Original GridHelper is now constructed once through viewport-grid.js: span 12, divisions 120 (0.1-unit cells), four vertex colours per line pair, every tenth line white 0xf1f4f8 and minors pale 0x697481. Main uses this single factory in place of its original GridHelper constructor; no second helper or overlaid major grid. Original -1.55 ground height retained. Geometry holds 484 vertices; no dynamic rebuild or per-frame allocation added.
