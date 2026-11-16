@@ -1,3 +1,22 @@
+# .1171 — supplied OBJ logo geometry and clean feature edges — 16 November 2026
+
+Cris confirms `.1170 PASS`: protect logo drag-to-orbit, viewport orientation sync,
+face-tap orthographic views and perspective return. Remaining visual FAIL is the
+unwanted overlap/seam lines in the generated bar geometry. Replace that geometry
+with the supplied BOXLAB_VIEWCUBE.obj (80 vertices, 78 quads, closed/manifold).
+Source is retained at icons/boxlab-viewcube-source.obj; exact indexed vertex/face
+data is embedded in the existing navigator owner, with uniform display scaling.
+
+Adjacent coplanar edges are omitted from the outline; real crease edges remain.
+Back-facing surfaces are culled before depth-sorted SVG display. Six colours and
+view ownership derive from each surface's dominant centroid axis. Existing pointer,
+cancellation, movement threshold and authoritative orbit owner are unchanged.
+Protected Multi, modelling, Helios tracer bundle and saved project formats remain.
+
+Focused geometry/orbit/projection checks pass; full regression and publication
+status pending. Device checks: examine all six openings and marked seam locations;
+drag logo and viewport; tap six faces; check ortho/perspective and Helios navigation.
+
 # .1170 — rotatable 3D logo orbit navigator — 16 November 2026
 
 `.1169 FAIL`: a static arrangement of view buttons does not meet the requested
