@@ -1,5 +1,6 @@
 import {bindViewportSizing} from './viewport-sizing.js?v=0.36.18.1005';
 import * as THREE from 'three';
+import {createViewportGrid} from './viewport-grid.js?v=0.36.18.1180';
 import {pickScreenEdges} from './edge-screen-picking.js?v=0.36.18.1144';
 import {createCageBatch,updateCageBatches,addMirrorCageBatch} from './cage-render-batches.js?v=0.36.18.930';
 import { scaffoldLoopCandidates } from './scaffold-loop-candidates.js?v=0.36.18.761';
@@ -28,7 +29,7 @@ try{
 }
 controls.enableDamping=false;controls.target.set(0,0,0);controls.touches.ONE=THREE.TOUCH.ROTATE;controls.touches.TWO=THREE.TOUCH.DOLLY_PAN;controls.screenSpacePanning=true;controls.minAzimuthAngle=-Infinity;controls.maxAzimuthAngle=Infinity;controls.minPolarAngle=.001;controls.maxPolarAngle=Math.PI-.001;
 globalThis.__boxlabPerformance?.observeNavigation?.(controls,canvas);
-const baseHemisphere=new THREE.HemisphereLight(0xeaf2ff,0x1d2430,1.2),key=new THREE.DirectionalLight(0xffffff,3.2);key.position.set(4,7,5);scene.add(baseHemisphere,key);Object.assign(globalThis.__boxlabBridgeState ||= {},{camera,controls,scene,renderer,baseHemisphere,key});const grid=new THREE.GridHelper(12,24,0x9aa8bb,0x627085);grid.position.y=-1.55;scene.add(grid);const originAxes=new THREE.AxesHelper(.9);originAxes.material.depthTest=false;originAxes.renderOrder=20;scene.add(originAxes);
+const baseHemisphere=new THREE.HemisphereLight(0xeaf2ff,0x1d2430,1.2),key=new THREE.DirectionalLight(0xffffff,3.2);key.position.set(4,7,5);scene.add(baseHemisphere,key);Object.assign(globalThis.__boxlabBridgeState ||= {},{camera,controls,scene,renderer,baseHemisphere,key});const grid=createViewportGrid();scene.add(grid);const originAxes=new THREE.AxesHelper(.9);originAxes.material.depthTest=false;originAxes.renderOrder=20;scene.add(originAxes);
 
 let mesh=EditableMesh.cube(1),selectionMode='face',toolMode='move',selection=null,multiSelectEnabled=false;
 let subdEnabled=false,subdLevel=1,showCage=true,activeLoopSlides=[],activeLoopSlide=null,selectedEdgeCutT=.5,directTool=null,axisSnapEnabled=false,inferenceSnapEnabled=false;
