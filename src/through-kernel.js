@@ -385,7 +385,18 @@ function rebuildSingleInwardBandFrame(before,trial,ids,eps){
 // and canonical seam assembly; private trials never publish into the live scene.
 // Each source face supplies its own sweep. Shared/coplanar walls disappear when
 // subtracting the next prism, so separated bands and adjacent faces use one rule.
-export function buildNegativeExtrude(before,faceIndices,distance) {
+// Corner-only cavities need a finite material junction; welding their exact
+// vertical contact creates a four-owner edge. Retry only diagnosed contacts with
+// a tolerance-sized corner relief, keeping every other footprint/depth unchanged.
+function relieveCutCorners(source,points,eps){
+ return source.flatMap((p,i)=>{
+  if(!points.some(q=>q.distanceTo(p)<=eps*4))return[p];
+  const a=source[(i+source.length-1)%source.length],b=source[(i+1)%source.length],length=Math.min(a.distanceTo(p),b.distanceTo(p)),amount=Math.min(eps*128,length*.01);
+  if(amount<=eps*32)fail('corner-junction-too-small');
+  return[p.clone().lerp(a,amount/a.distanceTo(p)),p.clone().lerp(b,amount/b.distanceTo(p))];
+ });
+}
+export function buildNegativeExtrude(before,faceIndices,distance,relief={points:[],attempt:0}) {
   try {
     if(!Number.isFinite(distance)||distance>=0)fail('negative-distance-required');
     const ids=[...new Set(faceIndices||[])];
@@ -394,7 +405,8 @@ export function buildNegativeExtrude(before,faceIndices,distance) {
     if(depth<=eps*32)fail('cut-too-small');
     const input=validateThrough(before,eps);if(!input.ok)fail('input-'+input.reason);
     const cutters=ids.map(fi=>{
-      const source=before.faces[fi].map(id=>before.vertices[id].clone()),n=areaVector(source).normalize();
+      let source=before.faces[fi].map(id=>before.vertices[id].clone());const n=areaVector(source).normalize();
+      if(relief.points.length)source=relieveCutCorners(source,relief.points,eps);
       triangles(source,eps); // Validate planarity and triangulation before any trial.
       const sides=source.map((a,i)=>plane(new V().crossVectors(source[(i+1)%source.length].clone().sub(a),n).normalize(),a));
       if(source.some(p=>sides.some(pl=>pl.n.dot(p)-pl.w>eps)))fail('concave-source-not-supported');
@@ -426,11 +438,20 @@ export function buildNegativeExtrude(before,faceIndices,distance) {
         for(const piece of coalesceBoundaryParts(accepted,eps))add(piece,group);
       }
       trial=assemble(trial,polys,eps,groups);
-      const valid=validateThrough(trial,eps);if(!valid.ok)fail(valid.reason);
+      const valid=validateThrough(trial,eps);
+      if(!valid.ok){
+        const bad=valid.details?.nonManifold||[];
+        if(relief.attempt<8&&bad.length&&bad.every(edge=>edge.faces.length===4)&&!(valid.details?.boundary?.length)&&!valid.details.degenerateFaces.length&&!valid.details.duplicateFaces.length){
+          const points=[...relief.points];
+          for(const edge of bad)for(const id of edge.edge)for(const fi of ids)for(const vertex of before.faces[fi]){const p=before.vertices[vertex];if(p.distanceTo(trial.vertices[id])<=eps*4&&!points.some(q=>q.distanceTo(p)<=eps*4))points.push(p.clone());}
+          if(points.length>relief.points.length)return buildNegativeExtrude(before,faceIndices,distance,{points,attempt:relief.attempt+1});
+        }
+        fail(valid.reason);
+      }
       if(!trial.faces.length)fail('entire-solid-removal');
       delete trial.edges;
     }
-    trial=rebuildInwardBandFrames(before,trial,ids,eps);
+    if(!relief.points.length)trial=rebuildInwardBandFrames(before,trial,ids,eps);
     trial.compactUnusedVertices?.({preserveLoose:true});
     // Identify surviving recessed caps geometrically, after every cutter has run.
     const faceIndicesOut=[];
