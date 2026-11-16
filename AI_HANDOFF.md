@@ -1,3 +1,7 @@
+## .1181 publication verified
+
+Runtime `bcaa902d4774533206c17c3338849095495c1c8c` on main; Pages `43860500128` completed SUCCESS. Cache-busted live version.json, index.html, viewport-grid.js, ground-polish.js and render-modes.js byte-match tested checkout. Full local suite 3,470/3,470 PASS, zero failures/cancelled/skips (124.857s); focused geometry/floor/ortho/release 12/12 PASS; changed JS syntax/diff pass. Hosted Topology `43860500509` was in progress at last query; no hosted PASS claimed. Device checks ready for same-height/centre/footprint Plane↔Grid swaps and moved/resized model updates, retained 0.1/1-unit grid, ortho/Home and no refresh flash. .1180 user PASS protected.
+
 # .1181 — continuous Plane / Grid footprint in 3D — 16 November 2026
 
 User confirms .1180 PASS, but requests exact 3D Plane/Grid continuity. Audit: Studio floor follows visible model bounds, minimum span24, at bounds.min.y-.025; grid was fixed span12 at y=-1.55. The same GridHelper now fits the existing Studio floor world centre, height and actual rectangular footprint in perspective. Render-modes refreshStudio publishes its final floor transform to the existing ground owner; camera/ground synchronization also follows it. No duplicate model bounds/floor-size calculations or second grid.
