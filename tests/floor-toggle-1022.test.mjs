@@ -22,7 +22,7 @@ test('1022 actual button cycles plane/grid/off/plane, with matching icon, no ext
  const f=fixture(),before=f.body.matrix.toArray(),originalCount=f.scene.children.length;
  f.api.apply();assert.equal(f.api.ground,'plane');assert.equal(f.floor.visible,true);assert.equal(f.grid.visible,false);assert.match(f.button.innerHTML,/fill="#cbd0d8"/);
  const click=()=>{let prevent=0,stop=0;f.button.listeners[0]({preventDefault(){prevent++;},stopPropagation(){stop++;}});assert.equal(prevent,1);assert.equal(stop,1);};
- click();assert.equal(f.api.ground,'grid');assert.equal(f.floor.visible,false);assert.equal(f.grid.visible,true);assert.equal(f.grid.material.opacity,.198);assert.match(f.button.innerHTML,/m6 10\.3/);assert.match(f.button.attributes['aria-label'],/Grid/);
+ click();assert.equal(f.api.ground,'grid');assert.equal(f.floor.visible,false);assert.equal(f.grid.visible,true);assert.equal(f.grid.material.opacity,.5);assert.match(f.button.innerHTML,/m6 10\.3/);assert.match(f.button.attributes['aria-label'],/Grid/);
  click();assert.equal(f.api.ground,'off');assert.equal(f.floor.visible,false);assert.equal(f.grid.visible,false);assert.doesNotMatch(f.button.innerHTML,/fill=|m6 10\.3/);
  click();assert.equal(f.api.ground,'plane');assert.equal(f.floor.visible,true);assert.equal(f.grid.visible,false);
  for(let i=0;i<5;i++)f.api.apply();assert.equal(f.button.listeners.length,1);assert.equal(f.scene.children.length,originalCount);assert.deepEqual(f.body.matrix.toArray(),before);
@@ -30,7 +30,7 @@ test('1022 actual button cycles plane/grid/off/plane, with matching icon, no ext
 });
 test('1022 choice survives render/bridge and Clean View updates, while axes retain original Clean visibility',()=>{
  const f=fixture();f.api.setGround('grid');f.clean(true);assert.equal(f.grid.visible,false);assert.equal(f.axes.visible,false);assert.equal(f.api.ground,'grid');f.clean(false);assert.equal(f.grid.visible,true);assert.equal(f.axes.visible,true);
- f.mode('solid');assert.equal(f.grid.material.opacity,.374);f.api.setGround('off');f.mode('solid');f.api.apply();assert.equal(f.floor.visible,false);assert.equal(f.grid.visible,false);f.mode('studio');assert.equal(f.floor.visible,false);assert.equal(f.grid.visible,false);
+ f.mode('solid');assert.equal(f.grid.material.opacity,.65);f.api.setGround('off');f.mode('solid');f.api.apply();assert.equal(f.floor.visible,false);assert.equal(f.grid.visible,false);f.mode('studio');assert.equal(f.floor.visible,false);assert.equal(f.grid.visible,false);
  f.api.setGround('plane');f.mode('solid');f.mode('studio');assert.equal(f.floor.visible,true);assert.equal(f.grid.visible,false);
 });
 test('1022 Studio contact shadow stays hidden in grid/off through original polish refresh and restores on plane',()=>{
@@ -44,4 +44,18 @@ test('1022 early button choice applies to late original floor/grid, and newly in
  const source=read('src/render-modes.js'),start=source.indexOf('function syncStudio(){'),end=source.indexOf('\nfunction applyMode(',start);
  Object.assign(f.ctx,{bridge:()=>({scene:f.scene,renderer:{shadowMap:{}}}),ensureStudioRig(){},syncUndersideLight(){},studioRig:f.rig,studioFloor:f.floor,mode:'studio',refreshStudio(){},originalBackground:null});
  f.floor.visible=true;vm.runInContext(source.slice(start,end)+'\nsyncStudio();',f.ctx);assert.equal(f.floor.visible,false);assert.equal(f.grid.visible,true);
+});
+
+
+test('1179 grid faces all six orthographic views and restores the original 3D ground transform',()=>{
+ const f=fixture(),camera=new THREE.PerspectiveCamera(45,1,.01,100),controls=new THREE.EventDispatcher();
+ f.grid.position.set(0,-1.55,0);f.ctx.__boxlabBridgeState.camera=camera;f.ctx.__boxlabBridgeState.controls=controls;f.api.setGround('grid');
+ const original=f.grid.position.clone();camera.isOrthographicCamera=true;
+ for(const [x,y,z] of [[1,0,0],[-1,0,0],[0,1,0],[0,-1,0],[0,0,1],[0,0,-1]]){
+  camera.position.set(x*5,y*5,z*5);camera.up.set(0,Math.abs(y)?0:1,Math.abs(y)?1:0);camera.lookAt(0,0,0);camera.updateMatrixWorld();controls.dispatchEvent({type:'change'});
+  const normal=new THREE.Vector3(0,1,0).applyQuaternion(f.grid.quaternion),direction=camera.getWorldDirection(new THREE.Vector3());
+  assert(Math.abs(normal.dot(direction))>.99999);assert(f.grid.visible);assert(!f.floor.visible);
+ }
+ camera.isOrthographicCamera=false;controls.dispatchEvent({type:'change'});assert(f.grid.position.equals(original));assert(f.grid.quaternion.equals(new THREE.Quaternion()));assert(f.grid.visible);assert(!f.floor.visible);
+ f.api.setGround('plane');assert(f.floor.visible);assert(!f.grid.visible);f.api.setGround('off');assert(!f.floor.visible);assert(!f.grid.visible);
 });
