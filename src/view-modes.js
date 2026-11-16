@@ -1,6 +1,6 @@
 import {installProjection,mountLogoViewcube} from './logo-viewcube.js?v=0.36.18.1173';
 import {mountViewMenuSurface} from './view-menu-surface.js?v=0.36.18.998';
-import {mountGeneralSettings} from './general-settings.js?v=0.36.18.1175';
+import {mountGeneralSettings} from './general-settings.js?v=0.36.18.1176';
 import * as THREE from 'three';
 
 const status=document.querySelector('#selectionStatus');
