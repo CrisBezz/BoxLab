@@ -1,3 +1,14 @@
+## .1171 release verification
+
+Runtime `d58bd2005909ecd83b74ea8c47db3e6c2b4ea6b0` is published. Final full local
+regression passes 3,459/3,459, zero failures/cancelled/skips (92.398s). The two
+initial failures were stale comparison labels; current heading/expectation corrected,
+historical records preserved, affected 20/20 pass. Geometry/orbit/Helios/release
+focused checks pass; Pages `43797910778` succeeds. Hosted Topology `43797911182`
+is still running at this evidence point. OBJ seam appearance remains device-pending;
+`.1170 PASS` interaction behavior is protected. This supersedes pending local and
+publication notes in the historical entry below. No hosted full-suite PASS claimed.
+
 # .1171 — supplied OBJ logo geometry and clean feature edges — 16 November 2026
 
 Cris confirms `.1170 PASS`: protect logo drag-to-orbit, viewport orientation sync,
