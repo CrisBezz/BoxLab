@@ -33,10 +33,10 @@ export function orbitFromLogo(state,dx,dy,size=150){
 
 export function logoBoxes(){
  return [
-  {view:'front',color:'#ed5957',axis:2,sign:1},
-  {view:'rear',color:'#8e2429',axis:2,sign:-1},
-  {view:'left',color:'#42a7ef',axis:0,sign:-1},
-  {view:'right',color:'#174c83',axis:0,sign:1},
+  {view:'front',color:'#42a7ef',axis:2,sign:1},
+  {view:'rear',color:'#174c83',axis:2,sign:-1},
+  {view:'left',color:'#8e2429',axis:0,sign:-1},
+  {view:'right',color:'#ed5957',axis:0,sign:1},
   {view:'top',color:'#83dc3d',axis:1,sign:1},
   {view:'bottom',color:'#2d6818',axis:1,sign:-1},
  ];
