@@ -378,7 +378,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1168",
+      "url": "./src/release-version.js?v=0.36.18.1169",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -1361,7 +1361,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1168",
+      "url": "./release-version.js?v=0.36.18.1169",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -3821,6 +3821,18 @@
       "url": "./src/helios-dock.js?v=0.36.18.1168",
       "target": "src/helios-dock.js",
       "sha256": "1e76af08afcf9a83aa9c023c6d984c04c1e718aac6f52825186dcf1bb4cd2e7c"
+    },
+    {
+      "owner": "src/view-modes.js",
+      "url": "./logo-viewcube.js?v=0.36.18.1169",
+      "target": "src/logo-viewcube.js",
+      "sha256": "8fc469e383113225dea7dde03c37f5ecc5666808cf4e7519d9d727b93480111f"
+    },
+    {
+      "owner": "src/pathtrace-mode.js",
+      "url": "./logo-viewcube.js?v=0.36.18.1169",
+      "target": "src/logo-viewcube.js",
+      "sha256": "8fc469e383113225dea7dde03c37f5ecc5666808cf4e7519d9d727b93480111f"
     }
   ]
 }
