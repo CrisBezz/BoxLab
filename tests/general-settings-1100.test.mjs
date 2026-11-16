@@ -43,6 +43,7 @@ test('1175 top panels use Mode / Snap / Select order and eight pixel gaps for ev
  for(let mask=0;mask<8;mask++){
   r.api.setGeneralSetting('modeTop',!!(mask&1));r.api.setGeneralSetting('snapTop',!!(mask&2));r.api.setGeneralSetting('selectTop',!!(mask&4));
   vm.runInContext('layoutTopPanels()',r.context);
+  assert.equal(positions['--boxlab-snap-bottom-offset'],mask&4?'0px':'214px');
   assert.equal(positions['--boxlab-snap-top'],(8+(mask&1?60:0))+'px');
   assert.equal(positions['--boxlab-select-top'],(8+(mask&1?60:0)+(mask&2?122:0))+'px');
  }
