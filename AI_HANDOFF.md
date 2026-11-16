@@ -1,3 +1,19 @@
+# .1172 — world-axis logo colours — 16 November 2026
+
+Cris confirms `.1171 PASS`: protect supplied OBJ geometry, clean crease outlines,
+logo drag/viewport sync and face-tap orthographic navigation. Correct the 90-degree
+colour orientation: +X/Right red, -X/Left dark red; +Z/Front blue, -Z/Back dark blue;
++Y/Top green, -Y/Bottom dark green. This matches world XYZ colours and the top-left
+logo from the default view. Geometry, camera directions and pointer behavior retain
+their existing owners. Original Front-red/Left-blue convention is superseded by
+this requested world-coordinate correction.
+
+Mode-matched navigator shading is a possible next narrow feature. The 3D geometry
+is projected into SVG; genuine Helios rendering would require a dedicated render
+path and a bounded GPU/performance design. No lighting or tracing feature added here.
+Focused checks and publication evidence follow the build run; device check: default
+view matches header logo colours, opposite sides are darker, six taps and drag work.
+
 ## .1171 release verification
 
 Runtime `d58bd2005909ecd83b74ea8c47db3e6c2b4ea6b0` is published. Final full local
