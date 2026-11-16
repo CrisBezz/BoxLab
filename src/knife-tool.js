@@ -25,13 +25,14 @@ function dragSourceUnchanged(d){
     &&source.faces.every((face,i)=>face.length===mesh.faces[i]?.length&&face.every((v,j)=>v===mesh.faces[i][j])));
 }
 function dragContextValid(d){return state()?.mesh===d.mesh&&globalThis.__boxlabObjectManager?.activeId===d.object&&bridge()?.mode?.()==='face'&&editable()&&dragSourceUnchanged(d);}
-function cancelDrag(){const d=drag;drag=null;clearPreview();if(d)try{canvas.releasePointerCapture?.(d.id);}catch{}}
+function cancelDrag(){const d=drag;drag=null;clearPreview();if(d){d.picker?.geometry.dispose();d.picker?.material.dispose();try{canvas.releasePointerCapture?.(d.id);}catch{}}}
 function render(){document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));}
 function inferenceOn(){return !!document.querySelector('#inferenceSnapToggle')?.checked;}
 function edgeKey(mesh,e){return mesh.edgeKey(e.a,e.b);}
 function screenPoint(v,camera){const p=v.clone().project(camera),r=canvas.getBoundingClientRect();return{x:r.left+(p.x*.5+.5)*r.width,y:r.top+(-p.y*.5+.5)*r.height};}
 function distSeg(px,py,a,b){const vx=b.x-a.x,vy=b.y-a.y,l2=vx*vx+vy*vy;if(!l2)return{d:Math.hypot(px-a.x,py-a.y),t:0,q:{x:a.x,y:a.y}};const t=Math.max(0,Math.min(1,((px-a.x)*vx+(py-a.y)*vy)/l2)),q={x:a.x+vx*t,y:a.y+vy*t};return{d:Math.hypot(px-q.x,py-q.y),t,q};}
-function hitFace(event){const s=state(),mesh=s?.mesh,camera=s?.camera;if(!mesh||!camera)return null;const r=canvas.getBoundingClientRect();pointer.set((event.clientX-r.left)/r.width*2-1,-((event.clientY-r.top)/r.height*2-1));ray.setFromCamera(pointer,camera);const geometry=mesh.triangulatedGeometry(),material=new THREE.MeshBasicMaterial({side:THREE.DoubleSide}),picker=new THREE.Mesh(geometry,material),hit=ray.intersectObject(picker,false)[0];geometry.dispose();material.dispose();if(!hit)return null;let tri=hit.faceIndex,faceIndex=-1;for(let fi=0;fi<mesh.faces.length;fi++){const n=Math.max(0,mesh.faces[fi].length-2);if(tri<n){faceIndex=fi;break;}tri-=n;}return faceIndex>=0?{faceIndex,point:hit.point.clone()}:null;}
+function knifePicker(mesh){const geometry=mesh.triangulatedGeometry(),material=new THREE.MeshBasicMaterial({side:THREE.DoubleSide});return{geometry,material,picker:new THREE.Mesh(geometry,material)};}
+function hitFace(event,prepared=null){const s=state(),mesh=s?.mesh,camera=s?.camera;if(!mesh||!camera)return null;const r=canvas.getBoundingClientRect();pointer.set((event.clientX-r.left)/r.width*2-1,-((event.clientY-r.top)/r.height*2-1));ray.setFromCamera(pointer,camera);const geometry=prepared?.geometry||mesh.triangulatedGeometry(),material=prepared?.material||new THREE.MeshBasicMaterial({side:THREE.DoubleSide}),picker=prepared?.picker||new THREE.Mesh(geometry,material),hit=ray.intersectObject(picker,false)[0];if(!prepared){geometry.dispose();material.dispose();}if(!hit)return null;let tri=hit.faceIndex,faceIndex=-1;for(let fi=0;fi<mesh.faces.length;fi++){const n=Math.max(0,mesh.faces[fi].length-2);if(tri<n){faceIndex=fi;break;}tri-=n;}return faceIndex>=0?{faceIndex,point:hit.point.clone()}:null;}
 function vertexSnap(vertex,screen,point3,d=0){return{kind:'vertex',snapType:'END',vertex,d,screen,point3:point3.clone()};}
 function edgeSnap(mesh,a,b,t,screen,point3,snapType='EDGE',d=0){return{kind:'edge',snapType,key:mesh.edgeKey(a,b),faceA:a,faceB:b,t:THREE.MathUtils.clamp(t,0,1),d,screen,point3:point3.clone()};}
 function midpointSnap(mesh,a,b,camera){const point3=mesh.vertices[a].clone().lerp(mesh.vertices[b],.5);return edgeSnap(mesh,a,b,.5,screenPoint(point3,camera),point3,'MID');}
@@ -48,7 +49,7 @@ function perpendicularCandidate(faceIndex,start,x,y){if(!inferenceOn()||!start?.
 function endpointFor(faceIndex,start,event){const basic=freeBoundaryPoint(faceIndex,event.clientX,event.clientY,true);if(basic?.snapType==='END'||basic?.snapType==='MID')return basic;const perp=perpendicularCandidate(faceIndex,start,event.clientX,event.clientY);if(perp)return perp;return basic;}
 function candidateFacesForStart(start,fallbackFace){const mesh=state()?.mesh;if(!mesh||!start)return[fallbackFace];let faces=[];if(start.kind==='vertex'){mesh.faces.forEach((face,fi)=>{if(Array.isArray(face)&&face.includes(start.vertex))faces.push(fi);});}else if(start.kind==='edge'){const edge=mesh.edges().find(e=>edgeKey(mesh,e)===start.key);faces=[...(edge?.faces||[])];}if(Number.isInteger(fallbackFace))faces.push(fallbackFace);return[...new Set(faces)].filter(fi=>Array.isArray(mesh.faces[fi]));}
 function snapRank(snap){if(snap?.snapType==='END')return 0;if(snap?.snapType==='MID')return 1;if(snap?.snapType==='PERP')return 2;return 3;}
-function endpointAcrossFaces(d,event){let best=null;for(const faceIndex of d.faceIndices){const snap=endpointFor(faceIndex,d.start,event);if(!snap)continue;const candidate={...snap,faceIndex};if(!best||snapRank(candidate)<snapRank(best)||(snapRank(candidate)===snapRank(best)&&(candidate.d??Infinity)<(best.d??Infinity)))best=candidate;}return best;}
+function endpointAcrossFaces(d,event){let best=null;for(const faceIndex of [...new Set([...d.faceIndices,hitFace(event,d.picker)?.faceIndex])].filter(Number.isInteger)){const snap=endpointFor(faceIndex,d.start,event);if(!snap)continue;const candidate={...snap,faceIndex};if(!best||snapRank(candidate)<snapRank(best)||(snapRank(candidate)===snapRank(best)&&(candidate.d??Infinity)<(best.d??Infinity)))best=candidate;}return best;}
 function rememberEndpoint(d,end,event){if(!d||!end)return end;d.lastEnd={snap:end,x:event.clientX,y:event.clientY};return end;}
 function endpointWithHysteresis(d,event){const live=endpointAcrossFaces(d,event);if(live)return rememberEndpoint(d,live,event);const last=d.lastEnd;if(!last?.snap)return null;return Math.hypot(event.clientX-last.x,event.clientY-last.y)<=RELEASE_HYSTERESIS_PX?last.snap:null;}
 function splitFaceEdge(face,a,b,vertex){for(let i=0;i<face.length;i++){const x=face[i],y=face[(i+1)%face.length];if((x===a&&y===b)||(x===b&&y===a)){const out=[...face];out.splice(i+1,0,vertex);return out;}}return null;}
@@ -101,6 +102,50 @@ function tryCut(mesh,start,end){
   }catch{}
   restore(mesh,before);return null;
 }
+// Extend the existing clean diagonal owner across a visible, connected face strip.
+// All crossings are planned against the unchanged source before any mutation.
+function tryCutAcrossFaces(mesh,start,end){
+  const single=tryCut(mesh,start,end);if(single)return single;
+  const camera=state()?.camera;if(!camera||!start.screen||!end.screen)return null;
+  const prepared=knifePicker(mesh),{geometry,material}=prepared;
+  try{return tryCutFaceStrip(mesh,start,end,camera,prepared);}finally{geometry.dispose();material.dispose();}
+}
+function tryCutFaceStrip(mesh,start,end,camera,prepared){
+  const A=start.screen,B=end.screen,dx=B.x-A.x,dy=B.y-A.y,length2=dx*dx+dy*dy;
+  if(length2<1)return null;
+  const cross=(x,y,u,v)=>x*v-y*u,events=[{u:0,snap:start},{u:1,snap:end}];
+  const scale=Math.max(1,new THREE.Box3().setFromPoints(mesh.vertices).getSize(new THREE.Vector3()).length()),epsilon=scale*1e-6;
+  for(const edge of mesh.edges()){
+    const va=mesh.vertices[edge.a],vb=mesh.vertices[edge.b],a=screenPoint(va,camera),b=screenPoint(vb,camera),ex=b.x-a.x,ey=b.y-a.y;
+    const denom=cross(dx,dy,ex,ey);if(Math.abs(denom)<1e-9)continue;
+    const ax=a.x-A.x,ay=a.y-A.y,u=cross(ax,ay,ex,ey)/denom,t=cross(ax,ay,dx,dy)/denom;
+    if(u<=1e-7||u>=1-1e-7||t< -1e-7||t>1+1e-7)continue;
+    const worldT=worldEdgeParameter(va,vb,THREE.MathUtils.clamp(t,0,1),camera);if(worldT===null)continue;
+    const point3=va.clone().lerp(vb,worldT),screen={x:A.x+dx*u,y:A.y+dy*u};
+    const hit=hitFace({clientX:screen.x,clientY:screen.y},prepared);if(!hit||hit.point.distanceTo(point3)>epsilon)continue;
+    const snap=worldT<1e-7?vertexSnap(edge.a,screen,va):worldT>1-1e-7?vertexSnap(edge.b,screen,vb):edgeSnap(mesh,edge.a,edge.b,worldT,screen,point3);
+    events.push({u,snap});
+  }
+  events.sort((a,b)=>a.u-b.u);
+  const path=[];
+  for(const event of events){const last=path.at(-1);if(last&&Math.abs(last.u-event.u)<1e-7){if(last.snap.point3.distanceTo(event.snap.point3)>epsilon)return null;if(event.snap.kind==='vertex')last.snap=event.snap;}else path.push(event);}
+  if(path.length<3)return null;
+  const belongs=(face,snap)=>snap.kind==='vertex'?face.includes(snap.vertex):face.includes(snap.faceA)&&face.includes(snap.faceB);
+  for(let i=1;i<path.length;i++){
+    const a=path[i-1],b=path[i],u=(a.u+b.u)/2,hit=hitFace({clientX:A.x+dx*u,clientY:A.y+dy*u},prepared),face=mesh.faces[hit?.faceIndex];
+    if(!face||!belongs(face,a.snap)||!belongs(face,b.snap))return null;
+  }
+  const before=mesh.clone();
+  try{
+    const vertices=path.map(event=>resolveEndpoint(mesh,event.snap));
+    if(vertices.some(v=>!Number.isInteger(v)))throw Error('endpoint');
+    for(let i=1;i<vertices.length;i++){
+      const a=vertices[i-1],b=vertices[i];
+      if(a===b||!cleanDiagonal(mesh,a,b)||!mesh.connectVertices(a,b)?.ok)throw Error('diagonal');
+    }
+    return {before,result:{ok:true},segments:vertices.length-1};
+  }catch{restore(mesh,before);return null;}
+}
 function clearPreview(){preview?.remove();preview=null;startMarker?.remove();startMarker=null;endMarker?.remove();endMarker=null;}
 function snapColor(snap){if(snap?.snapType==='MID')return'#62d8ff';if(snap?.snapType==='PERP')return'#ff68d8';return'#ffe14a';}
 function marker(point,snap){const type=snap?.snapType||'EDGE',size=type==='END'?12:type==='MID'?10:type==='PERP'?10:8,color=snapColor(snap),el=document.createElement('div');el.style.cssText=`position:fixed;pointer-events:none;width:${size}px;height:${size}px;border-radius:50%;border:2px solid ${type==='END'?'#ffffff':color};background:${type==='END'?color:'#111318'};box-shadow:0 0 0 2px #0008;z-index:10000;transform:translate(-50%,-50%)`;el.style.left=`${point.x}px`;el.style.top=`${point.y}px`;document.body.appendChild(el);return el;}
@@ -127,9 +172,9 @@ document.addEventListener('boxlab-direct-tool-exclusive',event=>{if(event.detail
 
 document.querySelector('#inferenceSnapToggle')?.addEventListener('change',()=>{if(armed&&status)status.textContent=`Knife • END → MID → PERP → EDGE${inferenceOn()?' • geometric inference ON':' • MID/PERP off'}`;});
 
-canvas?.addEventListener('pointerdown',e=>{if(!armed||!e.isPrimary||e.pointerType==='touch'||(e.pointerType==='pen'&&!(e.pressure>0)))return;if(!editable()||bridge()?.mode?.()!=='face'){disarm('context-changed');return;}const face=hitFace(e);if(!face)return;const start=freeBoundaryPoint(face.faceIndex,e.clientX,e.clientY,true);if(!start)return;e.preventDefault();e.stopImmediatePropagation();const faceIndices=candidateFacesForStart(start,face.faceIndex);drag={source:captureDragSource(state().mesh),mesh:state()?.mesh,object:globalThis.__boxlabObjectManager?.activeId,id:e.pointerId,faceIndex:face.faceIndex,faceIndices,x:e.clientX,y:e.clientY,start,lastEnd:null};showPreview(start,null,start.screen);if(status)status.textContent=`Knife start • ${snapLabel(start)} • ${faceIndices.length} candidate face${faceIndices.length===1?'':'s'}`;canvas.setPointerCapture?.(e.pointerId);},true);
+canvas?.addEventListener('pointerdown',e=>{if(!armed||!e.isPrimary||e.pointerType==='touch'||(e.pointerType==='pen'&&!(e.pressure>0)))return;if(!editable()||bridge()?.mode?.()!=='face'){disarm('context-changed');return;}const face=hitFace(e);if(!face)return;const start=freeBoundaryPoint(face.faceIndex,e.clientX,e.clientY,true);if(!start)return;e.preventDefault();e.stopImmediatePropagation();const faceIndices=candidateFacesForStart(start,face.faceIndex);drag={picker:knifePicker(state().mesh),source:captureDragSource(state().mesh),mesh:state()?.mesh,object:globalThis.__boxlabObjectManager?.activeId,id:e.pointerId,faceIndex:face.faceIndex,faceIndices,x:e.clientX,y:e.clientY,start,lastEnd:null};showPreview(start,null,start.screen);if(status)status.textContent=`Knife start • ${snapLabel(start)} • ${faceIndices.length} candidate face${faceIndices.length===1?'':'s'}`;canvas.setPointerCapture?.(e.pointerId);},true);
 canvas?.addEventListener('pointermove',e=>{if(!drag||drag.id!==e.pointerId)return;e.preventDefault();e.stopImmediatePropagation();if(!dragContextValid(drag)){disarm('context-changed');return;}const end=endpointWithHysteresis(drag,e);showPreview(drag.start,end,{x:e.clientX,y:e.clientY});if(status)status.textContent=end?`Knife end • ${snapLabel(end)} • release to cut`:'Knife • move onto a boundary snap before releasing';},true);
-canvas?.addEventListener('pointerup',e=>{if(!drag||drag.id!==e.pointerId)return;e.preventDefault();e.stopImmediatePropagation();if(!dragContextValid(drag)){disarm('context-changed');return;}const d=drag,end=endpointWithHysteresis(d,e);cancelDrag();if(Math.hypot(e.clientX-d.x,e.clientY-d.y)<MIN_DRAG_PX)return;if(!dragContextValid(d)){disarm('context-changed');return;}const mesh=d.mesh;if(!end){if(status)status.textContent='Knife • release only after END / MID / PERP / EDGE snap appears';return;}if(sameSnap(d.start,end))return;const cut=tryCut(mesh,d.start,end);if(!cut){render();if(status)status.textContent='Knife could not make a clean cut • use two different face boundaries';return;}globalThis.__boxlabHistory?.push(cut.before);render();if(bridge()?.mode?.()!=='face')document.querySelector('#selectionModes button[data-mode="face"]')?.click();button?.classList.add('active');armed=true;if(status)status.textContent=`Knife cut committed • ${snapLabel(d.start)} → ${snapLabel(end)} • Knife remains active`;},true);
+canvas?.addEventListener('pointerup',e=>{if(!drag||drag.id!==e.pointerId)return;e.preventDefault();e.stopImmediatePropagation();if(!dragContextValid(drag)){disarm('context-changed');return;}const d=drag,end=endpointWithHysteresis(d,e);cancelDrag();if(Math.hypot(e.clientX-d.x,e.clientY-d.y)<MIN_DRAG_PX)return;if(!dragContextValid(d)){disarm('context-changed');return;}const mesh=d.mesh;if(!end){if(status)status.textContent='Knife • release only after END / MID / PERP / EDGE snap appears';return;}if(sameSnap(d.start,end))return;const cut=tryCutAcrossFaces(mesh,d.start,end);if(!cut){render();if(status)status.textContent='Knife could not make a clean cut • use two different face boundaries';return;}globalThis.__boxlabHistory?.push(cut.before);render();if(bridge()?.mode?.()!=='face')document.querySelector('#selectionModes button[data-mode="face"]')?.click();button?.classList.add('active');armed=true;if(status)status.textContent=`Knife cut committed • ${snapLabel(d.start)} → ${snapLabel(end)} • Knife remains active`;},true);
 canvas?.addEventListener('pointercancel',e=>{if(drag?.id!==e.pointerId)return;cancelDrag();},true);
 
 canvas?.addEventListener('lostpointercapture',e=>{if(drag?.id===e.pointerId)cancelDrag();},true);
