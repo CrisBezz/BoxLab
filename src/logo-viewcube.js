@@ -22,7 +22,7 @@ export function installProjection(camera){
 // Reuse the viewport's actual orbit owner, including its camera-relative tumbling.
 export function orbitFromLogo(state,dx,dy,size=150){
  const {camera,controls}=state||{};
- if(!camera||!controls||!controls.enabled||!controls.enableRotate)return false;
+ if(!camera||!controls||!controls.enabled||!controls.enableRotate||controls.orbitLocked)return false;
  if(camera.isOrthographicCamera)installProjection(camera).set(false);
  controls.stopSpin?.();
  controls._rotateLeft(2*Math.PI*dx/size);
@@ -130,6 +130,7 @@ export function mountLogoViewcube(setView){
  }
  requestAnimationFrame(draw);
  host.addEventListener('pointerdown',event=>{
+  if(event.target.closest?.('button'))return;
   event.preventDefault();event.stopPropagation();if(drag||event.button>0)return;
   drag={id:event.pointerId,x:event.clientX,y:event.clientY,startX:event.clientX,startY:event.clientY,moved:false,view:event.target.closest?.('[data-view]')?.dataset.view};
   host.setPointerCapture(event.pointerId);
@@ -150,6 +151,19 @@ export function mountLogoViewcube(setView){
  };
  host.addEventListener('pointerup',event=>finish(event));host.addEventListener('pointercancel',event=>finish(event,true));host.addEventListener('lostpointercapture',event=>{if(drag)finish(event,true);});
  for(const type of ['click','dblclick','wheel'])host.addEventListener(type,event=>{event.preventDefault();event.stopPropagation();});
- const home=document.createElement('button');home.textContent='3D';home.title='Return to perspective';home.addEventListener('pointerdown',event=>event.stopPropagation());home.addEventListener('click',event=>{event.stopPropagation();setView('axon');});host.append(home);
- const style=document.createElement('style');style.textContent='#logoViewcube{position:absolute;top:10px;right:max(10px,env(safe-area-inset-right));width:112.5px;z-index:4;touch-action:none;user-select:none;-webkit-user-select:none}#logoViewcube svg{display:block;width:100%;overflow:visible;filter:drop-shadow(0 3px 3px #0008);cursor:grab}#logoViewcube:active svg{cursor:grabbing}#logoViewcube button{display:block;margin:0 auto;min-height:28px;padding:2px 12px;font-size:10px}';document.head.append(style);
+ mountLogoControls(host,setView);
+ const style=document.createElement('style');style.textContent='#logoViewcube{position:absolute;top:10px;right:max(44px,calc(env(safe-area-inset-right) + 44px));width:112.5px;z-index:4;touch-action:none;user-select:none;-webkit-user-select:none}#logoViewcube > svg{display:block;width:100%;overflow:visible;filter:drop-shadow(0 3px 3px #0008);cursor:grab}#logoViewcube:active > svg{cursor:grabbing}#logoViewcube button{position:absolute;width:38px;height:38px;min-height:38px;margin:0;padding:7px;display:grid;place-items:center;touch-action:manipulation}#logoViewcube button svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}#logoOrbitLockBtn{left:-34px;top:0}#logoViewcube #frameAllBtn{right:-34px;top:0}#logoViewcube #floorToggleBtn{left:-34px;bottom:0}#logoHomeBtn{right:-34px;bottom:0}#logoOrbitLockBtn[aria-pressed=true]{background:#eef1f7;color:#15171b}';document.head.append(style);
+}
+
+
+export function mountLogoControls(host,setView,doc=document,getState=()=>globalThis.__boxlabBridgeState){
+ const icon=path=>'<svg viewBox="0 0 24 24" aria-hidden="true">'+path+'</svg>';
+ const lock=doc.createElement('button');lock.id='logoOrbitLockBtn';lock.type='button';
+ lock.innerHTML=icon('<rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V6a4 4 0 0 1 8 0v4"/>');
+ lock.title='Lock orbit · two-finger pan, rotate and pinch remain available';lock.setAttribute('aria-label','Lock orbit');lock.setAttribute('aria-pressed','false');
+ lock.addEventListener('click',event=>{event.stopPropagation();const controls=getState()?.controls;if(!controls?.setOrbitLocked)return;const locked=controls.setOrbitLocked(!controls.orbitLocked);lock.setAttribute('aria-pressed',String(locked));lock.title=locked?'Unlock orbit':'Lock orbit · two-finger pan, rotate and pinch remain available';lock.setAttribute('aria-label',locked?'Unlock orbit':'Lock orbit');});
+ const home=doc.createElement('button');home.id='logoHomeBtn';home.type='button';home.title='Home view';home.setAttribute('aria-label','Home view');home.innerHTML=icon('<path d="m3 11 9-8 9 8M6 9v12h5v-7h3v7h4V9"/>');home.addEventListener('click',event=>{event.stopPropagation();setView('axon');});
+ const frame=doc.querySelector('#frameAllBtn'),floor=doc.querySelector('#floorToggleBtn');
+ for(const button of [lock,frame,floor,home])if(button){button.addEventListener('pointerdown',event=>event.stopPropagation());host.append(button);}
+ return {lock,home,frame,floor};
 }
