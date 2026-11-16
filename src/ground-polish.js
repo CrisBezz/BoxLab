@@ -1,3 +1,4 @@
+import {fitViewportGrid} from './viewport-grid.js?v=0.36.18.1181';
 // BoxLab v0.36.18.188 — viewport ground/grid presentation polish.
 // Visual only: floor/grid/off preference; Clean View still hides grid and axes.
 const VERSION='0.36.18.188';
@@ -5,11 +6,12 @@ let clean=false;
 let mode='studio';
 let ground='plane';
 const gridTransforms=new WeakMap();
-let viewGrid=null,viewControls=null;
+let viewGrid=null,viewControls=null,viewFloor=null;
 function syncGridCamera(){
   const grid=viewGrid,camera=bridge()?.camera;if(!grid)return;
   const original=gridTransforms.get(grid);if(!original)return;
   grid.position.copy(original.position);grid.quaternion.copy(original.quaternion);
+  if(!camera?.isOrthographicCamera&&viewFloor)fitViewportGrid(grid,viewFloor);
   if(camera?.isOrthographicCamera){
     camera.updateMatrixWorld();
     const e=camera.matrixWorld.elements,x=Math.abs(e[8]),y=Math.abs(e[9]),z=Math.abs(e[10]);
@@ -74,6 +76,7 @@ function apply(){
   if(!grid&&!axes&&!floor&&!contact)return false;
   const cleanNow=globalThis.__boxlabCleanView?.enabled??clean;
   if(grid){
+    viewFloor=floor||viewFloor;
     bindGridCamera(grid);
     grid.visible=ground==='grid'&&!cleanNow;
     if(grid.visible)setOpacity(grid,mode==='studio'?.5:.65);
@@ -94,4 +97,4 @@ window.addEventListener('boxlab-bridge-state',schedule);
 [0,120,500,1200].forEach(delay=>setTimeout(apply,delay));
 
 syncButton();
-globalThis.__boxlabGroundPolish={version:VERSION,apply,get ground(){return ground;},setGround,cycle};
+globalThis.__boxlabGroundPolish={version:VERSION,apply,syncFloor(floor){viewFloor=floor;syncGridCamera();},get ground(){return ground;},setGround,cycle};
