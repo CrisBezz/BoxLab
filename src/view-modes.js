@@ -1,3 +1,4 @@
+import {installProjection,mountLogoViewcube} from './logo-viewcube.js?v=0.36.18.1169';
 import {mountViewMenuSurface} from './view-menu-surface.js?v=0.36.18.998';
 import {mountGeneralSettings} from './general-settings.js?v=0.36.18.1104';
 import * as THREE from 'three';
@@ -113,6 +114,9 @@ function setView(view){
   const center=controls?.target?.clone?.()||box.getCenter(new THREE.Vector3());
   const distance=fitDistance(camera,box);
   const dir=directionFor(view);
+  controls?.stopSpin?.();
+  const projection=installProjection(camera);
+  projection.set(view!=='axon',2*distance*Math.tan(THREE.MathUtils.degToRad(camera.fov)*.5));
   camera.up.copy(upFor(view));
   camera.position.copy(center).addScaledVector(dir,distance);
   camera.near=Math.max(.001,distance-box.getSize(new THREE.Vector3()).length()*1.5);
@@ -259,3 +263,5 @@ html.boxlab-focus-view .statusbar{left:10px!important}
 `;
 document.head.append(focusViewStyle);
 syncFocusViewButton();
+
+mountLogoViewcube(setView);
