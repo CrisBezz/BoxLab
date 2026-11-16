@@ -4,6 +4,26 @@ const VERSION='0.36.18.188';
 let clean=false;
 let mode='studio';
 let ground='plane';
+const gridTransforms=new WeakMap();
+let viewGrid=null,viewControls=null;
+function syncGridCamera(){
+  const grid=viewGrid,camera=bridge()?.camera;if(!grid)return;
+  const original=gridTransforms.get(grid);if(!original)return;
+  grid.position.copy(original.position);grid.quaternion.copy(original.quaternion);
+  if(camera?.isOrthographicCamera){
+    camera.updateMatrixWorld();
+    const e=camera.matrixWorld.elements,x=Math.abs(e[8]),y=Math.abs(e[9]),z=Math.abs(e[10]);
+    if(x>y&&x>z){grid.rotation.set(0,0,Math.PI/2);grid.position.set(0,0,0);}
+    else if(z>y){grid.rotation.set(Math.PI/2,0,0);grid.position.set(0,0,0);}
+  }
+}
+function bindGridCamera(grid){
+  if(!gridTransforms.has(grid))gridTransforms.set(grid,{position:grid.position.clone(),quaternion:grid.quaternion.clone()});
+  viewGrid=grid;
+  const controls=bridge()?.controls;
+  if(controls!==viewControls){viewControls?.removeEventListener?.('change',syncGridCamera);viewControls=controls;viewControls?.addEventListener?.('change',syncGridCamera);}
+  syncGridCamera();
+}
 const groundIcons={
   plane:'<path d="M3 13 12 5 21 13 12 21Z" fill="#cbd0d8"/>',
   grid:'<path d="M3 13 12 5 21 13 12 21Z"/><path d="m6 10.3 9 8m-6-10.6 9 8m-3-8-9 8m12-5.4-9 8"/>',
@@ -54,8 +74,9 @@ function apply(){
   if(!grid&&!axes&&!floor&&!contact)return false;
   const cleanNow=globalThis.__boxlabCleanView?.enabled??clean;
   if(grid){
+    bindGridCamera(grid);
     grid.visible=ground==='grid'&&!cleanNow;
-    if(grid.visible)setOpacity(grid,mode==='studio'?.198:.374);
+    if(grid.visible)setOpacity(grid,mode==='studio'?.5:.65);
   }
   if(floor)floor.visible=ground==='plane';
   if(contact)contact.visible=ground==='plane'&&mode==='studio';
