@@ -161,9 +161,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1171",
+      "url": "./src/drawer-ui.js?v=0.36.18.1172",
       "target": "src/drawer-ui.js",
-      "sha256": "b94297b03389d51e0dfe7a696ef5f9d4e4ca23fde04529303bf85e091f026c90"
+      "sha256": "764a1541436294f1e758eebb2fd6d6c225897ae6f1a5cda6a0452224d6ac8d2d"
     },
     {
       "owner": "index.html",
@@ -378,7 +378,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1171",
+      "url": "./src/release-version.js?v=0.36.18.1172",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -575,9 +575,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/view-modes.js?v=0.36.18.1171",
+      "url": "./src/view-modes.js?v=0.36.18.1172",
       "target": "src/view-modes.js",
-      "sha256": "cc1ab3f875d2528a7b30a4d15dd72310824505ff1d3dcc48782cbf79b46bccd6"
+      "sha256": "7cf7d55088c347ac5af3fe48d25c2574deacac33ea77fbb954817877badb8fe9"
     },
     {
       "owner": "index.html",
@@ -864,9 +864,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1171",
+      "url": "./face-workflow-layout.js?v=0.36.18.1172",
       "target": "src/face-workflow-layout.js",
-      "sha256": "7b897a3dc9e5c57e79f61604037797149f9f1d013cc1a82a59dbc222606ce49c"
+      "sha256": "af6462f6542c665ce5da6379e9233a74940149b9ee302bb05d2fa5279b4fad27"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1361,7 +1361,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1171",
+      "url": "./release-version.js?v=0.36.18.1172",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -3326,9 +3326,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1171",
+      "url": "./src/shell-comparison.js?v=0.36.18.1172",
       "target": "src/shell-comparison.js",
-      "sha256": "5afa6eaf389b24861e1f2d3b430f3443717b44a6b0c674cbac68cf562492c287"
+      "sha256": "95d02761e601264507b0e6f4e322ddf478a733b7bbb763f8ebfe9ba4485275cb"
     },
     {
       "owner": "src/main.js",
@@ -3800,9 +3800,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/pathtrace-mode.js?v=0.36.18.1171",
+      "url": "./src/pathtrace-mode.js?v=0.36.18.1172",
       "target": "src/pathtrace-mode.js",
-      "sha256": "d33a06292858c55cf4183c21024645c82afdea94af43643f68e626e98dce46a7"
+      "sha256": "80a2059d5ba1b07659702befa93f1027dd3e3b02d9806fc6206626cd859e1dde"
     },
     {
       "owner": "src/pathtrace-mode.js",
@@ -3824,15 +3824,15 @@
     },
     {
       "owner": "src/view-modes.js",
-      "url": "./logo-viewcube.js?v=0.36.18.1171",
+      "url": "./logo-viewcube.js?v=0.36.18.1172",
       "target": "src/logo-viewcube.js",
-      "sha256": "72aaf590e8b2387e6e464e464cc0d437502ce2a70f7bc8e55464febc2efec341"
+      "sha256": "6efda2069904920a565bebf0b1c251bbe151b246f0416bacfab103b9d3376eca"
     },
     {
       "owner": "src/pathtrace-mode.js",
-      "url": "./logo-viewcube.js?v=0.36.18.1171",
+      "url": "./logo-viewcube.js?v=0.36.18.1172",
       "target": "src/logo-viewcube.js",
-      "sha256": "72aaf590e8b2387e6e464e464cc0d437502ce2a70f7bc8e55464febc2efec341"
+      "sha256": "6efda2069904920a565bebf0b1c251bbe151b246f0416bacfab103b9d3376eca"
     }
   ]
 }
