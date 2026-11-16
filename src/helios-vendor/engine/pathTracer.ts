@@ -58,6 +58,7 @@ uniform vec3 uCamUp;
 uniform vec3 uCamForward;
 uniform float uTanHalfFov;
 uniform float uAspect;
+uniform float uOrthoHeight;
 
 // Light uniforms: posRadius = (x, y, z, radius), colorEnabled = (r, g, b, enabled ? 1.0 : 0.0)
 uniform vec4 uLightPosRadius[${MAX_LIGHTS}];
@@ -572,6 +573,11 @@ void main() {
     uCamUp * (ndc.y * uTanHalfFov)
   );
 
+  if(uOrthoHeight > 0.0){
+    ro += uCamRight * ndc.x * uOrthoHeight * uAspect * 0.5 + uCamUp * ndc.y * uOrthoHeight * 0.5;
+    rd = normalize(uCamForward);
+  }
+
   vec3 radiance = vec3(0.0);
   vec3 throughput = vec3(1.0);
 
@@ -991,6 +997,7 @@ export class GPUPathTracer {
         uCamForward: { value: new THREE.Vector3(0, 0, -1) },
         uTanHalfFov: { value: 0.35 },
         uAspect: { value: 1.33 },
+        uOrthoHeight: { value: 0 },
         uLightPosRadius: { value: lightPosArr },
         uLightColorEnabled: { value: lightColArr },
         uMatA: { value: matAArr },
@@ -1178,6 +1185,8 @@ export class GPUPathTracer {
     u.uCamForward.value.copy(this.camForward);
     u.uTanHalfFov.value = tanHalfFov;
     u.uAspect.value = camera.aspect;
+    const projectionCamera = camera as THREE.PerspectiveCamera & { isOrthographicCamera?: boolean; top: number; bottom: number };
+    u.uOrthoHeight.value = projectionCamera.isOrthographicCamera ? (projectionCamera.top-projectionCamera.bottom)/camera.zoom : 0;
     u.uSampleIndex.value = this.sampleIndex;
     u.uMaxBounces.value = isInteracting ? Math.min(2, settings.maxBounces) : settings.maxBounces;
     u.uClayMode.value = settings.clayMode ? 1 : 0;
