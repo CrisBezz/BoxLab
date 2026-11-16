@@ -1,3 +1,7 @@
+## .1179 publication verified
+
+Runtime `b5831f5eb1901fcc8ed5bec4f6f22aa43c771aa4` published on main. Pages `43857253919` completed SUCCESS. Cache-busted live version.json, index.html, main.js and ground-polish.js byte-match tested checkout. Full local regression 3,468/3,468 PASS, zero failures/cancelled/skips (125.640s); focused floor/orthographic/release 10/10 PASS; syntax/diff checks pass. Hosted Topology `43857254985` was queued at last query; no hosted PASS claimed. Ready for native contrast and six-view checks; .1178 user PASS protected. New runtime uses original grid only, with restored 3D ground transform and retained floor/contact exclusion.
+
 # .1179 — brighter grid and six orthographic planes — 16 November 2026
 
 User confirms .1178 PASS: protect four navigator action corners, orbit lock preserving two-finger pan/twist/pinch, Home/Extents/Floor owners and cube appearance. GridHelper remains the only grid owner: line colours raised to centre 0x9aa8bb / minor 0x627085, opacity Studio .5 / other modes .65. Original 12-unit span, 24 divisions retained. Grid mode continues to hide solid Studio floor and contact shadow, including in 3D; Plane/Grid/Off and Clean View behavior remain original.
