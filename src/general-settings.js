@@ -1,5 +1,5 @@
 const STORAGE_KEY='boxlab.general-settings.v1';
-const DEFAULTS=Object.freeze({pencilOrbit:true,pencilSelection:true,snapTop:false,leftHanded:false});
+const DEFAULTS=Object.freeze({pencilOrbit:true,pencilSelection:true,snapTop:false,leftHanded:false,modeTop:false,selectTop:false});
 let current=load();
 
 function load(){
@@ -11,6 +11,8 @@ function load(){
 function apply(){
   const root=document.documentElement;
   root.classList.toggle('boxlab-snap-top',current.snapTop);
+  root.classList.toggle('boxlab-mode-top',current.modeTop);
+  root.classList.toggle('boxlab-select-top',current.selectTop);
   root.classList.toggle('boxlab-left-handed',current.leftHanded);
   window.dispatchEvent(new CustomEvent('boxlab-general-settings-change',{detail:{...current}}));
 }
@@ -33,7 +35,9 @@ export function mountGeneralSettings(panel){
   section.innerHTML=`<div class="viewport-menu-label">General Settings</div><div class="general-settings-list">
     <label><input type="checkbox" data-general-setting="pencilOrbit"><span>Pencil orbit</span></label>
     <label><input type="checkbox" data-general-setting="pencilSelection"><span>Pencil selection</span></label>
+    <label><input type="checkbox" data-general-setting="modeTop"><span>Mode select at top left</span></label>
     <label><input type="checkbox" data-general-setting="snapTop"><span>Snap options at top left</span></label>
+    <label><input type="checkbox" data-general-setting="selectTop"><span>Select options at top left</span></label>
     <label><input type="checkbox" data-general-setting="leftHanded"><span>Left-handed layout</span></label>
   </div>`;
   host.append(section);
@@ -51,7 +55,9 @@ export function mountGeneralSettings(panel){
 .general-settings-list{display:grid;gap:4px}
 .general-settings-list label{display:flex;align-items:center;gap:9px;min-height:38px;padding:3px 8px;border:1px solid rgba(255,255,255,.08);border-radius:7px;background:rgba(255,255,255,.025);font-size:12px;touch-action:manipulation}
 .general-settings-list input{width:18px;height:18px;margin:0;accent-color:#83b8ff;flex:0 0 auto}
-html.boxlab-snap-top #viewportSnapControls{top:8px;bottom:auto}
+html.boxlab-mode-top #viewportWrap > #selectionModes{top:8px!important;bottom:auto!important;left:8px!important}
+html.boxlab-snap-top #viewportSnapControls{top:8px!important;bottom:auto!important;left:var(--boxlab-snap-left,8px)!important}
+html.boxlab-select-top #viewportActionControls{top:8px!important;bottom:auto!important;left:var(--boxlab-select-left,8px)!important;max-height:calc(100% - 16px)}
 html.boxlab-left-handed #viewportWrap>.floating-panel.left-panel{left:auto!important;right:max(8px,env(safe-area-inset-right))!important}
 html.boxlab-left-handed #objectBrowserPanel{right:auto;left:max(8px,env(safe-area-inset-left))}
 `;
@@ -61,3 +67,22 @@ html.boxlab-left-handed #objectBrowserPanel{right:auto;left:max(8px,env(safe-are
 
 globalThis.__boxlabGeneralSettings={get:getGeneralSettings,set:setGeneralSetting};
 apply();
+
+// Measure the original panels; preserve their nodes, listeners and visibility owners.
+function layoutTopPanels(){
+  const root=document.documentElement;
+  let left=8;
+  for(const [key,id,property] of [['modeTop','selectionModes',null],['snapTop','viewportSnapControls','--boxlab-snap-left'],['selectTop','viewportActionControls','--boxlab-select-left']]){
+    const panel=document.querySelector?.('#'+id);
+    if(property)root.style?.setProperty(property,left+'px');
+    if(current[key]&&panel)left+=panel.getBoundingClientRect().width+8;
+  }
+}
+if(typeof ResizeObserver==='function'){
+  const observer=new ResizeObserver(layoutTopPanels);
+  const watch=()=>{for(const id of ['selectionModes','viewportSnapControls','viewportActionControls']){const panel=document.querySelector('#'+id);if(panel)observer.observe(panel);}layoutTopPanels();};
+  window.addEventListener('boxlab-general-settings-change',watch);
+  window.addEventListener('resize',layoutTopPanels);
+  document.addEventListener('DOMContentLoaded',watch);
+  watch();
+}
