@@ -1,4 +1,4 @@
-import {fitViewportGrid} from './viewport-grid.js?v=0.36.18.1182';
+import {fitViewportGrid} from './viewport-grid.js?v=0.36.18.1183';
 // BoxLab v0.36.18.188 — viewport ground/grid presentation polish.
 // Visual only: floor/grid/off preference; Clean View still hides grid and axes.
 const VERSION='0.36.18.188';
