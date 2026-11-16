@@ -72,3 +72,16 @@ test('1011 combined gesture retains both anchors with the app oblique camera and
  f.move(1,[310,400]);f.anchors.forEach((w,i)=>f.assertAt(w,f.points[i]));
  f.move(2,[600,500]);f.anchors.forEach((w,i)=>f.assertAt(w,f.points[i]));
 });
+
+test('1178 orbit lock blocks one-finger and logo tumbling but preserves combined pan, pinch and twist',()=>{
+ const f=fixture();f.c.setOrbitLocked(true);
+ const up=f.camera.up.clone(),target=f.c.target.clone(),distance=f.c.getDistance();
+ for(const pair of [[[340,320],[670,430]],[[360,300],[700,450]]]){f.move(1,pair[0]);f.move(2,pair[1]);f.anchors.forEach((w,i)=>f.assertAt(w,pair[i]));}
+ assert(f.camera.up.distanceTo(up)>0);assert(f.c.target.distanceTo(target)>0);assert(Math.abs(f.c.getDistance()-distance)>0);
+ f.c._onPointerUp(f.event(1,f.points[0]));f.c._onPointerUp(f.event(2,f.points[1]));
+ const position=f.camera.position.clone(),orientation=f.camera.quaternion.clone();
+ f.c._onPointerDown(f.event(1,[350,380]));f.move(1,[400,420]);
+ assert(position.distanceTo(f.camera.position)<1e-9);assert(orientation.angleTo(f.camera.quaternion)<1e-7);
+ f.c.setOrbitLocked(false);f.move(1,[410,430]);assert(position.distanceTo(f.camera.position)>0);
+ f.c._onPointerUp(f.event(1,[410,430]));
+});
