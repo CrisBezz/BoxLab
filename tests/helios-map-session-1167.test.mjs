@@ -120,14 +120,14 @@ test('1167 drops render-map overrides when the BoxLab object identity set change
     'an override from a different scene cannot attach to a reused material index');
 });
 
-test('1174 release graph refreshes the pathtrace owner and bundled tracer',()=>{
+test('1175 release graph refreshes the pathtrace owner and bundled tracer',()=>{
   const version=JSON.parse(read('version.json')).version;
   const index=read('index.html'),mode=read('src/pathtrace-mode.js'),shell=read('src/shell-comparison.js');
-  assert.equal(version,'0.36.18.1174');
-  assert.match(index,/<title>BoxLab v0\.36\.18\.1174<\/title>/);
-  assert.match(index,/data-release-version="0\.36\.18\.1174">v0\.36\.18\.1174/);
-  assert.match(index,/src\/pathtrace-mode\.js\?v=0\.36\.18\.1174/);
+  assert.equal(version,'0.36.18.1175');
+  assert.match(index,/<title>BoxLab v0\.36\.18\.1175<\/title>/);
+  assert.match(index,/data-release-version="0\.36\.18\.1175">v0\.36\.18\.1175/);
+  assert.match(index,/src\/pathtrace-mode\.js\?v=0\.36\.18\.1175/);
   assert.match(mode,/helios-tracer\.bundle\.js\?v=0\.36\.18\.1169/);
   assert.match(index,/src\/multi-object-transform\.js\?v=0\.36\.1\.0/);
-  assert.match(shell,/RELEASE='0\.36\.18\.1174'/);
+  assert.match(shell,/RELEASE='0\.36\.18\.1175'/);
 });
