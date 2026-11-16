@@ -1,3 +1,20 @@
+# .1170 — rotatable 3D logo orbit navigator — 16 November 2026
+
+`.1169 FAIL`: a static arrangement of view buttons does not meet the requested
+3D navigator behavior. Replace its presentation and input owner: six actual hollow
+box frames share a centre, rotate in sync with the viewport camera, and use depth-sorted
+projected surfaces. Drag the logo to orbit through the existing FreeOrbitControls
+rotation methods; a movement threshold separates taps from drags. Tap a visible box
+surface for its orthographic direction. Drag from an orthographic view returns to
+perspective. Cancellation/capture loss never selects a view. No second WebGL context.
+Keep `.1168 PASS` and prior material/map behavior protected. This supersedes .1169's
+static selector, not its orthographic projection or Helios ray support.
+
+Focused orbit/projection/Helios/release checks pass 18/18; syntax and diff checks
+pass. Full regression and hosted publication results remain pending. Device checks:
+logo follows viewport orbit; logo drag orbits viewport; six face taps snap to ortho;
+short taps versus drags/cancels; viewport/Pencil selection and Helios navigation smoke.
+
 # .1169 — logo orthographic navigator — 16 November 2026
 
 User confirms `.1168 PASS`; protect surface/emitter opacity and prior map-session
