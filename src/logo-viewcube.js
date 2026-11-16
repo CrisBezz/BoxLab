@@ -62,26 +62,65 @@ export function logoSurfaces(){
  return surfaces;
 }
 
+// Lightweight diffuse preview from the viewport's visible light rig. Axis colours
+// remain the material colours; this adds no render context, textures or shadow maps.
+export function shadeLogoSurface(surface,lights,mode,inverse){
+ const normal=surface.normal.clone();
+ if(mode==='matcap')normal.applyQuaternion(inverse);
+ const sum=new THREE.Color(0.16,0.16,0.16);
+ for(const light of lights){
+  let weight=light.intensity;
+  if(light.direction)weight*=Math.max(0,normal.dot(light.direction));
+  if(light.ground){
+   const t=Math.max(0,Math.min(1,(normal.y+1)/2));
+   sum.add(light.ground.clone().lerp(light.color,t).multiplyScalar(weight*.45));
+  }else sum.add(light.color.clone().multiplyScalar(weight*.45));
+ }
+ // Compress the highlight response so six orientation hues remain recognisable.
+ for(const key of ['r','g','b'])sum[key]=Math.min(1.18,.3+sum[key]/(1+sum[key]));
+ return new THREE.Color(surface.color).multiply(sum).getStyle();
+}
+export function logoLighting(scene,mode){
+ if(mode==='matcap')return [{color:new THREE.Color('#ffffff'),intensity:2,direction:new THREE.Vector3(-.4,.7,1).normalize()}];
+ const lights=[];
+ scene?.traverseVisible(object=>{
+  if(!object.isLight||object.intensity<=0)return;
+  if(object.isDirectionalLight){
+   const direction=object.getWorldPosition(new THREE.Vector3()).sub(object.target.getWorldPosition(new THREE.Vector3())).normalize();
+   lights.push({color:object.color.clone(),intensity:object.intensity,direction});
+  }else if(object.isHemisphereLight)lights.push({color:object.color.clone(),ground:object.groundColor.clone(),intensity:object.intensity});
+  else if(object.isAmbientLight)lights.push({color:object.color.clone(),intensity:object.intensity});
+ });
+ return lights;
+}
+
 export function mountLogoViewcube(setView){
  const wrap=document.querySelector('#viewportWrap');if(!wrap||document.querySelector('#logoViewcube'))return;
  const host=document.createElement('div');host.id='logoViewcube';host.setAttribute('aria-label','BoxLab orbit navigator');
  const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.setAttribute('viewBox','-80 -80 160 160');svg.setAttribute('role','img');svg.setAttribute('aria-label','Drag hollow cube logo to orbit; tap a coloured box for its orthographic view');
  host.append(svg);wrap.append(host);
- const surfaces=logoSurfaces(),inverse=new THREE.Quaternion();let signature='',drag=null;
+ const surfaces=logoSurfaces(),inverse=new THREE.Quaternion();let signature='',drag=null,lighting=[],lightSignature='',lastLightUpdate=-Infinity,mode='studio';
  const nodes=surfaces.map(surface=>{
   const group=document.createElementNS(svg.namespaceURI,'g');group.dataset.view=surface.view;
   const polygon=document.createElementNS(svg.namespaceURI,'polygon');polygon.setAttribute('fill',surface.color);polygon.setAttribute('stroke',surface.color);polygon.setAttribute('stroke-width','.35');
   const outline=document.createElementNS(svg.namespaceURI,'path');outline.setAttribute('fill','none');outline.setAttribute('stroke','#10161e');outline.setAttribute('stroke-width','.65');outline.setAttribute('stroke-linejoin','round');outline.setAttribute('pointer-events','none');
   const title=document.createElementNS(svg.namespaceURI,'title');title.textContent=surface.view==='rear'?'BACK':surface.view.toUpperCase();group.append(title,polygon,outline);svg.append(group);return {group,polygon,outline};
  });
- function draw(){
+ function draw(time=0){
   const camera=globalThis.__boxlabBridgeState?.camera;
   if(camera){
-   const next=camera.quaternion.toArray().join(',');
+   if(time-lastLightUpdate>100){
+    lastLightUpdate=time;
+    mode=document.querySelector('#viewportRenderLooks button.active[data-render]')?.dataset.render||'studio';
+    lighting=logoLighting(globalThis.__boxlabBridgeState?.scene,mode);
+    lightSignature=mode+JSON.stringify(lighting);
+   }
+   const next=camera.quaternion.toArray().join(',')+lightSignature;
    if(next!==signature){signature=next;inverse.copy(camera.quaternion).invert();
     const rows=surfaces.map((surface,index)=>{const points=surface.points.map(p=>p.clone().applyQuaternion(inverse));return {index,points,visible:surface.normal.clone().applyQuaternion(inverse).z>1e-7,depth:points.reduce((n,p)=>n+p.z,0)/4};}).sort((a,b)=>a.depth-b.depth);
     for(const row of rows){
      const node=nodes[row.index];node.group.style.display=row.visible?'':'none';
+     const colour=shadeLogoSurface(surfaces[row.index],lighting,mode,inverse);node.polygon.setAttribute('fill',colour);node.polygon.setAttribute('stroke',colour);
      const xy=row.points.map(p=>`${p.x*51},${-p.y*51}`);node.polygon.setAttribute('points',xy.join(' '));
      node.outline.setAttribute('d',surfaces[row.index].edges.map(i=>`M${xy[i]}L${xy[(i+1)%xy.length]}`).join(' '));svg.append(node.group);
     }
@@ -112,5 +151,5 @@ export function mountLogoViewcube(setView){
  host.addEventListener('pointerup',event=>finish(event));host.addEventListener('pointercancel',event=>finish(event,true));host.addEventListener('lostpointercapture',event=>{if(drag)finish(event,true);});
  for(const type of ['click','dblclick','wheel'])host.addEventListener(type,event=>{event.preventDefault();event.stopPropagation();});
  const home=document.createElement('button');home.textContent='3D';home.title='Return to perspective';home.addEventListener('pointerdown',event=>event.stopPropagation());home.addEventListener('click',event=>{event.stopPropagation();setView('axon');});host.append(home);
- const style=document.createElement('style');style.textContent='#logoViewcube{position:absolute;top:10px;right:max(10px,env(safe-area-inset-right));width:150px;z-index:4;touch-action:none;user-select:none;-webkit-user-select:none}#logoViewcube svg{display:block;width:100%;overflow:visible;filter:drop-shadow(0 3px 3px #0008);cursor:grab}#logoViewcube:active svg{cursor:grabbing}#logoViewcube button{display:block;margin:0 auto;min-height:28px;padding:2px 12px;font-size:10px}';document.head.append(style);
+ const style=document.createElement('style');style.textContent='#logoViewcube{position:absolute;top:10px;right:max(10px,env(safe-area-inset-right));width:112.5px;z-index:4;touch-action:none;user-select:none;-webkit-user-select:none}#logoViewcube svg{display:block;width:100%;overflow:visible;filter:drop-shadow(0 3px 3px #0008);cursor:grab}#logoViewcube:active svg{cursor:grabbing}#logoViewcube button{display:block;margin:0 auto;min-height:28px;padding:2px 12px;font-size:10px}';document.head.append(style);
 }
