@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {installProjection} from './logo-viewcube.js?v=0.36.18.1173';
+import {installProjection} from './logo-viewcube.js?v=0.36.18.1174';
 
 const wrap=document.querySelector('#viewportWrap');
 const status=document.querySelector('#selectionStatus');
