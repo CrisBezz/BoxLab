@@ -1,3 +1,7 @@
+## .1182 publication verified
+
+Runtime `781df44a0deee1537f0f8831b51a9bcf45ffb0be` published on main. Cache-busted live version.json, index.html and knife-tool.js byte-match tested checkout. Full local regression 3,477/3,477 PASS, zero failures/cancelled/skips (128.045s); final amended per-drag picker reuse/cancellation covered by Knife/release rerun 68/68 PASS. Changed JS syntax/diff pass; new test Git blob verified. Pages `43862424166` live files verified; hosted Topology `43862425457` was in progress at last query, no hosted PASS claimed. Device checks ready: straight multi-face drag with edge/vertex snapping, inference MID/PERP, folded strip, one-step Undo/Redo and normal Knife session exits. Sketch was not attached, so no exact sketch parity claimed. User .1181 PASS recorded and protected.
+
 # .1182 — Knife across connected visible face strips — 16 November 2026
 
 User requests Face > Knife across multiple edges with existing edge/vertex snaps; sketch was not received in this thread, so scope is a straight drag across a connected visible face strip. User separately confirms .1181 PASS; protect exact Plane/Grid footprint continuity and prior grid/navigation behavior. Original Knife owner/cleanDiagonal/connectVertices remain authoritative. End snap search now includes the currently visible face beyond start-incident faces; END/MID/PERP/EDGE priority and release hysteresis stay original.
