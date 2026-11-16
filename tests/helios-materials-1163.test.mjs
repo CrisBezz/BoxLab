@@ -46,6 +46,6 @@ test('the BoxLab adapter applies presets only through the selected render-sessio
   assert.match(entry,/function applyMaterialPreset\(id: string, presetId: string\)/);
   assert.match(entry,/hasImportedMaps[\s\S]*delete safePatch\.texturePreset/,'imported PBR maps remain protected');
   assert.match(mode,/helios-tracer\.bundle\.js\?v=0\.36\.18\.1169/,'the rebuilt tracer bundle gets a fresh cache key');
-  assert.match(read('index.html'),/pathtrace-mode\.js\?v=0\.36\.18\.1182/,'the parent lifecycle loader gets a fresh cache key');
+  assert.match(read('index.html'),/pathtrace-mode\.js\?v=0\.36\.18\.1183/,'the parent lifecycle loader gets a fresh cache key');
   assert.match(read('src/helios-vendor/UPSTREAM.txt'),/Base commit: 0e79c5163e5d87703d369250e1a9fff9e2b9085f/);
 });
