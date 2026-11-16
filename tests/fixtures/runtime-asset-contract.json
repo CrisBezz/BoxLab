@@ -161,9 +161,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1168",
+      "url": "./src/drawer-ui.js?v=0.36.18.1169",
       "target": "src/drawer-ui.js",
-      "sha256": "08919699bc42824d3dc1bd32f498952a3e5369667a8faf11722ccb7b4e992c12"
+      "sha256": "02cbc361c68c74286a845fc8e666a6382bbcade0570762fd7729eee010f5af5b"
     },
     {
       "owner": "index.html",
@@ -297,9 +297,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/main.js?v=0.36.18.1144",
+      "url": "./src/main.js?v=0.36.18.1169",
       "target": "src/main.js",
-      "sha256": "db2424afb94f17017d6e47d526ae6c66285df798c9a82004f45d8f07e362f4dd",
+      "sha256": "bc91d4052f777da0657fc1c5612b6c4a0eb58254ec9dfec457e55cafb7aec35e",
       "sourceVersion": "0.35.1"
     },
     {
@@ -575,9 +575,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/view-modes.js?v=0.36.18.1104",
+      "url": "./src/view-modes.js?v=0.36.18.1169",
       "target": "src/view-modes.js",
-      "sha256": "330583b963612fc59b4d1eb0a96978c08b6efbe7743f944ace7c94fc6fc4dc8c"
+      "sha256": "71a9078a0a79c4c7c7349a08c4436972f7e38d67d25d0167439c52b07103cb87"
     },
     {
       "owner": "index.html",
@@ -864,9 +864,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1168",
+      "url": "./face-workflow-layout.js?v=0.36.18.1169",
       "target": "src/face-workflow-layout.js",
-      "sha256": "cfd25852961dbb2da90f355ad58765d7b5abae3639cc90cda837fc2e798c99b7"
+      "sha256": "33a5714caec9ff0eb56e8184e08fa37ad2ff6ab8f1766688764b16f10a5d0da5"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -3326,9 +3326,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1168",
+      "url": "./src/shell-comparison.js?v=0.36.18.1169",
       "target": "src/shell-comparison.js",
-      "sha256": "51975ec3fc18079ca05edf55e6efe567a43b8f7c67c54e5b77e6f9d9d40879e6"
+      "sha256": "8360e2916e2e3e4f332ba049f57e2f9356719b7991f5b4b9c747fb62e55aeb98"
     },
     {
       "owner": "src/main.js",
@@ -3800,15 +3800,15 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/pathtrace-mode.js?v=0.36.18.1168",
+      "url": "./src/pathtrace-mode.js?v=0.36.18.1169",
       "target": "src/pathtrace-mode.js",
-      "sha256": "2cff760c5a081630fe7305a1e4d8457481aeac7a170b801a5ef177b01bf48cdb"
+      "sha256": "339aa8dade952d4ea462cabf16fbd4613502e35b180a6389792dae879d4d126f"
     },
     {
       "owner": "src/pathtrace-mode.js",
-      "url": "./helios-tracer.bundle.js?v=0.36.18.1168",
+      "url": "./helios-tracer.bundle.js?v=0.36.18.1169",
       "target": "src/helios-tracer.bundle.js",
-      "sha256": "fcdadd95e0633b4d983b88b1fb14bd926abd5f926db27aec4cea051d26084a2d"
+      "sha256": "1727d8b1f2f56088ec2cffe0735b8450c85fa44163c9d7f0c174865f87f85d65"
     },
     {
       "owner": "index.html",
