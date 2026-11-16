@@ -65,3 +65,11 @@ Focused floor lifecycle, all six orthographic normals, perspective restoration, 
 ## .1179 publication verified
 
 Runtime `b5831f5eb1901fcc8ed5bec4f6f22aa43c771aa4` published on main. Pages `43857253919` completed SUCCESS. Cache-busted live version.json, index.html, main.js and ground-polish.js byte-match tested checkout. Full local regression 3,468/3,468 PASS, zero failures/cancelled/skips (125.640s); focused floor/orthographic/release 10/10 PASS; syntax/diff checks pass. Hosted Topology `43857254985` was queued at last query; no hosted PASS claimed. Ready for native contrast and six-view checks; .1178 user PASS protected. New runtime uses original grid only, with restored 3D ground transform and retained floor/contact exclusion.
+
+# .1180 — startup grid hidden and decimal subdivisions — 16 November 2026
+
+User confirms .1179 PASS for stronger grid, all six orthographic planes and 3D floor replacement; reports initial grid flash and requests 0.1 subdivisions / white 1-unit major lines. Original GridHelper is now constructed once through viewport-grid.js: span 12, divisions 120 (0.1-unit cells), four vertex colours per line pair, every tenth line white 0xf1f4f8 and minors pale 0x697481. Main uses this single factory in place of its original GridHelper constructor; no second helper or overlaid major grid. Original -1.55 ground height retained. Geometry holds 484 vertices; no dynamic rebuild or per-frame allocation added.
+
+Factory sets visible=false BEFORE scene.add and first render. The existing ground presentation owner alone exposes grid when Grid is selected, removing the default Three visible=true startup flash. Plane/Grid/Off preference, .1179 ortho orientation/restoration, Clean View and floor/contact exclusion retained. Main loader and new module cache graph reviewed. Protected modelling, Multi, orbit lock, navigator and Paint unchanged.
+
+Focused geometry/floor/ortho/release checks 11/11 PASS. Actual geometry verifies all 121 coordinates per axis, 0.1 spacing, every 1-unit major and both exact vertex palettes; initial hidden state and original main scene wiring checked. Full regression/publication evidence follows. Device: refresh in default Plane mode without grid flash; select Grid, count 10 cells across 1-unit cube width and inspect major/minor contrast; six ortho views/Home restore; Plane/Grid/Off and lock smoke.
