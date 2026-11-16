@@ -1,3 +1,13 @@
+## .1173 release verification
+
+Runtime `769013d193920dd5a9d566ed3c462fed5e161b99` is published. Focused checks
+pass 36/36; full local regression passes 3,461/3,461, zero failures/cancelled/skips
+(95.053s). Syntax and diff checks pass. Pages `43803174039` succeeds on that runtime.
+Hosted Topology `43803174834` remains in progress at this evidence point; no hosted
+PASS claimed. User device checks: 25% smaller footprint; Studio light-angle changes,
+Solid/MatCap/Helios lighting preview; retained orbit, face taps and axis colours.
+This evidence supersedes pending-validation text below. Visual acceptance pending.
+
 # .1173 — smaller navigator and viewport lighting — 16 November 2026
 
 Navigator width is reduced exactly 25%, from 150px to 112.5px; the existing 3D
