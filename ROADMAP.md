@@ -1,3 +1,11 @@
+# .1180 — startup grid hidden and decimal subdivisions — 16 November 2026
+
+User confirms .1179 PASS for stronger grid, all six orthographic planes and 3D floor replacement; reports initial grid flash and requests 0.1 subdivisions / white 1-unit major lines. Original GridHelper is now constructed once through viewport-grid.js: span 12, divisions 120 (0.1-unit cells), four vertex colours per line pair, every tenth line white 0xf1f4f8 and minors pale 0x697481. Main uses this single factory in place of its original GridHelper constructor; no second helper or overlaid major grid. Original -1.55 ground height retained. Geometry holds 484 vertices; no dynamic rebuild or per-frame allocation added.
+
+Factory sets visible=false BEFORE scene.add and first render. The existing ground presentation owner alone exposes grid when Grid is selected, removing the default Three visible=true startup flash. Plane/Grid/Off preference, .1179 ortho orientation/restoration, Clean View and floor/contact exclusion retained. Main loader and new module cache graph reviewed. Protected modelling, Multi, orbit lock, navigator and Paint unchanged.
+
+Focused geometry/floor/ortho/release checks 11/11 PASS. Actual geometry verifies all 121 coordinates per axis, 0.1 spacing, every 1-unit major and both exact vertex palettes; initial hidden state and original main scene wiring checked. Full regression/publication evidence follows. Device: refresh in default Plane mode without grid flash; select Grid, count 10 cells across 1-unit cube width and inspect major/minor contrast; six ortho views/Home restore; Plane/Grid/Off and lock smoke.
+
 # .1179 — brighter grid and six orthographic planes — 16 November 2026
 
 User confirms .1178 PASS: protect four navigator action corners, orbit lock preserving two-finger pan/twist/pinch, Home/Extents/Floor owners and cube appearance. GridHelper remains the only grid owner: line colours raised to centre 0x9aa8bb / minor 0x627085, opacity Studio .5 / other modes .65. Original 12-unit span, 24 divisions retained. Grid mode continues to hide solid Studio floor and contact shadow, including in 3D; Plane/Grid/Off and Clean View behavior remain original.
