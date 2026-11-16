@@ -145,6 +145,7 @@ function refreshStudio(){
     if(!hasVisibleBody||bounds.isEmpty())return;
     const center=bounds.getCenter(new THREE.Vector3()),size=bounds.getSize(new THREE.Vector3()),span=Math.max(size.x,size.z,1),height=Math.max(size.y,1),radius=Math.max(span,height)*.5,floorSize=Math.max(span*2.8,24);
     studioFloor.position.set(center.x,bounds.min.y-.025,center.z);studioFloor.scale.set(floorSize,floorSize,1);
+    globalThis.__boxlabGroundPolish?.syncFloor?.(studioFloor);
     studioKeyTarget.position.copy(center);
     const lightDistance=Math.max(radius*3.5,12);
     const lightAngle=globalThis.__boxlabStudioLightAngle?.radians||0;
