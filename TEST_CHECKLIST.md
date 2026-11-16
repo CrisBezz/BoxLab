@@ -1,3 +1,11 @@
+# .1181 — continuous Plane / Grid footprint in 3D — 16 November 2026
+
+User confirms .1180 PASS, but requests exact 3D Plane/Grid continuity. Audit: Studio floor follows visible model bounds, minimum span24, at bounds.min.y-.025; grid was fixed span12 at y=-1.55. The same GridHelper now fits the existing Studio floor world centre, height and actual rectangular footprint in perspective. Render-modes refreshStudio publishes its final floor transform to the existing ground owner; camera/ground synchronization also follows it. No duplicate model bounds/floor-size calculations or second grid.
+
+viewport-grid fits the existing helper by regenerating only its line geometry when floor footprint/centre changes, disposing prior geometry; unchanged camera updates reuse it. Lines are clipped to floor edges and remain world-aligned every0.1, major every1, with accepted white/pale colours, without scaling cell size. Original startup hidden state, Plane/Grid/Off visibility, Clean View, six ortho plane normals, lock/Paint/history/Multi remain. Perspective return now intentionally fits the live floor instead of restoring obsolete fixed grid placement. Orthographic plane orientation remains the .1179 owner.
+
+Focused grid/floor/ortho/release 12/12 PASS: exact translated floor world bounds/height, rectangular resize, world0.1 coordinates, unchanged geometry reuse, initial hidden state and original grid palettes. Syntax/diff pass. Full regression/publication evidence follows. Device: repeatedly cycle Plane→Grid→Off→Plane in 3D; same centre/height/extent; move/resize/import model then compare; verify0.1/1-unit lines, six ortho/Home and refresh no grid flash.
+
 # .1180 — startup grid hidden and decimal subdivisions — 16 November 2026
 
 User confirms .1179 PASS for stronger grid, all six orthographic planes and 3D floor replacement; reports initial grid flash and requests 0.1 subdivisions / white 1-unit major lines. Original GridHelper is now constructed once through viewport-grid.js: span 12, divisions 120 (0.1-unit cells), four vertex colours per line pair, every tenth line white 0xf1f4f8 and minors pale 0x697481. Main uses this single factory in place of its original GridHelper constructor; no second helper or overlaid major grid. Original -1.55 ground height retained. Geometry holds 484 vertices; no dynamic rebuild or per-frame allocation added.
