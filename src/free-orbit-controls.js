@@ -10,8 +10,9 @@ export class FreeOrbitControls extends OrbitControls {
   this.addEventListener('start',()=>this.stopSpin());
  }
  stopSpin(){if(this._spin)this._spin.x=this._spin.y=0;this._panOffset?.set(0,0,0);this._sphericalDelta?.set(0,0,0);this._scale=1;}
- _rotateLeft(angle){if(this._spin)this._spin.x+=angle;}
- _rotateUp(angle){if(this._spin)this._spin.y+=angle;}
+ setOrbitLocked(value){this.orbitLocked=!!value;this.stopSpin();return this.orbitLocked;}
+ _rotateLeft(angle){if(this.orbitLocked)return;if(this._spin)this._spin.x+=angle;}
+ _rotateUp(angle){if(this.orbitLocked)return;if(this._spin)this._spin.y+=angle;}
  _touchPair(){return this._pointers.slice(0,2).map(id=>this._pointerPositions[id]?.clone());}
  _handleTouchStartDollyPan(event){
   super._handleTouchStartDollyPan(event);
