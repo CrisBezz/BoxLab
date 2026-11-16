@@ -1,3 +1,23 @@
+# .1169 — logo orthographic navigator — 16 November 2026
+
+User confirms `.1168 PASS`; protect surface/emitter opacity and prior map-session
+persistence. The first draft adds a top-right six-hollow-box logo navigator with
+Front red / Back dark red, Left blue / Right dark blue, Top green / Bottom dark
+green. Click a box to use the existing directional-view owner with orthographic
+projection; 3D returns perspective. No saved camera objects are added.
+
+The shared camera identity is retained for existing tools and ray picking. The
+projection helper supplies orthographic bounds, zoom and resize updates; screen-size
+selection markers account for orthographic span. Helios camera synchronization and
+primary rays support the same projection. The six-box composition is an initial
+visual draft for user refinement, with labels and keyboard activation. Existing
+Object/Helios panels retain their higher layer priority. Protected Multi unchanged.
+
+Local validation: direct parallel-ray, zoom and perspective-restore test passes;
+tracer rebuild and syntax checks pass. Full regression and hosted publication status
+must be checked before declaring the build ready. Device appearance/navigation,
+selection and Helios visual acceptance remain pending.
+
 
 
 ## GitHub publication method — verified 15 November 2026
