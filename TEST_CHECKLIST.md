@@ -1,3 +1,24 @@
+# .1174 — Paint mode entry and configurable top-left panel stack — 16 November 2026
+
+Cris confirms `.1173 PASS`; protect navigator size, lighting, OBJ outlines and orbit.
+Move the original viewportPaintBtn into selectionModes after Object. It retains its
+existing open/session/UV preflight owner and aria-pressed state; no fifth modelling
+selection enum or duplicate Paint owner is introduced. Vertex/Edge/Face/Object clicks
+retain the existing Paint close behavior. Paint remains available from the mode dock.
+
+General Settings gains independent persisted modeTop and selectionTop booleans beside
+existing snapTop. Enabled panels use the original nodes in the fixed order Mode Select,
+Snap Options, Select Options. Top inset and adjacent gaps are both the existing 8px.
+Actual panel heights drive offsets; ResizeObserver handles responsive resizing and
+root-child observation handles late panel mounting without observing logo SVG churn.
+Disabling a preference releases only this owner's positional overrides. Defaults keep
+existing placement; older saved settings safely default the new preferences to false.
+
+Device checks: Paint in mode dock opens original painter, Done/mode change exits;
+independent placement toggles survive reload; all enabled stack in required order with
+8px gaps, including portrait/landscape; unset restores ordinary panel positions.
+Validation/publication evidence follows the release run.
+
 # .1173 — smaller navigator and viewport lighting — 16 November 2026
 
 Navigator width is reduced exactly 25%, from 150px to 112.5px; the existing 3D
