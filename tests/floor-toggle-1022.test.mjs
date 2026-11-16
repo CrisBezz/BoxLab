@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
 import * as THREE from 'three';
+import {fitViewportGrid} from '../src/viewport-grid.js';
 const read=p=>fs.readFileSync(new URL('../'+p,import.meta.url),'utf8');
 function fixture(ready=true){
  const scene=new THREE.Scene();scene.background=new THREE.Color();
@@ -13,8 +14,8 @@ function fixture(ready=true){
  const events=new Map(),frames=[],timers=[],button={dataset:{},attributes:{},listeners:[],setAttribute(k,v){this.attributes[k]=v;},addEventListener(type,fn){this.listeners.push(fn);}};
  let studio=true;
  const document={querySelector:q=>q==='#floorToggleBtn'?button:q==='#viewportRenderLooks button[data-render="studio"].active'&&studio?{}:null,addEventListener:(type,fn)=>{const list=events.get(type)||[];list.push(fn);events.set(type,list);},createElement:()=>({getContext:()=>({createRadialGradient:()=>({addColorStop(){}}),fillRect(){}})})};
- const ctx={THREE,document,__boxlabBridgeState:ready?{scene}:null,window:{addEventListener:document.addEventListener},requestAnimationFrame:fn=>frames.push(fn),setTimeout:fn=>timers.push(fn)};
- vm.createContext(ctx);vm.runInContext(read('src/ground-polish.js'),ctx);
+ const ctx={fitViewportGrid,THREE,document,__boxlabBridgeState:ready?{scene}:null,window:{addEventListener:document.addEventListener},requestAnimationFrame:fn=>frames.push(fn),setTimeout:fn=>timers.push(fn)};
+ vm.createContext(ctx);vm.runInContext(read('src/ground-polish.js').replace(/^import[^\n]+\n/,''),ctx);
  const api=ctx.__boxlabGroundPolish;
  return{ctx,scene,rig,floor,grid,axes,body,button,api,frames,timers,mode(next){studio=next==='studio';rig.visible=studio;for(const fn of events.get('boxlab-render-mode-change')||[])fn({detail:{mode:next}});while(frames.length)frames.shift()();},clean(enabled){ctx.__boxlabCleanView={enabled};for(const fn of events.get('boxlab-clean-view-change')||[])fn({detail:{enabled}});while(frames.length)frames.shift()();},polish(){vm.runInContext('(function(){'+read('src/studio-polish.js').replace(/^import[^\n]+\n/,'')+'})();',ctx);ctx.__boxlabStudioPolish.apply();},contact(){return rig.getObjectByName('BoxLab Studio Contact Shadow');}};
 }
@@ -56,6 +57,6 @@ test('1179 grid faces all six orthographic views and restores the original 3D gr
   const normal=new THREE.Vector3(0,1,0).applyQuaternion(f.grid.quaternion),direction=camera.getWorldDirection(new THREE.Vector3());
   assert(Math.abs(normal.dot(direction))>.99999);assert(f.grid.visible);assert(!f.floor.visible);
  }
- camera.isOrthographicCamera=false;controls.dispatchEvent({type:'change'});assert(f.grid.position.equals(original));assert(f.grid.quaternion.equals(new THREE.Quaternion()));assert(f.grid.visible);assert(!f.floor.visible);
+ camera.isOrthographicCamera=false;controls.dispatchEvent({type:'change'});assert(f.grid.position.equals(f.floor.getWorldPosition(new THREE.Vector3())));assert(f.grid.quaternion.equals(new THREE.Quaternion()));assert(f.grid.visible);assert(!f.floor.visible);
  f.api.setGround('plane');assert(f.floor.visible);assert(!f.grid.visible);f.api.setGround('off');assert(!f.floor.visible);assert(!f.grid.visible);
 });
