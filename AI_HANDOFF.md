@@ -1,3 +1,7 @@
+## .1178 publication verified
+
+Runtime `737170b5479dea03312368fe133fc301fc37eac3` is on main. Cache-busted live version.json, index.html, logo-viewcube.js, free-orbit-controls.js and viewport-toolbar-controls.js byte-match tested checkout. Full local suite 3,467/3,467 PASS, zero failures/cancelled/skips (130.454s); focused action/gesture/release 20/20 PASS; syntax/diff checks pass. Pages `43855652696` built successfully and live bytes are verified. Hosted Topology `43855655522` was in progress at last query; no hosted PASS claimed. New test file Git blob and all edited runtime assets verified against release branch. Native corner layout/targets and locked gestures remain device checks. .1177 native startup flash acceptance still unconfirmed; no PASS inferred.
+
 # .1178 — viewcube action corners and orbit lock — 16 November 2026
 
 User requests Nomad-style viewcube controls. Existing navigator now has four 38px corner buttons: upper-left orbit lock, upper-right original frameAllBtn (Extents), lower-left original floorToggleBtn (Plane/Grid/Off), lower-right Home glyph replacing 3D, using the same setView('axon') owner. Frame/Floor DOM nodes and listeners move from the top bar; toolbar decoration now leaves navigator-owned buttons in place. No proxy duplicate or second frame/floor implementation. Cube SVG keeps accepted 112.5px size and mode lighting; host shifts left to fit corners within right safe area. Home means the existing axon/perspective return, not new saved cameras.
