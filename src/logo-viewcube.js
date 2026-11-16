@@ -25,8 +25,8 @@ export function orbitFromLogo(state,dx,dy,size=150){
  if(!camera||!controls||!controls.enabled||!controls.enableRotate||controls.orbitLocked)return false;
  if(camera.isOrthographicCamera)installProjection(camera).set(false);
  controls.stopSpin?.();
- controls._rotateLeft(2*Math.PI*dx/size);
- controls._rotateUp(2*Math.PI*dy/size);
+ controls._rotateLeft(Math.PI*dx/size);
+ controls._rotateUp(Math.PI*dy/size);
  controls.update();
  return true;
 }
@@ -94,6 +94,17 @@ export function logoLighting(scene,mode){
  return lights;
 }
 
+export function logoLabelLayout(camera){
+ const inverse=camera.quaternion.clone().invert();
+ return logoBoxes().map(box=>{
+  const normal=new THREE.Vector3();normal.setComponent(box.axis,box.sign);
+  const center=normal.clone().multiplyScalar(1.06).applyQuaternion(inverse),facing=normal.clone().applyQuaternion(inverse).z;
+  const u=box.axis===2?new THREE.Vector3(box.sign,0,0):box.axis===0?new THREE.Vector3(0,0,-box.sign):new THREE.Vector3(1,0,0);
+  const v=box.axis===1?new THREE.Vector3(0,0,-box.sign):new THREE.Vector3(0,1,0);u.applyQuaternion(inverse);v.applyQuaternion(inverse);
+  return {view:box.view,label:box.view==='rear'?'Back':box.view[0].toUpperCase()+box.view.slice(1),visible:facing>.12,transform:`matrix(${u.x} ${-u.y} ${-v.x} ${v.y} ${center.x*51} ${-center.y*51})`};
+ });
+}
+
 export function mountLogoViewcube(setView){
  const wrap=document.querySelector('#viewportWrap');if(!wrap||document.querySelector('#logoViewcube'))return;
  const host=document.createElement('div');host.id='logoViewcube';host.setAttribute('aria-label','BoxLab orbit navigator');
@@ -106,6 +117,7 @@ export function mountLogoViewcube(setView){
   const outline=document.createElementNS(svg.namespaceURI,'path');outline.setAttribute('fill','none');outline.setAttribute('stroke','#10161e');outline.setAttribute('stroke-width','.65');outline.setAttribute('stroke-linejoin','round');outline.setAttribute('pointer-events','none');
   const title=document.createElementNS(svg.namespaceURI,'title');title.textContent=surface.view==='rear'?'BACK':surface.view.toUpperCase();group.append(title,polygon,outline);svg.append(group);return {group,polygon,outline};
  });
+ const labels=logoBoxes().map(box=>{const text=document.createElementNS(svg.namespaceURI,'text');text.dataset.view=box.view;text.setAttribute('text-anchor','middle');text.setAttribute('dominant-baseline','middle');text.setAttribute('font-size','10');text.setAttribute('font-family','system-ui,sans-serif');text.setAttribute('font-weight','650');text.setAttribute('fill','#fff');text.setAttribute('stroke','#111820');text.setAttribute('stroke-width','1.2');text.setAttribute('paint-order','stroke');text.setAttribute('pointer-events','none');svg.append(text);return text;});
  function draw(time=0){
   const camera=globalThis.__boxlabBridgeState?.camera;
   if(camera){
@@ -124,6 +136,7 @@ export function mountLogoViewcube(setView){
      const xy=row.points.map(p=>`${p.x*51},${-p.y*51}`);node.polygon.setAttribute('points',xy.join(' '));
      node.outline.setAttribute('d',surfaces[row.index].edges.map(i=>`M${xy[i]}L${xy[(i+1)%xy.length]}`).join(' '));svg.append(node.group);
     }
+    logoLabelLayout(camera).forEach((row,i)=>{const text=labels[i];text.textContent=row.label;text.style.display=row.visible?'':'none';text.setAttribute('transform',row.transform);svg.append(text);});
    }
   }
   requestAnimationFrame(draw);
