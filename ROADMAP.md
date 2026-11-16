@@ -1,3 +1,22 @@
+# .1173 — smaller navigator and viewport lighting — 16 November 2026
+
+Navigator width is reduced exactly 25%, from 150px to 112.5px; the existing 3D
+button remains touch-sized. SVG diffuse shading reads the viewport scene's visible
+directional, hemisphere and ambient lights, including hidden-parent exclusion and
+current intensity/colour/direction. MatCap uses view-relative soft lighting. The
+lighting signature refreshes at most 10Hz; orientation remains frame-synchronous.
+No new WebGL context, textures, shadow maps or ray-trace pass is allocated. Helios
+mode retains a lightweight lit navigator preview, not actual path tracing. Lighting
+is diffuse preview shading, not full material/environment/shadow parity.
+
+Preserve world-axis hues (.1172), supplied OBJ/crease-only outlines (.1171 PASS),
+logo drag/pivot/cancel/tap behavior (.1170 PASS), orthographic/Helios camera support,
+and all earlier protected modelling/material behavior. Tests cover visible light
+rigs, live intensity, hemisphere gradient, MatCap view normals and orbit/projection.
+Device checks: verify smaller footprint; Studio lighting/angle changes shade logo;
+switch Solid/MatCap/Helios and orbit; verify colours, face taps and drag control.
+Validation/publication evidence will follow the release run.
+
 # .1172 — world-axis logo colours — 16 November 2026
 
 Cris confirms `.1171 PASS`: protect supplied OBJ geometry, clean crease outlines,
