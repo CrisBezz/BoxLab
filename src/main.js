@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import {pickScreenEdges} from './edge-screen-picking.js?v=0.36.18.1144';
 import {createCageBatch,updateCageBatches,addMirrorCageBatch} from './cage-render-batches.js?v=0.36.18.930';
 import { scaffoldLoopCandidates } from './scaffold-loop-candidates.js?v=0.36.18.761';
-import { FreeOrbitControls as OrbitControls } from './free-orbit-controls.js?v=0.36.18.1011';
+import { FreeOrbitControls as OrbitControls } from './free-orbit-controls.js?v=0.36.18.1178';
 import {createThreeFingerCommands} from './three-finger-commands.js?v=0.36.18.1010';
 import { EditableMesh } from './mesh.js?v=0.12';
 import { subdivide, subdivideWithCornerUVs } from './subdivision.js?v=0.36.18.1037';
