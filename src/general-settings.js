@@ -55,6 +55,10 @@ export function mountGeneralSettings(panel){
 .general-settings-list{display:grid;gap:4px}
 .general-settings-list label{display:flex;align-items:center;gap:9px;min-height:38px;padding:3px 8px;border:1px solid rgba(255,255,255,.08);border-radius:7px;background:rgba(255,255,255,.025);font-size:12px;touch-action:manipulation}
 .general-settings-list input{width:18px;height:18px;margin:0;accent-color:#83b8ff;flex:0 0 auto}
+/* Moving Mode to the top releases its entire bottom slot. The remaining rails
+   share the original status-lane anchor, keeping their existing 8px gap. */
+html.boxlab-mode-top #viewportWrap{--viewport-action-bottom:max(27px,calc(env(safe-area-inset-bottom) + 23px))!important}
+@media(max-width:900px){html.boxlab-mode-top #viewportWrap{--viewport-action-bottom:max(25px,calc(env(safe-area-inset-bottom) + 21px))!important}}
 html:not(.boxlab-snap-top) #viewportSnapControls{top:auto!important;bottom:calc(var(--viewport-action-bottom) + var(--boxlab-snap-bottom-offset,214px))!important}
 html.boxlab-mode-top #viewportWrap > #selectionModes{top:8px!important;bottom:auto!important;left:8px!important}
 html.boxlab-snap-top #viewportSnapControls{top:var(--boxlab-snap-top,8px)!important;bottom:auto!important;left:8px!important}
