@@ -35,16 +35,16 @@ test('General Settings exposes four toggles in the View panel and synchronizes t
  inputs[5].checked=true;section.listeners.change({target:{closest:()=>inputs[5]}});assert.equal(r.api.getGeneralSettings().leftHanded,true);assert.equal(inputs[5].checked,true);
 });
 
-test('1174 top panels use Mode / Snap / Select order and eight pixel gaps for every combination',()=>{
+test('1175 top panels use Mode / Snap / Select order and eight pixel gaps for every combination',()=>{
  const r=runtime(),positions={};
  r.context.document.documentElement.style={setProperty:(k,v)=>positions[k]=v};
- const widths={selectionModes:410,viewportSnapControls:58,viewportActionControls:58};
- r.context.document.querySelector=q=>({getBoundingClientRect:()=>({width:widths[q.slice(1)]})});
+ const widths={selectionModes:52,viewportSnapControls:114,viewportActionControls:206};
+ r.context.document.querySelector=q=>({getBoundingClientRect:()=>({height:widths[q.slice(1)]})});
  for(let mask=0;mask<8;mask++){
   r.api.setGeneralSetting('modeTop',!!(mask&1));r.api.setGeneralSetting('snapTop',!!(mask&2));r.api.setGeneralSetting('selectTop',!!(mask&4));
   vm.runInContext('layoutTopPanels()',r.context);
-  assert.equal(positions['--boxlab-snap-left'],(8+(mask&1?418:0))+'px');
-  assert.equal(positions['--boxlab-select-left'],(8+(mask&1?418:0)+(mask&2?66:0))+'px');
+  assert.equal(positions['--boxlab-snap-top'],(8+(mask&1?60:0))+'px');
+  assert.equal(positions['--boxlab-select-top'],(8+(mask&1?60:0)+(mask&2?122:0))+'px');
  }
- widths.selectionModes=250;vm.runInContext('layoutTopPanels()',r.context);assert.equal(positions['--boxlab-snap-left'],'266px');assert.equal(positions['--boxlab-select-left'],'332px');
+ widths.selectionModes=48;vm.runInContext('layoutTopPanels()',r.context);assert.equal(positions['--boxlab-snap-top'],'64px');assert.equal(positions['--boxlab-select-top'],'186px');
 });
