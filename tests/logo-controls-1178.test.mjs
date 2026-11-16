@@ -13,3 +13,10 @@ test('1178 navigator moves original Extents/Floor nodes and uses original home c
  ui.lock.click();assert(controls.orbitLocked);assert.equal(ui.lock.attrs['aria-pressed'],'true');ui.lock.click();assert(!controls.orbitLocked);
  assert.equal(orbitFromLogo({camera:{},controls:{enabled:true,enableRotate:true,orbitLocked:true}},10,10),false);
 });
+
+test('1183 labels identify six face centres and cull back-facing text',async()=>{
+ const THREE=await import('three'),{logoLabelLayout}=await import('../src/logo-viewcube.js'),camera=new THREE.PerspectiveCamera();camera.position.set(3,2,4);camera.lookAt(0,0,0);const rows=logoLabelLayout(camera);assert.deepEqual(rows.map(r=>r.label).sort(),['Back','Bottom','Front','Left','Right','Top']);assert.equal(rows.filter(r=>r.visible).length,3);assert(rows.every(r=>!r.transform.includes('NaN')));
+});
+test('1183 navigator rotation uses exactly half the previous drag angle',()=>{
+ let x=0,y=0;const controls={enabled:true,enableRotate:true,stopSpin(){},_rotateLeft:a=>x=a,_rotateUp:a=>y=a,update(){}};assert(orbitFromLogo({camera:{},controls},30,15,150));assert.equal(x,Math.PI*30/150);assert.equal(y,Math.PI*15/150);
+});
