@@ -132,7 +132,8 @@ const contextStyle=document.createElement('style');contextStyle.textContent=`
 #boxlabViewportPaint .paint-stack{grid-auto-rows:max-content;min-height:52px;max-height:200px;overflow-y:auto}
 #boxlabViewportPaint .paint-stack-row{min-height:52px}
 #viewportActionControls #viewportPaintBtn{width:48px;min-width:48px;font-size:8px;padding:3px}
-#viewportActionControls #viewportPaintBtn[aria-pressed=true]{background:#1268b6;border-color:#60b5ff}
+#selectionModes #viewportPaintBtn[aria-pressed=true]{background:#eef1f7;color:#15171b}
+#selectionModes:has(#viewportPaintBtn[aria-pressed=true]) [data-mode].active{background:rgba(30,34,42,.92);color:#eef1f7}
 #boxlabViewportPaint .paint-footer{position:sticky;bottom:0;z-index:1}
 #boxlabViewportPaint[data-page=brush] [data-paint-page=brush],#boxlabViewportPaint[data-page=layers] [data-paint-page=layers],#boxlabViewportPaint[data-page=mask] [data-paint-page=mask],#boxlabViewportPaint[data-page=image] [data-paint-page=image],#boxlabViewportPaint[data-page=ao] [data-paint-page=ao],#boxlabViewportPaint[data-page=settings] [data-paint-page=settings]{display:grid;gap:5px}
 #boxlabViewportPaint .paint-brush-row{grid-template-columns:repeat(2,minmax(0,1fr))}
