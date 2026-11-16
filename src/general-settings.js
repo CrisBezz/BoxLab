@@ -56,8 +56,8 @@ export function mountGeneralSettings(panel){
 .general-settings-list label{display:flex;align-items:center;gap:9px;min-height:38px;padding:3px 8px;border:1px solid rgba(255,255,255,.08);border-radius:7px;background:rgba(255,255,255,.025);font-size:12px;touch-action:manipulation}
 .general-settings-list input{width:18px;height:18px;margin:0;accent-color:#83b8ff;flex:0 0 auto}
 html.boxlab-mode-top #viewportWrap > #selectionModes{top:8px!important;bottom:auto!important;left:8px!important}
-html.boxlab-snap-top #viewportSnapControls{top:8px!important;bottom:auto!important;left:var(--boxlab-snap-left,8px)!important}
-html.boxlab-select-top #viewportActionControls{top:8px!important;bottom:auto!important;left:var(--boxlab-select-left,8px)!important;max-height:calc(100% - 16px)}
+html.boxlab-snap-top #viewportSnapControls{top:var(--boxlab-snap-top,8px)!important;bottom:auto!important;left:8px!important}
+html.boxlab-select-top #viewportActionControls{top:var(--boxlab-select-top,8px)!important;bottom:auto!important;left:8px!important;max-height:calc(100% - 16px)}
 html.boxlab-left-handed #viewportWrap>.floating-panel.left-panel{left:auto!important;right:max(8px,env(safe-area-inset-right))!important}
 html.boxlab-left-handed #objectBrowserPanel{right:auto;left:max(8px,env(safe-area-inset-left))}
 `;
@@ -71,11 +71,11 @@ apply();
 // Measure the original panels; preserve their nodes, listeners and visibility owners.
 function layoutTopPanels(){
   const root=document.documentElement;
-  let left=8;
-  for(const [key,id,property] of [['modeTop','selectionModes',null],['snapTop','viewportSnapControls','--boxlab-snap-left'],['selectTop','viewportActionControls','--boxlab-select-left']]){
+  let top=8;
+  for(const [key,id,property] of [['modeTop','selectionModes',null],['snapTop','viewportSnapControls','--boxlab-snap-top'],['selectTop','viewportActionControls','--boxlab-select-top']]){
     const panel=document.querySelector?.('#'+id);
-    if(property)root.style?.setProperty(property,left+'px');
-    if(current[key]&&panel)left+=panel.getBoundingClientRect().width+8;
+    if(property)root.style?.setProperty(property,top+'px');
+    if(current[key]&&panel)top+=panel.getBoundingClientRect().height+8;
   }
 }
 if(typeof ResizeObserver==='function'){
