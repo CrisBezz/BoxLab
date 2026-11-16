@@ -1,4 +1,4 @@
-import {installProjection,mountLogoViewcube} from './logo-viewcube.js?v=0.36.18.1169';
+import {installProjection,mountLogoViewcube} from './logo-viewcube.js?v=0.36.18.1170';
 import {mountViewMenuSurface} from './view-menu-surface.js?v=0.36.18.998';
 import {mountGeneralSettings} from './general-settings.js?v=0.36.18.1104';
 import * as THREE from 'three';
