@@ -139,5 +139,5 @@ test('1168 keeps prior shell-comparison records with their original release labe
   const previous={id:'native1163',release:'0.36.18.1163',mode:'separated',ratings:{startup:'pass'},notes:'accepted on .1163'};
   const currentPrior={id:'native1165',release:'0.36.18.1165',mode:'current',ratings:{startup:'pass'},notes:'accepted on .1165'};
   const data=new Map([[key,JSON.stringify({version:1,release:'0.36.18.1165',runs:[prior,older,recent,previous,currentPrior]})]]),f=fixture('current',{data});
-  const runs=f.api.report().runs;assert.deepEqual(JSON.parse(JSON.stringify(runs.slice(0,5))),[prior,older,recent,previous,currentPrior]);assert.equal(runs.at(-1).release,'0.36.18.1168');
+  const runs=f.api.report().runs;assert.deepEqual(JSON.parse(JSON.stringify(runs.slice(0,5))),[prior,older,recent,previous,currentPrior]);assert.equal(runs.at(-1).release,release);
 });
