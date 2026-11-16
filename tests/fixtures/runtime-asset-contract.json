@@ -161,9 +161,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1169",
+      "url": "./src/drawer-ui.js?v=0.36.18.1170",
       "target": "src/drawer-ui.js",
-      "sha256": "02cbc361c68c74286a845fc8e666a6382bbcade0570762fd7729eee010f5af5b"
+      "sha256": "f0aefc0c4617ddf3f566ad61bdbde94598ce009b5ceff002fd933d4cc500ad56"
     },
     {
       "owner": "index.html",
@@ -378,7 +378,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1169",
+      "url": "./src/release-version.js?v=0.36.18.1170",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -575,9 +575,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/view-modes.js?v=0.36.18.1169",
+      "url": "./src/view-modes.js?v=0.36.18.1170",
       "target": "src/view-modes.js",
-      "sha256": "71a9078a0a79c4c7c7349a08c4436972f7e38d67d25d0167439c52b07103cb87"
+      "sha256": "db71b5d0aac60a1d5648be943aa14e03199dbaf7f80306b29bc87c4fe9535d34"
     },
     {
       "owner": "index.html",
@@ -864,9 +864,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1169",
+      "url": "./face-workflow-layout.js?v=0.36.18.1170",
       "target": "src/face-workflow-layout.js",
-      "sha256": "33a5714caec9ff0eb56e8184e08fa37ad2ff6ab8f1766688764b16f10a5d0da5"
+      "sha256": "f00f994cc94424bcc18d93edc66d0b8a81d3832229a36ccf4d4f3c585a38ce3b"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1361,7 +1361,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1169",
+      "url": "./release-version.js?v=0.36.18.1170",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -3326,9 +3326,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1169",
+      "url": "./src/shell-comparison.js?v=0.36.18.1170",
       "target": "src/shell-comparison.js",
-      "sha256": "8360e2916e2e3e4f332ba049f57e2f9356719b7991f5b4b9c747fb62e55aeb98"
+      "sha256": "8a66d758432c74bdd0bc2f48851722ed4e6e0760fe2cd6d56a405b15dc0b741d"
     },
     {
       "owner": "src/main.js",
@@ -3800,9 +3800,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/pathtrace-mode.js?v=0.36.18.1169",
+      "url": "./src/pathtrace-mode.js?v=0.36.18.1170",
       "target": "src/pathtrace-mode.js",
-      "sha256": "339aa8dade952d4ea462cabf16fbd4613502e35b180a6389792dae879d4d126f"
+      "sha256": "ff8dd64730c021e34c9ce80d974220d58fb22a1e1811fd7c6e729ea97393ffe1"
     },
     {
       "owner": "src/pathtrace-mode.js",
@@ -3824,15 +3824,15 @@
     },
     {
       "owner": "src/view-modes.js",
-      "url": "./logo-viewcube.js?v=0.36.18.1169",
+      "url": "./logo-viewcube.js?v=0.36.18.1170",
       "target": "src/logo-viewcube.js",
-      "sha256": "8fc469e383113225dea7dde03c37f5ecc5666808cf4e7519d9d727b93480111f"
+      "sha256": "eaaa2f3778f6aed0f670dead4f6d847d2fe4624c6736b035413a3edfe1b09fb0"
     },
     {
       "owner": "src/pathtrace-mode.js",
-      "url": "./logo-viewcube.js?v=0.36.18.1169",
+      "url": "./logo-viewcube.js?v=0.36.18.1170",
       "target": "src/logo-viewcube.js",
-      "sha256": "8fc469e383113225dea7dde03c37f5ecc5666808cf4e7519d9d727b93480111f"
+      "sha256": "eaaa2f3778f6aed0f670dead4f6d847d2fe4624c6736b035413a3edfe1b09fb0"
     }
   ]
 }
