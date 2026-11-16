@@ -1,3 +1,7 @@
+## .1183 publication verified
+
+Runtime `d219b872bf7b4b12281ddd18663aacbd98f3368c` on main. Cache-busted live version.json, index.html, through-kernel.js and logo-viewcube.js byte-match tested checkout. Full local regression 3,486/3,486 PASS, zero failures/cancelled/skips (123.589s); focused junction/Knife/Through/navigator/release123/123 PASS; syntax/diff pass. Pages `43865009858` live files verified. Hosted Topology `43865010458` was in progress at last query; no hosted PASS claimed. New regression test blob verified against release branch. Device checks ready for vertex-only multi-selection inward, sequential diagonal recess, Knife source faces, UndoRedo and six labelled/half-sensitive viewcube navigation. Tiny diagnosed corner relief is deliberate finite geometry; closure validator was not weakened.
+
 # .1183 — vertex-touching inward recesses and calmer labelled navigator — 16 November 2026
 
 User accepts .1182 multi-face Knife but reports inward extrusion failures; further screenshot/tests identify both Loop/Knife faces and simultaneous selections touching only at one vertex, plus successive diagonal recesses. Reproduced on closedGrid4: after face21 recess -.096, four diagonal neighbours refused invalid-edge-or-face-topology. Normals/status are valid; exact corner-only cavity contact welds into a four-owner vertical edge. Do NOT weaken validateThrough or revive retired handlers.
