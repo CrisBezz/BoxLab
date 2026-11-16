@@ -19,3 +19,8 @@
 
 /* .997 — external VIEW surface starts hidden and has zero closed layout. */
 #viewModesPanel[hidden]{display:none!important}
+
+/* .1177 — first-paint state must not wait for module dependencies. */
+html.boxlab-focus-view #viewportWrap > .floating-panel.left-panel{display:none!important}
+.brand{align-items:center;gap:8px}
+.brand-logo{width:34px;height:34px;display:block;flex:0 0 auto;object-fit:contain;border-radius:8px}
