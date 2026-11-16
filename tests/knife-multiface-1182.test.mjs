@@ -37,3 +37,11 @@ test('1182 covered back faces remain untouched',()=>{
 test('1182 perspective stroke follows a folded visible face strip',()=>{
  const {mesh,f}=fixture('perspective');for(let i=0;i<mesh.vertices.length;i++)mesh.vertices[i].z=[0,.35,.1,0][i%4];const a=f.point(0,4,.4),b=f.point(3,7,.65);a.x+=2;b.x-=2;f.arm();f.pointer('pointerdown',a);f.pointer('pointermove',b);f.pointer('pointerup',b);assert.equal(mesh.faces.length,6,f.node('#selectionStatus').textContent);assert.equal(f.ctx.__boxlabHistory.undoStack.length,1);
 });
+
+test('1183 Knife-created vertex-only face selections support inward recesses',async()=>{
+ const {buildNegativeExtrude,validateThrough}=await import('../src/through-kernel.js'),mesh=EditableMesh.cube(),camera=new THREE.OrthographicCamera(-2,2,2,-2,.1,100);camera.position.z=8;camera.updateMatrixWorld();const f=knifeScreenRuntime(mesh,camera);
+ const cut=(a,b)=>{f.arm();f.pointer('pointerdown',a);f.pointer('pointermove',b);f.pointer('pointerup',b);f.ctx.__boxlabKnifeTool.disarm();};
+ let a=f.point(4,5,.4),b=f.point(7,6,.4);a.y-=2;b.y+=2;cut(a,b);a=f.point(4,7,.35);b=f.point(5,6,.65);a.x+=2;b.x-=2;cut(a,b);
+ const front=mesh.faces.map((face,fi)=>({face,fi})).filter(({face})=>face.every(i=>Math.abs(mesh.vertices[i].z-1)<1e-7));let tested=0;
+ for(const a of front)for(const b of front)if(a.fi<b.fi&&a.face.filter(v=>b.face.includes(v)).length===1){const r=buildNegativeExtrude(mesh,[a.fi,b.fi],-.096);assert(r.ok,r.reason);assert(validateThrough(r.mesh).ok);tested++;}assert.equal(tested,2);
+});
