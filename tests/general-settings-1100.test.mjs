@@ -35,7 +35,7 @@ test('General Settings exposes four toggles in the View panel and synchronizes t
  inputs[5].checked=true;section.listeners.change({target:{closest:()=>inputs[5]}});assert.equal(r.api.getGeneralSettings().leftHanded,true);assert.equal(inputs[5].checked,true);
 });
 
-test('1175 top panels use Mode / Snap / Select order and eight pixel gaps for every combination',()=>{
+test('1176 top panels use Mode / Snap / Select order and eight pixel gaps for every combination',()=>{
  const r=runtime(),positions={};
  r.context.document.documentElement.style={setProperty:(k,v)=>positions[k]=v};
  const widths={selectionModes:52,viewportSnapControls:114,viewportActionControls:206};
@@ -48,4 +48,13 @@ test('1175 top panels use Mode / Snap / Select order and eight pixel gaps for ev
   assert.equal(positions['--boxlab-select-top'],(8+(mask&1?60:0)+(mask&2?122:0))+'px');
  }
  widths.selectionModes=48;vm.runInContext('layoutTopPanels()',r.context);assert.equal(positions['--boxlab-snap-top'],'64px');assert.equal(positions['--boxlab-select-top'],'186px');
+});
+
+
+test('1176 moving Mode to top removes its reserved bottom slot at both viewport widths',()=>{
+ const r=runtime();
+ r.api.setGeneralSetting('modeTop',true);assert(r.classes.has('boxlab-mode-top'));
+ assert.match(source,/html\.boxlab-mode-top #viewportWrap\{--viewport-action-bottom:max\(27px,calc\(env\(safe-area-inset-bottom\) \+ 23px\)\)!important\}/);
+ assert.match(source,/@media\(max-width:900px\)\{html\.boxlab-mode-top #viewportWrap\{--viewport-action-bottom:max\(25px,calc\(env\(safe-area-inset-bottom\) \+ 21px\)\)!important\}\}/);
+ r.api.setGeneralSetting('modeTop',false);assert(!r.classes.has('boxlab-mode-top'));
 });
