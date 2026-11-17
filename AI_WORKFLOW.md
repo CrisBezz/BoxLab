@@ -1,3 +1,7 @@
+## .1187 — tool-launch selection retention gate
+
+For changes to Face selection, radial launch, native direct-tool arming or Extrude/Inset, also run tests/face-extrude-launch-1187.test.mjs. Launch must retain every selected face before the first drag, without a geometry/history commit, and must not restore stale indices after mesh/object/mode changes. Existing inward, Knife and large-region gates below remain required. .1186 user FAIL concerns selection loss on launch; do not record it as a full device PASS.
+
 ## .1186 — large-selection inward/through regression gate
 
 User .1185 PASS protected. Extend the inward-extrusion contract below with tests/many-region-through-1186.test.mjs:18/32 corner-contact regions cutting through the rear wall, five recessed regions on a sloped dense pattern, immutable source and real commit/Undo/Redo. Run it alongside corner-recess-1183 and knife-multiface-1182 and the full npm test suite for any relevant owner change. Preserve success and strict validation expectations; do not narrow them to bypass a failure. Corner relief is bounded by the number of distinct selected source vertices and must make monotonic progress, never a fixed eight-pass selection-size limit. Original screenshot topology is still a device retest without the saved mesh; do not claim exact reproduction.
