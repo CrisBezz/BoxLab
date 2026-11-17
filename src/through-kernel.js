@@ -412,6 +412,9 @@ export function buildNegativeExtrude(before,faceIndices,distance,relief={points:
       if(source.some(p=>sides.some(pl=>pl.n.dot(p)-pl.w>eps)))fail('concave-source-not-supported');
       return {source,n,dir:n.clone().negate(),sides,group:before.faceGroups?.[fi]??null};
     });
+    // Every retry must add a previously untreated source corner. Bound repair by
+    // that finite set, rather than eight passes regardless of selection size.
+    const reliefLimit=new Set(ids.flatMap(fi=>before.faces[fi])).size;
     let trial=before;
     for(const {source,n,dir,sides,group} of cutters){
       // Earcut can emit numerical zero-area triangles along a subdivided straight
@@ -441,7 +444,7 @@ export function buildNegativeExtrude(before,faceIndices,distance,relief={points:
       const valid=validateThrough(trial,eps);
       if(!valid.ok){
         const bad=valid.details?.nonManifold||[];
-        if(relief.attempt<8&&bad.length&&bad.every(edge=>edge.faces.length===4)&&!(valid.details?.boundary?.length)&&!valid.details.degenerateFaces.length&&!valid.details.duplicateFaces.length){
+        if(relief.attempt<reliefLimit&&bad.length&&bad.every(edge=>edge.faces.length===4)&&!(valid.details?.boundary?.length)&&!valid.details.degenerateFaces.length&&!valid.details.duplicateFaces.length){
           const points=[...relief.points];
           for(const edge of bad)for(const id of edge.edge)for(const fi of ids)for(const vertex of before.faces[fi]){const p=before.vertices[vertex];if(p.distanceTo(trial.vertices[id])<=eps*4&&!points.some(q=>q.distanceTo(p)<=eps*4))points.push(p.clone());}
           if(points.length>relief.points.length)return buildNegativeExtrude(before,faceIndices,distance,{points,attempt:relief.attempt+1});
