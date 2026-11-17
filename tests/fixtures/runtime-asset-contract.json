@@ -161,9 +161,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1186",
+      "url": "./src/drawer-ui.js?v=0.36.18.1187",
       "target": "src/drawer-ui.js",
-      "sha256": "b9343c81a94fdf604fbd60407094ed73bf991d06d9823d3524df609ceddf17f5"
+      "sha256": "5beda7941e93309aadffb2ec16edb352d16251388b56b944b2b30e0c65738dd0"
     },
     {
       "owner": "index.html",
@@ -273,7 +273,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/knife-tool.js?v=0.36.18.1186",
+      "url": "./src/knife-tool.js?v=0.36.18.1187",
       "target": "src/knife-tool.js",
       "sha256": "11dfeecde1c08c138b89fb5704b21bbc7aeb8809c2724694857d02ca5621fec7"
     },
@@ -297,9 +297,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/main.js?v=0.36.18.1186",
+      "url": "./src/main.js?v=0.36.18.1187",
       "target": "src/main.js",
-      "sha256": "f4531270190a6849cdfe0161b6de2f5f5b148028811934da5040387b114a231e",
+      "sha256": "9c8b2851122b107d27a94e3e7a10b9cd46a1d4e23fbbf33a4900edebe0b5819f",
       "sourceVersion": "0.35.1"
     },
     {
@@ -311,9 +311,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/multi-face-direct.js?v=0.36.18.1186",
+      "url": "./src/multi-face-direct.js?v=0.36.18.1187",
       "target": "src/multi-face-direct.js",
-      "sha256": "29ddb0bc2160e7a7bc350f5c18a644341d1789fae41b17cf06b22f714e82d7d4"
+      "sha256": "5b8845190f178b828c3c3e638eb303c968358eb9fa008e311d4400a3ce1df0a1"
     },
     {
       "owner": "index.html",
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1186",
+      "url": "./src/release-version.js?v=0.36.18.1187",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
     {
       "owner": "index.html",
-      "url": "./src/render-modes.js?v=0.36.18.1186",
+      "url": "./src/render-modes.js?v=0.36.18.1187",
       "target": "src/render-modes.js",
       "sha256": "aeaf242549be44912b3901d43d0d51b3d142c9d3d25a8aaf029c13a73f521bcf"
     },
@@ -539,15 +539,15 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/topbar-layout.js?v=0.36.18.1186",
+      "url": "./src/topbar-layout.js?v=0.36.18.1187",
       "target": "src/topbar-layout.js",
       "sha256": "d65f7e23738d3cb199bbd06108e3ee9c24cc4b8703274e2d378649840982a43c"
     },
     {
       "owner": "index.html",
-      "url": "./src/total-gizmo.js?v=0.36.18.1142",
+      "url": "./src/total-gizmo.js?v=0.36.18.1187",
       "target": "src/total-gizmo.js",
-      "sha256": "2afe27bf65f05922713671c2dc4df1fa22dfcbe97240327238dc2152198034da"
+      "sha256": "a883b139a3051c053105a5935647b1b0271fbde9baa0371675e9365d677845c6"
     },
     {
       "owner": "index.html",
@@ -575,9 +575,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/view-modes.js?v=0.36.18.1186",
+      "url": "./src/view-modes.js?v=0.36.18.1187",
       "target": "src/view-modes.js",
-      "sha256": "147a28c02b3a89cd5565d733d3f5b07379e99ccf40f210e15f8de26d1739727c"
+      "sha256": "a1a32c76b6107d820051736ef15a9da24c459954a584f834dd1845fc2b81d55b"
     },
     {
       "owner": "index.html",
@@ -864,9 +864,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1186",
+      "url": "./face-workflow-layout.js?v=0.36.18.1187",
       "target": "src/face-workflow-layout.js",
-      "sha256": "00055ec419637da6679aef93dbaa1b68a8ac7355f7ec47da13a607679feb1afc"
+      "sha256": "a25d5076590e123cd2a4407832543775dc6d099812c41bee127d3ec3c14e5e2f"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1135,9 +1135,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./sequential-through-fallback.js?v=0.36.18.1186",
+      "url": "./sequential-through-fallback.js?v=0.36.18.1187",
       "target": "src/sequential-through-fallback.js",
-      "sha256": "13bb2dbc1c15573cdc60712bd940dc5343cb8399dc8e33b4ad18e7571dee0e37"
+      "sha256": "3ed70f0aeaa9b582e0811f774d97984a02adeee8489bdd0d0946939441afd1ca"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1296,9 +1296,9 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./ground-polish.js?v=0.36.18.1186",
+      "url": "./ground-polish.js?v=0.36.18.1187",
       "target": "src/ground-polish.js",
-      "sha256": "ef34d3a917ca9b6095bbddc6ce81da307512a51972b6c53f90b8e1b9703eb553",
+      "sha256": "f5fb485523d3bf437267504ef85199432fe2f5baaac0a12ce9d4e0d64afe9315",
       "sourceVersion": "0.36.18.188"
     },
     {
@@ -1361,7 +1361,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1186",
+      "url": "./release-version.js?v=0.36.18.1187",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -1785,7 +1785,7 @@
     },
     {
       "owner": "src/multi-face-direct.js",
-      "url": "./through-kernel.js?v=0.36.18.1186",
+      "url": "./through-kernel.js?v=0.36.18.1187",
       "target": "src/through-kernel.js",
       "sha256": "2d2e2a61915b2a0475bbc528739754b5aaaf0301dd26507a9d6c5d350123d2d1"
     },
@@ -1951,7 +1951,7 @@
     },
     {
       "owner": "src/sequential-through-fallback.js",
-      "url": "./through-kernel.js?v=0.36.18.1186",
+      "url": "./through-kernel.js?v=0.36.18.1187",
       "target": "src/through-kernel.js",
       "sha256": "2d2e2a61915b2a0475bbc528739754b5aaaf0301dd26507a9d6c5d350123d2d1"
     },
@@ -2456,7 +2456,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/viewport-paint.js?v=0.36.18.1186",
+      "url": "./src/viewport-paint.js?v=0.36.18.1187",
       "target": "src/viewport-paint.js",
       "sha256": "5a22ee1852fa03cfac4e508a31ad4bb4f408524c756ea0d30a536e2cb58cb5f3"
     },
@@ -3176,7 +3176,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./viewport-toolbar-shell.css?v=0.36.18.1186",
+      "url": "./viewport-toolbar-shell.css?v=0.36.18.1187",
       "target": "viewport-toolbar-shell.css",
       "sha256": "3744d82d1f34efd7308967773243ab30d9e61cc65c5cb80ac1851d33d990145f"
     },
@@ -3326,9 +3326,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1186",
+      "url": "./src/shell-comparison.js?v=0.36.18.1187",
       "target": "src/shell-comparison.js",
-      "sha256": "f6703884c3e8fe93d331a2a4d13b4fe9430ffe180f1a8925dafe371d06262414"
+      "sha256": "9ecf84dfa778445661593f65e459ceb01dca3b0a3bf3691f10ad795912c1cdf0"
     },
     {
       "owner": "src/main.js",
@@ -3650,7 +3650,7 @@
     },
     {
       "owner": "src/view-modes.js",
-      "url": "./general-settings.js?v=0.36.18.1186",
+      "url": "./general-settings.js?v=0.36.18.1187",
       "target": "src/general-settings.js",
       "sha256": "bb5d8effe946ff976bda04fca11337eaf070e40f877a69214a4fd6f73da5f56f"
     },
@@ -3800,9 +3800,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/pathtrace-mode.js?v=0.36.18.1186",
+      "url": "./src/pathtrace-mode.js?v=0.36.18.1187",
       "target": "src/pathtrace-mode.js",
-      "sha256": "40d248de5051d5611d3fedf2d9ff8ed652a6c46c68746c94a448ebd377548867"
+      "sha256": "315034f557ffe18c38320dea3d761da15ed5520573e3fa168b998272e3d2c406"
     },
     {
       "owner": "src/pathtrace-mode.js",
@@ -3824,25 +3824,25 @@
     },
     {
       "owner": "src/view-modes.js",
-      "url": "./logo-viewcube.js?v=0.36.18.1186",
+      "url": "./logo-viewcube.js?v=0.36.18.1187",
       "target": "src/logo-viewcube.js",
       "sha256": "fdb900ea4aaa5642e54e7ea02e5e70773ed86834bd2fb239420a6c4c381cf287"
     },
     {
       "owner": "src/pathtrace-mode.js",
-      "url": "./logo-viewcube.js?v=0.36.18.1186",
+      "url": "./logo-viewcube.js?v=0.36.18.1187",
       "target": "src/logo-viewcube.js",
       "sha256": "fdb900ea4aaa5642e54e7ea02e5e70773ed86834bd2fb239420a6c4c381cf287"
     },
     {
       "owner": "src/main.js",
-      "url": "./viewport-grid.js?v=0.36.18.1186",
+      "url": "./viewport-grid.js?v=0.36.18.1187",
       "target": "src/viewport-grid.js",
       "sha256": "0f9ded5b01459bc14c95627297c3ab3ba3c83f4681e7227b6a71b4b4f13c129d"
     },
     {
       "owner": "src/ground-polish.js",
-      "url": "./viewport-grid.js?v=0.36.18.1186",
+      "url": "./viewport-grid.js?v=0.36.18.1187",
       "target": "src/viewport-grid.js",
       "sha256": "0f9ded5b01459bc14c95627297c3ab3ba3c83f4681e7227b6a71b4b4f13c129d"
     }
