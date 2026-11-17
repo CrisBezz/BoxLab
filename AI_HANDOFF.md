@@ -1,3 +1,7 @@
+## .1184 publication verified
+
+Runtime `411abfbb0dbe708291d49892fa3320adbf4cf18a` on main. Cache-busted live version.json, index.html and knife-tool.js byte-match tested checkout. Full local regression 3,489/3,489 PASS, zero failures/cancelled/skips (268.612s); focused Knife/protected inward-extrusion/release78/78 PASS; syntax/diff pass. Pages `44008803008` live files verified. Hosted Topology `44008803522` was in progress at last query; no hosted PASS claimed. New preview test Git blob verified against release branch. Inward kernel and protected regression files are byte-unchanged from accepted .1183. Device checks ready: crossing markers and face count, red invalid path, release/one-step Undo, cancel cleanup and inward-extrusion smoke.
+
 # .1184 — live Knife crossing / validity preview — 17 November 2026
 
 User invokes /nextbuild after accepting suggested preview refinement. Existing Knife guide now shows markers at each interior crossed edge and a live face count for a valid snapped stroke. Invalid snapped paths render red with a refusal message; unsnapped guides stay neutral. Original endpoint END/MID/PERP/EDGE colours and snapping stay. Crossings come directly from the existing successful multi-face commit result, not a second screen/topology planner.
