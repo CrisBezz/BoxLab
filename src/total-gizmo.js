@@ -594,6 +594,8 @@ toolSectors.forEach(button=>{
       globalThis.__boxlabFaceDirect?.clearTransformSuspension?.();
       suspendedFaceTool=false;
     }
+    // Tool arming must retain the chosen faces across the legacy button proxy.
+    const faceValueLaunch=mode==='face'&&['Extrude','Inset'].includes(pendingLabel)?{mesh:state()?.mesh,object:globalThis.__boxlabObjectManager?.activeId,ids:[...(globalThis.__boxlabSelectionBridge?.indices?.()||[])]}:null;
     hubSuppressedKey=lastSelectionKey;
     setHubState('closed',{reason:`tool:${button.textContent?.trim()||'unknown'}`,resumeSuspended:false});
     root.hidden=true;
@@ -629,6 +631,9 @@ toolSectors.forEach(button=>{
     }else{
       if(mode==='vertex')globalThis.__boxlabVertexViewportSession?.close?.({complete:false});
       target.click();
+      if(faceValueLaunch&&currentMode()==='face'&&state()?.mesh===faceValueLaunch.mesh&&globalThis.__boxlabObjectManager?.activeId===faceValueLaunch.object&&faceValueLaunch.ids.length){
+        globalThis.__boxlabSelectionBridge?.set?.('face',faceValueLaunch.ids);
+      }
       if(radialOffset)launchAccepted=!!globalThis.__boxlabOffsetViewportSession?.openFromHub?.({ids:launchIds});
       if(radialSlide)launchAccepted=!!globalThis.__boxlabSlideViewportSession?.openFromHub?.({ids:launchIds});
       if((mode==='vertex'&&['Join','Weld','Create Face','Delete','Circle','Merge Center','Merge First'].includes(toolLabel))||(mode==='edge'&&['Cut UVs','Dissolve','Delete','Uncrease','Fill Face','Grid Fill','Dissolve Loop','Join Coplanar','Flip Edge','Collapse','Circle','Stitch UVs'].includes(toolLabel))||(mode==='face'&&(toolLabel==='Delete'||toolLabel==='Join Coplanar'||toolLabel==='Circle'||toolLabel==='Poke'||toolLabel==='Make Planar'||toolLabel==='Triangulate'||toolLabel==='Flip Faces'||toolLabel==='Orient Faces'||toolLabel==='Orient Outward'))){
