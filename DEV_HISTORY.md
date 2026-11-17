@@ -155,3 +155,9 @@ User confirms .1185 PASS; reports five selected regions on a densely cut pattern
 
 New tests/many-region-through-1186.test.mjs covers18 and32 corner-contact regions through the back, expected removed volume and absence of surviving caps, five recessed regions in a sloped dense pattern, real drag/commit plus exact Undo/Redo. Focused new/protected18/18 PASS (20.094s). Full suite/publication evidence follows. This extends correctness to larger selections; repeated trial rebuilding remains a performance limitation. Device: repeat attached five-region cut through; try a large checker selection; Undo/Redo; shallow vertex-touch recess and Knife snapping smoke. If original five-region failure persists, obtain the saved BoxLab mesh to reproduce its exact topology.
 
+
+
+## .1186 publication verified
+
+Runtime `38933e322fbf25ef166f1a94d92c040db78ba43f` published to main. Pages `44078558910` build/report/deploy jobs SUCCESS; cache-busted live version.json, index.html, through-kernel.js and multi-face-direct.js byte-match tested checkout. Full final suite3,496/3,496 PASS, zero failures/cancelled/skipped (205.707s). Focused new/protected18/18, original Through12/12, release10/10 and shell/asset15/15 PASS; syntax/diff pass. First full run exposed stale release assertions and visible checklist labels; corrected without weakening behavioral tests, then full suite rerun PASS. Remote staged kernel/test blob hashes verified before fast-forward. Hosted Topology44078559787 was in progress at last observation; no hosted pass claimed. AI_WORKFLOW now explicitly requires large-region tests beside earlier inward gates. .1185 user PASS protected. Exact five-face screenshot topology not reproduced without source mesh; device repeat is required. If it persists, request saved BoxLab model rather than declaring every topology fixed. Known cost: repeated bounded trials may be slow for large dense selections.
+
