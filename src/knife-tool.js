@@ -157,10 +157,20 @@ function queueKnifePreview(d,end,fallback){
  const run=()=>{
   previewFrame=0;const next=pendingPreview;pendingPreview=null;if(!next||drag!==next.d)return;
   if(!dragContextValid(next.d)){disarm('context-changed');return;}
-  let result=null;
-  if(next.end&&!sameSnap(next.d.start,next.end))result=tryCutAcrossFaces(next.d.mesh.clone(),next.d.start,next.end,next.d.picker);
-  showPreview(next.d.start,next.end,next.fallback,next.end?{valid:!!result,crossings:result?.crossings||[]}:null);
-  if(status)status.textContent=!next.end?'Knife • move onto a boundary snap before releasing':result?`Knife • ${result.segments||1} face${(result.segments||1)===1?'':'s'} • ${snapLabel(next.end)} • release to cut`:'Knife • invalid path • cannot cut here';
+  let feedback=null;
+  if(next.end){
+   const camera=state()?.camera;camera?.updateMatrixWorld?.();
+   const snap=next.end,key=JSON.stringify([snap.kind,snap.snapType,snap.vertex,snap.key,snap.t,snap.screen?.x,snap.screen?.y,snap.point3?.x,snap.point3?.y,snap.point3?.z,camera?.isOrthographicCamera,camera?.isPerspectiveCamera,camera?.matrixWorld?.elements,camera?.projectionMatrix?.elements]);
+   if(next.d.previewCache?.key===key)feedback=next.d.previewCache.feedback;
+   else{
+    const result=sameSnap(next.d.start,snap)?null:tryCutAcrossFaces(next.d.mesh.clone(),next.d.start,snap,next.d.picker);
+    feedback={valid:!!result,crossings:result?.crossings||[],segments:result?.segments||1};
+    // Retain only feedback for this drag, never the private mesh/history snapshot.
+    next.d.previewCache={key,feedback};
+   }
+  }else next.d.previewCache=null;
+  showPreview(next.d.start,next.end,next.fallback,feedback);
+  if(status)status.textContent=!next.end?'Knife • move onto a boundary snap before releasing':feedback.valid?`Knife • ${feedback.segments} face${feedback.segments===1?'':'s'} • ${snapLabel(next.end)} • release to cut`:'Knife • invalid path • cannot cut here';
  };
  if(typeof requestAnimationFrame==='function'){if(!previewFrame)previewFrame=requestAnimationFrame(run);}else run();
 }
