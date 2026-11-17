@@ -12,7 +12,7 @@ const EDGE_PICK_PX=26;
 const RELEASE_HYSTERESIS_PX=34;
 const MIN_DRAG_PX=12;
 const END_EPS=0.001;
-let armed=false,drag=null,preview=null,startMarker=null,endMarker=null;
+let armed=false,drag=null,preview=null,startMarker=null,endMarker=null,crossingMarkers=[],previewFrame=0,pendingPreview=null;
 
 function state(){return globalThis.__boxlabBridgeState;}
 function bridge(){return globalThis.__boxlabSelectionBridge;}
@@ -25,7 +25,7 @@ function dragSourceUnchanged(d){
     &&source.faces.every((face,i)=>face.length===mesh.faces[i]?.length&&face.every((v,j)=>v===mesh.faces[i][j])));
 }
 function dragContextValid(d){return state()?.mesh===d.mesh&&globalThis.__boxlabObjectManager?.activeId===d.object&&bridge()?.mode?.()==='face'&&editable()&&dragSourceUnchanged(d);}
-function cancelDrag(){const d=drag;drag=null;clearPreview();if(d){d.picker?.geometry.dispose();d.picker?.material.dispose();try{canvas.releasePointerCapture?.(d.id);}catch{}}}
+function cancelDrag(){if(previewFrame&&typeof cancelAnimationFrame==='function')cancelAnimationFrame(previewFrame);previewFrame=0;pendingPreview=null;const d=drag;drag=null;clearPreview();if(d){d.picker?.geometry.dispose();d.picker?.material.dispose();try{canvas.releasePointerCapture?.(d.id);}catch{}}}
 function render(){document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));}
 function inferenceOn(){return !!document.querySelector('#inferenceSnapToggle')?.checked;}
 function edgeKey(mesh,e){return mesh.edgeKey(e.a,e.b);}
@@ -104,11 +104,11 @@ function tryCut(mesh,start,end){
 }
 // Extend the existing clean diagonal owner across a visible, connected face strip.
 // All crossings are planned against the unchanged source before any mutation.
-function tryCutAcrossFaces(mesh,start,end){
+function tryCutAcrossFaces(mesh,start,end,reusedPicker=null){
   const single=tryCut(mesh,start,end);if(single)return single;
   const camera=state()?.camera;if(!camera||!start.screen||!end.screen)return null;
-  const prepared=knifePicker(mesh),{geometry,material}=prepared;
-  try{return tryCutFaceStrip(mesh,start,end,camera,prepared);}finally{geometry.dispose();material.dispose();}
+  const prepared=reusedPicker||knifePicker(mesh),{geometry,material}=prepared;
+  try{return tryCutFaceStrip(mesh,start,end,camera,prepared);}finally{if(!reusedPicker){geometry.dispose();material.dispose();}}
 }
 function tryCutFaceStrip(mesh,start,end,camera,prepared){
   const A=start.screen,B=end.screen,dx=B.x-A.x,dy=B.y-A.y,length2=dx*dx+dy*dy;
@@ -143,13 +143,27 @@ function tryCutFaceStrip(mesh,start,end,camera,prepared){
       const a=vertices[i-1],b=vertices[i];
       if(a===b||!cleanDiagonal(mesh,a,b)||!mesh.connectVertices(a,b)?.ok)throw Error('diagonal');
     }
-    return {before,result:{ok:true},segments:vertices.length-1};
+    return {before,result:{ok:true},segments:vertices.length-1,crossings:path.slice(1,-1).map(event=>event.snap)};
   }catch{restore(mesh,before);return null;}
 }
-function clearPreview(){preview?.remove();preview=null;startMarker?.remove();startMarker=null;endMarker?.remove();endMarker=null;}
+function clearPreview(){for(const marker of crossingMarkers)marker.remove();crossingMarkers=[];preview?.remove();preview=null;startMarker?.remove();startMarker=null;endMarker?.remove();endMarker=null;}
 function snapColor(snap){if(snap?.snapType==='MID')return'#62d8ff';if(snap?.snapType==='PERP')return'#ff68d8';return'#ffe14a';}
 function marker(point,snap){const type=snap?.snapType||'EDGE',size=type==='END'?12:type==='MID'?10:type==='PERP'?10:8,color=snapColor(snap),el=document.createElement('div');el.style.cssText=`position:fixed;pointer-events:none;width:${size}px;height:${size}px;border-radius:50%;border:2px solid ${type==='END'?'#ffffff':color};background:${type==='END'?color:'#111318'};box-shadow:0 0 0 2px #0008;z-index:10000;transform:translate(-50%,-50%)`;el.style.left=`${point.x}px`;el.style.top=`${point.y}px`;document.body.appendChild(el);return el;}
-function showPreview(start,endSnap,fallback){clearPreview();startMarker=marker(start.screen,start);const b=endSnap?.screen||fallback,color=snapColor(endSnap),el=document.createElement('div');el.style.cssText=`position:fixed;pointer-events:none;height:2px;background:${color};transform-origin:0 50%;z-index:9999;box-shadow:0 0 4px #0008`;const dx=b.x-start.screen.x,dy=b.y-start.screen.y;el.style.left=`${start.screen.x}px`;el.style.top=`${start.screen.y}px`;el.style.width=`${Math.hypot(dx,dy)}px`;el.style.transform=`rotate(${Math.atan2(dy,dx)}rad)`;document.body.appendChild(el);preview=el;if(endSnap)endMarker=marker(endSnap.screen,endSnap);}
+function showPreview(start,endSnap,fallback,feedback=null){clearPreview();startMarker=marker(start.screen,start);const b=endSnap?.screen||fallback,color=feedback?.valid===false?'#ff6767':feedback?.valid===true?snapColor(endSnap):'#8e99a8',el=document.createElement('div');el.style.cssText=`position:fixed;pointer-events:none;height:2px;background:${color};transform-origin:0 50%;z-index:9999;box-shadow:0 0 4px #0008`;const dx=b.x-start.screen.x,dy=b.y-start.screen.y;el.style.left=`${start.screen.x}px`;el.style.top=`${start.screen.y}px`;el.style.width=`${Math.hypot(dx,dy)}px`;el.style.transform=`rotate(${Math.atan2(dy,dx)}rad)`;el.className='knife-preview-line '+(feedback?.valid===false?'knife-preview-invalid':feedback?.valid===true?'knife-preview-valid':'knife-preview-pending');document.body.appendChild(el);preview=el;if(endSnap)endMarker=marker(endSnap.screen,endSnap);if(feedback?.valid)for(const snap of feedback.crossings||[]){const dot=marker(snap.screen,snap);dot.className='knife-crossing-marker';crossingMarkers.push(dot);}}
+// Preview uses the actual commit owner on a private mesh, never live geometry or
+// history. Coalesce raw Pencil moves to one evaluation per animation frame.
+function queueKnifePreview(d,end,fallback){
+ pendingPreview={d,end,fallback};
+ const run=()=>{
+  previewFrame=0;const next=pendingPreview;pendingPreview=null;if(!next||drag!==next.d)return;
+  if(!dragContextValid(next.d)){disarm('context-changed');return;}
+  let result=null;
+  if(next.end&&!sameSnap(next.d.start,next.end))result=tryCutAcrossFaces(next.d.mesh.clone(),next.d.start,next.end,next.d.picker);
+  showPreview(next.d.start,next.end,next.fallback,next.end?{valid:!!result,crossings:result?.crossings||[]}:null);
+  if(status)status.textContent=!next.end?'Knife • move onto a boundary snap before releasing':result?`Knife • ${result.segments||1} face${(result.segments||1)===1?'':'s'} • ${snapLabel(next.end)} • release to cut`:'Knife • invalid path • cannot cut here';
+ };
+ if(typeof requestAnimationFrame==='function'){if(!previewFrame)previewFrame=requestAnimationFrame(run);}else run();
+}
 function snapLabel(snap){return snap?.snapType||'NO SNAP';}
 function sameSnap(a,b){if(!a||!b)return false;if(a.kind==='vertex'&&b.kind==='vertex')return a.vertex===b.vertex;if(a.kind==='edge'&&b.kind==='edge'&&a.key===b.key)return Math.abs((a.t??0)-(b.t??0))<.001;return false;}
 function disarm(reason='Knife off'){
@@ -173,7 +187,7 @@ document.addEventListener('boxlab-direct-tool-exclusive',event=>{if(event.detail
 document.querySelector('#inferenceSnapToggle')?.addEventListener('change',()=>{if(armed&&status)status.textContent=`Knife • END → MID → PERP → EDGE${inferenceOn()?' • geometric inference ON':' • MID/PERP off'}`;});
 
 canvas?.addEventListener('pointerdown',e=>{if(!armed||!e.isPrimary||e.pointerType==='touch'||(e.pointerType==='pen'&&!(e.pressure>0)))return;if(!editable()||bridge()?.mode?.()!=='face'){disarm('context-changed');return;}const face=hitFace(e);if(!face)return;const start=freeBoundaryPoint(face.faceIndex,e.clientX,e.clientY,true);if(!start)return;e.preventDefault();e.stopImmediatePropagation();const faceIndices=candidateFacesForStart(start,face.faceIndex);drag={picker:knifePicker(state().mesh),source:captureDragSource(state().mesh),mesh:state()?.mesh,object:globalThis.__boxlabObjectManager?.activeId,id:e.pointerId,faceIndex:face.faceIndex,faceIndices,x:e.clientX,y:e.clientY,start,lastEnd:null};showPreview(start,null,start.screen);if(status)status.textContent=`Knife start • ${snapLabel(start)} • ${faceIndices.length} candidate face${faceIndices.length===1?'':'s'}`;canvas.setPointerCapture?.(e.pointerId);},true);
-canvas?.addEventListener('pointermove',e=>{if(!drag||drag.id!==e.pointerId)return;e.preventDefault();e.stopImmediatePropagation();if(!dragContextValid(drag)){disarm('context-changed');return;}const end=endpointWithHysteresis(drag,e);showPreview(drag.start,end,{x:e.clientX,y:e.clientY});if(status)status.textContent=end?`Knife end • ${snapLabel(end)} • release to cut`:'Knife • move onto a boundary snap before releasing';},true);
+canvas?.addEventListener('pointermove',e=>{if(!drag||drag.id!==e.pointerId)return;e.preventDefault();e.stopImmediatePropagation();if(!dragContextValid(drag)){disarm('context-changed');return;}const end=endpointWithHysteresis(drag,e);queueKnifePreview(drag,end,{x:e.clientX,y:e.clientY});},true);
 canvas?.addEventListener('pointerup',e=>{if(!drag||drag.id!==e.pointerId)return;e.preventDefault();e.stopImmediatePropagation();if(!dragContextValid(drag)){disarm('context-changed');return;}const d=drag,end=endpointWithHysteresis(d,e);cancelDrag();if(Math.hypot(e.clientX-d.x,e.clientY-d.y)<MIN_DRAG_PX)return;if(!dragContextValid(d)){disarm('context-changed');return;}const mesh=d.mesh;if(!end){if(status)status.textContent='Knife • release only after END / MID / PERP / EDGE snap appears';return;}if(sameSnap(d.start,end))return;const cut=tryCutAcrossFaces(mesh,d.start,end);if(!cut){render();if(status)status.textContent='Knife could not make a clean cut • use two different face boundaries';return;}globalThis.__boxlabHistory?.push(cut.before);render();if(bridge()?.mode?.()!=='face')document.querySelector('#selectionModes button[data-mode="face"]')?.click();button?.classList.add('active');armed=true;if(status)status.textContent=`Knife cut committed • ${snapLabel(d.start)} → ${snapLabel(end)} • Knife remains active`;},true);
 canvas?.addEventListener('pointercancel',e=>{if(drag?.id!==e.pointerId)return;cancelDrag();},true);
 
