@@ -147,3 +147,11 @@ Focused Knife/protected inward/release81/81 PASS. New measured-work test:20 smal
 ## .1185 publication verified
 
 Runtime `f78d6e2b9f3d37a574fdef85cb520210b102856f` on main; Pages `44015332998` completed SUCCESS. Cache-busted live version.json, index.html and knife-tool.js byte-match tested checkout. Full local suite 3,492/3,492 PASS, zero failures/cancelled/skips (98.330s); focused Knife/protected inward/release81/81 PASS; syntax/diff pass. Hosted Topology `44015333203` was in progress at last query; no hosted PASS claimed. Inward kernel and protected test files remain byte-unchanged. Ready for device responsiveness/marker stability checks while snap holds, changed snap refresh, release/Undo and inward-extrusion smoke. User .1184 PASS protected.
+
+
+# .1186 — scale corner-contact repair to large inward selections — 17 November 2026
+
+User confirms .1185 PASS; reports five selected regions on a densely cut patterned solid cannot extrude through the rear surface. Reproduced a related size-dependent failure: 18 checkerboard regions on a closed 6x6 grid fail at shallow and through depths because corner relief stops after eight passes. Existing five-recess sloped fixture succeeds already, so screenshot parity is not claimed without the source model. Repair now bounds retries by the finite set of selected source vertices; each retry must still add at least one previously untreated corner. No change to cutter geometry, strict closed/manifold/winding validation, invalid Through refusals or tiny finite corner-web policy. Source remains immutable on trial/failure. Existing single-face and vertex-only contracts remain protected.
+
+New tests/many-region-through-1186.test.mjs covers18 and32 corner-contact regions through the back, expected removed volume and absence of surviving caps, five recessed regions in a sloped dense pattern, real drag/commit plus exact Undo/Redo. Focused new/protected18/18 PASS (20.094s). Full suite/publication evidence follows. This extends correctness to larger selections; repeated trial rebuilding remains a performance limitation. Device: repeat attached five-region cut through; try a large checker selection; Undo/Redo; shallow vertex-touch recess and Knife snapping smoke. If original five-region failure persists, obtain the saved BoxLab mesh to reproduce its exact topology.
+
