@@ -1,6 +1,6 @@
 import {bindViewportSizing} from './viewport-sizing.js?v=0.36.18.1005';
 import * as THREE from 'three';
-import {createViewportGrid} from './viewport-grid.js?v=0.36.18.1186';
+import {createViewportGrid} from './viewport-grid.js?v=0.36.18.1187';
 import {pickScreenEdges} from './edge-screen-picking.js?v=0.36.18.1144';
 import {createCageBatch,updateCageBatches,addMirrorCageBatch} from './cage-render-batches.js?v=0.36.18.930';
 import { scaffoldLoopCandidates } from './scaffold-loop-candidates.js?v=0.36.18.761';
@@ -346,7 +346,7 @@ function clearLoopSlide(){activeLoopSlides=[];activeLoopSlide=null;const input=d
 function setActiveLoopGroup(group){activeLoopSlide=group||null;const input=document.querySelector('#loopSlide');if(!input)return;if(!activeLoopSlide?.length){input.disabled=true;return;}const pct=Math.round((activeLoopSlide[0].position??.5)*100);input.value=String(pct);input.disabled=false;document.querySelector('#loopSlideOut').textContent=`${pct}%`;}
 function syncSelectionModeButtons(){document.querySelectorAll('#selectionModes button').forEach(b=>b.classList.toggle('active',b.dataset.mode===selectionMode));}
 function syncTransformButtons(){document.querySelectorAll('#toolModes button').forEach(b=>b.classList.toggle('active',!directTool&&b.dataset.tool===toolMode));}
-function setDirectTool(tool){const previous=directTool;directTool=tool||null;if(previous==='loopCut'&&directTool!=='loopCut')clearLoopSlide();if(directTool){multiSelectEnabled=false;const toggle=document.querySelector('#multiSelectToggle');if(toggle)toggle.checked=false;}if(directTool==='loopCut'||directTool==='crease'){selectionMode='edge';clearSelection();}else if(directTool==='extrude'||directTool==='inset'){selectionMode='face';clearSelection();}else if(directTool==='addVertex'||directTool==='vertexBevel'){selectionMode='vertex';clearSelection();}syncSelectionModeButtons();syncTransformButtons();syncDirectToolControls();updateStatus();}
+function setDirectTool(tool){const previous=directTool;directTool=tool||null;if(previous==='loopCut'&&directTool!=='loopCut')clearLoopSlide();if(directTool){multiSelectEnabled=false;const toggle=document.querySelector('#multiSelectToggle');if(toggle)toggle.checked=false;}if(directTool==='loopCut'||directTool==='crease'){selectionMode='edge';clearSelection();}else if(directTool==='extrude'||directTool==='inset'){const keepFaces=selectionMode==='face'&&selection?.type==='face';selectionMode='face';if(!keepFaces)clearSelection();}else if(directTool==='addVertex'||directTool==='vertexBevel'){selectionMode='vertex';clearSelection();}syncSelectionModeButtons();syncTransformButtons();syncDirectToolControls();updateStatus();}
 globalThis.__boxlabMainDirectTool={
   active:()=>directTool,
   busy:()=>!!drag,
