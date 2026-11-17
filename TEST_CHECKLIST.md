@@ -1,3 +1,11 @@
+## .1183 user PASS — protected inward-extrusion regression contract — 17 November 2026
+
+User confirms .1183 PASS and explicitly asks that the recurring inward-extrusion defect not return. Protect tests/corner-recess-1183.test.mjs and tests/knife-multiface-1182.test.mjs as required behavioral release gates. They cover vertex-only simultaneous selections, four diagonal directions, successive recesses next to an existing cavity, Knife-created diagonal faces, real preview/commit/Undo, closed/manifold output, exact depth and unchanged input. Genuine invalid Through four-owner refusal remains protected separately. Do not remove, skip, narrow or change these success expectations to accommodate a regression. A deliberate user-approved behavior change must explicitly revise the contract; ordinary refactors must preserve it.
+
+For any Knife, Loop, extrusion, clipping, assembly, seam/weld or selection-owner change, run these tests and the full npm test suite before publication. CI through-regression.yml runs npm test on main pushes and PRs for src/tests/runtime asset changes; package.json includes every tests/*.test.mjs, including these files. Verified 17 November: targeted14/14 PASS. This is documentation/protection only; application remains .1183, no new runtime build or device test required.
+
+Suggested next .1184 (not implemented): multi-face Knife preview feedback—mark crossed edges and distinguish a valid continuous face strip from a refused path before release. Preserve current snap/transaction/history owners; no new cutting kernel.
+
 # .1183 — vertex-touching inward recesses and calmer labelled navigator — 16 November 2026
 
 User accepts .1182 multi-face Knife but reports inward extrusion failures; further screenshot/tests identify both Loop/Knife faces and simultaneous selections touching only at one vertex, plus successive diagonal recesses. Reproduced on closedGrid4: after face21 recess -.096, four diagonal neighbours refused invalid-edge-or-face-topology. Normals/status are valid; exact corner-only cavity contact welds into a four-owner vertical edge. Do NOT weaken validateThrough or revive retired handlers.
