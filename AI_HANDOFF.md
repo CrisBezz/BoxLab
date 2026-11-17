@@ -1,3 +1,7 @@
+## .1185 publication verified
+
+Runtime `f78d6e2b9f3d37a574fdef85cb520210b102856f` on main; Pages `44015332998` completed SUCCESS. Cache-busted live version.json, index.html and knife-tool.js byte-match tested checkout. Full local suite 3,492/3,492 PASS, zero failures/cancelled/skips (98.330s); focused Knife/protected inward/release81/81 PASS; syntax/diff pass. Hosted Topology `44015333203` was in progress at last query; no hosted PASS claimed. Inward kernel and protected test files remain byte-unchanged. Ready for device responsiveness/marker stability checks while snap holds, changed snap refresh, release/Undo and inward-extrusion smoke. User .1184 PASS protected.
+
 # .1185 — reuse fixed-snap Knife preview validation — 17 November 2026
 
 User confirms .1184 PASS and invokes /nextbuild. Protect accepted crossing markers, face count, red invalid paths, snapping, preview cancellation and one-step commit/Undo. Narrow next build avoids repeating the private cutting trial when the snapped endpoint is unchanged. A per-drag single-entry cache retains ONLY validity, segment count and crossing marker data—not the private mesh/history snapshot. Exact key includes snap kind/type/vertex/edge parameter, screen/world position and camera world/projection matrices and projection type. No approximate quantization or topology cache across drags.
