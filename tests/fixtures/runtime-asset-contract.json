@@ -161,9 +161,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1187",
+      "url": "./src/drawer-ui.js?v=0.36.18.1188",
       "target": "src/drawer-ui.js",
-      "sha256": "5beda7941e93309aadffb2ec16edb352d16251388b56b944b2b30e0c65738dd0"
+      "sha256": "bfd6f55b66a9f4f8bead9ec2cf384165ce5a99ddfb3bac81ca689a4f1913e045"
     },
     {
       "owner": "index.html",
@@ -204,9 +204,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/export-as-panel.js?v=0.36.18.1095",
+      "url": "./src/export-as-panel.js?v=0.36.18.1188",
       "target": "src/export-as-panel.js",
-      "sha256": "67d20aa6901f6e1a7a17c868c26bf6f13035e634ed6aa7540de977d6a58109c2",
+      "sha256": "d9bfea4bf898e0f2956dadc3cedc7761e80346ed75603e750864c34b75684825",
       "sourceVersion": "0.36.18.892"
     },
     {
@@ -273,7 +273,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/knife-tool.js?v=0.36.18.1187",
+      "url": "./src/knife-tool.js?v=0.36.18.1188",
       "target": "src/knife-tool.js",
       "sha256": "11dfeecde1c08c138b89fb5704b21bbc7aeb8809c2724694857d02ca5621fec7"
     },
@@ -297,9 +297,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/main.js?v=0.36.18.1187",
+      "url": "./src/main.js?v=0.36.18.1188",
       "target": "src/main.js",
-      "sha256": "9c8b2851122b107d27a94e3e7a10b9cd46a1d4e23fbbf33a4900edebe0b5819f",
+      "sha256": "49522aa1305616d0537372a52e63e7f2e839e1487f6e5183313e6e32afe461eb",
       "sourceVersion": "0.35.1"
     },
     {
@@ -311,9 +311,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/multi-face-direct.js?v=0.36.18.1187",
+      "url": "./src/multi-face-direct.js?v=0.36.18.1188",
       "target": "src/multi-face-direct.js",
-      "sha256": "5b8845190f178b828c3c3e638eb303c968358eb9fa008e311d4400a3ce1df0a1"
+      "sha256": "16fe2f646469d370dccbb9de76f7f60f1d3d8dda7e22d2cf90a4ae2cf3984ce9"
     },
     {
       "owner": "index.html",
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1187",
+      "url": "./src/release-version.js?v=0.36.18.1188",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
     {
       "owner": "index.html",
-      "url": "./src/render-modes.js?v=0.36.18.1187",
+      "url": "./src/render-modes.js?v=0.36.18.1188",
       "target": "src/render-modes.js",
       "sha256": "aeaf242549be44912b3901d43d0d51b3d142c9d3d25a8aaf029c13a73f521bcf"
     },
@@ -539,13 +539,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/topbar-layout.js?v=0.36.18.1187",
+      "url": "./src/topbar-layout.js?v=0.36.18.1188",
       "target": "src/topbar-layout.js",
       "sha256": "d65f7e23738d3cb199bbd06108e3ee9c24cc4b8703274e2d378649840982a43c"
     },
     {
       "owner": "index.html",
-      "url": "./src/total-gizmo.js?v=0.36.18.1187",
+      "url": "./src/total-gizmo.js?v=0.36.18.1188",
       "target": "src/total-gizmo.js",
       "sha256": "a883b139a3051c053105a5935647b1b0271fbde9baa0371675e9365d677845c6"
     },
@@ -575,9 +575,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/view-modes.js?v=0.36.18.1187",
+      "url": "./src/view-modes.js?v=0.36.18.1188",
       "target": "src/view-modes.js",
-      "sha256": "a1a32c76b6107d820051736ef15a9da24c459954a584f834dd1845fc2b81d55b"
+      "sha256": "8c9fffc10024d306b86e0c29eb0cdbc42e06f9cf59d96e24465f5ad086d036a4"
     },
     {
       "owner": "index.html",
@@ -864,9 +864,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1187",
+      "url": "./face-workflow-layout.js?v=0.36.18.1188",
       "target": "src/face-workflow-layout.js",
-      "sha256": "a25d5076590e123cd2a4407832543775dc6d099812c41bee127d3ec3c14e5e2f"
+      "sha256": "b16da253058aa17b52039dff83a04ddf62be28339b00ad5b4cae8d2715aaf9ce"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1135,9 +1135,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./sequential-through-fallback.js?v=0.36.18.1187",
+      "url": "./sequential-through-fallback.js?v=0.36.18.1188",
       "target": "src/sequential-through-fallback.js",
-      "sha256": "3ed70f0aeaa9b582e0811f774d97984a02adeee8489bdd0d0946939441afd1ca"
+      "sha256": "13987c56fd1bebfa6f5e498af9e152815ed84d5ad1e6ab6f4479adb21cb9d0b8"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1177,9 +1177,9 @@
     },
     {
       "owner": "src/export-as-panel.js",
-      "url": "./nomad-packed-maps.js?v=0.36.18.1095",
+      "url": "./nomad-packed-maps.js?v=0.36.18.1188",
       "target": "src/nomad-packed-maps.js",
-      "sha256": "596ce4ae5a1d3eafc07aedd024ba79734873a86b93c07e8221da101f7b0ed7c0"
+      "sha256": "84a6b226420437604bb5fb5853671a720f05b2026fdcb19429fdb6b333cfc856"
     },
     {
       "owner": "src/export-as-panel.js",
@@ -1296,9 +1296,9 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./ground-polish.js?v=0.36.18.1187",
+      "url": "./ground-polish.js?v=0.36.18.1188",
       "target": "src/ground-polish.js",
-      "sha256": "f5fb485523d3bf437267504ef85199432fe2f5baaac0a12ce9d4e0d64afe9315",
+      "sha256": "d40a0e9d60c3beb4cc39530e93fd48bf560a51fc93aa951ae80745fe6d1ffa1d",
       "sourceVersion": "0.36.18.188"
     },
     {
@@ -1361,7 +1361,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1187",
+      "url": "./release-version.js?v=0.36.18.1188",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -1785,7 +1785,7 @@
     },
     {
       "owner": "src/multi-face-direct.js",
-      "url": "./through-kernel.js?v=0.36.18.1187",
+      "url": "./through-kernel.js?v=0.36.18.1188",
       "target": "src/through-kernel.js",
       "sha256": "2d2e2a61915b2a0475bbc528739754b5aaaf0301dd26507a9d6c5d350123d2d1"
     },
@@ -1951,7 +1951,7 @@
     },
     {
       "owner": "src/sequential-through-fallback.js",
-      "url": "./through-kernel.js?v=0.36.18.1187",
+      "url": "./through-kernel.js?v=0.36.18.1188",
       "target": "src/through-kernel.js",
       "sha256": "2d2e2a61915b2a0475bbc528739754b5aaaf0301dd26507a9d6c5d350123d2d1"
     },
@@ -2456,7 +2456,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/viewport-paint.js?v=0.36.18.1187",
+      "url": "./src/viewport-paint.js?v=0.36.18.1188",
       "target": "src/viewport-paint.js",
       "sha256": "5a22ee1852fa03cfac4e508a31ad4bb4f408524c756ea0d30a536e2cb58cb5f3"
     },
@@ -2746,7 +2746,7 @@
       "owner": "evaluations/uv-paint/lab.js",
       "url": "../../src/export-as-panel.js?v=0.36.18.1089",
       "target": "src/export-as-panel.js",
-      "sha256": "67d20aa6901f6e1a7a17c868c26bf6f13035e634ed6aa7540de977d6a58109c2"
+      "sha256": "d9bfea4bf898e0f2956dadc3cedc7761e80346ed75603e750864c34b75684825"
     },
     {
       "owner": "src/paint-layer-stack.js",
@@ -3176,7 +3176,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./viewport-toolbar-shell.css?v=0.36.18.1187",
+      "url": "./viewport-toolbar-shell.css?v=0.36.18.1188",
       "target": "viewport-toolbar-shell.css",
       "sha256": "3744d82d1f34efd7308967773243ab30d9e61cc65c5cb80ac1851d33d990145f"
     },
@@ -3326,9 +3326,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1187",
+      "url": "./src/shell-comparison.js?v=0.36.18.1188",
       "target": "src/shell-comparison.js",
-      "sha256": "9ecf84dfa778445661593f65e459ceb01dca3b0a3bf3691f10ad795912c1cdf0"
+      "sha256": "3c7fc0d5744a6efa0bad5932dfa1c22ab998ea72c8a7bd507e0c4fa8d2ed211b"
     },
     {
       "owner": "src/main.js",
@@ -3650,7 +3650,7 @@
     },
     {
       "owner": "src/view-modes.js",
-      "url": "./general-settings.js?v=0.36.18.1187",
+      "url": "./general-settings.js?v=0.36.18.1188",
       "target": "src/general-settings.js",
       "sha256": "bb5d8effe946ff976bda04fca11337eaf070e40f877a69214a4fd6f73da5f56f"
     },
@@ -3800,9 +3800,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/pathtrace-mode.js?v=0.36.18.1187",
+      "url": "./src/pathtrace-mode.js?v=0.36.18.1188",
       "target": "src/pathtrace-mode.js",
-      "sha256": "315034f557ffe18c38320dea3d761da15ed5520573e3fa168b998272e3d2c406"
+      "sha256": "24ad702010fecc3c45293445da42ba5ad74ffd896436b22d4ccf0200725ab773"
     },
     {
       "owner": "src/pathtrace-mode.js",
@@ -3824,25 +3824,25 @@
     },
     {
       "owner": "src/view-modes.js",
-      "url": "./logo-viewcube.js?v=0.36.18.1187",
+      "url": "./logo-viewcube.js?v=0.36.18.1188",
       "target": "src/logo-viewcube.js",
       "sha256": "fdb900ea4aaa5642e54e7ea02e5e70773ed86834bd2fb239420a6c4c381cf287"
     },
     {
       "owner": "src/pathtrace-mode.js",
-      "url": "./logo-viewcube.js?v=0.36.18.1187",
+      "url": "./logo-viewcube.js?v=0.36.18.1188",
       "target": "src/logo-viewcube.js",
       "sha256": "fdb900ea4aaa5642e54e7ea02e5e70773ed86834bd2fb239420a6c4c381cf287"
     },
     {
       "owner": "src/main.js",
-      "url": "./viewport-grid.js?v=0.36.18.1187",
+      "url": "./viewport-grid.js?v=0.36.18.1188",
       "target": "src/viewport-grid.js",
       "sha256": "0f9ded5b01459bc14c95627297c3ab3ba3c83f4681e7227b6a71b4b4f13c129d"
     },
     {
       "owner": "src/ground-polish.js",
-      "url": "./viewport-grid.js?v=0.36.18.1187",
+      "url": "./viewport-grid.js?v=0.36.18.1188",
       "target": "src/viewport-grid.js",
       "sha256": "0f9ded5b01459bc14c95627297c3ab3ba3c83f4681e7227b6a71b4b4f13c129d"
     }
