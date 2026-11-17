@@ -7,7 +7,7 @@ import {GLTFExporter} from 'three/addons/exporters/GLTFExporter.js';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {buildSceneOBJ,resolveExportMesh,safeOBJName} from './scene-obj-export-core.js?v=0.36.18.1075';
 
-import {buildNomadProjectWithMaps} from './nomad-packed-maps.js?v=0.36.18.1095';
+import {buildNomadProjectWithMaps} from './nomad-packed-maps.js?v=0.36.18.1188';
 
 const VERSION='0.36.18.892';
 const MAX_UV_PREVIEW_CORNERS=20000;
@@ -48,21 +48,22 @@ function updateNote(){
 }
 let nomadTemplatePromise=null;
 async function buildNOM(sceneObjects,subd=false){
- if(sceneObjects.some(o=>o?.opacityPaint))throw Error('Opacity map export is not available in this authoring build. Save .boxlab to preserve the opacity map.');
   if(!nomadTemplatePromise)nomadTemplatePromise=fetch(new URL('./templates/nomad-tube.nom',import.meta.url)).then(response=>{if(!response.ok)throw Error('Nomad template could not be loaded');return response.arrayBuffer();}).catch(error=>{nomadTemplatePromise=null;throw error;});
-  return buildNomadProjectWithMaps(sceneObjects,nomadTemplatePromise,{subd,name:cleanName(nameInput?.value)});
+  return buildNomadProjectWithMaps(sceneObjects,nomadTemplatePromise,{subd,name:cleanName(nameInput?.value),allowGeometryFallback:true});
 }
 async function exportNomad(){
   if(shareButton.disabled)return;
   const sceneObjects=objects();if(!sceneObjects.length){if(status)status.textContent='NOMAD • no visible editable objects';return;}
   shareButton.disabled=true;
+  let exportWarnings=[];
   try{
     if(status)status.textContent='NOMAD • building scene…';
     const result=await buildNOM(sceneObjects,geometry==='subd'),mime='application/x-nomad-sculpt';
+    exportWarnings=result.warnings||[];
     downloadBlob(new Blob([result.bytes],{type:mime}),cleanName(nameInput?.value)+'.nom',60000);
-    if(status)status.textContent=`NOMAD • ${result.count} object${result.count===1?'':'s'} • ${result.faces} faces${result.colourTextureObjects?` • colour images ${result.colourTextureObjects}/${result.count}`:''}${result.normalTextureObjects?` • normal maps ${result.normalTextureObjects}`:''}${result.emissiveTextureObjects?` • emissive maps ${result.emissiveTextureObjects}`:''}${result.roughnessTextureObjects?` • roughness maps ${result.roughnessTextureObjects}`:''}${result.metalnessTextureObjects?` • metalness maps ${result.metalnessTextureObjects}`:''}${result.displacementTextureObjects?` • displacement maps ${result.displacementTextureObjects}`:''}${result.uvObjects?` • UVs ${result.uvObjects}/${result.count}`:''} • open browser download, then Open In / Share → Nomad`;
+    if(status)status.textContent=`NOMAD • ${exportWarnings.length?`WARNING: ${exportWarnings.length} object(s) exported without UVs/textures • `:''}${result.count} object${result.count===1?'':'s'} • ${result.faces} faces${result.colourTextureObjects?` • colour images ${result.colourTextureObjects}/${result.count}`:''}${result.normalTextureObjects?` • normal maps ${result.normalTextureObjects}`:''}${result.emissiveTextureObjects?` • emissive maps ${result.emissiveTextureObjects}`:''}${result.roughnessTextureObjects?` • roughness maps ${result.roughnessTextureObjects}`:''}${result.metalnessTextureObjects?` • metalness maps ${result.metalnessTextureObjects}`:''}${result.displacementTextureObjects?` • displacement maps ${result.displacementTextureObjects}`:''}${result.uvObjects?` • UVs ${result.uvObjects}/${result.count}`:''} • open browser download, then Open In / Share → Nomad`;
   }catch(error){if(status)status.textContent=`NOMAD export failed • ${error?.message||error}`;}
-  finally{shareButton.disabled=false;updateNote();}
+  finally{shareButton.disabled=false;updateNote();if(exportWarnings.length&&note){note.hidden=false;note.textContent='Warning: '+exportWarnings.join(' • ')+'. Original UVs and paint remain in the BoxLab project.';}}
 }
 function extension(){return format==='glb'?'glb':'obj';}
 function filename(){return cleanName(nameInput?.value)+'.'+extension();}
