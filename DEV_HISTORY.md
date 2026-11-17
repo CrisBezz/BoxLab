@@ -169,3 +169,9 @@ User marks .1186 FAIL: selected faces become unselected when choosing Extrude, b
 
 New tests/face-extrude-launch-1187.test.mjs exercises actual native setDirectTool, actual radial click handler with a selection-clearing proxy, changed-object refusal, real direct click → selected pair → inward drag → one Undo/exact source restore. VM fixtures test owner behavior, not whole-browser propagation; local Chromium launch was blocked by environment socket restrictions, so no physical-browser pass claimed. Protected Knife/corner/many-region tests remain mandatory. Focused23/23 PASS; full suite/publication follows. Device: select multiple faces → radial Extrude and check all stay highlighted; drag inward/through; Undo/Redo; launch Inset; Done then select another group and repeat. .1186 is FAIL for selection launch, .1185 PASS retained.
 
+
+
+## .1187 publication verified
+
+Runtime `1418d544507bd49c107e77f4fa550e3a798fff47` on main; Pages44080441872 build/report/deploy jobs SUCCESS. Cache-busted live version.json, index.html, main.js and total-gizmo.js byte-match tested checkout. Full suite3,501/3,501 PASS, zero failures/cancelled/skipped (132.339s); focused launch plus protected inward/Knife/many-region23/23 PASS. Syntax/diff pass; staged new test Git blob verified against local before main fast-forward. .1186 FAIL recorded for selection lost on launch; no new device PASS claimed. Hosted Topology44080443039 was in progress at last observation; no hosted pass claimed. Kernel geometry unchanged. Native button and radial launch retain multi-face selections; context guards prevent restoration into another object/mesh/mode. Device ready: multi-select → Extrude retains highlight, inward/through drag, Undo/Redo, Inset retention and repeat with another selection. VM owner tests cover transitions; local full Chromium launch blocked by environment socket policy.
+
