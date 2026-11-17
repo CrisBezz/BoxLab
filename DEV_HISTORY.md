@@ -185,3 +185,9 @@ Download status starts with WARNING and count; a persistent File note identifies
 
 Focused10/10 PASS: topology mismatch, partial UV, SubD, mixed valid+stale scene, unchanged source/resource identity, facegroup retention, real File NOMAD download and persistent warning; original strict UV writer contracts retained. Full regression/publication follows. Device: edit an old UV model then File→NOMAD; verify download plus warning and import geometry/facegroups; verify valid UV model retains textures; return to BoxLab and confirm UV/paint data remains. .1187 awaits device selection-retention result; no unreported PASS inferred.
 
+
+
+## .1188 publication verified
+
+Runtime `36b47e2b88e2823e5911ae0ad1dde4d34198b262` published to main. Pages44082841702 completed SUCCESS; build/deploy/report jobs successful. Cache-busted live version.json, index.html, export-as-panel.js and nomad-packed-maps.js byte-match tested checkout. Full local suite3,507/3,507 PASS, zero failures/cancelled/skipped (93.407s); focused NOMAD warning/strict UV10/10 PASS. Syntax/diff pass; staged new test Git blob verified against local before fast-forward. Hosted Topology44082843031 was in progress at last observation; no hosted pass claimed. Strict native writer and modelling kernels unchanged. Device ready: edited UV model→File NOMAD downloads with warning, open in Nomad to inspect geometry/facegroups; valid UV model retains textures; BoxLab project still retains source UV/paint. .1187 device status remains unreported, .1186 FAIL preserved.
+
