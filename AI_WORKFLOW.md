@@ -1,3 +1,7 @@
+## User priority — 17 November 2026: UV unwrap and painting
+
+The authoritative recommended queue is docs/UV_AUDIT_AND_ORDERED_BUILDS_2026-11-17.md. Robust Auto Unwrap, Facegroup-guided regions, pre-unwrap selected-edge seams and painting reliability take priority over optional presets/output/displacement. Existing Facegroup disk-only refusal behavior belongs to the old strict mode; add explicit guided planning/extra seam preview instead of weakening geometry validity tests. External unwrap must map results back to existing face-corner UV/history owners without replacing editable quad topology. Required early proof includes polygon/corner correspondence, worker cancellation, required seam enforcement, Apply/Undo/Save/Open and export/painting continuity. This audit authorizes the roadmap, not all25 runtime changes in one build; /nextbuild proceeds narrowly from current main.
+
 ## .1187 — tool-launch selection retention gate
 
 For changes to Face selection, radial launch, native direct-tool arming or Extrude/Inset, also run tests/face-extrude-launch-1187.test.mjs. Launch must retain every selected face before the first drag, without a geometry/history commit, and must not restore stale indices after mesh/object/mode changes. Existing inward, Knife and large-region gates below remain required. .1186 user FAIL concerns selection loss on launch; do not record it as a full device PASS.
