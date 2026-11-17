@@ -1,3 +1,4 @@
+import {resolveExportMesh} from './scene-obj-export-core.js?v=0.36.18.1075';
 import {capturePaintExportObjects,preparePaintExportObjects,preparedPaintImage,preparedRoughnessImage,preparedMetalnessImage} from './paint-export.js?v=0.36.18.1095';
 import {encodeNomadScalarPNG} from './nomad-scalar-png.js?v=0.36.18.1035';
 // Export-local glTF G/B unpacking. Source resources remain read-only; the original
@@ -48,10 +49,26 @@ export async function splitNomadPackedImage(choice){
   return result;
  }finally{bitmap?.close();if(canvas){canvas.width=1;canvas.height=1;}}
 }
-export async function buildNomadProjectWithMaps(objects,template,{subd=false,...options}={},split=splitNomadPackedImage){
+export async function buildNomadProjectWithMaps(objects,template,{subd=false,allowGeometryFallback=false,...options}={},split=splitNomadPackedImage){
+ const warnings=[],signature=options.topologySignature||globalThis.__boxlabExportAs?.topologySignature;
+ // This fallback is explicit at the File NOMAD boundary. Strict native writers
+ // retain their refusal contract; only export-local object copies lose maps.
+ const candidates=(objects||[]).map(object=>{
+  if(!allowGeometryFallback||object?.kind==='reference'||object?.visible===false||!object?.mesh)return object;
+  const stored=object.glbPassthrough?.uvCorners,hasUV=Array.isArray(stored)&&stored.some(Boolean),paint=object.colourPaint||object.roughnessPaint||object.metalnessPaint||object.opacityPaint;
+  let reason=null;
+  if(hasUV){
+   const mesh=resolveExportMesh({...object,colourPaint:null,roughnessPaint:null,metalnessPaint:null,opacityPaint:null},subd);
+   if(subd||typeof signature!=='function'||!object.glbPassthrough.uvTopologySignature||object.glbPassthrough.uvTopologySignature!==signature(mesh))reason='UVs no longer match the exported geometry';
+   else if(stored.length!==mesh.faces.length||stored.some((uv,fi)=>!Array.isArray(uv)||uv.length!==mesh.faces[fi].length||uv.some(p=>!Array.isArray(p)||p.length!==2||p.some(v=>!Number.isFinite(v)||!Number.isFinite(Math.fround(v))))))reason='UV channel is incomplete or invalid';
+  }else if(paint||Object.keys(nativeMaterialMaps(object.glbPassthrough)?.maps||{}).length)reason='texture maps have no matching UV channel';
+  if(!reason)return object;
+  warnings.push(`${object.name||'Object'}: ${reason}; exported without UVs and textures`);
+  return {...object,glbPassthrough:null,colourPaint:null,roughnessPaint:null,metalnessPaint:null,opacityPaint:null};
+ });
  // Snapshot before the first await: edits/Undo/scene replacement during conversion
  // cannot mix geometry, UVs or factors from different scene states in the download.
- const snapshot=capturePaintExportObjects((objects||[]).filter(o=>o?.kind!=='reference'&&o?.visible!==false&&o?.mesh?.vertices?.length&&o?.mesh?.faces?.length));
+ const snapshot=capturePaintExportObjects(candidates.filter(o=>o?.kind!=='reference'&&o?.visible!==false&&o?.mesh?.vertices?.length&&o?.mesh?.faces?.length));
  const exportOwner=globalThis.__boxlabExportAs;
  const [templateBytes]=await Promise.all([template,preparePaintExportObjects(snapshot,{subd,owner:{topologySignature:options.topologySignature||exportOwner?.topologySignature,buildUVPreviewGeometry:options.buildUVPreviewGeometry||exportOwner?.buildUVPreviewGeometry,padPaintEdges:options.padPaintEdges===true||!!exportOwner}})]);
  const packedMaps=new Map(),sources=new Set(),imageIdentity=createNomadImageIdentity(),packedIdentity=createNomadImageIdentity(),converted=new Map();let bytes=0,sourceBytes=0;
@@ -77,5 +94,5 @@ export async function buildNomadProjectWithMaps(objects,template,{subd=false,...
   }
   packedMaps.set(choice.data,maps);
  }
- return buildNomadProject(snapshot,templateBytes,{...options,subd,packedMaps});
+ return {...buildNomadProject(snapshot,templateBytes,{...options,subd,packedMaps}),warnings};
 }
