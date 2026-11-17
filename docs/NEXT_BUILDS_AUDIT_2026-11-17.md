@@ -1,3 +1,5 @@
+> Priority order superseded by [UV audit and unified B / H / UV progression](UV_AUDIT_AND_ORDERED_BUILDS_2026-11-17.md). User places robust UV creation and painting ahead of optional renderer features. Findings below remain supporting evidence.
+
 # BoxLab and Helios Studio: next-build audit
 
 Audit date: 17 November 2026. This is a source and release-evidence audit, not a new application release or a claim of fresh physical-iPad testing.
