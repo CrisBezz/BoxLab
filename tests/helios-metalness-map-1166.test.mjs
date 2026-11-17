@@ -50,7 +50,7 @@ test('1185 release pins refresh the changed Helios dock and tracer bundle',()=>{
   const version=JSON.parse(read('version.json')).version;
   const index=read('index.html');
   const mode=read('src/pathtrace-mode.js');
-  assert.equal(version,'0.36.18.1185');
+  assert.equal(version,'0.36.18.1186');
   assert.match(index,/<title>BoxLab v0\.36\.18\.1185<\/title>/);
   assert.match(index,/data-release-version="0\.36\.18\.1185">v0\.36\.18\.1185/);
   assert.match(index,/helios-dock\.css\?v=0\.36\.18\.1166/);
