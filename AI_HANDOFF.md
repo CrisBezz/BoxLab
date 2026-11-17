@@ -1,3 +1,11 @@
+## .1183 user PASS — protected inward-extrusion regression contract — 17 November 2026
+
+User confirms .1183 PASS and explicitly asks that the recurring inward-extrusion defect not return. Protect tests/corner-recess-1183.test.mjs and tests/knife-multiface-1182.test.mjs as required behavioral release gates. They cover vertex-only simultaneous selections, four diagonal directions, successive recesses next to an existing cavity, Knife-created diagonal faces, real preview/commit/Undo, closed/manifold output, exact depth and unchanged input. Genuine invalid Through four-owner refusal remains protected separately. Do not remove, skip, narrow or change these success expectations to accommodate a regression. A deliberate user-approved behavior change must explicitly revise the contract; ordinary refactors must preserve it.
+
+For any Knife, Loop, extrusion, clipping, assembly, seam/weld or selection-owner change, run these tests and the full npm test suite before publication. CI through-regression.yml runs npm test on main pushes and PRs for src/tests/runtime asset changes; package.json includes every tests/*.test.mjs, including these files. Verified 17 November: targeted14/14 PASS. This is documentation/protection only; application remains .1183, no new runtime build or device test required.
+
+Suggested next .1184 (not implemented): multi-face Knife preview feedback—mark crossed edges and distinguish a valid continuous face strip from a refused path before release. Preserve current snap/transaction/history owners; no new cutting kernel.
+
 ## .1183 publication verified
 
 Runtime `d219b872bf7b4b12281ddd18663aacbd98f3368c` on main. Cache-busted live version.json, index.html, through-kernel.js and logo-viewcube.js byte-match tested checkout. Full local regression 3,486/3,486 PASS, zero failures/cancelled/skips (123.589s); focused junction/Knife/Through/navigator/release123/123 PASS; syntax/diff pass. Pages `43865009858` live files verified. Hosted Topology `43865010458` was in progress at last query; no hosted PASS claimed. New regression test blob verified against release branch. Device checks ready for vertex-only multi-selection inward, sequential diagonal recess, Knife source faces, UndoRedo and six labelled/half-sensitive viewcube navigation. Tiny diagnosed corner relief is deliberate finite geometry; closure validator was not weakened.
