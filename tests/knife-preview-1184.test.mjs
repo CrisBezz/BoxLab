@@ -13,3 +13,19 @@ test('1184 gap path is red before release and leaves mesh/redo unchanged on refu
 test('1184 queued previews coalesce and cancellation prevents late markers',()=>{
  const {f,a,b}=fixture(),frames=new Map();let serial=0;f.ctx.requestAnimationFrame=fn=>{frames.set(++serial,fn);return serial;};f.ctx.cancelAnimationFrame=id=>frames.delete(id);f.arm();f.pointer('pointerdown',a);f.pointer('pointermove',b);f.pointer('pointermove',b);assert.equal(frames.size,1);const callback=[...frames.values()][0];frames.clear();callback();assert.equal([...f.markers].filter(n=>n.className==='knife-crossing-marker').length,2);f.pointer('pointermove',b);f.pointer('pointercancel',b);assert.equal(frames.size,0);assert.equal(f.markers.size,0);callback();assert.equal(f.markers.size,0);
 });
+
+test('1185 midpoint jitter reuses validation, changing the snap revalidates and release remains one Undo',()=>{
+ const {mesh,f,a}=fixture(),b=f.point(3,7,.5),clone=mesh.clone.bind(mesh);b.x-=2;let clones=0;mesh.clone=()=>{clones++;return clone();};f.node('#inferenceSnapToggle').checked=true;f.arm();f.pointer('pointerdown',a);
+ for(let i=0;i<20;i++)f.pointer('pointermove',{x:b.x+i%3,y:b.y+i%2});assert.equal(clones,1,'twenty midpoint-snap moves require only one source clone');assert.equal([...f.markers].filter(n=>n.className==='knife-crossing-marker').length,2);
+ const changed=f.point(3,7,.75);changed.x-=2;f.pointer('pointermove',changed);assert.equal(clones,2);f.pointer('pointerup',changed);assert.equal(f.ctx.__boxlabHistory.undoStack.length,1);assert.equal(mesh.faces.length,6);
+});
+test('1185 camera changes and source edits cannot reuse stale preview feedback',()=>{
+ const {mesh,f,a,b}=fixture(),clone=mesh.clone.bind(mesh);let clones=0;mesh.clone=()=>{clones++;return clone();};f.arm();f.pointer('pointerdown',a);f.pointer('pointermove',b);assert.equal(clones,1);
+ const camera=f.ctx.__boxlabBridgeState.camera;camera.near=.2;camera.updateProjectionMatrix();f.pointer('pointermove',b);assert.equal(clones,2,'projection change invalidates identical endpoint');
+ camera.position.z=9;camera.updateMatrixWorld();f.pointer('pointermove',b);assert.equal(clones,3,'world camera change invalidates identical endpoint');mesh.vertices[0].x-=.1;f.pointer('pointermove',b);assert.equal(clones,3);assert.equal(f.markers.size,0);assert.equal(f.ctx.__boxlabKnifeTool.armed(),false);
+});
+
+test('1185 invalid preview cache remains red and moving to a valid endpoint refreshes it',()=>{
+ const {mesh,f,a,b}=fixture(true),clone=mesh.clone.bind(mesh);let clones=0;mesh.clone=()=>{clones++;return clone();};f.arm();f.pointer('pointerdown',a);f.pointer('pointermove',b);f.pointer('pointermove',b);assert.equal(clones,1);assert([...f.markers].some(n=>n.className?.includes('knife-preview-invalid')));
+ const valid=f.point(1,5,.7);valid.x-=2;f.pointer('pointermove',valid);assert.equal(clones,2);assert([...f.markers].some(n=>n.className?.includes('knife-preview-valid')));assert.equal(f.ctx.__boxlabHistory.undoStack.length,0);f.pointer('pointercancel',valid);assert.equal(f.markers.size,0);
+});
