@@ -11,6 +11,27 @@ try{
  await page.locator('[data-autouv="cancel"]').click();assert.deepEqual(await state(),before,'cancel must preserve UVs');
  await page.locator('[data-autouv="preview"]').click();await page.waitForFunction(()=>!document.querySelector('[data-autouv="apply"]').hidden,{},{timeout:60000});await page.locator('[data-autouv="apply"]').click();const after=await state();assert.equal(after.geometry,before.geometry);assert.notEqual(after.uv,before.uv);
  await page.locator('#undoBtn').click();assert.deepEqual(await state(),before);await page.locator('#redoBtn').click();assert.deepEqual(await state(),after);
+ await page.evaluate(()=>{
+   const mesh=globalThis.__boxlabBridgeState.mesh;
+   mesh.faceGroups=mesh.faces.map((_,index)=>index===0?'Top':'Body');
+ });
+ const grouped=await state();
+ await page.locator('[data-autouv="guided"]').click();
+ await page.waitForFunction(()=>!document.querySelector('[data-autouv="apply"]').hidden,{},{timeout:60000});
+ assert.match(await page.locator('[data-autouv="status"]').textContent(),/cyan group borders/);
+ assert.deepEqual(await state(),grouped);
+ await page.locator('[data-autouv="cancel"]').click();
+ assert.deepEqual(await state(),grouped);
+ await page.locator('[data-autouv="guided"]').click();
+ await page.waitForFunction(()=>!document.querySelector('[data-autouv="apply"]').hidden,{},{timeout:60000});
+ await page.locator('[data-autouv="apply"]').click();
+ const guided=await state();
+ assert.equal(guided.geometry,grouped.geometry);
+ assert.notEqual(guided.uv,grouped.uv);
+ await page.locator('#undoBtn').click();
+ assert.deepEqual(await state(),grouped);
+ await page.locator('#redoBtn').click();
+ assert.deepEqual(await state(),guided);
  const exported=await page.evaluate(async()=>{const m=globalThis.__boxlabObjectManager;m.saveActive();const o=m.objects.find(o=>o.id===m.activeId),r=await globalThis.__boxlabExportAs.buildNOM([o],false);return{uv:r.uvObjects,count:r.count};});assert.equal(exported.uv,1);assert.equal(exported.count,1);assert.deepEqual(errors,[]);
- console.log(JSON.stringify({test:'UV1 real browser module worker, preview, Cancel, Apply, Undo/Redo, NOM export',pass:true}));
+ console.log(JSON.stringify({test:'UV1/UV2 real browser module worker, preview, Cancel, Apply, Undo/Redo, NOM export',pass:true}));
 }finally{await browser?.close();await new Promise(r=>server.close(r));}

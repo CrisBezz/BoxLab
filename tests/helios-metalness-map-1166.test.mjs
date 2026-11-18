@@ -1,3 +1,4 @@
+import {assertShellRelease} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -50,9 +51,7 @@ test('1190 release pins refresh the changed Helios dock and tracer bundle',()=>{
   const version=JSON.parse(read('version.json')).version;
   const index=read('index.html');
   const mode=read('src/pathtrace-mode.js');
-  assert.equal(version,'0.36.18.1190');
-  assert.match(index,/<title>BoxLab v0\.36\.18\.1190<\/title>/);
-  assert.match(index,/data-release-version="0\.36\.18\.1190">v0\.36\.18\.1190/);
+  assertShellRelease(index,version);
   assert.match(index,/helios-dock\.css\?v=0\.36\.18\.1166/);
   assert.match(index,/src\/helios-dock\.js\?v=0\.36\.18\.1168/);
   assert.match(index,/src\/pathtrace-mode\.js\?v=0\.36\.18\.1190/);

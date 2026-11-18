@@ -1,5 +1,5 @@
 import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';import crypto from 'node:crypto';import * as THREE from 'three';
-import * as backend from '../src/uv-vendor/watlas.js';import {prepareAutoUnwrapMesh,runAutoUnwrap,validateAutoUnwrapResult,autoUnwrapSeams} from '../src/auto-unwrap-core.js';import {startAutoUnwrapJob} from '../src/auto-unwrap-job.js';import {installAutoUnwrapWorkflow} from '../src/auto-unwrap-workflow.js';
+import * as backend from '../src/uv-vendor/watlas.js';import {prepareAutoUnwrapMesh,runAutoUnwrap,validateAutoUnwrapResult,autoUnwrapSeams,guidedUnwrapSeams} from '../src/auto-unwrap-core.js';import {startAutoUnwrapJob} from '../src/auto-unwrap-job.js';import {installAutoUnwrapWorkflow} from '../src/auto-unwrap-workflow.js';
 import {EditableMesh} from '../src/mesh.js';import {makeSphere,makeTorus,makeCylinder} from '../src/primitive-factory.js';import {glbOwnerRuntime} from './helpers/glb-owner-runtime.mjs';import {commitAutoUnwrapUV,autoUnwrapTargetError} from '../src/imported-uv-edit.js';import {inspectImportedUV} from '../src/imported-uv-inspection.js';import {encodeBoxlabScene,decodeBoxlabScene} from '../src/boxlab-project-codec.js';import {buildNomadProject,readNomadProject} from '../src/nomad-export-core.js';
 const wasm=Buffer.from(fs.readFileSync(new URL('../src/uv-vendor/watlas.wasm.base64',import.meta.url),'utf8'),'base64');await backend.Initialize({wasmBinary:wasm});const owner=glbOwnerRuntime().c,signature=owner.topologySignature;
 const ring=()=>new EditableMesh([[-2,-2,0],[2,-2,0],[2,2,0],[-2,2,0],[-1,-1,0],[1,-1,0],[1,1,0],[-1,1,0]],[[0,1,5,4],[1,2,6,5],[2,3,7,6],[3,0,4,7]]);
@@ -37,3 +37,48 @@ test('1189 auto-unwrapped cube paints at1024 through original Paint UI and survi
 });
 
 test('1189 thin corner-relieved recessed solid unwraps without dropping small original triangles',async()=>{const {closedGrid}=await import('./helpers/through-validation-profile.mjs'),{buildNegativeExtrude}=await import('../src/through-kernel.js');const cut=buildNegativeExtrude(closedGrid(4,EditableMesh),[21,16],-.1);assert(cut.ok);const before=JSON.stringify(cut.mesh),input=prepareAutoUnwrapMesh(cut.mesh,owner),result=await runAutoUnwrap(input,backend);assert(validateAutoUnwrapResult(input,result));assert.equal(JSON.stringify(cut.mesh),before);assert.equal(result.uvCorners.length,cut.mesh.faces.length);});
+
+test('1191 guided WASM splits coplanar groups and preserves a holed or closed group',async()=>{
+ const planar=strip();
+ for(const vertex of planar.vertices)vertex.z=0;
+ assert.equal((await runAutoUnwrap(prepareAutoUnwrapMesh(planar,owner),backend)).chartCount,1);
+ for(const [mesh,groups,expect] of [
+  [planar,['A','B','B'],[1,2]],
+  [ring(),['Ring','Ring','Ring','Ring'],[0,1]],
+  [EditableMesh.cube(),Array(6).fill('Body'),[0,6]],
+ ]){
+  mesh.faceGroups=groups;
+  const before=JSON.stringify(mesh);
+  const input=prepareAutoUnwrapMesh(mesh,owner,{guided:true});
+  const layout=await runAutoUnwrap(input,backend);
+  assert.equal(input.borders.length,expect[0]);
+  assert.equal(layout.chartCount,expect[1]);
+  assert.doesNotThrow(()=>guidedUnwrapSeams(mesh,layout.uvCorners,input.borders));
+  assert.equal(JSON.stringify(mesh),before);
+ }
+});
+
+test('1191 guided assigns distinct region IDs to disconnected faces with the same label',async()=>{
+ const mesh=new EditableMesh([[0,0,0],[1,0,0],[0,1,0],[1,0,0],[1,1,0],[0,1,0]],[[0,1,2],[3,4,5]]);
+ assert.throws(()=>prepareAutoUnwrapMesh(mesh,owner,{guided:true}),/Assign at least one Facegroup/);
+ mesh.faceGroups=['Same','Same'];
+ const input=prepareAutoUnwrapMesh(mesh,owner,{guided:true});
+ assert.deepEqual(input.regions,[0,1]);
+ assert.equal((await runAutoUnwrap(input,backend)).chartCount,2);
+});
+
+test('1191 guided preview draws distinct group borders and invalidates on Facegroup changes',async()=>{
+ const f=workflow();
+ f.mesh.faceGroups=['A','B','B','B','B','B'];
+ const result=await runAutoUnwrap(prepareAutoUnwrapMesh(f.mesh,owner,{guided:true}),backend);
+ const p=f.api.previewGuided();
+ f.resolve(result);
+ assert(await p);
+ assert(f.scene.children.some(node=>node.material?.color?.getHex()===0x47d8ff));
+ assert(f.scene.children.some(node=>node.material?.color?.getHex()===0xffb23e));
+ assert.match(f.notice.textContent,/cyan group borders/);
+ f.mesh.faceGroups[0]='Changed';
+ assert.equal(f.api.apply(),false);
+ assert.equal(f.checkpoints,0);
+ assert.equal(f.scene.children.length,1);
+});
