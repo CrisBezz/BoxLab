@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { buildSceneBVH } from './engine/bvh';
 import { importModelFromFile } from './engine/models';
 import { GPUPathTracer } from './engine/pathTracer';
-import { MAX_CUSTOM_LAYERS, PbrTextureManager } from './engine/textures';
+import { CUSTOM_LAYER_OFFSET, PbrTextureManager } from './engine/textures';
 import { TextureSlot } from './types/studio';
 import {
   DEFAULT_LIGHTS,
@@ -58,6 +58,8 @@ export async function createBoxLabHeliosTrace(
       offset: project.rayTransform.offset.clone(),
     };
     const importedProject = project;
+    const pendingUploads = new Map<string, number>();
+    let disposed = false;
 
     function getState() {
       return {
@@ -119,18 +121,22 @@ export async function createBoxLabHeliosTrace(
     async function uploadMaterialMap(id: string, slot: TextureSlot, file: File) {
       const material = importedProject.materials.find((item) => item.id === id);
       if (!material || !file.type.startsWith('image/')) return;
+      if (disposed) throw new Error('Helios scene has been disposed.');
+      if (pendingUploads.has(id)) throw new Error('Wait for this material texture upload to finish.');
       let layer = materialLayerMap.get(id);
-      if (layer === undefined || layer < 100) {
-        const usedLayers = new Set(
-          [...materialLayerMap.values()].filter((value) => value >= 100),
-        );
-        if (usedLayers.size >= MAX_CUSTOM_LAYERS) {
-          throw new Error('All eight custom Helios texture layers are in use; restore an uploaded layer before adding another.');
-        }
-        layer = textureManager.allocateCustomLayer(material.texturePreset, false);
-        materialLayerMap.set(id, layer);
+      const newlyAllocated = layer === undefined || layer < CUSTOM_LAYER_OFFSET;
+      if (newlyAllocated) layer = textureManager.allocateCustomLayer(material.texturePreset, false);
+      pendingUploads.set(id, layer!);
+      try {
+        await textureManager.writeFileToLayer(layer!, slot, file);
+        if (disposed) throw new Error('Texture upload cancelled: Helios scene closed.');
+        materialLayerMap.set(id, layer!);
+      } catch (error) {
+        if (newlyAllocated) textureManager.releaseCustomLayer(layer!);
+        throw error;
+      } finally {
+        pendingUploads.delete(id);
       }
-      await textureManager.writeFileToLayer(layer, slot, file);
       if (slot === 'albedo') material.hasCustomAlbedo = true;
       else if (slot === 'normal') material.hasCustomNormal = true;
       else if (slot === 'roughness') material.hasCustomRoughness = true;
@@ -141,6 +147,10 @@ export async function createBoxLabHeliosTrace(
     function restoreMaterialPresetMaps(id: string) {
       const material = importedProject.materials.find((item) => item.id === id);
       if (!material) return;
+      const layer = materialLayerMap.get(id);
+      if (layer !== undefined) textureManager.releaseCustomLayer(layer);
+      const pending = pendingUploads.get(id);
+      if (pending !== undefined) textureManager.releaseCustomLayer(pending);
       materialLayerMap.delete(id);
       material.hasCustomAlbedo = false;
       material.hasCustomNormal = false;
@@ -178,6 +188,7 @@ export async function createBoxLabHeliosTrace(
     }
 
     function dispose() {
+      disposed = true;
       pathTracer?.dispose();
       pathTracer = null;
       textureManager.dispose();
