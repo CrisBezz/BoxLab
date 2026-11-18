@@ -1,3 +1,9 @@
+## .1191 / UV2 — Facegroup Guided Unwrap — 18 November 2026
+
+- Protected user PASS .1190 / B1.
+- On an unpainted Base mesh, open Object → UV → Guided Unwrap. Inspect cyan group borders and orange solver cuts/open edges, then Cancel. Check that the old UVs are intact.
+- Apply a fresh preview, inspect UV Editor, then Undo and Redo. Verify Facegroup labels remain. Try an entire closed cube in one group and a flat ring with a hole.
+
 # .1190 / B1 — shared Helios texture safety and opacity Reset — 18 November 2026
 
 User confirms Helios Studio0.1.5 PASS /nextbuild. Selectively ported H1 runtime cb4e68d04f3837f12266468e3cca59450ae9081a allocator lease/free-slot/release/decode cancellation into BoxLab vendor. No wholesale replacement: packed roughness/metalness channel helper, independent metalness slot, source UV transforms and surface/emitter opacity retain original BoxLab owners. Import stages layer mapping and releases every reservation on overflow/image-write failure. Upload publishes new material layer/flags after success, releases failed new reservations, reuses a material slot across channels, and refuses concurrent same-material uploads. Restore releases occupied and pending leases; disposed tracer rejects late output. Dock upload records its original tracer/generation before awaiting and avoids saving a map to a replacement scene. Full H2 request ordering remains queued, not claimed complete.
