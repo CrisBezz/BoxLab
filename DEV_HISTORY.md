@@ -230,3 +230,8 @@ DEVICE: Object mode→UV→Auto Unwrap; orbit checker/orange seams; Apply UVs→
 
 Cris confirms UV1 .1189 PASS /nextbuild. Protect bounded Auto Unwrap checker/seam preview, Apply/Cancel, original polygon/Facegroup retention, Undo/Redo, existing native UV/Paint/export contracts; no imported/painted or guided-seam capability inferred. H1 is being implemented in standalone Helios Studio0.1.5: explicit eight-slot leases/free reuse/overflow and allocation/import rollback. Per the authoritative ordered queue, B1 separately ports the validated repair to BoxLab and adds surface-opacity Reset/browser modelling workflow coverage. BoxLab runtime remains .1189; do not claim its older vendor allocator is repaired by H1. Next UV capability UV2 guided Facegroups remains high priority.
 
+
+## 18 November 2026 — H1 standalone 0.1.5 published; B1 ready
+
+HeliosStudio runtime cb4e68d04f3837f12266468e3cca59450ae9081a implements explicit eight-slot leases/free reuse/overflow, upload reservation rollback and private import resource staging. Local7/7 actual-owner tests/type-check/build PASS; hosted44235671140 build134571085734/deploy134571260760 SUCCESS including frozen Bun install and tests. Live production bundle checked for new guards. Standalone iPad acceptance pending. BoxLab .1189 user PASS protected; no BoxLab runtime or vendor changes in H1. Next B1 selectively ports allocator/import/upload safety while preserving BoxLab packed metalness and surface opacity, fixes surface-opacity Reset, and adds browser select→Extrude→Undo protection; split narrow runtime scopes if needed. H2 still owns full request-ordering safety. Do not overwrite diverged BoxLab models/textures with standalone wholesale. UV2 guided Facegroups follows B1 in agreed priority.
+
