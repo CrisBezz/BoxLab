@@ -1,3 +1,9 @@
+## .1192 — connected Guided Unwrap patches — 18 November 2026
+
+Addresses the .1191 qualified PASS. Guided Unwrap unfolds planar polygons across shared same-region edges in the worker. Each accepted hinge preserves shared UV edge endpoints and face scale. Growth cuts when attaching a face would overlap the net. The original WASM atlas packs and validates the result before preview, with corner mapping, region boundaries, nonoverlap and float32 checks retained. If the model has warped polygons, exceeds the net overlap budget, or cannot produce a better validated net, use the existing Guided charting. Auto Unwrap still uses its original solver path. Preview shows how many connected regions were split when applicable.
+
+Device: one Facegroup on a cube should yield one connected UV island. On a grouped mesh, review cyan borders, orange cuts, and patch count. Cancel, Apply, Undo/Redo and paint across a retained edge on a fresh unpainted Base mesh. Existing painted layouts remain protected. No general curved-surface island-count guarantee.
+
 ## .1191 / UV2 — Facegroup Guided Unwrap — 18 November 2026
 
 User confirms .1190 / B1 PASS. Protect independent Helios map upload, replacement and Restore, surface-opacity Reset, and the browser modelling regression. UV2 adds Guided Unwrap next to Auto Unwrap under Object → UV. Edge-connected same-label faces form solver regions. Guided keeps region borders separate and permits extra cuts inside a region. Cyan shows Facegroup borders. Orange shows solver cuts and open mesh edges. Valid closed or holed groups can unwrap. Preview uses the UV1 worker, overlap checks and existing Apply/Cancel/Undo owner. Original Facegroups and editable polygons are preserved. Guided requires an independent unpainted Base mesh and at least one Facegroup. Auto ignores groups, and the strict Facegroup command retains its original behavior. H2 is next in the ordered queue, then UV3 selected-edge seams.
