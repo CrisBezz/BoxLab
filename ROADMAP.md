@@ -1,3 +1,11 @@
+## .1194 — UV4A packing controls and quality — 18 November 2026
+
+BoxLab .1193 selected-edge seams is user PASS and protected. Auto, Seam and Guided Unwrap now offer a 1024 or 2048 target map, 2/4/8/16 pixel gutters and chart rotation on/off. The map size is the reference for UV packing and diagnostics, not the Paint texture size. xatlas packs padded charts; the export retains an explicit tile border and compensates dilation for its actual atlas dimensions. Changing inputs discards the pending preview. Applied UV coordinates use the existing project/history path.
+
+The preview reports island count, coverage, area-averaged density in texels per model unit, peak per-triangle anisotropy and the overlap check. A density target and repacking existing layouts are follow-up work within UV4. Seam marks, Facegroup cuts, and existing paint safety remain in effect.
+
+Device: open Object → UV on an unpainted object, set 2048 and 8 px, run an unwrap and review the quality summary. Toggle rotation or change the gutter to discard the preview, rerun and apply. In UV Editor inspect the gaps between islands and Undo to recover the previous UVs.
+
 ## .1193 — UV3 selected-edge seams — 18 November 2026
 
 Helios Studio 0.1.6 H2 user PASS protected. In BoxLab Edge mode, Mark Seams and Clear Seams consume the existing selection, including loops and paths, without editing the mesh. Object → UV → Seam Unwrap uses the marks, and Guided Unwrap combines them with Facegroups. Magenta shows marked seams; cyan and orange retain the group and automatic seam conventions. Marks are per-object session guides tied to current face topology. They are not serialized. Applied UVs use existing history and persistence.
