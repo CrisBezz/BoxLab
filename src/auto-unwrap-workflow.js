@@ -1,6 +1,6 @@
 import * as THREE from 'three';
-import {prepareAutoUnwrapMesh,autoUVFingerprint,autoUnwrapSeams,guidedUnwrapSeams,validateAutoUnwrapResult} from './auto-unwrap-core.js?v=0.36.18.1191';
-import {startAutoUnwrapJob} from './auto-unwrap-job.js?v=0.36.18.1191';
+import {prepareAutoUnwrapMesh,autoUVFingerprint,autoUnwrapSeams,guidedUnwrapSeams,validateAutoUnwrapResult} from './auto-unwrap-core.js?v=0.36.18.1192';
+import {startAutoUnwrapJob} from './auto-unwrap-job.js?v=0.36.18.1192';
 import {autoUnwrapTargetError,commitAutoUnwrapUV} from './imported-uv-edit.js?v=0.36.18.1189';
 import {createFacegroupBoundaryPreview} from './facegroup-boundary-preview.js?v=0.36.18.1191';
 export function installAutoUnwrapWorkflow({document,host,notice,getContext,onCommit,say,startJob=startAutoUnwrapJob,beforeStart=()=>{},requestFrame=requestAnimationFrame,cancelFrame=cancelAnimationFrame}){
@@ -38,13 +38,16 @@ export function installAutoUnwrapWorkflow({document,host,notice,getContext,onCom
    if(!current(staged)){reset();message('Auto Unwrap target changed; preview again');return false;}
    // Worker performs full overlap validation. Main verifies coverage/folds again
    // before allocating preview geometry, using the exact staged source triangles.
-   validateAutoUnwrapResult(input,result,{overlaps:false});staged.result=result;overlay=makeOverlay(staged,result);apply.hidden=false;message(`${name} preview · ${result.chartCount} patches · ${useGroups?"cyan group borders, orange other seams":"checker and orange seams"} · Apply UVs or Cancel`);return true;
+   validateAutoUnwrapResult(input,result,{overlaps:false});
+   const splitRegions=result.regionCounts?.filter(count=>count>1).length;
+   const splitNote=splitRegions?` · ${splitRegions} ${splitRegions===1?"region":"regions"} split`:'';
+   staged.result=result;overlay=makeOverlay(staged,result);apply.hidden=false;message(`${name} preview · ${result.chartCount} ${result.chartCount===1?"patch":"patches"}${splitNote} · ${useGroups?"cyan group borders, orange other seams":"checker and orange seams"} · Apply UVs or Cancel`);return true;
   }catch(error){if(token!==generation)return false;reset();message(name+' · '+error.message);return false;}
  }
  function commit(){
   const s=staged;if(!s?.result||!current(s)){reset();message('Auto Unwrap target changed; preview again');return false;}
   const result=commitAutoUnwrapUV(s.object,s.mesh,s.owner.topologySignature,s.history,s.result);if(!result.ok){message(result.reason);return false;}
-  const count=s.result.chartCount,name=s.input.regions?'Guided Unwrap':'Auto Unwrap';reset();onCommit(result);message(`${name} applied · ${count} patches · Undo restores previous UVs`);return true;
+  const count=s.result.chartCount,name=s.input.regions?'Guided Unwrap':'Auto Unwrap';reset();onCommit(result);message(`${name} applied · ${count} ${count===1?"patch":"patches"} · Undo restores previous UVs`);return true;
  }
  preview.addEventListener('click',()=>begin());guided.addEventListener('click',()=>begin(true));apply.addEventListener('click',commit);cancel.addEventListener('click',()=>{reset();message('Auto Unwrap cancelled · original UVs unchanged');});
  return {preview:()=>begin(),previewGuided:()=>begin(true),apply:commit,cancel:reset,get busy(){return !!job;}};
