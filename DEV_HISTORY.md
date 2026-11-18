@@ -1,3 +1,9 @@
+## .1196 — Pencil and collapsed-puck Vertex taps
+
+Cris reports FAIL on .1195 because multiple Vertex taps are still intermittent on iPad. The picker now recognizes Pencil contact from the primary button or pressure, matching viewport contact detection. A precise tap on an unselected vertex under the collapsed puck can add it to the selection. Tapping the puck away from another vertex still opens the gizmo. Existing depth policy, additive selection and grouped Bevel remain.
+
+Device: tap several vertices with Pencil, including behind the puck when they overlap; tap a selected marker again to remove it. Tap the puck clear of other markers and confirm gizmo activation. Bevel the resulting group. Physical iPad acceptance pending.
+
 ## .1195 — Vertex picking and multi-vertex Bevel
 
 Cris reports that farther vertices were hard to include in a multi-selection and selected vertices did not bevel together. Vertex taps now rank rendered marker centers, with depth as the tie break. FRONT now works in Vertex mode: on rejects occluded markers, off permits selecting through the surface. Bevel drag uses the same picker and the complete additive selection. Drag a selected vertex to bevel the group; dragging an unselected vertex will not replace it. Retains existing Bevel topology, preview, undo and safety checks.
