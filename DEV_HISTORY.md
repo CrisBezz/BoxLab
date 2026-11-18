@@ -1,3 +1,7 @@
+## .1192 device PASS — 18 November 2026
+
+Cris confirms PASS. Protect connected Guided Unwrap patches, including a one-group cube net, Facegroup boundaries, and the preview/apply workflow. Next ordered work is H2 in Helios Studio, followed by UV3 in BoxLab.
+
 ## .1192 release verification
 
 Runtime c48b99bf5c74979b3d6f55e4b597dc9452861063 is live on GitHub Pages. The live shell displayed v0.36.18.1192. All 18 staged files matched the tested local Git blob hashes. Local regression passed 3,534/3,534. Hosted run 44271707165 passed the real-browser Auto/Guided worker, one-patch cube, Apply/Cancel/Undo/Redo, NOM export and multi-face modelling checks. Local WASM fixtures passed one island on the one-group cube and six islands across six connected multi-face regions. Guided base paint and native export passed. Physical iPad test pending.
