@@ -1,3 +1,7 @@
+## .1192 device PASS — 18 November 2026
+
+Cris confirms PASS. Protect connected Guided Unwrap patches, including a one-group cube net, Facegroup boundaries, and the preview/apply workflow. Next ordered work is H2 in Helios Studio, followed by UV3 in BoxLab.
+
 ## .1192 — connected Guided Unwrap patches — 18 November 2026
 
 Addresses the .1191 qualified PASS. Guided Unwrap unfolds planar polygons across shared same-region edges in the worker. Each accepted hinge preserves shared UV edge endpoints and face scale. Growth cuts when attaching a face would overlap the net. The original WASM atlas packs and validates the result before preview, with corner mapping, region boundaries, nonoverlap and float32 checks retained. If the model has warped polygons, exceeds the net overlap budget, or cannot produce a better validated net, use the existing Guided charting. Auto Unwrap still uses its original solver path. Preview shows how many connected regions were split when applicable.
