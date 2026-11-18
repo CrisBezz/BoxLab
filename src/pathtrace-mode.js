@@ -1,9 +1,9 @@
 import * as THREE from 'three';
-import {installProjection} from './logo-viewcube.js?v=0.36.18.1189';
+import {installProjection} from './logo-viewcube.js?v=0.36.18.1190';
 
 const wrap=document.querySelector('#viewportWrap');
 const status=document.querySelector('#selectionStatus');
-const HELIOS_BUNDLE='./helios-tracer.bundle.js?v=0.36.18.1169';
+const HELIOS_BUNDLE='./helios-tracer.bundle.js?v=0.36.18.1190';
 const savedMaterialMaps=new Map();
 
 let active=false;
@@ -248,7 +248,9 @@ async function applyDockAction(detail={}){
   }else if(detail.action==='material')tracer.updateMaterial(detail.id,detail.patch||{});
   else if(detail.action==='upload-map'){
     try{
-      await tracer.uploadMaterialMap(detail.id,detail.slot,detail.file);
+      const target=tracer,runId=generation;
+      await target.uploadMaterialMap(detail.id,detail.slot,detail.file);
+      if(!active||tracer!==target||generation!==runId)return;
       const material=stateNow.materials.find(item=>item.id===detail.id);
       if(material)materialMapState(material).files.set(detail.slot,detail.file);
     }
@@ -262,7 +264,7 @@ async function applyDockAction(detail={}){
   else if(detail.action==='reset-material'){
     const defaults=defaultMaterials.get(detail.id);
     if(defaults){
-      const keys=['color','roughness','metalness','ior','transmission','clearcoat','emissiveIntensity','emissiveOpacity','texturePreset','uvScale','uvScaleX','uvScaleY','uvOffsetX','uvOffsetY','uvRotation','normalStrength'];
+      const keys=['color','roughness','metalness','ior','transmission','clearcoat','emissiveIntensity','emissiveOpacity','surfaceOpacity','texturePreset','uvScale','uvScaleX','uvScaleY','uvOffsetX','uvOffsetY','uvRotation','normalStrength'];
       const patch=Object.fromEntries(keys.filter(key=>defaults[key]!==undefined).map(key=>[key,defaults[key]]));
       tracer.updateMaterial(detail.id,patch);
     }
