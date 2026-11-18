@@ -33,6 +33,41 @@ try{
  // Direct-button route and Inset retain all selected faces before any operation.
  await page.evaluate(ids=>{globalThis.__boxlabFaceDirect.disarmForSelection();globalThis.__boxlabSelectionBridge.set('face',ids);document.querySelector('#insetBtn').click();},selected);
  assert.deepEqual(await selection(),selected);assert.equal(await snap(),before);
+ await page.reload();
+ await page.waitForFunction(()=>globalThis.__boxlabVertexPickAssist&&globalThis.__boxlabDirectVertexBevel&&globalThis.__boxlabSelectionInput);
+ await page.evaluate(()=>{
+  document.querySelector('#selectionModes button[data-mode="vertex"]').click();
+  document.querySelector('#multiSelectToggle').checked=false;
+ });
+ const corners=await page.evaluate(()=>{
+  const {scene,camera}=globalThis.__boxlabBridgeState;
+  const bounds=document.querySelector('#viewport').getBoundingClientRect(),points=[];
+  scene.traverse(marker=>{
+   if(marker.userData.kind!=='vertex')return;
+   const world=marker.getWorldPosition(marker.position.clone()),p=world.project(camera);
+   points.push({id:marker.userData.index,x:bounds.left+(p.x*.5+.5)*bounds.width,y:bounds.top+(-p.y*.5+.5)*bounds.height});
+  });
+  const picker=globalThis.__boxlabVertexPickAssist;
+  return {front:points.find(p=>picker.nearestVertexAt(p.x,p.y)?.i===p.id),rear:points.find(p=>picker.nearestVertexAt(p.x,p.y)?.i!==p.id)};
+ });
+ assert(corners.front&&corners.rear,'cube fixture has visible and occluded corners');
+ await page.mouse.click(corners.front.x,corners.front.y);
+ assert.deepEqual(await selection(),[corners.front.id]);
+ await page.locator('#frontSelectBtn').click();
+ await page.mouse.click(corners.rear.x,corners.rear.y);
+ assert.deepEqual(await selection(),[corners.front.id,corners.rear.id]);
+ const beforeBevel=await snap();
+ await page.evaluate(()=>document.querySelector('#vertexBevelBtn').click());
+ await page.mouse.move(corners.rear.x,corners.rear.y);
+ await page.mouse.down();
+ await page.mouse.move(corners.rear.x+30,corners.rear.y,{steps:3});
+ await page.mouse.up();
+ const afterBevel=await snap();
+ assert.equal(JSON.parse(afterBevel)[1].length,JSON.parse(beforeBevel)[1].length+2,'both selected corners are bevelled');
+ await page.locator('#undoBtn').click();
+ assert.equal(await snap(),beforeBevel);
+ await page.locator('#redoBtn').click();
+ assert.equal(await snap(),afterBevel);
  assert.deepEqual(errors,[]);
- console.log(JSON.stringify({test:'B1 real browser multi-face radial Extrude, inward Exact, Undo/Redo and direct Inset launch',pass:true}));
+ console.log(JSON.stringify({test:'B1 real browser multi-face radial Extrude, inward Exact, Undo/Redo direct Inset launch, depth Vertex selection and grouped Vertex Bevel',pass:true}));
 }finally{await browser?.close();await new Promise(r=>server.close(r));}
