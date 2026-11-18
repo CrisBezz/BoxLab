@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import {planFacegroupSeams} from './facegroup-uv-core.js?v=0.36.18.1000';
 import {createFacegroupAtlasUV} from './imported-uv-edit.js?v=0.36.18.1075';
 const fingerprint=mesh=>JSON.stringify([mesh.vertices,mesh.faces,mesh.faceGroups]);
-export function installFacegroupUVWorkflow({document,host,notice,getContext,onCommit,say,now=()=>performance.now(),requestFrame=requestAnimationFrame,cancelFrame=cancelAnimationFrame}){
+export function installFacegroupUVWorkflow({document,host,notice,getContext,onCommit,say,now=()=>performance.now(),requestFrame=requestAnimationFrame,cancelFrame=cancelAnimationFrame,beforePreview=()=>{}}){
  const row=document.createElement('div');row.className='outliner-actions';
  row.innerHTML='<button type="button" data-fguv="preview">Facegroups → UV Seams</button><button type="button" data-fguv="confirm" hidden>Confirm UV Unwrap</button><button type="button" data-fguv="cancel" hidden>Cancel</button><output data-fguv="timer" role="status" aria-live="polite"></output>';
  const summary=host.querySelector('summary');if(summary?.after)summary.after(row);else host.appendChild(row);
@@ -23,7 +23,7 @@ export function installFacegroupUVWorkflow({document,host,notice,getContext,onCo
   frame=requestFrame(tick);
  }
  function beginPreview(){
-  reset();const c=getContext();if(!c){message('Choose one unlocked Base object for Facegroup UV seams');return false;}
+  beforePreview();reset();const c=getContext();if(!c){message('Choose one unlocked Base object for Facegroup UV seams');return false;}
   if(c.object.locked||c.object.sourceId||c.object.kind==='reference'||c.object.booleanRecipe||c.object.arrayRecipe||c.object.curveProfile||c.object.materials||c.object.textures||c.object.glbPassthrough&&c.object.glbPassthrough.source!=='boxlab'||c.object.settings?.subd||Object.values(c.object.settings?.mirror||{}).some(Boolean)||c.object.colourPaint||c.object.roughnessPaint||c.object.metalnessPaint||c.object.opacityPaint){message('Use an unlocked Base mesh with SubD/Mirror off; clear paint before unwrapping');return false;}
   const plan=planFacegroupSeams(c.mesh);if(!plan.ok){message(plan.reason);return false;}
   if(!c.scene||!c.body){message('Viewport is not ready');return false;}
