@@ -161,9 +161,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1191",
+      "url": "./src/drawer-ui.js?v=0.36.18.1192",
       "target": "src/drawer-ui.js",
-      "sha256": "dc0cb3df1265eeebb310f06c4eb2c854e282d1a86d7171872b86f640e1c04f3c"
+      "sha256": "ef0d25059e28e21bf7d26593c6794b30219ce11f54d2d66023c444344cb8771f"
     },
     {
       "owner": "index.html",
@@ -304,9 +304,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/mesh-health.js?v=0.36.18.1191",
+      "url": "./src/mesh-health.js?v=0.36.18.1192",
       "target": "src/mesh-health.js",
-      "sha256": "3848465a2d5e93246f6b7de7832c0d100837a59688347d8f9473d5171a91fb9b",
+      "sha256": "64395ac7715f6da66523268fbfae0029ae32fd755267f52ef22aca87d7241151",
       "sourceVersion": "0.36.18.880"
     },
     {
@@ -378,7 +378,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1191",
+      "url": "./src/release-version.js?v=0.36.18.1192",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -864,9 +864,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1191",
+      "url": "./face-workflow-layout.js?v=0.36.18.1192",
       "target": "src/face-workflow-layout.js",
-      "sha256": "4774d28cbe77137a31b66930c684b54d5c10de398e5491a2a46f80b89539c76e"
+      "sha256": "a36d3df7beb46712f9e2e4852431eb6d30073f1f9660327ff26dbe03f405954f"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1361,7 +1361,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1191",
+      "url": "./release-version.js?v=0.36.18.1192",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -3326,9 +3326,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1191",
+      "url": "./src/shell-comparison.js?v=0.36.18.1192",
       "target": "src/shell-comparison.js",
-      "sha256": "24d493d04b9f7185b5d956fa837b264f8893ee23cf11b0cb350738a51172b5c3"
+      "sha256": "592dbb0243d92f28b7c2dec56b53957b4d3c15ee0703bcb8bdc05d049b16ad11"
     },
     {
       "owner": "src/main.js",
@@ -3848,21 +3848,21 @@
     },
     {
       "owner": "src/mesh-health.js",
-      "url": "./auto-unwrap-workflow.js?v=0.36.18.1191",
+      "url": "./auto-unwrap-workflow.js?v=0.36.18.1192",
       "target": "src/auto-unwrap-workflow.js",
-      "sha256": "c86e8fa0fcc7cc23f7613f7d965e302e33f3c50f2b84cbecf23134c60ed2b059"
+      "sha256": "0d6da2c1616878e2fde9e9f730dffba1bfd9f4b9eed7a6c08eb32109feac8ac6"
     },
     {
       "owner": "src/auto-unwrap-workflow.js",
-      "url": "./auto-unwrap-core.js?v=0.36.18.1191",
+      "url": "./auto-unwrap-core.js?v=0.36.18.1192",
       "target": "src/auto-unwrap-core.js",
-      "sha256": "c1b064907f050ae68f2402cfcc00362828d84a4c03eb1ea852a883f6b3d7bc22"
+      "sha256": "9579d04dddb45e034a22d54d4ac1b21059dfcbd8979404aab18d7567dfa183eb"
     },
     {
       "owner": "src/auto-unwrap-workflow.js",
-      "url": "./auto-unwrap-job.js?v=0.36.18.1191",
+      "url": "./auto-unwrap-job.js?v=0.36.18.1192",
       "target": "src/auto-unwrap-job.js",
-      "sha256": "a9c58f951e2efe91945aacc95e9cb62a74121d9baa0590b98ed8f69281b86ff6"
+      "sha256": "36da8b4330eff9f51b2ac4cde013a60ef0fcbff38dfef76aa142186836e4070e"
     },
     {
       "owner": "src/auto-unwrap-workflow.js",
@@ -3872,15 +3872,15 @@
     },
     {
       "owner": "src/auto-unwrap-job.js",
-      "url": "./auto-unwrap-worker.js?v=0.36.18.1191",
+      "url": "./auto-unwrap-worker.js?v=0.36.18.1192",
       "target": "src/auto-unwrap-worker.js",
-      "sha256": "e32c0ff0f7b03472cdeefeb6d825780189875a7ef030e53cd88dd75b177c9c81"
+      "sha256": "cce62384e475432ad832b4b792e0d7225d3e7e9e76b73013f79bbab7ea41272d"
     },
     {
       "owner": "src/auto-unwrap-worker.js",
-      "url": "./auto-unwrap-core.js?v=0.36.18.1191",
+      "url": "./auto-unwrap-core.js?v=0.36.18.1192",
       "target": "src/auto-unwrap-core.js",
-      "sha256": "c1b064907f050ae68f2402cfcc00362828d84a4c03eb1ea852a883f6b3d7bc22"
+      "sha256": "9579d04dddb45e034a22d54d4ac1b21059dfcbd8979404aab18d7567dfa183eb"
     },
     {
       "owner": "src/auto-unwrap-worker.js",
@@ -3893,6 +3893,12 @@
       "url": "./uv-vendor/watlas.wasm.base64?v=0.36.18.1189",
       "target": "src/uv-vendor/watlas.wasm.base64",
       "sha256": "7bccbb5010730facdbdd13a96b44403ee43a2f7c4c51bef1f6aa1eeaf57483ee"
+    },
+    {
+      "owner": "src/auto-unwrap-core.js",
+      "url": "./guided-uv-net.js?v=0.36.18.1192",
+      "target": "src/guided-uv-net.js",
+      "sha256": "1c8bdb62d252711f3ff7ecf71d61d872bcc0bd6d2f883de4f5dbd17aceab65a5"
     }
   ]
 }
