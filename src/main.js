@@ -1,6 +1,6 @@
 import {bindViewportSizing} from './viewport-sizing.js?v=0.36.18.1005';
 import * as THREE from 'three';
-import {createViewportGrid} from './viewport-grid.js?v=0.36.18.1190';
+import {createViewportGrid} from './viewport-grid.js?v=0.36.18.1191';
 import {pickScreenEdges} from './edge-screen-picking.js?v=0.36.18.1144';
 import {createCageBatch,updateCageBatches,addMirrorCageBatch} from './cage-render-batches.js?v=0.36.18.930';
 import { scaffoldLoopCandidates } from './scaffold-loop-candidates.js?v=0.36.18.761';

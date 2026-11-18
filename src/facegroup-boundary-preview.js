@@ -3,10 +3,10 @@ import * as THREE from 'three';
 export function facegroupBoundaryEdges(mesh){
  return mesh.edges().filter(e=>e.faces.length!==2||(mesh.faceGroups?.[e.faces[0]]??null)!==(mesh.faceGroups?.[e.faces[1]]??null)).map(e=>[e.a,e.b]);
 }
-export function createFacegroupBoundaryPreview({mesh,body,scene,edges}){
+export function createFacegroupBoundaryPreview({mesh,body,scene,edges,color=0xffb23e}){
  const positions=[];for(const pair of edges)for(const id of pair){const p=mesh.vertices[id];positions.push(p.x,p.y,p.z);}
  const geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));
- const line=new THREE.LineSegments(geometry,new THREE.LineBasicMaterial({color:0xffb23e,depthTest:false,depthWrite:false}));
+ const line=new THREE.LineSegments(geometry,new THREE.LineBasicMaterial({color,depthTest:false,depthWrite:false}));
  line.userData.boxlabRenderOverlay=true;line.userData.boxlabFacegroupUVSeams=true;line.renderOrder=150;line.raycast=()=>{};line.matrixAutoUpdate=false;scene.add(line);
  let disposed=false;
  const update=()=>{if(disposed)return;body.updateWorldMatrix(true,false);line.matrix.copy(body.matrixWorld);line.matrixWorldNeedsUpdate=true;};update();

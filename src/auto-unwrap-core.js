@@ -2,7 +2,17 @@
 export const AUTO_UV_LIMITS=Object.freeze({faces:4096,corners:20000,vertices:20000,triangles:18000,pairs:250000});
 const fail=message=>{throw Error(message);};
 export function autoUVFingerprint(mesh){return JSON.stringify([mesh.vertices,mesh.faces,mesh.faceGroups]);}
-export function prepareAutoUnwrapMesh(mesh,owner){
+// Connected regions preserve original labels; ungrouped faces form their own regions.
+export function facegroupGuideRegions(mesh){
+ const groups=mesh.faceGroups||[],labels=mesh.faces.map((_,i)=>{const g=groups[i];if(g==null)return 'ungrouped';if(typeof g!=='string'&&!(typeof g==='number'&&Number.isFinite(g)))fail('Repair invalid Facegroup labels before guided unwrapping');return typeof g+':'+g;});
+ const edges=new Map(),neighbors=mesh.faces.map(()=>[]),boundaries=[];
+ mesh.faces.forEach((f,fi)=>f.forEach((a,i)=>{const b=f[(i+1)%f.length],key=a<b?`${a}:${b}`:`${b}:${a}`,uses=edges.get(key)||[];uses.push({fi,a,b});edges.set(key,uses);}));
+ for(const uses of edges.values())if(uses.length===2){const [a,b]=uses;if(labels[a.fi]===labels[b.fi]){neighbors[a.fi].push(b.fi);neighbors[b.fi].push(a.fi);}else boundaries.push([a.a,a.b]);}
+ const faceRegions=mesh.faces.map(()=>-1);let regionCount=0;
+ for(let fi=0;fi<faceRegions.length;fi++)if(faceRegions[fi]<0){const pending=[fi];faceRegions[fi]=regionCount;while(pending.length){const f=pending.pop();for(const n of neighbors[f])if(faceRegions[n]<0){faceRegions[n]=regionCount;pending.push(n);}}regionCount++;}
+ return {faceRegions,regionCount,guideBoundaries:boundaries};
+}
+export function prepareAutoUnwrapMesh(mesh,owner,{guided=false}={}){
  const faces=mesh?.faces,vertices=mesh?.vertices;
  if(!faces?.length||!vertices?.length)fail('Choose a mesh to unwrap');
  const corners=faces.reduce((n,f)=>n+(f?.length||0),0);
@@ -38,7 +48,7 @@ export function prepareAutoUnwrapMesh(mesh,owner){
   // dropping valid thin recess corners. Original world coordinates stay intact.
   const positions=new Float32Array(vertices.flatMap(v=>['x','y','z'].map((k,i)=>((v[k]-min[i])/scale-.5)*1000)));
   for(const t of triangles){const [a,b,c]=t.ids.map(id=>Array.from(positions.slice(id*3,id*3+3))),u=b.map((v,i)=>v-a[i]),v=c.map((x,i)=>x-a[i]),area=Math.hypot(u[1]*v[2]-u[2]*v[1],u[2]*v[0]-u[0]*v[2],u[0]*v[1]-u[1]*v[0]);if(!(area>1e-14))fail(`Face ${t.face+1} has a collapsed or too-small triangle`);}
-  return {positions,indices:new Uint32Array(triangles.flatMap(t=>t.ids)),triangles,faceSizes:faces.map(f=>f.length),key:autoUVFingerprint(mesh)};
+  return {positions,indices:new Uint32Array(triangles.flatMap(t=>t.ids)),triangles,faceSizes:faces.map(f=>f.length),key:autoUVFingerprint(mesh),...(guided?facegroupGuideRegions(mesh):{})};
  }finally{geometry?.dispose?.();}
 }
 const area=t=>(t[1][0]-t[0][0])*(t[2][1]-t[0][1])-(t[1][1]-t[0][1])*(t[2][0]-t[0][0]);
@@ -59,20 +69,21 @@ export function validateAutoUnwrapResult(input,result,{overlaps=true}={}){
 export async function runAutoUnwrap(input,backend){
  await backend.Initialize();const atlas=new backend.Atlas();
  try{
-  atlas.addMesh({vertexPositionData:input.positions,vertexCount:input.positions.length/3,vertexPositionStride:12,indexData:input.indices,indexCount:input.indices.length});
+  atlas.addMesh({vertexPositionData:input.positions,vertexCount:input.positions.length/3,vertexPositionStride:12,indexData:input.indices,indexCount:input.indices.length,...(input.faceRegions?{faceMaterialData:new Uint32Array(input.triangles.map(t=>input.faceRegions[t.face]))}:{})});
   atlas.generate({maxIterations:2},{resolution:1024,padding:4,bilinear:true,rotateCharts:true});
   if(atlas.meshCount!==1||atlas.atlasCount!==1||!atlas.width||!atlas.height)fail('Auto Unwrap needs one valid atlas');
   const output=atlas.getMesh(0),indices=new Uint32Array(output.indexCount);if(output.indexCount!==input.indices.length||!output.getIndexArray(indices))fail('Auto Unwrap triangle count changed');
-  const uvCorners=input.faceSizes.map(n=>Array(n).fill(null)),side=Math.max(atlas.width,atlas.height),charts=new Set();
+  const uvCorners=input.faceSizes.map(n=>Array(n).fill(null)),side=Math.max(atlas.width,atlas.height),charts=new Set(),chartRegions=new Map();
   for(let i=0;i<indices.length;i++){
    const vertex=output.getVertex(indices[i]),t=input.triangles[Math.floor(i/3)],corner=t.corners[i%3];
    if(!vertex||vertex.xref!==input.indices[i])fail('Auto Unwrap lost original polygon corner correspondence');
    if(vertex.atlasIndex!==0)fail(`Face ${t.face+1} is too small for automatic charting; try Face atlas for this mesh`);
    const uv=[(vertex.uv[0]+(side-atlas.width)/2)/side,(vertex.uv[1]+(side-atlas.height)/2)/side],old=uvCorners[t.face][corner];
    if(old&&old.some((v,j)=>Math.abs(v-uv[j])>1e-9))fail(`Auto Unwrap would split inside polygon face ${t.face+1}; use a different projection for that face`);
+   if(input.faceRegions){const region=input.faceRegions[t.face],oldRegion=chartRegions.get(vertex.chartIndex);if(oldRegion!==undefined&&oldRegion!==region)fail('Guided Unwrap crossed a required Facegroup boundary');chartRegions.set(vertex.chartIndex,region);}
    uvCorners[t.face][corner]=uv;charts.add(vertex.chartIndex);
   }
-  const result={uvCorners,chartCount:charts.size,width:atlas.width,height:atlas.height};validateAutoUnwrapResult(input,result);return result;
+  const result={uvCorners,chartCount:charts.size,width:atlas.width,height:atlas.height,...(input.faceRegions?{regionCount:input.regionCount,guided:true}:{})};validateAutoUnwrapResult(input,result);return result;
  }finally{atlas.delete();}
 }
 export function autoUnwrapSeams(mesh,uv){
