@@ -225,3 +225,8 @@ New actual-WASM, lifecycle, quality, history, project, GLB/NOM and original1024 
 
 DEVICE: Object mode→UV→Auto Unwrap; orbit checker/orange seams; Apply UVs→UV Editor/Paint; Cancel leaves old UVs; Undo/Redo; NOMAD export. Start with cube then sphere/torus and a modest recessed unpainted Base model. Existing .1188 user PASS protected. Next queue item H1 texture-slot safety; UV2 guided Facegroups and UV3 selected seams remain next UV capabilities, not claimed delivered here.
 
+
+## 18 November 2026 — .1189 UV1 user PASS; H1 standalone next
+
+Cris confirms UV1 .1189 PASS /nextbuild. Protect bounded Auto Unwrap checker/seam preview, Apply/Cancel, original polygon/Facegroup retention, Undo/Redo, existing native UV/Paint/export contracts; no imported/painted or guided-seam capability inferred. H1 is being implemented in standalone Helios Studio0.1.5: explicit eight-slot leases/free reuse/overflow and allocation/import rollback. Per the authoritative ordered queue, B1 separately ports the validated repair to BoxLab and adds surface-opacity Reset/browser modelling workflow coverage. BoxLab runtime remains .1189; do not claim its older vendor allocator is repaired by H1. Next UV capability UV2 guided Facegroups remains high priority.
+
