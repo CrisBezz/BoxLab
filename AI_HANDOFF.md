@@ -1,3 +1,7 @@
+## .1195 verification
+
+Runtime 37c103974c61569d0b8467bde55dfe6eeb9f5337 is on main. Local 3,537/3,537 passed. Hosted 44302516087 passed UV1–UV4A plus real mouse taps on visible and occluded cube corners, grouped bevel on both selected vertices with legacy Multi off, and Undo/Redo. Initial hosted assertion assumed selection array order; fixed it to compare membership. iPad acceptance pending.
+
 ## .1195 — Vertex picking and multi-vertex Bevel
 
 Cris reports that farther vertices were hard to include in a multi-selection and selected vertices did not bevel together. Vertex taps now rank rendered marker centers, with depth as the tie break. FRONT now works in Vertex mode: on rejects occluded markers, off permits selecting through the surface. Bevel drag uses the same picker and the complete additive selection. Drag a selected vertex to bevel the group; dragging an unselected vertex will not replace it. Retains existing Bevel topology, preview, undo and safety checks.
