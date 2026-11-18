@@ -1,3 +1,4 @@
+import {unfoldGuidedNets} from './guided-uv-net.js?v=0.36.18.1192';
 // Export-local adapter. Editable polygon topology and Facegroups are read-only.
 export const AUTO_UV_LIMITS=Object.freeze({faces:4096,corners:20000,vertices:20000,triangles:18000,pairs:250000});
 const fail=message=>{throw Error(message);};
@@ -64,7 +65,7 @@ export function prepareAutoUnwrapMesh(mesh,owner,{guided=false}={}){
   // dropping valid thin recess corners. Original world coordinates stay intact.
   const positions=new Float32Array(vertices.flatMap(v=>['x','y','z'].map((k,i)=>((v[k]-min[i])/scale-.5)*1000)));
   for(const t of triangles){const [a,b,c]=t.ids.map(id=>Array.from(positions.slice(id*3,id*3+3))),u=b.map((v,i)=>v-a[i]),v=c.map((x,i)=>x-a[i]),area=Math.hypot(u[1]*v[2]-u[2]*v[1],u[2]*v[0]-u[0]*v[2],u[0]*v[1]-u[1]*v[0]);if(!(area>1e-14))fail(`Face ${t.face+1} has a collapsed or too-small triangle`);}
-  return {positions,indices:new Uint32Array(triangles.flatMap(t=>t.ids)),triangles,regions,borders,faceSizes:faces.map(f=>f.length),key:autoUVFingerprint(mesh)};
+  return {positions,indices:new Uint32Array(triangles.flatMap(t=>t.ids)),triangles,regions,borders,faces:guided?faces:undefined,faceSizes:faces.map(f=>f.length),key:autoUVFingerprint(mesh)};
  }finally{geometry?.dispose?.();}
 }
 const area=t=>(t[1][0]-t[0][0])*(t[2][1]-t[0][1])-(t[1][1]-t[0][1])*(t[2][0]-t[0][0]);
@@ -82,28 +83,77 @@ export function validateAutoUnwrapResult(input,result,{overlaps=true}={}){
  }
  return true;
 }
+const packOptions={resolution:1024,padding:4,bilinear:true,rotateCharts:true};
 export async function runAutoUnwrap(input,backend){
- await backend.Initialize();const atlas=new backend.Atlas();
+ await backend.Initialize();
+ let net;
+ if(input.regions&&input.faces){
+  const unfolded=unfoldGuidedNets(input,interiorsOverlap,AUTO_UV_LIMITS.pairs);
+  if(unfolded){
+   try{net=packGuidedNets(input,backend,unfolded);}catch{/* Retain validated xatlas charting if planar net packing fails. */}
+   if(net&&net.chartCount===new Set(input.regions).size)return net;
+  }
+ }
+ const atlas=new backend.Atlas();
  try{
   const declaration={vertexPositionData:input.positions,vertexCount:input.positions.length/3,vertexPositionStride:12,indexData:input.indices,indexCount:input.indices.length};
   if(input.regions)declaration.faceMaterialData=Uint32Array.from(input.triangles,t=>input.regions[t.face]);
   atlas.addMesh(declaration);
-  atlas.generate({maxIterations:2},{resolution:1024,padding:4,bilinear:true,rotateCharts:true});
-  if(atlas.meshCount!==1||atlas.atlasCount!==1||!atlas.width||!atlas.height)fail('Auto Unwrap needs one valid atlas');
-  const output=atlas.getMesh(0),indices=new Uint32Array(output.indexCount);if(output.indexCount!==input.indices.length||!output.getIndexArray(indices))fail('Auto Unwrap triangle count changed');
-  const uvCorners=input.faceSizes.map(n=>Array(n).fill(null)),side=Math.max(atlas.width,atlas.height),charts=new Map();
-  for(let i=0;i<indices.length;i++){
-   const vertex=output.getVertex(indices[i]),t=input.triangles[Math.floor(i/3)],corner=t.corners[i%3];
-   if(!vertex||vertex.xref!==input.indices[i])fail('Auto Unwrap lost original polygon corner correspondence');
-   if(vertex.atlasIndex!==0)fail(`Face ${t.face+1} is too small for automatic charting; try Face atlas for this mesh`);
-   const uv=[(vertex.uv[0]+(side-atlas.width)/2)/side,(vertex.uv[1]+(side-atlas.height)/2)/side],old=uvCorners[t.face][corner];
-   if(old&&old.some((v,j)=>Math.abs(v-uv[j])>1e-9))fail(`Auto Unwrap would split inside polygon face ${t.face+1}; use a different projection for that face`);
-   const region=input.regions?.[t.face];
-   if(charts.has(vertex.chartIndex)&&charts.get(vertex.chartIndex)!==region)fail('Guided Unwrap crossed a Facegroup region boundary');
-   uvCorners[t.face][corner]=uv;charts.set(vertex.chartIndex,region);
-  }
-  const result={uvCorners,chartCount:charts.size,width:atlas.width,height:atlas.height};validateAutoUnwrapResult(input,result);return result;
+  atlas.generate({maxIterations:2},packOptions);
+  const standard=readAtlas(input,atlas,input.indices);
+  return net&&net.chartCount<standard.chartCount?net:standard;
+ }catch(error){
+  if(net)return net;
+  throw error;
  }finally{atlas.delete();}
+}
+
+function packGuidedNets(input,backend,{uvCorners,chartFaces}){
+ const atlas=new backend.Atlas();
+ try{
+  const faceChart=Array(input.faceSizes.length),cornerIndices=[],uvData=[];
+  chartFaces.forEach((faces,chart)=>{
+   const indices=new Map();
+   for(const face of faces){
+    faceChart[face]=chart;
+    cornerIndices[face]=uvCorners[face].map((point,corner)=>{
+     const key=`${input.faces[face][corner]}:${point.join(',')}`;
+     if(!indices.has(key)){indices.set(key,uvData.length/2);uvData.push(...point);}
+     return indices.get(key);
+    });
+   }
+  });
+  const indexData=Uint32Array.from(input.triangles.flatMap(t=>t.corners.map(c=>cornerIndices[t.face][c])));
+  atlas.addUvMesh({vertexUvData:Float32Array.from(uvData),vertexCount:uvData.length/2,vertexStride:8,indexData,indexCount:indexData.length,faceMaterialData:Uint32Array.from(input.triangles,t=>faceChart[t.face])});
+  atlas.generate({},packOptions);
+  const result=readAtlas(input,atlas,indexData,faceChart);
+  if(result.chartCount!==chartFaces.length)fail('Guided packing changed the net chart count');
+  return result;
+ }finally{atlas.delete();}
+}
+
+function readAtlas(input,atlas,sourceIndices,expectedCharts){
+ if(atlas.meshCount!==1||atlas.atlasCount!==1||!atlas.width||!atlas.height)fail('Auto Unwrap needs one valid atlas');
+ const output=atlas.getMesh(0),indices=new Uint32Array(output.indexCount);if(output.indexCount!==input.indices.length||!output.getIndexArray(indices))fail('Auto Unwrap triangle count changed');
+ const uvCorners=input.faceSizes.map(n=>Array(n).fill(null)),side=Math.max(atlas.width,atlas.height),charts=new Map(),sourceCharts=new Map();
+ for(let i=0;i<indices.length;i++){
+  const vertex=output.getVertex(indices[i]),t=input.triangles[Math.floor(i/3)],corner=t.corners[i%3];
+  if(!vertex||vertex.xref!==sourceIndices[i])fail('Auto Unwrap lost original polygon corner correspondence');
+  if(vertex.atlasIndex!==0)fail(`Face ${t.face+1} is too small for automatic charting; try Face atlas for this mesh`);
+  const uv=[(vertex.uv[0]+(side-atlas.width)/2)/side,(vertex.uv[1]+(side-atlas.height)/2)/side],old=uvCorners[t.face][corner];
+  if(old&&old.some((v,j)=>Math.abs(v-uv[j])>1e-9))fail(`Auto Unwrap would split inside polygon face ${t.face+1}; use a different projection for that face`);
+  const expected=expectedCharts?.[t.face];
+  if(expectedCharts){
+   if(sourceCharts.has(expected)&&sourceCharts.get(expected)!==vertex.chartIndex)fail('Guided packing split a connected net');
+   sourceCharts.set(expected,vertex.chartIndex);
+  }
+  const region=input.regions?.[t.face];
+  if(charts.has(vertex.chartIndex)&&charts.get(vertex.chartIndex)!==region)fail('Guided Unwrap crossed a Facegroup region boundary');
+  uvCorners[t.face][corner]=uv;charts.set(vertex.chartIndex,region);
+ }
+ const regionCounts=input.regions?Array(new Set(input.regions).size).fill(0):undefined;
+ if(regionCounts)for(const region of charts.values())regionCounts[region]++;
+ const result={uvCorners,chartCount:charts.size,width:atlas.width,height:atlas.height,regionCounts};validateAutoUnwrapResult(input,result);return result;
 }
 export function autoUnwrapSeams(mesh,uv){
  const edges=new Map();mesh.faces.forEach((f,fi)=>f.forEach((a,i)=>{const b=f[(i+1)%f.length],key=a<b?`${a}:${b}`:`${b}:${a}`,list=edges.get(key)||[];list.push({a,b,p:uv[fi][i],q:uv[fi][(i+1)%f.length]});edges.set(key,list);}));
