@@ -1,9 +1,9 @@
-import {unfoldGuidedNets} from './guided-uv-net.js?v=0.36.18.1192';
+import {unfoldGuidedNets} from './guided-uv-net.js?v=0.36.18.1193';
 // Export-local adapter. Editable polygon topology and Facegroups are read-only.
 export const AUTO_UV_LIMITS=Object.freeze({faces:4096,corners:20000,vertices:20000,triangles:18000,pairs:250000});
 const fail=message=>{throw Error(message);};
 export function autoUVFingerprint(mesh){return JSON.stringify([mesh.vertices,mesh.faces,mesh.faceGroups]);}
-export function prepareAutoUnwrapMesh(mesh,owner,{guided=false}={}){
+export function prepareAutoUnwrapMesh(mesh,owner,{guided=false,markedEdges=[]}={}){
  const faces=mesh?.faces,vertices=mesh?.vertices;
  if(!faces?.length||!vertices?.length)fail('Choose a mesh to unwrap');
  const corners=faces.reduce((n,f)=>n+(f?.length||0),0);
@@ -18,17 +18,24 @@ export function prepareAutoUnwrapMesh(mesh,owner,{guided=false}={}){
   }
  }
  for(const uses of edges.values())if(uses.length>2||uses.length===2&&uses[0][0]!==uses[1][1])fail('Repair non-manifold edges or inconsistent winding before unwrapping');
+ const required=[];
+ const seamKeys=new Set();
+ for(const pair of markedEdges){
+  const key=seamKey(pair),uses=edges.get(key);
+  if(uses?.length!==2)fail('Marked seams must be shared mesh edges');
+  if(!seamKeys.has(key)){required.push(uses);seamKeys.add(key);}
+ }
  let regions,borders;
- if(guided){
-  const groups=faces.map((_,i)=>mesh.faceGroups?.[i]??null);
-  if(groups.every(group=>group===null))fail('Assign at least one Facegroup before using Guided Unwrap');
+ if(guided||required.length){
+  const groups=faces.map((_,i)=>guided?mesh.faceGroups?.[i]??null:null);
+  if(guided&&groups.every(group=>group===null))fail('Assign at least one Facegroup before using Guided Unwrap');
   const neighbors=faces.map(()=>[]);
   borders=[];
   for(const uses of edges.values()){
    if(uses.length!==2)continue;
    const [[a,b,left],[,,right]]=uses;
    if(groups[left]!==groups[right])borders.push([a,b]);
-   else{neighbors[left].push(right);neighbors[right].push(left);}
+   else if(!seamKeys.has(seamKey([a,b]))){neighbors[left].push(right);neighbors[right].push(left);}
   }
   regions=Array(faces.length).fill(-1);
   let region=0;
@@ -65,7 +72,7 @@ export function prepareAutoUnwrapMesh(mesh,owner,{guided=false}={}){
   // dropping valid thin recess corners. Original world coordinates stay intact.
   const positions=new Float32Array(vertices.flatMap(v=>['x','y','z'].map((k,i)=>((v[k]-min[i])/scale-.5)*1000)));
   for(const t of triangles){const [a,b,c]=t.ids.map(id=>Array.from(positions.slice(id*3,id*3+3))),u=b.map((v,i)=>v-a[i]),v=c.map((x,i)=>x-a[i]),area=Math.hypot(u[1]*v[2]-u[2]*v[1],u[2]*v[0]-u[0]*v[2],u[0]*v[1]-u[1]*v[0]);if(!(area>1e-14))fail(`Face ${t.face+1} has a collapsed or too-small triangle`);}
-  return {positions,indices:new Uint32Array(triangles.flatMap(t=>t.ids)),triangles,regions,borders,faces:guided?faces:undefined,faceSizes:faces.map(f=>f.length),key:autoUVFingerprint(mesh)};
+  return {positions,indices:new Uint32Array(triangles.flatMap(t=>t.ids)),triangles,regions,borders,required,seamKeys,faces:regions?faces:undefined,faceSizes:faces.map(f=>f.length),key:autoUVFingerprint(mesh)};
  }finally{geometry?.dispose?.();}
 }
 const area=t=>(t[1][0]-t[0][0])*(t[2][1]-t[0][1])-(t[1][1]-t[0][1])*(t[2][0]-t[0][0]);
@@ -83,6 +90,36 @@ export function validateAutoUnwrapResult(input,result,{overlaps=true}={}){
  }
  return true;
 }
+// xatlas may weld coincident split positions. Give incident faces distinct
+// material IDs if the ordinary charting does not keep the requested cuts.
+function constrainedChartMaterials(input){
+ const conflicts=input.faceSizes.map(()=>[]);
+ for(const [[,,left],[,,right]] of input.required){
+  conflicts[left].push(right);conflicts[right].push(left);
+ }
+ const colors=[],ids=new Map();
+ return input.regions.map((region,face)=>{
+  const used=new Set(conflicts[face].map(other=>colors[other]));
+  let color=0;
+  while(used.has(color))color++;
+  colors[face]=color;
+  const key=`${region}:${color}`;
+  if(!ids.has(key))ids.set(key,ids.size);
+  return ids.get(key);
+ });
+}
+
+export function validateMarkedUVSeams(input,uvCorners){
+ for(const [[a,b,left],[,,right]] of input.required??[]){
+  const l=input.faces[left],r=input.faces[right];
+  const same=id=>{
+   const p=uvCorners[left][l.indexOf(id)],q=uvCorners[right][r.indexOf(id)];
+   return p.every((value,i)=>Math.abs(Math.fround(value)-Math.fround(q[i]))<=1e-9);
+  };
+  if(same(a)&&same(b))fail('The solver joined a marked seam; UVs were not applied');
+ }
+}
+
 const packOptions={resolution:1024,padding:4,bilinear:true,rotateCharts:true};
 export async function runAutoUnwrap(input,backend){
  await backend.Initialize();
@@ -94,17 +131,24 @@ export async function runAutoUnwrap(input,backend){
    if(net&&net.chartCount===new Set(input.regions).size)return net;
   }
  }
+ let standard;
+ try{standard=chartMesh(input,backend,input.regions);}
+ catch(error){
+  if(net)return net;
+  if(!input.required?.length)throw error;
+  standard=chartMesh(input,backend,constrainedChartMaterials(input));
+ }
+ return net&&net.chartCount<standard.chartCount?net:standard;
+}
+
+function chartMesh(input,backend,materials){
  const atlas=new backend.Atlas();
  try{
   const declaration={vertexPositionData:input.positions,vertexCount:input.positions.length/3,vertexPositionStride:12,indexData:input.indices,indexCount:input.indices.length};
-  if(input.regions)declaration.faceMaterialData=Uint32Array.from(input.triangles,t=>input.regions[t.face]);
+  if(materials)declaration.faceMaterialData=Uint32Array.from(input.triangles,t=>materials[t.face]);
   atlas.addMesh(declaration);
   atlas.generate({maxIterations:2},packOptions);
-  const standard=readAtlas(input,atlas,input.indices);
-  return net&&net.chartCount<standard.chartCount?net:standard;
- }catch(error){
-  if(net)return net;
-  throw error;
+  return readAtlas(input,atlas,input.indices);
  }finally{atlas.delete();}
 }
 
@@ -153,7 +197,7 @@ function readAtlas(input,atlas,sourceIndices,expectedCharts){
  }
  const regionCounts=input.regions?Array(new Set(input.regions).size).fill(0):undefined;
  if(regionCounts)for(const region of charts.values())regionCounts[region]++;
- const result={uvCorners,chartCount:charts.size,width:atlas.width,height:atlas.height,regionCounts};validateAutoUnwrapResult(input,result);return result;
+ const result={uvCorners,chartCount:charts.size,width:atlas.width,height:atlas.height,regionCounts};validateAutoUnwrapResult(input,result);validateMarkedUVSeams(input,uvCorners);return result;
 }
 export function autoUnwrapSeams(mesh,uv){
  const edges=new Map();mesh.faces.forEach((f,fi)=>f.forEach((a,i)=>{const b=f[(i+1)%f.length],key=a<b?`${a}:${b}`:`${b}:${a}`,list=edges.get(key)||[];list.push({a,b,p:uv[fi][i],q:uv[fi][(i+1)%f.length]});edges.set(key,list);}));
