@@ -32,6 +32,27 @@ try{
  assert.deepEqual(await state(),grouped);
  await page.locator('#redoBtn').click();
  assert.deepEqual(await state(),guided);
+ await page.evaluate(async()=>{
+  document.querySelector('#selectionModes button[data-mode="edge"]').click();
+  globalThis.__boxlabSelectionBridge.set('edge',[0]);
+  document.querySelector('#markUVSeamsBtn').click();
+  document.querySelector('#selectionModes button[data-mode="object"]').click();
+  globalThis.__boxlabUVTools.open();
+ });
+ await page.locator('[data-autouv="seams"]').click();
+ await page.waitForFunction(()=>!document.querySelector('[data-autouv="apply"]').hidden,{},{timeout:60000});
+ assert.match(await page.locator('[data-autouv="status"]').textContent(),/1 marked seam/);
+ assert.deepEqual(await state(),guided);
+ await page.locator('[data-autouv="cancel"]').click();
+ await page.evaluate(()=>{
+  document.querySelector('#selectionModes button[data-mode="edge"]').click();
+  globalThis.__boxlabSelectionBridge.set('edge',[0]);
+  document.querySelector('#clearUVSeamsBtn').click();
+  document.querySelector('#selectionModes button[data-mode="object"]').click();
+  globalThis.__boxlabUVTools.open();
+ });
+ await page.locator('[data-autouv="seams"]').click();
+ assert.match(await page.locator('[data-autouv="status"]').textContent(),/Mark UV Seams first/);
  const exported=await page.evaluate(async()=>{const m=globalThis.__boxlabObjectManager;m.saveActive();const o=m.objects.find(o=>o.id===m.activeId),r=await globalThis.__boxlabExportAs.buildNOM([o],false);return{uv:r.uvObjects,count:r.count};});assert.equal(exported.uv,1);assert.equal(exported.count,1);assert.deepEqual(errors,[]);
- console.log(JSON.stringify({test:'UV1/UV2 real browser module worker, preview, Cancel, Apply, Undo/Redo, NOM export',pass:true}));
+ console.log(JSON.stringify({test:'UV1/UV2/UV3 real browser module worker, preview, Cancel, Apply, Undo/Redo, NOM export',pass:true}));
 }finally{await browser?.close();await new Promise(r=>server.close(r));}
