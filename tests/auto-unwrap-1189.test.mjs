@@ -108,3 +108,23 @@ test('1192 guided warped polygons fall back to validated charting',async()=>{
  const input=prepareAutoUnwrapMesh(mesh,owner,{guided:true});
  assert(validateAutoUnwrapResult(input,await runAutoUnwrap(input,backend)));
 });
+
+test('1193 explicit cylinder slit, torus loop and planar ring cut survive atlas welding',async()=>{
+ const cylinder=makeCylinder(1,2,12,2);
+ cylinder.faceGroups=cylinder.faces.map((_,i)=>i<24?'Wall':'Cap');
+ const torus=makeTorus(.7,.2,12,6);
+ for(const [mesh,markedEdges,guided] of [
+  [cylinder,[[0,12],[12,24]],true],
+  [torus,Array.from({length:6},(_,i)=>[i,(i+1)%6]),false],
+  [ring(),[[0,4]],false],
+ ]){
+  const before=JSON.stringify(mesh);
+  const input=prepareAutoUnwrapMesh(mesh,owner,{guided,markedEdges});
+  const result=await runAutoUnwrap(input,backend);
+  const edgeKey=pair=>[...pair].sort((a,b)=>a-b).join(':');
+  const seams=new Set(autoUnwrapSeams(mesh,result.uvCorners).map(edgeKey));
+  for(const edge of markedEdges)assert(seams.has(edgeKey(edge)));
+  if(guided)assert.doesNotThrow(()=>guidedUnwrapSeams(mesh,result.uvCorners,input.borders));
+  assert.equal(JSON.stringify(mesh),before);
+ }
+});
