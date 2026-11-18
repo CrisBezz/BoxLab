@@ -24,7 +24,8 @@ test('BoxLab Helios .1166 exposes replaceable texture previews and independent U
   assert.match(textures,/threeMapsCache = new Map<string, ThreePbrMaps>/);
   assert.match(textures,/t\.offset\.set\(offsetX, offsetY\)/);
   assert.match(adapter,/uploadMaterialMap\(id: string, slot: TextureSlot, file: File\)/);
-  assert.match(adapter,/usedLayers\.size >= MAX_CUSTOM_LAYERS/,'uploading a new slot cannot recycle a live imported texture-array layer');
+  assert.match(textures,/if \(slice === MAX_CUSTOM_LAYERS\)/,'allocator centrally refuses overflow for uploads AND imports');
+  assert.match(textures,/customLeases\.has\(CUSTOM_LAYER_OFFSET \+ slice\)/,'allocation searches for a genuinely free layer');
   assert.match(adapter,/restoreMaterialPresetMaps\(id: string\)/);
   assert.match(mode,/detail\.action==='upload-map'/);assert.match(mode,/detail\.action==='restore-maps'/);
 });
