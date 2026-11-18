@@ -1,3 +1,9 @@
+## .1192 — connected Guided Unwrap patches — 18 November 2026
+
+Addresses the .1191 qualified PASS. Guided Unwrap unfolds planar polygons across shared same-region edges in the worker. Each accepted hinge preserves shared UV edge endpoints and face scale. Growth cuts when attaching a face would overlap the net. The original WASM atlas packs and validates the result before preview, with corner mapping, region boundaries, nonoverlap and float32 checks retained. If the model has warped polygons, exceeds the net overlap budget, or cannot produce a better validated net, use the existing Guided charting. Auto Unwrap still uses its original solver path. Preview shows how many connected regions were split when applicable.
+
+Device: one Facegroup on a cube should yield one connected UV island. On a grouped mesh, review cyan borders, orange cuts, and patch count. Cancel, Apply, Undo/Redo and paint across a retained edge on a fresh unpainted Base mesh. Existing painted layouts remain protected. No general curved-surface island-count guarantee.
+
 ## .1191 device feedback — qualified PASS — 18 November 2026
 
 Cris accepts the Guided preview and Facegroup-border behavior in principle. Patch cohesion remains open: the one-group cube returns six face islands, and a shape with six facegroups still produces too many islands for useful painting. Do not treat six charts on a one-group cube as a quality success. Local WASM reproduced six charts both for the one-group cube and for a cube split into two groups, including trials with higher chart growth cost and zero normal penalties. No runtime change in this feedback entry.
