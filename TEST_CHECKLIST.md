@@ -1,3 +1,9 @@
+## .1195 — Vertex picking and multi-vertex Bevel
+
+Cris reports that farther vertices were hard to include in a multi-selection and selected vertices did not bevel together. Vertex taps now rank rendered marker centers, with depth as the tie break. FRONT now works in Vertex mode: on rejects occluded markers, off permits selecting through the surface. Bevel drag uses the same picker and the complete additive selection. Drag a selected vertex to bevel the group; dragging an unselected vertex will not replace it. Retains existing Bevel topology, preview, undo and safety checks.
+
+Device: select near and setback corners in Vertex mode. For a hidden corner switch FRONT off. Bevel from a selected corner and check both cuts plus Undo/Redo. The preceding .1194 UV packing build passed 3,536 local tests and its hosted UV browser checks.
+
 ## .1194 — UV4A packing controls and quality — 18 November 2026
 
 BoxLab .1193 selected-edge seams is user PASS and protected. Auto, Seam and Guided Unwrap now offer a 1024 or 2048 target map, 2/4/8/16 pixel gutters and chart rotation on/off. The map size is the reference for UV packing and diagnostics, not the Paint texture size. xatlas packs padded charts; the export retains an explicit tile border and compensates dilation for its actual atlas dimensions. Changing inputs discards the pending preview. Applied UV coordinates use the existing project/history path.
