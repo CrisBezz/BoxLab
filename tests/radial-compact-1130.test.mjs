@@ -3,8 +3,8 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {compactRadialLabels,radialToolPosition} from '../src/radial-compact-labels.js';
 const read=p=>fs.readFileSync(new URL('../'+p,import.meta.url),'utf8');
-test('1130 all 72 modelling radial targets fit compact rings without intersecting button rectangles',()=>{
- const source=read('src/total-gizmo.js'),counts={face:24,edge:21,vertex:14,object:13};let total=0;
+test('1130 all 74 modelling radial targets fit compact rings without intersecting button rectangles',()=>{
+ const source=read('src/total-gizmo.js'),counts={face:24,edge:23,vertex:14,object:13};let total=0;
  for(const match of source.matchAll(/<div class="tg-tool-ring" data-ring-mode="([^"]+)"[^>]*>([\s\S]*?)(?=<div class="tg-tool-ring"|<div class="tg-hud")/g)){
   const [,mode,html]=match,buttons=[];
   for(const item of html.matchAll(/<button[^>]*class="([^"]*tg-tool-sector[^"]*)"[^>]*style="--a:([\d.]+)deg[^>]*data-tool-target="([^"]*)"/g)){
@@ -14,7 +14,7 @@ test('1130 all 72 modelling radial targets fit compact rings without intersectin
   assert.equal(buttons.length,counts[mode]);total+=buttons.length;
   for(let i=0;i<buttons.length;i++)for(const b of buttons.slice(i+1)){const a=buttons[i];assert(Math.abs(a.x-b.x)>=50||Math.abs(a.y-b.y)>=54,mode+': '+a.target+' overlaps '+b.target);}
  }
- assert.equal(total,72);assert(2*134+50<.83*(2*168+50),'packed envelope reduces at least 17% beyond .1134');
+ assert.equal(total,74);assert(2*134+50<.83*(2*168+50),'packed envelope reduces at least 17% beyond .1134');
  const css=read('radial-compact.css');for(const value of ['width:50px;height:54px','translate(var(--radial-x),var(--radial-y))','border-radius:50%','background-size:28px 28px'])assert(css.includes(value));
 });
 test('1135 ten Paint targets fit packed252 wheel without shrinking the 48x52 targets',()=>{
