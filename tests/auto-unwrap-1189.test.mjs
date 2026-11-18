@@ -32,26 +32,29 @@ test('1189 Cancel, changed mesh and changed UV payload cannot publish a late wor
 });
 test('1189 pinned WASM bytes match provenance and do not require external CDN assets',()=>{const provenance=fs.readFileSync(new URL('../src/uv-vendor/UPSTREAM.txt',import.meta.url),'utf8');assert(provenance.includes(crypto.createHash('sha256').update(wasm).digest('hex')));});
 
-test('1189 auto-unwrapped cube paints at1024 through original Paint UI and survives native map export',async()=>{
- const {viewportPaintRuntime,viewportPaintUIRuntime}=await import('./helpers/viewport-paint-runtime.mjs'),{buildNomadProjectWithMaps}=await import('../src/nomad-packed-maps.js'),r=viewportPaintRuntime(),m=EditableMesh.cube();r.manager.replaceActiveMesh(m);const candidate=await runAutoUnwrap(prepareAutoUnwrapMesh(m,r.owner),backend);assert(commitAutoUnwrapUV(r.target(),m,r.owner.topologySignature,r.c.__boxlabObjectHistory,candidate).ok);r.body.geometry.dispose();r.body.geometry=r.owner.buildUVPreviewGeometry(m,r.target().glbPassthrough);const u=viewportPaintUIRuntime(r);await u.api.open();assert(u.api.active);u.nodes.get('paint-pressure').checked=false;u.emit('pointerdown');u.emit('pointerup');const paint=r.target().colourPaint;assert(paint?.pixels.some(v=>v!==255));assert.equal(paint.width,1024);u.api.close();const nom=await buildNomadProjectWithMaps([r.target()],fs.readFileSync(new URL('../src/templates/nomad-tube.nom',import.meta.url)),{topologySignature:r.owner.topologySignature});assert.equal(nom.uvObjects,1);assert.equal(nom.colourTextureObjects,1);
+for(const guided of [false,true])test(`1192 ${guided?'guided':'auto'}-unwrapped cube paints at1024 through original Paint UI and survives native map export`,async()=>{
+ const {viewportPaintRuntime,viewportPaintUIRuntime}=await import('./helpers/viewport-paint-runtime.mjs'),{buildNomadProjectWithMaps}=await import('../src/nomad-packed-maps.js'),r=viewportPaintRuntime(),m=EditableMesh.cube();if(guided)m.faceGroups.fill("Body");r.manager.replaceActiveMesh(m);const candidate=await runAutoUnwrap(prepareAutoUnwrapMesh(m,r.owner,{guided}),backend);assert(commitAutoUnwrapUV(r.target(),m,r.owner.topologySignature,r.c.__boxlabObjectHistory,candidate).ok);r.body.geometry.dispose();r.body.geometry=r.owner.buildUVPreviewGeometry(m,r.target().glbPassthrough);const u=viewportPaintUIRuntime(r);await u.api.open();assert(u.api.active);u.nodes.get('paint-pressure').checked=false;u.emit('pointerdown');u.emit('pointerup');const paint=r.target().colourPaint;assert(paint?.pixels.some(v=>v!==255));assert.equal(paint.width,1024);u.api.close();const nom=await buildNomadProjectWithMaps([r.target()],fs.readFileSync(new URL('../src/templates/nomad-tube.nom',import.meta.url)),{topologySignature:r.owner.topologySignature});assert.equal(nom.uvObjects,1);assert.equal(nom.colourTextureObjects,1);
 });
 
 test('1189 thin corner-relieved recessed solid unwraps without dropping small original triangles',async()=>{const {closedGrid}=await import('./helpers/through-validation-profile.mjs'),{buildNegativeExtrude}=await import('../src/through-kernel.js');const cut=buildNegativeExtrude(closedGrid(4,EditableMesh),[21,16],-.1);assert(cut.ok);const before=JSON.stringify(cut.mesh),input=prepareAutoUnwrapMesh(cut.mesh,owner),result=await runAutoUnwrap(input,backend);assert(validateAutoUnwrapResult(input,result));assert.equal(JSON.stringify(cut.mesh),before);assert.equal(result.uvCorners.length,cut.mesh.faces.length);});
 
-test('1191 guided WASM splits coplanar groups and preserves a holed or closed group',async()=>{
+test('1192 guided WASM splits coplanar groups and preserves a holed or closed group',async()=>{
  const planar=strip();
  for(const vertex of planar.vertices)vertex.z=0;
  assert.equal((await runAutoUnwrap(prepareAutoUnwrapMesh(planar,owner),backend)).chartCount,1);
  for(const [mesh,groups,expect] of [
   [planar,['A','B','B'],[1,2]],
   [ring(),['Ring','Ring','Ring','Ring'],[0,1]],
-  [EditableMesh.cube(),Array(6).fill('Body'),[0,6]],
+  [EditableMesh.cube(),Array(6).fill('Body'),[0,1]],
  ]){
   mesh.faceGroups=groups;
   const before=JSON.stringify(mesh);
   const input=prepareAutoUnwrapMesh(mesh,owner,{guided:true});
   const layout=await runAutoUnwrap(input,backend);
   assert.equal(input.borders.length,expect[0]);
+  const payload={version:1,source:'boxlab',uvTopologySignature:signature(mesh),uvCorners:layout.uvCorners};
+  assert.equal(inspectImportedUV(mesh,payload,signature).islandCount,expect[1]);
+  if(mesh.faces.length===6)assert.equal(autoUnwrapSeams(mesh,layout.uvCorners).length,7);
   assert.equal(layout.chartCount,expect[1]);
   assert.doesNotThrow(()=>guidedUnwrapSeams(mesh,layout.uvCorners,input.borders));
   assert.equal(JSON.stringify(mesh),before);
@@ -81,4 +84,27 @@ test('1191 guided preview draws distinct group borders and invalidates on Facegr
  assert.equal(f.api.apply(),false);
  assert.equal(f.checkpoints,0);
  assert.equal(f.scene.children.length,1);
+});
+
+test('1192 six multi-face regions retain one packed island each and preserve seam boundaries',async()=>{
+ const cube=EditableMesh.cube();
+ // Three edge-connected faces on each of two regions per cube.
+ const mesh=new EditableMesh(
+  Array.from({length:3},(_,copy)=>cube.vertices.map(v=>[v.x+copy*4,v.y,v.z])).flat(),
+  Array.from({length:3},(_,copy)=>cube.faces.map(face=>face.map(i=>i+copy*8))).flat(),
+  null,Array.from({length:18},(_,face)=>`Panel ${Math.floor(face/3)+1}`));
+ const input=prepareAutoUnwrapMesh(mesh,owner,{guided:true});
+ const result=await runAutoUnwrap(input,backend);
+ assert.deepEqual(result.regionCounts,[1,1,1,1,1,1]);
+ assert.equal(result.chartCount,6);
+ assert(input.borders.length>0);
+ assert.doesNotThrow(()=>guidedUnwrapSeams(mesh,result.uvCorners,input.borders));
+ const payload={version:1,source:'boxlab',uvTopologySignature:signature(mesh),uvCorners:result.uvCorners};
+ assert.equal(inspectImportedUV(mesh,payload,signature).islandCount,6);
+});
+
+test('1192 guided warped polygons fall back to validated charting',async()=>{
+ const mesh=new EditableMesh([[0,0,0],[1,0,0],[1,1,.05],[0,1,0]],[[0,1,2,3]],null,['Panel']);
+ const input=prepareAutoUnwrapMesh(mesh,owner,{guided:true});
+ assert(validateAutoUnwrapResult(input,await runAutoUnwrap(input,backend)));
 });
