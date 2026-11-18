@@ -16,7 +16,7 @@ export function unfoldGuidedNets(input, interiorsOverlap, pairLimit) {
   const b=face[(i+1)%face.length],key=a<b?`${a}:${b}`:`${b}:${a}`;
   const other=edges.get(key);
   if(!other){edges.set(key,{face:fi,edge:i});return;}
-  if(regions[fi]!==regions[other.face])return;
+  if(regions[fi]!==regions[other.face]||input.seamKeys?.has(key))return;
   neighbors[fi].push({face:other.face,edge:other.edge,parentEdge:i});
   neighbors[other.face].push({face:fi,edge:i,parentEdge:other.edge});
  }));
