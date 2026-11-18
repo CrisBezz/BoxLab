@@ -167,7 +167,8 @@ export class PbrTextureManager {
 
   private readonly threeMapsCache = new Map<string, ThreePbrMaps>();
   private readonly previewCache = new Map<string, string>();
-  private nextCustomSlice = 0;
+  private readonly customLeases = new Map<number, symbol>();
+  private disposed = false;
   private readonly maxAnisotropy: number;
 
   constructor(maxAnisotropy: number) {
@@ -548,10 +549,13 @@ export class PbrTextureManager {
   }
 
   public allocateCustomLayer(basePreset: PbrTexturePresetId = 'none', isAtlas = false): number {
+    if (this.disposed) throw new Error('Texture manager has been disposed.');
+    let slice = 0;
+    while (slice < MAX_CUSTOM_LAYERS && this.customLeases.has(CUSTOM_LAYER_OFFSET + slice)) slice++;
+    if (slice === MAX_CUSTOM_LAYERS) {
+      throw new Error('All eight custom texture layers are in use; restore preset maps before adding another textured material.');
+    }
     this.ensureCustomAllocated();
-    const slice = this.nextCustomSlice;
-    this.nextCustomSlice =
-      this.nextCustomSlice >= MAX_CUSTOM_LAYERS - 1 ? 0 : this.nextCustomSlice + 1;
     const srcLayer = PRESET_TO_LAYER[basePreset];
     if (srcLayer === 0) {
       this.fillNeutralCustomSlice(slice);
@@ -564,7 +568,14 @@ export class PbrTextureManager {
     this.customNormalArray.addLayerUpdate(slice);
     this.customRoughMetalArray.addLayerUpdate(slice);
     this.invalidateLayer(encoded);
+    this.customLeases.set(encoded, Symbol('texture layer'));
     return encoded;
+  }
+
+  public releaseCustomLayer(encodedLayer: number) {
+    if (!this.customLeases.delete(encodedLayer)) return;
+    this.customIsAtlas[encodedLayer - CUSTOM_LAYER_OFFSET] = false;
+    this.invalidateLayer(encodedLayer);
   }
 
   public writeImageToLayer(
@@ -574,23 +585,19 @@ export class PbrTextureManager {
     flipY = false,
     uvInfo?: GeometryUVInfo,
   ) {
-    if (encodedLayer < CUSTOM_LAYER_OFFSET) return;
+    if (this.disposed || !this.customLeases.has(encodedLayer)) throw new Error('Texture layer is no longer reserved.');
     this.ensureCustomAllocated();
     if (!this.customAlbedoBytes || !this.customNormalBytes || !this.customRoughMetalBytes) return;
 
     const slice = encodedLayer - CUSTOM_LAYER_OFFSET;
     if (slice < 0 || slice >= MAX_CUSTOM_LAYERS) return;
 
-    if (uvInfo) {
-      this.customIsAtlas[slice] = uvInfo.isAtlas;
-    }
-
     const size = CUSTOM_TEX_SIZE;
     const canvas = document.createElement('canvas');
     canvas.width = size;
     canvas.height = size;
     const ctx = canvas.getContext('2d');
-    if (!ctx) return;
+    if (!ctx) throw new Error('Unable to prepare texture image.');
 
     ctx.imageSmoothingEnabled = true;
     ctx.imageSmoothingQuality = 'high';
@@ -623,6 +630,7 @@ export class PbrTextureManager {
 
     processTextureAtlasEdges(sliceCopy, origAlpha, size, slot === 'normal', uvInfo);
 
+    if (uvInfo) this.customIsAtlas[slice] = uvInfo.isAtlas;
     if (slot === 'albedo') {
       this.customAlbedoBytes.set(sliceCopy, offset);
       this.customAlbedoArray.addLayerUpdate(slice);
@@ -650,6 +658,8 @@ export class PbrTextureManager {
     file: File,
     uvInfo?: GeometryUVInfo,
   ): Promise<void> {
+    const lease = this.customLeases.get(encodedLayer);
+    if (this.disposed || !lease) throw new Error('Texture layer is no longer reserved.');
     const url = URL.createObjectURL(file);
     try {
       const img = await new Promise<HTMLImageElement>((resolve, reject) => {
@@ -658,6 +668,9 @@ export class PbrTextureManager {
         el.onerror = () => reject(new Error(`Unable to decode image ${file.name}`));
         el.src = url;
       });
+      if (this.disposed || this.customLeases.get(encodedLayer) !== lease) {
+        throw new Error('Texture upload was cancelled; its layer has been released.');
+      }
       this.writeImageToLayer(encodedLayer, slot, img, false, uvInfo);
     } finally {
       URL.revokeObjectURL(url);
@@ -832,7 +845,7 @@ export class PbrTextureManager {
   }
 
   public resetCustomCounter() {
-    this.nextCustomSlice = 0;
+    this.customLeases.clear();
     this.customIsAtlas.fill(false);
     for (const [key, maps] of this.threeMapsCache) {
       if (Number(key.split(':')[0]) >= CUSTOM_LAYER_OFFSET) {
@@ -843,6 +856,8 @@ export class PbrTextureManager {
   }
 
   public dispose() {
+    this.disposed = true;
+    this.customLeases.clear();
     this.albedoArray.dispose();
     this.normalArray.dispose();
     this.roughMetalArray.dispose();
