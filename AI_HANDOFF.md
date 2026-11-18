@@ -1,3 +1,9 @@
+## .1191 device feedback — qualified PASS — 18 November 2026
+
+Cris accepts the Guided preview and Facegroup-border behavior in principle. Patch cohesion remains open: the one-group cube returns six face islands, and a shape with six facegroups still produces too many islands for useful painting. Do not treat six charts on a one-group cube as a quality success. Local WASM reproduced six charts both for the one-group cube and for a cube split into two groups, including trials with higher chart growth cost and zero normal penalties. No runtime change in this feedback entry.
+
+Prioritize connected UV patches within Facegroups. Try unfolding along shared polygon edges, choosing cuts only as needed for overlap, topology or stretch. Acceptance: one connected non-overlapping net on a one-group cube, measured island counts per group on a multi-group model, intact Facegroup borders and corner UV mapping, Paint continuity inside a patch, and the existing preview/Apply/Cancel/Undo/export checks.
+
 ## .1191 validation and live release — 18 November 2026
 
 Runtime 616bf70734fd582f67c74e06e7d3c8e7ff5bb513 fast-forwarded to main. All 20 staged files matched the local Git blob hashes. Final local suite 3,531/3,531 PASS with zero failures or skips. The initial local run caught stale cache-contract hashes, which were refreshed and checked in the full rerun. Hosted Topology 44262727463 passed the real-browser Auto/Guided worker, Apply/Cancel/Undo/Redo, NOM export and multi-face modelling workflow checks.
