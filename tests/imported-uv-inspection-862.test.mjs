@@ -1,3 +1,4 @@
+import {installAutoUnwrapWorkflow} from '../src/auto-unwrap-workflow.js';
 import {installFacegroupUVWorkflow} from '../src/facegroup-uv-workflow.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -48,9 +49,9 @@ test('862 preview preserves UV orientation and tile reference, bounds dense draw
 });
 function uiFixture(){
  const object=fixture(),nodes=new Map(),events=new Map();
- const node=id=>{if(nodes.has(id))return nodes.get(id);const listeners=new Map(),n={id,hidden:false,style:{},dataset:{},children:[],open:false,addEventListener(t,fn){listeners.set(t,fn);},fire(t){listeners.get(t)?.({});},append(...x){this.children.push(...x);},appendChild(x){this.append(x);},replaceChildren(){this.children=[];},querySelector(s){return node(s.slice(1));},getContext:()=>canvas().getContext()};nodes.set(id,n);return n;};
+ const node=id=>{if(nodes.has(id))return nodes.get(id);const listeners=new Map(),n={id,hidden:false,style:{},dataset:{},children:[],open:false,addEventListener(t,fn){listeners.set(t,fn);},fire(t){listeners.get(t)?.({});},append(...x){this.children.push(...x);},appendChild(x){this.append(x);},prepend(...x){this.children.unshift(...x);},replaceChildren(){this.children=[];},querySelector(s){return node(s.slice(1));},getContext:()=>canvas().getContext()};nodes.set(id,n);return n;};
  const launch=node('meshHealthBtn'),activeMode=node('mode');activeMode.dataset.mode='object';const session=[];
- const context={installFacegroupUVWorkflow:options=>installFacegroupUVWorkflow({...options,requestFrame:()=>0,cancelFrame(){}}),console,inspectImportedUV,drawImportedUV,analyzeMeshHealth,safeRepairMesh,autoCloseSimpleHoles,simpleBoundaryLoops,boundaryDiagnostics,unifyFaceWinding,flipAllFaces,triangulateMesh,
+ const context={installAutoUnwrapWorkflow:options=>installAutoUnwrapWorkflow({...options,requestFrame:()=>0,cancelFrame(){}}),installFacegroupUVWorkflow:options=>installFacegroupUVWorkflow({...options,requestFrame:()=>0,cancelFrame(){}}),console,inspectImportedUV,drawImportedUV,analyzeMeshHealth,safeRepairMesh,autoCloseSimpleHoles,simpleBoundaryLoops,boundaryDiagnostics,unifyFaceWinding,flipAllFaces,triangulateMesh,
  document:{createElement:()=>node('element'+nodes.size),querySelector:s=>s.includes('button.active')?activeMode:s.startsWith('#')?node(s.slice(1)):node('tools'),querySelectorAll:()=>[]},
  window:{addEventListener:(t,fn)=>events.set(t,fn)},__boxlabObjectManager:{activeId:1,objects:[object],saveActive(){}},__boxlabBridgeState:{mesh:object.mesh},__boxlabExportAs:{topologySignature:signature},__boxlabToolSession:{begin:x=>session.push(x.id),end:x=>session.push('end:'+x)},__boxlabObjectHistory:{checkpointSnapshot(){throw Error('Inspection must not write history');}}};
  vm.createContext(context);const source=fs.readFileSync(new URL('../src/mesh-health.js',import.meta.url),'utf8');vm.runInContext(source.replace(/^import .*;\n/gm,''),context);
