@@ -7,7 +7,7 @@ import {GLTFExporter} from 'three/addons/exporters/GLTFExporter.js';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {buildSceneOBJ,resolveExportMesh,safeOBJName} from './scene-obj-export-core.js?v=0.36.18.1075';
 
-import {buildNomadProjectWithMaps} from './nomad-packed-maps.js?v=0.36.18.1190';
+import {buildNomadProjectWithMaps} from './nomad-packed-maps.js?v=0.36.18.1191';
 
 const VERSION='0.36.18.892';
 const MAX_UV_PREVIEW_CORNERS=20000;
