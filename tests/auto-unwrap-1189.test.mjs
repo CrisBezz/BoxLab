@@ -128,3 +128,33 @@ test('1193 explicit cylinder slit, torus loop and planar ring cut survive atlas 
   assert.equal(JSON.stringify(mesh),before);
  }
 });
+
+test('1194 packing reserves pixel gutters at 1024 and 2048 and reports finite layout quality',async()=>{
+ const mesh=new EditableMesh(
+  [[0,0,0],[4,0,0],[4,1,0],[0,1,0],[6,0,0],[10,0,0],[10,1,0],[6,1,0]],
+  [[0,1,2,3],[4,5,6,7]]);
+ for(const [mapSize,gutter,rotate] of [[1024,16,false],[2048,8,true]]){
+  const input=prepareAutoUnwrapMesh(mesh,owner);
+  input.packing={mapSize,gutter,rotate};
+  const calls=[];
+  const Atlas=class extends backend.Atlas {
+   packCharts(options){calls.push({...options});return super.packCharts(options);}
+  };
+  const result=await runAutoUnwrap(input,{Initialize:backend.Initialize,Atlas});
+  assert.equal(result.chartCount,2);
+  assert(calls.every(c=>c.rotateCharts===rotate&&c.rotateChartsToAxis===rotate));
+  const bounds=result.uvCorners.map(face=>[0,1].map(axis=>{
+   const values=face.map(uv=>uv[axis]*mapSize);
+   return [Math.min(...values),Math.max(...values)];
+  }));
+  for(const box of bounds)for(const [min,max] of box){
+   assert(min>=gutter-1e-6);
+   assert(max<=mapSize-gutter+1e-6);
+  }
+  const gaps=bounds[0].map(([lo,hi],i)=>Math.max(0,lo-bounds[1][i][1],bounds[1][i][0]-hi));
+  assert(Math.hypot(...gaps)>=2*gutter-1e-6);
+  assert(result.quality.coverage>0&&result.quality.coverage<1);
+  assert(result.quality.texelsPerUnit>0);
+  assert(result.quality.maxStretch>=1&&result.quality.maxStretch<1.02);
+ }
+});
