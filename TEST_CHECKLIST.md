@@ -1,3 +1,11 @@
+## .1193 — UV3 selected-edge seams — 18 November 2026
+
+Helios Studio 0.1.6 H2 user PASS protected. In BoxLab Edge mode, Mark Seams and Clear Seams consume the existing selection, including loops and paths, without editing the mesh. Object → UV → Seam Unwrap uses the marks, and Guided Unwrap combines them with Facegroups. Magenta shows marked seams; cyan and orange retain the group and automatic seam conventions. Marks are per-object session guides tied to current face topology. They are not serialized. Applied UVs use existing history and persistence.
+
+Planar net growth omits marked adjacencies. The worker checks both UV endpoints after packing and will retry with incompatible chart material IDs if coincident positions defeat a requested split. This fallback can introduce additional seams. The main thread verifies the marks again before preview. Auto Unwrap ignores marks. UV1/UV2 target restrictions still apply.
+
+Device: choose shared edges or a loop, Mark Seams, switch to Object → UV → Seam Unwrap and review the magenta edges. Cancel or apply, Undo, then clear the same marks in Edge mode. Try Guided Unwrap with marks on a grouped Base model. Automated fixtures cover a cylinder slit, torus loop, and planar ring.
+
 ## .1192 device PASS — 18 November 2026
 
 Cris confirms PASS. Protect connected Guided Unwrap patches, including a one-group cube net, Facegroup boundaries, and the preview/apply workflow. Next ordered work is H2 in Helios Studio, followed by UV3 in BoxLab.
