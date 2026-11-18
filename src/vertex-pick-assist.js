@@ -58,10 +58,15 @@ function selected(){return [...new Set(bridge()?.indices?.()||[])];}
 function applyPick(index){const current=selected(),has=current.includes(index),next=has?current.filter(i=>i!==index):[...current,index];bridge()?.set?.('vertex',next);if(status)status.textContent=next.length?`Vertex mode • ${next.length} selected`:'Vertex mode • nothing selected';}
 
 // Shared with main's earlier window background classifier; one assist hit policy.
+function isPuckTarget(target){return !!target?.closest?.('#totalGizmo[data-hub-state="closed"] .tg-activator');}
 function assistedPick(event){
-  if(event.target!==canvas||!event.isPrimary||mode()!=='vertex'||addVertexSessionActive()||directToolActive()||transformArmed())return null;
-  if(event.pointerType==='pen'&&!(event.pressure>0))return null;
-  return nearestVertexAt(event.clientX,event.clientY);
+  const puck=isPuckTarget(event.target);
+  if((event.target!==canvas&&!puck)||!event.isPrimary||mode()!=='vertex'||addVertexSessionActive()||directToolActive()||transformArmed())return null;
+  if(event.pointerType==='pen'&&!(event.buttons&1)&&!(event.pressure>0))return null;
+  const hit=nearestVertexAt(event.clientX,event.clientY);
+  // Preserve the normal puck action unless the tap is over another vertex.
+  if(puck&&(!hit||hit.d>12||selected().includes(hit.i)))return null;
+  return hit;
 }
 
 document.addEventListener('pointerdown',event=>{
@@ -86,7 +91,7 @@ document.addEventListener('pointerup',event=>{
   if(p.moved||addVertexSessionActive()||transformArmed())return;
   event.preventDefault();
   event.stopImmediatePropagation();
-  if(event.target!==canvas||mode()!=='vertex'||directToolActive())return;
+  if((event.target!==canvas&&!isPuckTarget(event.target))||mode()!=='vertex'||directToolActive())return;
   if(Math.hypot(event.clientX-p.x,event.clientY-p.y)>TAP_MOVE_PX)return;
   if(p.mesh!==state()?.mesh||p.objectId!==globalThis.__boxlabObjectManager?.activeId)return;
   applyPick(p.index);
@@ -95,4 +100,4 @@ document.addEventListener('pointerup',event=>{
 document.addEventListener('pointercancel',event=>{if(!press||press.id===event.pointerId)press=null;},true);
 document.addEventListener('pointerleave',event=>{if(event.pointerType==='pen'&&event.pressure===0)press=null;},true);
 
-globalThis.__boxlabVertexPickAssist={version:'0.36.18.1195',nearestVertexAt,pick:assistedPick};
+globalThis.__boxlabVertexPickAssist={version:'0.36.18.1196',nearestVertexAt,pick:assistedPick};
