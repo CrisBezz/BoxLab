@@ -1,3 +1,7 @@
+## .1193 verification
+
+Runtime dd2ad26cccd1a7b9fbd4a97284c4785b0205f2bc fast-forwarded to main. Hosted run 44298603730 passed browser UV1–UV3 workflow and multi-face modelling. Cylinder, torus and planar ring seam enforcement passed. The local full run passed 3,533 of 3,535; the two failures were stale Edge radial counts. Both corrected test files passed on focused rerun, including the compact ring non-intersection assertion for all 74 tools. iPad acceptance pending.
+
 ## .1193 — UV3 selected-edge seams — 18 November 2026
 
 Helios Studio 0.1.6 H2 user PASS protected. In BoxLab Edge mode, Mark Seams and Clear Seams consume the existing selection, including loops and paths, without editing the mesh. Object → UV → Seam Unwrap uses the marks, and Guided Unwrap combines them with Facegroups. Magenta shows marked seams; cyan and orange retain the group and automatic seam conventions. Marks are per-object session guides tied to current face topology. They are not serialized. Applied UVs use existing history and persistence.
