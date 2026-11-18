@@ -1,3 +1,7 @@
+## .1192 release verification
+
+Runtime c48b99bf5c74979b3d6f55e4b597dc9452861063 is live on GitHub Pages. The live shell displayed v0.36.18.1192. All 18 staged files matched the tested local Git blob hashes. Local regression passed 3,534/3,534. Hosted run 44271707165 passed the real-browser Auto/Guided worker, one-patch cube, Apply/Cancel/Undo/Redo, NOM export and multi-face modelling checks. Local WASM fixtures passed one island on the one-group cube and six islands across six connected multi-face regions. Guided base paint and native export passed. Physical iPad test pending.
+
 ## .1192 — connected Guided Unwrap patches — 18 November 2026
 
 Addresses the .1191 qualified PASS. Guided Unwrap unfolds planar polygons across shared same-region edges in the worker. Each accepted hinge preserves shared UV edge endpoints and face scale. Growth cuts when attaching a face would overlap the net. The original WASM atlas packs and validates the result before preview, with corner mapping, region boundaries, nonoverlap and float32 checks retained. If the model has warped polygons, exceeds the net overlap budget, or cannot produce a better validated net, use the existing Guided charting. Auto Unwrap still uses its original solver path. Preview shows how many connected regions were split when applicable.
