@@ -161,9 +161,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1193",
+      "url": "./src/drawer-ui.js?v=0.36.18.1194",
       "target": "src/drawer-ui.js",
-      "sha256": "31d96c8603fcfae8cc718353cfaa74a0d4489924555dac297c80868a39072623"
+      "sha256": "d7fb8214ba7d092d39da31bea255a2ab78420983297b7617c7288e5acdab8bdc"
     },
     {
       "owner": "index.html",
@@ -304,9 +304,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/mesh-health.js?v=0.36.18.1193",
+      "url": "./src/mesh-health.js?v=0.36.18.1194",
       "target": "src/mesh-health.js",
-      "sha256": "cbc2955594098da5b325173d0fccf7c0acc950ca8d1a07bc3c4040f64ab1ee65",
+      "sha256": "06d550c38c08b487f09eced2b08cc3e97db890ab19e8c1c5f3e9c6c2d44d81e5",
       "sourceVersion": "0.36.18.880"
     },
     {
@@ -378,7 +378,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1193",
+      "url": "./src/release-version.js?v=0.36.18.1194",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -864,9 +864,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1193",
+      "url": "./face-workflow-layout.js?v=0.36.18.1194",
       "target": "src/face-workflow-layout.js",
-      "sha256": "c59974d6f53ba290099ca6d425e69c66437c50f592807c5f422d71dbb5a6f0e7"
+      "sha256": "5b88aa62144c44bd6324ebe4eaf28c5b0311f65ae109c4d18ac60dc6fb862818"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1361,7 +1361,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1193",
+      "url": "./release-version.js?v=0.36.18.1194",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -3326,9 +3326,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1193",
+      "url": "./src/shell-comparison.js?v=0.36.18.1194",
       "target": "src/shell-comparison.js",
-      "sha256": "2ac67d20bbc1d033c8c774a5e0dcbfbdbbadb905893b56dbd60359f8058350f3"
+      "sha256": "7f842ff669d72d0e9e0dfa175dfeb52015cc386de25ad112a0e57bedc361cd12"
     },
     {
       "owner": "src/main.js",
@@ -3848,21 +3848,21 @@
     },
     {
       "owner": "src/mesh-health.js",
-      "url": "./auto-unwrap-workflow.js?v=0.36.18.1193",
+      "url": "./auto-unwrap-workflow.js?v=0.36.18.1194",
       "target": "src/auto-unwrap-workflow.js",
-      "sha256": "31957b37284b822e438162c978374257d6a9245f6472740180bb685735e15b2b"
+      "sha256": "9204d34092945a553cfd2ac423cf9faa41bad0cb30b2935840776bfa54f5f671"
     },
     {
       "owner": "src/auto-unwrap-workflow.js",
-      "url": "./auto-unwrap-core.js?v=0.36.18.1193",
+      "url": "./auto-unwrap-core.js?v=0.36.18.1194",
       "target": "src/auto-unwrap-core.js",
-      "sha256": "5e7599f3246020582a1d975114476bc23734f5c55a8f02584a240ab98b9d7683"
+      "sha256": "19df490d0c55914150b628df9b77f7ad55f3217e939b6ebcbd1e284b4e7a84d4"
     },
     {
       "owner": "src/auto-unwrap-workflow.js",
-      "url": "./auto-unwrap-job.js?v=0.36.18.1193",
+      "url": "./auto-unwrap-job.js?v=0.36.18.1194",
       "target": "src/auto-unwrap-job.js",
-      "sha256": "b901f0ea8b674ba25a51fcdd3a5038cde0a95bb438905f19da265b86e08b4de2"
+      "sha256": "6506be807a5d9f35787516635aa128e92b5d77509a13f3f6b7f6a050a572e369"
     },
     {
       "owner": "src/auto-unwrap-workflow.js",
@@ -3872,15 +3872,15 @@
     },
     {
       "owner": "src/auto-unwrap-job.js",
-      "url": "./auto-unwrap-worker.js?v=0.36.18.1193",
+      "url": "./auto-unwrap-worker.js?v=0.36.18.1194",
       "target": "src/auto-unwrap-worker.js",
-      "sha256": "2c4388bd88d0a872e4185909a7362386888b6c55f5e8c8292cecd1be7235fdb3"
+      "sha256": "bb3ff76c983eaae32cafa5cd327d8a450f471e7f73f07b92dd1d5218520bda9a"
     },
     {
       "owner": "src/auto-unwrap-worker.js",
-      "url": "./auto-unwrap-core.js?v=0.36.18.1193",
+      "url": "./auto-unwrap-core.js?v=0.36.18.1194",
       "target": "src/auto-unwrap-core.js",
-      "sha256": "5e7599f3246020582a1d975114476bc23734f5c55a8f02584a240ab98b9d7683"
+      "sha256": "19df490d0c55914150b628df9b77f7ad55f3217e939b6ebcbd1e284b4e7a84d4"
     },
     {
       "owner": "src/auto-unwrap-worker.js",
