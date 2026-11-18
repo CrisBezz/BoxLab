@@ -1,0 +1,8 @@
+watlas https://github.com/toji/watlas
+Pinned commit: 9a8f004c1053145e97b2c489fc73a37fe48a44a7
+Bundled dist/watlas.js and dist/watlas.wasm (base64 transport).
+Local wrapper change: Initialize(options={}) forwards options to the Emscripten factory, permitting explicit wasmBinary and isolated Node tests. No native algorithm changes.
+Decoded WASM SHA256: 5a250cc2699e202f902ef8fb25c66ce11fb45ad026b96197ff3dd6c57003596d
+WASM is decoded in the worker; no external CDN or SharedArrayBuffer required.
+The wrapper polygon index-output path is deliberately unused.
+Emscripten glue patches: accept explicit wasmBinary (initialize its local and remove its ignored-prop assertion); cap resize-heap requests at 128 MiB. No C++/WASM algorithm changes.
