@@ -1,3 +1,9 @@
+## .1191 validation and live release — 18 November 2026
+
+Runtime 616bf70734fd582f67c74e06e7d3c8e7ff5bb513 fast-forwarded to main. All 20 staged files matched the local Git blob hashes. Final local suite 3,531/3,531 PASS with zero failures or skips. The initial local run caught stale cache-contract hashes, which were refreshed and checked in the full rerun. Hosted Topology 44262727463 passed the real-browser Auto/Guided worker, Apply/Cancel/Undo/Redo, NOM export and multi-face modelling workflow checks.
+
+The live BoxLab Pages shell displayed v0.36.18.1191 and referenced mesh-health.js with the .1191 cache pin. The live cloud-browser renderer could not create a WebGL context, so the interactive verification is from GitHub's WebGL-enabled browser run. Device checks are listed in TEST_CHECKLIST.md.
+
 ## .1191 / UV2 — Facegroup Guided Unwrap — 18 November 2026
 
 User confirms .1190 / B1 PASS. Protect independent Helios map upload, replacement and Restore, surface-opacity Reset, and the browser modelling regression. UV2 adds Guided Unwrap next to Auto Unwrap under Object → UV. Edge-connected same-label faces form solver regions. Guided keeps region borders separate and permits extra cuts inside a region. Cyan shows Facegroup borders. Orange shows solver cuts and open mesh edges. Valid closed or holed groups can unwrap. Preview uses the UV1 worker, overlap checks and existing Apply/Cancel/Undo owner. Original Facegroups and editable polygons are preserved. Guided requires an independent unpainted Base mesh and at least one Facegroup. Auto ignores groups, and the strict Facegroup command retains its original behavior. H2 is next in the ordered queue, then UV3 selected-edge seams.
