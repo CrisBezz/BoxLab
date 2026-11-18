@@ -13,12 +13,12 @@ try{
  await page.locator('#undoBtn').click();assert.deepEqual(await state(),before);await page.locator('#redoBtn').click();assert.deepEqual(await state(),after);
  await page.evaluate(()=>{
    const mesh=globalThis.__boxlabBridgeState.mesh;
-   mesh.faceGroups=mesh.faces.map((_,index)=>index===0?'Top':'Body');
+   mesh.faceGroups=mesh.faces.map(()=> 'Body');
  });
  const grouped=await state();
  await page.locator('[data-autouv="guided"]').click();
  await page.waitForFunction(()=>!document.querySelector('[data-autouv="apply"]').hidden,{},{timeout:60000});
- assert.match(await page.locator('[data-autouv="status"]').textContent(),/cyan group borders/);
+ assert.match(await page.locator('[data-autouv="status"]').textContent(),/1 patch · cyan group borders/);
  assert.deepEqual(await state(),grouped);
  await page.locator('[data-autouv="cancel"]').click();
  assert.deepEqual(await state(),grouped);
