@@ -8,8 +8,6 @@ const canvas=document.querySelector('#viewport');
 const status=document.querySelector('#selectionStatus');
 const PICK_RADIUS_PX=22;
 const TAP_MOVE_PX=12;
-const raycaster=new THREE.Raycaster();
-const pointer=new THREE.Vector2();
 const visibilityRay=new THREE.Raycaster();
 const world=new THREE.Vector3();
 let press=null;
@@ -35,6 +33,7 @@ function nearestVertexAt(x,y){
     marker.getWorldPosition(world);
     const p=screenPoint(world,camera);
     if(p.z<-1||p.z>1||Math.hypot(p.x-x,p.y-y)>PICK_RADIUS_PX)return false;
+    if(globalThis.__boxlabSelectionInput?.frontOnly?.()===false)return true;
     const bodies=(marker.parent?.children||[]).filter(object=>object.visible!==false&&object.userData?.kind==='body');
     if(!bodies.length)return true; // loose scaffold has no occluding surface
     visibilityRay.setFromCamera(new THREE.Vector2(((p.x-r.left)/r.width)*2-1,-(((p.y-r.top)/r.height)*2-1)),camera);
@@ -43,10 +42,6 @@ function nearestVertexAt(x,y){
     return !surface||surface.distance>=distance-Math.max(1e-5,distance*1e-5);
   });
   if(!markers.length)return null;
-  pointer.set(((x-r.left)/r.width)*2-1,-(((y-r.top)/r.height)*2-1));
-  raycaster.setFromCamera(pointer,camera);
-  const rayHit=raycaster.intersectObjects(markers,false)[0];
-  if(rayHit&&Number.isInteger(rayHit.object?.userData?.index))return{i:rayHit.object.userData.index,d:0,z:rayHit.distance};
   let best=null;
   for(const marker of markers){
     marker.getWorldPosition(world);
@@ -55,7 +50,7 @@ function nearestVertexAt(x,y){
     const d=Math.hypot(p.x-x,p.y-y);
     if(d>PICK_RADIUS_PX)continue;
     const cameraDistance=camera.position.distanceTo(world);
-    if(!best||d<best.d-.75||(Math.abs(d-best.d)<=.75&&cameraDistance<best.cameraDistance))best={i:marker.userData.index,d,z:p.z,cameraDistance};
+    if(!best||d<best.d-.25||(Math.abs(d-best.d)<=.25&&cameraDistance<best.cameraDistance))best={i:marker.userData.index,d,z:p.z,cameraDistance};
   }
   return best;
 }
@@ -72,7 +67,7 @@ function assistedPick(event){
 document.addEventListener('pointerdown',event=>{
   const hit=assistedPick(event);
   if(!hit)return;
-  press={id:event.pointerId,x:event.clientX,y:event.clientY,index:hit.i,pointerType:event.pointerType};
+  press={id:event.pointerId,x:event.clientX,y:event.clientY,index:hit.i,pointerType:event.pointerType,mesh:state()?.mesh,objectId:globalThis.__boxlabObjectManager?.activeId};
   event.preventDefault();
   event.stopImmediatePropagation();
 },true);
@@ -93,10 +88,11 @@ document.addEventListener('pointerup',event=>{
   event.stopImmediatePropagation();
   if(event.target!==canvas||mode()!=='vertex'||directToolActive())return;
   if(Math.hypot(event.clientX-p.x,event.clientY-p.y)>TAP_MOVE_PX)return;
+  if(p.mesh!==state()?.mesh||p.objectId!==globalThis.__boxlabObjectManager?.activeId)return;
   applyPick(p.index);
 },true);
 
 document.addEventListener('pointercancel',event=>{if(!press||press.id===event.pointerId)press=null;},true);
 document.addEventListener('pointerleave',event=>{if(event.pointerType==='pen'&&event.pressure===0)press=null;},true);
 
-globalThis.__boxlabVertexPickAssist={version:'0.36.18.786',nearestVertexAt,pick:assistedPick};
+globalThis.__boxlabVertexPickAssist={version:'0.36.18.1195',nearestVertexAt,pick:assistedPick};
