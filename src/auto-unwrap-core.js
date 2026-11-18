@@ -33,7 +33,9 @@ export function prepareAutoUnwrapMesh(mesh,owner){
   const min=[Infinity,Infinity,Infinity],max=[-Infinity,-Infinity,-Infinity];for(const v of vertices)for(const [i,k]of ['x','y','z'].entries()){min[i]=Math.min(min[i],v[k]);max[i]=Math.max(max[i],v[k]);}
   const scale=Math.max(...max.map((v,i)=>v-min[i]));if(!(scale>0)&&Number.isFinite(scale))fail('Mesh has no usable extent');
   if(!Number.isFinite(scale))fail('Mesh extent exceeds the supported range');
-  const positions=new Float32Array(vertices.flatMap(v=>['x','y','z'].map((k,i)=>(v[k]-min[i])/scale-.5)));
+  // Fixed 1000-unit export-local extent avoids xatlas absolute-area epsilon
+  // dropping valid thin recess corners. Original world coordinates stay intact.
+  const positions=new Float32Array(vertices.flatMap(v=>['x','y','z'].map((k,i)=>((v[k]-min[i])/scale-.5)*1000)));
   for(const t of triangles){const [a,b,c]=t.ids.map(id=>Array.from(positions.slice(id*3,id*3+3))),u=b.map((v,i)=>v-a[i]),v=c.map((x,i)=>x-a[i]),area=Math.hypot(u[1]*v[2]-u[2]*v[1],u[2]*v[0]-u[0]*v[2],u[0]*v[1]-u[1]*v[0]);if(!(area>1e-14))fail(`Face ${t.face+1} has a collapsed or too-small triangle`);}
   return {positions,indices:new Uint32Array(triangles.flatMap(t=>t.ids)),triangles,faceSizes:faces.map(f=>f.length),key:autoUVFingerprint(mesh)};
  }finally{geometry?.dispose?.();}
@@ -63,7 +65,8 @@ export async function runAutoUnwrap(input,backend){
   const uvCorners=input.faceSizes.map(n=>Array(n).fill(null)),side=Math.max(atlas.width,atlas.height),charts=new Set();
   for(let i=0;i<indices.length;i++){
    const vertex=output.getVertex(indices[i]),t=input.triangles[Math.floor(i/3)],corner=t.corners[i%3];
-   if(!vertex||vertex.xref!==input.indices[i]||vertex.atlasIndex!==0)fail('Auto Unwrap lost original polygon corner correspondence');
+   if(!vertex||vertex.xref!==input.indices[i])fail('Auto Unwrap lost original polygon corner correspondence');
+   if(vertex.atlasIndex!==0)fail(`Face ${t.face+1} is too small for automatic charting; try Face atlas for this mesh`);
    const uv=[(vertex.uv[0]+(side-atlas.width)/2)/side,(vertex.uv[1]+(side-atlas.height)/2)/side],old=uvCorners[t.face][corner];
    if(old&&old.some((v,j)=>Math.abs(v-uv[j])>1e-9))fail(`Auto Unwrap would split inside polygon face ${t.face+1}; use a different projection for that face`);
    uvCorners[t.face][corner]=uv;charts.add(vertex.chartIndex);
