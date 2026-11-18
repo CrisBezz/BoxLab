@@ -1,4 +1,4 @@
-import {installAutoUnwrapWorkflow} from './auto-unwrap-workflow.js?v=0.36.18.1192';
+import {installAutoUnwrapWorkflow} from './auto-unwrap-workflow.js?v=0.36.18.1193';
 import {installFacegroupUVWorkflow} from './facegroup-uv-workflow.js?v=0.36.18.1189';
 import {analyzeMeshHealth} from './mesh-health-core.js?v=0.36.18.443';
 import {safeRepairMesh} from './mesh-health-repair-core.js?v=0.36.18.443';
@@ -20,6 +20,34 @@ stitchUVButton.id='stitchUVEdgeBtn';stitchUVButton.type='button';stitchUVButton.
 stitchUVButton.title='Join two flat UV islands across one selected seam and repack; clear paint first';
 document.querySelector('.mode-tools[data-mode-tools="edge"]')?.appendChild(stitchUVButton);
 stitchUVButton.addEventListener('click',stitchSelectedUVEdge);
+// These are session-local unwrap guides, keyed to the active object's topology.
+const markedUVSeams=new WeakMap();
+function seamMarks(object,mesh){
+ const key=JSON.stringify(mesh.faces),saved=markedUVSeams.get(object);
+ if(saved?.key===key)return saved.edges;
+ const edges=new Map();markedUVSeams.set(object,{key,edges});return edges;
+}
+function editSeamMarks(mark){
+ const object=activeObject(),mesh=liveMesh(),selection=globalThis.__boxlabSelectionBridge;
+ if(!object||!mesh||currentMode()!=='edge'||selection?.mode?.()!=='edge')return false;
+ const picked=mesh.edges();
+ const selected=(selection.indices?.()||[]).map(i=>picked[i]).filter(edge=>edge?.faces?.length===2);
+ if(!selected.length){setStatus('UV seams · select shared mesh edges first');return false;}
+ const marks=seamMarks(object,mesh);
+ for(const {a,b} of selected){
+  const key=a<b?`${a}:${b}`:`${b}:${a}`;
+  if(mark)marks.set(key,[a,b]);
+  else marks.delete(key);
+ }
+ setStatus(`UV seams · ${marks.size} marked · Object → UV to preview`);
+ return true;
+}
+const seamActions=document.createElement('div');
+seamActions.className='outliner-actions';
+seamActions.innerHTML='<button id="markUVSeamsBtn" type="button" title="Use selected shared edges when unwrapping">Mark UV Seams</button><button id="clearUVSeamsBtn" type="button" title="Remove guides from selected shared edges">Clear UV Seams</button>';
+document.querySelector('.mode-tools[data-mode-tools="edge"]')?.appendChild(seamActions);
+seamActions.querySelector('#markUVSeamsBtn')?.addEventListener('click',()=>editSeamMarks(true));
+seamActions.querySelector('#clearUVSeamsBtn')?.addEventListener('click',()=>editSeamMarks(false));
 function cutSelectedUVEdges(){
  const selection=globalThis.__boxlabSelectionBridge;
  if(currentMode()!=='edge'||selection?.mode?.()!=='edge')return false;
@@ -470,7 +498,8 @@ const uvNotice=panel.querySelector('#uvToolsNotice');
 globalThis.__boxlabUVTools={
  open({notice=''}={}){
   launch({uvOnly:true});if(!active||!uvOnly)return false;
-  uvNotice.textContent=notice;uvNotice.hidden=!notice;return true;
+  const count=seamMarks(activeObject(),liveMesh()).size;
+  uvNotice.textContent=notice||(count?`${count} marked UV seams`:'');uvNotice.hidden=!uvNotice.textContent;return true;
  },close,get busy(){return facegroupUVFlow.busy||autoUVFlow.busy;},get active(){return active&&uvOnly;}
 };
 const facegroupUVFlow=installFacegroupUVWorkflow({document,host:uvDetails,notice:uvNotice,say:setStatus,beforePreview:()=>autoUVFlow?.cancel(),
@@ -486,6 +515,7 @@ const facegroupUVFlow=installFacegroupUVWorkflow({document,host:uvDetails,notice
 });
 
 const autoUVFlow=installAutoUnwrapWorkflow({document,host:uvDetails,notice:uvNotice,say:setStatus,beforeStart:()=>facegroupUVFlow.cancel(),
+ getMarkedEdges:(object,mesh)=>[...seamMarks(object,mesh).values()],
  getContext:()=>{
   if(!active||!uvOnly||uvWorkspace?.active||currentMode()!=='object'||activeObject()?.id!==objectId)return null;
   let body;const scene=globalThis.__boxlabBridgeState?.scene;scene?.traverse(o=>{if(o.userData?.kind==='body')body=o;});
