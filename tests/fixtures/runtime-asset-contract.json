@@ -2362,7 +2362,7 @@
       "owner": "src/mesh-health.js",
       "url": "./imported-uv-edit.js?v=0.36.18.1075",
       "target": "src/imported-uv-edit.js",
-      "sha256": "bf06911f6002332a1dfe509ed2a4b508c05be76e0f3ae48a5549c6ece12d3400"
+      "sha256": "2dce0e1c89052384bd075922cdb4ce2d4d010a513cd6d34f7b74f292baa9bb73"
     },
     {
       "owner": "src/imported-uv-edit.js",
@@ -3016,13 +3016,13 @@
       "owner": "src/multi-object.js",
       "url": "./imported-uv-edit.js?v=0.36.18.1075",
       "target": "src/imported-uv-edit.js",
-      "sha256": "bf06911f6002332a1dfe509ed2a4b508c05be76e0f3ae48a5549c6ece12d3400"
+      "sha256": "2dce0e1c89052384bd075922cdb4ce2d4d010a513cd6d34f7b74f292baa9bb73"
     },
     {
       "owner": "src/primitive-ui.js",
       "url": "./imported-uv-edit.js?v=0.36.18.1075",
       "target": "src/imported-uv-edit.js",
-      "sha256": "bf06911f6002332a1dfe509ed2a4b508c05be76e0f3ae48a5549c6ece12d3400"
+      "sha256": "2dce0e1c89052384bd075922cdb4ce2d4d010a513cd6d34f7b74f292baa9bb73"
     },
     {
       "owner": "src/imported-uv-edit.js",
@@ -3082,7 +3082,7 @@
       "owner": "evaluations/uv-paint/samples.js",
       "url": "../../src/imported-uv-edit.js?v=0.36.18.957",
       "target": "src/imported-uv-edit.js",
-      "sha256": "bf06911f6002332a1dfe509ed2a4b508c05be76e0f3ae48a5549c6ece12d3400"
+      "sha256": "2dce0e1c89052384bd075922cdb4ce2d4d010a513cd6d34f7b74f292baa9bb73"
     },
     {
       "owner": "src/main.js",
@@ -3268,7 +3268,7 @@
       "owner": "src/facegroup-uv-workflow.js",
       "url": "./imported-uv-edit.js?v=0.36.18.1075",
       "target": "src/imported-uv-edit.js",
-      "sha256": "bf06911f6002332a1dfe509ed2a4b508c05be76e0f3ae48a5549c6ece12d3400"
+      "sha256": "2dce0e1c89052384bd075922cdb4ce2d4d010a513cd6d34f7b74f292baa9bb73"
     },
     {
       "owner": "src/advanced-selection.js",
