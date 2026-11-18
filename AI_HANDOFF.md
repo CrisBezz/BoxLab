@@ -1,3 +1,9 @@
+## .1196 — Pencil and collapsed-puck Vertex taps
+
+Cris reports FAIL on .1195 because multiple Vertex taps are still intermittent on iPad. The picker now recognizes Pencil contact from the primary button or pressure, matching viewport contact detection. A precise tap on an unselected vertex under the collapsed puck can add it to the selection. Tapping the puck away from another vertex still opens the gizmo. Existing depth policy, additive selection and grouped Bevel remain.
+
+Device: tap several vertices with Pencil, including behind the puck when they overlap; tap a selected marker again to remove it. Tap the puck clear of other markers and confirm gizmo activation. Bevel the resulting group. Physical iPad acceptance pending.
+
 ## .1195 verification
 
 Runtime 37c103974c61569d0b8467bde55dfe6eeb9f5337 is on main. Local 3,537/3,537 passed. Hosted 44302516087 passed UV1–UV4A plus real mouse taps on visible and occluded cube corners, grouped bevel on both selected vertices with legacy Multi off, and Undo/Redo. Initial hosted assertion assumed selection array order; fixed it to compare membership. iPad acceptance pending.
