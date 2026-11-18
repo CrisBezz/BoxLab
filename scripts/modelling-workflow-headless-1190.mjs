@@ -54,7 +54,15 @@ try{
  await page.mouse.click(corners.front.x,corners.front.y);
  assert.deepEqual(await selection(),[corners.front.id]);
  await page.locator('#frontSelectBtn').click();
- await page.mouse.click(corners.rear.x,corners.rear.y);
+ // Force the collapsed puck to cover the rear marker and dispatch a contact
+ // through the real document/viewport handlers with Pencil's zero-pressure onset.
+ await page.evaluate(({x,y})=>{
+  const puck=document.querySelector('#totalGizmo .tg-activator');
+  globalThis.__boxlabTotalGizmo.setHubState('closed');
+  const contact={bubbles:true,cancelable:true,isPrimary:true,pointerId:75,pointerType:'pen',button:0,pressure:0,clientX:x,clientY:y};
+  puck.dispatchEvent(new PointerEvent('pointerdown',{...contact,buttons:1}));
+  puck.dispatchEvent(new PointerEvent('pointerup',{...contact,buttons:0}));
+ },corners.rear);
  assert.deepEqual(new Set(await selection()),new Set([corners.front.id,corners.rear.id]));
  const beforeBevel=await snap();
  await page.evaluate(()=>document.querySelector('#vertexBevelBtn').click());
