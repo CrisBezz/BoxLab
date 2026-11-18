@@ -8,7 +8,7 @@ export function installAutoUnwrapWorkflow({document,host,notice,getContext,onCom
  const button=n=>row.querySelector(`[data-autouv="${n}"]`),preview=button('preview'),apply=button('apply'),cancel=button('cancel'),status=button('status');let job=null,staged=null,overlay=null,raf=null,generation=0,lastCheck=0;
  const message=text=>{notice.hidden=false;notice.textContent=text;say(text);status.textContent=text;};
  function removeOverlay(){overlay?.dispose();overlay=null;}
- function reset(){generation++;job?.cancel();job=null;staged=null;removeOverlay();if(raf!==null)cancelFrame(raf);raf=null;preview.disabled=false;apply.hidden=cancel.hidden=true;}
+ function reset(){generation++;job?.cancel();job=null;staged=null;removeOverlay();if(raf!==null)cancelFrame(raf);raf=null;preview.disabled=false;apply.hidden=cancel.hidden=true;status.textContent='';}
  function current(s,geometry=true){const c=getContext();return !!c&&c.object===s.object&&c.mesh===s.mesh&&c.object.glbPassthrough===s.payload&&!autoUnwrapTargetError(c.object,c.mesh,c.owner?.topologySignature)&&JSON.stringify(c.object.settings||{})===s.settings&&(!geometry||autoUVFingerprint(c.mesh)===s.key&&JSON.stringify(c.object.glbPassthrough??null)===s.payloadKey);}
  function tick(){raf=null;if(!staged)return;const check=Date.now()-lastCheck>=200;if(!current(staged,check)){reset();message('Auto Unwrap target changed; preview again');return;}if(check)lastCheck=Date.now();overlay?.update();raf=requestFrame(tick);}
  function makeOverlay(s,result){
