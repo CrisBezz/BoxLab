@@ -651,3 +651,16 @@ export function clearNativePaint(object,mesh,history,clearUVs=false){
  if(clearUVs)delete object.glbPassthrough;
  return {ok:true,changed:true};
 }
+
+// UV1 shares the original UV target policy and single scene checkpoint owner.
+export function autoUnwrapTargetError(object,mesh,signature){
+ const error=nativeUVTargetError(object,mesh,signature);if(error)return error;
+ if(object.colourPaint||object.roughnessPaint||object.metalnessPaint||object.opacityPaint)return 'Auto Unwrap currently needs an unpainted Base mesh; existing paint is retained';
+ return null;
+}
+export function commitAutoUnwrapUV(object,mesh,signature,history,candidate){
+ const error=autoUnwrapTargetError(object,mesh,signature);if(error)return {ok:false,reason:error};
+ const uv=candidate?.uvCorners;
+ if(!Array.isArray(uv)||uv.length!==mesh.faces.length||uv.some((f,i)=>!Array.isArray(f)||f.length!==mesh.faces[i].length||f.some(p=>!Array.isArray(p)||p.length!==2||p.some(v=>!Number.isFinite(v)||v<0||v>1))))return {ok:false,reason:'Auto Unwrap returned invalid UV coverage'};
+ return commitNativeUV(object,mesh,signature,history,uv);
+}
