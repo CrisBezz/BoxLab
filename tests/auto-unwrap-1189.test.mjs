@@ -37,3 +37,8 @@ test('1189 auto-unwrapped cube paints at1024 through original Paint UI and survi
 });
 
 test('1189 thin corner-relieved recessed solid unwraps without dropping small original triangles',async()=>{const {closedGrid}=await import('./helpers/through-validation-profile.mjs'),{buildNegativeExtrude}=await import('../src/through-kernel.js');const cut=buildNegativeExtrude(closedGrid(4,EditableMesh),[21,16],-.1);assert(cut.ok);const before=JSON.stringify(cut.mesh),input=prepareAutoUnwrapMesh(cut.mesh,owner),result=await runAutoUnwrap(input,backend);assert(validateAutoUnwrapResult(input,result));assert.equal(JSON.stringify(cut.mesh),before);assert.equal(result.uvCorners.length,cut.mesh.faces.length);});
+
+test('1191 guided workflow previews cyan group boundaries and orange extra cuts, with private Cancel and stale-label protection',async()=>{
+ const f=workflow();f.mesh.faceGroups=['A','A','A','B','B','B'];const before=JSON.stringify(f.object),r=await runAutoUnwrap(prepareAutoUnwrapMesh(f.mesh,owner,{guided:true}),backend),p=f.api.preview({guided:true});f.resolve(r);assert(await p);assert.equal(JSON.stringify(f.object),before);assert.equal(f.checkpoints,0);const colors=f.scene.children.filter(n=>n.isLineSegments).map(n=>n.material.color.getHex());assert(colors.includes(0x55ddff));assert(colors.includes(0xffb23e));assert.match(f.notice.textContent,/Facegroup Guided.*regions/);f.api.cancel();assert.equal(f.scene.children.length,1);assert.equal(JSON.stringify(f.object),before);
+ const pending=f.api.preview({guided:true});f.mesh.faceGroups[0]='Changed';f.flush();f.resolve(r);assert.equal(await pending,false);assert.equal(f.checkpoints,0);assert.equal(f.scene.children.length,1);
+});
