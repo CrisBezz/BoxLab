@@ -9,7 +9,7 @@ export function installAutoUnwrapWorkflow({document,host,notice,getContext,onCom
  const message=text=>{notice.hidden=false;notice.textContent=text;say(text);status.textContent=text;};
  function removeOverlay(){overlay?.dispose();overlay=null;}
  function reset(){generation++;job?.cancel();job=null;staged=null;removeOverlay();if(raf!==null)cancelFrame(raf);raf=null;preview.disabled=false;apply.hidden=cancel.hidden=true;}
- function current(s,geometry=true){const c=getContext();return !!c&&c.object===s.object&&c.mesh===s.mesh&&c.object.glbPassthrough===s.payload&&!autoUnwrapTargetError(c.object,c.mesh,c.owner?.topologySignature)&&JSON.stringify(c.object.settings||{})===s.settings&&(!geometry||autoUVFingerprint(c.mesh)===s.key);}
+ function current(s,geometry=true){const c=getContext();return !!c&&c.object===s.object&&c.mesh===s.mesh&&c.object.glbPassthrough===s.payload&&!autoUnwrapTargetError(c.object,c.mesh,c.owner?.topologySignature)&&JSON.stringify(c.object.settings||{})===s.settings&&(!geometry||autoUVFingerprint(c.mesh)===s.key&&JSON.stringify(c.object.glbPassthrough??null)===s.payloadKey);}
  function tick(){raf=null;if(!staged)return;const check=Date.now()-lastCheck>=200;if(!current(staged,check)){reset();message('Auto Unwrap target changed; preview again');return;}if(check)lastCheck=Date.now();overlay?.update();raf=requestFrame(tick);}
  function makeOverlay(s,result){
   const payload={version:1,source:'boxlab',uvTopologySignature:s.owner.topologySignature(s.mesh),uvCorners:result.uvCorners},geometry=s.owner.buildUVPreviewGeometry(s.mesh,payload);
@@ -27,7 +27,7 @@ export function installAutoUnwrapWorkflow({document,host,notice,getContext,onCom
   const token=generation;let input;
   try{input=prepareAutoUnwrapMesh(c.mesh,c.owner);}catch(error){message(error.message);return false;}
   if(!c.scene||!c.body){message('UV viewport is not ready');return false;}
-  staged={...c,key:input.key,payload:c.object.glbPassthrough,settings:JSON.stringify(c.object.settings||{}),input};preview.disabled=true;apply.hidden=true;cancel.hidden=false;message('Auto Unwrap running; source UVs unchanged');tick();
+  staged={...c,key:input.key,payload:c.object.glbPassthrough,payloadKey:JSON.stringify(c.object.glbPassthrough??null),settings:JSON.stringify(c.object.settings||{}),input};preview.disabled=true;apply.hidden=true;cancel.hidden=false;message('Auto Unwrap running; source UVs unchanged');tick();
   try{
    job=startJob(input,{onStage:text=>{if(token===generation)status.textContent=text;}});
    const result=await job.promise;if(token!==generation)return false;job=null;
