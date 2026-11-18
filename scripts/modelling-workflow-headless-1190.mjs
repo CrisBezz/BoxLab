@@ -22,6 +22,7 @@ try{
  const snap=()=>page.evaluate(()=>{const m=globalThis.__boxlabBridgeState.mesh;return JSON.stringify([m.vertices.map(v=>v.toArray()),m.faces]);});
  const selection=()=>page.evaluate(()=>globalThis.__boxlabSelectionBridge.indices());
  const before=await snap();
+ await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
  await page.evaluate(()=>globalThis.__boxlabTotalGizmo.setHubState('tools'));
  const radial=page.locator('[data-tool-target="#extrudeBtn"][data-mode="face"]');
  const button=page.locator('[data-tool-target="#extrudeBtn"]').first();await button.click();assert.deepEqual(await selection(),selected);assert.equal(await snap(),before);
