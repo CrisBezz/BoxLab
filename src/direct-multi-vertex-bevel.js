@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import {createFaceBevelPreview,disposeFaceBevelPreview} from './bevel-face-preview.js?v=0.36.18.716';
 
-const button=document.querySelector('#vertexBevelBtn'), canvas=document.querySelector('#viewport'), width=document.querySelector('#vertexBevelWidth'), out=document.querySelector('#vertexBevelWidthOut'), multiToggle=document.querySelector('#multiSelectToggle'), status=document.querySelector('#selectionStatus');
+const button=document.querySelector('#vertexBevelBtn'), canvas=document.querySelector('#viewport'), width=document.querySelector('#vertexBevelWidth'), out=document.querySelector('#vertexBevelWidthOut'), status=document.querySelector('#selectionStatus');
 const PICK_PX=20;
 let armed=false, drag=null, popupPreview=false, preview=null;
 
@@ -12,7 +12,7 @@ function syncButton(){button?.classList.toggle('active',armed);}
 function render(){document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));queueMicrotask(syncButton);}
 function restore(mesh,snapshot){mesh.vertices=snapshot.vertices.map(v=>v.clone());mesh.faces=snapshot.faces.map(f=>[...f]);mesh.faceGroups=[...snapshot.faceGroups];mesh.creases=new Map(snapshot.creases);if(snapshot.looseEdges instanceof Set)mesh.looseEdges=new Set(snapshot.looseEdges);if(snapshot.looseVertices instanceof Set)mesh.looseVertices=new Set(snapshot.looseVertices);mesh.edges?.();}
 function screenPoint(v,camera){const p=v.clone().project(camera),r=canvas.getBoundingClientRect();return new THREE.Vector2(r.left+(p.x*.5+.5)*r.width,r.top+(-p.y*.5+.5)*r.height);}
-function hitVertex(event){const s=state(),mesh=s?.mesh,camera=s?.camera;if(!mesh||!camera)return null;const p=new THREE.Vector2(event.clientX,event.clientY);let best=null;mesh.vertices.forEach((v,index)=>{const q=screenPoint(v,camera),d=q.distanceTo(p);if(d<=PICK_PX&&(!best||d<best.distance))best={index,distance:d};});return best?.index??null;}
+function hitVertex(event){const assist=globalThis.__boxlabVertexPickAssist;if(assist?.nearestVertexAt)return assist.nearestVertexAt(event.clientX,event.clientY)?.i??null;const s=state(),mesh=s?.mesh,camera=s?.camera;if(!mesh||!camera)return null;const p=new THREE.Vector2(event.clientX,event.clientY);let best=null;mesh.vertices.forEach((v,index)=>{const q=screenPoint(v,camera),d=q.distanceTo(p);if(d<=PICK_PX&&(!best||d<best.distance))best={index,distance:d};});return best?.index??null;}
 function disarm(){
   discardPreview();popupPreview=false;
   if(drag){const d=drag;drag=null;if(dragSourceOwned(d))restore(d.mesh,d.before);try{canvas.releasePointerCapture?.(d.pointerId);}catch{}render();}
@@ -66,7 +66,7 @@ function applyPreview(value){
   return result;
 }
 for(const type of ['input','change'])width?.addEventListener(type,()=>{if(popupPreview&&!drag)previewWidth();});
-function updateStatus(){const count=selectedVertexIds().length,useMulti=!!multiToggle?.checked&&count>1;if(status)status.textContent=armed?(useMulti?`Bevel ${count} vertices • drag any selected vertex`:'Bevel Vertex • drag a vertex'):'Vertex mode';}
+function updateStatus(){const count=selectedVertexIds().length,useMulti=count>1;if(status)status.textContent=armed?(useMulti?`Bevel ${count} vertices • drag any selected vertex`:'Bevel Vertex • drag a vertex'):'Vertex mode';}
 
 // Capture at document level so the legacy main.js button handler never gets a
 // chance to clear Multi or the selected vertices before this direct tool arms.
@@ -87,7 +87,12 @@ canvas?.addEventListener('pointerdown',event=>{
   if(!armed||!event.isPrimary||!editable()||bridge()?.mode?.()!=='vertex')return;
   const mesh=state()?.mesh,index=hitVertex(event);if(!mesh||!Number.isInteger(index))return;
   event.preventDefault();event.stopImmediatePropagation();
-  const existing=selectedVertexIds(),useMulti=!!multiToggle?.checked&&existing.length>1&&existing.includes(index),ids=useMulti?existing:[index];
+  const existing=selectedVertexIds(),useMulti=existing.length>1;
+  if(useMulti&&!existing.includes(index)){
+    if(status)status.textContent='Vertex Bevel • drag a selected vertex to bevel the group';
+    return;
+  }
+  const ids=useMulti?existing:[index];
   if(!useMulti)bridge()?.set?.('vertex',[index]);
   const valid=mesh.multiVertexBevelInfo?.(ids);
   if(!valid){if(status)status.textContent=ids.length>1?'Selected vertices cannot be bevelled together':'This vertex cannot be bevelled';return;}
