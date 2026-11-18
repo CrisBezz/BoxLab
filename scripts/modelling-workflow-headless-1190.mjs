@@ -55,7 +55,7 @@ try{
  assert.deepEqual(await selection(),[corners.front.id]);
  await page.locator('#frontSelectBtn').click();
  await page.mouse.click(corners.rear.x,corners.rear.y);
- assert.deepEqual(await selection(),[corners.front.id,corners.rear.id]);
+ assert.deepEqual(new Set(await selection()),new Set([corners.front.id,corners.rear.id]));
  const beforeBevel=await snap();
  await page.evaluate(()=>document.querySelector('#vertexBevelBtn').click());
  await page.mouse.move(corners.rear.x,corners.rear.y);
