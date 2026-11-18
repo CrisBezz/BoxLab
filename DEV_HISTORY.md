@@ -1,3 +1,9 @@
+## .1192 — connected Guided Unwrap patches — 18 November 2026
+
+Addresses the .1191 qualified PASS. Guided Unwrap unfolds planar polygons across shared same-region edges in the worker. Each accepted hinge preserves shared UV edge endpoints and face scale. Growth cuts when attaching a face would overlap the net. The original WASM atlas packs and validates the result before preview, with corner mapping, region boundaries, nonoverlap and float32 checks retained. If the model has warped polygons, exceeds the net overlap budget, or cannot produce a better validated net, use the existing Guided charting. Auto Unwrap still uses its original solver path. Preview shows how many connected regions were split when applicable.
+
+Device: one Facegroup on a cube should yield one connected UV island. On a grouped mesh, review cyan borders, orange cuts, and patch count. Cancel, Apply, Undo/Redo and paint across a retained edge on a fresh unpainted Base mesh. Existing painted layouts remain protected. No general curved-surface island-count guarantee.
+
 ## .1191 validation and live release — 18 November 2026
 
 Runtime 616bf70734fd582f67c74e06e7d3c8e7ff5bb513 fast-forwarded to main. All 20 staged files matched the local Git blob hashes. Final local suite 3,531/3,531 PASS with zero failures or skips. The initial local run caught stale cache-contract hashes, which were refreshed and checked in the full rerun. Hosted Topology 44262727463 passed the real-browser Auto/Guided worker, Apply/Cancel/Undo/Redo, NOM export and multi-face modelling workflow checks.
