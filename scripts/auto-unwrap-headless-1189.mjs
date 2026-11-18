@@ -53,6 +53,15 @@ try{
  });
  await page.locator('[data-autouv="seams"]').click();
  assert.match(await page.locator('[data-autouv="status"]').textContent(),/Mark UV Seams first/);
+ await page.locator('[data-autouv="map-size"]').selectOption('2048');
+ await page.locator('[data-autouv="gutter"]').selectOption('8');
+ await page.locator('[data-autouv="rotate"]').uncheck();
+ await page.locator('[data-autouv="preview"]').click();
+ await page.waitForFunction(()=>!document.querySelector('[data-autouv="apply"]').hidden,{},{timeout:60000});
+ assert.match(await page.locator('[data-autouv="status"]').textContent(),/2048px map · 8px gutter .*overlap check passed/);
+ await page.locator('[data-autouv="gutter"]').selectOption('16');
+ assert(await page.locator('[data-autouv="apply"]').isHidden());
+ assert.deepEqual(await state(),guided);
  const exported=await page.evaluate(async()=>{const m=globalThis.__boxlabObjectManager;m.saveActive();const o=m.objects.find(o=>o.id===m.activeId),r=await globalThis.__boxlabExportAs.buildNOM([o],false);return{uv:r.uvObjects,count:r.count};});assert.equal(exported.uv,1);assert.equal(exported.count,1);assert.deepEqual(errors,[]);
- console.log(JSON.stringify({test:'UV1/UV2/UV3 real browser module worker, preview, Cancel, Apply, Undo/Redo, NOM export',pass:true}));
+ console.log(JSON.stringify({test:'UV1–UV4A real browser module worker, preview, Cancel, Apply, Undo/Redo, NOM export',pass:true}));
 }finally{await browser?.close();await new Promise(r=>server.close(r));}
