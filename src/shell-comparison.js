@@ -57,10 +57,10 @@
  function el(tag,text){const n=doc.createElement(tag);if(text!==undefined)n.textContent=text;return n;}
  function button(text,action){const b=el('button',text);b.type='button';b.addEventListener('click',action);return b;}
  const header=el('div');header.className='shell-test-header';
- const title=el('strong',active?(mode==='current'?'A · Current · .1189':'B · Separated · .1189'):'Screen comparison · .1189');
+ const title=el('strong',active?(mode==='current'?'A · Current · .1190':'B · Separated · .1190'):'Screen comparison · .1190');
  const body=el('div');body.className='shell-test-body';
  const collapse=button('Collapse',()=>{body.hidden=!body.hidden;collapse.textContent=body.hidden?'Test list':'Collapse';});
- const launcher=button('TEST LIST · .1189',showPanel);launcher.id='shellTestReopen';launcher.hidden=true;
+ const launcher=button('TEST LIST · .1190',showPanel);launcher.id='shellTestReopen';launcher.hidden=true;
  launcher.style.cssText='display:none;position:fixed;left:8px;top:50dvh;z-index:100003;min-height:40px;';
  const hide=button('Hide list',()=>{panel.hidden=true;launcher.hidden=false;launcher.style.display='block';stopDock();});
  header.append(title,collapse,hide);panel.append(header,body);
