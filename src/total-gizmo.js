@@ -638,7 +638,7 @@ toolSectors.forEach(button=>{
       }
       if(radialOffset)launchAccepted=!!globalThis.__boxlabOffsetViewportSession?.openFromHub?.({ids:launchIds});
       if(radialSlide)launchAccepted=!!globalThis.__boxlabSlideViewportSession?.openFromHub?.({ids:launchIds});
-      if((mode==='vertex'&&['Join','Weld','Create Face','Delete','Circle','Merge Center','Merge First'].includes(toolLabel))||(mode==='edge'&&['Cut UVs','Dissolve','Delete','Uncrease','Fill Face','Grid Fill','Dissolve Loop','Join Coplanar','Flip Edge','Collapse','Circle','Stitch UVs'].includes(toolLabel))||(mode==='face'&&(toolLabel==='Delete'||toolLabel==='Join Coplanar'||toolLabel==='Circle'||toolLabel==='Poke'||toolLabel==='Make Planar'||toolLabel==='Triangulate'||toolLabel==='Flip Faces'||toolLabel==='Orient Faces'||toolLabel==='Orient Outward'))){
+      if((mode==='vertex'&&['Join','Weld','Create Face','Delete','Circle','Merge Center','Merge First'].includes(toolLabel))||(mode==='edge'&&['Cut UVs','Dissolve','Delete','Uncrease','Fill Face','Grid Fill','Dissolve Loop','Join Coplanar','Flip Edge','Collapse','Circle','Stitch UVs','Mark Seams','Clear Seams'].includes(toolLabel))||(mode==='face'&&(toolLabel==='Delete'||toolLabel==='Join Coplanar'||toolLabel==='Circle'||toolLabel==='Poke'||toolLabel==='Make Planar'||toolLabel==='Triangulate'||toolLabel==='Flip Faces'||toolLabel==='Orient Faces'||toolLabel==='Orient Outward'))){
         queueMicrotask(()=>{
           hubSuppressedKey='';
           const mesh=state()?.mesh,current=currentMode();
