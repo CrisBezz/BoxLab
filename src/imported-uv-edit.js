@@ -656,6 +656,7 @@ export function clearNativePaint(object,mesh,history,clearUVs=false){
 export function autoUnwrapTargetError(object,mesh,signature){
  const error=nativeUVTargetError(object,mesh,signature);if(error)return error;
  if(object.colourPaint||object.roughnessPaint||object.metalnessPaint||object.opacityPaint)return 'Auto Unwrap currently needs an unpainted Base mesh; existing paint is retained';
+ const payload=object.glbPassthrough;if(payload&&Object.keys(payload).some(key=>!['version','source','uvTopologySignature','uvCorners'].includes(key)))return 'Auto Unwrap currently needs an untextured Base mesh; original material data is retained';
  return null;
 }
 export function commitAutoUnwrapUV(object,mesh,signature,history,candidate){
