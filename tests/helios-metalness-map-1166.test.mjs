@@ -46,16 +46,16 @@ test('1166 preserves both imported scalar maps in glTF packed channels and both 
   assert.match(read('src/helios-vendor/boxlab-entry.ts'),/material\.hasCustomMetalness = false/,'Restore preset maps clears the uploaded map state');
 });
 
-test('1188 release pins refresh the changed Helios dock and tracer bundle',()=>{
+test('1189 release pins refresh the changed Helios dock and tracer bundle',()=>{
   const version=JSON.parse(read('version.json')).version;
   const index=read('index.html');
   const mode=read('src/pathtrace-mode.js');
-  assert.equal(version,'0.36.18.1188');
-  assert.match(index,/<title>BoxLab v0\.36\.18\.1188<\/title>/);
-  assert.match(index,/data-release-version="0\.36\.18\.1188">v0\.36\.18\.1188/);
+  assert.equal(version,'0.36.18.1189');
+  assert.match(index,/<title>BoxLab v0\.36\.18\.1189<\/title>/);
+  assert.match(index,/data-release-version="0\.36\.18\.1189">v0\.36\.18\.1189/);
   assert.match(index,/helios-dock\.css\?v=0\.36\.18\.1166/);
   assert.match(index,/src\/helios-dock\.js\?v=0\.36\.18\.1168/);
-  assert.match(index,/src\/pathtrace-mode\.js\?v=0\.36\.18\.1188/);
+  assert.match(index,/src\/pathtrace-mode\.js\?v=0\.36\.18\.1189/);
   assert.match(mode,/helios-tracer\.bundle\.js\?v=0\.36\.18\.1169/);
   assert.match(index,/multi-object-transform\.js\?v=0\.36\.1\.0/);
 });
