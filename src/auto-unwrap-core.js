@@ -22,7 +22,8 @@ export function prepareAutoUnwrapMesh(mesh,owner){
  try{
   geometry=owner.buildUVPreviewGeometry(mesh,payload,{faceIndices:true});
   const tf=geometry?.userData?.boxlabTriangleFaces,tv=geometry?.userData?.boxlabTriangleVertices;
-  if(!tf||!tv||tv.length!==tf.length*3||tf.length>AUTO_UV_LIMITS.triangles)fail('Could not read complete source face triangles');
+  if(!tf||!tv||tv.length!==tf.length*3)fail('Could not read complete source face triangles');
+  if(tf.length>AUTO_UV_LIMITS.triangles)fail('Auto Unwrap supports at most 18,000 render triangles');
   const counts=faces.map(()=>0),triangles=[];
   for(let i=0;i<tf.length;i++){
    const fi=tf[i],f=faces[fi],ids=tv.slice(i*3,i*3+3),local=ids.map(id=>f?.indexOf(id));
