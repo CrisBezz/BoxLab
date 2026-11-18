@@ -404,6 +404,8 @@ root.innerHTML=`
   <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:67.500deg;--r:230px" data-tool-target="#cutUVEdgesBtn" title="Split existing UV islands at complete selected cuts; clear paint first">Cut UVs</button>
   <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:90.000deg;--r:230px" data-tool-target="#faceSplitBtn">Split</button>
   <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:112.500deg;--r:230px" data-tool-target="#stitchUVEdgeBtn" title="Join two flat UV islands at one selected seam and repack; clear paint first">Stitch UVs</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:157.500deg;--r:230px" data-tool-target="#markUVSeamsBtn" title="Mark selected edges for the next unwrap">Mark Seams</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:202.500deg;--r:230px" data-tool-target="#clearUVSeamsBtn" title="Clear seam marks from selected edges">Clear Seams</button>
   <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:135.000deg;--r:230px" data-tool-target="#clearCreaseBtn">Uncrease</button>
   <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:180.000deg;--r:230px" data-tool-target="#fillFaceBtn">Fill Face</button>
   <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:225.000deg;--r:230px" data-tool-target="#gridFillBtn">Grid Fill</button>
