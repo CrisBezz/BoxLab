@@ -246,3 +246,10 @@ New actual TypeScript owner tests cover eight→nine, non-next free reuse, untou
 
 DEVICE1190: Helios VIEW upload/replace maps on multiple surfaces, Restore and confirm other surfaces unchanged; lower Surface opacity then Reset restores original opacity; return modelling multi-face Extrude inward/UndoRedo; Auto Unwrap smoke. Accepted .1189 UV1 and standalone .1.5 PASS protected. Next UV2 guided Facegroups after B1 acceptance; H2 async ordering remains later in queue.
 
+
+## .1190 / B1 publication verified — 18 November 2026
+
+Runtime425a0ed17a84114c4bb75510441d24d2f6158927 fast-forwarded to main. Final local npm suite3,528/3,528 PASS,0 failures/cancelled/skipped (240.677s); focused texture5/5, mapping/reset6/6, shell15/15 PASS. Rebuilt existing tracer; syntax/diff clean; all25 changed local runtime/test/config files byte-match staged source. Hosted Topology44240312218/job134586312630 real-browser UV1 worker/history/NOM and multi-face radial Extrude/inward Exact/UndoRedo/direct Inset launch both PASS; full hosted npm/subdivision steps still in progress at this observation, no full hosted PASS claimed. Main Topology44240769619 likewise running. Initial browser fixture opened radial before selection-change sync; waiting two animation frames resolved it without app changes. Initial full run found stale visible test-list .1189 labels; updated .1190 labels and final full suite passed unchanged tests.
+
+Pages44240769369 build134587839991/deploy134588006824/report SUCCESS. Cache-busted live version.json, index.html, pathtrace-mode.js and rebuilt helios-tracer.bundle.js byte-match tested source. BoxLab .1190 ready for physical iPad check: per-material upload/replace/Restore independence; Surface opacity Reset restores original default; return to multi-face Extrude inward and UndoRedo; UV1 Auto Unwrap smoke. Do not infer .1190 device PASS yet. Helios Studio0.1.5 user PASS and BoxLab .1189 UV1 PASS protected. Next ordered build UV2 guided Facegroups; H2 remains later for complete request ordering. Source modelling kernels/protected Multi1.0 unchanged.
+
