@@ -1,4 +1,5 @@
-import {installFacegroupUVWorkflow} from './facegroup-uv-workflow.js?v=0.36.18.1075';
+import {installAutoUnwrapWorkflow} from './auto-unwrap-workflow.js?v=0.36.18.1189';
+import {installFacegroupUVWorkflow} from './facegroup-uv-workflow.js?v=0.36.18.1189';
 import {analyzeMeshHealth} from './mesh-health-core.js?v=0.36.18.443';
 import {safeRepairMesh} from './mesh-health-repair-core.js?v=0.36.18.443';
 import {autoCloseSimpleHoles,simpleBoundaryLoops} from './mesh-auto-close-core.js?v=0.36.18.443';
@@ -425,7 +426,7 @@ function flipNormals(){return commitTopologyAction(flipAllFaces,'Flip Normals');
 function triangulate(){return commitTopologyAction(triangulateMesh,'Triangulate');}
 function close(){
   if(!active)return;
-  active=false;objectId=null;uvWorkspace?.close();panel.hidden=true;toolSession()?.end?.(sessionId());
+  autoUVFlow?.cancel();active=false;objectId=null;uvWorkspace?.close();panel.hidden=true;toolSession()?.end?.(sessionId());
   setStatus(uvOnly?'UV tools closed':'Mesh Health closed • no geometry changed');
 }
 function launch({uvOnly:showUV=false}={}){
@@ -470,9 +471,9 @@ globalThis.__boxlabUVTools={
  open({notice=''}={}){
   launch({uvOnly:true});if(!active||!uvOnly)return false;
   uvNotice.textContent=notice;uvNotice.hidden=!notice;return true;
- },close,get busy(){return facegroupUVFlow.busy;},get active(){return active&&uvOnly;}
+ },close,get busy(){return facegroupUVFlow.busy||autoUVFlow.busy;},get active(){return active&&uvOnly;}
 };
-const facegroupUVFlow=installFacegroupUVWorkflow({document,host:uvDetails,notice:uvNotice,say:setStatus,
+const facegroupUVFlow=installFacegroupUVWorkflow({document,host:uvDetails,notice:uvNotice,say:setStatus,beforePreview:()=>autoUVFlow?.cancel(),
  getContext:()=>{
   if(!active||!uvOnly||uvWorkspace?.active||currentMode()!=='object'||activeObject()?.id!==objectId)return null;
   let body;const scene=globalThis.__boxlabBridgeState?.scene;scene?.traverse(o=>{if(o.userData?.kind==='body')body=o;});
@@ -482,4 +483,12 @@ const facegroupUVFlow=installFacegroupUVWorkflow({document,host:uvDetails,notice
   document.querySelector('#viewportRenderLooks [data-render="uvchecker"]')?.click();
   renderReport();
  }
+});
+
+const autoUVFlow=installAutoUnwrapWorkflow({document,host:uvDetails,notice:uvNotice,say:setStatus,beforeStart:()=>facegroupUVFlow.cancel(),
+ getContext:()=>{
+  if(!active||!uvOnly||uvWorkspace?.active||currentMode()!=='object'||activeObject()?.id!==objectId)return null;
+  let body;const scene=globalThis.__boxlabBridgeState?.scene;scene?.traverse(o=>{if(o.userData?.kind==='body')body=o;});
+  return {object:activeObject(),mesh:liveMesh(),scene,body,owner:globalThis.__boxlabExportAs,history:globalThis.__boxlabObjectHistory};
+ },onCommit:()=>{manager()?.saveActive?.();document.querySelector('#viewportRenderLooks [data-render="uvchecker"]')?.click();renderReport();}
 });
