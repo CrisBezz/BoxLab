@@ -72,7 +72,7 @@ export function prepareAutoUnwrapMesh(mesh,owner,{guided=false,markedEdges=[]}={
   // dropping valid thin recess corners. Original world coordinates stay intact.
   const positions=new Float32Array(vertices.flatMap(v=>['x','y','z'].map((k,i)=>((v[k]-min[i])/scale-.5)*1000)));
   for(const t of triangles){const [a,b,c]=t.ids.map(id=>Array.from(positions.slice(id*3,id*3+3))),u=b.map((v,i)=>v-a[i]),v=c.map((x,i)=>x-a[i]),area=Math.hypot(u[1]*v[2]-u[2]*v[1],u[2]*v[0]-u[0]*v[2],u[0]*v[1]-u[1]*v[0]);if(!(area>1e-14))fail(`Face ${t.face+1} has a collapsed or too-small triangle`);}
-  return {positions,indices:new Uint32Array(triangles.flatMap(t=>t.ids)),triangles,regions,borders,required,seamKeys,faces:regions?faces:undefined,faceSizes:faces.map(f=>f.length),key:autoUVFingerprint(mesh)};
+  return {positions,indices:new Uint32Array(triangles.flatMap(t=>t.ids)),triangles,regions,borders,required,seamKeys,worldUnitsPerUnit:scale/1000,faces:regions?faces:undefined,faceSizes:faces.map(f=>f.length),key:autoUVFingerprint(mesh)};
  }finally{geometry?.dispose?.();}
 }
 const area=t=>(t[1][0]-t[0][0])*(t[2][1]-t[0][1])-(t[1][1]-t[0][1])*(t[2][0]-t[0][0]);
@@ -120,39 +120,91 @@ export function validateMarkedUVSeams(input,uvCorners){
  }
 }
 
-const packOptions={resolution:1024,padding:4,bilinear:true,rotateCharts:true};
+const defaultPacking={mapSize:1024,gutter:4,rotate:true};
+
+function resolvePacking(settings={}){
+ const {mapSize,gutter,rotate}={...defaultPacking,...settings};
+ if(![1024,2048].includes(mapSize)||![2,4,8,16].includes(gutter)||typeof rotate!=='boolean')fail('Invalid UV packing settings');
+ return {mapSize,gutter,rotate};
+}
+
+// xatlas trims its outer pad. Keep that border in the exported unit tile,
+// and compensate its inter-chart dilation for the actual packed dimensions.
+function packAtlas(atlas,packing){
+ const {mapSize,gutter,rotate}=packing,interior=mapSize-2*gutter;
+ const options={resolution:interior,padding:gutter,bilinear:true,rotateCharts:rotate,rotateChartsToAxis:rotate};
+ for(let attempt=0;attempt<5;attempt++){
+  atlas.packCharts(options);
+  const side=Math.max(atlas.width,atlas.height);
+  if(!side||atlas.atlasCount!==1)fail('UV packing needs one valid atlas');
+  const required=Math.ceil(gutter*side/interior);
+  if(options.padding>=required)return;
+  options.padding=required+1;
+ }
+ fail('Could not fit the requested UV gutter within the packing limit');
+}
+
+function measureLayout(input,uvCorners,mapSize){
+ let totalWorld=0,totalUV=0,maxStretch=1;
+ const {positions}=input;
+ for(const {ids,face,corners} of input.triangles){
+  const [a,b,c]=ids.map(id=>positions.subarray(id*3,id*3+3));
+  const u=b.map((value,i)=>value-a[i]),v=c.map((value,i)=>value-a[i]);
+  const length=Math.hypot(...u);
+  const worldArea=Math.hypot(u[1]*v[2]-u[2]*v[1],u[2]*v[0]-u[0]*v[2],u[0]*v[1]-u[1]*v[0]);
+  const along=v.reduce((sum,value,i)=>sum+value*u[i],0)/length;
+  const across=worldArea/length;
+  const [p,q,r]=corners.map(i=>uvCorners[face][i]);
+  const x=q.map((value,i)=>(value-p[i])/length);
+  const y=r.map((value,i)=>(value-p[i]-x[i]*along)/across);
+  const determinant=Math.abs(x[0]*y[1]-x[1]*y[0]);
+  const trace=x[0]**2+x[1]**2+y[0]**2+y[1]**2;
+  const largest=(trace+Math.sqrt(Math.max(0,trace**2-4*determinant**2)))/2;
+  maxStretch=Math.max(maxStretch,largest/determinant);
+  totalWorld+=worldArea;
+  totalUV+=Math.abs(area([p,q,r]));
+ }
+ return {
+  maxStretch,
+  coverage:totalUV/2,
+  texelsPerUnit:mapSize*Math.sqrt(totalUV/totalWorld)/input.worldUnitsPerUnit,
+ };
+}
+
 export async function runAutoUnwrap(input,backend){
+ const packing=resolvePacking(input.packing);
  await backend.Initialize();
  let net;
  if(input.regions&&input.faces){
   const unfolded=unfoldGuidedNets(input,interiorsOverlap,AUTO_UV_LIMITS.pairs);
   if(unfolded){
-   try{net=packGuidedNets(input,backend,unfolded);}catch{/* Retain validated xatlas charting if planar net packing fails. */}
+   try{net=packGuidedNets(input,backend,unfolded,packing);}catch{/* Retain validated xatlas charting if planar net packing fails. */}
    if(net&&net.chartCount===new Set(input.regions).size)return net;
   }
  }
  let standard;
- try{standard=chartMesh(input,backend,input.regions);}
+ try{standard=chartMesh(input,backend,input.regions,packing);}
  catch(error){
   if(net)return net;
   if(!input.required?.length)throw error;
-  standard=chartMesh(input,backend,constrainedChartMaterials(input));
+  standard=chartMesh(input,backend,constrainedChartMaterials(input),packing);
  }
  return net&&net.chartCount<standard.chartCount?net:standard;
 }
 
-function chartMesh(input,backend,materials){
+function chartMesh(input,backend,materials,packing){
  const atlas=new backend.Atlas();
  try{
   const declaration={vertexPositionData:input.positions,vertexCount:input.positions.length/3,vertexPositionStride:12,indexData:input.indices,indexCount:input.indices.length};
   if(materials)declaration.faceMaterialData=Uint32Array.from(input.triangles,t=>materials[t.face]);
   atlas.addMesh(declaration);
-  atlas.generate({maxIterations:2},packOptions);
-  return readAtlas(input,atlas,input.indices);
+  atlas.computeCharts({maxIterations:2});
+  packAtlas(atlas,packing);
+  return readAtlas(input,atlas,input.indices,packing);
  }finally{atlas.delete();}
 }
 
-function packGuidedNets(input,backend,{uvCorners,chartFaces}){
+function packGuidedNets(input,backend,{uvCorners,chartFaces},packing){
  const atlas=new backend.Atlas();
  try{
   const faceChart=Array(input.faceSizes.length),cornerIndices=[],uvData=[];
@@ -169,22 +221,24 @@ function packGuidedNets(input,backend,{uvCorners,chartFaces}){
   });
   const indexData=Uint32Array.from(input.triangles.flatMap(t=>t.corners.map(c=>cornerIndices[t.face][c])));
   atlas.addUvMesh({vertexUvData:Float32Array.from(uvData),vertexCount:uvData.length/2,vertexStride:8,indexData,indexCount:indexData.length,faceMaterialData:Uint32Array.from(input.triangles,t=>faceChart[t.face])});
-  atlas.generate({},packOptions);
-  const result=readAtlas(input,atlas,indexData,faceChart);
+  atlas.computeCharts({});
+  packAtlas(atlas,packing);
+  const result=readAtlas(input,atlas,indexData,packing,faceChart);
   if(result.chartCount!==chartFaces.length)fail('Guided packing changed the net chart count');
   return result;
  }finally{atlas.delete();}
 }
 
-function readAtlas(input,atlas,sourceIndices,expectedCharts){
+function readAtlas(input,atlas,sourceIndices,packing,expectedCharts){
  if(atlas.meshCount!==1||atlas.atlasCount!==1||!atlas.width||!atlas.height)fail('Auto Unwrap needs one valid atlas');
  const output=atlas.getMesh(0),indices=new Uint32Array(output.indexCount);if(output.indexCount!==input.indices.length||!output.getIndexArray(indices))fail('Auto Unwrap triangle count changed');
  const uvCorners=input.faceSizes.map(n=>Array(n).fill(null)),side=Math.max(atlas.width,atlas.height),charts=new Map(),sourceCharts=new Map();
+ const {mapSize,gutter}=packing,scale=(mapSize-2*gutter)/side/mapSize,margin=gutter/mapSize;
  for(let i=0;i<indices.length;i++){
   const vertex=output.getVertex(indices[i]),t=input.triangles[Math.floor(i/3)],corner=t.corners[i%3];
   if(!vertex||vertex.xref!==sourceIndices[i])fail('Auto Unwrap lost original polygon corner correspondence');
   if(vertex.atlasIndex!==0)fail(`Face ${t.face+1} is too small for automatic charting; try Face atlas for this mesh`);
-  const uv=[(vertex.uv[0]+(side-atlas.width)/2)/side,(vertex.uv[1]+(side-atlas.height)/2)/side],old=uvCorners[t.face][corner];
+  const uv=[margin+(vertex.uv[0]+(side-atlas.width)/2)*scale,margin+(vertex.uv[1]+(side-atlas.height)/2)*scale],old=uvCorners[t.face][corner];
   if(old&&old.some((v,j)=>Math.abs(v-uv[j])>1e-9))fail(`Auto Unwrap would split inside polygon face ${t.face+1}; use a different projection for that face`);
   const expected=expectedCharts?.[t.face];
   if(expectedCharts){
@@ -197,7 +251,8 @@ function readAtlas(input,atlas,sourceIndices,expectedCharts){
  }
  const regionCounts=input.regions?Array(new Set(input.regions).size).fill(0):undefined;
  if(regionCounts)for(const region of charts.values())regionCounts[region]++;
- const result={uvCorners,chartCount:charts.size,width:atlas.width,height:atlas.height,regionCounts};validateAutoUnwrapResult(input,result);validateMarkedUVSeams(input,uvCorners);return result;
+ const result={uvCorners,chartCount:charts.size,width:atlas.width,height:atlas.height,regionCounts};validateAutoUnwrapResult(input,result);validateMarkedUVSeams(input,uvCorners);
+ return {...result,packing,quality:measureLayout(input,uvCorners,mapSize)};
 }
 export function autoUnwrapSeams(mesh,uv){
  const edges=new Map();mesh.faces.forEach((f,fi)=>f.forEach((a,i)=>{const b=f[(i+1)%f.length],key=a<b?`${a}:${b}`:`${b}:${a}`,list=edges.get(key)||[];list.push({a,b,p:uv[fi][i],q:uv[fi][(i+1)%f.length]});edges.set(key,list);}));
