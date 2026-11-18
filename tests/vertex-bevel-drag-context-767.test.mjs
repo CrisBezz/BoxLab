@@ -24,3 +24,11 @@ for(const terminal of ['pointerup','pointercancel','disarm'])test(`normal repeat
 test('equal-value replaced Vertex preview arrays remain valid',()=>{const {m,f}=launch();f.pointer('pointermove',20);m.vertices=m.vertices.map(v=>v.clone());m.faces=m.faces.map(face=>[...face]);m.faceGroups=[...m.faceGroups];f.pointer('pointerup');assert.equal(f.ctx.__boxlabHistory.undoStack.length,1);});
 for(const context of ['locked','Face'])test(`armed Vertex Bevel cannot start on ${context} context`,()=>{const {m,f,mode,lock,releases}=launch([0,1],false),before=snapshot(m);if(context==='locked')lock();else mode('face');f.pointer('pointerdown');f.pointer('pointermove',40);f.pointer('pointerup');assert.equal(snapshot(m),before);assert.equal(f.owner.busy(),false);assert.equal(f.ctx.__boxlabHistory.undoStack.length,0);assert.equal(f.ctx.__boxlabHistory.redoStack.length,1);assert.equal(releases(),0);});
 test('Vertex Bevel press without movement releases capture and preserves redo',()=>{const {m,f,releases}=launch(),before=snapshot(m);f.pointer('pointerup');assert.equal(snapshot(m),before);assert.equal(f.ctx.__boxlabHistory.undoStack.length,0);assert.equal(f.ctx.__boxlabHistory.redoStack.length,1);assert.equal(releases(),1);assert.equal(f.owner.busy(),false);});
+
+test('Vertex Bevel uses the additive selection even when the legacy Multi toggle is off',()=>{
+ const {m,f}=launch([0,6],false),faceCount=m.faces.length;
+ f.node('#multiSelectToggle').checked=false;
+ f.pointer('pointerdown');f.pointer('pointermove',35);f.pointer('pointerup');
+ assert.equal(m.faces.length,faceCount+2);
+ assert.equal(f.ctx.__boxlabHistory.undoStack.length,1);
+});
