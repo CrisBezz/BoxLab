@@ -130,9 +130,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/direct-multi-vertex-bevel.js?v=0.36.18.767",
+      "url": "./src/direct-multi-vertex-bevel.js?v=0.36.18.1195",
       "target": "src/direct-multi-vertex-bevel.js",
-      "sha256": "740aeae86f8baa22bda453ef611bf43e84d98d6eda944b5b8990c2775dbc5fc5"
+      "sha256": "6816ff71e3a9675f97a3c3ac253ab86689c4a99cd83bec8c673d839b6cb353f7"
     },
     {
       "owner": "index.html",
@@ -161,9 +161,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1194",
+      "url": "./src/drawer-ui.js?v=0.36.18.1195",
       "target": "src/drawer-ui.js",
-      "sha256": "d7fb8214ba7d092d39da31bea255a2ab78420983297b7617c7288e5acdab8bdc"
+      "sha256": "4f4f0471f4ee7ad5e4303f0ef5c62d7d098a13de1129d7a6d0478055dbd5c4a9"
     },
     {
       "owner": "index.html",
@@ -378,7 +378,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1194",
+      "url": "./src/release-version.js?v=0.36.18.1195",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -539,9 +539,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/topbar-layout.js?v=0.36.18.1190",
+      "url": "./src/topbar-layout.js?v=0.36.18.1195",
       "target": "src/topbar-layout.js",
-      "sha256": "d65f7e23738d3cb199bbd06108e3ee9c24cc4b8703274e2d378649840982a43c"
+      "sha256": "b678303392ce706c2fbfa51ed8622e5add741cbba1805c27ea2be98093f9d15a"
     },
     {
       "owner": "index.html",
@@ -563,9 +563,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/vertex-pick-assist.js?v=0.36.18.786",
+      "url": "./src/vertex-pick-assist.js?v=0.36.18.1195",
       "target": "src/vertex-pick-assist.js",
-      "sha256": "0ef54be3c857627f122fffb21c12db21bac6efdd151a2d1eb4c031825c85e8f6"
+      "sha256": "a50a73c38292f9c0a15f3e9bc18c49ace4e4e9b4abde1293f0c5003ad90b0ba0"
     },
     {
       "owner": "index.html",
@@ -864,9 +864,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1194",
+      "url": "./face-workflow-layout.js?v=0.36.18.1195",
       "target": "src/face-workflow-layout.js",
-      "sha256": "5b88aa62144c44bd6324ebe4eaf28c5b0311f65ae109c4d18ac60dc6fb862818"
+      "sha256": "ad5532fae4af55b07b6480399aa8941bdbf370078f921d42fc893095bcf239d8"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1361,7 +1361,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1194",
+      "url": "./release-version.js?v=0.36.18.1195",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -2044,9 +2044,9 @@
     },
     {
       "owner": "src/topbar-layout.js",
-      "url": "./viewport-toolbar-controls.js?v=0.36.18.1178",
+      "url": "./viewport-toolbar-controls.js?v=0.36.18.1195",
       "target": "src/viewport-toolbar-controls.js",
-      "sha256": "991a7e6a1b8acd7441b9648f3dc44cddc76e3ae3bed92e13ed59402c78bef24f"
+      "sha256": "5591c9969400768f1cd4705a5b07c1471879113feb1316f4a962c41d90ea8891"
     },
     {
       "owner": "src/total-gizmo.js",
@@ -3326,9 +3326,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1194",
+      "url": "./src/shell-comparison.js?v=0.36.18.1195",
       "target": "src/shell-comparison.js",
-      "sha256": "7f842ff669d72d0e9e0dfa175dfeb52015cc386de25ad112a0e57bedc361cd12"
+      "sha256": "bd688f3b4dbabefcc2e0b73ce8ee19fdadfd25420bdbf02c23891b14118dfcf8"
     },
     {
       "owner": "src/main.js",
@@ -3686,9 +3686,9 @@
     },
     {
       "owner": "src/viewport-toolbar-controls.js",
-      "url": "./selection-input-controls.js?v=0.36.18.1130",
+      "url": "./selection-input-controls.js?v=0.36.18.1195",
       "target": "src/selection-input-controls.js",
-      "sha256": "454f94d3ca871fdd9b316b06aebbf8669abc600a1067dae6f5e92f79a219277c"
+      "sha256": "7db7d9c6c032e3ed7fd5115269651eac788bca6f8332d8397b0e51cc16c9efad"
     },
     {
       "owner": "index.html",
