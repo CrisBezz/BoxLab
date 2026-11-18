@@ -1120,6 +1120,9 @@ export async function importModelFromFile(
 
   // Analyze complete per-material UVs, feather 3D seams, and dilate atlas borders into high-res layers
   if (textureManager && materialLayerMap) {
+    const reserved: number[] = [];
+    const staged = new Map<string, number>();
+    try {
     for (const spec of materials) {
       const stdMat = srcMaterialBySpecId.get(spec.id);
       const hasAlbedoImg = Boolean(stdMat?.map?.image);
@@ -1131,6 +1134,7 @@ export async function importModelFromFile(
         const geoms = geometriesBySpecId.get(spec.id) ?? [];
         const uvInfo = analyzeGeometriesUV(geoms);
         const customLayer = textureManager.allocateCustomLayer('none', uvInfo.isAtlas);
+        reserved.push(customLayer);
 
         if (stdMat?.map?.image) {
           textureManager.writeImageToLayer(
@@ -1168,10 +1172,21 @@ export async function importModelFromFile(
             uvInfo,
           );
         }
-        materialLayerMap.set(spec.id, customLayer);
+        staged.set(spec.id, customLayer);
       } else {
-        materialLayerMap.set(spec.id, 0);
+        staged.set(spec.id, 0);
       }
+    }
+      for (const [id, layer] of staged) materialLayerMap.set(id, layer);
+    } catch (error) {
+      for (const layer of reserved) textureManager.releaseCustomLayer(layer);
+      wrapper.traverse((node) => {
+        const mesh = node as THREE.Mesh;
+        if (!mesh.isMesh) return;
+        mesh.geometry?.dispose();
+        for (const material of Array.isArray(mesh.material) ? mesh.material : [mesh.material]) material?.dispose();
+      });
+      throw error;
     }
   }
 
