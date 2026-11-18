@@ -11,6 +11,15 @@ try{
  await page.locator('[data-autouv="cancel"]').click();assert.deepEqual(await state(),before,'cancel must preserve UVs');
  await page.locator('[data-autouv="preview"]').click();await page.waitForFunction(()=>!document.querySelector('[data-autouv="apply"]').hidden,{},{timeout:60000});await page.locator('[data-autouv="apply"]').click();const after=await state();assert.equal(after.geometry,before.geometry);assert.notEqual(after.uv,before.uv);
  await page.locator('#undoBtn').click();assert.deepEqual(await state(),before);await page.locator('#redoBtn').click();assert.deepEqual(await state(),after);
- const exported=await page.evaluate(async()=>{const m=globalThis.__boxlabObjectManager;m.saveActive();const o=m.objects.find(o=>o.id===m.activeId),r=await globalThis.__boxlabExportAs.buildNOM([o],false);return{uv:r.uvObjects,count:r.count};});assert.equal(exported.uv,1);assert.equal(exported.count,1);assert.deepEqual(errors,[]);
- console.log(JSON.stringify({test:'UV1 real browser module worker, preview, Cancel, Apply, Undo/Redo, NOM export',pass:true}));
+ const exported=await page.evaluate(async()=>{const m=globalThis.__boxlabObjectManager;m.saveActive();const o=m.objects.find(o=>o.id===m.activeId),r=await globalThis.__boxlabExportAs.buildNOM([o],false);return{uv:r.uvObjects,count:r.count};});assert.equal(exported.uv,1);assert.equal(exported.count,1);
+ await page.evaluate(()=>{const m=globalThis.__boxlabBridgeState.mesh;m.faceGroups=m.faces.map((_,i)=>i<3?'Group A':'Group B');});
+ const guideBefore=await state();
+ await page.locator('[data-autouv="guided"]').click();await page.waitForFunction(()=>!document.querySelector('[data-autouv="apply"]').hidden,{},{timeout:60000});
+ assert.deepEqual(await state(),guideBefore,'guided preview preserves polygons, labels and prior UVs');
+ assert.match(await page.locator('[data-autouv="status"]').textContent(),/Facegroup Guided.*regions.*cyan.*orange/);
+ await page.locator('[data-autouv="cancel"]').click();assert.deepEqual(await state(),guideBefore);
+ await page.locator('[data-autouv="guided"]').click();await page.waitForFunction(()=>!document.querySelector('[data-autouv="apply"]').hidden,{},{timeout:60000});await page.locator('[data-autouv="apply"]').click();const guided=await state();assert.equal(guided.geometry,guideBefore.geometry);
+ await page.locator('#undoBtn').click();assert.deepEqual(await state(),guideBefore);await page.locator('#redoBtn').click();assert.deepEqual(await state(),guided);
+ assert.deepEqual(errors,[]);
+ console.log(JSON.stringify({test:'UV1+UV2 guided real browser module worker, preview, Cancel, Apply, Undo/Redo, NOM export',pass:true}));
 }finally{await browser?.close();await new Promise(r=>server.close(r));}
