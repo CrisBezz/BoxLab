@@ -1,3 +1,9 @@
+## .1189 / UV1 publication verified — 18 November 2026
+
+Runtime e5a4afdaa69207a5420906619705922d1fd5f9de fast-forwarded to main; PR251 merged. Full final local suite3,522/3,522 PASS,0 failures/cancelled/skipped (289.902s). Focused UV29/29 and UI lifecycle fixtures9/9 PASS. Exact staged source hosted Topology44229706330/job134551443450 completed SUCCESS, including real-browser module worker/private checker+seam preview/Cancel/Apply/geometry retention/UndoRedo/NOM UV export, full npm test and existing subdivision comparison/report. Pages44230354388 completed SUCCESS. Nine cache-busted live files byte-match tested tree: version.json, index.html, mesh-health.js, auto-unwrap-worker.js, auto-unwrap-core.js, auto-unwrap-workflow.js, imported-uv-edit.js, uv-vendor/watlas.js and uv-vendor/watlas.wasm.base64. All33 local runtime/test/config changes matched staged source; diff check clean. Existing inward/Knife/many-region modelling owners unchanged; their tests remain in full passing suite.
+
+Device acceptance pending: independent unpainted native Base object, Mirror/SubD off → Object→UV→Auto Unwrap; orbit checker/orange seams, Cancel and confirm old UVs; repeat Apply UVs, open UV Editor/Paint, Undo/Redo, NOMAD handoff. UV1 does not unwrap imported/material-bearing/painted/linked/evaluated targets or implement guided Facegroups/selected seams. Preserve .1188 user PASS. Next ordered queue H1; next UV capability UV2 guided groups, then UV3 selected seams.
+
 
 
 # .1174 — Mode Paint and optional top-left panels — 16 November 2026
