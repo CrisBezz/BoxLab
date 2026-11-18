@@ -3,3 +3,5 @@ Base release: 0.1.4
 Base commit: 0e79c5163e5d87703d369250e1a9fff9e2b9085f
 BoxLab integration extensions: .1166 adds the packed Metalness map preview/replacement; .1168 adds render-session scalar surface opacity for non-emissive materials. Both retain the standalone 0.1.4 base and use the existing dock, adapter, Three.js material owner and GPU path tracer. No BoxLab project material data is changed.
 Imported modules: GPU path tracer with independent UV transforms and emissive opacity, BVH, texture manager with map previews and replacement, model importer, UV cleanup, material preset catalog, shared SVG material preview helper, types, color helpers.
+
+Selective H1 backport in BoxLab .1190: texture-slot leases/free allocation/release and failed decode/import reservation rollback from HeliosStudio 0.1.5 runtime cb4e68d04f3837f12266468e3cca59450ae9081a (user PASS). BoxLab adapter upload/Restore follows that ownership contract; BoxLab packed Metalness, surface opacity, normalization and scene adapter remain divergent and retained. This is not a wholesale upgrade of the 0.1.4 integration base. Full request-ordering work is H2.
