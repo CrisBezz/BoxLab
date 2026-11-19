@@ -38,3 +38,17 @@ test('pencil-deferred-orbit-651.test: UV Paint keeps every mesh Pencil contact o
  const background=pencilSelectionRuntime(null,{paintActive:true});background.body();background.pointer('pointerdown',{clientX:40,clientY:40});background.pointer('pointermove',{clientX:80,clientY:40});
  assert.equal(background.orbit().down,1);assert.equal(background.logs.some(x=>x.stage==='PEN ORBIT ROUTE'&&x.detail.route==='FORWARD_ORBIT'),true);
 });
+
+test('Pencil vertex marker outside the body ray adds to an existing group without a background clear',()=>{
+ const f=pencilSelectionRuntime();
+ f.setMode('vertex');
+ f.setIds([0,1,2]);
+ f.tap(3);
+ assert.deepEqual(f.ids(),[0,1,2,3]);
+ assert(!f.events.some(e=>e.type==='boxlab-pencil-background-tap'));
+ f.tap(3);
+ assert.deepEqual(f.ids(),[0,1,2]);
+ f.pointer('pointerdown',{clientX:1,clientY:1});
+ f.pointer('pointerup',{clientX:1,clientY:1});
+ assert.deepEqual(f.ids(),[]);
+});
