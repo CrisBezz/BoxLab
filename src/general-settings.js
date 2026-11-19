@@ -1,5 +1,5 @@
 const STORAGE_KEY='boxlab.general-settings.v1';
-const DEFAULTS=Object.freeze({pencilOrbit:true,pencilSelection:true,snapTop:false,leftHanded:false,modeTop:false,selectTop:false});
+const DEFAULTS=Object.freeze({pencilOrbit:true,pencilSelection:true,leftHanded:false,modeTop:false,selectTop:false});
 let current=load();
 
 function load(){
@@ -10,7 +10,6 @@ function load(){
 }
 function apply(){
   const root=document.documentElement;
-  root.classList.toggle('boxlab-snap-top',current.snapTop);
   root.classList.toggle('boxlab-mode-top',current.modeTop);
   root.classList.toggle('boxlab-select-top',current.selectTop);
   root.classList.toggle('boxlab-left-handed',current.leftHanded);
@@ -36,7 +35,6 @@ export function mountGeneralSettings(panel){
     <label><input type="checkbox" data-general-setting="pencilOrbit"><span>Pencil orbit</span></label>
     <label><input type="checkbox" data-general-setting="pencilSelection"><span>Pencil selection</span></label>
     <label><input type="checkbox" data-general-setting="modeTop"><span>Mode select at top left</span></label>
-    <label><input type="checkbox" data-general-setting="snapTop"><span>Snap options at top left</span></label>
     <label><input type="checkbox" data-general-setting="selectTop"><span>Select options at top left</span></label>
     <label><input type="checkbox" data-general-setting="leftHanded"><span>Left-handed layout</span></label>
   </div>`;
@@ -59,9 +57,7 @@ export function mountGeneralSettings(panel){
    share the original status-lane anchor, keeping their existing 8px gap. */
 html.boxlab-mode-top #viewportWrap{--viewport-action-bottom:max(27px,calc(env(safe-area-inset-bottom) + 23px))!important}
 @media(max-width:900px){html.boxlab-mode-top #viewportWrap{--viewport-action-bottom:max(25px,calc(env(safe-area-inset-bottom) + 21px))!important}}
-html:not(.boxlab-snap-top) #viewportSnapControls{top:auto!important;bottom:calc(var(--viewport-action-bottom) + var(--boxlab-snap-bottom-offset,214px))!important}
 html.boxlab-mode-top #viewportWrap > #selectionModes{top:8px!important;bottom:auto!important;left:8px!important}
-html.boxlab-snap-top #viewportSnapControls{top:var(--boxlab-snap-top,8px)!important;bottom:auto!important;left:8px!important}
 html.boxlab-select-top #viewportActionControls{top:var(--boxlab-select-top,8px)!important;bottom:auto!important;left:8px!important;max-height:calc(100% - 16px)}
 html.boxlab-left-handed #viewportWrap>.floating-panel.left-panel{left:auto!important;right:max(8px,env(safe-area-inset-right))!important}
 html.boxlab-left-handed #objectBrowserPanel{right:auto;left:max(8px,env(safe-area-inset-left))}
@@ -76,10 +72,8 @@ apply();
 // Measure the original panels; preserve their nodes, listeners and visibility owners.
 function layoutTopPanels(){
   const root=document.documentElement;
-  const actions=document.querySelector?.('#viewportActionControls');
-  root.style?.setProperty('--boxlab-snap-bottom-offset',current.selectTop?'0px':((actions?.getBoundingClientRect().height||206)+8)+'px');
   let top=8;
-  for(const [key,id,property] of [['modeTop','selectionModes',null],['snapTop','viewportSnapControls','--boxlab-snap-top'],['selectTop','viewportActionControls','--boxlab-select-top']]){
+  for(const [key,id,property] of [['modeTop','selectionModes',null],['selectTop','viewportActionControls','--boxlab-select-top']]){
     const panel=document.querySelector?.('#'+id);
     if(property)root.style?.setProperty(property,top+'px');
     if(current[key]&&panel)top+=panel.getBoundingClientRect().height+8;
@@ -87,7 +81,7 @@ function layoutTopPanels(){
 }
 if(typeof ResizeObserver==='function'){
   const observer=new ResizeObserver(layoutTopPanels);
-  const watch=()=>{for(const id of ['selectionModes','viewportSnapControls','viewportActionControls']){const panel=document.querySelector('#'+id);if(panel)observer.observe(panel);}layoutTopPanels();};
+  const watch=()=>{for(const id of ['selectionModes','viewportActionControls']){const panel=document.querySelector('#'+id);if(panel)observer.observe(panel);}layoutTopPanels();};
   window.addEventListener('boxlab-general-settings-change',watch);
   window.addEventListener('resize',layoutTopPanels);
   document.addEventListener('DOMContentLoaded',watch);

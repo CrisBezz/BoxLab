@@ -28,7 +28,7 @@ export function installViewportSelectionPanel(doc=document){
 #viewportSelectionPanel #objectManagementTools{padding:8px!important}
 #viewportActionControls #viewportSelectionBtn{font-size:8px;letter-spacing:.02em}
 @media(max-width:500px){
- #viewportSnapControls,#viewportActionControls{left:8px}
+ #viewportActionControls{left:8px}
 }
 `;doc.head.append(style);
  return {toggle,close,panel,button,drawer};

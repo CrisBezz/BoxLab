@@ -161,9 +161,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1198",
+      "url": "./src/drawer-ui.js?v=0.36.18.1199",
       "target": "src/drawer-ui.js",
-      "sha256": "c8a115954119a1632982a27ffc3100deb4058f74e6680e77396d3d70244d8b1a"
+      "sha256": "1ceedd46749bde4c298527c813cbcb760bbb51cfe47368552dd952ffe867eec1"
     },
     {
       "owner": "index.html",
@@ -297,9 +297,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/main.js?v=0.36.18.1190",
+      "url": "./src/main.js?v=0.36.18.1199",
       "target": "src/main.js",
-      "sha256": "01e45633817239b389213057ea3abcac3c9989d61414ca3d97d7cb15d52a8752",
+      "sha256": "3674b2005893fd2b959dba429ce83ea2935d0ea3fdaee66848909e4ac64bb741",
       "sourceVersion": "0.35.1"
     },
     {
@@ -378,7 +378,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1198",
+      "url": "./src/release-version.js?v=0.36.18.1199",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -539,9 +539,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/topbar-layout.js?v=0.36.18.1195",
+      "url": "./src/topbar-layout.js?v=0.36.18.1199",
       "target": "src/topbar-layout.js",
-      "sha256": "b678303392ce706c2fbfa51ed8622e5add741cbba1805c27ea2be98093f9d15a"
+      "sha256": "68508a14a7d7f41e06ec928dded4d66e492eadbf7eaa35b63350fda42749ffaf"
     },
     {
       "owner": "index.html",
@@ -575,9 +575,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/view-modes.js?v=0.36.18.1190",
+      "url": "./src/view-modes.js?v=0.36.18.1199",
       "target": "src/view-modes.js",
-      "sha256": "a732beb6ff81c027a6e824f2a9ea6f51b9bf653571b17d545a2fbb79a6471ba0"
+      "sha256": "9bc4c42203ae7b04f94e50f10d952f78eeb724f15e3c8cb387f80b1f02cb50c4"
     },
     {
       "owner": "index.html",
@@ -864,9 +864,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1198",
+      "url": "./face-workflow-layout.js?v=0.36.18.1199",
       "target": "src/face-workflow-layout.js",
-      "sha256": "2a8ff3f6c93cb63c301fc3c0237db4d0d14ba880401b2593ca2e807bfea7994f"
+      "sha256": "79ca83e596de6b36e83ed4f92d70ef2e9e5901d226b2555013297887efec5ec0"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1361,7 +1361,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1198",
+      "url": "./release-version.js?v=0.36.18.1199",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -2038,15 +2038,15 @@
     },
     {
       "owner": "src/topbar-layout.js",
-      "url": "./viewport-selection-panel.js?v=0.36.18.1101",
+      "url": "./viewport-selection-panel.js?v=0.36.18.1199",
       "target": "src/viewport-selection-panel.js",
-      "sha256": "7630be5ab871dc4e97e221835bff07663373e59b5de70c7acef9b372ca2f8923"
+      "sha256": "edef4ef9dade38d2e80b0316231a7ed04fc0f52677fa64e1f8cd7f39213c82e6"
     },
     {
       "owner": "src/topbar-layout.js",
-      "url": "./viewport-toolbar-controls.js?v=0.36.18.1195",
+      "url": "./viewport-toolbar-controls.js?v=0.36.18.1199",
       "target": "src/viewport-toolbar-controls.js",
-      "sha256": "5591c9969400768f1cd4705a5b07c1471879113feb1316f4a962c41d90ea8891"
+      "sha256": "bff3dfc169f252b221d8b457fbd916cca2fcb214c8719b668804e5f467205f6e"
     },
     {
       "owner": "src/total-gizmo.js",
@@ -3326,9 +3326,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1198",
+      "url": "./src/shell-comparison.js?v=0.36.18.1199",
       "target": "src/shell-comparison.js",
-      "sha256": "6a007dff0193f0fe6edda52a7fbf2a1cbc88a1fda76cb916e4e0f08ab602e101"
+      "sha256": "bdb8ee4c45de7130974d64c7f034b6ca89c669a0f8594a7f620545ce55427139"
     },
     {
       "owner": "src/main.js",
@@ -3650,9 +3650,9 @@
     },
     {
       "owner": "src/view-modes.js",
-      "url": "./general-settings.js?v=0.36.18.1190",
+      "url": "./general-settings.js?v=0.36.18.1199",
       "target": "src/general-settings.js",
-      "sha256": "bb5d8effe946ff976bda04fca11337eaf070e40f877a69214a4fd6f73da5f56f"
+      "sha256": "2c81d45da4ccc0292cfa398d76adcd8a1f9c7d4ca8099bdc2a32c3b24fc6a87d"
     },
     {
       "owner": "index.html",

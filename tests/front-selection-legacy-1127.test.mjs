@@ -33,8 +33,8 @@ test('1127 persistent armed fallback shares the authoritative FRONT picker',()=>
  f.context.__boxlabSelectionBridge.pick=()=>null;assert.equal(f.context.pickFace(e,f.state.mesh,f.state.camera),null,'no fallback through an occluder or rejected hit');
 });
 
-test('current requested rail order is Select Lasso DRAG FRONT Paint without changing spacing',()=>{
- const css=read('viewport-toolbar-controls.js');for(const [id,order]of [['viewportSelectionBtn',0],['lassoSelectBtn',1],['dragSelectBtn',2],['frontSelectBtn',3],['viewportPaintBtn',4]])assert(css.includes('#'+id+'{order:'+order+'}'));
+test('current requested rail order is Select Lasso DRAG FRONT Geo Snap Paint without changing spacing',()=>{
+ const css=read('viewport-toolbar-controls.js');for(const [id,order]of [['viewportSelectionBtn',0],['lassoSelectBtn',1],['dragSelectBtn',2],['frontSelectBtn',3],['viewportGeoSnap',4],['viewportPaintBtn',5]])assert(css.includes('#'+id+'{order:'+order+'}'));
 });
 
 test('1127 every live bootstrap import uses the same refreshed module identity',()=>{

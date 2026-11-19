@@ -22,18 +22,38 @@ test('Existing Object owner activates Multi before transform consumers and prese
  c.__boxlabLasso={isArmed:()=>true};hit={id:2,inactive:true};handlers.window.pointerdown(e);assert.equal(activated,1,'armed Lasso retains its gesture');c.__boxlabLasso=null;
  hit={id:2,inactive:true};handlers.window.pointerdown({...e,pointerType:'touch'});handlers.window.pointerup({...e,pointerType:'touch'});assert.equal(activated,2);assert.equal(c.touchTap,null);
 });
-test('Original Snap inputs and lazy Lasso move into the viewport rails; top toolbar icons retain their shared artwork',()=>{
+test('Geo Snap and lazy Lasso share the Select Options rail; top toolbar icons retain their shared artwork',()=>{
  const nodes=new Map(),observers=[];
  class N{constructor(tag){this.tag=tag;this.children=[];this.dataset={};this.listeners={};this.attrs={};}append(...ns){for(const n of ns){if(n.parentElement)n.parentElement.children=n.parentElement.children.filter(x=>x!==n);this.children.push(n);n.parentElement=this;}}setAttribute(k,v){this.attrs[k]=v;}closest(){return this.parentElement;}querySelector(){return this.children.find(n=>n.tag==='span');}addEventListener(t,f){this.listeners[t]=f;}}
  const doc={querySelector:s=>nodes.get(s),createElement:t=>new N(t),body:new N('body'),head:new N('head')};const add=(id,tag='button')=>{const n=new N(tag);nodes.set('#'+id,n);return n;};add('viewportWrap','div');add('selectionModes','div');
- for(const id of ['axisSnapToggle','inferenceSnapToggle']){const input=add(id,'input'),label=new N('label');label.append(input,new N('span'));input.addEventListener('change',()=>{});}
+ const input=add('inferenceSnapToggle','input'),label=new N('label');
+ label.append(input,new N('span'));
+ let toggles=0;
+ input.addEventListener('change',()=>toggles++);
  const depth=add('paintSelectDepth','div'),visible=new N('button'),through=new N('button');let depthClicks=0;depth.append(visible,through);visible.addEventListener('click',()=>depthClicks++);through.addEventListener('click',()=>depthClicks++);
  for(const id of ['undoBtn','redoBtn','frameAllBtn','focusViewBtn'])add(id).addEventListener('click',()=>{});
  const ctx={gizmoIcons,installSelectionInputControls,MutationObserver:class{constructor(fn){observers.push(fn);}observe(){}},document:doc};vm.createContext(ctx);vm.runInContext(read('viewport-toolbar-controls.js').replace(/^import[^\n]+\n/gm,'').replace('export function','function')+'\ninstallViewportToolbarControls();',ctx);const wrap=nodes.get('#viewportWrap');
- assert.deepEqual(wrap.children.map(n=>n.id),['viewportSnapControls','viewportActionControls'],'compact rails are separate viewport children, not a viewport-sized overlay');
+ assert.deepEqual(wrap.children.map(n=>n.id),['viewportActionControls'],'Select Options is a direct viewport child');
  assert.equal(depth.parentElement,undefined);assert.equal(depth.hidden,true);assert.equal(depth.attrs['aria-hidden'],'true');assert.equal(depth.children[0],visible);assert.equal(depth.children[1],through);visible.listeners.click();through.listeners.click();assert.equal(depthClicks,2,'original depth button listeners retained');assert.match(read('viewport-toolbar-controls.js'),/#paintSelectDepth\{display:none!important\}/);
- const snap=wrap.children.find(n=>n.id==='viewportSnapControls'),actions=wrap.children.find(n=>n.id==='viewportActionControls');assert(snap);assert(actions);for(const id of ['axisSnapToggle','inferenceSnapToggle'])assert.equal(nodes.get('#'+id).parentElement.parentElement,snap);
- const lasso=add('lassoSelectBtn');lasso.addEventListener('click',()=>{});observers[0]();assert.equal(lasso.parentElement,actions);assert.match(lasso.innerHTML,/toolbar-label/);assert.ok(lasso.listeners.click);const css=read('viewport-toolbar-controls.js');assert.match(css,/#viewportSnapControls,#viewportActionControls\{[^}]*width:58px/);assert.match(css,/#viewportSnapControls label,#viewportActionControls label\{[^}]*width:48px/);assert.match(css,/#viewportSnapControls\{bottom:calc\(var\(--viewport-action-bottom\) \+ 256px \+ 8px\)\}/);assert.match(css,/html\.boxlab-focus-view #viewportSnapControls,html\.boxlab-focus-view #viewportActionControls\{left:max\(8px,env\(safe-area-inset-left\)\)\}/);assert.match(css,/#viewportWrap\{--viewport-action-bottom:calc\(max\(27px,env\(safe-area-inset-bottom\) \+ 23px\) \+ 52px \+ 8px\)\}/);assert.match(css,/#viewportWrap\{--viewport-action-bottom:calc\(max\(25px,env\(safe-area-inset-bottom\) \+ 21px\) \+ 50px \+ 8px\)\}/);assert.match(css,/#viewportSnapControls,#viewportActionControls\{[^}]*flex-direction:column/);assert.doesNotMatch(css,/#viewportSelectionControls\{[^}]*inset:0/);assert.match(css,/#lassoSelectBtn\{order:1\}[\s\S]*#viewportSelectionBtn\{order:0\}[\s\S]*#viewportPaintBtn\{order:4\}/);assert.match(read('general-settings.js'),/boxlab-snap-top #viewportSnapControls\{top:var\(--boxlab-snap-top,8px\)!important;bottom:auto!important;left:8px!important\}/);assert.equal(nodes.get('#undoBtn').innerHTML,'<svg viewBox="0 0 24 24" aria-hidden="true">'+gizmoIcons.undo+'</svg>');assert.ok(nodes.get('#focusViewBtn').listeners.click);assert.equal(nodes.get('#focusViewBtn').attrs['aria-label'],'Focus view');
+ const actions=wrap.children[0];
+ assert.equal(label.parentElement,actions);
+ assert.equal(label.id,'viewportGeoSnap');
+ assert.equal(input.attrs['aria-label'],'Geo Snap');
+ input.listeners.change();
+ assert.equal(toggles,1);
+ const lasso=add('lassoSelectBtn');
+ lasso.addEventListener('click',()=>{});
+ observers[0]();
+ assert.equal(lasso.parentElement,actions);
+ assert.match(lasso.innerHTML,/toolbar-label/);
+ assert.ok(lasso.listeners.click);
+ const css=read('viewport-toolbar-controls.js');
+ assert.match(css,/#viewportActionControls\{[^}]*width:58px[^}]*flex-direction:column/);
+ assert.match(css,/#frontSelectBtn\{order:3\}/);
+ assert.match(css,/#viewportGeoSnap\{order:4\}/);
+ assert.equal(nodes.get('#undoBtn').innerHTML,'<svg viewBox="0 0 24 24" aria-hidden="true">'+gizmoIcons.undo+'</svg>');
+ assert.ok(nodes.get('#focusViewBtn').listeners.click);
+ assert.equal(nodes.get('#focusViewBtn').attrs['aria-label'],'Focus view');
 });
 test('Object invert lives in authoritative owner; component invert accepts original tap seed',()=>{
  const s=read('object-management.js');const start=s.indexOf('invert(seed=');const end=s.indexOf(',get wholeGroupId',start);let selectedIds=new Set([1]),multiEnabled=false;const c={selectedIds,multiEnabled,objects:()=>[{id:1,visible:true},{id:2,visible:true},{id:3,visible:false}],updateUI(){}};vm.createContext(c);vm.runInContext('const api={'+s.slice(start,end)+'};api.invert([1]);',c);assert.deepEqual([...c.selectedIds],[2]);assert.equal(c.multiEnabled,true);assert.match(read('selection-set-polish.js'),/function invert\(seed=selected\(\)\)/);

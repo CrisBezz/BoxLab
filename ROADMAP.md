@@ -1,3 +1,9 @@
+## .1199 — Geo Snap in Select Options
+
+Remove the Axis Snap button and the separate Snap Options at top left preference. The existing Geo Snap input sits directly below FRONT and follows Select Options at top left. When both top-left preferences are enabled, Select Options sits eight pixels beneath Mode Select.
+
+Device check: toggle GEO SNAP and confirm highlighting and geometry snapping, then toggle Select Options at top left with Mode Select both on and off.
+
 ## .1198 — axis inference for Move and Extrude
 
 Cris confirms .1197 PASS. Protect additive Pencil Vertex taps, including setback vertices and tap-to-toggle. The component Move gizmo now checks nearby coordinates along the active axis when GEO is enabled and the pointer has no direct geometry reference. Selected vertices are excluded. Local axes use the active pivot frame. Face Extrude uses the same coordinate-based behavior along the face normal, with Through contact retaining priority and Repeat bypassing inference.
