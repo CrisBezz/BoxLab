@@ -1,3 +1,9 @@
+## .1197 — keep the Vertex group on Pencil taps
+
+Cris reports .1196 FAIL: after selecting two or three vertices, a setback vertex can replace the selection. The production event fixture reproduced [0,1,2] becoming [3]. Pencil background classification had used the polygon ray even when Vertex Pick Assist claimed the projected marker. Window release cleared the selection before the document picker added the vertex. Pencil background classification now honors the same Vertex Pick Assist hit as the main viewport owner. The regression also checks that tapping the same marker again removes it and tapping empty space still clears.
+
+Device: repeat the failing sequence on the same model using Pencil. The rear tap should add to the group; tap it again to toggle it off. Check an empty-canvas tap still clears. FRONT still controls depth selection.
+
 ## .1196 — Pencil and collapsed-puck Vertex taps
 
 Cris reports FAIL on .1195 because multiple Vertex taps are still intermittent on iPad. The picker now recognizes Pencil contact from the primary button or pressure, matching viewport contact detection. A precise tap on an unselected vertex under the collapsed puck can add it to the selection. Tapping the puck away from another vertex still opens the gizmo. Existing depth policy, additive selection and grouped Bevel remain.
