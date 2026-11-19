@@ -249,7 +249,9 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
     if(event.pointerType!=='pen'||event.target!==canvas)return;
     const contact=(event.buttons&1)===1||event.pressure>0;
     if(!contact)return;
-    const meshHit=pencilHitsEditableMesh(event);
+    // A projected vertex marker can be picked beyond the body silhouette.
+    const vertexHit=globalThis.__boxlabVertexPickAssist?.pick?.(event);
+    const meshHit=vertexHit||pencilHitsEditableMesh(event);
     const modellingToolActive=!!globalThis.__boxlabFaceDirect?.active?.()||!!globalThis.__boxlabMainDirectTool?.ownsModellingGesture?.();
     if(meshHit||modellingToolActive||globalThis.__boxlabLasso?.isArmed?.()){
       penBackgroundTaps.delete(event.pointerId);
