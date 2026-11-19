@@ -66,7 +66,37 @@ function numeric(){const n=Number(valueInput?.value);return Number.isFinite(n)&&
 function clearRefVisual(){refMarker?.remove();refGuide?.remove();refMarker=refGuide=null;}
 function showRefVisual(ref,inferred,camera){clearRefVisual();if(!ref)return;const p=screenPoint(ref.point,camera),q=screenPoint(inferred,camera);const mark=document.createElement('div');mark.style.cssText='position:fixed;pointer-events:none;width:12px;height:12px;border-radius:50%;border:2px solid white;background:#ffe14a;box-shadow:0 0 0 2px #0008;z-index:10000;transform:translate(-50%,-50%)';mark.style.left=`${p.x}px`;mark.style.top=`${p.y}px`;document.body.appendChild(mark);refMarker=mark;const line=document.createElement('div'),dx=q.x-p.x,dy=q.y-p.y;line.style.cssText='position:fixed;pointer-events:none;height:2px;background:#ffe14a;transform-origin:0 50%;z-index:9999;box-shadow:0 0 4px #0008';line.style.left=`${p.x}px`;line.style.top=`${p.y}px`;line.style.width=`${Math.hypot(dx,dy)}px`;line.style.transform=`rotate(${Math.atan2(dy,dx)}rad)`;document.body.appendChild(line);refGuide=line;}
 function referenceUnderPointer(g,event){if(!inferenceSnapOn())return null;const mesh=g.before,camera=g.camera,p=new THREE.Vector2(event.clientX,event.clientY),selectedSet=new Set(g.indices);let bestV=null;mesh.vertices.forEach((v,i)=>{if(selectedSet.has(i))return;const d=screenPoint(v,camera).distanceTo(p);if(d<=REF_VERTEX_PX&&(!bestV||d<bestV.d))bestV={type:'Vertex',index:i,point:v.clone(),d};});if(bestV)return bestV;let bestE=null;const edges=mesh.edges();edges.forEach((e,i)=>{if(selectedSet.has(e.a)&&selectedSet.has(e.b))return;const a=screenPoint(mesh.vertices[e.a],camera),b=screenPoint(mesh.vertices[e.b],camera),ab=b.clone().sub(a),l=ab.lengthSq();if(l<1)return;const t=THREE.MathUtils.clamp(p.clone().sub(a).dot(ab)/l,0,1),q=a.clone().addScaledVector(ab,t),d=p.distanceTo(q);if(d<=REF_EDGE_PX&&(!bestE||d<bestE.d))bestE={type:'Edge',index:i,point:mesh.vertices[e.a].clone().lerp(mesh.vertices[e.b],t),d};});if(bestE)return bestE;const r=canvas.getBoundingClientRect(),ndc=new THREE.Vector2((event.clientX-r.left)/r.width*2-1,-((event.clientY-r.top)/r.height*2-1)),ray=new THREE.Raycaster();ray.setFromCamera(ndc,camera);let bestF=null;mesh.faces.forEach((f,fi)=>{if(f.some(i=>selectedSet.has(i)))return;const pos=[];for(let i=1;i<f.length-1;i++)for(const vi of[f[0],f[i],f[i+1]]){const v=mesh.vertices[vi];pos.push(v.x,v.y,v.z);}if(!pos.length)return;const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));const mat=new THREE.MeshBasicMaterial({side:THREE.DoubleSide}),obj=new THREE.Mesh(geo,mat),hit=ray.intersectObject(obj,false)[0];geo.dispose();mat.dispose();if(hit&&(!bestF||hit.distance<bestF.distance))bestF={type:'Face',index:fi,point:hit.point.clone(),distance:hit.distance};});return bestF;}
-function applyReferenceInference(g,delta,event){const ref=referenceUnderPointer(g,event);if(!ref){clearRefVisual();return{delta,snap:null};}let dir;if(g.axis)dir=axisVector(g.axis,g);else{dir=delta.clone();if(dir.lengthSq()<1e-10)return{delta,snap:null};dir.normalize();}const amount=ref.point.clone().sub(g.center).dot(dir),inferred=g.center.clone().addScaledVector(dir,amount);showRefVisual(ref,inferred,g.camera);return{delta:dir.multiplyScalar(amount),snap:ref};}
+function referenceAlongAxis(g,delta,dir){
+  const pixelsPerUnit=g.axes[g.axis]?.length()??0;
+  if(pixelsPerUnit<2)return null;
+  const selectedSet=new Set(g.indices),candidate=delta.dot(dir);
+  let best=null,nearest=12/pixelsPerUnit;
+  g.before.vertices.forEach((point,index)=>{
+    if(selectedSet.has(index))return;
+    const amount=(point.x-g.center.x)*dir.x+(point.y-g.center.y)*dir.y+(point.z-g.center.z)*dir.z;
+    const distance=Math.abs(amount-candidate);
+    if(distance>nearest||(best&&distance===nearest))return;
+    best={type:'Vertex',index,point};
+    nearest=distance;
+  });
+  return best;
+}
+function applyReferenceInference(g,delta,event){
+  const dir=g.axis?axisVector(g.axis,g):delta.clone().normalize();
+  if(!inferenceSnapOn()||(!g.axis&&delta.lengthSq()<1e-10)){
+    clearRefVisual();
+    return{delta,snap:null};
+  }
+  const ref=referenceUnderPointer(g,event)||(g.axis?referenceAlongAxis(g,delta,dir):null);
+  if(!ref){
+    clearRefVisual();
+    return{delta,snap:null};
+  }
+  const amount=ref.point.clone().sub(g.center).dot(dir);
+  const inferred=g.center.clone().addScaledVector(dir,amount);
+  showRefVisual(ref,inferred,g.camera);
+  return{delta:dir.multiplyScalar(amount),snap:ref};
+}
 function applyExactTransform(requestedTool,requestedConstraint,value,spec=null){
   const n=Number(value),s=state(),mesh=s?.mesh,m=mode(),ids=selected(),indices=selectionVertices(mesh,m,ids);
   const t=requestedTool||tool(),axis=['x','y','z'].includes(requestedConstraint)?requestedConstraint:explicitAxis();

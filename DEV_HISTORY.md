@@ -1,3 +1,9 @@
+## .1198 — axis inference for Move and Extrude
+
+Cris confirms .1197 PASS. Protect additive Pencil Vertex taps, including setback vertices and tap-to-toggle. The component Move gizmo now checks nearby coordinates along the active axis when GEO is enabled and the pointer has no direct geometry reference. Selected vertices are excluded. Local axes use the active pivot frame. Face Extrude uses the same coordinate-based behavior along the face normal, with Through contact retaining priority and Repeat bypassing inference.
+
+Device check: enable GEO, select a component and drag a Move axis toward the coordinate of an unselected vertex off the drag rail. Look for the yellow guide and alignment. Repeat with GEO off and verify free travel along the rail. Repeat in Local orientation, then extrude a face toward the height of an off-rail vertex and check both GEO settings.
+
 ## .1197 — keep the Vertex group on Pencil taps
 
 Cris reports .1196 FAIL: after selecting two or three vertices, a setback vertex can replace the selection. The production event fixture reproduced [0,1,2] becoming [3]. Pencil background classification had used the polygon ray even when Vertex Pick Assist claimed the projected marker. Window release cleared the selection before the document picker added the vertex. Pencil background classification now honors the same Vertex Pick Assist hit as the main viewport owner. The regression also checks that tapping the same marker again removes it and tapping empty space still clears.

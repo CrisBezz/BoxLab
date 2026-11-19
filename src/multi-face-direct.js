@@ -103,6 +103,21 @@ function showRefVisual(ref,inferred,camera){clearRefVisual();const p=screenPoint
 // Reuse bounds and projected endpoints only within this synchronous pointer call.
 // Camera, viewport, source mesh and selection are read fresh on the next event.
 function referenceUnderPointer(event,d){if(event.pointerId===9876||!inferenceToggle?.checked)return null;const m=d.before,camera=d.camera,selectedFaces=new Set(d.faces),selectedVertices=new Set();d.faces.forEach(fi=>(m.faces[fi]||[]).forEach(v=>selectedVertices.add(v)));const rect=canvas.getBoundingClientRect(),projected=[],screenVertex=i=>projected[i]||(projected[i]=screenPoint(m.vertices[i],camera,rect));let bestV=null;m.vertices.forEach((v,i)=>{if(selectedVertices.has(i))return;const sp=screenVertex(i),dist=Math.hypot(event.clientX-sp.x,event.clientY-sp.y);if(dist<=REF_VERTEX_PX&&(!bestV||dist<bestV.d))bestV={type:'Vertex',index:i,point:v.clone(),d:dist};});if(bestV)return bestV;let bestE=null;m.edges().forEach((e,i)=>{if(selectedVertices.has(e.a)&&selectedVertices.has(e.b))return;const a=screenVertex(e.a),b=screenVertex(e.b),vx=b.x-a.x,vy=b.y-a.y,l2=vx*vx+vy*vy;if(l2<1)return;const t=THREE.MathUtils.clamp(((event.clientX-a.x)*vx+(event.clientY-a.y)*vy)/l2,0,1),qx=a.x+vx*t,qy=a.y+vy*t,dist=Math.hypot(event.clientX-qx,event.clientY-qy);if(dist<=REF_EDGE_PX&&(!bestE||dist<bestE.d))bestE={type:'Edge',index:i,point:m.vertices[e.a].clone().lerp(m.vertices[e.b],t),d:dist};});if(bestE)return bestE;setPointer(event);raycaster.setFromCamera(pointer,camera);let bestF=null;m.faces.forEach((f,fi)=>{if(selectedFaces.has(fi))return;const positions=[];for(let i=1;i<f.length-1;i++)for(const vi of[f[0],f[i],f[i+1]]){const v=m.vertices[vi];positions.push(v.x,v.y,v.z);}if(!positions.length)return;const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));const mat=new THREE.MeshBasicMaterial({side:THREE.DoubleSide}),obj=new THREE.Mesh(g,mat),hit=raycaster.intersectObject(obj,false)[0];g.dispose();mat.dispose();if(hit&&(!bestF||hit.distance<bestF.distance))bestF={type:'Face',index:fi,point:hit.point.clone(),distance:hit.distance};});return bestF;}
+function referenceAlongExtrusion(event,d,distance){
+  if(event.pointerId===9876||!inferenceToggle?.checked)return null;
+  const selectedVertices=new Set(d.faces.flatMap(fi=>d.before.faces[fi]||[]));
+  let best=null,nearest=12*.006;
+  d.before.vertices.forEach((point,index)=>{
+    if(selectedVertices.has(index))return;
+    const amount=point.clone().sub(d.regionCenter).dot(d.worldNormal);
+    if(Math.abs(amount)<1e-8||Math.sign(amount)!==Math.sign(distance))return;
+    const error=Math.abs(amount-distance);
+    if(error>nearest||(best&&error===nearest))return;
+    best={type:'Vertex',index,point};
+    nearest=error;
+  });
+  return best;
+}
 function closestPointOnSegment(point,a,b){const ab=b.clone().sub(a),l2=ab.lengthSq();if(l2<1e-12)return a.clone();const t=THREE.MathUtils.clamp(point.clone().sub(a).dot(ab)/l2,0,1);return a.clone().addScaledVector(ab,t);}
 function insetReference(d,ref){const m=d.before,group=m.faceRegionsInfo?.(d.faces);if(!group||!ref?.point)return null;let best=null;for(const region of group.regions||[]){const loop=region.boundaryLoop||[];if(loop.length<3)continue;let minEdge=Infinity,nearest=null,nearestDistance=Infinity;for(let i=0;i<loop.length;i++){const a=m.vertices[loop[i]],b=m.vertices[loop[(i+1)%loop.length]];if(!a||!b)continue;minEdge=Math.min(minEdge,a.distanceTo(b));const q=closestPointOnSegment(ref.point,a,b),distance=q.distanceTo(ref.point);if(distance<nearestDistance){nearestDistance=distance;nearest=q;}}if(!Number.isFinite(minEdge)||minEdge<1e-8||!nearest)continue;const maxDistance=minEdge*.5,amount=THREE.MathUtils.clamp(nearestDistance/maxDistance,.01,.95);const candidate={amount,distance:maxDistance*amount,boundaryPoint:nearest,rawDistance:nearestDistance};if(!best||candidate.rawDistance<best.rawDistance)best=candidate;}return best;}
 
@@ -280,7 +295,7 @@ document.addEventListener('pointermove',event=>{
       return;
     }
   }
-  if(!drag||drag.id!==event.pointerId)return;event.preventDefault();event.stopImmediatePropagation();const dx=event.clientX-drag.x,dy=event.clientY-drag.y;if(!drag.changed&&Math.hypot(dx,dy)<8)return;if(!drag.changed){drag.changed=true;}restore(drag.m,drag.before);let previewFaces=null;if(drag.tool==='extrude'){let distance=(dx*drag.normal.x+dy*drag.normal.y)*.006;const ref=drag.worldNormal?referenceUnderPointer(event,drag):null;if(ref){distance=ref.point.clone().sub(drag.regionCenter).dot(drag.worldNormal);const inferred=drag.regionCenter.clone().addScaledVector(drag.worldNormal,distance);showRefVisual(ref,inferred,drag.camera);drag.snap=ref;}else{clearRefVisual();drag.snap=null;}drag.negativeCut=false;drag.resultFaces=null;
+  if(!drag||drag.id!==event.pointerId)return;event.preventDefault();event.stopImmediatePropagation();const dx=event.clientX-drag.x,dy=event.clientY-drag.y;if(!drag.changed&&Math.hypot(dx,dy)<8)return;if(!drag.changed){drag.changed=true;}restore(drag.m,drag.before);let previewFaces=null;if(drag.tool==='extrude'){let distance=(dx*drag.normal.x+dy*drag.normal.y)*.006;const ref=drag.worldNormal?(referenceUnderPointer(event,drag)||referenceAlongExtrusion(event,drag,distance)):null;if(ref){distance=ref.point.clone().sub(drag.regionCenter).dot(drag.worldNormal);const inferred=drag.regionCenter.clone().addScaledVector(drag.worldNormal,distance);showRefVisual(ref,inferred,drag.camera);drag.snap=ref;}else{clearRefVisual();drag.snap=null;}drag.negativeCut=false;drag.resultFaces=null;
     if(distance<0&&topologySummary(drag.before).closed){
       // Keep established cavity-aware Through target snapping for one source face.
       const contact=drag.faces.length===1?classifySingleFaceContact(drag.before,drag.faces[0],distance,drag.preparedThrough):null;
