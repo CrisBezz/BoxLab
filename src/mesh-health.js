@@ -198,14 +198,30 @@ function renderUVReport(object,mesh){
  uvWorkspace?.setReport(report,`${object?.name||'UVs'} · ${uvSummary.textContent}`);
  return report;
 }
+let viewBeforeChecker=null,viewBeforeEditor=null;
+const renderLook=()=>document.querySelector('#viewportRenderLooks button[data-render].active')?.dataset.render;
+function showUVChecker(){
+ const current=renderLook();
+ if(current&&current!=='uvchecker')viewBeforeChecker=current;
+ document.querySelector('#viewportRenderLooks [data-render="uvchecker"]')?.click();
+}
+function returnTo3D(){
+ const previous=viewBeforeEditor;
+ close();
+ const current=renderLook();
+ if(previous&&previous!==current)document.querySelector(`#viewportRenderLooks button[data-render="${previous}"]`)?.click();
+}
 function openUVEditor(){
- const object=activeObject();if(!active||currentMode()!=='object'||!object||object.id!==objectId)return false;
- uvWorkspace??=createUVWorkspace({canvas:uvPreview,note:uvNote,controls:uvRotate.parentElement,onDone:close,onTransform:transformUVs,getTransformContext:()=>({object:activeObject(),mesh:liveMesh(),payload:uvPayload}),canEdit:()=>!uvRotate.disabled,onHistory:action=>{
+ const object=activeObject();if(!active||currentMode()!=='object'||!object||object.id!==objectId||uvWorkspace?.active)return false;
+ uvWorkspace??=createUVWorkspace({canvas:uvPreview,note:uvNote,controls:uvRotate.parentElement,onDone:returnTo3D,onTransform:transformUVs,getTransformContext:()=>({object:activeObject(),mesh:liveMesh(),payload:uvPayload}),canEdit:()=>!uvRotate.disabled,onHistory:action=>{
   document.querySelector(action==='redo'?'#redoBtn':'#undoBtn')?.click();
   queueMicrotask(()=>{if(active)renderReport();});
  }});
  if(!uvWorkspace)return false;
- renderReport();if(!uvWorkspace.open())return false;panel.hidden=true;toolSession()?.suspendSurface?.(sessionId());return true;
+ const current=renderLook();
+ renderReport();if(!uvWorkspace.open())return false;
+ viewBeforeEditor=current==='uvchecker'?(viewBeforeChecker??current):current;
+ panel.hidden=true;toolSession()?.suspendSurface?.(sessionId());return true;
 }
 uvOpen.addEventListener('click',openUVEditor);
 uvDetails.addEventListener('toggle',()=>{if(active&&uvDetails.open)renderUVReport(activeObject(),liveMesh());});
@@ -454,7 +470,7 @@ function flipNormals(){return commitTopologyAction(flipAllFaces,'Flip Normals');
 function triangulate(){return commitTopologyAction(triangulateMesh,'Triangulate');}
 function close(){
   if(!active)return;
-  autoUVFlow?.cancel();active=false;objectId=null;uvWorkspace?.close();panel.hidden=true;toolSession()?.end?.(sessionId());
+  autoUVFlow?.cancel();active=false;objectId=null;viewBeforeChecker=viewBeforeEditor=null;uvWorkspace?.close();panel.hidden=true;toolSession()?.end?.(sessionId());
   setStatus(uvOnly?'UV tools closed':'Mesh Health closed • no geometry changed');
 }
 function launch({uvOnly:showUV=false}={}){
@@ -509,7 +525,7 @@ const facegroupUVFlow=installFacegroupUVWorkflow({document,host:uvDetails,notice
   return {object:activeObject(),mesh:liveMesh(),scene,body,owner:globalThis.__boxlabExportAs,history:globalThis.__boxlabObjectHistory};
  },onCommit:()=>{
   manager()?.saveActive?.();
-  document.querySelector('#viewportRenderLooks [data-render="uvchecker"]')?.click();
+  showUVChecker();
   renderReport();
  }
 });
@@ -520,5 +536,5 @@ const autoUVFlow=installAutoUnwrapWorkflow({document,host:uvDetails,notice:uvNot
   if(!active||!uvOnly||uvWorkspace?.active||currentMode()!=='object'||activeObject()?.id!==objectId)return null;
   let body;const scene=globalThis.__boxlabBridgeState?.scene;scene?.traverse(o=>{if(o.userData?.kind==='body')body=o;});
   return {object:activeObject(),mesh:liveMesh(),scene,body,owner:globalThis.__boxlabExportAs,history:globalThis.__boxlabObjectHistory};
- },onCommit:()=>{manager()?.saveActive?.();document.querySelector('#viewportRenderLooks [data-render="uvchecker"]')?.click();renderReport();}
+ },onCommit:()=>{manager()?.saveActive?.();showUVChecker();renderReport();}
 });

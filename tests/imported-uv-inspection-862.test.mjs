@@ -72,3 +72,31 @@ test('1000 missing-UV handoff opens the original UV session and puts its reminde
  assert.equal(r.node('meshHealthTitle').textContent,'UV');assert.deepEqual(r.session,['uv-tools']);assert.equal(r.context.__boxlabUVTools.busy,false);
  r.context.__boxlabUVTools.close();assert.equal(r.context.__boxlabUVTools.active,false);
 });
+
+test('Back to 3D restores the entry look or the look before automatic UV Checker',()=>{
+ const r=uiFixture(),query=r.context.document.querySelector;
+ let look='studio',done;
+ r.context.document.querySelector=selector=>{
+  if(selector==='#viewportRenderLooks button[data-render].active')return {dataset:{render:look}};
+  const target=selector.match(/#viewportRenderLooks (?:button)?\[data-render="([^"]+)"\]/)?.[1];
+  return target?{click(){look=target;}}:query(selector);
+ };
+ r.context.createUVWorkspace=options=>{
+  done=options.onDone;
+  return {active:false,setReport(){},open(){this.active=true;return true;},close(){this.active=false;}};
+ };
+ const enter=()=>r.node('meshHealthUVOpen').fire('click');
+ r.context.__boxlabUVTools.open();
+ enter();look='uvimage';enter();done();
+ assert.equal(look,'studio');
+ r.context.__boxlabUVTools.open();
+ look='solid';
+ vm.runInContext('showUVChecker();showUVChecker();',r.context);
+ assert.equal(look,'uvchecker');
+ enter();done();
+ assert.equal(look,'solid');
+ r.context.__boxlabUVTools.open();
+ look='uvchecker';
+ enter();done();
+ assert.equal(look,'uvchecker');
+});

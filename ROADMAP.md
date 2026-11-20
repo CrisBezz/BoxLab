@@ -1,3 +1,9 @@
+## .1201 — restore 3D view after UV editing
+
+Back to 3D and Escape restore the render look captured when UV Editor opened. If Apply UVs automatically enabled UV Checker during the same UV session, returning restores the look before that temporary checker. An explicitly selected UV Checker is retained when there was no automatic switch. Build .1200 completed 3,542 local regression tests with zero failures.
+
+Device check: enter UV Editor from Studio, then from Solid or MatCap, and check each return. Also apply an unwrap from Studio, open UV Editor from the automatic checker, and check that Back to 3D restores Studio.
+
 ## .1200 — UV4B texel density target
 
 Resume the UV roadmap after the selection and toolbar builds. Object → UV now offers Texels/unit for Auto, Guided and Seam Unwrap. Blank uses automatic fit. A positive target sets the area-averaged UV density in model units at the selected map size. Packing retains the requested gutters and chart rotation setting, with bounded retries and validation before preview. A target that cannot fit within the packing limits returns a message and keeps the existing UVs. Apply, Cancel and Undo use the existing UV transaction. Existing-layout repack remains separate work.
