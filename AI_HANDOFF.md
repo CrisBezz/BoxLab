@@ -1,3 +1,9 @@
+## .1203 — UV5A re-unwrap a selected island
+
+Cris confirms .1202 PASS. Protect the right-docked UV menu, restoration of the entry view on Close and the B2 guided-chart Paint regression. UV Editor now offers Re-unwrap Island on a selected island of an unpainted Base mesh. The existing worker re-unwraps the selected source faces, fits the result into their original UV bounds and checks the complete layout for overlaps before a single Undo step. All other island coordinates remain exact. A new local cut can yield multiple islands. Whole-layout, imported and painted refinement and selected merge remain separate.
+
+Device check: on an unpainted Base object with several islands, open UV Editor, tap an island and choose Re-unwrap Island. Compare the other islands and use Undo/Redo.
+
 ## .1202 — UV menu placement and B2 paint regression
 
 Cris reports .1201 FAIL because the required exit is the UV menu Close button. Capture the display mode at UV menu entry and restore it when closing that session, including after an unwrap switches to UV Checker. Dock the existing scrollable UV menu at the upper right in both top-layer and fallback paths.

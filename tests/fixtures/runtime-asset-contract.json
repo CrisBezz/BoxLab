@@ -161,9 +161,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1202",
+      "url": "./src/drawer-ui.js?v=0.36.18.1203",
       "target": "src/drawer-ui.js",
-      "sha256": "2687320116b9b9d457e50e90f968dd8a3826278245ef2d7cf60728d2dfb7a46e"
+      "sha256": "783e76dfd58738bed825a642b776843f20146ed27736b2f46a1e221dfe07e87a"
     },
     {
       "owner": "index.html",
@@ -304,9 +304,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/mesh-health.js?v=0.36.18.1202",
+      "url": "./src/mesh-health.js?v=0.36.18.1203",
       "target": "src/mesh-health.js",
-      "sha256": "475ee0fdc9b1925c158ebdd8d8bb531d310ac5b1fc6ad35be0c8af304843f10c",
+      "sha256": "4e2d702d31468e0618b64d475b7a03d3842cb88a94b7e67f3c123e51d0333d74",
       "sourceVersion": "0.36.18.880"
     },
     {
@@ -378,7 +378,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1202",
+      "url": "./src/release-version.js?v=0.36.18.1203",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -864,9 +864,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1202",
+      "url": "./face-workflow-layout.js?v=0.36.18.1203",
       "target": "src/face-workflow-layout.js",
-      "sha256": "48175095c93e30b708e8185ea642a739ba695b70b397de5e4fada156aa78283b"
+      "sha256": "d364dde39825b5ea54cb54895ebba2bb029ac9708fb49455b986a135a2886abb"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1361,7 +1361,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1202",
+      "url": "./release-version.js?v=0.36.18.1203",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -2372,9 +2372,9 @@
     },
     {
       "owner": "src/mesh-health.js",
-      "url": "./uv-workspace.js?v=0.36.18.1063",
+      "url": "./uv-workspace.js?v=0.36.18.1203",
       "target": "src/uv-workspace.js",
-      "sha256": "1946bdde2391f073658715851c421106e9ad2f7aa10468cdf8d7a8a85c7d9d55"
+      "sha256": "4612a613631a6ee636e7cce5a86cce37e025b777b5cb55b71405df7c1d3a5c8a"
     },
     {
       "owner": "src/uv-workspace.js",
@@ -3326,9 +3326,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1202",
+      "url": "./src/shell-comparison.js?v=0.36.18.1203",
       "target": "src/shell-comparison.js",
-      "sha256": "18b68306472d29f21d6320440224abf0adf647d84ad12e25c0a5c090b77b461a"
+      "sha256": "381e37302fe7b80f82871439da4eac525d09b8415b00534b02a5faa32983bda4"
     },
     {
       "owner": "src/main.js",
@@ -3899,6 +3899,36 @@
       "url": "./guided-uv-net.js?v=0.36.18.1193",
       "target": "src/guided-uv-net.js",
       "sha256": "0ecbce448c0a71a278175066218b3b67bbaa51f44de670dba6f3f2fde04b42e8"
+    },
+    {
+      "owner": "src/mesh-health.js",
+      "url": "./uv-island-refine.js?v=0.36.18.1203",
+      "target": "src/uv-island-refine.js",
+      "sha256": "645980394537ec9363d4215a98f251fd216061e1dba9dbcc8f603cb8038f6df1"
+    },
+    {
+      "owner": "src/mesh-health.js",
+      "url": "./auto-unwrap-job.js?v=0.36.18.1200",
+      "target": "src/auto-unwrap-job.js",
+      "sha256": "77660b27708efe5bdfe3f89954e1163cc68d6e8c0dc5f4e1f5fdeebaf9eb162c"
+    },
+    {
+      "owner": "src/mesh-health.js",
+      "url": "./auto-unwrap-core.js?v=0.36.18.1200",
+      "target": "src/auto-unwrap-core.js",
+      "sha256": "641b00ea54f8923bc7e08381a5ab7fe747fd01eb0022af18c3fe4aae23aece1b"
+    },
+    {
+      "owner": "src/uv-island-refine.js",
+      "url": "./imported-uv-inspection.js?v=0.36.18.951",
+      "target": "src/imported-uv-inspection.js",
+      "sha256": "52dfd22f7cdb37029dd2b0e701e1b43ec5f547e602af0727fe2d3f9dae14ea64"
+    },
+    {
+      "owner": "src/uv-island-refine.js",
+      "url": "./auto-unwrap-core.js?v=0.36.18.1200",
+      "target": "src/auto-unwrap-core.js",
+      "sha256": "641b00ea54f8923bc7e08381a5ab7fe747fd01eb0022af18c3fe4aae23aece1b"
     }
   ]
 }

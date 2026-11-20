@@ -1,3 +1,6 @@
+import {prepareIslandRefinement,fitRefinedIsland} from './uv-island-refine.js?v=0.36.18.1203';
+import {startAutoUnwrapJob} from './auto-unwrap-job.js?v=0.36.18.1200';
+import {autoUVFingerprint} from './auto-unwrap-core.js?v=0.36.18.1200';
 import {installAutoUnwrapWorkflow} from './auto-unwrap-workflow.js?v=0.36.18.1200';
 import {installFacegroupUVWorkflow} from './facegroup-uv-workflow.js?v=0.36.18.1189';
 import {analyzeMeshHealth} from './mesh-health-core.js?v=0.36.18.443';
@@ -6,8 +9,8 @@ import {autoCloseSimpleHoles,simpleBoundaryLoops} from './mesh-auto-close-core.j
 import {boundaryDiagnostics} from './mesh-boundary-diagnostics-core.js?v=0.36.18.443';
 import {unifyFaceWinding,flipAllFaces,triangulateMesh} from './mesh-normals-triangulate-core.js?v=0.36.18.443';
 import {inspectImportedUV} from './imported-uv-inspection.js?v=0.36.18.951';
-import {stitchNativeUVEdge,cutNativeUVEdges,clearNativePaint,rotateImportedUV,flipImportedUV,moveImportedUV,scaleImportedUV,rotateImportedUVByAngle,fitImportedUVToTile,packImportedUVIslands,equalizeImportedUVDensity,createPlanarUV,createFaceAtlasUV,createCoplanarAtlasUV,createBoxUV,createCylinderUV,createSphereUV,createTorusUV} from './imported-uv-edit.js?v=0.36.18.1075';
-import {createUVWorkspace} from './uv-workspace.js?v=0.36.18.1063';
+import {autoUnwrapTargetError,commitAutoUnwrapUV,stitchNativeUVEdge,cutNativeUVEdges,clearNativePaint,rotateImportedUV,flipImportedUV,moveImportedUV,scaleImportedUV,rotateImportedUVByAngle,fitImportedUVToTile,packImportedUVIslands,equalizeImportedUVDensity,createPlanarUV,createFaceAtlasUV,createCoplanarAtlasUV,createBoxUV,createCylinderUV,createSphereUV,createTorusUV} from './imported-uv-edit.js?v=0.36.18.1075';
+import {createUVWorkspace} from './uv-workspace.js?v=0.36.18.1203';
 
 // One-shot Edge action uses the original selected edge indices and native history.
 const cutUVButton=document.createElement('button');
@@ -198,7 +201,7 @@ function renderUVReport(object,mesh){
  uvWorkspace?.setReport(report,`${object?.name||'UVs'} · ${uvSummary.textContent}`);
  return report;
 }
-let uvMenuEntryLook=null;
+let uvMenuEntryLook=null,islandRefinementJob=null;
 const renderLook=()=>document.querySelector('#viewportRenderLooks button[data-render].active')?.dataset.render;
 function showUVChecker(){
  document.querySelector('#viewportRenderLooks [data-render="uvchecker"]')?.click();
@@ -309,7 +312,33 @@ function flipUVs(axis){
 uvFlipU.addEventListener('click',()=>flipUVs('u'));
 uvFlipV.addEventListener('click',()=>flipUVs('v'));
 
+async function refineUVIsland(island,expected){
+ const object=activeObject(),mesh=liveMesh(),payload=object?.glbPassthrough,owner=globalThis.__boxlabExportAs;
+ if(islandRefinementJob)return 'Island refinement is already running';
+ const current=()=>active&&uvWorkspace?.active&&currentMode()==='object'&&object?.id===objectId&&activeObject()===object&&liveMesh()===mesh&&object?.glbPassthrough===payload&&uvWorkspace.selectedIsland===island;
+ if(!current()||expected?.object!==object||expected?.mesh!==mesh||expected?.payload!==payload)return 'Select the UV island again';
+ const reason=autoUnwrapTargetError(object,mesh,owner?.topologySignature);
+ if(reason)return reason;
+ const fingerprint=autoUVFingerprint(mesh),original=JSON.stringify(payload);
+ let job;
+ try{
+  const plan=prepareIslandRefinement(mesh,payload,island,owner);
+  const settings=uvDetails.querySelector('[data-autouv="rotate"]');
+  plan.patch.packing={rotate:settings?.checked!==false};
+  job=startAutoUnwrapJob(plan.patch);islandRefinementJob=job;
+  const candidate=await job.promise;
+  if(islandRefinementJob!==job||!current()||fingerprint!==autoUVFingerprint(mesh)||original!==JSON.stringify(payload))return 'Island changed; re-unwrap it again';
+  const layout=fitRefinedIsland(plan,payload.uvCorners,candidate);
+  const result=commitAutoUnwrapUV(object,mesh,owner.topologySignature,globalThis.__boxlabObjectHistory,layout);
+  if(!result.ok)return result.reason;
+  manager()?.saveActive?.();
+  renderReport();uvWorkspace.retainSelection(plan.faces);
+  return result.changed?'Island re-unwrapped · Undo to restore':'Island unchanged';
+ }catch(error){return error.message;}
+ finally{if(islandRefinementJob===job)islandRefinementJob=null;}
+}
 function transformUVs(kind,a,b,expected){
+ if(kind==='refine')return refineUVIsland(a,expected);
  const object=activeObject(),mesh=liveMesh();
  if(!active||currentMode()!=='object'||!object||object.id!==objectId||!mesh||!uvWorkspace?.active||(!['pack','density'].includes(kind)&&!Number.isInteger(uvWorkspace.selectedIsland)))return false;
  if(expected&&(expected.object!==object||expected.mesh!==mesh||expected.payload!==uvPayload||expected.payload!==object.glbPassthrough))return false;
@@ -462,6 +491,7 @@ function close(){
   if(!active)return;
   const previous=uvMenuEntryLook;
   uvMenuEntryLook=null;
+  islandRefinementJob?.cancel();islandRefinementJob=null;
   autoUVFlow?.cancel();active=false;objectId=null;uvWorkspace?.close();panel.hidden=true;toolSession()?.end?.(sessionId());
   if(previous&&previous!==renderLook())document.querySelector(`#viewportRenderLooks button[data-render="${previous}"]`)?.click();
   setStatus(uvOnly?'UV tools closed':'Mesh Health closed • no geometry changed');
