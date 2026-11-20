@@ -1,3 +1,9 @@
+## .1204 — UV5B marked cuts within a selected island
+
+Cris confirms .1203 PASS. Protect local refinement and locked-island coordinates. Re-unwrap Island now consumes existing Edge-mode seam marks inside the selected island, maps their vertex indices into the worker patch and verifies the required cuts both before and after fitting. Marks on the patch boundary or other islands are ignored. A change to seam marks while the worker runs invalidates the candidate. Existing unpainted Base eligibility and one-step UV history remain. Build .1203 completed 3,545 local tests with zero failures.
+
+Device check: mark an internal shared edge in Edge mode, open UV Editor, select the island containing it and choose Re-unwrap Island. Confirm the marked edge becomes a split and other islands retain their positions. Undo/Redo.
+
 ## .1203 — UV5A re-unwrap a selected island
 
 Cris confirms .1202 PASS. Protect the right-docked UV menu, restoration of the entry view on Close and the B2 guided-chart Paint regression. UV Editor now offers Re-unwrap Island on a selected island of an unpainted Base mesh. The existing worker re-unwraps the selected source faces, fits the result into their original UV bounds and checks the complete layout for overlaps before a single Undo step. All other island coordinates remain exact. A new local cut can yield multiple islands. Whole-layout, imported and painted refinement and selected merge remain separate.

@@ -1,4 +1,4 @@
-import {prepareIslandRefinement,fitRefinedIsland} from './uv-island-refine.js?v=0.36.18.1203';
+import {prepareIslandRefinement,fitRefinedIsland} from './uv-island-refine.js?v=0.36.18.1204';
 import {startAutoUnwrapJob} from './auto-unwrap-job.js?v=0.36.18.1200';
 import {autoUVFingerprint} from './auto-unwrap-core.js?v=0.36.18.1200';
 import {installAutoUnwrapWorkflow} from './auto-unwrap-workflow.js?v=0.36.18.1200';
@@ -10,7 +10,7 @@ import {boundaryDiagnostics} from './mesh-boundary-diagnostics-core.js?v=0.36.18
 import {unifyFaceWinding,flipAllFaces,triangulateMesh} from './mesh-normals-triangulate-core.js?v=0.36.18.443';
 import {inspectImportedUV} from './imported-uv-inspection.js?v=0.36.18.951';
 import {autoUnwrapTargetError,commitAutoUnwrapUV,stitchNativeUVEdge,cutNativeUVEdges,clearNativePaint,rotateImportedUV,flipImportedUV,moveImportedUV,scaleImportedUV,rotateImportedUVByAngle,fitImportedUVToTile,packImportedUVIslands,equalizeImportedUVDensity,createPlanarUV,createFaceAtlasUV,createCoplanarAtlasUV,createBoxUV,createCylinderUV,createSphereUV,createTorusUV} from './imported-uv-edit.js?v=0.36.18.1075';
-import {createUVWorkspace} from './uv-workspace.js?v=0.36.18.1203';
+import {createUVWorkspace} from './uv-workspace.js?v=0.36.18.1204';
 
 // One-shot Edge action uses the original selected edge indices and native history.
 const cutUVButton=document.createElement('button');
@@ -319,21 +319,22 @@ async function refineUVIsland(island,expected){
  if(!current()||expected?.object!==object||expected?.mesh!==mesh||expected?.payload!==payload)return 'Select the UV island again';
  const reason=autoUnwrapTargetError(object,mesh,owner?.topologySignature);
  if(reason)return reason;
+ const marks=[...seamMarks(object,mesh).values()],marksKey=JSON.stringify(marks);
  const fingerprint=autoUVFingerprint(mesh),original=JSON.stringify(payload);
  let job;
  try{
-  const plan=prepareIslandRefinement(mesh,payload,island,owner);
+  const plan=prepareIslandRefinement(mesh,payload,island,owner,marks);
   const settings=uvDetails.querySelector('[data-autouv="rotate"]');
   plan.patch.packing={rotate:settings?.checked!==false};
   job=startAutoUnwrapJob(plan.patch);islandRefinementJob=job;
   const candidate=await job.promise;
-  if(islandRefinementJob!==job||!current()||fingerprint!==autoUVFingerprint(mesh)||original!==JSON.stringify(payload))return 'Island changed; re-unwrap it again';
+  if(islandRefinementJob!==job||!current()||fingerprint!==autoUVFingerprint(mesh)||original!==JSON.stringify(payload)||marksKey!==JSON.stringify([...seamMarks(object,mesh).values()]))return 'Island changed; re-unwrap it again';
   const layout=fitRefinedIsland(plan,payload.uvCorners,candidate);
   const result=commitAutoUnwrapUV(object,mesh,owner.topologySignature,globalThis.__boxlabObjectHistory,layout);
   if(!result.ok)return result.reason;
   manager()?.saveActive?.();
   renderReport();uvWorkspace.retainSelection(plan.faces);
-  return result.changed?'Island re-unwrapped · Undo to restore':'Island unchanged';
+  return result.changed?`Island re-unwrapped${plan.markedCount?' · '+plan.markedCount+' marked seams':''} · Undo to restore`:'Island unchanged';
  }catch(error){return error.message;}
  finally{if(islandRefinementJob===job)islandRefinementJob=null;}
 }

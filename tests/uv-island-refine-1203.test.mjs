@@ -37,3 +37,24 @@ test('local unwrap fits the selected island and keeps locked corners and history
  assert.equal(JSON.stringify(payload),before);
  assert.deepEqual(object.glbPassthrough.uvCorners[2],uvCorners[2]);
 });
+
+test('marked cuts refine only the selected island and remain split after fitting',async()=>{
+ const owner=glbOwnerRuntime().c;
+ const mesh=new EditableMesh([[0,0,0],[1,0,0],[2,0,0],[0,1,0],[1,1,0],[2,1,0],[3,0,0],[4,0,0],[4,1,0],[3,1,0]],
+  [[0,1,4,3],[1,2,5,4],[6,7,8,9]]);
+ const uvCorners=[[[.02,.02],[.22,.02],[.22,.42],[.02,.42]],[[.22,.02],[.42,.02],[.42,.42],[.22,.42]],[[.6,.6],[.9,.6],[.9,.9],[.6,.9]]];
+ const payload={version:1,source:'boxlab',uvTopologySignature:owner.topologySignature(mesh),uvCorners};
+ const plain=prepareIslandRefinement(mesh,payload,0,owner);
+ const plan=prepareIslandRefinement(mesh,payload,0,owner,[[1,4],[6,7],[0,1]]);
+ assert.equal(plan.markedCount,1);
+ const raw=await runAutoUnwrap(plain.patch,backend);
+ assert.equal(raw.chartCount,1);
+ assert.throws(()=>fitRefinedIsland(plan,uvCorners,raw),/marked seam/i);
+ const cut=await runAutoUnwrap(plan.patch,backend);
+ assert.equal(cut.chartCount,2);
+ const result=fitRefinedIsland(plan,uvCorners,cut);
+ assert.equal(result.uvCorners[2],uvCorners[2]);
+ assert.notDeepEqual(result.uvCorners[0][1],result.uvCorners[1][0]);
+ assert.notDeepEqual(result.uvCorners[0][2],result.uvCorners[1][3]);
+ assert.deepEqual(payload.uvCorners,uvCorners);
+});

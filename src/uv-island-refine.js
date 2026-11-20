@@ -1,7 +1,7 @@
 import {inspectImportedUV,importedUVIslandBounds} from './imported-uv-inspection.js?v=0.36.18.951';
-import {prepareAutoUnwrapMesh,validateAutoUnwrapResult} from './auto-unwrap-core.js?v=0.36.18.1200';
+import {prepareAutoUnwrapMesh,validateAutoUnwrapResult,validateMarkedUVSeams} from './auto-unwrap-core.js?v=0.36.18.1200';
 
-export function prepareIslandRefinement(mesh,payload,island,owner){
+export function prepareIslandRefinement(mesh,payload,island,owner,markedEdges=[]){
  const report=inspectImportedUV(mesh,payload,owner.topologySignature);
  if(report.state!=='ready'||report.missingFaces||report.outsideCorners)throw Error('Refinement requires complete UVs inside tile 0–1');
  const faces=report.faceIslands.flatMap((id,index)=>id===island?[index]:[]);
@@ -13,11 +13,23 @@ export function prepareIslandRefinement(mesh,payload,island,owner){
   if(!vertexIDs.has(id)){vertexIDs.set(id,vertices.length);vertices.push(mesh.vertices[id]);}
   return vertexIDs.get(id);
  }));
- return {faces,bounds,full:prepareAutoUnwrapMesh(mesh,owner),patch:prepareAutoUnwrapMesh({vertices,faces:patchFaces},owner)};
+ const edgeUses=new Map();
+ for(const face of patchFaces)face.forEach((a,i)=>{
+  const b=face[(i+1)%face.length],key=a<b?a+':'+b:b+':'+a;
+  edgeUses.set(key,(edgeUses.get(key)||0)+1);
+ });
+ const patchMarks=markedEdges.flatMap(([a,b])=>{
+  const x=vertexIDs.get(a),y=vertexIDs.get(b);
+  if(x===undefined||y===undefined)return [];
+  const key=x<y?x+':'+y:y+':'+x;
+  return edgeUses.get(key)===2?[[x,y]]:[];
+ });
+ return {faces,bounds,markedCount:patchMarks.length,full:prepareAutoUnwrapMesh(mesh,owner),patch:prepareAutoUnwrapMesh({vertices,faces:patchFaces},owner,{markedEdges:patchMarks})};
 }
 
 export function fitRefinedIsland(plan,original,result){
  validateAutoUnwrapResult(plan.patch,result,{overlaps:false});
+ validateMarkedUVSeams(plan.patch,result.uvCorners);
  const source=importedUVIslandBounds(result.uvCorners,plan.faces.map((_,i)=>i));
  const target=plan.bounds,spanU=source.maxU-source.minU,spanV=source.maxV-source.minV;
  const scale=.98*Math.min((target.maxU-target.minU)/spanU,(target.maxV-target.minV)/spanV);
@@ -30,5 +42,6 @@ export function fitRefinedIsland(plan,original,result){
   ]);
  });
  validateAutoUnwrapResult(plan.full,{uvCorners});
+ validateMarkedUVSeams(plan.patch,plan.faces.map(face=>uvCorners[face]));
  return {uvCorners};
 }
