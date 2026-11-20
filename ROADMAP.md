@@ -1,3 +1,9 @@
+## .1200 — UV4B texel density target
+
+Resume the UV roadmap after the selection and toolbar builds. Object → UV now offers Texels/unit for Auto, Guided and Seam Unwrap. Blank uses automatic fit. A positive target sets the area-averaged UV density in model units at the selected map size. Packing retains the requested gutters and chart rotation setting, with bounded retries and validation before preview. A target that cannot fit within the packing limits returns a message and keeps the existing UVs. Apply, Cancel and Undo use the existing UV transaction. Existing-layout repack remains separate work.
+
+Device check: unwrap an unpainted mesh with Auto density and note the achieved value. Enter a lower value and rerun, then inspect the new readout and Apply/Undo. Try a target well above the original result and confirm no Apply is offered.
+
 ## .1199 — Geo Snap in Select Options
 
 Remove the Axis Snap button and the separate Snap Options at top left preference. The existing Geo Snap input sits directly below FRONT and follows Select Options at top left. When both top-left preferences are enabled, Select Options sits eight pixels beneath Mode Select.

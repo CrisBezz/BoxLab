@@ -123,25 +123,38 @@ export function validateMarkedUVSeams(input,uvCorners){
 const defaultPacking={mapSize:1024,gutter:4,rotate:true};
 
 function resolvePacking(settings={}){
- const {mapSize,gutter,rotate}={...defaultPacking,...settings};
+ const {mapSize,gutter,rotate,density=null}={...defaultPacking,...settings};
  if(![1024,2048].includes(mapSize)||![2,4,8,16].includes(gutter)||typeof rotate!=='boolean')fail('Invalid UV packing settings');
- return {mapSize,gutter,rotate};
+ if(density!==null&&(!Number.isFinite(density)||density<=0))fail('Enter a positive texel density or leave it blank for Auto');
+ return density===null?{mapSize,gutter,rotate}:{mapSize,gutter,rotate,density};
 }
 
 // xatlas trims its outer pad. Keep that border in the exported unit tile,
 // and compensate its inter-chart dilation for the actual packed dimensions.
-function packAtlas(atlas,packing){
- const {mapSize,gutter,rotate}=packing,interior=mapSize-2*gutter;
+function packAtlas(input,atlas,sourceIndices,packing,expectedCharts){
+ const {mapSize,gutter,rotate,density}=packing,interior=mapSize-2*gutter;
  const options={resolution:interior,padding:gutter,bilinear:true,rotateCharts:rotate,rotateChartsToAxis:rotate};
  for(let attempt=0;attempt<5;attempt++){
   atlas.packCharts(options);
   const side=Math.max(atlas.width,atlas.height);
   if(!side||atlas.atlasCount!==1)fail('UV packing needs one valid atlas');
-  const required=Math.ceil(gutter*side/interior);
-  if(options.padding>=required)return;
+  const result=density===undefined?null:readAtlas(input,atlas,sourceIndices,packing,expectedCharts);
+  const ratio=result?density/result.quality.texelsPerUnit:1;
+  if(ratio>1+1e-9)fail('Target density does not fit with these packing settings; lower the target or choose Auto');
+  // Uniformly reduce the whole layout, compensating the atlas dilation
+  // before scaling so adjacent islands still retain their requested gutters.
+  const scale=Math.min(1,ratio),required=Math.ceil(gutter*side/(interior*scale));
+  if(options.padding>=required){
+   if(!result)return readAtlas(input,atlas,sourceIndices,packing,expectedCharts);
+   const uvCorners=result.uvCorners.map(face=>face.map(point=>point.map(value=>.5+(value-.5)*scale)));
+   validateAutoUnwrapResult(input,{uvCorners});
+   validateMarkedUVSeams(input,uvCorners);
+   return {...result,uvCorners,quality:measureLayout(input,uvCorners,mapSize)};
+  }
+  if(!Number.isFinite(required)||required>=interior/2)break;
   options.padding=required+1;
  }
- fail('Could not fit the requested UV gutter within the packing limit');
+ fail(density===undefined?'Could not fit the requested UV gutter within the packing limit':'Could not preserve the requested gutter at this density; adjust the target or choose Auto');
 }
 
 function measureLayout(input,uvCorners,mapSize){
@@ -199,8 +212,7 @@ function chartMesh(input,backend,materials,packing){
   if(materials)declaration.faceMaterialData=Uint32Array.from(input.triangles,t=>materials[t.face]);
   atlas.addMesh(declaration);
   atlas.computeCharts({maxIterations:2});
-  packAtlas(atlas,packing);
-  return readAtlas(input,atlas,input.indices,packing);
+  return packAtlas(input,atlas,input.indices,packing);
  }finally{atlas.delete();}
 }
 
@@ -222,8 +234,7 @@ function packGuidedNets(input,backend,{uvCorners,chartFaces},packing){
   const indexData=Uint32Array.from(input.triangles.flatMap(t=>t.corners.map(c=>cornerIndices[t.face][c])));
   atlas.addUvMesh({vertexUvData:Float32Array.from(uvData),vertexCount:uvData.length/2,vertexStride:8,indexData,indexCount:indexData.length,faceMaterialData:Uint32Array.from(input.triangles,t=>faceChart[t.face])});
   atlas.computeCharts({});
-  packAtlas(atlas,packing);
-  const result=readAtlas(input,atlas,indexData,packing,faceChart);
+  const result=packAtlas(input,atlas,indexData,packing,faceChart);
   if(result.chartCount!==chartFaces.length)fail('Guided packing changed the net chart count');
   return result;
  }finally{atlas.delete();}

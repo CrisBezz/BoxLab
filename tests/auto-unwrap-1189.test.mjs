@@ -158,3 +158,31 @@ test('1194 packing reserves pixel gutters at 1024 and 2048 and reports finite la
   assert(result.quality.maxStretch>=1&&result.quality.maxStretch<1.02);
  }
 });
+
+test('1200 density target preserves chart gaps, seams and corner mapping',async()=>{
+ const mesh=new EditableMesh(
+  [[0,0,0],[4,0,0],[4,1,0],[0,1,0],[8,0,0],[8,1,0]],
+  [[0,1,2,3],[1,4,5,2]]);
+ mesh.faceGroups=['left','right'];
+ for(const mapSize of [1024,2048]){
+  const gutter=8;
+  const input=prepareAutoUnwrapMesh(mesh,owner,{guided:true,markedEdges:[[1,2]]});
+  input.packing={mapSize,gutter,rotate:false};
+  const auto=await runAutoUnwrap(input,backend);
+  const density=auto.quality.texelsPerUnit*.7;
+  input.packing.density=density;
+  const result=await runAutoUnwrap(input,backend);
+  assert.equal(result.chartCount,2);
+  assert(Math.abs(result.quality.texelsPerUnit/density-1)<1e-9);
+  assert(result.quality.maxStretch<1.02);
+  assert(validateAutoUnwrapResult(input,result));
+  const bounds=result.uvCorners.map(face=>[0,1].map(axis=>{
+   const values=face.map(uv=>uv[axis]*mapSize);
+   return [Math.min(...values),Math.max(...values)];
+  }));
+  const gaps=bounds[0].map(([lo,hi],i)=>Math.max(0,lo-bounds[1][i][1],bounds[1][i][0]-hi));
+  assert(Math.hypot(...gaps)>=2*gutter-1e-6);
+  input.packing.density=1e9;
+  await assert.rejects(runAutoUnwrap(input,backend),/density does not fit/);
+ }
+});

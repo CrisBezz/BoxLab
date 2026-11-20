@@ -1,5 +1,5 @@
 import * as watlas from './uv-vendor/watlas.js?v=0.36.18.1189';
-import {runAutoUnwrap} from './auto-unwrap-core.js?v=0.36.18.1194';
+import {runAutoUnwrap} from './auto-unwrap-core.js?v=0.36.18.1200';
 self.onmessage=async event=>{
  try{
   self.postMessage({stage:'Loading unwrap engine'});
