@@ -1,3 +1,11 @@
+## .1202 — UV menu placement and B2 paint regression
+
+Cris reports .1201 FAIL because the required exit is the UV menu Close button. Capture the display mode at UV menu entry and restore it when closing that session, including after an unwrap switches to UV Checker. Dock the existing scrollable UV menu at the upper right in both top-layer and fallback paths.
+
+Continue the B2 roadmap with a regression using actual xatlas Guided Unwrap, two multi-face charts, a marked shared seam and the existing Pencil Paint UI. Exercise continuous Colour, Roughness, Metalness and Opacity, cancellation, Done/navigation, Undo/Redo and UV preservation. No change to the paint raster.
+
+Device check: enter UV from Studio, apply an unwrap, examine the checker with the menu at the right, then tap Close without opening UV Editor. Repeat from Solid. Paint a continuous stroke across the seam between two charts and check Done/Undo/Redo.
+
 ## .1201 — restore 3D view after UV editing
 
 Back to 3D and Escape restore the render look captured when UV Editor opened. If Apply UVs automatically enabled UV Checker during the same UV session, returning restores the look before that temporary checker. An explicitly selected UV Checker is retained when there was no automatic switch. Build .1200 completed 3,542 local regression tests with zero failures.

@@ -6,10 +6,18 @@ try{
  browser=await chromium.launch({headless:true,...(process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH?{executablePath:process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH}:{}),args:['--no-sandbox','--enable-unsafe-swiftshader','--use-angle=swiftshader']});const page=await browser.newPage({viewport:{width:1366,height:900}}),errors=[];page.on('pageerror',e=>errors.push(e.message));
  await page.goto('http://127.0.0.1:'+server.address().port);await page.waitForFunction(()=>globalThis.__boxlabUVTools&&globalThis.__boxlabObjectHistory&&globalThis.__boxlabExportAs);
  await page.evaluate(()=>{document.querySelector('#selectionModes button[data-mode="object"]').click();globalThis.__boxlabUVTools.open();});
+ const host=page.locator('#boxlabToolSessionHost');
+ const bounds=await host.boundingBox();
+ assert(bounds&&bounds.x>page.viewportSize().width/2,'UV menu stays on the right');
+ assert.match(await page.locator('#viewportRenderLooks button.active').getAttribute('data-render'),/^studio$/);
  const state=()=>page.evaluate(()=>{const m=globalThis.__boxlabObjectManager,o=m.objects.find(o=>o.id===m.activeId),mesh=globalThis.__boxlabBridgeState.mesh;return{geometry:JSON.stringify([mesh.vertices,mesh.faces,mesh.faceGroups]),uv:JSON.stringify(o.glbPassthrough??null)};});const before=await state();
  await page.locator('[data-autouv="preview"]').click();await page.waitForFunction(()=>document.querySelector('[data-autouv="apply"]').hidden===false,{},{timeout:60000});assert.deepEqual(await state(),before,'preview must be private');
  await page.locator('[data-autouv="cancel"]').click();assert.deepEqual(await state(),before,'cancel must preserve UVs');
  await page.locator('[data-autouv="preview"]').click();await page.waitForFunction(()=>!document.querySelector('[data-autouv="apply"]').hidden,{},{timeout:60000});await page.locator('[data-autouv="apply"]').click();const after=await state();assert.equal(after.geometry,before.geometry);assert.notEqual(after.uv,before.uv);
+ assert.equal(await page.locator('#viewportRenderLooks button.active').getAttribute('data-render'),'uvchecker');
+ await page.locator('#meshHealthClose').click();
+ assert.equal(await page.locator('#viewportRenderLooks button.active').getAttribute('data-render'),'studio');
+ await page.evaluate(()=>globalThis.__boxlabUVTools.open());
  await page.locator('#undoBtn').click();assert.deepEqual(await state(),before);await page.locator('#redoBtn').click();assert.deepEqual(await state(),after);
  await page.evaluate(()=>{
    const mesh=globalThis.__boxlabBridgeState.mesh;

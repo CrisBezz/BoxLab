@@ -198,29 +198,19 @@ function renderUVReport(object,mesh){
  uvWorkspace?.setReport(report,`${object?.name||'UVs'} · ${uvSummary.textContent}`);
  return report;
 }
-let viewBeforeChecker=null,viewBeforeEditor=null;
+let uvMenuEntryLook=null;
 const renderLook=()=>document.querySelector('#viewportRenderLooks button[data-render].active')?.dataset.render;
 function showUVChecker(){
- const current=renderLook();
- if(current&&current!=='uvchecker')viewBeforeChecker=current;
  document.querySelector('#viewportRenderLooks [data-render="uvchecker"]')?.click();
-}
-function returnTo3D(){
- const previous=viewBeforeEditor;
- close();
- const current=renderLook();
- if(previous&&previous!==current)document.querySelector(`#viewportRenderLooks button[data-render="${previous}"]`)?.click();
 }
 function openUVEditor(){
  const object=activeObject();if(!active||currentMode()!=='object'||!object||object.id!==objectId||uvWorkspace?.active)return false;
- uvWorkspace??=createUVWorkspace({canvas:uvPreview,note:uvNote,controls:uvRotate.parentElement,onDone:returnTo3D,onTransform:transformUVs,getTransformContext:()=>({object:activeObject(),mesh:liveMesh(),payload:uvPayload}),canEdit:()=>!uvRotate.disabled,onHistory:action=>{
+ uvWorkspace??=createUVWorkspace({canvas:uvPreview,note:uvNote,controls:uvRotate.parentElement,onDone:close,onTransform:transformUVs,getTransformContext:()=>({object:activeObject(),mesh:liveMesh(),payload:uvPayload}),canEdit:()=>!uvRotate.disabled,onHistory:action=>{
   document.querySelector(action==='redo'?'#redoBtn':'#undoBtn')?.click();
   queueMicrotask(()=>{if(active)renderReport();});
  }});
  if(!uvWorkspace)return false;
- const current=renderLook();
  renderReport();if(!uvWorkspace.open())return false;
- viewBeforeEditor=current==='uvchecker'?(viewBeforeChecker??current):current;
  panel.hidden=true;toolSession()?.suspendSurface?.(sessionId());return true;
 }
 uvOpen.addEventListener('click',openUVEditor);
@@ -470,7 +460,10 @@ function flipNormals(){return commitTopologyAction(flipAllFaces,'Flip Normals');
 function triangulate(){return commitTopologyAction(triangulateMesh,'Triangulate');}
 function close(){
   if(!active)return;
-  autoUVFlow?.cancel();active=false;objectId=null;viewBeforeChecker=viewBeforeEditor=null;uvWorkspace?.close();panel.hidden=true;toolSession()?.end?.(sessionId());
+  const previous=uvMenuEntryLook;
+  uvMenuEntryLook=null;
+  autoUVFlow?.cancel();active=false;objectId=null;uvWorkspace?.close();panel.hidden=true;toolSession()?.end?.(sessionId());
+  if(previous&&previous!==renderLook())document.querySelector(`#viewportRenderLooks button[data-render="${previous}"]`)?.click();
   setStatus(uvOnly?'UV tools closed':'Mesh Health closed • no geometry changed');
 }
 function launch({uvOnly:showUV=false}={}){
@@ -479,6 +472,7 @@ function launch({uvOnly:showUV=false}={}){
   if(active)close();
   const reminder=panel.querySelector('#uvToolsNotice');if(reminder){reminder.hidden=true;reminder.textContent='';}
   uvOnly=showUV;
+  uvMenuEntryLook=showUV?renderLook():null;
   panel.querySelector('#meshHealthTitle').textContent=uvOnly?'UV':'Mesh Health';
   panel.querySelector('#meshHealthSubtitle').textContent=uvOnly?'Project · edit UVs':'Inspect · safe repair';
   panel.querySelector('#meshHealthDiagnosticsSummary').hidden=uvOnly;

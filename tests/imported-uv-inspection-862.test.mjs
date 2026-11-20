@@ -73,7 +73,7 @@ test('1000 missing-UV handoff opens the original UV session and puts its reminde
  r.context.__boxlabUVTools.close();assert.equal(r.context.__boxlabUVTools.active,false);
 });
 
-test('Back to 3D restores the entry look or the look before automatic UV Checker',()=>{
+test('Close UV menu restores the entry look even without opening UV Editor',()=>{
  const r=uiFixture(),query=r.context.document.querySelector;
  let look='studio',done;
  r.context.document.querySelector=selector=>{
@@ -85,18 +85,20 @@ test('Back to 3D restores the entry look or the look before automatic UV Checker
   done=options.onDone;
   return {active:false,setReport(){},open(){this.active=true;return true;},close(){this.active=false;}};
  };
- const enter=()=>r.node('meshHealthUVOpen').fire('click');
  r.context.__boxlabUVTools.open();
- enter();look='uvimage';enter();done();
- assert.equal(look,'studio');
- r.context.__boxlabUVTools.open();
- look='solid';
  vm.runInContext('showUVChecker();showUVChecker();',r.context);
  assert.equal(look,'uvchecker');
- enter();done();
- assert.equal(look,'solid');
+ r.node('meshHealthClose').fire('click');
+ assert.equal(look,'studio');
+ look='solid';
  r.context.__boxlabUVTools.open();
+ vm.runInContext('showUVChecker()',r.context);
+ r.node('meshHealthUVOpen').fire('click');
+ done();
+ assert.equal(look,'solid');
  look='uvchecker';
- enter();done();
+ r.context.__boxlabUVTools.open();
+ look='matcap';
+ r.node('meshHealthClose').fire('click');
  assert.equal(look,'uvchecker');
 });
