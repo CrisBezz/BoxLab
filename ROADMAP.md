@@ -1,3 +1,9 @@
+## .1208 — UV5D re-unwrap collected islands together
+
+Cris confirms .1207 PASS. In UV Editor, Add Island collects the currently selected island, Remove Island toggles it out, Clear Set empties the collection and Re-unwrap Together runs the existing bounded worker on the collected faces. Collected islands are highlighted. Compatible adjacent faces can join; marked seams and solver-required cuts remain. Results fit inside the combined old bounds and are overlap-checked against the complete layout. Other island coordinates remain exact. Existing unpainted Base eligibility, cancellation, stale context guards and one UV Undo step apply. UV/history refresh clears the collection. The result reports its patch count.
+
+Device check: select one island, Add Island, select another, Add Island, then Re-unwrap Together. Inspect joined compatible faces, unchanged islands and Undo/Redo. Repeat with a marked connecting seam to retain the split.
+
 ## .1207 — repair Facegroup refinement entry
 
 Cris reports .1206 FAIL with the complete tile 0–1 UV prerequisite. Reuse source corner UVs after a group-label-only signature change when all ordered polygon vertex lists still match exactly. Inspect and validate the private compatible payload, then preserve other region corners in the original refinement transaction. Actual connectivity changes fail the correspondence check.

@@ -70,3 +70,33 @@ test('1060 UV help closes before Escape exits and resets on reopen without chang
   key();assert.equal(done,1);help.open=true;api.close();assert.equal(help.open,false);api.open();assert.equal(help.open,false);api.close();
  }finally{f.restore();}
 });
+
+test('UV Editor collects islands, dispatches Together once, and clears stale membership on refresh',async()=>{
+ const f=browserFixture();
+ try{
+  f.ctx.fill=()=>{};
+  const calls=[],payload={stable:true};
+  const r={state:'ready',islandCount:2,faceIslands:[0,1],bounds:{minU:0,minV:0,maxU:1,maxV:1},previewFaces:[[[.05,.05],[.4,.05],[.4,.4]],[[.6,.6],[.95,.6],[.95,.95]]],previewIslands:[0,1],previewSeams:[]};
+  const api=createUVWorkspace({canvas:f.canvas,note:f.note,controls:f.controls,onDone(){},getTransformContext:()=>({payload}),onTransform:(...args)=>{calls.push(args);return 'Islands re-unwrapped';}});
+  api.setReport(r,'Two islands');
+  api.open();
+  const root=f.viewport.children[0],collect=root.querySelector('[data-uv="collect"]'),merge=root.querySelector('[data-uv="merge"]');
+  assert.equal(merge.disabled,true);
+  api.retainSelection([0]);collect.fire('click');
+  assert.deepEqual(api.refinementIslands,[0]);
+  api.retainSelection([1]);collect.fire('click');
+  assert.deepEqual(api.refinementIslands,[0,1]);
+  assert.equal(merge.disabled,false);
+  merge.fire('click');await Promise.resolve();await Promise.resolve();
+  assert.equal(calls.length,1);
+  assert.equal(calls[0][0],'merge');
+  assert.deepEqual(calls[0][1],[0,1]);
+  assert.equal(calls[0][3].payload,payload);
+  collect.fire('click');
+  assert.deepEqual(api.refinementIslands,[0]);
+  api.setReport(r,'Refreshed');
+  assert.deepEqual(api.refinementIslands,[]);
+  assert.equal(merge.disabled,true);
+  api.close();
+ }finally{f.restore();}
+});

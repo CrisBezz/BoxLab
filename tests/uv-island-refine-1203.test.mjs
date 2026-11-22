@@ -4,7 +4,7 @@ import {readFileSync} from 'node:fs';
 import {EditableMesh} from '../src/mesh.js';
 import * as backend from '../src/uv-vendor/watlas.js';
 import {runAutoUnwrap} from '../src/auto-unwrap-core.js';
-import {prepareIslandRefinement,prepareFacegroupRefinement,fitRefinedIsland,refinementSource} from '../src/uv-island-refine.js';
+import {prepareIslandRefinement,prepareIslandsRefinement,prepareFacegroupRefinement,fitRefinedIsland,refinementSource} from '../src/uv-island-refine.js';
 import {commitAutoUnwrapUV,autoUnwrapTargetError} from '../src/imported-uv-edit.js';
 import {glbOwnerRuntime} from './helpers/glb-owner-runtime.mjs';
 
@@ -97,4 +97,21 @@ test('Facegroup labels can change after unwrap without invalidating original cor
  mesh.faces[0].reverse();
  assert.equal(refinementSource(mesh,payload,owner),null);
  assert.equal(refinementSource(mesh,null,owner),null);
+});
+
+test('collected islands reflatten as one patch while the uncollected island remains exact',async()=>{
+ const owner=glbOwnerRuntime().c;
+ const mesh=new EditableMesh([[0,0,0],[1,0,0],[2,0,0],[0,1,0],[1,1,0],[2,1,0],[4,0,0],[5,0,0],[5,1,0],[4,1,0]],[[0,1,4,3],[1,2,5,4],[6,7,8,9]]);
+ const uvCorners=[[[.02,.02],[.2,.02],[.2,.42],[.02,.42]],[[.25,.02],[.43,.02],[.43,.42],[.25,.42]],[[.6,.6],[.9,.6],[.9,.9],[.6,.9]]];
+ const payload={version:1,source:'boxlab',uvTopologySignature:owner.topologySignature(mesh),uvCorners};
+ assert.throws(()=>prepareIslandsRefinement(mesh,payload,[0],owner),/two UV islands/);
+ assert.throws(()=>prepareIslandsRefinement(mesh,payload,[0,9],owner),/two UV islands/);
+ const plan=prepareIslandsRefinement(mesh,payload,[0,1],owner);
+ const result=await runAutoUnwrap(plan.patch,backend);
+ assert.equal(result.chartCount,1);
+ const fitted=fitRefinedIsland(plan,uvCorners,result);
+ assert.equal(fitted.uvCorners[2],uvCorners[2]);
+ assert.deepEqual(fitted.uvCorners[0][1],fitted.uvCorners[1][0]);
+ const marked=prepareIslandsRefinement(mesh,payload,[0,1],owner,[[1,4]]);
+ assert.equal((await runAutoUnwrap(marked.patch,backend)).chartCount,2);
 });

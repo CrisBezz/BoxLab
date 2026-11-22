@@ -1,4 +1,4 @@
-import {prepareIslandRefinement,prepareFacegroupRefinement,fitRefinedIsland,refinementSource} from './uv-island-refine.js?v=0.36.18.1207';
+import {prepareIslandRefinement,prepareIslandsRefinement,prepareFacegroupRefinement,fitRefinedIsland,refinementSource} from './uv-island-refine.js?v=0.36.18.1208';
 import {startAutoUnwrapJob} from './auto-unwrap-job.js?v=0.36.18.1200';
 import {autoUVFingerprint} from './auto-unwrap-core.js?v=0.36.18.1200';
 import {installAutoUnwrapWorkflow} from './auto-unwrap-workflow.js?v=0.36.18.1200';
@@ -10,7 +10,7 @@ import {boundaryDiagnostics} from './mesh-boundary-diagnostics-core.js?v=0.36.18
 import {unifyFaceWinding,flipAllFaces,triangulateMesh} from './mesh-normals-triangulate-core.js?v=0.36.18.443';
 import {inspectImportedUV} from './imported-uv-inspection.js?v=0.36.18.951';
 import {autoUnwrapTargetError,commitAutoUnwrapUV,stitchNativeUVEdge,cutNativeUVEdges,clearNativePaint,rotateImportedUV,flipImportedUV,moveImportedUV,scaleImportedUV,rotateImportedUVByAngle,fitImportedUVToTile,packImportedUVIslands,equalizeImportedUVDensity,createPlanarUV,createFaceAtlasUV,createCoplanarAtlasUV,createBoxUV,createCylinderUV,createSphereUV,createTorusUV} from './imported-uv-edit.js?v=0.36.18.1075';
-import {createUVWorkspace} from './uv-workspace.js?v=0.36.18.1204';
+import {createUVWorkspace} from './uv-workspace.js?v=0.36.18.1208';
 
 // One-shot Edge action uses the original selected edge indices and native history.
 const cutUVButton=document.createElement('button');
@@ -338,9 +338,10 @@ uvFlipV.addEventListener('click',()=>flipUVs('v'));
 async function refineUVRegion(island,expected,group=null){
  const object=activeObject(),mesh=liveMesh(),payload=object?.glbPassthrough,owner=globalThis.__boxlabExportAs;
  if(islandRefinementJob)return 'UV refinement is already running';
- const groupMode=group!==null;
- const label=groupMode?'Facegroup':'Island';
- const current=()=>active&&currentMode()==='object'&&object?.id===objectId&&activeObject()===object&&liveMesh()===mesh&&object?.glbPassthrough===payload&&(groupMode?uvOnly&&!uvWorkspace?.active&&refineGroupSelect.value===group:uvWorkspace?.active&&uvWorkspace.selectedIsland===island);
+ const groupMode=group!==null,mergeMode=Array.isArray(island);
+ const label=groupMode?'Facegroup':mergeMode?'Islands':'Island';
+ const selectedKey=mergeMode?JSON.stringify(island):null;
+ const current=()=>active&&currentMode()==='object'&&object?.id===objectId&&activeObject()===object&&liveMesh()===mesh&&object?.glbPassthrough===payload&&(groupMode?uvOnly&&!uvWorkspace?.active&&refineGroupSelect.value===group:uvWorkspace?.active&&(mergeMode?JSON.stringify(uvWorkspace.refinementIslands)===selectedKey:uvWorkspace.selectedIsland===island));
  if(!current()||expected?.object!==object||expected?.mesh!==mesh||expected?.payload!==payload)return `Select the ${label.toLowerCase()} again`;
  const reason=autoUnwrapTargetError(object,mesh,owner?.topologySignature);
  if(reason)return reason;
@@ -352,7 +353,7 @@ async function refineUVRegion(island,expected,group=null){
  const fingerprint=autoUVFingerprint(mesh),original=JSON.stringify(payload);
  let job;
  try{
-  const plan=groupMode?prepareFacegroupRefinement(mesh,payload,group,owner,marks):prepareIslandRefinement(mesh,payload,island,owner,marks);
+  const plan=groupMode?prepareFacegroupRefinement(mesh,payload,group,owner,marks):mergeMode?prepareIslandsRefinement(mesh,payload,island,owner,marks):prepareIslandRefinement(mesh,payload,island,owner,marks);
   const settings=uvDetails.querySelector('[data-autouv="rotate"]');
   plan.patch.packing={rotate:settings?.checked!==false};
   job=startAutoUnwrapJob(plan.patch);islandRefinementJob=job;
@@ -364,12 +365,12 @@ async function refineUVRegion(island,expected,group=null){
   manager()?.saveActive?.();
   if(groupMode&&result.changed)showUVChecker();
   renderReport();if(!groupMode)uvWorkspace.retainSelection(plan.faces);
-  return result.changed?`${label} re-unwrapped${plan.markedCount?' · '+plan.markedCount+' marked seams':''} · Undo to restore`:`${label} unchanged`;
+  return result.changed?`${label} re-unwrapped${mergeMode?' · '+candidate.chartCount+' resulting patches':''}${plan.markedCount?' · '+plan.markedCount+' marked seams':''} · Undo to restore`:`${label} unchanged`;
  }catch(error){return error.message;}
  finally{if(islandRefinementJob===job)islandRefinementJob=null;}
 }
 function transformUVs(kind,a,b,expected){
- if(kind==='refine')return refineUVRegion(a,expected);
+ if(kind==='refine'||kind==='merge')return refineUVRegion(a,expected);
  const object=activeObject(),mesh=liveMesh();
  if(!active||currentMode()!=='object'||!object||object.id!==objectId||!mesh||!uvWorkspace?.active||(!['pack','density'].includes(kind)&&!Number.isInteger(uvWorkspace.selectedIsland)))return false;
  if(expected&&(expected.object!==object||expected.mesh!==mesh||expected.payload!==uvPayload||expected.payload!==object.glbPassthrough))return false;

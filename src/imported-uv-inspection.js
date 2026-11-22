@@ -62,7 +62,7 @@ function inspectConnectivity(faces,uvs,report,includeEdgeOwners=false,canJoinFac
  report.previewIslands=report.previewFaceIndices.map(fi=>report.faceIslands[fi]);
  report.previewSeamIslands=seamFaces.map(fi=>report.faceIslands[fi]);
 }
-export function drawImportedUV(canvas,report,{padding=12,center=false,pixelRatio=1,view={},selectedIsland=null,previewOffset=null,previewScale=null,previewRotation=null,checker=false,image=null}={}){
+export function drawImportedUV(canvas,report,{padding=12,center=false,pixelRatio=1,view={},selectedIsland=null,selectedIslands=[],previewOffset=null,previewScale=null,previewRotation=null,checker=false,image=null}={}){
  const ctx=canvas?.getContext?.('2d');if(!ctx)return false;
  const width=canvas.width,height=canvas.height;
  ctx.clearRect(0,0,width,height);ctx.fillStyle='#101722';ctx.fillRect(0,0,width,height);
@@ -99,10 +99,13 @@ export function drawImportedUV(canvas,report,{padding=12,center=false,pixelRatio
   ctx.beginPath();face.forEach((p,i)=>i?ctx.lineTo(px(p,moving),py(p,moving)):ctx.moveTo(px(p,moving),py(p,moving)));ctx.closePath();ctx.stroke();
  }
  // Selection is view state only; preserve island colours/seams beneath it.
- if(Number.isInteger(selectedIsland))for(let i=0;i<report.previewFaces.length;i++){
-  if(report.previewIslands?.[i]!==selectedIsland)continue;
+ const highlighted=new Set(selectedIslands);
+ if(Number.isInteger(selectedIsland))highlighted.add(selectedIsland);
+ if(highlighted.size)for(let i=0;i<report.previewFaces.length;i++){
+  if(!highlighted.has(report.previewIslands?.[i]))continue;
+  const moving=report.previewIslands?.[i]===selectedIsland;
   ctx.fillStyle='#ffe06a33';ctx.strokeStyle='#ffe06a';ctx.lineWidth=3*pixelRatio;
-  ctx.beginPath();report.previewFaces[i].forEach((p,j)=>j?ctx.lineTo(px(p,true),py(p,true)):ctx.moveTo(px(p,true),py(p,true)));ctx.closePath();ctx.fill();ctx.stroke();
+  ctx.beginPath();report.previewFaces[i].forEach((p,j)=>j?ctx.lineTo(px(p,moving),py(p,moving)):ctx.moveTo(px(p,moving),py(p,moving)));ctx.closePath();ctx.fill();ctx.stroke();
  }
  ctx.strokeStyle='#ff9f43';ctx.lineWidth=2*pixelRatio;
  for(let i=0;i<(report.previewSeams?.length||0);i++){const [a,b]=report.previewSeams[i],moving=report.previewSeamIslands?.[i]===selectedIsland;ctx.beginPath();ctx.moveTo(px(a,moving),py(a,moving));ctx.lineTo(px(b,moving),py(b,moving));ctx.stroke();}

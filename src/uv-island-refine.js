@@ -28,6 +28,16 @@ export function prepareIslandRefinement(mesh,payload,island,owner,markedEdges=[]
  return prepareRefinementFaces(mesh,payload,faces,owner,markedEdges);
 }
 
+export function prepareIslandsRefinement(mesh,payload,islands,owner,markedEdges=[]){
+ const source=refinementSource(mesh,payload,owner);
+ if(!source)throw Error('Create a complete UV layout with Guided Unwrap first');
+ const report=inspectImportedUV(mesh,source,owner.topologySignature);
+ if(!Array.isArray(islands)||new Set(islands).size<2||islands.some(id=>!Number.isInteger(id)||id<0||id>=report.islandCount))throw Error('Collect at least two UV islands');
+ const selected=new Set(islands);
+ const faces=report.faceIslands.flatMap((id,index)=>selected.has(id)?[index]:[]);
+ return prepareRefinementFaces(mesh,payload,faces,owner,markedEdges);
+}
+
 export function prepareFacegroupRefinement(mesh,payload,group,owner,markedEdges=[]){
  if(!refinementSource(mesh,payload,owner))throw Error('Create a complete UV layout with Guided Unwrap first');
  const faces=mesh.faces.flatMap((_,index)=>mesh.faceGroups?.[index]===group?[index]:[]);
