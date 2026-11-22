@@ -1,3 +1,11 @@
+## .1207 — repair Facegroup refinement entry
+
+Cris reports .1206 FAIL with the complete tile 0–1 UV prerequisite. Reuse source corner UVs after a group-label-only signature change when all ordered polygon vertex lists still match exactly. Inspect and validate the private compatible payload, then preserve other region corners in the original refinement transaction. Actual connectivity changes fail the correspondence check.
+
+If a usable complete starting layout is absent, Re-unwrap Facegroup now starts the existing whole-object Guided Unwrap preview. It requires Apply UVs to create that initial layout; Cancel retains the original data. Complete supported layouts still refine only the selected group. Unpainted Base eligibility remains.
+
+Device check: retry the failing group. If Guided preview is offered, review and Apply UVs, then refine the group. Also assign or rename groups after unwrapping and retry refinement. Verify Undo/Redo and the unaffected groups.
+
 ## .1206 — UV5C Facegroup refinement
 
 Cris confirms .1205 PASS. Paint → UV now offers a Facegroup selector and Re-unwrap Facegroup. The selected group uses the existing patch preparation, worker, fit validation and UV transaction. It can join fragmented charts within a group, follows internal seam marks and fits into the old group bounds. Other groups retain exact UV coordinates. Overlap or invalid results are refused before commit. Unpainted Base geometry with complete tile 0–1 UVs is supported. Close cancels a pending job. Group/object/topology/UV/seam changes invalidate the result.

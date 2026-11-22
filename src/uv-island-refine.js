@@ -1,17 +1,35 @@
 import {inspectImportedUV,importedUVIslandBounds} from './imported-uv-inspection.js?v=0.36.18.951';
 import {prepareAutoUnwrapMesh,validateAutoUnwrapResult,validateMarkedUVSeams} from './auto-unwrap-core.js?v=0.36.18.1200';
 
+// Group labels are part of the legacy signature. Reuse corners only when
+// the ordered polygon vertex lists still match exactly.
+export function refinementSource(mesh,payload,owner){
+ if(!payload)return null;
+ const signature=owner.topologySignature(mesh);
+ const stored=payload.uvTopologySignature;
+ if(stored!==signature){
+  if(typeof stored!=='string')return null;
+  const parts=stored.split('|');
+  if(parts.some(part=>part.indexOf('@')<1))return null;
+  const faceKeys=parts.map(part=>part.slice(0,part.indexOf('@')));
+  if(faceKeys.length!==mesh.faces.length||faceKeys.some((key,index)=>key!==mesh.faces[index].join(',')))return null;
+ }
+ const source=stored===signature?payload:{...payload,uvTopologySignature:signature};
+ const report=inspectImportedUV(mesh,source,owner.topologySignature);
+ return report.state==='ready'&&!report.missingFaces&&!report.outsideCorners?source:null;
+}
+
 export function prepareIslandRefinement(mesh,payload,island,owner,markedEdges=[]){
- const report=inspectImportedUV(mesh,payload,owner.topologySignature);
- if(report.state!=='ready'||report.missingFaces||report.outsideCorners)throw Error('Refinement requires complete UVs inside tile 0–1');
+ const source=refinementSource(mesh,payload,owner);
+ if(!source)throw Error('Create a complete UV layout with Guided Unwrap first');
+ const report=inspectImportedUV(mesh,source,owner.topologySignature);
  const faces=report.faceIslands.flatMap((id,index)=>id===island?[index]:[]);
  if(!faces.length)throw Error('Select a UV island first');
  return prepareRefinementFaces(mesh,payload,faces,owner,markedEdges);
 }
 
 export function prepareFacegroupRefinement(mesh,payload,group,owner,markedEdges=[]){
- const report=inspectImportedUV(mesh,payload,owner.topologySignature);
- if(report.state!=='ready'||report.missingFaces||report.outsideCorners)throw Error('Refinement requires complete UVs inside tile 0–1');
+ if(!refinementSource(mesh,payload,owner))throw Error('Create a complete UV layout with Guided Unwrap first');
  const faces=mesh.faces.flatMap((_,index)=>mesh.faceGroups?.[index]===group?[index]:[]);
  if(!faces.length||typeof group!=='string'||!group.trim())throw Error('Choose a Facegroup first');
  return prepareRefinementFaces(mesh,payload,faces,owner,markedEdges);

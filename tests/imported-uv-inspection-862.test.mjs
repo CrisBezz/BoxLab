@@ -1,4 +1,4 @@
-import {prepareFacegroupRefinement,fitRefinedIsland} from '../src/uv-island-refine.js';
+import {prepareFacegroupRefinement,fitRefinedIsland,refinementSource} from '../src/uv-island-refine.js';
 import {autoUVFingerprint,runAutoUnwrap} from '../src/auto-unwrap-core.js';
 import {autoUnwrapTargetError,commitAutoUnwrapUV} from '../src/imported-uv-edit.js';
 import * as uvBackend from '../src/uv-vendor/watlas.js';
@@ -115,7 +115,7 @@ test('Facegroup menu invokes the original worker transaction and rejects a chang
  r.object.glbPassthrough.uvTopologySignature=signature(r.object.mesh);
  let checkpoints=0,candidate,checker=0;
  Object.assign(r.context,{
-  prepareFacegroupRefinement,fitRefinedIsland,autoUVFingerprint,autoUnwrapTargetError,commitAutoUnwrapUV,
+  prepareFacegroupRefinement,fitRefinedIsland,refinementSource,autoUVFingerprint,autoUnwrapTargetError,commitAutoUnwrapUV,
   showUVChecker(){checker++;},
   __boxlabExportAs:owner.c,
   __boxlabObjectHistory:{capture:()=>({saved:true}),checkpointSnapshot:()=>{checkpoints++;return true;}},
@@ -138,5 +138,17 @@ test('Facegroup menu invokes the original worker transaction and rejects a chang
  await pending;
  assert.equal(r.object.glbPassthrough,before);
  assert.equal(checkpoints,1);
+ r.context.__boxlabUVTools.close();
+});
+
+test('Facegroup action starts the existing Guided preview when starting UVs are absent',async()=>{
+ const r=uiFixture();r.object.mesh.faceGroups=['Panel'];delete r.object.glbPassthrough;
+ Object.assign(r.context,{autoUnwrapTargetError,refinementSource});
+ vm.runInContext('autoUVFlow.previewGuided=async()=>true;',r.context);
+ r.context.__boxlabUVTools.open();
+ r.node('uvRefineFacegroup').value='Panel';
+ await r.node('uvRefineFacegroupBtn').fire('click');
+ assert.equal(r.object.glbPassthrough,undefined);
+ assert.match(r.node('uvToolsNotice').textContent,/Guided UV preview for all groups/);
  r.context.__boxlabUVTools.close();
 });

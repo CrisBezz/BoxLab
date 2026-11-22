@@ -1,4 +1,4 @@
-import {prepareIslandRefinement,prepareFacegroupRefinement,fitRefinedIsland} from './uv-island-refine.js?v=0.36.18.1206';
+import {prepareIslandRefinement,prepareFacegroupRefinement,fitRefinedIsland,refinementSource} from './uv-island-refine.js?v=0.36.18.1207';
 import {startAutoUnwrapJob} from './auto-unwrap-job.js?v=0.36.18.1200';
 import {autoUVFingerprint} from './auto-unwrap-core.js?v=0.36.18.1200';
 import {installAutoUnwrapWorkflow} from './auto-unwrap-workflow.js?v=0.36.18.1200';
@@ -344,6 +344,10 @@ async function refineUVRegion(island,expected,group=null){
  if(!current()||expected?.object!==object||expected?.mesh!==mesh||expected?.payload!==payload)return `Select the ${label.toLowerCase()} again`;
  const reason=autoUnwrapTargetError(object,mesh,owner?.topologySignature);
  if(reason)return reason;
+ if(groupMode&&!refinementSource(mesh,payload,owner)){
+  const ready=await autoUVFlow.previewGuided();
+  return ready?'Guided UV preview for all groups · Apply UVs to create the starting layout':'Review the Guided Unwrap message above';
+ }
  const marks=[...seamMarks(object,mesh).values()],marksKey=JSON.stringify(marks);
  const fingerprint=autoUVFingerprint(mesh),original=JSON.stringify(payload);
  let job;

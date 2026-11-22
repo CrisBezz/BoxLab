@@ -4,7 +4,7 @@ import {readFileSync} from 'node:fs';
 import {EditableMesh} from '../src/mesh.js';
 import * as backend from '../src/uv-vendor/watlas.js';
 import {runAutoUnwrap} from '../src/auto-unwrap-core.js';
-import {prepareIslandRefinement,prepareFacegroupRefinement,fitRefinedIsland} from '../src/uv-island-refine.js';
+import {prepareIslandRefinement,prepareFacegroupRefinement,fitRefinedIsland,refinementSource} from '../src/uv-island-refine.js';
 import {commitAutoUnwrapUV,autoUnwrapTargetError} from '../src/imported-uv-edit.js';
 import {glbOwnerRuntime} from './helpers/glb-owner-runtime.mjs';
 
@@ -80,4 +80,21 @@ test('Facegroup refinement crosses existing island boundaries and locks other gr
  assert.equal(fitRefinedIsland(cutPlan,uvCorners,split).uvCorners[2],uvCorners[2]);
  assert.throws(()=>prepareFacegroupRefinement(mesh,payload,'Missing',owner),/Facegroup/);
  assert.equal(JSON.stringify([mesh,payload]),before);
+});
+
+test('Facegroup labels can change after unwrap without invalidating original corner correspondence',async()=>{
+ const owner=glbOwnerRuntime().c;
+ const mesh=new EditableMesh([[0,0,0],[1,0,0],[2,0,0],[0,1,0],[1,1,0],[2,1,0]],[[0,1,4,3],[1,2,5,4]]);
+ const uvCorners=[[[.02,.02],[.2,.02],[.2,.4],[.02,.4]],[[.6,.6],[.9,.6],[.9,.9],[.6,.9]]];
+ const payload={version:1,source:'boxlab',uvTopologySignature:owner.topologySignature(mesh),uvCorners};
+ mesh.faceGroups=['Panel','Locked'];
+ const before=JSON.stringify(payload);
+ assert(refinementSource(mesh,payload,owner));
+ const plan=prepareFacegroupRefinement(mesh,payload,'Panel',owner);
+ const result=fitRefinedIsland(plan,uvCorners,await runAutoUnwrap(plan.patch,backend));
+ assert.equal(result.uvCorners[1],uvCorners[1]);
+ assert.equal(JSON.stringify(payload),before);
+ mesh.faces[0].reverse();
+ assert.equal(refinementSource(mesh,payload,owner),null);
+ assert.equal(refinementSource(mesh,null,owner),null);
 });
