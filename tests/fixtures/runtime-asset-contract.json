@@ -161,9 +161,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1205",
+      "url": "./src/drawer-ui.js?v=0.36.18.1206",
       "target": "src/drawer-ui.js",
-      "sha256": "46f73decbdaedcbc196667bd28758c0e7c3df13255e54d1502c1daed6a0e1b6b"
+      "sha256": "4fc8e6a5b6bd1de276f4895bc3e608731334701eb7cf427058a636db53d9ecb3"
     },
     {
       "owner": "index.html",
@@ -304,9 +304,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/mesh-health.js?v=0.36.18.1205",
+      "url": "./src/mesh-health.js?v=0.36.18.1206",
       "target": "src/mesh-health.js",
-      "sha256": "3d03cfcca2a113f9b0144e47d8725750db1ee1657f133788ccc21698fb882aef",
+      "sha256": "0accdf1341dd3f9be27e34052cf52b96eb4be897fe7484d53310851fe5007924",
       "sourceVersion": "0.36.18.880"
     },
     {
@@ -378,7 +378,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1205",
+      "url": "./src/release-version.js?v=0.36.18.1206",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -864,9 +864,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1205",
+      "url": "./face-workflow-layout.js?v=0.36.18.1206",
       "target": "src/face-workflow-layout.js",
-      "sha256": "8e65b38ff50ea2cf296203f202a8c9ff776818bb8878ae4d0f2554f525385cb1"
+      "sha256": "92492196ea12a76d43334604a6d2477e96f468394a3627f0e3f16e41c3606c48"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1361,7 +1361,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1205",
+      "url": "./release-version.js?v=0.36.18.1206",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -3326,9 +3326,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1205",
+      "url": "./src/shell-comparison.js?v=0.36.18.1206",
       "target": "src/shell-comparison.js",
-      "sha256": "e62e1bd913e53caec343d67964a4b5acea7e9f5c401842a55e72176f1a6ab484"
+      "sha256": "c9c9452b65a2081f7377956c59b0edf8c9ae6feda484e709e030fdd08e9b441f"
     },
     {
       "owner": "src/main.js",
@@ -3902,9 +3902,9 @@
     },
     {
       "owner": "src/mesh-health.js",
-      "url": "./uv-island-refine.js?v=0.36.18.1204",
+      "url": "./uv-island-refine.js?v=0.36.18.1206",
       "target": "src/uv-island-refine.js",
-      "sha256": "5a2f5cdb607ee0727bf33e767a846bd73fcd11d217721ae23a2d4558a6fa1715"
+      "sha256": "9615d4677622eab0ceec28767af7aec22702b92ada907ac04791a1c8eec775b3"
     },
     {
       "owner": "src/mesh-health.js",

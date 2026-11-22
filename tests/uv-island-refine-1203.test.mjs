@@ -4,7 +4,7 @@ import {readFileSync} from 'node:fs';
 import {EditableMesh} from '../src/mesh.js';
 import * as backend from '../src/uv-vendor/watlas.js';
 import {runAutoUnwrap} from '../src/auto-unwrap-core.js';
-import {prepareIslandRefinement,fitRefinedIsland} from '../src/uv-island-refine.js';
+import {prepareIslandRefinement,prepareFacegroupRefinement,fitRefinedIsland} from '../src/uv-island-refine.js';
 import {commitAutoUnwrapUV,autoUnwrapTargetError} from '../src/imported-uv-edit.js';
 import {glbOwnerRuntime} from './helpers/glb-owner-runtime.mjs';
 
@@ -57,4 +57,27 @@ test('marked cuts refine only the selected island and remain split after fitting
  assert.notDeepEqual(result.uvCorners[0][1],result.uvCorners[1][0]);
  assert.notDeepEqual(result.uvCorners[0][2],result.uvCorners[1][3]);
  assert.deepEqual(payload.uvCorners,uvCorners);
+});
+
+test('Facegroup refinement crosses existing island boundaries and locks other groups',async()=>{
+ const owner=glbOwnerRuntime().c;
+ const mesh=new EditableMesh([[0,0,0],[1,0,0],[2,0,0],[0,1,0],[1,1,0],[2,1,0],[4,0,0],[5,0,0],[5,1,0],[4,1,0]],
+  [[0,1,4,3],[1,2,5,4],[6,7,8,9]]);
+ mesh.faceGroups=['Panel','Panel','Locked'];
+ const uvCorners=[[[.02,.02],[.2,.02],[.2,.42],[.02,.42]],[[.25,.02],[.43,.02],[.43,.42],[.25,.42]],[[.6,.6],[.9,.6],[.9,.9],[.6,.9]]];
+ const payload={version:1,source:'boxlab',uvTopologySignature:owner.topologySignature(mesh),uvCorners};
+ const before=JSON.stringify([mesh,payload]);
+ const plan=prepareFacegroupRefinement(mesh,payload,'Panel',owner);
+ assert.deepEqual(plan.faces,[0,1]);
+ const joined=await runAutoUnwrap(plan.patch,backend);
+ assert.equal(joined.chartCount,1);
+ const result=fitRefinedIsland(plan,uvCorners,joined);
+ assert.equal(result.uvCorners[2],uvCorners[2]);
+ assert.deepEqual(result.uvCorners[0][1],result.uvCorners[1][0]);
+ const cutPlan=prepareFacegroupRefinement(mesh,payload,'Panel',owner,[[1,4]]);
+ const split=await runAutoUnwrap(cutPlan.patch,backend);
+ assert.equal(split.chartCount,2);
+ assert.equal(fitRefinedIsland(cutPlan,uvCorners,split).uvCorners[2],uvCorners[2]);
+ assert.throws(()=>prepareFacegroupRefinement(mesh,payload,'Missing',owner),/Facegroup/);
+ assert.equal(JSON.stringify([mesh,payload]),before);
 });

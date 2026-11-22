@@ -6,6 +6,18 @@ export function prepareIslandRefinement(mesh,payload,island,owner,markedEdges=[]
  if(report.state!=='ready'||report.missingFaces||report.outsideCorners)throw Error('Refinement requires complete UVs inside tile 0–1');
  const faces=report.faceIslands.flatMap((id,index)=>id===island?[index]:[]);
  if(!faces.length)throw Error('Select a UV island first');
+ return prepareRefinementFaces(mesh,payload,faces,owner,markedEdges);
+}
+
+export function prepareFacegroupRefinement(mesh,payload,group,owner,markedEdges=[]){
+ const report=inspectImportedUV(mesh,payload,owner.topologySignature);
+ if(report.state!=='ready'||report.missingFaces||report.outsideCorners)throw Error('Refinement requires complete UVs inside tile 0–1');
+ const faces=mesh.faces.flatMap((_,index)=>mesh.faceGroups?.[index]===group?[index]:[]);
+ if(!faces.length||typeof group!=='string'||!group.trim())throw Error('Choose a Facegroup first');
+ return prepareRefinementFaces(mesh,payload,faces,owner,markedEdges);
+}
+
+function prepareRefinementFaces(mesh,payload,faces,owner,markedEdges){
  const bounds=importedUVIslandBounds(payload.uvCorners,faces);
  if(!(bounds.maxU>bounds.minU&&bounds.maxV>bounds.minV))throw Error('Selected island has no usable UV area');
  const vertexIDs=new Map(),vertices=[];

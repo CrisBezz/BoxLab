@@ -1,3 +1,7 @@
+import {prepareFacegroupRefinement,fitRefinedIsland} from '../src/uv-island-refine.js';
+import {autoUVFingerprint,runAutoUnwrap} from '../src/auto-unwrap-core.js';
+import {autoUnwrapTargetError,commitAutoUnwrapUV} from '../src/imported-uv-edit.js';
+import * as uvBackend from '../src/uv-vendor/watlas.js';
 import {installAutoUnwrapWorkflow} from '../src/auto-unwrap-workflow.js';
 import {installFacegroupUVWorkflow} from '../src/facegroup-uv-workflow.js';
 import test from 'node:test';
@@ -49,7 +53,7 @@ test('862 preview preserves UV orientation and tile reference, bounds dense draw
 });
 function uiFixture(){
  const object=fixture(),nodes=new Map(),events=new Map();
- const node=id=>{if(nodes.has(id))return nodes.get(id);const listeners=new Map(),n={id,hidden:false,style:{},dataset:{},children:[],open:false,addEventListener(t,fn){listeners.set(t,fn);},fire(t){listeners.get(t)?.({});},append(...x){this.children.push(...x);},appendChild(x){this.append(x);},prepend(...x){this.children.unshift(...x);},replaceChildren(){this.children=[];},querySelector(s){return node(s.slice(1));},getContext:()=>canvas().getContext()};nodes.set(id,n);return n;};
+ const node=id=>{if(nodes.has(id))return nodes.get(id);const listeners=new Map(),n={id,hidden:false,style:{},dataset:{},children:[],open:false,addEventListener(t,fn){listeners.set(t,fn);},fire(t){return listeners.get(t)?.({});},append(...x){this.children.push(...x);},appendChild(x){this.append(x);},prepend(...x){this.children.unshift(...x);},replaceChildren(){this.children=[];},querySelector(s){return node(s.slice(1));},getContext:()=>canvas().getContext()};nodes.set(id,n);return n;};
  const launch=node('meshHealthBtn'),activeMode=node('mode');activeMode.dataset.mode='object';const session=[];
  const context={installAutoUnwrapWorkflow:options=>installAutoUnwrapWorkflow({...options,requestFrame:()=>0,cancelFrame(){}}),installFacegroupUVWorkflow:options=>installFacegroupUVWorkflow({...options,requestFrame:()=>0,cancelFrame(){}}),console,inspectImportedUV,drawImportedUV,analyzeMeshHealth,safeRepairMesh,autoCloseSimpleHoles,simpleBoundaryLoops,boundaryDiagnostics,unifyFaceWinding,flipAllFaces,triangulateMesh,
  document:{createElement:()=>node('element'+nodes.size),querySelector:s=>s.includes('button.active')?activeMode:s.startsWith('#')?node(s.slice(1)):node('tools'),querySelectorAll:()=>[]},
@@ -101,4 +105,38 @@ test('Close UV menu restores the entry look even without opening UV Editor',()=>
  look='matcap';
  r.node('meshHealthClose').fire('click');
  assert.equal(look,'uvchecker');
+});
+
+test('Facegroup menu invokes the original worker transaction and rejects a changed group',async()=>{
+ await uvBackend.Initialize({wasmBinary:Buffer.from(fs.readFileSync(new URL('../src/uv-vendor/watlas.wasm.base64',import.meta.url),'utf8'),'base64')});
+ const r=uiFixture();
+ r.object.mesh.faceGroups=['Panel'];
+ r.object.glbPassthrough.source='boxlab';
+ r.object.glbPassthrough.uvTopologySignature=signature(r.object.mesh);
+ let checkpoints=0,candidate,checker=0;
+ Object.assign(r.context,{
+  prepareFacegroupRefinement,fitRefinedIsland,autoUVFingerprint,autoUnwrapTargetError,commitAutoUnwrapUV,
+  showUVChecker(){checker++;},
+  __boxlabExportAs:owner.c,
+  __boxlabObjectHistory:{capture:()=>({saved:true}),checkpointSnapshot:()=>{checkpoints++;return true;}},
+  startAutoUnwrapJob(input){return {promise:runAutoUnwrap(input,uvBackend).then(result=>(candidate=result)),cancel(){}};},
+ });
+ r.context.__boxlabUVTools.open();
+ r.node('uvRefineFacegroup').value='Panel';
+ const original=r.object.glbPassthrough;
+ await r.node('uvRefineFacegroupBtn').fire('click');
+ assert.equal(checkpoints,1);
+ assert.equal(checker,1);
+ assert.notEqual(r.object.glbPassthrough,original);
+ assert.equal(r.node('uvRefineFacegroupBtn').disabled,false);
+ let resolve;
+ r.context.startAutoUnwrapJob=()=>({promise:new Promise(done=>{resolve=done;}),cancel(){}});
+ r.node('uvRefineFacegroup').value='Panel';
+ const pending=r.node('uvRefineFacegroupBtn').fire('click'),before=r.object.glbPassthrough;
+ r.node('uvRefineFacegroup').value='Other';
+ resolve(candidate);
+ await pending;
+ assert.equal(r.object.glbPassthrough,before);
+ assert.equal(checkpoints,1);
+ r.context.__boxlabUVTools.close();
 });

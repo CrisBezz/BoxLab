@@ -1,4 +1,4 @@
-import {prepareIslandRefinement,fitRefinedIsland} from './uv-island-refine.js?v=0.36.18.1204';
+import {prepareIslandRefinement,prepareFacegroupRefinement,fitRefinedIsland} from './uv-island-refine.js?v=0.36.18.1206';
 import {startAutoUnwrapJob} from './auto-unwrap-job.js?v=0.36.18.1200';
 import {autoUVFingerprint} from './auto-unwrap-core.js?v=0.36.18.1200';
 import {installAutoUnwrapWorkflow} from './auto-unwrap-workflow.js?v=0.36.18.1200';
@@ -108,7 +108,7 @@ panel.innerHTML=`
   </div>
   <details id="meshHealthUVDetails">
     <summary class="boxlab-tool-session-section">UVs</summary>
-    <div id="meshHealthUVSummary" class="boxlab-tool-session-subtitle" aria-live="polite"></div>
+    <div class="outliner-actions"><select id="uvRefineFacegroup" aria-label="Facegroup to re-unwrap"></select><button id="uvRefineFacegroupBtn" type="button" title="Re-unwrap this group within its current UV bounds; other groups stay fixed">Re-unwrap Facegroup</button></div><div id="meshHealthUVSummary" class="boxlab-tool-session-subtitle" aria-live="polite"></div>
     <label class="boxlab-tool-session-subtitle">Auto atlas join angle <input id="meshHealthUVAtlasAngle" type="number" min="0" max="30" step="1" value="15" style="width:54px" aria-label="Auto atlas maximum edge angle in degrees">° · 0 = flat; higher angles may stretch</label>
     <div class="outliner-actions" style="grid-template-columns:repeat(3,1fr)"><button id="meshHealthUVPlanarXY" type="button">Planar XY</button><button id="meshHealthUVPlanarXZ" type="button">Planar XZ</button><button id="meshHealthUVPlanarYZ" type="button">Planar YZ</button><button id="meshHealthUVCoplanarAtlas" type="button" title="Group connected faces within the join angle; up to 4096 faces. Clear paint first.">Auto atlas</button><button id="meshHealthUVFaceAtlas" type="button" title="One packed island per face; up to 4096 faces. Clear paint first.">Face atlas</button><button id="meshHealthUVBox" type="button">Box UVs</button><button id="meshHealthUVCylinder" type="button">Cylinder UVs (Y)</button><button id="meshHealthUVSphere" type="button" title="Round spheres with Y-axis vertex poles; replaces native UVs">Sphere UVs (Y)</button><button id="meshHealthUVTorus" type="button" title="Round upright Y-axis torus with regular quads; replaces native UVs">Torus UVs (Y)</button></div><div class="boxlab-tool-session-subtitle">Base meshes · replaces native UVs · Clear paint first. Atlases: up to 4096 faces; 20,000 corners maximum. Curved faces may stretch.</div><details id="meshHealthUVHelp"><summary class="boxlab-tool-session-section" style="min-height:36px;padding:8px 0;box-sizing:border-box;cursor:pointer">Projection help</summary><div class="boxlab-tool-session-subtitle" style="line-height:1.5"><p>Planar projects along the chosen plane. Box maps each face by its main direction. Cylinder (Y) suits upright cylinders, cones and Revolves.</p><p>Sphere (Y) needs a round sphere with Y-axis vertex poles. Torus (Y) needs a round upright Y-axis torus with regular quads.</p><p>Auto atlas groups connected faces within the join angle; sharp bends remain seams. Face atlas: one island per face, up to 4096 faces. Clear paint first. Increase the join angle carefully: curved faces may stretch.</p><p>Open UV Editor to inspect islands and seams, use reference maps, and edit the layout. Projection changes UVs; it does not move texture images.</p></div></details>
     <div class="outliner-actions" style="grid-template-columns:repeat(2,1fr)"><button id="meshHealthClearPaint" type="button">Clear paint</button><button id="meshHealthClearPaintUV" type="button">Clear paint + UVs</button></div>
@@ -183,7 +183,30 @@ const uvTorus=panel.querySelector('#meshHealthUVTorus');
 const clearPaint=panel.querySelector('#meshHealthClearPaint'),clearPaintUV=panel.querySelector('#meshHealthClearPaintUV');
 let active=false,last=null,lastBoundary=null,objectId=null,uvWorkspace=null,uvMesh=null,uvPayload=null;
 
+const refineGroupSelect=panel.querySelector('#uvRefineFacegroup');
+const refineGroupButton=panel.querySelector('#uvRefineFacegroupBtn');
+function syncRefinementGroups(mesh){
+ const groups=[...new Set((mesh?.faceGroups||[]).filter(name=>typeof name==='string'&&name.trim()))];
+ const previous=refineGroupSelect.value;
+ refineGroupSelect.replaceChildren();
+ for(const group of groups){
+  const option=document.createElement('option');option.value=group;option.textContent=group;
+  refineGroupSelect.appendChild(option);
+ }
+ if(groups.includes(previous))refineGroupSelect.value=previous;
+ refineGroupSelect.disabled=!groups.length||!!islandRefinementJob;
+ refineGroupButton.disabled=refineGroupSelect.disabled;
+}
+refineGroupButton.addEventListener('click',async()=>{
+ const object=activeObject(),mesh=liveMesh();
+ if(refineGroupButton.disabled||!object||!mesh)return;
+ autoUVFlow?.cancel();facegroupUVFlow?.cancel();
+ refineGroupButton.disabled=true;refineGroupSelect.disabled=true;
+ const message=await refineUVRegion(null,{object,mesh,payload:object.glbPassthrough},refineGroupSelect.value);
+ if(active&&activeObject()===object){renderReport();setStatus(message);const notice=panel.querySelector('#uvToolsNotice');notice.hidden=false;notice.textContent=message;}
+});
 function renderUVReport(object,mesh){
+ syncRefinementGroups(mesh);
  uvMesh=mesh;uvPayload=object?.glbPassthrough;
  const resetReady=object&&!object.locked&&object.kind!=='reference'&&!object.sourceId&&!object.booleanRecipe&&!object.arrayRecipe&&!object.curveProfile&&!object.materials&&!object.textures&&(!object.glbPassthrough||object.glbPassthrough.source==='boxlab')&&!!globalThis.__boxlabObjectHistory?.capture&&!!globalThis.__boxlabObjectHistory?.checkpointSnapshot;
  const hasPaint=!!(object?.colourPaint||object?.roughnessPaint||object?.metalnessPaint||object?.opacityPaint);
@@ -312,34 +335,37 @@ function flipUVs(axis){
 uvFlipU.addEventListener('click',()=>flipUVs('u'));
 uvFlipV.addEventListener('click',()=>flipUVs('v'));
 
-async function refineUVIsland(island,expected){
+async function refineUVRegion(island,expected,group=null){
  const object=activeObject(),mesh=liveMesh(),payload=object?.glbPassthrough,owner=globalThis.__boxlabExportAs;
- if(islandRefinementJob)return 'Island refinement is already running';
- const current=()=>active&&uvWorkspace?.active&&currentMode()==='object'&&object?.id===objectId&&activeObject()===object&&liveMesh()===mesh&&object?.glbPassthrough===payload&&uvWorkspace.selectedIsland===island;
- if(!current()||expected?.object!==object||expected?.mesh!==mesh||expected?.payload!==payload)return 'Select the UV island again';
+ if(islandRefinementJob)return 'UV refinement is already running';
+ const groupMode=group!==null;
+ const label=groupMode?'Facegroup':'Island';
+ const current=()=>active&&currentMode()==='object'&&object?.id===objectId&&activeObject()===object&&liveMesh()===mesh&&object?.glbPassthrough===payload&&(groupMode?uvOnly&&!uvWorkspace?.active&&refineGroupSelect.value===group:uvWorkspace?.active&&uvWorkspace.selectedIsland===island);
+ if(!current()||expected?.object!==object||expected?.mesh!==mesh||expected?.payload!==payload)return `Select the ${label.toLowerCase()} again`;
  const reason=autoUnwrapTargetError(object,mesh,owner?.topologySignature);
  if(reason)return reason;
  const marks=[...seamMarks(object,mesh).values()],marksKey=JSON.stringify(marks);
  const fingerprint=autoUVFingerprint(mesh),original=JSON.stringify(payload);
  let job;
  try{
-  const plan=prepareIslandRefinement(mesh,payload,island,owner,marks);
+  const plan=groupMode?prepareFacegroupRefinement(mesh,payload,group,owner,marks):prepareIslandRefinement(mesh,payload,island,owner,marks);
   const settings=uvDetails.querySelector('[data-autouv="rotate"]');
   plan.patch.packing={rotate:settings?.checked!==false};
   job=startAutoUnwrapJob(plan.patch);islandRefinementJob=job;
   const candidate=await job.promise;
-  if(islandRefinementJob!==job||!current()||fingerprint!==autoUVFingerprint(mesh)||original!==JSON.stringify(payload)||marksKey!==JSON.stringify([...seamMarks(object,mesh).values()]))return 'Island changed; re-unwrap it again';
+  if(islandRefinementJob!==job||!current()||fingerprint!==autoUVFingerprint(mesh)||original!==JSON.stringify(payload)||marksKey!==JSON.stringify([...seamMarks(object,mesh).values()]))return `${label} changed; re-unwrap it again`;
   const layout=fitRefinedIsland(plan,payload.uvCorners,candidate);
   const result=commitAutoUnwrapUV(object,mesh,owner.topologySignature,globalThis.__boxlabObjectHistory,layout);
   if(!result.ok)return result.reason;
   manager()?.saveActive?.();
-  renderReport();uvWorkspace.retainSelection(plan.faces);
-  return result.changed?`Island re-unwrapped${plan.markedCount?' · '+plan.markedCount+' marked seams':''} · Undo to restore`:'Island unchanged';
+  if(groupMode&&result.changed)showUVChecker();
+  renderReport();if(!groupMode)uvWorkspace.retainSelection(plan.faces);
+  return result.changed?`${label} re-unwrapped${plan.markedCount?' · '+plan.markedCount+' marked seams':''} · Undo to restore`:`${label} unchanged`;
  }catch(error){return error.message;}
  finally{if(islandRefinementJob===job)islandRefinementJob=null;}
 }
 function transformUVs(kind,a,b,expected){
- if(kind==='refine')return refineUVIsland(a,expected);
+ if(kind==='refine')return refineUVRegion(a,expected);
  const object=activeObject(),mesh=liveMesh();
  if(!active||currentMode()!=='object'||!object||object.id!==objectId||!mesh||!uvWorkspace?.active||(!['pack','density'].includes(kind)&&!Number.isInteger(uvWorkspace.selectedIsland)))return false;
  if(expected&&(expected.object!==object||expected.mesh!==mesh||expected.payload!==uvPayload||expected.payload!==object.glbPassthrough))return false;
@@ -543,7 +569,7 @@ globalThis.__boxlabUVTools={
   uvNotice.textContent=notice||(count?`${count} marked UV seams`:'');uvNotice.hidden=!uvNotice.textContent;return true;
  },close,get busy(){return facegroupUVFlow.busy||autoUVFlow.busy;},get active(){return active&&uvOnly;}
 };
-const facegroupUVFlow=installFacegroupUVWorkflow({document,host:uvDetails,notice:uvNotice,say:setStatus,beforePreview:()=>autoUVFlow?.cancel(),
+const facegroupUVFlow=installFacegroupUVWorkflow({document,host:uvDetails,notice:uvNotice,say:setStatus,beforePreview:()=>{islandRefinementJob?.cancel();islandRefinementJob=null;autoUVFlow?.cancel();},
  getContext:()=>{
   if(!active||!uvOnly||uvWorkspace?.active||currentMode()!=='object'||activeObject()?.id!==objectId)return null;
   let body;const scene=globalThis.__boxlabBridgeState?.scene;scene?.traverse(o=>{if(o.userData?.kind==='body')body=o;});
@@ -555,7 +581,7 @@ const facegroupUVFlow=installFacegroupUVWorkflow({document,host:uvDetails,notice
  }
 });
 
-const autoUVFlow=installAutoUnwrapWorkflow({document,host:uvDetails,notice:uvNotice,say:setStatus,beforeStart:()=>facegroupUVFlow.cancel(),
+const autoUVFlow=installAutoUnwrapWorkflow({document,host:uvDetails,notice:uvNotice,say:setStatus,beforeStart:()=>{islandRefinementJob?.cancel();islandRefinementJob=null;facegroupUVFlow.cancel();},
  getMarkedEdges:(object,mesh)=>[...seamMarks(object,mesh).values()],
  getContext:()=>{
   if(!active||!uvOnly||uvWorkspace?.active||currentMode()!=='object'||activeObject()?.id!==objectId)return null;

@@ -1,3 +1,9 @@
+## .1206 — UV5C Facegroup refinement
+
+Cris confirms .1205 PASS. Paint → UV now offers a Facegroup selector and Re-unwrap Facegroup. The selected group uses the existing patch preparation, worker, fit validation and UV transaction. It can join fragmented charts within a group, follows internal seam marks and fits into the old group bounds. Other groups retain exact UV coordinates. Overlap or invalid results are refused before commit. Unpainted Base geometry with complete tile 0–1 UVs is supported. Close cancels a pending job. Group/object/topology/UV/seam changes invalidate the result.
+
+Device check: select a group in Paint → UV, tap Re-unwrap Facegroup, inspect the result in UV Editor and Undo/Redo. Try a group spread over several charts and one with a marked internal seam. Other groups should keep their positions.
+
 ## .1205 — Paint radial UV entry and seam icons
 
 Cris confirms .1204 PASS. UV tools now open from the centre of the Paint radial. Remove the Object radial UV entry and hide the old Object drawer launcher. The Paint action closes its active session before opening existing UV tools. Missing-UV Paint entry continues to open UV preparation. The existing Edge Mark Seams and Clear Seams actions now have distinct icons. Cris clarified that “Paint Seam” meant Clear Seams.
