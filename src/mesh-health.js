@@ -42,7 +42,7 @@ function editSeamMarks(mark){
   if(mark)marks.set(key,[a,b]);
   else marks.delete(key);
  }
- setStatus(`UV seams · ${marks.size} marked · Object → UV to preview`);
+ setStatus(`UV seams · ${marks.size} marked · Paint → UV to preview`);
  return true;
 }
 const seamActions=document.createElement('div');
@@ -87,8 +87,8 @@ const status=document.querySelector('#selectionStatus');
 
 const launchRow=document.createElement('div');
 launchRow.className='outliner-actions mesh-health-launch-row';
-launchRow.style.gridTemplateColumns='repeat(2,1fr)';
-launchRow.innerHTML='<button id="meshHealthBtn" type="button">Mesh Health</button><button id="uvToolsBtn" type="button">UV</button>';
+launchRow.style.gridTemplateColumns='1fr';
+launchRow.innerHTML='<button id="meshHealthBtn" type="button">Mesh Health</button><button id="uvToolsBtn" type="button" hidden>UV</button>';
 objectTools?.appendChild(launchRow);
 const launchButton=launchRow.querySelector('#meshHealthBtn');
 const uvLaunchButton=launchRow.querySelector('#uvToolsBtn');

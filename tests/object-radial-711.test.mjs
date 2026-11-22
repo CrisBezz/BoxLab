@@ -22,7 +22,7 @@ function fixture(){
 }
 test('Object ring exactly covers existing tools and user-requested object actions, with spaced sectors',()=>{
  const s=read('total-gizmo.js'),start=s.indexOf('<div class="tg-tool-ring" data-ring-mode="object"'),ring=s.slice(start,s.indexOf('<div class="tg-edge-extrude-badge"',start));
- assert.deepEqual([...ring.matchAll(/data-tool-target="#([^"]+)"/g)].map(m=>m[1]).sort(),specs.filter(s=>s[0]!=='UV Paint').map(s=>s[1]).sort());assert.doesNotMatch(ring,/viewportPaintBtn/);assert.match(ring,/Return to gizmo/);assert.doesNotMatch(ring,/selectAll|Origin|Pivot/);
+ assert.deepEqual([...ring.matchAll(/data-tool-target="#([^"]+)"/g)].map(m=>m[1]).sort(),specs.filter(s=>!['UV Paint','UV'].includes(s[0])).map(s=>s[1]).sort());assert.doesNotMatch(ring,/viewportPaintBtn/);assert.match(ring,/Return to gizmo/);assert.doesNotMatch(ring,/selectAll|Origin|Pivot/);
  const rects=[...ring.matchAll(/style="--a:([\d.]+)deg(?:;--r:([\d.]+)px)?"/g)].map(m=>{const a=Number(m[1])*Math.PI/180,r=Number(m[2]||120);return{x:r*Math.sin(a),y:-r*Math.cos(a)};});for(let i=0;i<rects.length;i++)for(let j=i+1;j<rects.length;j++)assert.ok(Math.abs(rects[i].x-rects[j].x)>=86||Math.abs(rects[i].y-rects[j].y)>=34,`overlap ${i}/${j}`);
 });
 test('All session launches including UV Paint dock original controls intact; close restores them and completes Object lifecycle',()=>{

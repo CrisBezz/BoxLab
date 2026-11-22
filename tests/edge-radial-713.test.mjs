@@ -49,3 +49,13 @@ test('Loop EXACT finalizes current rail, keeps owner/session and accepts commit 
  f.launch('Loop');const exact=f.fields.get('.ets-done');assert.equal(exact.textContent,'EXACT');assert.equal(exact.disabled,false);exact.click({preventDefault(){},stopPropagation(){}});assert.equal(commits,1);assert.equal(f.active(),'loopCut');assert.equal(f.ctx.__boxlabEdgeViewportSession.loopActive(),true);assert.equal(f.panel.hidden,false);assert.equal(exact.disabled,true);
  f.dispatch('boxlab-viewport-background-tap');assert.equal(f.active(),null);assert.equal(f.ctx.__boxlabEdgeViewportSession.active(),false);assert.equal(f.events.at(-1).detail.tool,'Loop');
 });
+
+test('Mark and Clear Seams use the existing radial icon stylesheet',()=>{
+ const css=read('edge-radial-icons.css');
+ const mark=css.split('[data-tool-target="#markUVSeamsBtn"]')[1];
+ const clear=css.split('[data-tool-target="#clearUVSeamsBtn"]')[1];
+ assert(mark&&clear);
+ assert(mark.includes('--edge-tool-icon:url("data:image/svg+xml,'));
+ assert(clear.includes('--edge-tool-icon:url("data:image/svg+xml,'));
+ assert.notEqual(mark.split('}')[0],clear.split('}')[0]);
+});

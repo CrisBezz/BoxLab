@@ -37,3 +37,12 @@ test('1045 Smudge drags a mixed reservoir forward and blends again on the next s
  assert.deepEqual([...layer.pixels.slice((18+16*size)*4,(18+16*size)*4+4)],[204,0,51,255]);
  assert.deepEqual([...layer.pixels.slice((22+16*size)*4,(22+16*size)*4+4)],[163,0,92,255]);layer.finish(true);layer.dispose();
 });
+
+test('Paint radial UV entry ends painting before opening the original UV tools',async()=>{
+ const r=runtime(),u=uiRuntime(r);let opened=0;
+ u.c.__boxlabUVTools={open(){assert.equal(u.api.active,false);opened++;}};
+ await u.api.open();
+ await u.nodes.get('paint-open-uv').click();
+ assert.equal(opened,1);
+ assert.equal(r.controls.enabled,true);
+});

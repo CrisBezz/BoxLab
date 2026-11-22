@@ -1,3 +1,9 @@
+## .1205 — Paint radial UV entry and seam icons
+
+Cris confirms .1204 PASS. UV tools now open from the centre of the Paint radial. Remove the Object radial UV entry and hide the old Object drawer launcher. The Paint action closes its active session before opening existing UV tools. Missing-UV Paint entry continues to open UV preparation. The existing Edge Mark Seams and Clear Seams actions now have distinct icons. Cris clarified that “Paint Seam” meant Clear Seams.
+
+Device check: Paint radial → UV opens the right-side menu; Close restores the entry view. Edge → Mark Seams and Clear Seams have distinct icons and still consume selected edges.
+
 ## .1204 — UV5B marked cuts within a selected island
 
 Cris confirms .1203 PASS. Protect local refinement and locked-island coordinates. Re-unwrap Island now consumes existing Edge-mode seam marks inside the selected island, maps their vertex indices into the worker patch and verifies the required cuts both before and after fitting. Marks on the patch boundary or other islands are ignored. A change to seam marks while the worker runs invalidates the candidate. Existing unpainted Base eligibility and one-step UV history remain. Build .1203 completed 3,545 local tests with zero failures.

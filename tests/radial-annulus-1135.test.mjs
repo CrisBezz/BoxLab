@@ -18,6 +18,6 @@ test('1135 Paint and modelling share a true evenodd annulus with independently r
  const model=read('src/total-gizmo.js'),paint=read('src/viewport-paint.js'),css=read('radial-compact.css');
  const paths=[model,paint].map(s=>s.match(/class="radial-drag-annulus" fill-rule="evenodd" d="([^"]+)"/)?.[1]);assert(paths[0]);assert.equal(paths[0],paths[1]);
  assert(paths[0].includes('a44 44'));assert(paths[0].includes('a30 30'));
- assert.equal([...model.matchAll(/class="tg-tool-center"[^>]*>×<\/button>/g)].length,4);assert(paint.includes('data-paint="hide-tools" class="paint-radial-centre"'));
+ assert.equal([...model.matchAll(/class="tg-tool-center"[^>]*>×<\/button>/g)].length,4);assert(paint.includes('data-paint="open-uv" class="paint-radial-centre"'));
  assert(css.includes('#totalGizmo[data-hub-state=tools] .tg-radial-move svg{display:block!important}'),'tools-only ring overrides original transform-only SVG visibility');assert(css.includes('pointer-events:fill'));assert(css.includes('pointer-events:none'));assert(css.includes('fill:#c9cdd38c'));
 });
