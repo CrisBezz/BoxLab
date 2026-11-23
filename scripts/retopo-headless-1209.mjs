@@ -11,6 +11,8 @@ try{
  const point=await page.evaluate(()=>{const s=__boxlabBridgeState,r=document.querySelector('#viewport').getBoundingClientRect(),p=s.mesh.faceCenter(1).project(s.camera);return{x:r.left+(p.x*.5+.5)*r.width,y:r.top+(-p.y*.5+.5)*r.height};});
  const pen=async(type,x=point.x,y=point.y)=>page.evaluate(({type,x,y})=>document.querySelector('#viewport').dispatchEvent(new PointerEvent(type,{bubbles:true,cancelable:true,pointerType:'pen',pointerId:41,isPrimary:true,button:0,buttons:type==='pointerup'?0:1,pressure:type==='pointerup'?0:.5,clientX:x,clientY:y})),{type,x,y});
  await pen('pointerdown');await pen('pointerup');
+ assert.deepEqual(await snap(),before,'source tap only selects the mesh');
+ await pen('pointerdown');await pen('pointerup');
  assert.equal(await page.evaluate(()=>__boxlabRetopo.active),true,'native object creation must keep Retopo active');
  const first=await snap();assert.equal(first.objects.length,before.objects.length+1);assert.equal(first.live.length,1);assert.deepEqual(first.objects[0],before.objects[0]);
  await page.locator('#undoBtn').click();assert.deepEqual(await snap(),before);
@@ -25,7 +27,7 @@ try{
  await page.reload();await page.waitForFunction(()=>globalThis.__boxlabRetopo&&globalThis.__boxlabObjectHistory&&globalThis.__boxlabObjectManager);
  const quadSource=await snap();
  const positions=await page.evaluate(()=>{const s=__boxlabBridgeState,r=document.querySelector('#viewport').getBoundingClientRect(),v=s.mesh.vertices[0].clone();return [[-.30,-.25,.5],[0,-.25,.5],[0,.10,.5],[-.30,.10,.5],[.30,-.25,.5],[.30,.10,.5]].map(p=>{v.set(...p).project(s.camera);return{x:r.left+(v.x*.5+.5)*r.width,y:r.top+(-v.y*.5+.5)*r.height};});});
- await page.locator('#retopoModeBtn').click();await page.locator('#retopoQuad').click();
+ await page.locator('#retopoModeBtn').click();await pen('pointerdown',positions[0].x,positions[0].y);await pen('pointerup',positions[0].x,positions[0].y);await page.locator('#retopoQuad').click();
  const tap=async i=>{const p=positions[i];await pen('pointerdown',p.x,p.y);await pen('pointerup',p.x,p.y);};
  await tap(0);await tap(1);await tap(2);assert.deepEqual(await snap(),quadSource,'partial quad must not mutate the scene');
  await tap(3);const q1=await snap();assert.equal(q1.objects.length,quadSource.objects.length+1);assert.equal(q1.live.length,4);assert.equal(q1.objects.at(-1).faces.length,1);assert.equal(await page.evaluate(()=>__boxlabRetopo.active),true);
@@ -50,17 +52,16 @@ try{
  await page.locator('#undoBtn').click();assert.deepEqual(await snap(),imported);await page.locator('#redoBtn').click();assert.deepEqual(await snap(),referenceOnly);
  const referenceFile=await page.evaluate(async()=>{const {encodeBoxlabScene}=await import('./src/boxlab-project-codec.js?v=0.36.18.1213');return encodeBoxlabScene(__boxlabObjectHistory.capture());});
 
- // Follow the Objects-list entry point after deleting the only editable mesh.
- const referenceRow=page.locator(`#outlinerList [data-object-id="${ref.id}"] .outliner-name`);
- await referenceRow.evaluate(button=>button.click());
- assert.equal(await page.evaluate(()=>__boxlabRetopo.active),true);
- assert.equal(await page.locator('#retopoTarget').inputValue(),String(ref.id));
- assert.equal(await page.evaluate(()=>__boxlabRetopo.referenceId),ref.id);assert.equal(await page.evaluate(()=>__boxlabObjectManager.activeId),null);
- const report=()=>page.evaluate(()=>({active:__boxlabRetopo.active,mode:__boxlabSelectionBridge.mode(),panel:[...document.querySelectorAll('#retopoSession')].map(e=>({hidden:e.hidden,display:getComputedStyle(e).display,visibility:getComputedStyle(e).visibility,parent:e.parentElement.id,rect:e.getBoundingClientRect().toJSON()})),status:document.querySelector('#selectionStatus').textContent}));
- const refStart=await snap();try{await page.locator('#retopoQuad').click({timeout:5500});}catch(error){console.log(JSON.stringify(await report()));throw error;}
- await referenceRow.evaluate(button=>button.click());
- assert.equal(await page.locator('#retopoQuad').getAttribute('aria-pressed'),'true','reselecting the source must keep the current tool');
- const rp=await page.evaluate(()=>{const s=__boxlabBridgeState,r=document.querySelector('#viewport').getBoundingClientRect(),v=__boxlabObjectManager.objects.find(o=>o.id===__boxlabRetopo.referenceId).mesh.vertices[0].clone();return [[-.4,-.3,1],[.1,-.3,1],[.1,.2,1],[-.4,.2,1]].map(p=>{v.set(...p).project(s.camera);return{x:r.left+(v.x*.5+.5)*r.width,y:r.top+(-v.y*.5+.5)*r.height};});});
+ const rp=await page.evaluate(()=>{const s=__boxlabBridgeState,r=document.querySelector('#viewport').getBoundingClientRect(),v=__boxlabObjectManager.objects.find(o=>o.kind==='reference').mesh.vertices[0].clone();return [[-.4,-.3,1],[.1,-.3,1],[.1,.2,1],[-.4,.2,1]].map(p=>{v.set(...p).project(s.camera);return{x:r.left+(v.x*.5+.5)*r.width,y:r.top+(-v.y*.5+.5)*r.height};});});
+ await page.locator('#retopoModeBtn').click();
+ const pick=rp[0];
+ await page.evaluate(({x,y})=>{
+   const canvas=document.querySelector('#viewport');
+   for(const type of ['pointerdown','pointerup'])canvas.dispatchEvent(new PointerEvent(type,{bubbles:true,cancelable:true,pointerType:'touch',isPrimary:true,pointerId:55,button:0,buttons:type==='pointerdown'?1:0,clientX:x,clientY:y}));
+ },pick);
+ assert.equal(await page.evaluate(()=>__boxlabRetopo.referenceId),ref.id);
+ assert.deepEqual(await snap(),referenceOnly,'viewport source selection leaves the reference-only scene unchanged');
+ const refStart=await snap();await page.locator('#retopoQuad').click();
  for(const p of rp){await pen('pointerdown',p.x,p.y);await pen('pointerup',p.x,p.y);}
  const onRef=await snap();assert.equal(onRef.objects.length,refStart.objects.length+1);assert.equal(onRef.live.length,4);assert.equal(onRef.objects.at(-1).faces.length,1);assert(onRef.live.every(v=>Math.abs(v[2]-1)<1e-7),'corners must use the imported reference, not the smaller active cube');
  const refAfter=await page.evaluate(id=>{const o=__boxlabObjectManager.objects.find(o=>o.id===id);return{kind:o.kind,locked:o.locked,geometry:JSON.stringify([o.mesh.vertices.map(v=>v.toArray()),o.mesh.faces])};},ref.id);
@@ -80,6 +81,7 @@ try{
  await page.waitForFunction(()=>__boxlabObjectManager.objects.length===1&&__boxlabObjectManager.objects[0].kind==='reference');assert.equal((await snap()).active,null);
  await page.locator('#retopoModeBtn').click();
  const vertexPoint=rp[0];await pen('pointerdown',vertexPoint.x,vertexPoint.y);await pen('pointerup',vertexPoint.x,vertexPoint.y);
+ await pen('pointerdown',vertexPoint.x,vertexPoint.y);await pen('pointerup',vertexPoint.x,vertexPoint.y);
  assert.equal((await snap()).objects.length,2);assert.equal((await snap()).live.length,1);await page.locator('#undoBtn').click();assert.equal((await snap()).objects.length,1);assert.equal((await snap()).active,null);await page.locator('#redoBtn').click();assert.equal((await snap()).live.length,1);await page.locator('#retopoDone').click();
- assert.deepEqual(errors,[]);console.log('Retopo1215 browser PASS: Objects-list reference selection / cube deletion / reference-only Retopo / delete all / empty UndoRedo / empty and reference-only Open / actual locked OBJ reference import / target picker / reference preservation / vertex editing / quad creation / shared edges / duplicate refusal / clear / Undo / Redo / source unchanged / Done');
+ assert.deepEqual(errors,[]);console.log('Retopo1217 browser PASS: viewport reference selection / cube deletion / reference-only Retopo / delete all / empty UndoRedo / empty and reference-only Open / actual locked OBJ reference import / reference preservation / vertex editing / quad creation / shared edges / duplicate refusal / clear / Undo / Redo / source unchanged / Done');
 }finally{await browser?.close();await new Promise(r=>server.close(r));}

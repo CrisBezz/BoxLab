@@ -1,3 +1,9 @@
+## .1217 — pick the Retopo source on the model
+
+Cris reported .1216 FAIL and requested Retopo → tap the object → start modelling. The Retopo button now prompts for a viewport tap. The existing scene hit picker resolves the nearest visible object, including locked imports in a reference-only scene. A finger, Pencil or mouse can choose the source. The choice leaves geometry and history intact, the next Pencil or mouse tap places a point, and finger drags still navigate. The Objects list returns to its ordinary selection behavior and Retopo has no source dropdown. Vertex, Quad, Done and the separate output mesh remain.
+
+Device check: open Retopo, tap the source directly, place a vertex or draw a quad, then Undo. Repeat with the cube deleted and only the imported reference visible.
+
 ## .1216 — keep Retopo open after Objects selection
 
 The .1215 hosted browser check caught the deferred Object mode restoration closing Retopo after the reference row opened it from Object mode. The existing restoration handler now yields to active Retopo, as it already does for Paint. The reference-only browser check requires the Quad control to remain visible and usable after selecting the source in Objects. Cube deletion was accepted by Cris. Device check: delete the cube, tap the reference name in Objects, then use Vertex or Quad and Undo.

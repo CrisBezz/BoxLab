@@ -399,15 +399,9 @@ function renderOutliner() {
     const links = linkedCount(object.sourceId);
     name.textContent = object.arrayRecipe ? `${baseName} • Array ×${object.arrayRecipe.count}` : links > 1 ? `${baseName} • Link ×${links}` : baseName;
     name.title = object.kind === 'reference'
-      ? 'Use read-only reference in Retopo'
+      ? 'Reference guide — read-only snapping geometry'
       : (object.locked ? 'Locked object — unlock from More' : 'Make active object');
-    name.addEventListener('click', () => {
-      if (object.kind === 'reference' && globalThis.__boxlabRetopo) {
-        globalThis.__boxlabRetopo.selectReference(object.id);
-        return;
-      }
-      activateObject(object.id);
-    });
+    name.addEventListener('click', () => activateObject(object.id));
 
     const subd = document.createElement('button');
     subd.type = 'button';
@@ -771,9 +765,9 @@ function hitObject(event, object) {
 }
 
 // The same scene picker serves activation and Object gizmo hit classification.
-function pickViewportObject(event) {
+function pickViewportObject(event, { anyMode = false } = {}) {
   const camera = state()?.camera;
-  if (currentMode() !== 'object' || !camera) return null;
+  if ((!anyMode && currentMode() !== 'object') || !camera) return null;
   setPointer(event);
   raycaster.setFromCamera(pointer, camera);
   const activeHit = activeBody?.visible ? raycaster.intersectObject(activeBody, false)[0] : null;
@@ -1114,7 +1108,7 @@ function initialize() {
     },
     addMesh(mesh, name = 'Object', options = {}) { return addObject(mesh, name, options); },
     activate(id) { return activateObject(id); },
-    pickObject(event) { return pickViewportObject(event); },
+    pickObject(event, options) { return pickViewportObject(event, options); },
     joinObjects(ids) { return joinObjects(ids); },
     linkedDuplicate() { return linkedDuplicateActive(); },
     linkedDuplicateObject(id, options={}) { return linkedDuplicateObject(objects.find(item=>item.id===id),options); },
