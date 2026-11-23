@@ -21,5 +21,18 @@ try{
  await page.locator('#redoBtn').click();assert.deepEqual((await snap()).live,moved.live);
  await pen('pointerdown',point.x+20,point.y);await pen('pointermove',point.x+35,point.y);await pen('pointercancel',point.x+35,point.y);assert.deepEqual((await snap()).live,moved.live);
  await page.locator('#retopoDone').click();assert.equal(await page.evaluate(()=>__boxlabRetopo.active),false);assert.deepEqual((await snap()).live,moved.live);
- assert.deepEqual(errors,[]);console.log('Retopo1209 browser PASS: create / move / cancel / scene Undo / Redo / source unchanged / Done');
+ // A fresh native scene checks Quad directly, including the first-object transaction.
+ await page.reload();await page.waitForFunction(()=>globalThis.__boxlabRetopo&&globalThis.__boxlabObjectHistory&&globalThis.__boxlabObjectManager);
+ const quadSource=await snap();
+ const positions=await page.evaluate(()=>{const s=__boxlabBridgeState,r=document.querySelector('#viewport').getBoundingClientRect(),v=s.mesh.vertices[0].clone();return [[-.30,-.25,.5],[0,-.25,.5],[0,.10,.5],[-.30,.10,.5],[.30,-.25,.5],[.30,.10,.5]].map(p=>{v.set(...p).project(s.camera);return{x:r.left+(v.x*.5+.5)*r.width,y:r.top+(-v.y*.5+.5)*r.height};});});
+ await page.locator('#retopoModeBtn').click();await page.locator('#retopoQuad').click();
+ const tap=async i=>{const p=positions[i];await pen('pointerdown',p.x,p.y);await pen('pointerup',p.x,p.y);};
+ await tap(0);await tap(1);await tap(2);assert.deepEqual(await snap(),quadSource,'partial quad must not mutate the scene');
+ await tap(3);const q1=await snap();assert.equal(q1.objects.length,quadSource.objects.length+1);assert.equal(q1.live.length,4);assert.equal(q1.objects.at(-1).faces.length,1);assert.equal(await page.evaluate(()=>__boxlabRetopo.active),true);
+ await tap(1);await tap(4);await tap(5);await tap(2);const q2=await snap();assert.equal(q2.live.length,6);assert.equal(q2.objects.at(-1).faces.length,2);assert.deepEqual(q2.objects[0],quadSource.objects[0]);
+ await page.locator('#undoBtn').click();assert.deepEqual(await snap(),q1);await page.locator('#redoBtn').click();assert.deepEqual(await snap(),q2);
+ for(const i of [0,1,2,3])await tap(i);assert.deepEqual(await snap(),q2,'duplicate quad refusal is atomic');
+ await tap(0);await page.locator('#retopoClear').click();assert.deepEqual(await snap(),q2);
+ await page.locator('#retopoDone').click();assert.deepEqual(await snap(),q2);
+ assert.deepEqual(errors,[]);console.log('Retopo1211 browser PASS: vertex editing / quad creation / shared edges / duplicate refusal / clear / Undo / Redo / source unchanged / Done');
 }finally{await browser?.close();await new Promise(r=>server.close(r));}
