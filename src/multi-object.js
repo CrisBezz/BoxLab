@@ -345,7 +345,9 @@ function queueOutliner() {
 }
 
 function updateLockUI() {
-  app?.classList.toggle('boxlab-active-locked', !!activeObject()?.locked);
+  app?.classList.toggle('boxlab-no-active', !activeObject());
+  if(!document.querySelector('#boxlabEmptySceneStyle')){const style=document.createElement('style');style.id='boxlabEmptySceneStyle';style.textContent='#app.boxlab-no-active #totalGizmo{display:none!important}#app.boxlab-no-active #selectionDrawer{pointer-events:auto;opacity:1}';document.head.appendChild(style);}
+  app?.classList.toggle('boxlab-active-locked', !activeObject() || !!activeObject()?.locked);
 }
 
 function setObjectSubd(object,next){
@@ -468,7 +470,7 @@ function renderOutliner() {
     remove.type = 'button';
     remove.className = 'outliner-delete-action danger';
     remove.textContent = 'Delete Object';
-    remove.disabled = objects.length <= 1;
+    remove.disabled = false;
     remove.addEventListener('click', event => {
       event.preventDefault();
       event.stopPropagation();
@@ -483,7 +485,7 @@ function renderOutliner() {
   }
   if (duplicateButton) duplicateButton.disabled = !active;
   if (renameButton) renameButton.disabled = !active;
-  if (deleteButton) deleteButton.disabled = objects.length <= 1;
+  if (deleteButton) deleteButton.disabled = !active;
   if(linkedDuplicateButton)linkedDuplicateButton.disabled=!active||active.kind==='reference';
   if(makeUniqueButton)makeUniqueButton.disabled=!active||linkedCount(active.sourceId)<2;
   updateLockUI();
@@ -691,28 +693,34 @@ async function renameActive() {
   if (status) status.textContent = `${object.name} renamed`;
 }
 
-function deleteObjectById(id,{checkpoint=true}={}) {
-  if (objects.length <= 1) return false;
-  const index = objects.findIndex(object => object.id === id);
-  if (index < 0) return false;
-  if(checkpoint)globalThis.__boxlabObjectHistory?.checkpoint?.();
-  const deletingActive = id === activeId;
-  objects.splice(index, 1);
-  if (soloId === id) soloId = null;
-  if (deletingActive) {
-    const replacement = objects[Math.min(index, objects.length - 1)];
-    activeId = null;
-    activateObject(replacement.id, true);
-  } else {
-    forceRender();
-    renderOutliner();
-  }
+// No editable object is represented by an empty live carrier, never a scene
+// object. Locked references stay inactive and keep their read-only identity.
+function restoreSceneObjects(sceneObjects,wantedId){
+  const live=state()?.mesh;if(!live||!Array.isArray(sceneObjects))return false;
+  activeId=null;
+  objects.splice(0,objects.length,...sceneObjects);
+  const editable=o=>o.kind!=='reference'&&!o.locked;
+  const active=objects.find(o=>o.id===wantedId&&editable(o))||objects.find(editable);
+  replaceMeshInPlace(live,active?.mesh||new EditableMesh([],[]));
+  activeId=active?.id??null;soloId=null;
+  restoreSettings(active?.settings||{mirror:{x:false,y:false,z:false},subd:false,subdLevel:1,cage:true});
+  clearComponentSelection();forceRender();renderOutliner();return true;
+}
+function deleteObjects(ids,{checkpoint=true}={}){
+  const chosen=new Set(ids),removed=objects.filter(o=>chosen.has(o.id));if(!removed.length)return false;
+  saveActive();const before=globalThis.__boxlabObjectHistory?.capture?.(),oldMesh=state()?.mesh?.clone?.();
+  const remaining=objects.filter(o=>!chosen.has(o.id));
+  restoreSceneObjects(remaining,activeId);
+  if(checkpoint&&before&&oldMesh)globalThis.__boxlabObjectHistory?.checkpointSnapshot?.(before,oldMesh);
   globalThis.__boxlabObjectSelection?.refresh?.();
-  if (status) status.textContent = 'Object deleted';
+  if(status)status.textContent=objects.length?'Object deleted':'Scene empty · Add or Import to begin';
   return true;
 }
+function deleteObjectById(id,{checkpoint=true}={}) {
+  return deleteObjects([id],{checkpoint});
+}
 function deleteActive() {
-  deleteObjectById(activeId,{checkpoint:false});
+  deleteObjectById(activeId);
 }
 
 function resetAll() {
@@ -1048,6 +1056,8 @@ function initialize() {
     deleteButton.click();
   }, true);
   globalThis.__boxlabObjectManager = {
+    deleteObjects,
+    restoreSceneSnapshot:restoreSceneObjects,
     replaceActiveMesh(mesh) {
       const object=activeObject(),live=state()?.mesh;
       if(!object||!live||object.locked||object.kind==='reference'||object.sourceId||!mesh?.clone)return false;
@@ -1056,14 +1066,13 @@ function initialize() {
     validateBasicProjectLinks(sceneObjects) { try { projectLinkedSources(sceneObjects);return true; } catch { return false; } },
     replaceBasicProjectScene(sceneObjects, wantedId) {
       const live=state()?.mesh;
-      if(!live||!Array.isArray(sceneObjects)||!sceneObjects.length)return false;
+      if(!live||!Array.isArray(sceneObjects))return false;
       if(sceneObjects.some(o=>!o.mesh?.clone||(o.glbPassthrough&&(o.glbPassthrough.version!==1||!['glb','boxlab'].includes(o.glbPassthrough.source)))))return false;
       // All validation and confirmation must be performed by the caller.
       const ids=new Set(sceneObjects.map(o=>o.id));
       if(ids.size!==sceneObjects.length||[...ids].some(id=>!Number.isSafeInteger(id)||id<1||id>=Number.MAX_SAFE_INTEGER))return false;
       const editable=o=>o.kind!=='reference'&&!o.locked;
       const active=sceneObjects.find(o=>o.id===wantedId&&editable(o))||sceneObjects.find(editable);
-      if(!active)return false;
       // Stage independent meshes/settings before touching the live scene.
       let prepared, previous, links;
       const h=history();
@@ -1074,14 +1083,14 @@ function initialize() {
           sources:new Map(linkedSources),undo:h?.undoStack?.slice(),redo:h?.redoStack?.slice()};
       } catch { return false; }
       try {
-        replaceMeshInPlace(live,prepared.find(o=>o.id===active.id).mesh);
+        replaceMeshInPlace(live,active?prepared.find(o=>o.id===active.id).mesh:new EditableMesh([],[]));
         objects=prepared;
-        activeId=active.id;
+        activeId=active?.id??null;
         soloId=null;
         linkedSources.clear();for(const [id,source] of links.sources)linkedSources.set(id,source);
         nextSourceId=links.next;
         nextId=prepared.reduce((id,o)=>Math.max(id,o.id+1),nextId);
-        restoreSettings(active.settings);
+        restoreSettings(active?.settings||{mirror:{x:false,y:false,z:false},subd:false,subdLevel:1,cage:true});
         forceRender();
         renderOutliner();
         // History is cleared only after successful replacement/render setup.

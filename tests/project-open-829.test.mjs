@@ -10,7 +10,7 @@ function mesh(value){return {value,clone(){return mesh(this.value);},edges(){}};
 function fixture(failAt){
  const original={id:1,mesh:mesh(1)},live=mesh(1),undo=[mesh(2)],redo=[mesh(3)];
  let throws=0;
- const c={live,original,linkedSources:new Map([[5,'source']]),objects:[original],activeId:1,soloId:1,nextId:10,nextSourceId:1,
+ const c={EditableMesh,live,original,linkedSources:new Map([[5,'source']]),objects:[original],activeId:1,soloId:1,nextId:10,nextSourceId:1,
  state:()=>({mesh:live}),history:()=>({undoStack:undo,redoStack:redo,clear(){undo.length=redo.length=0;}}),
  captureSettings:()=>({subd:false}),cloneSettings:s=>({...s}),restoreSettings(){if(failAt==='settings'&&!throws++)throw Error('settings failed');},
  forceRender(){if(failAt==='render'&&!throws++)throw Error('render failed');},renderOutliner(){if(failAt==='outliner'&&!throws++)throw Error('outliner failed');}};
@@ -31,8 +31,8 @@ test('829 settings/render/outliner failures restore live mesh, scene, IDs, sourc
   assert.equal(c.linkedSources.get(5),'source');assert.equal(undo[0].value,2);assert.equal(redo[0].value,3);
  }
 });
-test('829 malformed IDs, locked scene and clone failures refuse before mutation',()=>{
- const candidates=[[{...incoming()[0],id:Number.MAX_SAFE_INTEGER}],incoming().map(o=>({...o,id:40})),incoming().map(o=>({...o,locked:true})),[{...incoming()[0],mesh:{clone(){throw Error('bad clone');}}}]];
+test('829 malformed IDs and clone failures refuse before mutation',()=>{
+ const candidates=[[{...incoming()[0],id:Number.MAX_SAFE_INTEGER}],incoming().map(o=>({...o,id:40})),[{...incoming()[0],mesh:{clone(){throw Error('bad clone');}}}]];
  for(const input of candidates){const {c,live,undo}=fixture();assert.equal(c.replace(input,40),false);assert.equal(live.value,1);assert.equal(c.nextId,10);assert.equal(undo.length,1);}
 });
 
@@ -64,7 +64,7 @@ test('831 manager restores reference guides locked and never promotes a referenc
  const {c,live}=fixture(),items=incoming();items[1]={...items[1],kind:'reference',locked:false,visible:false,groupId:5};
  assert.equal(c.replace(items,41),true);assert.equal(c.activeId,40);assert.equal(live.value,40);
  assert.equal(c.objects[1].kind,'reference');assert.equal(c.objects[1].locked,true);assert.equal(c.objects[1].visible,false);assert.equal(c.objects[1].groupId,5);
- const f=fixture();assert.equal(f.c.replace([{...items[1],locked:false}],41),false);assert.equal(f.live.value,1);assert.equal(f.undo.length,1);
+ const f=fixture();assert.equal(f.c.replace([{...items[1],locked:false}],41),true);assert.equal(f.c.activeId,null);assert.equal(f.live.vertices.length,0);assert.equal(f.c.objects[0].locked,true);
 });
 test('831 reference project round trip preserves geometry, groups, lock and visibility; Open accepts mixed scene',async()=>{
  const data=project();data.objects.push({...structuredClone(data.objects[0]),id:41,name:'Guide',kind:'reference',locked:true,visible:false,groupId:5});data.groups={names:[[5,'Guides']],collapsed:[5]};
@@ -72,11 +72,12 @@ test('831 reference project round trip preserves geometry, groups, lock and visi
  const f=openFixture(),out={};await f.c.openBasicProject(file(data),out);assert.deepEqual(f.calls,['confirm','replace','groups','ui']);assert.match(out.textContent,/Opened \.boxlab/);
  const cancel=openFixture(false);await cancel.c.openBasicProject(file(data),out);assert.deepEqual(cancel.calls,['confirm']);
 });
-test('831 Open refuses reference-only/unlocked guides; malformed linked data still refuses',async()=>{
+test('1213 Open accepts reference-only scenes; unlocked guides and malformed linked data still refuse',async()=>{
  const ref=project();ref.objects[0].kind='reference';ref.objects[0].locked=true;
  const unlocked=structuredClone(ref);unlocked.objects[0].locked=false;
  const linked=project();linked.objects[0].sourceId=40;
- for(const data of [ref,unlocked,linked]){const f=openFixture(),out={};await f.c.openBasicProject(file(data),out);assert.deepEqual(f.calls,[]);assert.match(out.textContent,/Open refused/);}
+ const accepted=openFixture(),output={};await accepted.c.openBasicProject(file(ref),output);assert.deepEqual(accepted.calls,['confirm','replace','groups','ui']);assert.match(output.textContent,/Opened/);
+ for(const data of [unlocked,linked]){const f=openFixture(),out={};await f.c.openBasicProject(file(data),out);assert.deepEqual(f.calls,[]);assert.match(out.textContent,/Open refused/);}
 });
 
 import {matrixForInstance,localMeshFromWorld,meshesNear,transformEditableMesh} from '../src/instance-core.js';
@@ -141,3 +142,5 @@ test('1113 successful Open adopts the filename; cancellation, invalid files and 
   assert.equal(r.nameInput.value,'Previous project',kind);
  }
 });
+
+test('1213 manager supports empty and fully locked scenes without an editable active object',()=>{for(const input of [[],incoming().map(o=>({...o,locked:true}))]){const f=fixture();assert.equal(f.c.replace(input,null),true);assert.equal(f.c.activeId,null);assert.equal(f.live.vertices.length,0);assert.equal(f.undo.length,0);assert.equal(f.c.objects.length,input.length);}});

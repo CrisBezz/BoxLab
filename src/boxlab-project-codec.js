@@ -8,7 +8,8 @@ import {evaluateArray} from './live-array-core.js?v=0.36.18.861';
 import {createProjectPaintPool,decodeProjectPaintPool,paintOwner} from './project-paint-resources.js?v=0.36.18.1095';
 const plain=value=>value==null?null:JSON.parse(JSON.stringify(value));
 export function encodeBoxlabScene(snapshot,{poolImages=true}={}){
- if(!snapshot||!Array.isArray(snapshot.objects)||!snapshot.objects.length)throw Error('Scene has no objects');
+ if(!snapshot||!Array.isArray(snapshot.objects))throw Error('Scene has no objects');
+ if(!snapshot.objects.length&&(snapshot.activeId!=null||snapshot.selected?.length))throw Error('Empty scene cannot have an active object or selection');
  const pool=poolImages&&!snapshot.__boxlabInlineGLB?createProjectGLBImagePool():null;
  const paint=createProjectPaintPool(),roughness=createProjectRoughnessPool(),metalness=createProjectMetalnessPool(),opacity=createProjectOpacityPool();
  const objects=snapshot.objects.map(o=>{
@@ -32,7 +33,8 @@ export function encodeBoxlabScene(snapshot,{poolImages=true}={}){
  return opacity.resources.length?{...base,version:8,opacityBaseVersion:base.version,opacityPaintPool:opacity.resources}:base;
 }
 export function decodeBoxlabScene(data,makeMesh){
- if(data?.format!=='boxlab'||![1,2,3,4,5,6,7,8].includes(data.version)||!Array.isArray(data.objects)||!data.objects.length)throw Error('Unsupported BOXLAB project');
+ if(data?.format!=='boxlab'||![1,2,3,4,5,6,7,8].includes(data.version)||!Array.isArray(data.objects))throw Error('Unsupported BOXLAB project');
+ if(!data.objects.length&&(data.activeId!=null||data.selected?.length))throw Error('Empty scene cannot have an active object or selection');
  if(typeof makeMesh!=='function')throw Error('Mesh factory required');
  const opacity=decodeProjectOpacityPool(data);
  const metalness=decodeProjectMetalnessPool(opacity.baseScene);

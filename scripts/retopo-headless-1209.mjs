@@ -42,8 +42,16 @@ try{
  await page.waitForFunction(()=>__boxlabObjectManager.objects.some(o=>o.kind==='reference'));
  const ref=await page.evaluate(()=>{const m=__boxlabObjectManager,o=m.objects.find(o=>o.kind==='reference'),active=m.activeId;return{id:o.id,active,locked:o.locked,kind:o.kind,geometry:JSON.stringify([o.mesh.vertices.map(v=>v.toArray()),o.mesh.faces]),activation:m.activate(o.id),after:m.activeId};});
  assert.equal(ref.locked,true);assert.equal(ref.activation,false);assert.equal(ref.after,ref.active);
+ // Delete the cube through the real global Delete owner, leaving only a reference.
+ const imported=await snap();
+ await page.evaluate(()=>{document.querySelector('#selectionModes [data-mode="object"]').click();document.querySelector('#outlinerDeleteBtn').click();});
+ assert.equal(await page.locator('#selectionDrawer').evaluate(el=>getComputedStyle(el).pointerEvents),'auto','object selection stays available without an editable object');
+ const referenceOnly=await snap();assert.equal(referenceOnly.active,null);assert.equal(referenceOnly.objects.length,1);assert.equal(referenceOnly.live.length,0);assert.equal(referenceOnly.objects[0].id,ref.id);
+ await page.locator('#undoBtn').click();assert.deepEqual(await snap(),imported);await page.locator('#redoBtn').click();assert.deepEqual(await snap(),referenceOnly);
+ const referenceFile=await page.evaluate(async()=>{const {encodeBoxlabScene}=await import('./src/boxlab-project-codec.js?v=0.36.18.1213');return encodeBoxlabScene(__boxlabObjectHistory.capture());});
+
  await page.locator('#retopoModeBtn').click();await page.locator('#retopoTarget').selectOption(String(ref.id));
- assert.equal(await page.evaluate(()=>__boxlabRetopo.referenceId),ref.id);assert.equal(await page.evaluate(()=>__boxlabObjectManager.activeId),ref.active);
+ assert.equal(await page.evaluate(()=>__boxlabRetopo.referenceId),ref.id);assert.equal(await page.evaluate(()=>__boxlabObjectManager.activeId),null);
  const refStart=await snap();await page.locator('#retopoQuad').click();
  const rp=await page.evaluate(()=>{const s=__boxlabBridgeState,r=document.querySelector('#viewport').getBoundingClientRect(),v=s.mesh.vertices[0].clone();return [[-.4,-.3,1],[.1,-.3,1],[.1,.2,1],[-.4,.2,1]].map(p=>{v.set(...p).project(s.camera);return{x:r.left+(v.x*.5+.5)*r.width,y:r.top+(-v.y*.5+.5)*r.height};});});
  for(const p of rp){await pen('pointerdown',p.x,p.y);await pen('pointerup',p.x,p.y);}
@@ -52,5 +60,19 @@ try{
  assert.deepEqual(refAfter,{kind:ref.kind,locked:ref.locked,geometry:ref.geometry});
  await page.locator('#undoBtn').click();assert.deepEqual(await snap(),refStart);await page.locator('#redoBtn').click();assert.deepEqual(await snap(),onRef);
  await page.locator('#retopoDone').click();assert.deepEqual(await snap(),onRef);
- assert.deepEqual(errors,[]);console.log('Retopo1212 browser PASS: actual locked OBJ reference import / target picker / reference preservation / vertex editing / quad creation / shared edges / duplicate refusal / clear / Undo / Redo / source unchanged / Done');
+ // Multi -> All -> Delete must permit a genuinely empty, undoable scene.
+ await page.evaluate(()=>{document.querySelector('#selectionModes [data-mode="object"]').click();document.querySelector('button[title="Select all objects"]').click();document.querySelector('#outlinerDeleteBtn').click();});
+ const empty=await snap();assert.equal(empty.active,null);assert.equal(empty.objects.length,0);assert.equal(empty.live.length,0);
+ await page.locator('#undoBtn').click();assert.deepEqual(await snap(),onRef);await page.locator('#redoBtn').click();assert.deepEqual(await snap(),empty);
+ const emptyFile=await page.evaluate(async()=>{const {encodeBoxlabScene}=await import('./src/boxlab-project-codec.js?v=0.36.18.1213');return encodeBoxlabScene(__boxlabObjectHistory.capture());});
+ await page.evaluate(()=>document.querySelector('#outlinerAddBtn').click());assert.equal((await snap()).objects.length,1);
+ page.on('dialog',dialog=>dialog.accept());
+ await page.locator('#projectOpenBasicInput').setInputFiles({name:'Empty.boxlab',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(emptyFile))});
+ await page.waitForFunction(()=>__boxlabObjectManager.objects.length===0);assert.equal((await snap()).active,null);
+ await page.locator('#projectOpenBasicInput').setInputFiles({name:'ReferenceOnly.boxlab',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(referenceFile))});
+ await page.waitForFunction(()=>__boxlabObjectManager.objects.length===1&&__boxlabObjectManager.objects[0].kind==='reference');assert.equal((await snap()).active,null);
+ await page.locator('#retopoModeBtn').click();
+ const vertexPoint=rp[0];await pen('pointerdown',vertexPoint.x,vertexPoint.y);await pen('pointerup',vertexPoint.x,vertexPoint.y);
+ assert.equal((await snap()).objects.length,2);assert.equal((await snap()).live.length,1);await page.locator('#undoBtn').click();assert.equal((await snap()).objects.length,1);assert.equal((await snap()).active,null);await page.locator('#redoBtn').click();assert.equal((await snap()).live.length,1);await page.locator('#retopoDone').click();
+ assert.deepEqual(errors,[]);console.log('Retopo1213 browser PASS: cube deletion / reference-only Retopo / delete all / empty UndoRedo / empty and reference-only Open / actual locked OBJ reference import / target picker / reference preservation / vertex editing / quad creation / shared edges / duplicate refusal / clear / Undo / Redo / source unchanged / Done');
 }finally{await browser?.close();await new Promise(r=>server.close(r));}

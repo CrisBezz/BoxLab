@@ -46,7 +46,7 @@ export function booleanSceneRuntime({groups=false,eligible=true,solverOK=true,cr
   c.installHistoryBridge();
   const bridge=c.__boxlabObjectHistory,baseCapture=bridge.capture,baseCheckpoint=bridge.checkpointSnapshot;
   bridge.capture=()=>{events.push('capture');return baseCapture();};
-  bridge.checkpointSnapshot=snapshot=>{events.push('checkpoint');return baseCheckpoint(snapshot);};
+  bridge.checkpointSnapshot=(snapshot,mesh)=>{events.push('checkpoint');return baseCheckpoint(snapshot,mesh);};
   vm.runInContext(section(boolean,'function booleanNameStem(','function sync(){')+section(boolean,'function apply(operation){','\nensureUI();'),c);
   const snapshot=()=>JSON.parse(JSON.stringify(bridge.capture()));
   events.length=0;

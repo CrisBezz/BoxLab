@@ -14,8 +14,8 @@ test('359 each object More menu restores Delete Object',()=>{
 test('359 row Delete uses one direct history checkpoint while global Delete does not double checkpoint',()=>{
   const src=fs.readFileSync(new URL('../src/multi-object.js',import.meta.url),'utf8');
   assert.match(src,/function deleteObjectById\(id,\{checkpoint=true\}=\{\}\)/);
-  assert.match(src,/if\(checkpoint\)globalThis\.__boxlabObjectHistory\?\.checkpoint\?\.\(\)/);
-  assert.match(src,/deleteObjectById\(activeId,\{checkpoint:false\}\)/);
+  assert.match(src,/checkpointSnapshot\?\.\(before,oldMesh\)/);
+  assert.match(src,/deleteObjectById\(activeId\)/);
 });
 
 test('359 Delete and Backspace trigger authoritative Object Delete outside editable fields',()=>{
