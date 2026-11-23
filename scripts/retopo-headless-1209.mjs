@@ -50,9 +50,15 @@ try{
  await page.locator('#undoBtn').click();assert.deepEqual(await snap(),imported);await page.locator('#redoBtn').click();assert.deepEqual(await snap(),referenceOnly);
  const referenceFile=await page.evaluate(async()=>{const {encodeBoxlabScene}=await import('./src/boxlab-project-codec.js?v=0.36.18.1213');return encodeBoxlabScene(__boxlabObjectHistory.capture());});
 
- await page.locator('#retopoModeBtn').click();await page.locator('#retopoTarget').selectOption(String(ref.id));
+ // Follow the Objects-list entry point after deleting the only editable mesh.
+ const referenceRow=page.locator(`#outlinerList [data-object-id="${ref.id}"] .outliner-name`);
+ await referenceRow.evaluate(button=>button.click());
+ assert.equal(await page.evaluate(()=>__boxlabRetopo.active),true);
+ assert.equal(await page.locator('#retopoTarget').inputValue(),String(ref.id));
  assert.equal(await page.evaluate(()=>__boxlabRetopo.referenceId),ref.id);assert.equal(await page.evaluate(()=>__boxlabObjectManager.activeId),null);
  const refStart=await snap();await page.locator('#retopoQuad').click();
+ await referenceRow.evaluate(button=>button.click());
+ assert.equal(await page.locator('#retopoQuad').getAttribute('aria-pressed'),'true','reselecting the source must keep the current tool');
  const rp=await page.evaluate(()=>{const s=__boxlabBridgeState,r=document.querySelector('#viewport').getBoundingClientRect(),v=__boxlabObjectManager.objects.find(o=>o.id===__boxlabRetopo.referenceId).mesh.vertices[0].clone();return [[-.4,-.3,1],[.1,-.3,1],[.1,.2,1],[-.4,.2,1]].map(p=>{v.set(...p).project(s.camera);return{x:r.left+(v.x*.5+.5)*r.width,y:r.top+(-v.y*.5+.5)*r.height};});});
  for(const p of rp){await pen('pointerdown',p.x,p.y);await pen('pointerup',p.x,p.y);}
  const onRef=await snap();assert.equal(onRef.objects.length,refStart.objects.length+1);assert.equal(onRef.live.length,4);assert.equal(onRef.objects.at(-1).faces.length,1);assert(onRef.live.every(v=>Math.abs(v[2]-1)<1e-7),'corners must use the imported reference, not the smaller active cube');
@@ -74,5 +80,5 @@ try{
  await page.locator('#retopoModeBtn').click();
  const vertexPoint=rp[0];await pen('pointerdown',vertexPoint.x,vertexPoint.y);await pen('pointerup',vertexPoint.x,vertexPoint.y);
  assert.equal((await snap()).objects.length,2);assert.equal((await snap()).live.length,1);await page.locator('#undoBtn').click();assert.equal((await snap()).objects.length,1);assert.equal((await snap()).active,null);await page.locator('#redoBtn').click();assert.equal((await snap()).live.length,1);await page.locator('#retopoDone').click();
- assert.deepEqual(errors,[]);console.log('Retopo1213 browser PASS: cube deletion / reference-only Retopo / delete all / empty UndoRedo / empty and reference-only Open / actual locked OBJ reference import / target picker / reference preservation / vertex editing / quad creation / shared edges / duplicate refusal / clear / Undo / Redo / source unchanged / Done');
+ assert.deepEqual(errors,[]);console.log('Retopo1215 browser PASS: Objects-list reference selection / cube deletion / reference-only Retopo / delete all / empty UndoRedo / empty and reference-only Open / actual locked OBJ reference import / target picker / reference preservation / vertex editing / quad creation / shared edges / duplicate refusal / clear / Undo / Redo / source unchanged / Done');
 }finally{await browser?.close();await new Promise(r=>server.close(r));}

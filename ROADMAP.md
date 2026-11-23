@@ -1,3 +1,9 @@
+## .1215 — choose a Retopo reference from Objects
+
+Cris confirms cube deletion works and reports that the remaining reference cannot be selected. A single tap on a reference name in Objects now opens Retopo with that source selected, including in a reference-only scene. The source stays read-only. The existing Reference picker and Multi selection retain their roles. Tapping the current source again keeps the current tool and draft. Hidden sources require Show before use.
+
+Device check: import as Reference, delete the cube, tap the reference name in Objects, and place a vertex or draw a quad. Undo should return to the reference-only scene. Next roadmap build remains Retopo boundary extension.
+
 ## .1214 — empty first-object Undo token
 
 Continue the .1213 empty/reference-only scene change. When a scene checkpoint starts with activeId null and the caller omits a mesh token, use an empty native carrier instead of the newly created live mesh. This lets Add → Cube → Apply → Undo return to truly empty state; ordinary nonempty transactions and explicit tokens retain their previous paths. Extend the native-owner test for this case. The hosted smoke now uses the real Add/Cube/Apply workflow and verifies Undo/Redo, then actual empty/reference-only project Open. Earlier smoke failures were test assumptions about an active cube vertex and Add creating a cube immediately; do not restore those assumptions or the last-object restriction. .1213 runtime passed all 3,571 local tests, and browser checks reached successful reference-only Quad and Delete All/Undo/Redo before the Add-menu test correction. Final application release .1214. .1212 PASS remains protected; .1213 is not a device-accepted baseline.

@@ -323,9 +323,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/multi-object.js?v=0.36.18.1214",
+      "url": "./src/multi-object.js?v=0.36.18.1215",
       "target": "src/multi-object.js",
-      "sha256": "576a10a687f48d0b66ca91edce0993fc8d8ea6c50bab89daa8fbcc38e70792dd"
+      "sha256": "67cbff297db37555351cd05990bcda90639f60b1d43eaa530614656360d3461d"
     },
     {
       "owner": "index.html",
@@ -3326,9 +3326,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1214",
+      "url": "./src/shell-comparison.js?v=0.36.18.1215",
       "target": "src/shell-comparison.js",
-      "sha256": "bf1fc2890e5bbec05716113eb52ac98070ec8b79b53179bf6ea306502945d9a7"
+      "sha256": "c8b5c543db95a899706a2bdb115c5c549b27f1986651aa42e9ee3e84d548e8cc"
     },
     {
       "owner": "src/main.js",
@@ -3938,9 +3938,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/retopo-workspace.js?v=0.36.18.1214",
+      "url": "./src/retopo-workspace.js?v=0.36.18.1215",
       "target": "src/retopo-workspace.js",
-      "sha256": "02ae619994d723ace1cab259ea08b667a215b20443a0b44f203ead2c6be41506"
+      "sha256": "ecb36491747183979c065077194cb7dce3eaae27b3c90f4994395491e0e4db8d"
     },
     {
       "owner": "src/retopo-workspace.js",

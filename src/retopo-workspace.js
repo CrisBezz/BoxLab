@@ -91,6 +91,13 @@ function start({fresh=false,reference=null}={}){
   panel.querySelector('#retopoHint').textContent=`${source.name} · Pencil: place / drag vertices · fingers: navigate`;
   message('Retopo · tap surface to place · drag a vertex to move · Done retains mesh');return true;
 }
+function selectReference(id){
+  const source=manager()?.objects?.find(object=>object.id===id);
+  if(!source?.mesh?.faces?.length){message('Retopo · select a visible reference mesh first');return false;}
+  if(source.visible===false){message('Retopo · show the reference object first');return false;}
+  if(id===referenceId&&valid())return true;
+  return start({reference:id});
+}
 function hit(e){return surface?.hit(state().camera,canvas.getBoundingClientRect(),e.clientX,e.clientY);}
 function down(e){
   if(active&&e.pointerType==='touch'&&drag){cancelDrag();return;}
@@ -131,7 +138,7 @@ function up(e){
   manager().saveActive();globalThis.__boxlabSelectionBridge?.clear?.();render();message('Retopo · surface vertex retained · Undo/Redo available');
 }
 button.addEventListener('click',()=>active?close():start());
-panel.querySelector('#retopoTarget').addEventListener('change',()=>start({fresh:true,reference:Number(panel.querySelector('#retopoTarget').value)}));
+panel.querySelector('#retopoTarget').addEventListener('change',()=>selectReference(Number(panel.querySelector('#retopoTarget').value)));
 panel.querySelector('#retopoDone').addEventListener('click',close);
 panel.querySelector('#retopoVertex').addEventListener('click',()=>setTool('vertex'));
 panel.querySelector('#retopoQuad').addEventListener('click',()=>setTool('quad'));
@@ -154,4 +161,4 @@ document.addEventListener('click',e=>{
     close();
   }
 },true);
-globalThis.__boxlabRetopo={start,close,get active(){return active;},get referenceId(){return referenceId;},get retopoId(){return retopoId;}};
+globalThis.__boxlabRetopo={start,close,selectReference,get active(){return active;},get referenceId(){return referenceId;},get retopoId(){return retopoId;}};

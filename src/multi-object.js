@@ -399,9 +399,15 @@ function renderOutliner() {
     const links = linkedCount(object.sourceId);
     name.textContent = object.arrayRecipe ? `${baseName} • Array ×${object.arrayRecipe.count}` : links > 1 ? `${baseName} • Link ×${links}` : baseName;
     name.title = object.kind === 'reference'
-      ? 'Reference guide — read-only snapping geometry'
+      ? 'Use read-only reference in Retopo'
       : (object.locked ? 'Locked object — unlock from More' : 'Make active object');
-    name.addEventListener('click', () => activateObject(object.id));
+    name.addEventListener('click', () => {
+      if (object.kind === 'reference' && globalThis.__boxlabRetopo) {
+        globalThis.__boxlabRetopo.selectReference(object.id);
+        return;
+      }
+      activateObject(object.id);
+    });
 
     const subd = document.createElement('button');
     subd.type = 'button';
