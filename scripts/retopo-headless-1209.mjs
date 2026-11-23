@@ -34,5 +34,23 @@ try{
  for(const i of [0,1,2,3])await tap(i);assert.deepEqual(await snap(),q2,'duplicate quad refusal is atomic');
  await tap(0);await page.locator('#retopoClear').click();assert.deepEqual(await snap(),q2);
  await page.locator('#retopoDone').click();assert.deepEqual(await snap(),q2);
- assert.deepEqual(errors,[]);console.log('Retopo1211 browser PASS: vertex editing / quad creation / shared edges / duplicate refusal / clear / Undo / Redo / source unchanged / Done');
+ // Use the actual OBJ reference-import flow, not a forced editable activation.
+ await page.reload();await page.waitForFunction(()=>globalThis.__boxlabRetopo&&globalThis.__boxlabObjectHistory&&globalThis.__boxlabObjectManager);
+ await page.evaluate(()=>document.querySelector('#importKind [data-import-kind="reference"]').click());
+ const obj='o Reference\nv -1 -1 -1\nv 1 -1 -1\nv 1 1 -1\nv -1 1 -1\nv -1 -1 1\nv 1 -1 1\nv 1 1 1\nv -1 1 1\nf 1 4 3 2\nf 5 6 7 8\nf 1 2 6 5\nf 4 8 7 3\nf 1 5 8 4\nf 2 3 7 6\n';
+ await page.locator('#importMeshInput').setInputFiles({name:'Locked Reference.obj',mimeType:'text/plain',buffer:Buffer.from(obj)});
+ await page.waitForFunction(()=>__boxlabObjectManager.objects.some(o=>o.kind==='reference'));
+ const ref=await page.evaluate(()=>{const m=__boxlabObjectManager,o=m.objects.find(o=>o.kind==='reference'),active=m.activeId;return{id:o.id,active,locked:o.locked,kind:o.kind,geometry:JSON.stringify([o.mesh.vertices.map(v=>v.toArray()),o.mesh.faces]),activation:m.activate(o.id),after:m.activeId};});
+ assert.equal(ref.locked,true);assert.equal(ref.activation,false);assert.equal(ref.after,ref.active);
+ await page.locator('#retopoModeBtn').click();await page.locator('#retopoTarget').selectOption(String(ref.id));
+ assert.equal(await page.evaluate(()=>__boxlabRetopo.referenceId),ref.id);assert.equal(await page.evaluate(()=>__boxlabObjectManager.activeId),ref.active);
+ const refStart=await snap();await page.locator('#retopoQuad').click();
+ const rp=await page.evaluate(()=>{const s=__boxlabBridgeState,r=document.querySelector('#viewport').getBoundingClientRect(),v=s.mesh.vertices[0].clone();return [[-.4,-.3,1],[.1,-.3,1],[.1,.2,1],[-.4,.2,1]].map(p=>{v.set(...p).project(s.camera);return{x:r.left+(v.x*.5+.5)*r.width,y:r.top+(-v.y*.5+.5)*r.height};});});
+ for(const p of rp){await pen('pointerdown',p.x,p.y);await pen('pointerup',p.x,p.y);}
+ const onRef=await snap();assert.equal(onRef.objects.length,refStart.objects.length+1);assert.equal(onRef.live.length,4);assert.equal(onRef.objects.at(-1).faces.length,1);assert(onRef.live.every(v=>Math.abs(v[2]-1)<1e-7),'corners must use the imported reference, not the smaller active cube');
+ const refAfter=await page.evaluate(id=>{const o=__boxlabObjectManager.objects.find(o=>o.id===id);return{kind:o.kind,locked:o.locked,geometry:JSON.stringify([o.mesh.vertices.map(v=>v.toArray()),o.mesh.faces])};},ref.id);
+ assert.deepEqual(refAfter,{kind:ref.kind,locked:ref.locked,geometry:ref.geometry});
+ await page.locator('#undoBtn').click();assert.deepEqual(await snap(),refStart);await page.locator('#redoBtn').click();assert.deepEqual(await snap(),onRef);
+ await page.locator('#retopoDone').click();assert.deepEqual(await snap(),onRef);
+ assert.deepEqual(errors,[]);console.log('Retopo1212 browser PASS: actual locked OBJ reference import / target picker / reference preservation / vertex editing / quad creation / shared edges / duplicate refusal / clear / Undo / Redo / source unchanged / Done');
 }finally{await browser?.close();await new Promise(r=>server.close(r));}

@@ -7,10 +7,10 @@ const canvas=document.querySelector('#viewport'),bar=document.querySelector('#se
 const state=()=>globalThis.__boxlabBridgeState,manager=()=>globalThis.__boxlabObjectManager;
 const button=document.createElement('button');button.id='retopoModeBtn';button.type='button';button.title='Retopology';button.setAttribute('aria-pressed','false');button.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 7 8-4 8 4v10l-8 4-8-4zM4 7l8 4 8-4M12 11v10M8 5l8 4M8 9v10M4 12l8 4 8-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg><span class="mode-label">Retopo</span>';bar?.appendChild(button);
 const panel=document.createElement('div');panel.id='retopoSession';panel.className='boxlab-tool-session-shell';panel.hidden=true;
-panel.innerHTML='<div class="boxlab-tool-session-title">Retopo · Surface modelling</div><div id="retopoHint" class="boxlab-tool-session-subtitle"></div><div class="outliner-actions"><button type="button" id="retopoVertex" aria-pressed="true">Vertex</button><button type="button" id="retopoQuad" aria-pressed="false">Quad</button><button type="button" id="retopoClear">Clear corners</button><button type="button" id="retopoDone">Done</button></div>';
+panel.innerHTML='<div class="boxlab-tool-session-title">Retopo · Surface modelling</div><label class="boxlab-tool-session-subtitle">Reference<select id="retopoTarget" aria-label="Retopo reference"></select></label><div id="retopoHint" class="boxlab-tool-session-subtitle"></div><div class="outliner-actions"><button type="button" id="retopoVertex" aria-pressed="true">Vertex</button><button type="button" id="retopoQuad" aria-pressed="false">Quad</button><button type="button" id="retopoClear">Clear corners</button><button type="button" id="retopoDone">Done</button></div>';
 document.querySelector('#viewportWrap')?.appendChild(panel);placeToolSessionPanel(panel,{compact:true});
-const style=document.createElement('style');style.textContent='#retopoSession button[aria-pressed=true]{background:#eef1f7;color:#15171b}#retopoModeBtn svg{width:22px;height:22px}#retopoSession{width:340px;padding:12px;background:#1b2029;color:#eef1f7;border:1px solid #454c59;border-radius:14px}#retopoModeBtn[aria-pressed=true]{background:#eef1f7;color:#15171b}#app.boxlab-retopo-session #selectionModes [data-mode].active{background:#1e222a;color:#eef1f7}#app.boxlab-retopo-session #totalGizmo{visibility:hidden!important}';document.head.appendChild(style);
-let active=false,referenceId=null,retopoId=null,surface=null,drag=null,previousMode='face',tool='vertex',corners=[],cornerContext=null;
+const style=document.createElement('style');style.textContent='#retopoTarget{display:block;width:100%;min-height:36px;margin:5px 0 8px;padding:6px;border:1px solid #454c59;border-radius:8px;background:#151a22;color:#eef1f7}#retopoSession button[aria-pressed=true]{background:#eef1f7;color:#15171b}#retopoModeBtn svg{width:22px;height:22px}#retopoSession{width:340px;padding:12px;background:#1b2029;color:#eef1f7;border:1px solid #454c59;border-radius:14px}#retopoModeBtn[aria-pressed=true]{background:#eef1f7;color:#15171b}#app.boxlab-retopo-session #selectionModes [data-mode].active{background:#1e222a;color:#eef1f7}#app.boxlab-retopo-session #totalGizmo{visibility:hidden!important}';document.head.appendChild(style);
+let active=false,referenceId=null,retopoId=null,surface=null,drag=null,previousMode='face',entryObjectId=null,tool='vertex',corners=[],cornerContext=null;
 const guide=document.createElement('div');guide.id='retopoQuadGuide';
 Object.assign(guide.style,{position:'absolute',inset:'0',pointerEvents:'none',zIndex:'40'});document.querySelector('#viewportWrap')?.appendChild(guide);
 function drawCorners(){
@@ -48,7 +48,7 @@ function render(){document.querySelector('#cageToggle')?.dispatchEvent(new Event
 function consume(e){e.preventDefault();e.stopImmediatePropagation();}
 function valid(){
   const m=manager(),ref=m?.objects?.find(o=>o.id===referenceId),edit=m?.objects?.find(o=>o.id===retopoId);
-  return active&&surface&&ref?.visible!==false&&!!ref&&((!retopoId&&m.activeId===referenceId)||(m.activeId===retopoId&&!!edit&&!edit.locked&&!edit.sourceId));
+  return active&&surface&&ref?.visible!==false&&!!ref&&((!retopoId&&m.activeId===entryObjectId)||(m.activeId===retopoId&&!!edit&&!edit.locked&&!edit.sourceId));
 }
 function release(d){try{canvas.releasePointerCapture(d.pointer);}catch{}if(d.controls)d.controls.enabled=d.enabled;}
 function cancelDrag(){
@@ -63,19 +63,27 @@ function close(){
   document.querySelector(`#selectionModes [data-mode="${previousMode}"]`)?.click();
   message('Retopo closed · mesh retained · Undo/Redo available');
 }
-function start({fresh=false}={}){
+function start({fresh=false,reference=null}={}){
   if(active)close();
   if(globalThis.__boxlabViewportPaint?.active||globalThis.__boxlabUVWorkspace?.active){message('Finish the current workspace before Retopo');return false;}
   const session=globalThis.__boxlabToolSession;
   if(session?.isActive?.()){message('Close the current tool before entering Retopo');return false;}
   const m=manager();m?.saveActive?.();
   let source=m?.objects?.find(o=>o.id===referenceId),edit=m?.objects?.find(o=>o.id===retopoId);
-  const resume=!fresh&&source&&edit&&m.activeId===retopoId;
-  if(!resume){source=m?.objects?.find(o=>o.id===m.activeId);retopoId=null;}
+  const explicit=reference!==null;
+  const resume=!fresh&&!explicit&&source&&edit&&m.activeId===retopoId;
+  if(explicit){source=m?.objects?.find(o=>o.id===reference);retopoId=null;}
+  else if(!resume){source=m?.objects?.find(o=>o.id===m.activeId);retopoId=null;}
+  if(!explicit&&(!source?.mesh?.faces?.length||source.visible===false)){source=m?.objects?.find(o=>o.visible!==false&&o.mesh?.faces?.length);retopoId=null;}
   if(!source?.mesh?.faces?.length){message('Retopo · select a visible reference mesh first');return false;}
   if(source.visible===false){message('Retopo · show the reference object first');return false;}
   try{surface=createRetopoSurface(source.mesh);}catch(e){message(`Retopo · ${e.message}`);return false;}
-  previousMode=globalThis.__boxlabSelectionBridge?.mode?.()||'face';referenceId=source.id;
+  previousMode=globalThis.__boxlabSelectionBridge?.mode?.()||'face';referenceId=source.id;entryObjectId=m.activeId;
+  const picker=panel.querySelector('#retopoTarget');picker.innerHTML='';
+  for(const object of m.objects.filter(o=>o.visible!==false&&o.mesh?.faces?.length&&o.id!==retopoId)){
+    const option=document.createElement('option');option.value=String(object.id);option.textContent=object.name+(object.kind==='reference'?' (reference)':'');picker.appendChild(option);
+  }
+  picker.value=String(referenceId);
   globalThis.__boxlabAddVertex?.stop?.(false);globalThis.__boxlabBuildEdge?.disarm?.();globalThis.__boxlabVertexExtrude?.disarm?.();globalThis.__boxlabDirectVertexBevel?.disarm?.();globalThis.__boxlabVertexSlidePolish?.disarm?.({cancelDrag:true});globalThis.__boxlabTransformArming?.disarm?.();
   document.dispatchEvent(new CustomEvent('boxlab-direct-tool-exclusive',{detail:{tool:'retopo'}}));
   document.querySelector('#selectionModes [data-mode="vertex"]')?.click();
@@ -123,6 +131,7 @@ function up(e){
   manager().saveActive();globalThis.__boxlabSelectionBridge?.clear?.();render();message('Retopo · surface vertex retained · Undo/Redo available');
 }
 button.addEventListener('click',()=>active?close():start());
+panel.querySelector('#retopoTarget').addEventListener('change',()=>start({fresh:true,reference:Number(panel.querySelector('#retopoTarget').value)}));
 panel.querySelector('#retopoDone').addEventListener('click',close);
 panel.querySelector('#retopoVertex').addEventListener('click',()=>setTool('vertex'));
 panel.querySelector('#retopoQuad').addEventListener('click',()=>setTool('quad'));
