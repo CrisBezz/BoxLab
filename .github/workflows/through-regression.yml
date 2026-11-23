@@ -45,6 +45,8 @@ jobs:
         run: node scripts/auto-unwrap-headless-1189.mjs
       - name: Test multi-face modelling workflow in the real browser
         run: node scripts/modelling-workflow-headless-1190.mjs
+      - name: Test Retopo surface editing and Undo/Redo in the real browser
+        run: node scripts/retopo-headless-1209.mjs
       - run: npm test
       - name: Run subdivision comparison in headless browser
         run: npm run benchmark:subdivision:headless -- --output "benchmark-artifacts/subdivision-wasm-${{ github.run_id }}.json"

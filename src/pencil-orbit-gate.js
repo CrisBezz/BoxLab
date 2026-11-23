@@ -85,7 +85,7 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
   // deferred-orbit path can still claim a deliberate drag after its threshold.
   nativeAddEventListener('pointerdown',event=>{
     if(event.target!==canvas||event.pointerType!=='pen'||!isPenContact(event)||generalSettings().pencilSelection)return;
-    const toolOwns=!!globalThis.__boxlabFaceDirect?.active?.()||!!globalThis.__boxlabMainDirectTool?.ownsModellingGesture?.()||!!globalThis.__boxlabViewportPaint?.active||!!globalThis.__boxlabLasso?.isArmed?.()||!!globalThis.__boxlabFacegroupStroke?.armed;
+    const toolOwns=!!globalThis.__boxlabRetopo?.active||!!globalThis.__boxlabFaceDirect?.active?.()||!!globalThis.__boxlabMainDirectTool?.ownsModellingGesture?.()||!!globalThis.__boxlabViewportPaint?.active||!!globalThis.__boxlabLasso?.isArmed?.()||!!globalThis.__boxlabFacegroupStroke?.armed;
     if(toolOwns||!pencilHitsEditableMesh(event))return;
     suppressedPenSelections.add(event.pointerId);
     const settings=generalSettings();
