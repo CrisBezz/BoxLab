@@ -55,10 +55,11 @@ try{
  const rp=await page.evaluate(()=>{const s=__boxlabBridgeState,r=document.querySelector('#viewport').getBoundingClientRect(),v=__boxlabObjectManager.objects.find(o=>o.kind==='reference').mesh.vertices[0].clone();return [[-.4,-.3,1],[.1,-.3,1],[.1,.2,1],[-.4,.2,1]].map(p=>{v.set(...p).project(s.camera);return{x:r.left+(v.x*.5+.5)*r.width,y:r.top+(-v.y*.5+.5)*r.height};});});
  await page.locator('#retopoModeBtn').click();
  const pick=rp[0];
- await page.evaluate(({x,y})=>{
-   const canvas=document.querySelector('#viewport');
-   for(const type of ['pointerdown','pointerup'])canvas.dispatchEvent(new PointerEvent(type,{bubbles:true,cancelable:true,pointerType:'touch',isPrimary:true,pointerId:55,button:0,buttons:type==='pointerdown'?1:0,clientX:x,clientY:y}));
- },pick);
+ const input=await page.context().newCDPSession(page);
+ await input.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[pick]});
+ await input.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});
+ await input.detach();
+ await page.waitForFunction(id=>__boxlabRetopo.referenceId===id,ref.id);
  assert.equal(await page.evaluate(()=>__boxlabRetopo.referenceId),ref.id);
  assert.deepEqual(await snap(),referenceOnly,'viewport source selection leaves the reference-only scene unchanged');
  const refStart=await snap();await page.locator('#retopoQuad').click();
