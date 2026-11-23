@@ -56,7 +56,8 @@ try{
  assert.equal(await page.evaluate(()=>__boxlabRetopo.active),true);
  assert.equal(await page.locator('#retopoTarget').inputValue(),String(ref.id));
  assert.equal(await page.evaluate(()=>__boxlabRetopo.referenceId),ref.id);assert.equal(await page.evaluate(()=>__boxlabObjectManager.activeId),null);
- const refStart=await snap();await page.locator('#retopoQuad').click();
+ const report=()=>page.evaluate(()=>({active:__boxlabRetopo.active,mode:__boxlabSelectionBridge.mode(),panel:[...document.querySelectorAll('#retopoSession')].map(e=>({hidden:e.hidden,display:getComputedStyle(e).display,visibility:getComputedStyle(e).visibility,parent:e.parentElement.id,rect:e.getBoundingClientRect().toJSON()})),status:document.querySelector('#selectionStatus').textContent}));
+ const refStart=await snap();try{await page.locator('#retopoQuad').click({timeout:5500});}catch(error){console.log(JSON.stringify(await report()));throw error;}
  await referenceRow.evaluate(button=>button.click());
  assert.equal(await page.locator('#retopoQuad').getAttribute('aria-pressed'),'true','reselecting the source must keep the current tool');
  const rp=await page.evaluate(()=>{const s=__boxlabBridgeState,r=document.querySelector('#viewport').getBoundingClientRect(),v=__boxlabObjectManager.objects.find(o=>o.id===__boxlabRetopo.referenceId).mesh.vertices[0].clone();return [[-.4,-.3,1],[.1,-.3,1],[.1,.2,1],[-.4,.2,1]].map(p=>{v.set(...p).project(s.camera);return{x:r.left+(v.x*.5+.5)*r.width,y:r.top+(-v.y*.5+.5)*r.height};});});
