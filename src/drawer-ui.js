@@ -65,7 +65,7 @@ import('./object-drawer-retain.js?v=0.36.18.517').catch(error => console.warn('B
 import('./studio-scene-fix.js?v=0.36.18.1028').catch(error => console.warn('BoxLab Studio scene fix failed to load', error));
 import('./lasso-select.js?v=0.36.18.1126').catch(error => console.warn('BoxLab Lasso Select failed to load', error));
 import('./cross-object-snap.js?v=0.36.18.1101').catch(error => console.warn('BoxLab cross-object snap failed to load', error));
-import('./object-mode-retain.js?v=0.36.18.1094').catch(error => console.warn('BoxLab object mode retain failed to load', error));
+import('./object-mode-retain.js?v=0.36.18.1216').catch(error => console.warn('BoxLab object mode retain failed to load', error));
 import('./transform-state-fix.js?v=0.36.18.5').catch(error => console.warn('BoxLab transform state fix failed to load', error));
 import('./persistent-face-tool-select.js?v=0.36.18.1127').catch(error => console.warn('BoxLab persistent face tool selection failed to load', error));
 import('./precision-face.js?v=0.36.18.979').catch(error => console.warn('BoxLab Face precision failed to load', error));

@@ -13,7 +13,7 @@ function objectModeActive() {
 }
 
 function restoreObjectMode() {
-  if (globalThis.__boxlabViewportPaint?.active) return;
+  if (globalThis.__boxlabViewportPaint?.active || globalThis.__boxlabRetopo?.active) return;
   if (!objectButton) return;
   if (!objectModeActive()) objectButton.click();
   if (objectsDrawer) objectsDrawer.open = true;

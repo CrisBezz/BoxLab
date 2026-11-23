@@ -1,3 +1,7 @@
+## .1216 — keep Retopo open after Objects selection
+
+The .1215 hosted browser check caught the deferred Object mode restoration closing Retopo after the reference row opened it from Object mode. The existing restoration handler now yields to active Retopo, as it already does for Paint. The reference-only browser check requires the Quad control to remain visible and usable after selecting the source in Objects. Cube deletion was accepted by Cris. Device check: delete the cube, tap the reference name in Objects, then use Vertex or Quad and Undo.
+
 ## .1215 — choose a Retopo reference from Objects
 
 Cris confirms cube deletion works and reports that the remaining reference cannot be selected. A single tap on a reference name in Objects now opens Retopo with that source selected, including in a reference-only scene. The source stays read-only. The existing Reference picker and Multi selection retain their roles. Tapping the current source again keeps the current tool and draft. Hidden sources require Show before use.

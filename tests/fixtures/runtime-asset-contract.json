@@ -161,9 +161,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1214",
+      "url": "./src/drawer-ui.js?v=0.36.18.1216",
       "target": "src/drawer-ui.js",
-      "sha256": "ba66bb973db1d88c260e383283ad7b0365037f668cf64a2e2cd382f292f88197"
+      "sha256": "3ec0899fecc141d0123cc28db38dccbb04d80c8e6d00a7f295cf6fb248d0d3de"
     },
     {
       "owner": "index.html",
@@ -925,9 +925,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./object-mode-retain.js?v=0.36.18.1094",
+      "url": "./object-mode-retain.js?v=0.36.18.1216",
       "target": "src/object-mode-retain.js",
-      "sha256": "31057c1f562628f37a3eadc37740a89f0dbb77d4c028850fef596b54589033ed"
+      "sha256": "18da465fc67559ab1a3b6b27782bb55e73a93b4451b3d3586f161880b4af8904"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -3326,9 +3326,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1215",
+      "url": "./src/shell-comparison.js?v=0.36.18.1216",
       "target": "src/shell-comparison.js",
-      "sha256": "c8b5c543db95a899706a2bdb115c5c549b27f1986651aa42e9ee3e84d548e8cc"
+      "sha256": "bef5ec4862f2f986ac70cff5eb7c4771221f3ce9df2f2f8dec35310b82ac4878"
     },
     {
       "owner": "src/main.js",
