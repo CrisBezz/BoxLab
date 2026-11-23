@@ -30,3 +30,5 @@ test('empty and reference-only project codecs round-trip; invalid empty active I
  }
  assert.throws(()=>encodeBoxlabScene({objects:[],activeId:1,selected:[]}));assert.throws(()=>decodeBoxlabScene({format:'boxlab',version:1,objects:[],activeId:null,selected:[1]},(...args)=>new EditableMesh(...args)));
 });
+
+test('first-object checkpoints from a null-active scene retain an empty carrier token',()=>{const f=runtime();f.remove(f.manager.objects.map(o=>o.id));const before=f.c.__boxlabObjectHistory.capture();f.c.__boxlabBridgeState.mesh=EditableMesh.cube();f.c.__boxlabObjectHistory.checkpointSnapshot(before);assert.equal(f.history.undoStack.at(-1).vertices.length,0);});

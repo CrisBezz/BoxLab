@@ -65,7 +65,7 @@ try{
  const empty=await snap();assert.equal(empty.active,null);assert.equal(empty.objects.length,0);assert.equal(empty.live.length,0);
  await page.locator('#undoBtn').click();assert.deepEqual(await snap(),onRef);await page.locator('#redoBtn').click();assert.deepEqual(await snap(),empty);
  const emptyFile=await page.evaluate(async()=>{const {encodeBoxlabScene}=await import('./src/boxlab-project-codec.js?v=0.36.18.1213');return encodeBoxlabScene(__boxlabObjectHistory.capture());});
- await page.evaluate(()=>document.querySelector('#outlinerAddBtn').click());assert.equal((await snap()).objects.length,1);
+ await page.evaluate(()=>document.querySelector('#outlinerAddBtn').click());await page.locator('[data-primitive="cube"]').click();await page.locator('[data-add-action="apply"]').click();const added=await snap();assert.equal(added.objects.length,1);await page.locator('#undoBtn').click();assert.equal((await snap()).objects.length,0);assert.equal((await snap()).live.length,0);await page.locator('#redoBtn').click();assert.deepEqual(await snap(),added);
  page.on('dialog',dialog=>dialog.accept());
  await page.locator('#projectOpenBasicInput').setInputFiles({name:'Empty.boxlab',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(emptyFile))});
  await page.waitForFunction(()=>__boxlabObjectManager.objects.length===0);assert.equal((await snap()).active,null);

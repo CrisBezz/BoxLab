@@ -1,3 +1,9 @@
+## .1214 — empty first-object Undo token
+
+Continue the .1213 empty/reference-only scene change. When a scene checkpoint starts with activeId null and the caller omits a mesh token, use an empty native carrier instead of the newly created live mesh. This lets Add → Cube → Apply → Undo return to truly empty state; ordinary nonempty transactions and explicit tokens retain their previous paths. Extend the native-owner test for this case. The hosted smoke now uses the real Add/Cube/Apply workflow and verifies Undo/Redo, then actual empty/reference-only project Open. Earlier smoke failures were test assumptions about an active cube vertex and Add creating a cube immediately; do not restore those assumptions or the last-object restriction. .1213 runtime passed all 3,571 local tests, and browser checks reached successful reference-only Quad and Delete All/Undo/Redo before the Add-menu test correction. Final application release .1214. .1212 PASS remains protected; .1213 is not a device-accepted baseline.
+
+Device checks remain: delete the default cube leaving a reference and use Retopo; delete all objects and Undo/Redo; Add/Import after empty; save/open empty or reference-only projects.
+
 ## .1213 — empty and reference-only scenes
 
 Cris confirms .1212 PASS but cannot delete the default cube when only references remain. Authorizes deleting every scene object. Remove the last-object guard in per-row, global and Multi deletion. All paths now delegate to the Object Manager batch deletion transaction, with one scene checkpoint after the result is staged. Do not force-activate a locked reference as a replacement. With no unlocked editable object, activeId is null and the existing live mesh is an empty, unlisted carrier; it is not an extra object. Suppress the gizmo/modelling controls while no editable object is active. Add/Import can create new objects normally. Native scene history restores empty/reference-only snapshots as well as populated scenes.
