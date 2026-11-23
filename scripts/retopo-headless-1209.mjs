@@ -11,6 +11,7 @@ try{
  const point=await page.evaluate(()=>{const s=__boxlabBridgeState,r=document.querySelector('#viewport').getBoundingClientRect(),p=s.mesh.faceCenter(1).project(s.camera);return{x:r.left+(p.x*.5+.5)*r.width,y:r.top+(-p.y*.5+.5)*r.height};});
  const pen=async(type,x=point.x,y=point.y)=>page.evaluate(({type,x,y})=>document.querySelector('#viewport').dispatchEvent(new PointerEvent(type,{bubbles:true,cancelable:true,pointerType:'pen',pointerId:41,isPrimary:true,button:0,buttons:type==='pointerup'?0:1,pressure:type==='pointerup'?0:.5,clientX:x,clientY:y})),{type,x,y});
  await pen('pointerdown');await pen('pointerup');
+ assert.equal(await page.evaluate(()=>__boxlabRetopo.active),true,'native object creation must keep Retopo active');
  const first=await snap();assert.equal(first.objects.length,before.objects.length+1);assert.equal(first.live.length,1);assert.deepEqual(first.objects[0],before.objects[0]);
  await page.locator('#undoBtn').click();assert.deepEqual(await snap(),before);
  await page.locator('#redoBtn').click();assert.deepEqual(await snap(),first);

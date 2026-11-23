@@ -10,7 +10,7 @@ function fixture(){
  const camera=new THREE.PerspectiveCamera(45,1,.01,100);camera.position.set(0,0,5);camera.lookAt(0,0,0);camera.updateMatrixWorld();
  const state={mesh:EditableMesh.cube(),camera,scene:new THREE.Scene(),controls:{enabled:true}},h=new History(),objects=[{id:1,name:'Source',visible:true,mesh:state.mesh.clone()}];let activeId=1;
  function restoreMesh(src){state.mesh=src.clone();}
- const manager={objects,get activeId(){return activeId;},saveActive(){objects.find(o=>o.id===activeId).mesh=state.mesh.clone();},addMesh(mesh,name){this.saveActive();const o={id:2,name,mesh:mesh.clone(),visible:true};objects.push(o);activeId=2;restoreMesh(mesh);h.clear();return o;}};
+ const manager={objects,get activeId(){return activeId;},saveActive(){objects.find(o=>o.id===activeId).mesh=state.mesh.clone();},addMesh(mesh,name){this.saveActive();const o={id:2,name,mesh:mesh.clone(),visible:true};objects.push(o);activeId=2;restoreMesh(mesh);h.clear();const b=field('#selectionModes [data-mode="vertex"]');b.dataset.mode='vertex';window.dispatchEvent({type:'click',isTrusted:false,target:{closest:s=>s.includes('selectionModes')||s==='button'?b:null}});return o;}};
  const capture=()=>{manager.saveActive();return {activeId,objects:objects.map(o=>({...o,mesh:o.mesh.clone()}))};},meta=new WeakMap();
  const objectHistory={capture,checkpointSnapshot(s,m=state.mesh){h.push(m);meta.set(h.undoStack.at(-1),s);}};
  const baseUndo=h.undo.bind(h),baseRedo=h.redo.bind(h);
@@ -23,9 +23,9 @@ function fixture(){
 }
 test('actual Retopo session creates separate loose geometry, cancels drags, preserves source and uses native Undo/Redo',()=>{
  const f=fixture(),source=JSON.stringify(f.objects[0].mesh);assert.equal(f.api.start(),true);
- f.pointer('pointerdown');f.pointer('pointerup');assert.equal(f.objects.length,2);assert.equal(f.state.mesh.vertices.length,1);assert.equal(f.state.mesh.looseVertices.size,1);assert.equal(JSON.stringify(f.objects[0].mesh),source);
+ f.pointer('pointerdown');f.pointer('pointerup');assert.equal(f.api.active,true);assert.equal(f.objects.length,2);assert.equal(f.state.mesh.vertices.length,1);assert.equal(f.state.mesh.looseVertices.size,1);assert.equal(JSON.stringify(f.objects[0].mesh),source);
  f.history('undo');assert.equal(f.objects.length,1);assert.equal(f.state.mesh.vertices.length,8);
- f.history('redo');assert.equal(f.objects.length,2);assert.equal(f.state.mesh.vertices.length,1);
+ f.history('redo');assert.equal(f.api.active,true);assert.equal(f.objects.length,2);assert.equal(f.state.mesh.vertices.length,1);
  const before=f.state.mesh.vertices[0].clone();f.pointer('pointerdown');f.pointer('pointermove',425);f.pointer('pointerup',425);assert.ok(f.state.mesh.vertices[0].x>before.x);assert.equal(f.state.mesh.vertices[0].z,1);
  const after=f.state.mesh.vertices[0].clone();f.history('undo');assert.ok(f.state.mesh.vertices[0].equals(before));f.history('redo');assert.ok(f.state.mesh.vertices[0].equals(after));
  f.pointer('pointerdown',425);f.pointer('pointermove',440);f.pointer('pointercancel',440);assert.ok(f.state.mesh.vertices[0].equals(after));

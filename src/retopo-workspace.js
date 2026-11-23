@@ -100,6 +100,12 @@ window.addEventListener('keydown',e=>{if(active&&(e.ctrlKey||e.metaKey)&&e.key.t
 document.addEventListener('click',e=>{
   if(!active)return;
   if(e.target.closest?.('#undoBtn,#redoBtn')){cancelDrag();}
-  else if(e.target.closest?.('#selectionModes button')&&e.target.closest('button')!==button)close();
+  else if(e.target.closest?.('#selectionModes button')&&e.target.closest('button')!==button){
+    const picked=e.target.closest('button');
+    // Object activation/history clears native selection by clicking the CURRENT
+    // Vertex button. This is not a request to leave the Retopo workspace.
+    if(picked.dataset.mode==='vertex'&&!e.isTrusted)return;
+    close();
+  }
 },true);
 globalThis.__boxlabRetopo={start,close,get active(){return active;},get referenceId(){return referenceId;},get retopoId(){return retopoId;}};

@@ -1,3 +1,9 @@
+## .1210 — retain Retopo during native selection refresh
+
+Hosted .1209 browser smoke caught the first-point object activation silently closing Retopo: Object Manager clears component selection by programmatically clicking the already-active Vertex button. Preserve that same-mode programmatic refresh while real mode clicks and programmatic changes to another mode still exit Retopo. Protect it in the actual-owner fixture and assert that Retopo remains active immediately after first-point creation in the browser smoke. .1209 passed all 3,560 local tests but failed this hosted gate; it is not an accepted device baseline. Existing UV and modelling browser gates passed. Final runtime is .1210; the R1 scope and ordered queue below remain authoritative. No quad tools added.
+
+Device: active reference → Retopo → several points → drag a point → Undo/Redo → Done. Retopo should stay open throughout editing and the source should remain unchanged.
+
 ## .1209 — R1 Retopo surface-vertex workspace — 23 November 2026
 
 Cris confirms .1208 PASS and requests original CozyBlanket-style manual retopology, deterministic guided patches and expanded UV tools. Current priority is Retopo foundations first, then reuse interaction patterns for UV editing; projection and UV constraints remain separate. Add a Retopo entry beside Paint in the mode bar. It is a focused workspace backed by native Vertex mode, not a new selection type or modelling kernel.
