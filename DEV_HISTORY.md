@@ -1,3 +1,9 @@
+## .1221 — Retopo line, cross and ribbon gestures
+
+A line can finish a quad bounded by three connected edges. An X drawn in one continuous stroke fills an enclosed four-edge hole. An open U drawn between the ends of a row of boundary segments adds a single welded ribbon. Existing segment lengths determine the spacing along the outer stroke. Each outer point projects to the reference, and the entire row commits as one undoable edit. Ambiguous paths are skipped. The ribbon follows up to 16 boundary segments and preserves the existing segment count.
+
+Device check: close a three-edge gap with a line, draw a continuous X inside a four-edge hole, then draw a U beside five boundary segments and Undo/Redo the five-quad result.
+
 ## .1220 — complete open Retopo quad strokes
 
 Cris passed .1219 and requested forgiving two- and three-sided strokes. Start and end near visible boundary corners. On release BoxLab fits the drawn sides and uses one or two connected existing boundary edges to close the face. The quad builder validates the result before a single Undo step. Competing valid paths of the same length are skipped. Closed outlines and the opaque reference overlay retain their .1219 behavior.

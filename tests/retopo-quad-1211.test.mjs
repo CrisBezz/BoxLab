@@ -78,3 +78,45 @@ test('open strokes reuse one or two real boundary edges on Pencil lift',()=>{
  f.history('redo');assert.equal(f.state.mesh.faces.length,4);
  assert.equal(JSON.stringify(f.objects[0].mesh),source);
 });
+
+function gestureFixture(){
+ const f=fixture();
+ f.api.start();
+ const stroke=points=>{
+   f.pointer('pointerdown',...points[0]);
+   for(const p of points.slice(1,-1))f.pointer('pointermove',...p);
+   f.pointer('pointerup',...points.at(-1));
+ };
+ const cell=(x,y,width=32,height=32)=>{
+   for(const p of [[x,y],[x+width,y],[x+width,y+height],[x,y+height]])stroke([p,p]);
+ };
+ return {f,stroke,cell};
+}
+
+test('one line completes a three-edge gap and a cross fills an enclosed quad',()=>{
+ const {f,stroke,cell}=gestureFixture();
+ cell(352,384);cell(384,352);cell(416,384);
+ const before=f.state.mesh.vertices.length;
+ stroke([[385,415],[400,416],[415,415]]);
+ assert.equal(f.state.mesh.faces.length,4);
+ assert.equal(f.state.mesh.vertices.length,before);
+ f.history('undo');
+ cell(384,416);
+ const enclosed=f.state.mesh.vertices.length;
+ stroke([[389,389],[411,411],[389,411],[411,389]]);
+ assert.equal(f.state.mesh.faces.length,5);
+ assert.equal(f.state.mesh.vertices.length,enclosed);
+ f.history('undo');assert.equal(f.state.mesh.faces.length,4);
+});
+
+test('a single ribbon outline carries five existing boundary segments into five welded quads',()=>{
+ const {f,stroke,cell}=gestureFixture();
+ for(let i=0;i<5;i++)cell(320+i*32,404);
+ assert.equal(f.state.mesh.faces.length,5);
+ stroke([[321,403],[320,369],[355,366],[390,367],[428,366],[480,370],[479,404]]);
+ assert.equal(f.state.mesh.faces.length,10);
+ assert.equal(f.state.mesh.vertices.length,18);
+ assert.equal(f.state.mesh.edges().filter(edge=>edge.faces.length===2).length,13);
+ f.history('undo');assert.equal(f.state.mesh.faces.length,5);
+ f.history('redo');assert.equal(f.state.mesh.faces.length,10);
+});

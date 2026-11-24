@@ -161,9 +161,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1220",
+      "url": "./src/drawer-ui.js?v=0.36.18.1221",
       "target": "src/drawer-ui.js",
-      "sha256": "6bb6eabbc598578b77fe7eee1b4420e4115de366d3c269c1fac1b31c104e6d69"
+      "sha256": "36563b7072419c4c6b1c4a171800a32461136e4ae4aef3a7485bae438bc16971"
     },
     {
       "owner": "index.html",
@@ -378,7 +378,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1220",
+      "url": "./src/release-version.js?v=0.36.18.1221",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -864,9 +864,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1220",
+      "url": "./face-workflow-layout.js?v=0.36.18.1221",
       "target": "src/face-workflow-layout.js",
-      "sha256": "effabc0467e2a5278acbc7ec4559f35dc8b138b3db0ea96e81dfb9b3474dcede"
+      "sha256": "0c7f7a3950a16d983ae9be3abfbd3c45e82980fc0327287548c305bae5ee70e9"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1361,7 +1361,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1220",
+      "url": "./release-version.js?v=0.36.18.1221",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -3326,9 +3326,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1220",
+      "url": "./src/shell-comparison.js?v=0.36.18.1221",
       "target": "src/shell-comparison.js",
-      "sha256": "b1160c7e0fd938123e20c8049cc5a304df96f6c23a892a60177a24a5f108fc48"
+      "sha256": "420306a97ae2a50be4810b5af9f4a701f610715e6b66655be463a92e17169d6d"
     },
     {
       "owner": "src/main.js",
@@ -3938,9 +3938,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/retopo-workspace.js?v=0.36.18.1220",
+      "url": "./src/retopo-workspace.js?v=0.36.18.1221",
       "target": "src/retopo-workspace.js",
-      "sha256": "724b4686d29547921d95250d289a766184072a3f2b9b6c69d5c0b36b1abbf8bb"
+      "sha256": "a388a4e87444215c54fd570358608668b723e2fdd4895b09fa1e48861acfe2e9"
     },
     {
       "owner": "src/retopo-workspace.js",
@@ -3968,9 +3968,9 @@
     },
     {
       "owner": "src/retopo-workspace.js",
-      "url": "./retopo-stroke.js?v=0.36.18.1220",
+      "url": "./retopo-stroke.js?v=0.36.18.1221",
       "target": "src/retopo-stroke.js",
-      "sha256": "fbe6bce499d6760b87334f8bc3bf2ff34411cbad7c051d267ad301929b220f38"
+      "sha256": "25357b18ccaa9e143d9cf9916e010a8dd2ddbcade8c85eb6846735c2c0ca24a3"
     },
     {
       "owner": "src/render-modes.js",
