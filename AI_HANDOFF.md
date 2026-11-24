@@ -1,3 +1,9 @@
+## .1220 — complete open Retopo quad strokes
+
+Cris passed .1219 and requested forgiving two- and three-sided strokes. Start and end near visible boundary corners. On release BoxLab fits the drawn sides and uses one or two connected existing boundary edges to close the face. The quad builder validates the result before a single Undo step. Competing valid paths of the same length are skipped. Closed outlines and the opaque reference overlay retain their .1219 behavior.
+
+Device check: extend a quad with a loose U stroke, then leave a one-cell L-shaped gap and close it with two drawn sides. End slightly off the existing corner and check that it welds. Undo/Redo the last quad.
+
 ## .1219 — forgiving Retopo strokes and opaque-reference overlay
 
 Cris passed .1218 and reported that only about one in fifteen outlines committed, and curved references hid the quad fills. Closed outlines now accept smaller quads, a larger closing gap, and more hand-drawn variation. Corner snap radius scales down on small strokes to avoid collapsing nearby corners onto an existing vertex. The quad builder continues to validate topology.

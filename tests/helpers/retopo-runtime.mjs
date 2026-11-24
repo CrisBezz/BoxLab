@@ -1,4 +1,4 @@
-import {quadStrokeCorners} from '../../src/retopo-stroke.js';
+import {openQuadStrokeCorners,quadStrokeCorners} from '../../src/retopo-stroke.js';
 import {buildRetopoQuad} from '../../src/retopo-quad.js';
 import fs from 'node:fs';import vm from 'node:vm';
 import * as THREE from 'three';import {EditableMesh} from '../../src/mesh.js';import {installLooseTopology} from '../../src/loose-topology.js';import {History} from '../../src/history.js';import {createRetopoSurface,nearestRetopoVertex} from '../../src/retopo-surface.js';
@@ -18,7 +18,7 @@ export function fixture(){
  const baseUndo=h.undo.bind(h),baseRedo=h.redo.bind(h);
  function history(which){manager.saveActive();const stack=which==='undo'?h.undoStack:h.redoStack,s=meta.get(stack.at(-1)),before=s?capture():null;const result=(which==='undo'?baseUndo:baseRedo)(state.mesh);if(s&&result){objects.splice(0,objects.length,...s.objects.map(o=>({...o,mesh:o.mesh.clone()})));activeId=s.activeId;meta.set((which==='undo'?h.redoStack:h.undoStack).at(-1),before);}if(result)restoreMesh(result);manager.saveActive();}
  field('#undoBtn').click=()=>history('undo');field('#redoBtn').click=()=>history('redo');
- const context={quadStrokeCorners,buildRetopoQuad,THREE,EditableMesh,createRetopoSurface,nearestRetopoVertex,placeToolSessionPanel(){},document,window,Event:class{},CustomEvent:class{},queueMicrotask:fn=>fn(),__boxlabBridgeState:state,__boxlabObjectManager:manager,__boxlabHistory:h,__boxlabObjectHistory:objectHistory,__boxlabSelectionBridge:{mode:()=>mode,clear(){}}};
+ const context={openQuadStrokeCorners,quadStrokeCorners,buildRetopoQuad,THREE,EditableMesh,createRetopoSurface,nearestRetopoVertex,placeToolSessionPanel(){},document,window,Event:class{},CustomEvent:class{},queueMicrotask:fn=>fn(),__boxlabBridgeState:state,__boxlabObjectManager:manager,__boxlabHistory:h,__boxlabObjectHistory:objectHistory,__boxlabSelectionBridge:{mode:()=>mode,clear(){}}};
  vm.runInNewContext(fs.readFileSync(new URL('../../src/retopo-workspace.js',import.meta.url),'utf8').replace(/^import .*;\n/gm,''),context);
  function pointer(type,x=400,y=400,extra={}){const e={type,target:field('#viewport'),pointerType:'pen',pointerId:9,button:0,pressure:type==='pointerup'?0:.5,clientX:x,clientY:y,preventDefault(){this.prevented=true;},stopImmediatePropagation(){},...extra};window.dispatchEvent(e);return e;}
  return{api:context.__boxlabRetopo,state,objects,manager,h,pointer,field,history};

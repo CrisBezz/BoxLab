@@ -1,7 +1,26 @@
+const distance = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
+
+function segmentDistance(p,a,b) {
+  const dx=b.x-a.x,dy=b.y-a.y,lengthSquared=dx*dx+dy*dy;
+  const t=lengthSquared?Math.max(0,Math.min(1,((p.x-a.x)*dx+(p.y-a.y)*dy)/lengthSquared)):0;
+  return Math.hypot(p.x-a.x-t*dx,p.y-a.y-t*dy);
+}
+
+function simplify(path, start, end, keep, tolerance) {
+  let furthest = -1, error = tolerance;
+  for (let i = start + 1; i < end; i++) {
+    const offset = segmentDistance(path[i],path[start],path[end]);
+    if (offset > error) { error = offset; furthest = i; }
+  }
+  if (furthest < 0) return;
+  simplify(path, start, furthest, keep, tolerance);
+  keep.push(path[furthest]);
+  simplify(path, furthest, end, keep, tolerance);
+}
+
 // Simplify a closed screen-space stroke without treating its start as a corner.
 export function quadStrokeCorners(points) {
   if (points.length < 5) return null;
-  const distance = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
   let diameter = 0, first = 0, second = 0;
   for (let i = 0; i < points.length; i++) {
     for (let j = i + 1; j < points.length; j++) {
@@ -11,21 +30,6 @@ export function quadStrokeCorners(points) {
   }
   if (diameter < 14 || distance(points[0], points.at(-1)) > Math.min(32, diameter * .34)) return null;
 
-  function simplify(path, start, end, keep, tolerance) {
-    const a = path[start], b = path[end], dx = b.x - a.x, dy = b.y - a.y;
-    const lengthSquared = dx * dx + dy * dy;
-    let furthest = -1, error = tolerance;
-    for (let i = start + 1; i < end; i++) {
-      const p = path[i];
-      const t = lengthSquared ? Math.max(0, Math.min(1, ((p.x - a.x) * dx + (p.y - a.y) * dy) / lengthSquared)) : 0;
-      const offset = Math.hypot(p.x - a.x - t * dx, p.y - a.y - t * dy);
-      if (offset > error) { error = offset; furthest = i; }
-    }
-    if (furthest < 0) return;
-    simplify(path, start, furthest, keep, tolerance);
-    keep.push(path[furthest]);
-    simplify(path, furthest, end, keep, tolerance);
-  }
   const paths = [points.slice(first, second + 1), points.slice(second).concat(points.slice(0, first + 1))];
   for (const ratio of [.035,.045,.06,.08,.10,.12]) {
     const corners = [];
@@ -38,4 +42,35 @@ export function quadStrokeCorners(points) {
     if (corners.length < 4) break;
   }
   return null;
+}
+
+// Return a loose open outline with either one or two drawn corners.
+export function openQuadStrokeCorners(points, sideCount) {
+  const span = Math.max(...points.map(point=>distance(points[0],point)));
+  if (span < 12) return null;
+  const sampleCount=Math.min(points.length,48);
+  const path=Array.from({length:sampleCount},(_,i)=>points[Math.round(i*(points.length-1)/(sampleCount-1))]);
+  const last=path.length-1, errors=path.map(()=>[]);
+  for(let a=0;a<last;a++){
+    for(let b=a+1;b<=last;b++){
+      let error=distance(path[a],path[b])<Math.max(5,span*.08)?Infinity:0;
+      for(let i=a+1;i<b;i++)error+=segmentDistance(path[i],path[a],path[b])**2;
+      errors[a][b]=error;
+    }
+  }
+  let best=null,bestError=path.length*(span*.16)**2;
+  function consider(indices){
+    let error=0;
+    for(let i=0;i<indices.length-1;i++)error+=errors[indices[i]][indices[i+1]];
+    for(let i=1;i<indices.length-1;i++){
+      const a=path[indices[i-1]],p=path[indices[i]],b=path[indices[i+1]];
+      if(segmentDistance(p,a,b)<Math.max(3,span*.075))return;
+    }
+    if(error<bestError){bestError=error;best=indices.slice(1,-1).map(index=>path[index]);}
+  }
+  for(let a=1;a<last;a++){
+    if(sideCount===2)consider([0,a,last]);
+    else for(let b=a+1;b<last;b++)consider([0,a,b,last]);
+  }
+  return best;
 }

@@ -53,3 +53,28 @@ test('Quad defaults to one closed stroke, snaps to the source, and commits one u
  f.history('redo');
  assert.equal(f.state.mesh.faces.length,1);
 });
+
+test('open strokes reuse one or two real boundary edges on Pencil lift',()=>{
+ const f=fixture(),source=JSON.stringify(f.objects[0].mesh);
+ f.api.start();
+ function stroke(points){
+   f.pointer('pointerdown',...points[0]);
+   for(const point of points.slice(1,-1))f.pointer('pointermove',...point);
+   f.pointer('pointerup',...points.at(-1));
+ }
+ stroke([[340,440],[400,440],[400,390],[340,390],[340,440]]);
+ stroke([[402,441],[430,443],[457,440],[460,410],[460,389],[404,387]]);
+ assert.equal(f.state.mesh.faces.length,2);
+ assert.equal(f.state.mesh.vertices.length,6);
+ stroke([[401,392],[400,340],[340,340],[338,387]]);
+ assert.equal(f.state.mesh.faces.length,3);
+ assert.equal(f.state.mesh.vertices.length,8);
+ stroke([[401,342],[426,336],[460,340],[463,365],[462,388]]);
+ assert.equal(f.state.mesh.faces.length,4);
+ assert.equal(f.state.mesh.vertices.length,9);
+ assert.equal(f.state.mesh.edges().filter(edge=>edge.faces.length===2).length,4);
+ assert.equal(f.h.undoStack.length,4);
+ f.history('undo');assert.equal(f.state.mesh.faces.length,3);
+ f.history('redo');assert.equal(f.state.mesh.faces.length,4);
+ assert.equal(JSON.stringify(f.objects[0].mesh),source);
+});

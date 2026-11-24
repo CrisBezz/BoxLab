@@ -1,4 +1,4 @@
-import {quadStrokeCorners} from './retopo-stroke.js?v=0.36.18.1219';
+import {openQuadStrokeCorners,quadStrokeCorners} from './retopo-stroke.js?v=0.36.18.1220';
 import {buildRetopoQuad} from './retopo-quad.js?v=0.36.18.1211';
 import {EditableMesh} from './mesh.js';
 import {createRetopoSurface,nearestRetopoVertex} from './retopo-surface.js?v=0.36.18.1209';
@@ -33,7 +33,7 @@ function drawCorners(){
   guide.innerHTML=`<svg width="100%" height="100%" viewBox="0 0 ${r.width} ${r.height}"><polyline points="${xy.map(p=>p.join(',')).join(' ')}" fill="none" stroke="#50efc6" stroke-width="2"/>${xy.map((p,i)=>`<circle cx="${p[0]}" cy="${p[1]}" r="6" fill="#50efc6" stroke="#102921" stroke-width="2"/><text x="${p[0]+9}" y="${p[1]-8}" fill="#fff" font-size="14">${i+1}</text>`).join('')}</svg>`;
 }
 function clearCorners(){corners=[];cornerContext=null;guide.innerHTML='';}
-function setTool(next){cancelDrag();clearCorners();tool=next;panel.querySelector('#retopoVertex').setAttribute('aria-pressed',String(tool==='vertex'));panel.querySelector('#retopoQuad').setAttribute('aria-pressed',String(tool==='quad'));render();message(tool==='quad'?'Retopo · draw a closed four-sided outline':'Retopo · tap surface to place · drag vertices to move');}
+function setTool(next){cancelDrag();clearCorners();tool=next;panel.querySelector('#retopoVertex').setAttribute('aria-pressed',String(tool==='vertex'));panel.querySelector('#retopoQuad').setAttribute('aria-pressed',String(tool==='quad'));render();message(tool==='quad'?'Retopo · draw a quad or connect boundary corners':'Retopo · tap surface to place · drag vertices to move');}
 function quadCorner(d){
   if(cornerContext&&(cornerContext.mesh!==state().mesh||cornerContext.id!==manager().activeId))clearCorners();
   cornerContext??={mesh:state().mesh,id:manager().activeId};
@@ -42,8 +42,9 @@ function quadCorner(d){
   if(corners.length<4){message(`Retopo · corner ${corners.length}/4 · tap the next corner`);return;}
   commitQuad(corners);
 }
-function commitQuad(outline){
-  const before=retopoId?state().mesh.clone():new EditableMesh([],[]),result=buildRetopoQuad(before,outline,outline[0].normal);
+function commitQuad(outline, result=null){
+  const before=retopoId?state().mesh.clone():new EditableMesh([],[]);
+  result??=buildRetopoQuad(before,outline,outline[0].normal);
   if(!result.ok){clearCorners();message(`Retopo · ${result.reason} · try another outline`);return;}
   if(!retopoId){
     const snapshot=globalThis.__boxlabObjectHistory?.capture?.();if(!snapshot){clearCorners();return;}
@@ -117,7 +118,7 @@ function start({fresh=false,reference=null}={}){
   document.querySelector('#selectionModes [data-mode="vertex"]')?.click();
   picking=false;sourceTap=null;clearCorners();active=true;setTool('quad');
   state().controls?.addEventListener?.('change',drawCorners);showPanel(true);
-  hint.textContent=`${source.name} · Draw a closed quad outline · fingers: navigate`;
+  hint.textContent=`${source.name} · Draw a quad or connect boundary corners · fingers: navigate`;
   return true;
 }
 function selectReference(id){
@@ -185,8 +186,11 @@ function finishStroke(d,e){
   if(!d.moved){quadCorner(d);return;}
   clearCorners();
   const outline=d.strokeOverflow?null:quadStrokeCorners(d.stroke);
-  if(!outline){message('Retopo · draw one closed outline with four clear corners');return;}
   const rect=canvas.getBoundingClientRect(),camera=state().camera;
+  if(!outline){
+    if(!d.strokeOverflow&&retopoId&&completeOpenStroke(d.stroke,rect,camera))return;
+    message('Retopo · close the outline or start and end near boundary corners');return;
+  }
   const projected=[];
   const snapRadius=Math.min(16,Math.min(...outline.map((p,i)=>Math.hypot(p.x-outline[(i+1)%4].x,p.y-outline[(i+1)%4].y)))*.3);
   for(const {x,y} of outline){
@@ -196,6 +200,47 @@ function finishStroke(d,e){
     projected.push({...pick,index});
   }
   commitQuad(projected);
+}
+function completeOpenStroke(stroke,rect,camera){
+  const mesh=state().mesh, first=stroke[0], last=stroke.at(-1);
+  const radius=Math.min(32,Math.max(12,Math.hypot(last.x-first.x,last.y-first.y)*.45));
+  function anchor(point){
+    const pick=surface.hit(camera,rect,point.x,point.y);
+    const index=pick?nearestRetopoVertex(mesh,camera,rect,point.x,point.y,pick,radius,surface):null;
+    return index===null?null:{...pick,index};
+  }
+  const start=anchor(first),end=anchor(last);
+  if(!start||!end||start.index===end.index)return false;
+  const adjacent=new Map();
+  for(const {a,b,faces} of mesh.edges()){
+    if(faces.length!==1)continue;
+    if(!adjacent.has(a))adjacent.set(a,new Set());
+    if(!adjacent.has(b))adjacent.set(b,new Set());
+    adjacent.get(a).add(b);adjacent.get(b).add(a);
+  }
+  const from=adjacent.get(start.index),to=adjacent.get(end.index);
+  if(!from||!to)return false;
+  for(const sharedSides of [2,1]){
+    const paths=sharedSides===2?[...from].filter(index=>to.has(index)).map(index=>[{index}]):from.has(end.index)?[[]]:[];
+    if(!paths.length)continue;
+    const corners=openQuadStrokeCorners(stroke,4-sharedSides);
+    if(!corners)continue;
+    const drawn=corners.map(({x,y})=>surface.hit(camera,rect,x,y));
+    if(drawn.some(point=>!point))continue;
+    let candidate=null;
+    for(const path of paths){
+      const outline=[start,...drawn.map(point=>({...point,index:null})),end,...path];
+      const result=buildRetopoQuad(mesh,outline,start.normal);
+      if(!result.ok)continue;
+      if(candidate)return false;
+      candidate={outline,result};
+    }
+    if(candidate){
+      commitQuad(candidate.outline,candidate.result);
+      return true;
+    }
+  }
+  return false;
 }
 function up(e){
   if(picking){sourceUp(e);return;}
