@@ -185,9 +185,9 @@ test('Relax brushes a distorted quad patch on a curved reference with one Undo',
  const interior=mesh.edges().filter(edge=>edge.faces.length===2).flatMap(edge=>[edge.a,edge.b])
    .find(index=>mesh.faces.every(face=>face.includes(index)));
  f.field('#retopoRelax').click();
- f.pointer('pointerdown',406,411);f.pointer('pointermove',431,409);f.pointer('pointercancel',433,409);
+ f.pointer('pointerdown',406,411);f.pointer('pointermove',411,409);f.pointer('pointercancel',413,409);
  assert.deepEqual(mesh.vertices,before);
- f.pointer('pointerdown',406,411);f.pointer('pointermove',431,409);f.pointer('pointerup',433,409);
+ f.pointer('pointerdown',406,411);f.pointer('pointermove',411,409);f.pointer('pointerup',413,409);
  assert.equal(f.h.undoStack.length,count+1);
  assert.ok(mesh.vertices[interior].x<before[interior].x);
  const moved=mesh.vertices[interior];
@@ -264,4 +264,24 @@ test('welding to a reversed boundary cannot commit an inside-out extension',()=>
  assert.equal(geometry(),before);
  assert.equal(f.h.undoStack.length,steps);
  assert.match(f.field('#selectionStatus').textContent,/could not place/);
+});
+
+test('Relax evens an outer edge while keeping its corners and the reference fixed',()=>{
+ const {f,stroke}=gestureFixture();
+ const tap=point=>stroke([point,point]);
+ for(const point of [[350,368],[376,368],[400,424],[350,424],
+   [376,368],[450,368],[450,424],[400,424]])tap(point);
+ const mesh=f.state.mesh,old=mesh.vertices.map(v=>v.clone()),reference=JSON.stringify(f.objects[0].mesh);
+ const steps=f.h.undoStack.length;
+ assert.equal(mesh.faces.length,2);
+ f.field('#retopoRelax').click();
+ stroke([[367,367],[379,369],[390,368]]);
+ assert.equal(f.h.undoStack.length,steps+1);
+ assert.ok(mesh.vertices[1].x>old[1].x);
+ assert.ok(Math.abs(mesh.vertices[1].z-old[1].z)<1e-7);
+ for(const index of [0,2,3,4,5])assert.deepEqual(mesh.vertices[index],old[index]);
+ const relaxed=mesh.vertices[1].clone();
+ assert.equal(JSON.stringify(f.objects[0].mesh),reference);
+ f.history('undo');assert.deepEqual(f.state.mesh.vertices,old);
+ f.history('redo');assert.deepEqual(f.state.mesh.vertices[1],relaxed);
 });

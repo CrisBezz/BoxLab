@@ -1,5 +1,5 @@
 import {applyGridFill} from './grid-fill-core.js?v=0.36.18.338';
-import {quadTopologyAudit} from './quad-clean-core.js?v=0.36.18.1223';
+import {quadTopologyAudit} from './quad-clean-core.js?v=0.36.18.1226';
 
 // Retopo supplies a four-corner boundary to the existing one-cell Grid Fill
 // assembler. All work stays on a private native mesh until validation succeeds.

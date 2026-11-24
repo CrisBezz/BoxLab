@@ -1,4 +1,4 @@
-import {quadTopologyAudit} from './quad-clean-core.js?v=0.36.18.1223';
+import {quadTopologyAudit} from './quad-clean-core.js?v=0.36.18.1226';
 
 function crossing(a,b,c,d){
   const ux=b.x-a.x,uy=b.y-a.y,vx=d.x-c.x,vy=d.y-c.y;

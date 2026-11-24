@@ -662,14 +662,21 @@ export function quadMeshFlowScore(mesh){
   return score;
 }
 
-function incidentData(mesh){
+function incidentData(mesh,relaxBoundary=false){
   const neighbors=Array.from({length:mesh.vertices.length},()=>new Set());
   const incidentFaces=Array.from({length:mesh.vertices.length},()=>new Set());
-  const protectedVertices=new Set();
+  const protectedVertices=new Set(),boundary=new Map();
   const edges=mesh.edges?.()||[];
   for(const edge of edges){
     neighbors[edge.a]?.add(edge.b);neighbors[edge.b]?.add(edge.a);
-    if(edge.faces?.length!==2||(mesh.creases instanceof Map&&(mesh.creases.get(edgeKey(mesh,edge.a,edge.b))||0)>0)){
+    const rim=edge.faces?.length===1;
+    if(relaxBoundary&&rim){
+      for(const [a,b] of [[edge.a,edge.b],[edge.b,edge.a]]){
+        if(!boundary.has(a))boundary.set(a,[]);
+        boundary.get(a).push(b);
+      }
+    }
+    if((edge.faces?.length!==2&&!(relaxBoundary&&rim))||(mesh.creases instanceof Map&&(mesh.creases.get(edgeKey(mesh,edge.a,edge.b))||0)>0)){
       protectedVertices.add(edge.a);protectedVertices.add(edge.b);
     }
   }
@@ -691,25 +698,31 @@ function incidentData(mesh){
     }
     if(sharp){protectedVertices.add(vi);normalBreakVertices.add(vi);}
   }
-  return{neighbors,incidentFaces,protectedVertices,normalBreakVertices};
+  return{neighbors,incidentFaces,protectedVertices,normalBreakVertices,boundary};
 }
 
-export function quadRelaxFlow(mesh,{strength=.35,maxFraction=.15,weight=null,project=null}={}){
+export function quadRelaxFlow(mesh,{strength=.35,maxFraction=.15,weight=null,project=null,relaxBoundary=false}={}){
   if(!mesh?.faces||!mesh?.vertices)return{ok:false,reason:'invalid-mesh',changed:false,relaxedVertices:0};
   const beforeScore=quadMeshFlowScore(mesh);
   if(!Number.isFinite(beforeScore))return{ok:false,reason:'invalid-quad-region',changed:false,relaxedVertices:0,beforeScore};
   const original=mesh.vertices.map(v=>v.clone());
-  const {neighbors,incidentFaces,protectedVertices,normalBreakVertices}=incidentData(mesh);
+  const {neighbors,incidentFaces,protectedVertices,normalBreakVertices,boundary}=incidentData(mesh,relaxBoundary);
   const proposed=new Map();
   for(let vi=0;vi<mesh.vertices.length;vi++){
     if(protectedVertices.has(vi))continue;
-    const ring=[...(neighbors[vi]||[])];
-    if(ring.length<4)continue;
-    const faces=[...(incidentFaces[vi]||[])];
-    if(faces.length<3||faces.some(fi=>mesh.faces[fi]?.length!==4))continue;
+    const rim=boundary.get(vi),ring=rim||[...neighbors[vi]];
+    const faces=incidentFaces[vi];
+    if(rim?rim.length!==2||faces.size<2:ring.length<4||faces.size<3)continue;
     const current=mesh.vertices[vi],target=current.clone().multiplyScalar(0);
     for(const ni of ring)target.add(mesh.vertices[ni]);
     target.multiplyScalar(1/ring.length);
+    if(rim){
+      const a=mesh.vertices[rim[0]].clone().sub(current),b=mesh.vertices[rim[1]].clone().sub(current);
+      if(a.normalize().dot(b.normalize())>-.65)continue;
+      const tangent=mesh.vertices[rim[1]].clone().sub(mesh.vertices[rim[0]]).normalize();
+      const along=target.sub(current).dot(tangent);
+      target.copy(current).addScaledVector(tangent,along);
+    }
     const move=target.sub(current);
     const normal=current.clone().multiplyScalar(0);
     let normalCount=0;
@@ -725,7 +738,7 @@ export function quadRelaxFlow(mesh,{strength=.35,maxFraction=.15,weight=null,pro
     for(const ni of ring)avgEdge+=current.distanceTo(mesh.vertices[ni]);
     avgEdge/=ring.length;
     const maxMove=Math.max(avgEdge*maxFraction,0);
-    const influence=weight?weight(vi,current):1;
+    const influence=weight?weight(vi,current,!!rim):1;
     if(!(influence>0))continue;
     move.multiplyScalar(Math.max(0,Math.min(1,strength*influence)));
     if(move.length()>maxMove&&maxMove>0)move.setLength(maxMove);

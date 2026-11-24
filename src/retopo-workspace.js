@@ -1,7 +1,7 @@
-import {cutRetopoStroke} from './retopo-cut.js?v=0.36.18.1224';
-import {quadRelaxFlow} from './quad-clean-core.js?v=0.36.18.1223';
+import {cutRetopoStroke} from './retopo-cut.js?v=0.36.18.1226';
+import {quadRelaxFlow} from './quad-clean-core.js?v=0.36.18.1226';
 import {openQuadStrokeCorners,quadStrokeCorners,straightQuadStroke,quadStrokeCrossing} from './retopo-stroke.js?v=0.36.18.1224';
-import {buildRetopoQuad} from './retopo-quad.js?v=0.36.18.1223';
+import {buildRetopoQuad} from './retopo-quad.js?v=0.36.18.1226';
 import {EditableMesh} from './mesh.js';
 import {createRetopoSurface,nearestRetopoVertex} from './retopo-surface.js?v=0.36.18.1225';
 import {placeToolSessionPanel} from './tool-session-panel-position.js?v=0.36.18.732';
@@ -519,7 +519,7 @@ function finishRelax(d,e){
   if(d.strokeOverflow){message('Retopo · use a shorter Relax stroke');return;}
   const rect=canvas.getBoundingClientRect(),camera=state().camera;
   const trial=d.mesh.clone(),weights=new Map(),radius=48;
-  function weight(index,vertex){
+  function weight(index,vertex,onBoundary){
     if(weights.has(index))return weights.get(index);
     const p=screenPoint(vertex,rect,camera);
     if(Math.abs(p.z)>1)return 0;
@@ -529,7 +529,8 @@ function finishRelax(d,e){
       const t=Math.max(0,Math.min(1,((p.x-a.x)*dx+(p.y-a.y)*dy)/(dx*dx+dy*dy)));
       distance=Math.min(distance,Math.hypot(p.x-a.x-t*dx,p.y-a.y-t*dy));
     }
-    const influence=distance<radius&&visibleBoundaryVertex(vertex,p,rect,camera)?1-(distance/radius)**2:0;
+    const reach=onBoundary?radius*.5:radius;
+    const influence=distance<reach&&visibleBoundaryVertex(vertex,p,rect,camera)?1-(distance/reach)**2:0;
     weights.set(index,influence);
     return influence;
   }
@@ -540,11 +541,11 @@ function finishRelax(d,e){
   }
   let changed=false;
   for(let i=0;i<4;i++){
-    const result=quadRelaxFlow(trial,{strength:.5,maxFraction:.12,weight,project});
+    const result=quadRelaxFlow(trial,{strength:.5,maxFraction:.12,weight,project,relaxBoundary:true});
     if(!result.changed)break;
     changed=true;
   }
-  if(!changed){message('Retopo · brush across visible interior quad vertices');return;}
+  if(!changed){message('Retopo · brush across visible quad vertices or along an outer edge');return;}
   globalThis.__boxlabHistory.push(d.beforeMesh);
   d.mesh.vertices=trial.vertices;
   manager().saveActive();globalThis.__boxlabSelectionBridge?.clear?.();render();

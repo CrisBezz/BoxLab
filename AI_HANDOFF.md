@@ -1,3 +1,9 @@
+## .1226 — Retopo Relax works along outer edges
+
+Cris passed .1224 stroke cuts and straighter patches, and .1225 surface validation. Retopo Relax now redistributes vertices along smooth boundary runs. The tighter rim falloff distinguishes a stroke on the edge from a nearby interior stroke. The boundary step runs along the rim tangent and snaps to the reference. Corners, creases and sharp folds remain fixed. The brush commits one Undo step.
+
+Device check: brush a crowded outer edge on a curved reference, orbit to confirm the vertices still sit on the surface, then Undo/Redo. Also brush the middle of a patch and check the cut and invalid-patch gestures from .1224 and .1225.
+
 ## .1225 — Retopo rejects flipped and unsupported faces
 
 Cris passed Relax in .1223 and reported occasional inside-out quad patches. The reference picker handles reversed source winding. Before committing newly drawn faces, validate front-facing convex screen winding, reference contact at every corner, and nearby surface at edge midpoints and center. A bad cell rejects the entire stroke before topology or history changes. Existing cut validation remains in its own owner.
