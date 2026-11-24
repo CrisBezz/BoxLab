@@ -1,6 +1,6 @@
 import {cutRetopoStroke} from './retopo-cut.js?v=0.36.18.1226';
 import {quadRelaxFlow} from './quad-clean-core.js?v=0.36.18.1226';
-import {openQuadStrokeCorners,quadStrokeCorners,straightQuadStroke,quadStrokeCrossing} from './retopo-stroke.js?v=0.36.18.1224';
+import {openQuadStrokeCorners,quadStrokeCorners,straightQuadStroke,quadStrokeCrossing,quadStrokeGuide} from './retopo-stroke.js?v=0.36.18.1227';
 import {buildRetopoQuad} from './retopo-quad.js?v=0.36.18.1226';
 import {EditableMesh} from './mesh.js';
 import {createRetopoSurface,nearestRetopoVertex} from './retopo-surface.js?v=0.36.18.1225';
@@ -20,11 +20,15 @@ let active=false,referenceId=null,retopoId=null,surface=null,drag=null,previousM
 const guide=document.createElement('div');guide.id='retopoQuadGuide';
 Object.assign(guide.style,{position:'absolute',inset:'0',pointerEvents:'none',zIndex:'40'});document.querySelector('#viewportWrap')?.appendChild(guide);
 function drawCorners(){
-  if(drag?.stroke&&(drag.moved||tool==='relax')){
+  if(drag&&tool==='relax'){
+    const r=canvas.getBoundingClientRect(),p=drag.brush;
+    guide.innerHTML=`<svg width="100%" height="100%" viewBox="0 0 ${r.width} ${r.height}"><circle cx="${p.x-r.left}" cy="${p.y-r.top}" r="48" fill="none" stroke="#50efc6" stroke-width="2" opacity=".7"/></svg>`;
+    return;
+  }
+  if(drag?.stroke&&drag.moved){
     const r=canvas.getBoundingClientRect();
-    const xy=drag.stroke.map(p=>`${p.x-r.left},${p.y-r.top}`);
-    const dab=tool==='relax'&&xy.length===1?`<circle cx="${drag.x-r.left}" cy="${drag.y-r.top}" r="48" fill="#50efc6" opacity=".32"/>`:'';
-    guide.innerHTML=`<svg width="100%" height="100%" viewBox="0 0 ${r.width} ${r.height}"><polyline points="${xy.join(' ')}" fill="none" stroke="#50efc6" stroke-width="${tool==='relax'?96:3}" opacity="${tool==='relax'?.32:1}" stroke-linejoin="round" stroke-linecap="round"/>${dab}</svg>`;
+    const xy=quadStrokeGuide(drag.stroke).map(p=>`${p.x-r.left},${p.y-r.top}`);
+    guide.innerHTML=`<svg width="100%" height="100%" viewBox="0 0 ${r.width} ${r.height}"><polyline points="${xy.join(' ')}" fill="none" stroke="#50efc6" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/></svg>`;
     return;
   }
   if(!active||!corners.length){guide.innerHTML='';return;}
@@ -104,6 +108,7 @@ function release(d){try{canvas.releasePointerCapture(d.pointer);}catch{}if(d.con
 function cancelDrag(){
   if(!drag)return;const d=drag;drag=null;
   if(d.index!==null&&manager()?.activeId===d.object&&state()?.mesh===d.mesh)d.mesh.vertices[d.index].copy(d.start);
+  if(d.relaxed&&manager()?.activeId===d.object&&state()?.mesh===d.mesh)d.mesh.vertices=d.beforeMesh.vertices;
   release(d);drawCorners();render();
 }
 function showPanel(show){
@@ -187,14 +192,15 @@ function sourceUp(e){
 function down(e){
   if(picking){sourceDown(e);return;}
   if(active&&e.pointerType==='touch'&&drag){cancelDrag();return;}
-  if(!active||e.target!==canvas||!['pen','mouse'].includes(e.pointerType)||(e.button!==0&&!(e.pressure>0)))return;
+  if(!active||e.target!==canvas||!['pen','mouse'].includes(e.pointerType)||(e.button!==0&&(tool==='quad'||!(e.pressure>0))))return;
   if(!valid()){close();return;}
   if(drag)return;
   consume(e);
-  const h=hit(e);if(!h){message('Retopo · point at the reference surface');return;}
+  const h=hit(e);if(!h&&tool!=='quad'){message('Retopo · point at the reference surface');return;}
   const m=state().mesh,index=retopoId&&tool!=='relax'?nearestRetopoVertex(m,state().camera,canvas.getBoundingClientRect(),e.clientX,e.clientY,h,16,surface):null;
-  drag={pointer:e.pointerId,object:manager().activeId,mesh:m,index,start:index===null?null:m.vertices[index].clone(),beforeMesh:m.clone(),point:h.point,normal:h.normal,valid:true,x:e.clientX,y:e.clientY,moved:false,before:globalThis.__boxlabObjectHistory?.capture?.(),controls:state().controls,enabled:state().controls?.enabled};
-  if(tool!=='vertex'){drag.stroke=[{x:e.clientX,y:e.clientY}];drawCorners();}
+  drag={pointer:e.pointerId,object:manager().activeId,mesh:m,index,start:index===null?null:m.vertices[index].clone(),beforeMesh:m.clone(),point:h?.point,normal:h?.normal,valid:true,x:e.clientX,y:e.clientY,moved:false,before:globalThis.__boxlabObjectHistory?.capture?.(),controls:state().controls,enabled:state().controls?.enabled};
+  if(tool==='quad')drag.stroke=[{x:e.clientX,y:e.clientY}];
+  if(tool==='relax')relaxDab(drag,e,true);
   if(drag.controls)drag.controls.enabled=false;
   try{canvas.setPointerCapture(e.pointerId);}catch{}
 }
@@ -202,49 +208,54 @@ function move(e){
   if(picking){sourceMove(e);return;}
   if(!drag||e.pointerId!==drag.pointer)return;
   consume(e);if(!valid()||state().mesh!==drag.mesh){cancelDrag();return;}
-  if(drag.stroke){
-    for(const point of e.getCoalescedEvents?.() || [])recordStroke(drag,point);
-    recordStroke(drag,e);drawCorners();return;
-  }
+  if(tool==='relax'){relaxDab(drag,e);return;}
+  if(drag.stroke){recordStroke(drag,e);drawCorners();return;}
   const h=hit(e);drag.valid=!!h;drag.moved ||= Math.hypot(e.clientX-drag.x,e.clientY-drag.y)>5;
   if(!h)return;drag.point=h.point;
   if(tool==='vertex'&&drag.index!==null){drag.mesh.vertices[drag.index].copy(h.point);render();}
 }
 function recordStroke(d,e){
   const last=d.stroke.at(-1);
-  if(Math.hypot(e.clientX-last.x,e.clientY-last.y)<2)return;
-  if(d.stroke.length>=256){d.strokeOverflow=true;return;}
+  if(Math.hypot(e.clientX-last.x,e.clientY-last.y)<(d.moved?2:5))return;
+  if(d.stroke.length>=256)d.stroke=d.stroke.filter((_,i)=>i%2===0);
   d.stroke.push({x:e.clientX,y:e.clientY});
   d.moved ||= Math.hypot(e.clientX-d.x,e.clientY-d.y)>5;
 }
 function finishStroke(d,e){
   recordStroke(d,e);
-  if(!d.moved){quadCorner(d);return;}
+  if(!d.moved){if(d.point)quadCorner(d);else message('Retopo · tap the visible reference');return;}
   clearCorners();
   const rect=canvas.getBoundingClientRect(),camera=state().camera;
-  if(!d.strokeOverflow&&retopoId){
+  if(retopoId){
     const crossing=quadStrokeCrossing(d.stroke);
     if(crossing){
       if(!fillCrossedQuad(crossing,rect,camera))message('Retopo · draw the cross inside a quad or a four-edge gap');
       return;
     }
   }
-  const outline=d.strokeOverflow?null:quadStrokeCorners(d.stroke);
+  const outline=quadStrokeCorners(d.stroke);
   if(!outline){
-    if(!d.strokeOverflow&&retopoId){
+    if(retopoId){
       const result=cutRetopoStroke(state().mesh,d.stroke,vertex=>screenPoint(vertex,rect,camera),
         point=>surface.hit(camera,rect,point.x,point.y)?.point,
         (vertex,point)=>visibleBoundaryVertex(vertex,point,rect,camera));
       if(result){commitQuad(null,result);return;}
     }
-    if(!d.strokeOverflow&&retopoId&&completeOpenStroke(d.stroke,rect,camera))return;
+    if(retopoId&&completeOpenStroke(d.stroke,rect,camera))return;
     message('Retopo · close the outline or start and end near boundary corners');return;
   }
   const projected=[];
   const snapRadius=Math.min(16,Math.min(...outline.map((p,i)=>Math.hypot(p.x-outline[(i+1)%4].x,p.y-outline[(i+1)%4].y)))*.3);
-  for(const {x,y} of outline){
-    const pick=surface.hit(camera,rect,x,y);
-    if(!pick){message('Retopo · keep all four corners on the reference');return;}
+  const center=outline.reduce((sum,p)=>({x:sum.x+p.x/4,y:sum.y+p.y/4}),{x:0,y:0});
+  for(const point of outline){
+    let {x,y}=point,pick=surface.hit(camera,rect,x,y);
+    const distance=Math.hypot(center.x-x,center.y-y);
+    if(!pick&&distance>0){
+      const step=Math.min(6,distance*.12)/distance;
+      x+=(center.x-x)*step;y+=(center.y-y)*step;
+      pick=surface.hit(camera,rect,x,y);
+    }
+    if(!pick){message('Retopo · a quad corner missed the reference');return;}
     const index=retopoId?nearestRetopoVertex(state().mesh,camera,rect,x,y,pick,snapRadius,surface):null;
     projected.push({...pick,index});
   }
@@ -512,42 +523,35 @@ function completeOpenStroke(stroke,rect,camera){
   }
   return false;
 }
-function finishRelax(d,e){
-  recordStroke(d,e);
-  clearCorners();
-  if(!retopoId||!d.mesh.faces.length){message('Retopo · draw quads before relaxing');return;}
-  if(d.strokeOverflow){message('Retopo · use a shorter Relax stroke');return;}
+function relaxDab(d,e,initial=false){
+  d.brush={x:e.clientX,y:e.clientY};drawCorners();
+  if(!retopoId||!d.mesh.faces.length)return;
+  if(!initial&&Number.isFinite(e.timeStamp)&&e.timeStamp-d.lastDab<24)return;
+  d.lastDab=e.timeStamp;
+  const previous=d.lastBrush||d.brush;
+  d.lastBrush=d.brush;
   const rect=canvas.getBoundingClientRect(),camera=state().camera;
-  const trial=d.mesh.clone(),weights=new Map(),radius=48;
+  const dx=d.brush.x-previous.x,dy=d.brush.y-previous.y;
+  const length=dx*dx+dy*dy;
   function weight(index,vertex,onBoundary){
-    if(weights.has(index))return weights.get(index);
-    const p=screenPoint(vertex,rect,camera);
+    const p=screenPoint(vertex,rect,camera),reach=onBoundary?24:48;
     if(Math.abs(p.z)>1)return 0;
-    let distance=Math.hypot(p.x-d.stroke[0].x,p.y-d.stroke[0].y);
-    for(let i=1;i<d.stroke.length;i++){
-      const a=d.stroke[i-1],b=d.stroke[i],dx=b.x-a.x,dy=b.y-a.y;
-      const t=Math.max(0,Math.min(1,((p.x-a.x)*dx+(p.y-a.y)*dy)/(dx*dx+dy*dy)));
-      distance=Math.min(distance,Math.hypot(p.x-a.x-t*dx,p.y-a.y-t*dy));
-    }
-    const reach=onBoundary?radius*.5:radius;
-    const influence=distance<reach&&visibleBoundaryVertex(vertex,p,rect,camera)?1-(distance/reach)**2:0;
-    weights.set(index,influence);
-    return influence;
+    const t=length?Math.max(0,Math.min(1,((p.x-previous.x)*dx+(p.y-previous.y)*dy)/length)):0;
+    const distance=Math.hypot(p.x-previous.x-t*dx,p.y-previous.y-t*dy);
+    return distance<reach&&visibleBoundaryVertex(vertex,p,rect,camera)?1-(distance/reach)**2:0;
   }
   function project(target,current,averageEdge){
-    const p=screenPoint(target,rect,camera);
-    const hit=surface.hit(camera,rect,p.x,p.y);
+    const p=screenPoint(target,rect,camera),hit=surface.hit(camera,rect,p.x,p.y);
     return hit&&current.distanceTo(hit.point)<=averageEdge*.3?hit.point:null;
   }
-  let changed=false;
-  for(let i=0;i<4;i++){
-    const result=quadRelaxFlow(trial,{strength:.5,maxFraction:.12,weight,project,relaxBoundary:true});
-    if(!result.changed)break;
-    changed=true;
-  }
-  if(!changed){message('Retopo · brush across visible quad vertices or along an outer edge');return;}
+  const pressure=e.pointerType==='pen'&&Number.isFinite(e.pressure)?Math.max(0,Math.min(1,e.pressure)):.5;
+  const result=quadRelaxFlow(d.mesh,{strength:.32+.58*pressure,maxFraction:.1+.14*pressure,weight,project,relaxBoundary:true});
+  if(result.changed){d.relaxed=true;render();}
+}
+function finishRelax(d){
+  clearCorners();
+  if(!d.relaxed){message('Retopo · brush across visible quad vertices or along an outer edge');return;}
   globalThis.__boxlabHistory.push(d.beforeMesh);
-  d.mesh.vertices=trial.vertices;
   manager().saveActive();globalThis.__boxlabSelectionBridge?.clear?.();render();
   message('Retopo · quad spacing relaxed');
 }
@@ -558,7 +562,7 @@ function up(e){
   if(e.type!=='pointerup'||!valid()||state().mesh!==d.mesh||!d.valid){cancelDrag();return;}
   drag=null;release(d);
   if(tool==='quad'){finishStroke(d,e);return;}
-  if(tool==='relax'){finishRelax(d,e);return;}
+  if(tool==='relax'){finishRelax(d);return;}
   if(d.index!==null){
     if(d.start.distanceToSquared(d.mesh.vertices[d.index])>1e-16)globalThis.__boxlabHistory?.push?.(d.beforeMesh);
   }else if(!d.moved){

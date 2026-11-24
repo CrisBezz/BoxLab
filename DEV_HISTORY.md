@@ -1,3 +1,9 @@
+## .1227 — live pressure Relax and straight-segment Quad preview
+
+Cris passed .1226. Relax now updates on contact and movement, with pressure controlling move strength. Pointer capture cancellation restores the original vertices and finishing gives one Undo step. Quad uses pressure-independent positions, skips coalesced startup samples and tiny starting motion, displays a fitted straight-segment preview, and downsamples long strokes. Near-silhouette outlines can start off the surface and try a small inward corner recovery. The existing front-visible surface and invalid-patch checks still gate commits.
+
+Device check: look for visible movement before Pencil lift, compare soft and firm pressure, and Undo a stroke. Draw a light-start Quad outline near the silhouette and check the segmented preview and reference snap.
+
 ## .1226 — Retopo Relax works along outer edges
 
 Cris passed .1224 stroke cuts and straighter patches, and .1225 surface validation. Retopo Relax now redistributes vertices along smooth boundary runs. The tighter rim falloff distinguishes a stroke on the edge from a nearby interior stroke. The boundary step runs along the rim tangent and snaps to the reference. Corners, creases and sharp folds remain fixed. The brush commits one Undo step.

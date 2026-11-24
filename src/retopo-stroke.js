@@ -18,6 +18,15 @@ function simplify(path, start, end, keep, tolerance) {
   simplify(path, furthest, end, keep, tolerance);
 }
 
+export function quadStrokeGuide(points) {
+  const end=points.length-1;
+  if(end<2)return points;
+  const bends=[];
+  const span=Math.max(...points.map(p=>distance(points[0],p)));
+  simplify(points,0,end,bends,Math.max(4,span*.035));
+  return [points[0],...bends,points[end]];
+}
+
 // Simplify a closed screen-space stroke without treating its start as a corner.
 export function quadStrokeCorners(points) {
   if (points.length < 5) return null;

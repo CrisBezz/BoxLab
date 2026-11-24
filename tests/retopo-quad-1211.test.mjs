@@ -285,3 +285,32 @@ test('Relax evens an outer edge while keeping its corners and the reference fixe
  f.history('undo');assert.deepEqual(f.state.mesh.vertices,old);
  f.history('redo');assert.deepEqual(f.state.mesh.vertices[1],relaxed);
 });
+
+test('Pencil pressure controls live Relax before lift and cancel restores every vertex',()=>{
+ function preview(pressure){
+   const {f}=gestureFixture();
+   const tap=(x,y)=>{f.pointer('pointerdown',x,y);f.pointer('pointerup',x,y);};
+   for(const point of [[350,368],[376,368],[400,424],[350,424],
+     [376,368],[450,368],[450,424],[400,424]])tap(...point);
+   const before=f.state.mesh.vertices.map(vertex=>vertex.clone()),count=f.h.undoStack.length;
+   f.field('#retopoRelax').click();
+   f.pointer('pointerdown',376,368,{pressure});
+   const displacement=f.state.mesh.vertices[1].distanceTo(before[1]);
+   assert.equal(f.h.undoStack.length,count);
+   f.pointer('pointercancel',376,368);
+   assert.deepEqual(f.state.mesh.vertices,before);
+   return displacement;
+ }
+ assert.ok(preview(.9)>preview(.05));
+});
+
+test('Quad ignores pen pressure and stale coalesced startup points',()=>{
+ const {f}=gestureFixture();
+ f.pointer('pointerdown',350,350,{pressure:.01});
+ for(const [x,y] of [[352,352],[450,350],[450,450],[350,450]]){
+   f.pointer('pointermove',x,y,{pressure:.8,getCoalescedEvents:()=>[{clientX:15,clientY:15}]});
+ }
+ f.pointer('pointerup',350,350,{pressure:0});
+ assert.equal(f.state.mesh.faces.length,1);
+ assert.equal(f.h.undoStack.length,1);
+});
