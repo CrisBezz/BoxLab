@@ -3,7 +3,7 @@ import {EditableMesh} from '../src/mesh.js';import {fixture} from './helpers/ret
 function reference(f){const mesh=EditableMesh.cube();mesh.vertices.forEach(v=>v.z+=2);mesh.ensureLooseTopology();const o={id:3,name:'Imported Reference',kind:'reference',locked:true,visible:true,mesh};f.objects.push(o);return o;}
 test('Retopo picker accepts a locked inactive reference and keeps both source objects unchanged',()=>{
  const f=fixture(),ref=reference(f),before=JSON.stringify(ref),source=JSON.stringify(f.objects[0]);f.api.start();
- f.api.selectReference(3);
+ f.api.selectReference(3);f.field('#retopoVertex').click();
  assert.equal(f.api.active,true);assert.equal(f.api.referenceId,3);assert.equal(f.manager.activeId,1);assert.equal(f.h.undoStack.length,0);
  f.pointer('pointerdown');f.pointer('pointerup');assert.equal(f.state.mesh.vertices.length,1);assert.ok(Math.abs(f.state.mesh.vertices[0].z-3)<1e-8);assert.equal(f.manager.activeId,2);
  assert.equal(JSON.stringify(f.objects.find(o=>o.id===3)),before);assert.equal(JSON.stringify(f.objects[0]),source);
@@ -42,6 +42,7 @@ test('Retopo mode waits for a viewport tap and keeps orbit gestures from choosin
  assert.equal(f.manager.activeId,1);
  assert.equal(f.objects.length,2);
  assert.equal(f.h.undoStack.length,0);
+ f.field('#retopoVertex').click();
  f.pointer('pointerdown');f.pointer('pointerup');
  assert.equal(f.objects.length,3);
  assert.equal(f.objects[1].locked,true);

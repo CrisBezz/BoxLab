@@ -12,6 +12,8 @@ try{
  const pen=async(type,x=point.x,y=point.y)=>page.evaluate(({type,x,y})=>document.querySelector('#viewport').dispatchEvent(new PointerEvent(type,{bubbles:true,cancelable:true,pointerType:'pen',pointerId:41,isPrimary:true,button:0,buttons:type==='pointerup'?0:1,pressure:type==='pointerup'?0:.5,clientX:x,clientY:y})),{type,x,y});
  await pen('pointerdown');await pen('pointerup');
  assert.deepEqual(await snap(),before,'source tap only selects the mesh');
+ assert.equal(await page.locator('#retopoQuad').getAttribute('aria-pressed'),'true');
+ await page.locator('#retopoVertex').click();
  await pen('pointerdown');await pen('pointerup');
  assert.equal(await page.evaluate(()=>__boxlabRetopo.active),true,'native object creation must keep Retopo active');
  const first=await snap();assert.equal(first.objects.length,before.objects.length+1);assert.equal(first.live.length,1);assert.deepEqual(first.objects[0],before.objects[0]);
@@ -63,8 +65,24 @@ try{
  assert.equal(await page.evaluate(()=>__boxlabRetopo.referenceId),ref.id);
  assert.deepEqual(await snap(),referenceOnly,'viewport source selection leaves the reference-only scene unchanged');
  const refStart=await snap();await page.locator('#retopoQuad').click();
- for(const p of rp){await pen('pointerdown',p.x,p.y);await pen('pointerup',p.x,p.y);}
+ await pen('pointerdown',rp[0].x,rp[0].y);
+ for(const p of rp.slice(1)){await pen('pointermove',p.x,p.y);}
+ assert.deepEqual(await snap(),refStart,'an unfinished stroke cannot edit geometry');
+ await pen('pointerup',rp[0].x,rp[0].y);
  const onRef=await snap();assert.equal(onRef.objects.length,refStart.objects.length+1);assert.equal(onRef.live.length,4);assert.equal(onRef.objects.at(-1).faces.length,1);assert(onRef.live.every(v=>Math.abs(v[2]-1)<1e-7),'corners must use the imported reference, not the smaller active cube');
+ const display=await page.evaluate(id=>{
+   const result={};
+   __boxlabBridgeState.scene.traverse(body=>{
+     if(body.userData.objectId===id&&body.userData.kind==='boxlab-inactive-body'){
+       result.reference=body.material.color.getHex();result.smooth=!!body.userData.boxlabRetopoCleanup;
+     }
+     if(body.userData.kind==='body'){
+       result.quad=body.material.color.getHex();result.lineWidth=body.children.find(child=>child.isLineSegments2)?.material.linewidth;
+     }
+   });
+   return result;
+ },ref.id);
+ assert.deepEqual(display,{reference:0xd8d5d0,smooth:true,quad:0xa393de,lineWidth:2.7});
  const refAfter=await page.evaluate(id=>{const o=__boxlabObjectManager.objects.find(o=>o.id===id);return{kind:o.kind,locked:o.locked,geometry:JSON.stringify([o.mesh.vertices.map(v=>v.toArray()),o.mesh.faces])};},ref.id);
  assert.deepEqual(refAfter,{kind:ref.kind,locked:ref.locked,geometry:ref.geometry});
  await page.locator('#undoBtn').click();assert.deepEqual(await snap(),refStart);await page.locator('#redoBtn').click();assert.deepEqual(await snap(),onRef);
@@ -81,8 +99,8 @@ try{
  await page.locator('#projectOpenBasicInput').setInputFiles({name:'ReferenceOnly.boxlab',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(referenceFile))});
  await page.waitForFunction(()=>__boxlabObjectManager.objects.length===1&&__boxlabObjectManager.objects[0].kind==='reference');assert.equal((await snap()).active,null);
  await page.locator('#retopoModeBtn').click();
- const vertexPoint=rp[0];await pen('pointerdown',vertexPoint.x,vertexPoint.y);await pen('pointerup',vertexPoint.x,vertexPoint.y);
+ const vertexPoint=rp[0];await pen('pointerdown',vertexPoint.x,vertexPoint.y);await pen('pointerup',vertexPoint.x,vertexPoint.y);await page.locator('#retopoVertex').click();
  await pen('pointerdown',vertexPoint.x,vertexPoint.y);await pen('pointerup',vertexPoint.x,vertexPoint.y);
  assert.equal((await snap()).objects.length,2);assert.equal((await snap()).live.length,1);await page.locator('#undoBtn').click();assert.equal((await snap()).objects.length,1);assert.equal((await snap()).active,null);await page.locator('#redoBtn').click();assert.equal((await snap()).live.length,1);await page.locator('#retopoDone').click();
- assert.deepEqual(errors,[]);console.log('Retopo1217 browser PASS: viewport reference selection / cube deletion / reference-only Retopo / delete all / empty UndoRedo / empty and reference-only Open / actual locked OBJ reference import / reference preservation / vertex editing / quad creation / shared edges / duplicate refusal / clear / Undo / Redo / source unchanged / Done');
+ assert.deepEqual(errors,[]);console.log('Retopo1218 browser PASS: closed quad stroke / smooth reference / bold edges / viewport reference selection / cube deletion / reference-only Retopo / delete all / empty UndoRedo / empty and reference-only Open / actual locked OBJ reference import / reference preservation / vertex editing / quad creation / shared edges / duplicate refusal / clear / Undo / Redo / source unchanged / Done');
 }finally{await browser?.close();await new Promise(r=>server.close(r));}

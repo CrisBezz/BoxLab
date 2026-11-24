@@ -29,3 +29,27 @@ test('Clear corners and tool switches discard partial quads without geometry/his
  const f=fixture();f.api.start();f.field('#retopoQuad').click();f.pointer('pointerdown',340,450);f.pointer('pointerup',340,450);f.field('#retopoClear').click();assert.equal(f.objects.length,1);assert.equal(f.h.undoStack.length,0);
  f.field('#retopoVertex').click();f.pointer('pointerdown');f.pointer('pointerup');assert.equal(f.state.mesh.vertices.length,1);assert.equal(f.state.mesh.faces.length,0);
 });
+
+test('Quad defaults to one closed stroke, snaps to the source, and commits one undo step',()=>{
+ const f=fixture(),source=JSON.stringify(f.objects[0].mesh);
+ f.api.start();
+ assert.equal(f.field('#retopoQuad').attributes.get('aria-pressed'),'true');
+ const stroke=(type='pointerup',end=[400,450])=>{
+   f.pointer('pointerdown',400,450);
+   for(const [x,y] of [[460,450],[460,350],[340,350],[340,450]])f.pointer('pointermove',x,y);
+   assert.equal(f.objects.length,1);
+   f.pointer(type,...end);
+ };
+ stroke('pointercancel');
+ stroke('pointerup',[340,450]);
+ assert.equal(f.h.undoStack.length,0);
+ stroke();
+ assert.equal(f.state.mesh.faces.length,1);
+ assert.equal(f.state.mesh.vertices.length,4);
+ assert.equal(f.h.undoStack.length,1);
+ assert.equal(JSON.stringify(f.objects[0].mesh),source);
+ f.history('undo');
+ assert.equal(f.objects.length,1);
+ f.history('redo');
+ assert.equal(f.state.mesh.faces.length,1);
+});

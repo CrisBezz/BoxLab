@@ -1,3 +1,9 @@
+## .1218 — draw a quad in one stroke
+
+Cris confirmed .1217 PASS after reducing the reference below 250,000 triangles. Retopo selects the source directly in the viewport and defaults to Quad. Draw one closed four-sided Pencil or mouse stroke. The existing reference picker projects the interpreted corners and snaps to nearby visible topology. The existing native quad builder and history transaction commit one face. Four corner taps still work, and Vertex remains available for point editing. A cancelled, open or ambiguous stroke leaves geometry and history unchanged.
+
+Retopo displays a pale, smoothly shaded reference and lilac output with 2.7-pixel dark edges. The styling belongs to Retopo display and leaves native mesh data and saved materials alone. Device check: draw the outline, Undo/Redo, orbit with fingers, then Done. Next: complete three-, two- and one-sided strokes using unique existing boundary paths.
+
 ## .1217 — pick the Retopo source on the model
 
 Cris reported .1216 FAIL and requested Retopo → tap the object → start modelling. The Retopo button now prompts for a viewport tap. The existing scene hit picker resolves the nearest visible object, including locked imports in a reference-only scene. A finger, Pencil or mouse can choose the source. The choice leaves geometry and history intact, the next Pencil or mouse tap places a point, and finger drags still navigate. The Objects list returns to its ordinary selection behavior and Retopo has no source dropdown. Vertex, Quad, Done and the separate output mesh remain.

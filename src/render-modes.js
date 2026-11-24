@@ -1,3 +1,4 @@
+import {applyRetopoDisplay} from './retopo-display.js?v=0.36.18.1218';
 import {createFacegroupDrafts} from './facegroup-drafts.js?v=0.36.18.995';
 import {createFacegroupList} from './facegroup-list.js?v=0.36.18.995';
 import {createFacegroupPaintDock} from './facegroup-paint-dock.js?v=0.36.18.991';
@@ -75,7 +76,7 @@ const xrayMaterial=new THREE.MeshStandardMaterial({color:0x9eb4cc,roughness:.78,
 const xrayHiddenWireMaterial=new THREE.MeshBasicMaterial({color:0xaec3d9,wireframe:true,transparent:true,opacity:.22,depthTest:false,depthWrite:false});
 const xrayVisibleWireMaterial=new THREE.MeshBasicMaterial({color:0xf1f6fb,wireframe:true,transparent:true,opacity:.88,depthTest:true,depthWrite:false,polygonOffset:true,polygonOffsetFactor:-1,polygonOffsetUnits:-1});
 
-function clearRenderChildren(body){[...body.children].forEach(child=>{if(child?.userData?.boxlabColourPaintDispose){child.userData.boxlabColourPaintDispose();}else if(child?.userData?.boxlabUVImageDispose){child.userData.boxlabUVImageDispose();}else if(child?.userData?.boxlabUVCheckerDispose){child.userData.boxlabUVCheckerDispose();}else if(child?.userData?.boxlabRenderOverlay){body.remove(child);child.material?.dispose?.();}});}
+function clearRenderChildren(body){body?.userData?.boxlabRetopoCleanup?.();if(body?.userData)delete body.userData.boxlabRetopoCleanup;[...body.children].forEach(child=>{if(child?.userData?.boxlabColourPaintDispose){child.userData.boxlabColourPaintDispose();}else if(child?.userData?.boxlabUVImageDispose){child.userData.boxlabUVImageDispose();}else if(child?.userData?.boxlabUVCheckerDispose){child.userData.boxlabUVCheckerDispose();}else if(child?.userData?.boxlabRenderOverlay){body.remove(child);child.material?.dispose?.();}});}
 function addWire(body,material,order=12){const overlay=new THREE.Mesh(body.geometry,material.clone());overlay.userData.boxlabRenderOverlay=true;overlay.renderOrder=order;body.add(overlay);}
 function addBackface(body){const overlay=new THREE.Mesh(body.geometry,backfaceMaterial.clone());overlay.userData.boxlabRenderOverlay=true;overlay.userData.boxlabBackfaceCue=true;overlay.renderOrder=1;body.add(overlay);}
 function frontOnly(material){
@@ -183,6 +184,11 @@ function applyMode(body){
   const inactive=kind==='boxlab-inactive-body';if(!inactive)lastBody=body;clearRenderChildren(body);
   if(!body.userData.boxlabOriginalMaterial)body.userData.boxlabOriginalMaterial=body.material;
   const original=body.userData.boxlabOriginalMaterial;syncStudio();
+  const retopo=globalThis.__boxlabRetopo;
+  if(retopo?.active){
+    const id=inactive?body.userData.objectId:manager()?.activeId;
+    if(applyRetopoDisplay(body,id,inactive?objectFor(id)?.mesh:bridge()?.mesh,retopo))return;
+  }
   // Set before async paint display creation, not only in the queued rig refresh.
   // The replacement surface inherits these flags even when its digest wins the race.
   if(mode==='studio'){body.castShadow=true;body.receiveShadow=true;body.material=inactive?studioInactiveMaterial:studioMaterial;addBackface(body);}

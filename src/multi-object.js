@@ -949,6 +949,10 @@ function installRenderObserver() {
     } else if (this === activeRoot) {
       const show = activeShouldShow(),groupContext=globalThis.__boxlabObjectSelection?.wholeGroupId!=null;
       for (const item of items) if (item?.userData?.kind !== 'boxlab-inactive-body') item.visible = show && !(groupContext&&groupSuppressedKinds.has(item?.userData?.kind));
+      const retopo=globalThis.__boxlabRetopo;
+      if(retopo?.active&&activeId!=null&&(activeId===retopo.referenceId||(retopo.drawQuads&&activeId===retopo.retopoId))){
+        for(const item of items)if(['cage-edge-batch','cage-vertex-batch','mirror-edge'].includes(item?.userData?.kind))item.visible=false;
+      }
     }
 
     const result = baseAdd.apply(this, items);
