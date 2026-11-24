@@ -1,3 +1,9 @@
+## .1219 — forgiving Retopo strokes and opaque-reference overlay
+
+Cris passed .1218 and reported that only about one in fifteen outlines committed, and curved references hid the quad fills. Closed outlines now accept smaller quads, a larger closing gap, and more hand-drawn variation. Corner snap radius scales down on small strokes to avoid collapsing nearby corners onto an existing vertex. The quad builder continues to validate topology.
+
+Retopo uses a uniform lilac fill and dark polygon edges drawn over the opaque reference. Triangle shading and internal diagonals are absent from the quad display. Back-facing polygons and edges are culled. Display changes do not move modelling vertices. Device check: draw several small rounded quads, orbit around a curved patch and confirm solid uninterrupted fills, then Undo/Redo. Shared-edge partial outlines remain next.
+
 ## .1218 — draw a quad in one stroke
 
 Cris confirmed .1217 PASS after reducing the reference below 250,000 triangles. Retopo selects the source directly in the viewport and defaults to Quad. Draw one closed four-sided Pencil or mouse stroke. The existing reference picker projects the interpreted corners and snaps to nearby visible topology. The existing native quad builder and history transaction commit one face. Four corner taps still work, and Vertex remains available for point editing. A cancelled, open or ambiguous stroke leaves geometry and history unchanged.

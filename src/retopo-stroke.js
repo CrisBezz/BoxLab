@@ -9,10 +9,9 @@ export function quadStrokeCorners(points) {
       if (length > diameter) { diameter = length; first = i; second = j; }
     }
   }
-  if (diameter < 24 || distance(points[0], points.at(-1)) > Math.min(24, diameter * .2)) return null;
+  if (diameter < 14 || distance(points[0], points.at(-1)) > Math.min(32, diameter * .34)) return null;
 
-  const tolerance = Math.max(3, diameter * .045);
-  function simplify(path, start, end, keep) {
+  function simplify(path, start, end, keep, tolerance) {
     const a = path[start], b = path[end], dx = b.x - a.x, dy = b.y - a.y;
     const lengthSquared = dx * dx + dy * dy;
     let furthest = -1, error = tolerance;
@@ -23,14 +22,20 @@ export function quadStrokeCorners(points) {
       if (offset > error) { error = offset; furthest = i; }
     }
     if (furthest < 0) return;
-    simplify(path, start, furthest, keep);
+    simplify(path, start, furthest, keep, tolerance);
     keep.push(path[furthest]);
-    simplify(path, furthest, end, keep);
+    simplify(path, furthest, end, keep, tolerance);
   }
-  const corners = [];
-  for (const path of [points.slice(first, second + 1), points.slice(second).concat(points.slice(0, first + 1))]) {
-    corners.push(path[0]);
-    simplify(path, 0, path.length - 1, corners);
+  const paths = [points.slice(first, second + 1), points.slice(second).concat(points.slice(0, first + 1))];
+  for (const ratio of [.035,.045,.06,.08,.10,.12]) {
+    const corners = [];
+    const tolerance = Math.max(2, diameter * ratio);
+    for (const path of paths) {
+      corners.push(path[0]);
+      simplify(path, 0, path.length - 1, corners, tolerance);
+    }
+    if (corners.length === 4 && corners.every((p, i) => distance(p, corners[(i + 1) % 4]) >= 5)) return corners;
+    if (corners.length < 4) break;
   }
-  return corners.length === 4 && corners.every((p, i) => distance(p, corners[(i + 1) % 4]) >= 8) ? corners : null;
+  return null;
 }

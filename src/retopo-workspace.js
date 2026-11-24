@@ -1,4 +1,4 @@
-import {quadStrokeCorners} from './retopo-stroke.js?v=0.36.18.1218';
+import {quadStrokeCorners} from './retopo-stroke.js?v=0.36.18.1219';
 import {buildRetopoQuad} from './retopo-quad.js?v=0.36.18.1211';
 import {EditableMesh} from './mesh.js';
 import {createRetopoSurface,nearestRetopoVertex} from './retopo-surface.js?v=0.36.18.1209';
@@ -188,10 +188,11 @@ function finishStroke(d,e){
   if(!outline){message('Retopo · draw one closed outline with four clear corners');return;}
   const rect=canvas.getBoundingClientRect(),camera=state().camera;
   const projected=[];
+  const snapRadius=Math.min(16,Math.min(...outline.map((p,i)=>Math.hypot(p.x-outline[(i+1)%4].x,p.y-outline[(i+1)%4].y)))*.3);
   for(const {x,y} of outline){
     const pick=surface.hit(camera,rect,x,y);
     if(!pick){message('Retopo · keep all four corners on the reference');return;}
-    const index=retopoId?nearestRetopoVertex(state().mesh,camera,rect,x,y,pick,16,surface):null;
+    const index=retopoId?nearestRetopoVertex(state().mesh,camera,rect,x,y,pick,snapRadius,surface):null;
     projected.push({...pick,index});
   }
   commitQuad(projected);
