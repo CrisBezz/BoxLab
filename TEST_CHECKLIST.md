@@ -1,3 +1,9 @@
+## .1223 — surface-constrained Retopo Relax brush
+
+Select Relax in Retopo, then sweep the Pencil across uneven quad spacing. The brush uses the existing Quad Clean flow solver with localized falloff and reference projection. It relaxes visible interior quad vertices, holds the patch rim and protected sharp features, and rejects off-surface, folded or poorer solutions. The preview shows the brush footprint. A successful stroke changes vertex positions only and is one Undo step. Finger navigation and Quad gestures retain their .1222 behavior.
+
+Device check: build an uneven quad grid over a curved reference, brush the inner row, and orbit to check the moved points stay on the surface. Check the rim, then Undo/Redo. The curved-reference fixture tests projection, rim preservation, cancellation and one-step history.
+
 ## .1222 — Retopo X delete and boundary-sized patches
 
 Cris passed .1221. Drawing X over a visible quad deletes it. A cross in an enclosed gap still fills it. The sideways U now uses the full identified run of existing boundary segments, including runs longer than 16. For lengthways ribbons, draw a deep U from one boundary edge back to its other corner. Adjacent quad depth estimates cell length up to 128 cells. For a grid, draw the two missing sides across from two connected boundary runs that meet at a corner. Each run sets the grid count along its axis. The stroke determines the far edges and the grid points snap to the reference. Each patch is validated and committed as one Undo step.

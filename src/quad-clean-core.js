@@ -694,7 +694,7 @@ function incidentData(mesh){
   return{neighbors,incidentFaces,protectedVertices,normalBreakVertices};
 }
 
-export function quadRelaxFlow(mesh,{strength=.35,maxFraction=.15}={}){
+export function quadRelaxFlow(mesh,{strength=.35,maxFraction=.15,weight=null,project=null}={}){
   if(!mesh?.faces||!mesh?.vertices)return{ok:false,reason:'invalid-mesh',changed:false,relaxedVertices:0};
   const beforeScore=quadMeshFlowScore(mesh);
   if(!Number.isFinite(beforeScore))return{ok:false,reason:'invalid-quad-region',changed:false,relaxedVertices:0,beforeScore};
@@ -725,14 +725,25 @@ export function quadRelaxFlow(mesh,{strength=.35,maxFraction=.15}={}){
     for(const ni of ring)avgEdge+=current.distanceTo(mesh.vertices[ni]);
     avgEdge/=ring.length;
     const maxMove=Math.max(avgEdge*maxFraction,0);
-    move.multiplyScalar(Math.max(0,Math.min(1,strength)));
+    const influence=weight?weight(vi,current):1;
+    if(!(influence>0))continue;
+    move.multiplyScalar(Math.max(0,Math.min(1,strength*influence)));
     if(move.length()>maxMove&&maxMove>0)move.setLength(maxMove);
-    if(move.length()>avgEdge*1e-6)proposed.set(vi,current.clone().add(move));
+    if(move.length()<=avgEdge*1e-6)continue;
+    const targetPoint=current.clone().add(move);
+    const candidate=project?project(targetPoint,current,avgEdge):targetPoint;
+    if(candidate&&candidate.distanceTo(current)>avgEdge*1e-6)proposed.set(vi,candidate);
   }
   if(!proposed.size)return{ok:true,changed:false,relaxedVertices:0,protectedNormalBreaks:normalBreakVertices.size,beforeScore,afterScore:beforeScore};
+  const affected=project?new Set([...proposed.keys()].flatMap(vi=>[...incidentFaces[vi]])):null;
+  const normals=affected?new Map([...affected].map(fi=>[fi,quadNormal(mesh,mesh.faces[fi])])):null;
   for(const [vi,pos] of proposed)mesh.vertices[vi].copy(pos);
   const afterScore=quadMeshFlowScore(mesh);
-  const improved=Number.isFinite(afterScore)&&afterScore<beforeScore-1e-9;
+  const flipped=normals&&[...normals].some(([fi,normal])=>{
+    const next=quadNormal(mesh,mesh.faces[fi]);
+    return !normal||!next||normal.dot(next)<.5;
+  });
+  const improved=!flipped&&Number.isFinite(afterScore)&&afterScore<beforeScore-1e-9;
   if(!improved){
     for(let i=0;i<original.length;i++)mesh.vertices[i].copy(original[i]);
     return{ok:true,changed:false,relaxedVertices:0,protectedNormalBreaks:normalBreakVertices.size,beforeScore,afterScore:beforeScore,rejectedScore:afterScore,candidates:proposed.size};

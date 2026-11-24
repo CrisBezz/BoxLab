@@ -1,6 +1,6 @@
 // BoxLab v0.36.18.339 — Clean for SubD sharp-fold shape preservation guard.
 
-import { quadCleanMesh } from './quad-clean-core.js?v=0.36.18.339';
+import { quadCleanMesh } from './quad-clean-core.js?v=0.36.18.1223';
 
 const button=document.querySelector('#quadCleanBtn');
 const status=document.querySelector('#selectionStatus');

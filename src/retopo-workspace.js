@@ -1,5 +1,6 @@
+import {quadRelaxFlow} from './quad-clean-core.js?v=0.36.18.1223';
 import {openQuadStrokeCorners,quadStrokeCorners,straightQuadStroke,quadStrokeCrossing,sampleStrokeSpan} from './retopo-stroke.js?v=0.36.18.1222';
-import {buildRetopoQuad} from './retopo-quad.js?v=0.36.18.1211';
+import {buildRetopoQuad} from './retopo-quad.js?v=0.36.18.1223';
 import {EditableMesh} from './mesh.js';
 import {createRetopoSurface,nearestRetopoVertex} from './retopo-surface.js?v=0.36.18.1209';
 import {placeToolSessionPanel} from './tool-session-panel-position.js?v=0.36.18.732';
@@ -8,20 +9,21 @@ const canvas=document.querySelector('#viewport'),bar=document.querySelector('#se
 const state=()=>globalThis.__boxlabBridgeState,manager=()=>globalThis.__boxlabObjectManager;
 const button=document.createElement('button');button.id='retopoModeBtn';button.type='button';button.title='Retopology';button.setAttribute('aria-pressed','false');button.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 7 8-4 8 4v10l-8 4-8-4zM4 7l8 4 8-4M12 11v10M8 5l8 4M8 9v10M4 12l8 4 8-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg><span class="mode-label">Retopo</span>';bar?.appendChild(button);
 const panel=document.createElement('div');panel.id='retopoSession';panel.className='boxlab-tool-session-shell';panel.hidden=true;
-panel.innerHTML='<div class="boxlab-tool-session-title">Retopo · Surface modelling</div><div id="retopoHint" class="boxlab-tool-session-subtitle"></div><div class="outliner-actions"><button type="button" id="retopoVertex" aria-pressed="false">Vertex</button><button type="button" id="retopoQuad" aria-pressed="true">Quad</button><button type="button" id="retopoClear">Clear corners</button><button type="button" id="retopoDone">Done</button></div>';
+panel.innerHTML='<div class="boxlab-tool-session-title">Retopo · Surface modelling</div><div id="retopoHint" class="boxlab-tool-session-subtitle"></div><div class="outliner-actions"><button type="button" id="retopoVertex" aria-pressed="false">Vertex</button><button type="button" id="retopoQuad" aria-pressed="true">Quad</button><button type="button" id="retopoRelax" aria-pressed="false">Relax</button><button type="button" id="retopoClear">Clear corners</button><button type="button" id="retopoDone">Done</button></div>';
 document.querySelector('#viewportWrap')?.appendChild(panel);placeToolSessionPanel(panel,{compact:true});
 const style=document.createElement('style');style.textContent='#retopoSession button[aria-pressed=true]{background:#eef1f7;color:#15171b}#retopoModeBtn svg{width:22px;height:22px}#retopoSession{width:340px;padding:12px;background:#1b2029;color:#eef1f7;border:1px solid #454c59;border-radius:14px}#retopoModeBtn[aria-pressed=true]{background:#eef1f7;color:#15171b}#app.boxlab-retopo-session #selectionModes [data-mode].active{background:#1e222a;color:#eef1f7}#app.boxlab-retopo-session #totalGizmo{visibility:hidden!important}';document.head.appendChild(style);
 let picking=false,sourceTap=null;
 const hint=panel.querySelector('#retopoHint');
-const toolButtons=['#retopoVertex','#retopoQuad','#retopoClear'].map(selector=>panel.querySelector(selector));
+const toolButtons=['#retopoVertex','#retopoQuad','#retopoRelax','#retopoClear'].map(selector=>panel.querySelector(selector));
 let active=false,referenceId=null,retopoId=null,surface=null,drag=null,previousMode='face',entryObjectId=null,tool='quad',corners=[],cornerContext=null;
 const guide=document.createElement('div');guide.id='retopoQuadGuide';
 Object.assign(guide.style,{position:'absolute',inset:'0',pointerEvents:'none',zIndex:'40'});document.querySelector('#viewportWrap')?.appendChild(guide);
 function drawCorners(){
-  if(drag?.stroke&&drag.moved){
+  if(drag?.stroke&&(drag.moved||tool==='relax')){
     const r=canvas.getBoundingClientRect();
     const xy=drag.stroke.map(p=>`${p.x-r.left},${p.y-r.top}`);
-    guide.innerHTML=`<svg width="100%" height="100%" viewBox="0 0 ${r.width} ${r.height}"><polyline points="${xy.join(' ')}" fill="none" stroke="#50efc6" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/></svg>`;
+    const dab=tool==='relax'&&xy.length===1?`<circle cx="${drag.x-r.left}" cy="${drag.y-r.top}" r="48" fill="#50efc6" opacity=".32"/>`:'';
+    guide.innerHTML=`<svg width="100%" height="100%" viewBox="0 0 ${r.width} ${r.height}"><polyline points="${xy.join(' ')}" fill="none" stroke="#50efc6" stroke-width="${tool==='relax'?96:3}" opacity="${tool==='relax'?.32:1}" stroke-linejoin="round" stroke-linecap="round"/>${dab}</svg>`;
     return;
   }
   if(!active||!corners.length){guide.innerHTML='';return;}
@@ -33,7 +35,7 @@ function drawCorners(){
   guide.innerHTML=`<svg width="100%" height="100%" viewBox="0 0 ${r.width} ${r.height}"><polyline points="${xy.map(p=>p.join(',')).join(' ')}" fill="none" stroke="#50efc6" stroke-width="2"/>${xy.map((p,i)=>`<circle cx="${p[0]}" cy="${p[1]}" r="6" fill="#50efc6" stroke="#102921" stroke-width="2"/><text x="${p[0]+9}" y="${p[1]-8}" fill="#fff" font-size="14">${i+1}</text>`).join('')}</svg>`;
 }
 function clearCorners(){corners=[];cornerContext=null;guide.innerHTML='';}
-function setTool(next){cancelDrag();clearCorners();tool=next;panel.querySelector('#retopoVertex').setAttribute('aria-pressed',String(tool==='vertex'));panel.querySelector('#retopoQuad').setAttribute('aria-pressed',String(tool==='quad'));render();message(tool==='quad'?'Retopo · draw a quad or connect boundary corners':'Retopo · tap surface to place · drag vertices to move');}
+function setTool(next){cancelDrag();clearCorners();tool=next;panel.querySelector('#retopoVertex').setAttribute('aria-pressed',String(tool==='vertex'));panel.querySelector('#retopoQuad').setAttribute('aria-pressed',String(tool==='quad'));panel.querySelector('#retopoRelax').setAttribute('aria-pressed',String(tool==='relax'));render();message(tool==='relax'?'Retopo · brush the quads to relax their spacing':tool==='quad'?'Retopo · draw a quad or connect boundary corners':'Retopo · tap surface to place · drag vertices to move');}
 function quadCorner(d){
   if(cornerContext&&(cornerContext.mesh!==state().mesh||cornerContext.id!==manager().activeId))clearCorners();
   cornerContext??={mesh:state().mesh,id:manager().activeId};
@@ -156,9 +158,9 @@ function down(e){
   if(drag)return;
   consume(e);
   const h=hit(e);if(!h){message('Retopo · point at the reference surface');return;}
-  const m=state().mesh,index=retopoId?nearestRetopoVertex(m,state().camera,canvas.getBoundingClientRect(),e.clientX,e.clientY,h,16,surface):null;
+  const m=state().mesh,index=retopoId&&tool!=='relax'?nearestRetopoVertex(m,state().camera,canvas.getBoundingClientRect(),e.clientX,e.clientY,h,16,surface):null;
   drag={pointer:e.pointerId,object:manager().activeId,mesh:m,index,start:index===null?null:m.vertices[index].clone(),beforeMesh:m.clone(),point:h.point,normal:h.normal,valid:true,x:e.clientX,y:e.clientY,moved:false,before:globalThis.__boxlabObjectHistory?.capture?.(),controls:state().controls,enabled:state().controls?.enabled};
-  if(tool==='quad')drag.stroke=[{x:e.clientX,y:e.clientY}];
+  if(tool!=='vertex'){drag.stroke=[{x:e.clientX,y:e.clientY}];drawCorners();}
   if(drag.controls)drag.controls.enabled=false;
   try{canvas.setPointerCapture(e.pointerId);}catch{}
 }
@@ -469,6 +471,44 @@ function completeOpenStroke(stroke,rect,camera){
   }
   return false;
 }
+function finishRelax(d,e){
+  recordStroke(d,e);
+  clearCorners();
+  if(!retopoId||!d.mesh.faces.length){message('Retopo · draw quads before relaxing');return;}
+  if(d.strokeOverflow){message('Retopo · use a shorter Relax stroke');return;}
+  const rect=canvas.getBoundingClientRect(),camera=state().camera;
+  const trial=d.mesh.clone(),weights=new Map(),radius=48;
+  function weight(index,vertex){
+    if(weights.has(index))return weights.get(index);
+    const p=screenPoint(vertex,rect,camera);
+    if(Math.abs(p.z)>1)return 0;
+    let distance=Math.hypot(p.x-d.stroke[0].x,p.y-d.stroke[0].y);
+    for(let i=1;i<d.stroke.length;i++){
+      const a=d.stroke[i-1],b=d.stroke[i],dx=b.x-a.x,dy=b.y-a.y;
+      const t=Math.max(0,Math.min(1,((p.x-a.x)*dx+(p.y-a.y)*dy)/(dx*dx+dy*dy)));
+      distance=Math.min(distance,Math.hypot(p.x-a.x-t*dx,p.y-a.y-t*dy));
+    }
+    const influence=distance<radius&&visibleBoundaryVertex(vertex,p,rect,camera)?1-(distance/radius)**2:0;
+    weights.set(index,influence);
+    return influence;
+  }
+  function project(target,current,averageEdge){
+    const p=screenPoint(target,rect,camera);
+    const hit=surface.hit(camera,rect,p.x,p.y);
+    return hit&&current.distanceTo(hit.point)<=averageEdge*.3?hit.point:null;
+  }
+  let changed=false;
+  for(let i=0;i<4;i++){
+    const result=quadRelaxFlow(trial,{strength:.5,maxFraction:.12,weight,project});
+    if(!result.changed)break;
+    changed=true;
+  }
+  if(!changed){message('Retopo · brush across visible interior quad vertices');return;}
+  globalThis.__boxlabHistory.push(d.beforeMesh);
+  d.mesh.vertices=trial.vertices;
+  manager().saveActive();globalThis.__boxlabSelectionBridge?.clear?.();render();
+  message('Retopo · quad spacing relaxed');
+}
 function up(e){
   if(picking){sourceUp(e);return;}
   if(!drag||e.pointerId!==drag.pointer)return;
@@ -476,6 +516,7 @@ function up(e){
   if(e.type!=='pointerup'||!valid()||state().mesh!==d.mesh||!d.valid){cancelDrag();return;}
   drag=null;release(d);
   if(tool==='quad'){finishStroke(d,e);return;}
+  if(tool==='relax'){finishRelax(d,e);return;}
   if(d.index!==null){
     if(d.start.distanceToSquared(d.mesh.vertices[d.index])>1e-16)globalThis.__boxlabHistory?.push?.(d.beforeMesh);
   }else if(!d.moved){
@@ -493,6 +534,7 @@ button.addEventListener('click',()=>active||picking?close():chooseSource());
 panel.querySelector('#retopoDone').addEventListener('click',close);
 panel.querySelector('#retopoVertex').addEventListener('click',()=>setTool('vertex'));
 panel.querySelector('#retopoQuad').addEventListener('click',()=>setTool('quad'));
+panel.querySelector('#retopoRelax').addEventListener('click',()=>setTool('relax'));
 panel.querySelector('#retopoClear').addEventListener('click',()=>{cancelDrag();clearCorners();message('Retopo · corners cleared');});
 window.addEventListener('resize',drawCorners);
 // One explicit editing owner. Touch contacts remain with native navigation.
@@ -512,4 +554,4 @@ document.addEventListener('click',e=>{
     close();
   }
 },true);
-globalThis.__boxlabRetopo={start,close,selectReference,get active(){return active||picking;},get referenceId(){return referenceId;},get retopoId(){return retopoId;},get drawQuads(){return active&&tool==='quad';}};
+globalThis.__boxlabRetopo={start,close,selectReference,get active(){return active||picking;},get referenceId(){return referenceId;},get retopoId(){return retopoId;},get drawQuads(){return active&&tool!=='vertex';}};

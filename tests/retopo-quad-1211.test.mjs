@@ -162,3 +162,38 @@ test('sideways ribbons extend beyond sixteen segments and retain every existing 
  assert.equal(f.state.mesh.vertices.length,54);
  f.history('undo');assert.equal(f.state.mesh.faces.length,17);
 });
+
+test('Relax brushes a distorted quad patch on a curved reference with one Undo',()=>{
+ const f=fixture();
+ const vertices=[];
+ for(const y of [-1,0,1]){
+   for(const x of [-1,0,1])vertices.push(new THREE.Vector3(x,y,.45-.15*x*x-.1*y*y));
+ }
+ const faces=[[0,1,4,3],[1,2,5,4],[3,4,7,6],[4,5,8,7]];
+ f.state.mesh=new EditableMesh(vertices,faces);
+ const source=JSON.stringify(f.state.mesh.clone());
+ f.api.start();
+ const points=[[350,350],[400,350],[450,350],[350,400],[420,409],[450,400],[350,450],[400,450],[450,450]];
+ for(const face of faces){
+   for(const index of face){
+     f.pointer('pointerdown',...points[index]);
+     f.pointer('pointerup',...points[index]);
+   }
+ }
+ const mesh=f.state.mesh, before=mesh.vertices.map(vertex=>vertex.clone()),count=f.h.undoStack.length;
+ assert.equal(mesh.faces.length,4);
+ const interior=mesh.edges().filter(edge=>edge.faces.length===2).flatMap(edge=>[edge.a,edge.b])
+   .find(index=>mesh.faces.every(face=>face.includes(index)));
+ f.field('#retopoRelax').click();
+ f.pointer('pointerdown',406,411);f.pointer('pointermove',431,409);f.pointer('pointercancel',433,409);
+ assert.deepEqual(mesh.vertices,before);
+ f.pointer('pointerdown',406,411);f.pointer('pointermove',431,409);f.pointer('pointerup',433,409);
+ assert.equal(f.h.undoStack.length,count+1);
+ assert.ok(mesh.vertices[interior].x<before[interior].x);
+ const moved=mesh.vertices[interior];
+ assert.ok(Math.abs(moved.z-(.45-.15*Math.abs(moved.x)-.1*Math.abs(moved.y)))<1e-6);
+ mesh.vertices.forEach((vertex,index)=>{if(index!==interior)assert.deepEqual(vertex,before[index]);});
+ assert.equal(JSON.stringify(f.objects[0].mesh),source);
+ f.history('undo');assert.deepEqual(f.state.mesh.vertices,before);
+ f.history('redo');assert.deepEqual(f.state.mesh.vertices[interior],moved);
+});
