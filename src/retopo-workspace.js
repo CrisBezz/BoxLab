@@ -1,5 +1,6 @@
+import {cutRetopoStroke} from './retopo-cut.js?v=0.36.18.1224';
 import {quadRelaxFlow} from './quad-clean-core.js?v=0.36.18.1223';
-import {openQuadStrokeCorners,quadStrokeCorners,straightQuadStroke,quadStrokeCrossing,sampleStrokeSpan} from './retopo-stroke.js?v=0.36.18.1222';
+import {openQuadStrokeCorners,quadStrokeCorners,straightQuadStroke,quadStrokeCrossing} from './retopo-stroke.js?v=0.36.18.1224';
 import {buildRetopoQuad} from './retopo-quad.js?v=0.36.18.1223';
 import {EditableMesh} from './mesh.js';
 import {createRetopoSurface,nearestRetopoVertex} from './retopo-surface.js?v=0.36.18.1209';
@@ -35,7 +36,7 @@ function drawCorners(){
   guide.innerHTML=`<svg width="100%" height="100%" viewBox="0 0 ${r.width} ${r.height}"><polyline points="${xy.map(p=>p.join(',')).join(' ')}" fill="none" stroke="#50efc6" stroke-width="2"/>${xy.map((p,i)=>`<circle cx="${p[0]}" cy="${p[1]}" r="6" fill="#50efc6" stroke="#102921" stroke-width="2"/><text x="${p[0]+9}" y="${p[1]-8}" fill="#fff" font-size="14">${i+1}</text>`).join('')}</svg>`;
 }
 function clearCorners(){corners=[];cornerContext=null;guide.innerHTML='';}
-function setTool(next){cancelDrag();clearCorners();tool=next;panel.querySelector('#retopoVertex').setAttribute('aria-pressed',String(tool==='vertex'));panel.querySelector('#retopoQuad').setAttribute('aria-pressed',String(tool==='quad'));panel.querySelector('#retopoRelax').setAttribute('aria-pressed',String(tool==='relax'));render();message(tool==='relax'?'Retopo · brush the quads to relax their spacing':tool==='quad'?'Retopo · draw a quad or connect boundary corners':'Retopo · tap surface to place · drag vertices to move');}
+function setTool(next){cancelDrag();clearCorners();tool=next;panel.querySelector('#retopoVertex').setAttribute('aria-pressed',String(tool==='vertex'));panel.querySelector('#retopoQuad').setAttribute('aria-pressed',String(tool==='quad'));panel.querySelector('#retopoRelax').setAttribute('aria-pressed',String(tool==='relax'));render();message(tool==='relax'?'Retopo · brush the quads to relax their spacing':tool==='quad'?'Retopo · draw a quad, connect corners or cut across a row':'Retopo · tap surface to place · drag vertices to move');}
 function quadCorner(d){
   if(cornerContext&&(cornerContext.mesh!==state().mesh||cornerContext.id!==manager().activeId))clearCorners();
   cornerContext??={mesh:state().mesh,id:manager().activeId};
@@ -57,7 +58,7 @@ function commitQuad(outline, result=null){
     globalThis.__boxlabHistory.push(before);
     for(const key of ['vertices','faces','faceGroups','creases','looseEdges','looseVertices'])live[key]=result.mesh[key];
   }
-  clearCorners();manager().saveActive();globalThis.__boxlabSelectionBridge?.clear?.();render();const added=result.mesh.faces.length-before.faces.length;message(`Retopo · ${added===1?'quad':added+' quads'} created`);
+  clearCorners();manager().saveActive();globalThis.__boxlabSelectionBridge?.clear?.();render();const added=result.mesh.faces.length-before.faces.length;message(result.splitFaces?`Retopo · split ${result.splitFaces} ${result.splitFaces===1?'quad':'quads'}`:`Retopo · ${added===1?'quad':added+' quads'} created`);
 }
 function message(text){if(status)status.textContent=text;}
 function render(){document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));}
@@ -197,6 +198,12 @@ function finishStroke(d,e){
   }
   const outline=d.strokeOverflow?null:quadStrokeCorners(d.stroke);
   if(!outline){
+    if(!d.strokeOverflow&&retopoId){
+      const result=cutRetopoStroke(state().mesh,d.stroke,vertex=>screenPoint(vertex,rect,camera),
+        point=>surface.hit(camera,rect,point.x,point.y)?.point,
+        (vertex,point)=>visibleBoundaryVertex(vertex,point,rect,camera));
+      if(result){commitQuad(null,result);return;}
+    }
     if(!d.strokeOverflow&&retopoId&&completeOpenStroke(d.stroke,rect,camera))return;
     message('Retopo · close the outline or start and end near boundary corners');return;
   }
@@ -309,11 +316,17 @@ function boundaryFractions(mesh,path){
   for(let i=1;i<path.length;i++)lengths.push(lengths[i-1]+mesh.vertices[path[i-1]].distanceTo(mesh.vertices[path[i]]));
   return lengths.map(length=>length/lengths.at(-1));
 }
+function straightRail(a,b,fractions){
+  return fractions.map(t=>({x:a.x+(b.x-a.x)*t,y:a.y+(b.y-a.y)*t}));
+}
+function balancedFractions(mesh,path){
+  return boundaryFractions(mesh,path).map((fraction,i)=>(fraction+i/(path.length-1))*.5);
+}
 function buildStrokeGrid(mesh,bottom,right,left,top,rect,camera,normal,drawnRight=null){
   const project=index=>screenPoint(mesh.vertices[index],rect,camera);
   const bottomPoints=bottom.map(project),rightPoints=right?.map(project)||drawnRight;
-  const u=boundaryFractions(mesh,bottom);
-  const v=right?boundaryFractions(mesh,right):left.map((_,i)=>i/(left.length-1));
+  const u=balancedFractions(mesh,bottom);
+  const v=right?balancedFractions(mesh,right):left.map((_,i)=>i/(left.length-1));
   const blend=(a,b,t,key)=>a[key]+(b[key]-a[key])*t;
   const grid=[];
   for(let j=0;j<v.length;j++){
@@ -370,9 +383,8 @@ function extendLengthwise(mesh,adjacent,start,end,stroke,rect,camera){
   const count=Math.min(128,Math.round(depth/size));
   if(!Number.isFinite(count)||count<2)return false;
   const steps=Array.from({length:count+1},(_,i)=>i/count);
-  const left=sampleStrokeSpan(stroke,near,corners[0],steps);
-  const right=sampleStrokeSpan(stroke,corners[1],far,steps).reverse();
-  left[0]=a;right[0]=b;
+  const left=straightRail(a,corners[0],steps);
+  const right=straightRail(b,corners[1],steps);
   const output=buildStrokeGrid(mesh,[start.index,end.index],null,left,corners,rect,camera,start.normal,right);
   if(!output)return false;
   commitQuad(null,{ok:true,mesh:output});
@@ -390,10 +402,9 @@ function fillBoundaryPatch(mesh,adjacent,start,end,stroke,rect,camera){
     const a=points[0],b=points.at(-1);
     const side=p=>(b.x-a.x)*(p.y-a.y)-(b.y-a.y)*(p.x-a.x);
     if(side(outer)*side(bend)>=0||points.some((p,i)=>!visibleBoundaryVertex(mesh.vertices[path[i]],p,rect,camera)))continue;
-    const first=stroke[0],last=stroke.at(-1),bottom=path.slice(0,split+1),right=path.slice(split);
-    const left=sampleStrokeSpan(stroke,first,outer,boundaryFractions(mesh,right));
-    const top=sampleStrokeSpan(stroke,outer,last,boundaryFractions(mesh,bottom));
-    left[0]=a;top[top.length-1]=b;
+    const bottom=path.slice(0,split+1),right=path.slice(split);
+    const left=straightRail(a,outer,balancedFractions(mesh,right));
+    const top=straightRail(outer,b,balancedFractions(mesh,bottom));
     const output=buildStrokeGrid(mesh,bottom,right,left,top,rect,camera,start.normal);
     if(output)solutions.push(output);
     if(solutions.length>1)return false;
@@ -413,18 +424,15 @@ function extendRibbon(mesh,adjacent,start,end,stroke,rect,camera){
     const a=base[0],b=base.at(-1),dx=b.x-a.x,dy=b.y-a.y;
     const progress=base.map(p=>(p.x-a.x)*dx+(p.y-a.y)*dy);
     if(progress.some((value,i)=>i&&value-progress[i-1]<progress.at(-1)*.08/(base.length-1)))continue;
-    const opposite=sampleStrokeSpan(stroke,...corners,boundaryFractions(mesh,path))
-      .map(p=>surface.hit(camera,rect,p.x,p.y));
-    if(opposite.some(point=>!point))continue;
-    let output=mesh,previous=null;
-    for(let i=0;i<path.length-1;i++){
-      const outline=[{index:path[i]},{index:previous,point:opposite[i].point},
-        {index:null,point:opposite[i+1].point},{index:path[i+1]}];
-      const next=output.vertices.length+(previous===null?1:0);
-      const result=buildRetopoQuad(output,outline,start.normal);
-      if(!result.ok){output=null;break;}
-      previous=next;output=result.mesh;
-    }
+    const lengths=base.slice(1).map((p,i)=>Math.hypot(p.x-base[i].x,p.y-base[i].y)).sort((x,y)=>x-y);
+    const spacing=lengths[Math.floor(lengths.length/2)];
+    const depth=(Math.hypot(corners[0].x-a.x,corners[0].y-a.y)+Math.hypot(corners[1].x-b.x,corners[1].y-b.y))/2;
+    if(spacing<1)continue;
+    const count=Math.max(1,Math.min(128,Math.round(depth/spacing)));
+    const steps=Array.from({length:count+1},(_,i)=>i/count);
+    const top=straightRail(...corners,balancedFractions(mesh,path));
+    const left=straightRail(a,corners[0],steps),right=straightRail(b,corners[1],steps);
+    const output=buildStrokeGrid(mesh,path,null,left,top,rect,camera,start.normal,right);
     if(output)candidates.push(output);
     if(candidates.length>1)return false;
   }

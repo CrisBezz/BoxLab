@@ -100,16 +100,3 @@ export function quadStrokeCrossing(points) {
   }
   return crossings.length===1?crossings[0]:null;
 }
-
-export function sampleStrokeSpan(stroke,first,last,fractions) {
-  const points=stroke.slice(stroke.indexOf(first),stroke.indexOf(last)+1),lengths=[0];
-  for(let i=1;i<points.length;i++)lengths.push(lengths[i-1]+distance(points[i-1],points[i]));
-  const total=lengths.at(-1);
-  let i=1;
-  return fractions.map(fraction=>{
-    const length=total*fraction;
-    while(i<lengths.length-1&&lengths[i]<length)i++;
-    const a=points[i-1],b=points[i],t=(length-lengths[i-1])/(lengths[i]-lengths[i-1]);
-    return {x:a.x+(b.x-a.x)*t,y:a.y+(b.y-a.y)*t};
-  });
-}

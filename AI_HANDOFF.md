@@ -1,3 +1,9 @@
+## .1224 — Retopo stroke cuts and straighter patches
+
+Draw across a complete connected row in Retopo Quad mode to split each crossed quad through opposite edges. Reuses the native Loop Cut topology, projects crossings onto the reference, and rolls back incomplete or invalid cuts. Each committed stroke is one Undo step with shared cut vertices. Success tests cover crosswise and lengthwise cuts in sequence. Existing X and outline gestures remain available.
+
+New U and L outline patches straighten the sketched borders in the current view before snapping the grid to the surface. New spacing balances existing segment lengths with uniform intervals. Deep sideways outlines can add multiple rows sized from the median existing edge spacing. Existing boundary coordinates and shared vertices stay fixed. Device checks: cut a neck patch vertically and horizontally with two strokes, then sketch a deep U along three existing segments and inspect the grid and Undo.
+
 ## .1223 — surface-constrained Retopo Relax brush
 
 Select Relax in Retopo, then sweep the Pencil across uneven quad spacing. The brush uses the existing Quad Clean flow solver with localized falloff and reference projection. It relaxes visible interior quad vertices, holds the patch rim and protected sharp features, and rejects off-surface, folded or poorer solutions. The preview shows the brush footprint. A successful stroke changes vertex positions only and is one Undo step. Finger navigation and Quad gestures retain their .1222 behavior.

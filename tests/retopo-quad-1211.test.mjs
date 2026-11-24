@@ -197,3 +197,31 @@ test('Relax brushes a distorted quad patch on a curved reference with one Undo',
  f.history('undo');assert.deepEqual(f.state.mesh.vertices,before);
  f.history('redo');assert.deepEqual(f.state.mesh.vertices[interior],moved);
 });
+
+test('a Retopo stroke cuts three quads with one welded edge chain and one Undo',()=>{
+ const {f,stroke,cell}=gestureFixture();
+ for(let i=0;i<3;i++)cell(352+i*32,384);
+ const before=JSON.stringify(f.state.mesh);
+ stroke([[353,398],[398,400],[446,402]]);
+ assert.equal(f.state.mesh.faces.length,6);
+ assert.equal(f.state.mesh.vertices.length,12);
+ assert.equal(f.state.mesh.faces.every(face=>face.length===4),true);
+ const newPoints=f.state.mesh.vertices.slice(8);
+ assert.ok(newPoints.every(point=>Math.abs(point.z-f.state.mesh.vertices[0].z)<1e-7));
+ stroke([[398,385],[399,400],[399,416]]);
+ assert.equal(f.state.mesh.faces.length,8);
+ f.history('undo'); assert.equal(f.state.mesh.faces.length,6);
+ f.history('undo'); assert.equal(JSON.stringify(f.state.mesh),before);
+});
+
+test('a deep sideways outline builds two evenly spaced rows rather than long narrow quads',()=>{
+ const {f,stroke,cell}=gestureFixture();
+ for(let i=0;i<3;i++)cell(352+i*32,402);
+ stroke([[352,402],[351,338],[385,336],[422,342],[448,338],[448,402]]);
+ const mesh=f.state.mesh;
+ assert.equal(mesh.faces.length,9);
+ assert.ok(mesh.faces.slice(3).every(face=>{
+   const lengths=face.map((v,i)=>mesh.vertices[v].distanceTo(mesh.vertices[face[(i+1)%4]]));
+   return Math.max(...lengths)/Math.min(...lengths)<1.25;
+ }));
+});
