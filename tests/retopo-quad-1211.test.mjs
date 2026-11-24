@@ -225,3 +225,43 @@ test('a deep sideways outline builds two evenly spaced rows rather than long nar
    return Math.max(...lengths)/Math.min(...lengths)<1.25;
  }));
 });
+
+test('a snapped outline cannot bridge a hole in the reference',()=>{
+ const f=fixture();
+ const vertices=[[-1,-1],[1,-1],[1,1],[-1,1],[-.15,-.15],[.15,-.15],[.15,.15],[-.15,.15]]
+   .map(([x,y])=>new THREE.Vector3(x,y,0));
+ f.state.mesh=new EditableMesh(vertices,[[0,1,5,4],[1,2,6,5],[2,3,7,6],[3,0,4,7]]);
+ f.api.start();
+ f.pointer('pointerdown',350,350);
+ for(const point of [[450,350],[450,450],[350,450]])f.pointer('pointermove',...point);
+ f.pointer('pointerup',350,350);
+ assert.equal(f.objects.length,1);
+ assert.equal(f.h.undoStack.length,0);
+ assert.match(f.field('#selectionStatus').textContent,/could not place/);
+});
+
+test('inconsistent reference winding still produces a front-facing snapped quad',()=>{
+ const f=fixture();
+ f.state.mesh=new EditableMesh([[-1,-1],[-1,1],[1,1],[1,-1]].map(([x,y])=>new THREE.Vector3(x,y,0)),[[0,1,2,3]]);
+ f.api.start();
+ for(const point of [[360,360],[440,360],[440,440],[360,440]]){
+   f.pointer('pointerdown',...point);f.pointer('pointerup',...point);
+ }
+ const mesh=f.state.mesh;
+ assert.equal(mesh.faces.length,1);
+ const [a,b,c]=mesh.faces[0].map(index=>mesh.vertices[index]);
+ assert.ok(b.clone().sub(a).cross(c.clone().sub(a)).z>0);
+ assert.ok(mesh.vertices.every(point=>Math.abs(point.z)<1e-8));
+});
+
+test('welding to a reversed boundary cannot commit an inside-out extension',()=>{
+ const {f,stroke,cell}=gestureFixture();
+ cell(384,384);
+ f.state.mesh.faces[0].reverse();
+ const geometry=()=>JSON.stringify([f.state.mesh.vertices,f.state.mesh.faces]);
+ const before=geometry(),steps=f.h.undoStack.length;
+ stroke([[416,384],[448,384],[448,416],[416,416]]);
+ assert.equal(geometry(),before);
+ assert.equal(f.h.undoStack.length,steps);
+ assert.match(f.field('#selectionStatus').textContent,/could not place/);
+});

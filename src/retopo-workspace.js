@@ -3,7 +3,7 @@ import {quadRelaxFlow} from './quad-clean-core.js?v=0.36.18.1223';
 import {openQuadStrokeCorners,quadStrokeCorners,straightQuadStroke,quadStrokeCrossing} from './retopo-stroke.js?v=0.36.18.1224';
 import {buildRetopoQuad} from './retopo-quad.js?v=0.36.18.1223';
 import {EditableMesh} from './mesh.js';
-import {createRetopoSurface,nearestRetopoVertex} from './retopo-surface.js?v=0.36.18.1209';
+import {createRetopoSurface,nearestRetopoVertex} from './retopo-surface.js?v=0.36.18.1225';
 import {placeToolSessionPanel} from './tool-session-panel-position.js?v=0.36.18.732';
 
 const canvas=document.querySelector('#viewport'),bar=document.querySelector('#selectionModes'),status=document.querySelector('#selectionStatus');
@@ -45,10 +45,43 @@ function quadCorner(d){
   if(corners.length<4){message(`Retopo · corner ${corners.length}/4 · tap the next corner`);return;}
   commitQuad(corners);
 }
+function validateSurfaceFaces(mesh,firstFace){
+  const rect=canvas.getBoundingClientRect(),camera=state().camera,checked=new Map();
+  function pointOnReference(index){
+    if(checked.has(index))return checked.get(index);
+    const vertex=mesh.vertices[index],p=screenPoint(vertex,rect,camera);
+    const result=Math.abs(p.z)<=1&&visibleBoundaryVertex(vertex,p,rect,camera)?p:null;
+    checked.set(index,result);
+    return result;
+  }
+  for(const face of mesh.faces.slice(firstFace)){
+    const points=face.map(pointOnReference);
+    if(points.some(point=>!point))return false;
+    // Screen y points down. An outward face must turn consistently in the
+    // negative direction around the whole polygon, not only at one triangle.
+    for(let i=0;i<4;i++){
+      const a=points[i],b=points[(i+1)%4],c=points[(i+2)%4];
+      if((b.x-a.x)*(c.y-b.y)-(b.y-a.y)*(c.x-b.x)>=-1e-6)return false;
+    }
+    const corners=face.map(index=>mesh.vertices[index]);
+    const center=corners[0].clone().add(corners[1]).add(corners[2]).add(corners[3]).multiplyScalar(.25);
+    const span=Math.max(...corners.map(vertex=>vertex.distanceTo(center)));
+    // Reject faces bridging holes or jumping to a different depth layer.
+    for(let i=0;i<=4;i++){
+      const sample=i===4?center:corners[i].clone().lerp(corners[(i+1)%4],.5);
+      const p=screenPoint(sample,rect,camera),hit=surface.hit(camera,rect,p.x,p.y);
+      if(!hit||sample.distanceTo(hit.point)>span*.5)return false;
+    }
+  }
+  return true;
+}
 function commitQuad(outline, result=null){
   const before=retopoId?state().mesh.clone():new EditableMesh([],[]);
   result??=buildRetopoQuad(before,outline,outline[0].normal);
   if(!result.ok){clearCorners();message(`Retopo · ${result.reason} · try another outline`);return;}
+  if(!result.splitFaces&&!validateSurfaceFaces(result.mesh,before.faces.length)){
+    clearCorners();message('Retopo · could not place a valid patch on the reference');return;
+  }
   if(!retopoId){
     const snapshot=globalThis.__boxlabObjectHistory?.capture?.();if(!snapshot){clearCorners();return;}
     retopoId=manager().addMesh(result.mesh,'Retopo',{enterObjectMode:false,settings:{mirror:{x:false,y:false,z:false},subd:false,subdLevel:1,cage:true}}).id;

@@ -1,3 +1,9 @@
+## .1225 — Retopo rejects flipped and unsupported faces
+
+Cris passed Relax in .1223 and reported occasional inside-out quad patches. The reference picker handles reversed source winding. Before committing newly drawn faces, validate front-facing convex screen winding, reference contact at every corner, and nearby surface at edge midpoints and center. A bad cell rejects the entire stroke before topology or history changes. Existing cut validation remains in its own owner.
+
+Device check: redraw a patch that used to flip, try a stroke across a hole, and verify a valid curved patch still snaps and takes one Undo.
+
 ## .1224 — Retopo stroke cuts and straighter patches
 
 Draw across a complete connected row in Retopo Quad mode to split each crossed quad through opposite edges. Reuses the native Loop Cut topology, projects crossings onto the reference, and rolls back incomplete or invalid cuts. Each committed stroke is one Undo step with shared cut vertices. Success tests cover crosswise and lengthwise cuts in sequence. Existing X and outline gestures remain available.

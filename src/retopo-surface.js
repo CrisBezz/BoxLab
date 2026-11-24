@@ -15,7 +15,10 @@ export function createRetopoSurface(mesh){
       if(disposed||!rect.width||!rect.height||!Number.isFinite(x)||!Number.isFinite(y))return null;
       raycaster.setFromCamera(new THREE.Vector2((x-rect.left)/rect.width*2-1,-((y-rect.top)/rect.height*2-1)),camera);
       const hit=raycaster.intersectObject(body,false)[0];
-      return hit?{point:hit.point.clone(),normal:hit.face.normal.clone(),distance:hit.distance}:null;
+      if(!hit)return null;
+      const normal=hit.face.normal.clone();
+      if(normal.dot(raycaster.ray.direction)>0)normal.negate();
+      return {point:hit.point.clone(),normal,distance:hit.distance};
     },
     dispose(){if(disposed)return;disposed=true;geometry.dispose();material.dispose();}
   };
