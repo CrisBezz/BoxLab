@@ -1,4 +1,4 @@
-import {openQuadStrokeCorners,quadStrokeCorners,straightQuadStroke,quadStrokeCrossing,sampleStrokeSpan} from './retopo-stroke.js?v=0.36.18.1221';
+import {openQuadStrokeCorners,quadStrokeCorners,straightQuadStroke,quadStrokeCrossing,sampleStrokeSpan} from './retopo-stroke.js?v=0.36.18.1222';
 import {buildRetopoQuad} from './retopo-quad.js?v=0.36.18.1211';
 import {EditableMesh} from './mesh.js';
 import {createRetopoSurface,nearestRetopoVertex} from './retopo-surface.js?v=0.36.18.1209';
@@ -189,7 +189,7 @@ function finishStroke(d,e){
   if(!d.strokeOverflow&&retopoId){
     const crossing=quadStrokeCrossing(d.stroke);
     if(crossing){
-      if(!fillCrossedQuad(crossing,rect,camera))message('Retopo · draw the cross inside a four-edge gap');
+      if(!fillCrossedQuad(crossing,rect,camera))message('Retopo · draw the cross inside a quad or a four-edge gap');
       return;
     }
   }
@@ -219,18 +219,16 @@ function boundaryNeighbors(mesh){
   return adjacent;
 }
 function boundaryPaths(adjacent,start,end,maxEdges){
-  const paths=[];
-  let budget=256;
-  function walk(path){
-    if(--budget<0)return;
-    const tip=path.at(-1);
-    if(tip===end&&path.length>1){paths.push(path);return;}
-    if(path.length>maxEdges)return;
+  const paths=[],pending=[[start]];
+  let budget=Math.max(256,adjacent.size*4);
+  while(pending.length&&--budget>=0){
+    const path=pending.pop(),tip=path.at(-1);
+    if(tip===end&&path.length>1){paths.push(path);continue;}
+    if(path.length>maxEdges)continue;
     for(const next of adjacent.get(tip)||[]){
-      if(!path.includes(next))walk([...path,next]);
+      if(!path.includes(next))pending.push([...path,next]);
     }
   }
-  walk([start]);
   return budget<0?[]:paths;
 }
 function closeQuadGap(mesh,adjacent,start,end){
@@ -246,9 +244,43 @@ function screenPoint(vertex,rect,camera){
   const p=vertex.clone().project(camera);
   return {x:rect.left+(p.x*.5+.5)*rect.width,y:rect.top+(-p.y*.5+.5)*rect.height,z:p.z};
 }
+function containsQuadPoint(points,point){
+  if(points.some(p=>Math.abs(p.z)>1))return false;
+  const signs=points.map((p,i)=>{
+    const q=points[(i+1)%4];
+    return (q.x-p.x)*(point.y-p.y)-(q.y-p.y)*(point.x-p.x);
+  });
+  return signs.every(s=>s>0)||signs.every(s=>s<0);
+}
+function visibleBoundaryVertex(vertex,point,rect,camera){
+  const front=surface.hit(camera,rect,point.x,point.y);
+  return front&&front.point.distanceTo(vertex)<=Math.max(.00001,front.distance*.00001);
+}
 function fillCrossedQuad(point,rect,camera){
   const mesh=state().mesh,adjacent=boundaryNeighbors(mesh),hit=surface.hit(camera,rect,point.x,point.y);
   if(!hit)return false;
+  const selected=[];
+  for(let i=0;i<mesh.faces.length;i++){
+    const face=mesh.faces[i];
+    if(face.length!==4)continue;
+    const points=face.map(index=>screenPoint(mesh.vertices[index],rect,camera));
+    if(!containsQuadPoint(points,point))continue;
+    const winding=points.reduce((sum,p,j)=>{
+      const q=points[(j+1)%4];return sum+p.x*q.y-p.y*q.x;
+    },0);
+    if(winding>=0||!face.every((index,j)=>visibleBoundaryVertex(mesh.vertices[index],points[j],rect,camera)))continue;
+    selected.push(i);
+  }
+  if(selected.length>1)return false;
+  if(selected.length){
+    const before=mesh.clone();
+    mesh.deleteFace(selected[0]);
+    mesh.compactUnusedVertices();
+    globalThis.__boxlabHistory.push(before);
+    manager().saveActive();globalThis.__boxlabSelectionBridge?.clear?.();render();
+    message('Retopo · quad deleted');
+    return true;
+  }
   const candidates=[];
   const projected=new Map([...adjacent.keys()].map(index=>[index,screenPoint(mesh.vertices[index],rect,camera)]));
   for(const [a,neighbors] of adjacent){
@@ -258,17 +290,7 @@ function fillCrossedQuad(point,rect,camera){
         if(path.length!==4||path.slice(1,-1).some(index=>index<a)||b>path[2])continue;
         const polygon=[a,...path.slice(0,-1)];
         const points=polygon.map(index=>projected.get(index));
-        if(points.some(p=>Math.abs(p.z)>1))continue;
-        const signs=points.map((p,i)=>{
-          const q=points[(i+1)%4];
-          return (q.x-p.x)*(point.y-p.y)-(q.y-p.y)*(point.x-p.x);
-        });
-        if(!signs.every(s=>s>0)&&!signs.every(s=>s<0))continue;
-        const visible=polygon.every(index=>{
-          const p=projected.get(index),front=surface.hit(camera,rect,p.x,p.y);
-          return front&&front.point.distanceTo(mesh.vertices[index])<=Math.max(.00001,front.distance*.00001);
-        });
-        if(!visible)continue;
+        if(!containsQuadPoint(points,point)||!polygon.every((index,j)=>visibleBoundaryVertex(mesh.vertices[index],points[j],rect,camera)))continue;
         const outline=polygon.map(index=>({index}));
         const result=buildRetopoQuad(mesh,outline,hit.normal);
         if(result.ok)candidates.push({outline,result});
@@ -280,8 +302,106 @@ function fillCrossedQuad(point,rect,camera){
   commitQuad(candidates[0].outline,candidates[0].result);
   return true;
 }
+function boundaryFractions(mesh,path){
+  const lengths=[0];
+  for(let i=1;i<path.length;i++)lengths.push(lengths[i-1]+mesh.vertices[path[i-1]].distanceTo(mesh.vertices[path[i]]));
+  return lengths.map(length=>length/lengths.at(-1));
+}
+function buildStrokeGrid(mesh,bottom,right,left,top,rect,camera,normal,drawnRight=null){
+  const project=index=>screenPoint(mesh.vertices[index],rect,camera);
+  const bottomPoints=bottom.map(project),rightPoints=right?.map(project)||drawnRight;
+  const u=boundaryFractions(mesh,bottom);
+  const v=right?boundaryFractions(mesh,right):left.map((_,i)=>i/(left.length-1));
+  const blend=(a,b,t,key)=>a[key]+(b[key]-a[key])*t;
+  const grid=[];
+  for(let j=0;j<v.length;j++){
+    const row=[];
+    for(let i=0;i<u.length;i++){
+      let index=j===0?bottom[i]:i===u.length-1&&right?right[j]:null;
+      if(index!==null){row.push({index});continue;}
+      const coords={};
+      for(const key of ['x','y']){
+        const base=blend(bottomPoints[0],bottomPoints.at(-1),u[i],key);
+        const far=blend(top[0],top.at(-1),u[i],key);
+        coords[key]=blend(bottomPoints[i],top[i],v[j],key)+blend(left[j],rightPoints[j],u[i],key)
+          -(base+(far-base)*v[j]);
+      }
+      const hit=surface.hit(camera,rect,coords.x,coords.y);
+      if(!hit)return null;
+      row.push({index:null,point:hit.point});
+    }
+    grid.push(row);
+  }
+  let output=mesh;
+  for(let j=0;j<v.length-1;j++){
+    for(let i=0;i<u.length-1;i++){
+      const outline=[grid[j][i],grid[j+1][i],grid[j+1][i+1],grid[j][i+1]];
+      const result=buildRetopoQuad(output,outline,normal);
+      if(!result.ok)return null;
+      let index=output.vertices.length;
+      for(const corner of outline)if(corner.index===null)corner.index=index++;
+      output=result.mesh;
+    }
+  }
+  return output;
+}
+function extendLengthwise(mesh,adjacent,start,end,stroke,rect,camera){
+  if(!adjacent.get(start.index)?.has(end.index))return false;
+  const corners=openQuadStrokeCorners(stroke,3);
+  if(!corners)return false;
+  const [near,far]=[stroke[0],stroke.at(-1)];
+  const a=screenPoint(mesh.vertices[start.index],rect,camera),b=screenPoint(mesh.vertices[end.index],rect,camera);
+  const owner=mesh.edges().find(edge=>
+    edge.a===Math.min(start.index,end.index)&&edge.b===Math.max(start.index,end.index));
+  const face=mesh.faces[owner?.faces[0]];
+  let size=Math.hypot(a.x-b.x,a.y-b.y);
+  if(face?.length===4){
+    const inward=(index,partner,p)=>{
+      const i=face.indexOf(index),next=face[(i+1)%4];
+      const q=screenPoint(mesh.vertices[next===partner?face[(i+3)%4]:next],rect,camera);
+      return Math.hypot(p.x-q.x,p.y-q.y);
+    };
+    const height=(inward(start.index,end.index,a)+inward(end.index,start.index,b))/2;
+    if(height>=5)size=height;
+  }
+  const depth=(Math.hypot(corners[0].x-near.x,corners[0].y-near.y)+Math.hypot(corners[1].x-far.x,corners[1].y-far.y))/2;
+  const count=Math.min(128,Math.round(depth/size));
+  if(!Number.isFinite(count)||count<2)return false;
+  const steps=Array.from({length:count+1},(_,i)=>i/count);
+  const left=sampleStrokeSpan(stroke,near,corners[0],steps);
+  const right=sampleStrokeSpan(stroke,corners[1],far,steps).reverse();
+  left[0]=a;right[0]=b;
+  const output=buildStrokeGrid(mesh,[start.index,end.index],null,left,corners,rect,camera,start.normal,right);
+  if(!output)return false;
+  commitQuad(null,{ok:true,mesh:output});
+  return true;
+}
+function fillBoundaryPatch(mesh,adjacent,start,end,stroke,rect,camera){
+  const corners=openQuadStrokeCorners(stroke,2);
+  if(!corners)return false;
+  const [outer]=corners,solutions=[];
+  for(const path of boundaryPaths(adjacent,start.index,end.index,adjacent.size-1)){
+    if(path.length<4)continue;
+    const points=path.map(index=>screenPoint(mesh.vertices[index],rect,camera));
+    const bend=openQuadStrokeCorners(points,2)?.[0],split=points.indexOf(bend);
+    if(split<1||split>=path.length-1)continue;
+    const a=points[0],b=points.at(-1);
+    const side=p=>(b.x-a.x)*(p.y-a.y)-(b.y-a.y)*(p.x-a.x);
+    if(side(outer)*side(bend)>=0||points.some((p,i)=>!visibleBoundaryVertex(mesh.vertices[path[i]],p,rect,camera)))continue;
+    const first=stroke[0],last=stroke.at(-1),bottom=path.slice(0,split+1),right=path.slice(split);
+    const left=sampleStrokeSpan(stroke,first,outer,boundaryFractions(mesh,right));
+    const top=sampleStrokeSpan(stroke,outer,last,boundaryFractions(mesh,bottom));
+    left[0]=a;top[top.length-1]=b;
+    const output=buildStrokeGrid(mesh,bottom,right,left,top,rect,camera,start.normal);
+    if(output)solutions.push(output);
+    if(solutions.length>1)return false;
+  }
+  if(!solutions.length)return false;
+  commitQuad(null,{ok:true,mesh:solutions[0]});
+  return true;
+}
 function extendRibbon(mesh,adjacent,start,end,stroke,rect,camera){
-  const paths=boundaryPaths(adjacent,start.index,end.index,16);
+  const paths=boundaryPaths(adjacent,start.index,end.index,adjacent.size-1);
   if(!paths.length||paths.some(path=>path.length<4))return false;
   const corners=openQuadStrokeCorners(stroke,3);
   if(!corners)return false;
@@ -291,9 +411,7 @@ function extendRibbon(mesh,adjacent,start,end,stroke,rect,camera){
     const a=base[0],b=base.at(-1),dx=b.x-a.x,dy=b.y-a.y;
     const progress=base.map(p=>(p.x-a.x)*dx+(p.y-a.y)*dy);
     if(progress.some((value,i)=>i&&value-progress[i-1]<progress.at(-1)*.08/(base.length-1)))continue;
-    const lengths=[0];
-    for(let i=1;i<path.length;i++)lengths.push(lengths[i-1]+mesh.vertices[path[i-1]].distanceTo(mesh.vertices[path[i]]));
-    const opposite=sampleStrokeSpan(stroke,...corners,lengths.map(length=>length/lengths.at(-1)))
+    const opposite=sampleStrokeSpan(stroke,...corners,boundaryFractions(mesh,path))
       .map(p=>surface.hit(camera,rect,p.x,p.y));
     if(opposite.some(point=>!point))continue;
     let output=mesh,previous=null;
@@ -325,6 +443,8 @@ function completeOpenStroke(stroke,rect,camera){
   const adjacent=boundaryNeighbors(mesh);
   if(straightQuadStroke(stroke)&&closeQuadGap(mesh,adjacent,start,end))return true;
   if(extendRibbon(mesh,adjacent,start,end,stroke,rect,camera))return true;
+  if(extendLengthwise(mesh,adjacent,start,end,stroke,rect,camera))return true;
+  if(fillBoundaryPatch(mesh,adjacent,start,end,stroke,rect,camera))return true;
   const from=adjacent.get(start.index),to=adjacent.get(end.index);
   if(!from||!to)return false;
   for(const sharedSides of [2,1]){

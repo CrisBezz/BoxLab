@@ -53,7 +53,7 @@ export function openQuadStrokeCorners(points, sideCount) {
   const last=path.length-1, errors=path.map(()=>[]);
   for(let a=0;a<last;a++){
     for(let b=a+1;b<=last;b++){
-      let error=distance(path[a],path[b])<Math.max(5,span*.08)?Infinity:0;
+      let error=distance(path[a],path[b])<Math.min(10,Math.max(5,span*.08))?Infinity:0;
       for(let i=a+1;i<b;i++)error+=segmentDistance(path[i],path[a],path[b])**2;
       errors[a][b]=error;
     }
@@ -64,7 +64,7 @@ export function openQuadStrokeCorners(points, sideCount) {
     for(let i=0;i<indices.length-1;i++)error+=errors[indices[i]][indices[i+1]];
     for(let i=1;i<indices.length-1;i++){
       const a=path[indices[i-1]],p=path[indices[i]],b=path[indices[i+1]];
-      if(segmentDistance(p,a,b)<Math.max(3,span*.075))return;
+      if(segmentDistance(p,a,b)<Math.min(9,Math.max(3,span*.075)))return;
     }
     if(error<bestError){bestError=error;best=indices.slice(1,-1).map(index=>path[index]);}
   }

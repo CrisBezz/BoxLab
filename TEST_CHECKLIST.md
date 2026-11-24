@@ -1,3 +1,9 @@
+## .1222 — Retopo X delete and boundary-sized patches
+
+Cris passed .1221. Drawing X over a visible quad deletes it. A cross in an enclosed gap still fills it. The sideways U now uses the full identified run of existing boundary segments, including runs longer than 16. For lengthways ribbons, draw a deep U from one boundary edge back to its other corner. Adjacent quad depth estimates cell length up to 128 cells. For a grid, draw the two missing sides across from two connected boundary runs that meet at a corner. Each run sets the grid count along its axis. The stroke determines the far edges and the grid points snap to the reference. Each patch is validated and committed as one Undo step.
+
+Device checks: X delete and Undo; trace a wide U and a deep U, then draw two sides opposite a 3-by-5 boundary and check all 15 faces and one-step Undo.
+
 ## .1221 — Retopo line, cross and ribbon gestures
 
 A line can finish a quad bounded by three connected edges. An X drawn in one continuous stroke fills an enclosed four-edge hole. An open U drawn between the ends of a row of boundary segments adds a single welded ribbon. Existing segment lengths determine the spacing along the outer stroke. Each outer point projects to the reference, and the entire row commits as one undoable edit. Ambiguous paths are skipped. The ribbon follows up to 16 boundary segments and preserves the existing segment count.

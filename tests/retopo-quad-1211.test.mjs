@@ -120,3 +120,45 @@ test('a single ribbon outline carries five existing boundary segments into five 
  f.history('undo');assert.equal(f.state.mesh.faces.length,5);
  f.history('redo');assert.equal(f.state.mesh.faces.length,10);
 });
+
+test('a continuous X deletes an existing quad in one undoable edit',()=>{
+ const {f,stroke,cell}=gestureFixture();
+ cell(384,384);
+ stroke([[389,389],[411,411],[389,411],[411,389]]);
+ assert.equal(f.state.mesh.faces.length,0);
+ assert.equal(f.state.mesh.vertices.length,0);
+ f.history('undo');assert.equal(f.state.mesh.faces.length,1);
+ f.history('redo');assert.equal(f.state.mesh.faces.length,0);
+});
+
+test('a deep U from one existing edge extends a one-quad-wide ribbon',()=>{
+ const {f,stroke,cell}=gestureFixture();
+ cell(384,400);
+ stroke([[384,400],[384,304],[416,304],[416,400]]);
+ assert.equal(f.state.mesh.faces.length,4);
+ assert.equal(f.state.mesh.vertices.length,10);
+ f.history('undo');assert.equal(f.state.mesh.faces.length,1);
+});
+
+test('two drawn sides fill a 3 by 5 patch using both existing boundary runs',()=>{
+ const {f,stroke,cell}=gestureFixture();
+ for(let j=0;j<5;j++)cell(319,351+j*24,24,24);
+ for(let i=0;i<3;i++)cell(343+i*24,471,24,24);
+ assert.equal(f.state.mesh.faces.length,8);
+ stroke([[343,351],[415,351],[415,471]]);
+ assert.equal(f.state.mesh.faces.length,23);
+ assert.equal(f.state.mesh.faces.every(face=>face.length===4),true);
+ f.history('undo');assert.equal(f.state.mesh.faces.length,8);
+ f.history('redo');assert.equal(f.state.mesh.faces.length,23);
+});
+
+test('sideways ribbons extend beyond sixteen segments and retain every existing segment',()=>{
+ const {f,stroke,cell}=gestureFixture();
+ f.state.camera.fov=20;f.state.camera.updateProjectionMatrix();
+ for(let i=0;i<17;i++)cell(196+i*24,410,24,24);
+ assert.equal(f.state.mesh.faces.length,17);
+ stroke([[196,410],[196,384],[604,384],[604,410]]);
+ assert.equal(f.state.mesh.faces.length,34);
+ assert.equal(f.state.mesh.vertices.length,54);
+ f.history('undo');assert.equal(f.state.mesh.faces.length,17);
+});
