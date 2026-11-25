@@ -1,4 +1,4 @@
-import {applyRetopoDisplay} from './retopo-display.js?v=0.36.18.1230';
+import {applyRetopoDisplay} from './retopo-display.js?v=0.36.18.1231';
 import {createFacegroupDrafts} from './facegroup-drafts.js?v=0.36.18.995';
 import {createFacegroupList} from './facegroup-list.js?v=0.36.18.995';
 import {createFacegroupPaintDock} from './facegroup-paint-dock.js?v=0.36.18.991';
@@ -187,7 +187,7 @@ function applyMode(body){
   const retopo=globalThis.__boxlabRetopo;
   if(retopo?.active){
     const id=inactive?body.userData.objectId:manager()?.activeId;
-    if(applyRetopoDisplay(body,id,inactive?objectFor(id)?.mesh:bridge()?.mesh,retopo,matcapMaterial.matcap))return;
+    if(applyRetopoDisplay(body,id,inactive?objectFor(id)?.mesh:bridge()?.mesh,retopo))return;
   }
   // Set before async paint display creation, not only in the queued rig refresh.
   // The replacement surface inherits these flags even when its digest wins the race.

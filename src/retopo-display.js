@@ -3,44 +3,69 @@ import {LineSegments2} from 'three/addons/lines/LineSegments2.js';
 import {LineSegmentsGeometry} from 'three/addons/lines/LineSegmentsGeometry.js';
 import {LineMaterial} from 'three/addons/lines/LineMaterial.js';
 
-// Retopo uses view-relative shading so a saved scene's lighting cannot
-// turn the working reference into a silhouette.
-const referenceMaterial = new THREE.MeshMatcapMaterial({color:0xd8d5d0,side:THREE.DoubleSide,toneMapped:false});
+// Shade the opaque reference with a soft, camera-relative key and fill.
+const referenceColor = new THREE.Color(0xd8d5d0);
+const referenceMaterial = new THREE.ShaderMaterial({
+  side:THREE.DoubleSide,
+  toneMapped:false,
+  uniforms:{referenceColor:{value:referenceColor}},
+  vertexShader:`
+    attribute vec3 retopoNormal;
+    varying vec3 vReferenceNormal;
+    varying vec3 vReferencePosition;
+    void main() {
+      vec4 viewPosition = modelViewMatrix * vec4(position, 1.0);
+      vReferencePosition = viewPosition.xyz;
+      vReferenceNormal = normalMatrix * retopoNormal;
+      gl_Position = projectionMatrix * viewPosition;
+    }
+  `,
+  fragmentShader:`
+    uniform vec3 referenceColor;
+    varying vec3 vReferenceNormal;
+    varying vec3 vReferencePosition;
+    void main() {
+      vec3 faceNormal = normalize(cross(dFdx(vReferencePosition), dFdy(vReferencePosition)));
+      vec3 surfaceNormal = faceNormal;
+      if (dot(vReferenceNormal, vReferenceNormal) > 0.0001) {
+        vec3 smoothNormal = normalize(vReferenceNormal) * (gl_FrontFacing ? 1.0 : -1.0);
+        if (dot(smoothNormal, faceNormal) > 0.0) surfaceNormal = smoothNormal;
+      }
+      float key = max(dot(surfaceNormal, vec3(-0.42, 0.66, 0.62)), 0.0);
+      float fill = max(dot(surfaceNormal, vec3(0.82, -0.25, 0.51)), 0.0);
+      gl_FragColor = vec4(referenceColor * (0.22 + 0.82 * key + 0.26 * fill), 1.0);
+      #include <colorspace_fragment>
+    }
+  `
+});
 // Render the Retopo pass after opaque scene geometry. A single unlit fill
 // keeps both GPU triangles of a nonplanar quad the same colour.
 const quadMaterial = new THREE.MeshBasicMaterial({color:0xa393de,depthTest:false,depthWrite:false});
 const edgeMaterial = new LineMaterial({color:0x252236,linewidth:2.7,depthTest:false,depthWrite:false});
-const smoothNormals = new WeakMap();
 
 function smoothReference(geometry) {
+  if (geometry.hasAttribute('retopoNormal')) return;
+  const position = geometry.getAttribute('position');
   const original = geometry.getAttribute('normal');
-  let smooth = smoothNormals.get(geometry);
-  if (!smooth) {
-    const position = geometry.getAttribute('position');
-    const totals = new Map(), keys = [];
-    for (let i = 0; i < position.count; i++) {
-      const key = [position.getX(i),position.getY(i),position.getZ(i)].join(',');
-      keys.push(key);
-      if (!totals.has(key)) totals.set(key,new THREE.Vector3());
-      const normal = totals.get(key);
-      normal.x += original.getX(i); normal.y += original.getY(i); normal.z += original.getZ(i);
-    }
-    for (const normal of totals.values()) normal.normalize();
-    const values = new Float32Array(position.count * 3);
-    keys.forEach((key,i)=>totals.get(key).toArray(values,i*3));
-    smooth = new THREE.BufferAttribute(values,3);
-    smoothNormals.set(geometry,smooth);
+  const totals = new Map(), normals = [];
+  for (let i = 0; i < position.count; i++) {
+    const key = [position.getX(i),position.getY(i),position.getZ(i)].join(',');
+    if (!totals.has(key)) totals.set(key,new THREE.Vector3());
+    const normal = totals.get(key);
+    normals.push(normal);
+    normal.x += original.getX(i); normal.y += original.getY(i); normal.z += original.getZ(i);
   }
-  geometry.setAttribute('normal',smooth);
-  return ()=>geometry.setAttribute('normal',original);
+  for (const normal of totals.values()) normal.normalize();
+  const values = new Float32Array(position.count * 3);
+  normals.forEach((normal,i)=>normal.toArray(values,i*3));
+  geometry.setAttribute('retopoNormal',new THREE.BufferAttribute(values,3));
 }
 
-export function applyRetopoDisplay(body, id, mesh, session, matcap=null) {
+export function applyRetopoDisplay(body, id, mesh, session) {
   if (!session?.active || id == null || !mesh) return false;
   if (id === session.referenceId) {
-    referenceMaterial.matcap=matcap;
+    smoothReference(body.geometry);
     body.material = referenceMaterial;
-    body.userData.boxlabRetopoCleanup = smoothReference(body.geometry);
     return true;
   }
   if (id !== session.retopoId) return false;

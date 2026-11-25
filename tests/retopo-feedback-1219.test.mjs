@@ -16,10 +16,17 @@ test('Retopo fill clears the reference depth and outlines only front-facing poly
  const mesh=new EditableMesh([[-1,-1,0],[1,-1,0],[1,1,.2],[-1,1,0]].map(p=>new THREE.Vector3(...p)),[[0,1,2,3]]);
  const reference=new THREE.Mesh(mesh.triangulatedGeometry()),output=new THREE.Mesh(mesh.triangulatedGeometry());
  const session={active:true,referenceId:1,retopoId:2};
- const matcap=new THREE.Texture();
- applyRetopoDisplay(reference,1,mesh,session,matcap);applyRetopoDisplay(output,2,mesh,session);
- assert.equal(reference.material.isMeshMatcapMaterial,true);
- assert.equal(reference.material.matcap,matcap);
+ applyRetopoDisplay(reference,1,mesh,session);applyRetopoDisplay(output,2,mesh,session);
+ assert.equal(reference.material.uniforms.referenceColor.value.getHex(),0xd8d5d0);
+ assert.equal(reference.geometry.getAttribute('retopoNormal').count,6);
+ const original = reference.geometry.getAttribute('normal');
+ const smooth = reference.geometry.getAttribute('retopoNormal');
+ assert.notEqual(original,smooth);
+ assert.deepEqual([smooth.getX(0),smooth.getY(0),smooth.getZ(0)],
+   [smooth.getX(3),smooth.getY(3),smooth.getZ(3)]);
+ applyRetopoDisplay(reference,1,mesh,session);
+ assert.equal(reference.geometry.getAttribute('retopoNormal'),smooth);
+ assert.equal(reference.geometry.getAttribute('normal'),original);
  assert.equal(reference.material.toneMapped,false);
  assert.equal(reference.material.transparent,false);
  assert.equal(reference.material.depthWrite,true);

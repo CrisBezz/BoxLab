@@ -74,7 +74,7 @@ try{
    const result={};
    __boxlabBridgeState.scene.traverse(body=>{
      if(body.userData.objectId===id&&body.userData.kind==='boxlab-inactive-body'){
-       result.reference=body.material.color.getHex();result.smooth=!!body.userData.boxlabRetopoCleanup;
+       result.reference=body.material.uniforms.referenceColor.value.getHex();result.smooth=body.geometry.hasAttribute('retopoNormal');
      }
      if(body.userData.kind==='body'){
        result.quad=body.material.color.getHex();result.lineWidth=body.children.find(child=>child.isLineSegments2)?.material.linewidth;
@@ -116,16 +116,38 @@ try{
  assert.equal(saved.objects.find(object=>object.id===savedId).retopoReferenceId,ref.id);
  await page.locator('#projectOpenBasicInput').setInputFiles({name:'Retopo.boxlab',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(saved))});
  await page.waitForFunction(id=>__boxlabRetopo.active&&__boxlabRetopo.retopoId===id,savedId);
- assert.equal(await page.evaluate(id=>{
-   let reference;
-   __boxlabBridgeState.scene.traverse(node=>{if(node.userData.objectId===id)reference=node;});
-   return reference?.material.isMeshMatcapMaterial&&!!reference.material.matcap&&
-     reference.material.color.getHex()===0xd8d5d0&&!reference.material.transparent;
- },ref.id),true,'reopened reference keeps its pale opaque Retopo shading');
+ const referenceShading=await page.evaluate(async id=>{
+   const THREE=await import('three');
+   const {scene,renderer}=__boxlabBridgeState;
+   let source;
+   scene.traverse(node=>{if(node.userData.objectId===id&&node.isMesh)source=node;});
+   const material=source.material;
+   const preview=new THREE.Scene();
+   preview.add(new THREE.Mesh(source.geometry,material));
+   const camera=new THREE.OrthographicCamera(-1.4,1.4,1.4,-1.4,.1,10);
+   camera.position.z=4;
+   const target=new THREE.WebGLRenderTarget(64,64);
+   const priorTarget=renderer.getRenderTarget();
+   const bright=new Uint8Array(4),shadow=new Uint8Array(4);
+   try {
+     renderer.setRenderTarget(target);
+     renderer.render(preview,camera);
+     renderer.readRenderTargetPixels(target,18,46,1,1,bright);
+     renderer.readRenderTargetPixels(target,46,18,1,1,shadow);
+   } finally {
+     renderer.setRenderTarget(priorTarget);
+     target.dispose();
+   }
+   return {opaque:!material.transparent&&material.depthWrite,
+     brightness:bright[0],contrast:bright[0]-shadow[0]};
+ },ref.id);
+ assert.equal(referenceShading.opaque,true);
+ assert(referenceShading.brightness>100&&referenceShading.contrast>20,
+   'the reopened reference must render both highlights and shading: '+JSON.stringify(referenceShading));
  await page.locator('#retopoVertex').click();
  await pen('pointerdown',rp[1].x,rp[1].y);await pen('pointerup',rp[1].x,rp[1].y);
  assert.equal((await snap()).active,savedId);
  assert.equal((await snap()).objects.length,2);
  assert.equal((await snap()).live.length,2);
- assert.deepEqual(errors,[]);console.log('Retopo1229 browser PASS: closed quad stroke / smooth reference / bold edges / viewport reference selection / cube deletion / reference-only Retopo / delete all / empty UndoRedo / empty and reference-only Open / actual locked OBJ reference import / reference preservation / vertex editing / quad creation / shared edges / duplicate refusal / clear / Undo / Redo / source unchanged / Done');
+ assert.deepEqual(errors,[]);console.log('Retopo1231 browser PASS: closed quad stroke / smooth reference / bold edges / viewport reference selection / cube deletion / reference-only Retopo / delete all / empty UndoRedo / empty and reference-only Open / actual locked OBJ reference import / reference preservation / vertex editing / quad creation / shared edges / duplicate refusal / clear / Undo / Redo / source unchanged / Done');
 }finally{await browser?.close();await new Promise(r=>server.close(r));}

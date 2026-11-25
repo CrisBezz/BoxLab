@@ -1,3 +1,9 @@
+## .1231 — restore surface definition in Retopo
+
+The .1230 iPad result is FAIL because the reference became a pale silhouette. Use camera-relative key and fill with dedicated smooth normals and a geometric fallback. The geometry retains its original normal attribute for regular viewing. The reopened-project browser check reads rendered pixels for highlight and shadow contrast.
+
+Device check: reopen the same head project, zoom to the eyelid and cheek and orbit. Verify that the pale reference has visible relief under the existing lilac quads. Add one quad to the saved patch.
+
 ## .1230 — preserve pale Retopo reference shading after Open
 
 The .1229 iPad screenshot showed the restored Retopo overlay on a flat dark reference. Retopo now uses the existing MatCap texture for its opaque smooth reference material. It no longer relies on scene lighting or exposure to shade this display surface. Scope is Retopo display only. Project association and normal View materials are retained. Browser smoke checks the pale material after reopening a linked Retopo project.
