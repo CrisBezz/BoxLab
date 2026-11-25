@@ -31,12 +31,13 @@ export function nearestRetopoVertex(mesh,camera,rect,x,y,hit,radius=16,surface=n
     const v=mesh.vertices[i],p=v.clone().project(camera);
     if(p.z< -1||p.z>1)continue;
     const pixels=Math.hypot(rect.left+(p.x*.5+.5)*rect.width-x,rect.top+(-p.y*.5+.5)*rect.height-y);
+    if(pixels>radius||(best&&pixels>=best.pixels))continue;
     // Screen proximity alone must not select a vertex behind the reference.
     const visible=surface?surface.hit(camera,rect,rect.left+(p.x*.5+.5)*rect.width,rect.top+(-p.y*.5+.5)*rect.height):hit;
     if(!visible)continue;
     const depth=camera.position.distanceTo(v),tolerance=Math.max(.000001,visible.distance*.000001);
     if(depth>visible.distance+tolerance)continue;
-    if(pixels<=radius&&(!best||pixels<best.pixels))best={index:i,pixels};
+    best={index:i,pixels};
   }
   return best?.index??null;
 }

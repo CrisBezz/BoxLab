@@ -304,7 +304,12 @@ function shouldShow(object) {
 
 const inactiveSubdCaches=new WeakMap();
 const inactiveSubdUVPreviews=new WeakMap();
+function isStaticReference(object){
+  return object.kind==='reference'&&!object.sourceId&&!object.settings?.subd&&
+    !Object.values(object.settings?.mirror||{}).some(Boolean);
+}
 function displayMeshFor(object) {
+  if(isStaticReference(object))return object.mesh;
   let display = object.mesh;
   if(object?.sourceId&&linkedSources.has(object.sourceId)){
     const source=linkedSources.get(object.sourceId);
@@ -571,6 +576,7 @@ function addObject(mesh, name = 'Cube', options = {}) {
     settings: cloneSettings(options.settings || captureSettings()),
     history: { undo:[], redo:[] }
   };
+  if(options.retopoReferenceId)object.retopoReferenceId=options.retopoReferenceId;
   if(options.glbPassthrough)object.glbPassthrough=options.glbPassthrough;
   if(options.colourPaint)object.colourPaint=options.colourPaint;
   if(options.roughnessPaint)object.roughnessPaint=options.roughnessPaint;
@@ -882,6 +888,8 @@ function clearInactiveLayer(keepGeometry=false){
     child.traverse?.(node=>{
       if(node.geometry?.dispose&&node.geometry!==child.userData.boxlabCachedGeometry)node.geometry.dispose();
     });
+    const original=child.userData.boxlabOriginalMaterial;
+    if(original!==child.material&&original?.userData?.disposable)original.dispose?.();
     if(child.material?.userData?.disposable)child.material.dispose?.();
   }
   inactiveBodies=[];
@@ -899,13 +907,14 @@ function rebuildInactiveLayer(body){
   for(const object of objects){
     if(object.id===activeId||!shouldShow(object))continue;
     try{
+      const staticReference=isStaticReference(object);
       const display=displayMeshFor(object);
       const material=body.material?.clone?.()||new THREE.MeshStandardMaterial({roughness:.62,metalness:.02,side:THREE.DoubleSide});
       material.transparent=true;
       material.opacity=object.locked?.32:.52;
       material.userData={...(material.userData||{}),disposable:true};
       let geometry,cachedGeometry=null;
-      if(object.settings?.subd&&!object.sourceId){
+      if(staticReference||(object.settings?.subd&&!object.sourceId)){
         let entry=geometryCache.get(object);
         if(entry?.display!==display){
           geometry=display.triangulatedGeometry();
@@ -1123,6 +1132,7 @@ function initialize() {
     sourceId(id) { return objects.find(item=>item.id===id)?.sourceId||null; },
     resetAll,
     saveActive,
+    getObject(id) { return objects.find(item=>item.id===id); },
     activeObject, // Stored identity for display readers; does not save mesh/history.
     get activeId() { return activeId; },
     groupMetadata,

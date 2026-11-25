@@ -14,7 +14,7 @@ export function fixture(){
  const camera=new THREE.PerspectiveCamera(45,1,.01,100);camera.position.set(0,0,5);camera.lookAt(0,0,0);camera.updateMatrixWorld();
  const state={mesh:EditableMesh.cube(),camera,scene:new THREE.Scene(),controls:{enabled:true}},h=new History(),objects=[{id:1,name:'Source',visible:true,mesh:state.mesh.clone()}];let activeId=1;
  function restoreMesh(src){state.mesh=src.clone();}
- const manager={objects,get activeId(){return activeId;},saveActive(){objects.find(o=>o.id===activeId).mesh=state.mesh.clone();},addMesh(mesh,name){this.saveActive();const o={id:2,name,mesh:mesh.clone(),visible:true};objects.push(o);activeId=2;restoreMesh(mesh);h.clear();const b=field('#selectionModes [data-mode="vertex"]');b.dataset.mode='vertex';window.dispatchEvent({type:'click',isTrusted:false,target:{closest:s=>s.includes('selectionModes')||s==='button'?b:null}});return o;}};
+ const manager={objects,get activeId(){return activeId;},saveActive(){objects.find(o=>o.id===activeId).mesh=state.mesh.clone();},addMesh(mesh,name,options={}){this.saveActive();const o={id:2,name,mesh:mesh.clone(),visible:true,retopoReferenceId:options.retopoReferenceId};objects.push(o);activeId=2;restoreMesh(mesh);h.clear();const b=field('#selectionModes [data-mode="vertex"]');b.dataset.mode='vertex';window.dispatchEvent({type:'click',isTrusted:false,target:{closest:s=>s.includes('selectionModes')||s==='button'?b:null}});return o;}};
  const capture=()=>{manager.saveActive();return {activeId,objects:objects.map(o=>({...o,mesh:o.mesh.clone()}))};},meta=new WeakMap();
  const objectHistory={capture,checkpointSnapshot(s,m=state.mesh){h.push(m);meta.set(h.undoStack.at(-1),s);}};
  const baseUndo=h.undo.bind(h),baseRedo=h.redo.bind(h);

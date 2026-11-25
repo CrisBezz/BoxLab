@@ -1,3 +1,11 @@
+## .1229 — reopen and continue Retopo projects
+
+Cris passed .1228. The project codec saves an optional Retopo reference ID. Open resumes Retopo when the saved active editable mesh has a visible linked source. Retopo also resumes saved associations on tool entry. For older projects select a mesh named Retopo or Retopo N before choosing its locked reference in Retopo. Saving again writes the association. Missing reference links are omitted on Save.
+
+Reduced editing work: reuse locked unmodified reference geometry across rebuilds, dispose replaced original material clones, avoid scene snapshots on ordinary Quad and Relax contacts, read object IDs without syncing the entire editable mesh, and reject distant vertices before reference raycasts. These are verified sources of extra work, but the reported iPad slowdown has no confirmed heap diagnosis.
+
+Device check: save with Retopo active, reopen, and add a quad to the same object. Then work on a dense reference using several Quad and Relax strokes and compare responsiveness.
+
 ## .1228 — Retopo edge-delete and loop gestures
 
 Cris passed .1227. In Quad mode a single zigzag with three alternating crossings along one visible edge deletes that edge and its incident faces, following BoxLab Delete Edge behavior. A short straight inward drag from a visible edge adds the connected opposite-edge loop using the starting edge position. Loop vertices project to the reference and invalid rings refuse before modifying the mesh. Both gestures use one Undo step.

@@ -48,3 +48,19 @@ test('Retopo mode waits for a viewport tap and keeps orbit gestures from choosin
  assert.equal(f.objects[1].locked,true);
  assert.equal(f.state.mesh.vertices.length,1);
 });
+
+test('a persisted Retopo link reopens an existing mesh instead of creating another',()=>{
+ const f=fixture(),ref=reference(f);
+ assert.equal(f.api.start({reference:ref.id}),true);
+ f.field('#retopoVertex').click();f.pointer('pointerdown');f.pointer('pointerup');
+ const id=f.manager.activeId;
+ assert.equal(f.objects.find(o=>o.id===id).retopoReferenceId,ref.id);
+ f.api.close();
+ assert.equal(f.api.resumeSaved(),true);
+ assert.equal(f.api.referenceId,ref.id);
+ assert.equal(f.api.retopoId,id);
+ f.field('#retopoVertex').click();
+ f.pointer('pointerdown',425,400);f.pointer('pointerup',425,400);
+ assert.equal(f.state.mesh.vertices.length,2);
+ assert.equal(f.objects.length,3);
+});

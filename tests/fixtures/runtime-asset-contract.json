@@ -161,9 +161,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1228",
+      "url": "./src/drawer-ui.js?v=0.36.18.1229",
       "target": "src/drawer-ui.js",
-      "sha256": "a31cad06d0487cda44279acbdf121f2aca3d4b620e7d3a2d3295059b0856d22f"
+      "sha256": "5b8f98a2570692778e20f7fe991d52c28de09070c4e6f85d47965adf74a5c3aa"
     },
     {
       "owner": "index.html",
@@ -323,15 +323,15 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/multi-object.js?v=0.36.18.1218",
+      "url": "./src/multi-object.js?v=0.36.18.1229",
       "target": "src/multi-object.js",
-      "sha256": "e2866c8c897e37498efe499e5ebb4723dc222345b5b3c38dcdea8f7763aeeb37"
+      "sha256": "51ba78666e2dacca60f934b673112fccbcbae7b6d9ecd7e02b17252bf53c81c5"
     },
     {
       "owner": "index.html",
-      "url": "./src/object-management.js?v=0.36.18.1214",
+      "url": "./src/object-management.js?v=0.36.18.1229",
       "target": "src/object-management.js",
-      "sha256": "997b4885e4ba00a4508be5147774af9e8a8e52e0a9062da39f56a767108708cc"
+      "sha256": "36a4359a162dd5209c01b92c8acefc26d8be28b0c5b4ae799ffe08522fa14ce7"
     },
     {
       "owner": "index.html",
@@ -378,15 +378,15 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1228",
+      "url": "./src/release-version.js?v=0.36.18.1229",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
     {
       "owner": "index.html",
-      "url": "./src/render-modes.js?v=0.36.18.1219",
+      "url": "./src/render-modes.js?v=0.36.18.1229",
       "target": "src/render-modes.js",
-      "sha256": "1bf05c4e9d9c864964cb21af08942ada7e4a6fd69d91922af6dc6e1689b0ffd9"
+      "sha256": "b235b972c7f169195d8bd661abbfe4ba5f539cda41f6748d30ed14ede541fa4e"
     },
     {
       "owner": "index.html",
@@ -864,9 +864,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1228",
+      "url": "./face-workflow-layout.js?v=0.36.18.1229",
       "target": "src/face-workflow-layout.js",
-      "sha256": "1b4ba1447bfab0b11bc640338592802547435572c1dcf45ae002aa976187e7c5"
+      "sha256": "c1f7e82e4893b349c8fe45774e685912bd892b4fa2fc750c2b0ca3357196aaee"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -919,9 +919,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./object-management.js?v=0.36.18.1153",
+      "url": "./object-management.js?v=0.36.18.1229",
       "target": "src/object-management.js",
-      "sha256": "997b4885e4ba00a4508be5147774af9e8a8e52e0a9062da39f56a767108708cc"
+      "sha256": "36a4359a162dd5209c01b92c8acefc26d8be28b0c5b4ae799ffe08522fa14ce7"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1361,7 +1361,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1228",
+      "url": "./release-version.js?v=0.36.18.1229",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -2282,9 +2282,9 @@
     },
     {
       "owner": "src/object-management.js",
-      "url": "./boxlab-project-codec.js?v=0.36.18.1213",
+      "url": "./boxlab-project-codec.js?v=0.36.18.1229",
       "target": "src/boxlab-project-codec.js",
-      "sha256": "e536614dbc46cccfde282f0a1e37b3a694befab0917c4257c23189dcb44c56a8"
+      "sha256": "ed248e1b4a83836df55f00b08cbf19d356e1b5c1811380ff9f44bdf5ccb1d826"
     },
     {
       "owner": "src/linear-array.js",
@@ -2506,7 +2506,7 @@
       "owner": "src/paint-target.js",
       "url": "./boxlab-project-codec.js?v=0.36.18.1095",
       "target": "src/boxlab-project-codec.js",
-      "sha256": "e536614dbc46cccfde282f0a1e37b3a694befab0917c4257c23189dcb44c56a8"
+      "sha256": "ed248e1b4a83836df55f00b08cbf19d356e1b5c1811380ff9f44bdf5ccb1d826"
     },
     {
       "owner": "src/render-modes.js",
@@ -2764,7 +2764,7 @@
       "owner": "evaluations/uv-paint/paint-session.js",
       "url": "../../src/boxlab-project-codec.js?v=0.36.18.1033",
       "target": "src/boxlab-project-codec.js",
-      "sha256": "e536614dbc46cccfde282f0a1e37b3a694befab0917c4257c23189dcb44c56a8"
+      "sha256": "ed248e1b4a83836df55f00b08cbf19d356e1b5c1811380ff9f44bdf5ccb1d826"
     },
     {
       "owner": "evaluations/uv-paint/paint-session.js",
@@ -3326,9 +3326,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1228",
+      "url": "./src/shell-comparison.js?v=0.36.18.1229",
       "target": "src/shell-comparison.js",
-      "sha256": "91138f0b458578f742fcdbdf067dfd864055086d0d2dc99fdf37212dee82b0e1"
+      "sha256": "3015eaeb04602e5930c23758400e2b9dd4034be68df7779e4d6f82b905549834"
     },
     {
       "owner": "src/main.js",
@@ -3938,15 +3938,15 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/retopo-workspace.js?v=0.36.18.1228",
+      "url": "./src/retopo-workspace.js?v=0.36.18.1229",
       "target": "src/retopo-workspace.js",
-      "sha256": "0915edbef9a8ea9efb009bf1e7c44fb200649dfb3f89bf9ec7bfdf653b075192"
+      "sha256": "e3063bbbef7ea7f2116acc2606e93c28be6c98773a1a11692c1c46d6fe88d404"
     },
     {
       "owner": "src/retopo-workspace.js",
-      "url": "./retopo-surface.js?v=0.36.18.1225",
+      "url": "./retopo-surface.js?v=0.36.18.1229",
       "target": "src/retopo-surface.js",
-      "sha256": "763217f5e1c32bd2b8699216cc6239e3fdc16f4c8696607d7260e59a7b081f3b"
+      "sha256": "10837c11ae2bebe25eb2e8449f49d7e7b676f00af6591bab8b585d3dd72ed6e7"
     },
     {
       "owner": "src/retopo-workspace.js",

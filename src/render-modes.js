@@ -180,7 +180,7 @@ function applyMode(body){
   const perf=globalThis.__boxlabPerformance,perfStart=perf?.start();
   try{
   const kind=body?.userData?.kind;if(!body?.isMesh||(kind!=='body'&&kind!=='boxlab-inactive-body'))return;
-  const objectFor=id=>{const lookupStart=perf?.start();try{return manager()?.objects?.find(object=>object.id===id)||null;}finally{perf?.stage?.('object-sync',lookupStart);}};
+  const objectFor=id=>{const lookupStart=perf?.start();try{const m=manager();return (m?.getObject?m.getObject(id):m?.objects?.find(object=>object.id===id))||null;}finally{perf?.stage?.('object-sync',lookupStart);}};
   const inactive=kind==='boxlab-inactive-body';if(!inactive)lastBody=body;clearRenderChildren(body);
   if(!body.userData.boxlabOriginalMaterial)body.userData.boxlabOriginalMaterial=body.material;
   const original=body.userData.boxlabOriginalMaterial;syncStudio();

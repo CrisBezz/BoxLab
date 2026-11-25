@@ -144,3 +144,19 @@ test('1113 successful Open adopts the filename; cancellation, invalid files and 
 });
 
 test('1213 manager supports empty and fully locked scenes without an editable active object',()=>{for(const input of [[],incoming().map(o=>({...o,locked:true}))]){const f=fixture();assert.equal(f.c.replace(input,null),true);assert.equal(f.c.activeId,null);assert.equal(f.live.vertices.length,0);assert.equal(f.undo.length,0);assert.equal(f.c.objects.length,input.length);}});
+
+test('Retopo reference link survives a project round trip and resumes after Open',async()=>{
+ const stored={activeId:2,objects:[
+   {id:1,name:'Source',kind:'reference',locked:true,mesh:EditableMesh.cube(2)},
+   {id:2,name:'Retopo',retopoReferenceId:1,mesh:EditableMesh.cube(1)}
+ ]};
+ const data=encodeBoxlabScene(stored),opened=decodeBoxlabScene(data,(...args)=>new EditableMesh(...args));
+ assert.equal(opened.objects[1].retopoReferenceId,1);
+ assert.deepEqual(encodeBoxlabScene(opened),data);
+ const f=openFixture(),out={};
+ f.c.__boxlabRetopo={close:()=>f.calls.push('close'),resumeSaved:()=>f.calls.push('resume')};
+ await f.c.openBasicProject(file(data),out);
+ assert.deepEqual(f.calls,['confirm','close','replace','groups','ui','resume']);
+ stored.objects.shift();
+ assert.equal('retopoReferenceId' in encodeBoxlabScene(stored).objects[0],false);
+});

@@ -3,11 +3,12 @@ import {quadRelaxFlow} from './quad-clean-core.js?v=0.36.18.1226';
 import {openQuadStrokeCorners,quadStrokeCorners,straightQuadStroke,quadStrokeCrossing,quadStrokeGuide} from './retopo-stroke.js?v=0.36.18.1227';
 import {buildRetopoQuad} from './retopo-quad.js?v=0.36.18.1226';
 import {EditableMesh} from './mesh.js';
-import {createRetopoSurface,nearestRetopoVertex} from './retopo-surface.js?v=0.36.18.1225';
+import {createRetopoSurface,nearestRetopoVertex} from './retopo-surface.js?v=0.36.18.1229';
 import {placeToolSessionPanel} from './tool-session-panel-position.js?v=0.36.18.732';
 
 const canvas=document.querySelector('#viewport'),bar=document.querySelector('#selectionModes'),status=document.querySelector('#selectionStatus');
 const state=()=>globalThis.__boxlabBridgeState,manager=()=>globalThis.__boxlabObjectManager;
+const objectById=(m,id)=>m?.getObject?m.getObject(id):m?.objects?.find(o=>o.id===id);
 const button=document.createElement('button');button.id='retopoModeBtn';button.type='button';button.title='Retopology';button.setAttribute('aria-pressed','false');button.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 7 8-4 8 4v10l-8 4-8-4zM4 7l8 4 8-4M12 11v10M8 5l8 4M8 9v10M4 12l8 4 8-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg><span class="mode-label">Retopo</span>';bar?.appendChild(button);
 const panel=document.createElement('div');panel.id='retopoSession';panel.className='boxlab-tool-session-shell';panel.hidden=true;
 panel.innerHTML='<div class="boxlab-tool-session-title">Retopo · Surface modelling</div><div id="retopoHint" class="boxlab-tool-session-subtitle"></div><div class="outliner-actions"><button type="button" id="retopoVertex" aria-pressed="false">Vertex</button><button type="button" id="retopoQuad" aria-pressed="true">Quad</button><button type="button" id="retopoRelax" aria-pressed="false">Relax</button><button type="button" id="retopoClear">Clear corners</button><button type="button" id="retopoDone">Done</button></div>';
@@ -88,7 +89,7 @@ function commitQuad(outline, result=null){
   }
   if(!retopoId){
     const snapshot=globalThis.__boxlabObjectHistory?.capture?.();if(!snapshot){clearCorners();return;}
-    retopoId=manager().addMesh(result.mesh,'Retopo',{enterObjectMode:false,settings:{mirror:{x:false,y:false,z:false},subd:false,subdLevel:1,cage:true}}).id;
+    retopoId=manager().addMesh(result.mesh,'Retopo',{enterObjectMode:false,retopoReferenceId:referenceId,settings:{mirror:{x:false,y:false,z:false},subd:false,subdLevel:1,cage:true}}).id;
     globalThis.__boxlabObjectHistory.checkpointSnapshot(snapshot,snapshot.objects.find(o=>o.id===snapshot.activeId)?.mesh||new EditableMesh([],[]));
   }else{
     const live=state().mesh;
@@ -101,7 +102,7 @@ function message(text){if(status)status.textContent=text;}
 function render(){document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));}
 function consume(e){e.preventDefault();e.stopImmediatePropagation();}
 function valid(){
-  const m=manager(),ref=m?.objects?.find(o=>o.id===referenceId),edit=m?.objects?.find(o=>o.id===retopoId);
+  const m=manager(),ref=objectById(m,referenceId),edit=objectById(m,retopoId);
   return active&&surface&&ref?.visible!==false&&!!ref&&((!retopoId&&m.activeId===entryObjectId)||(m.activeId===retopoId&&!!edit&&!edit.locked&&!edit.sourceId));
 }
 function release(d){try{canvas.releasePointerCapture(d.pointer);}catch{}if(d.controls)d.controls.enabled=d.enabled;}
@@ -121,6 +122,7 @@ function showPanel(show){
 }
 function chooseSource(){
   if(!canEnter())return;
+  if(resumeSaved())return;
   picking=true;
   hint.textContent='Tap the mesh you want to retopologise';
   showPanel(true);
@@ -144,11 +146,23 @@ function start({fresh=false,reference=null}={}){
   if(active)close();
   if(!canEnter())return false;
   const m=manager();m?.saveActive?.();
-  let source=m?.objects?.find(o=>o.id===referenceId),edit=m?.objects?.find(o=>o.id===retopoId);
-  const explicit=reference!==null;
-  const resume=!fresh&&source&&edit&&m.activeId===retopoId&&(!explicit||reference===referenceId);
-  if(explicit&&!resume){source=m?.objects?.find(o=>o.id===reference);retopoId=null;}
-  else if(!resume){source=m?.objects?.find(o=>o.id===m.activeId);retopoId=null;}
+  const explicit=reference!==null,activeObject=objectById(m,m?.activeId);
+  const requested=explicit?objectById(m,reference):null;
+  if(explicit&&(!requested?.mesh?.faces?.length||requested.visible===false)){
+    message('Retopo · select a visible reference mesh first');return false;
+  }
+  const savedId=activeObject?.retopoReferenceId;
+  const canResume=activeObject?.kind!=='reference'&&!activeObject?.locked&&!activeObject?.sourceId;
+  const legacy=explicit&&requested?.kind==='reference'&&!savedId&&/^Retopo(?: \d+)?$/.test(activeObject?.name||'');
+  const sourceId=savedId??(activeObject?.id===retopoId?referenceId:legacy?reference:null);
+  let source=!fresh&&canResume&&sourceId&&(!explicit||reference===sourceId)?objectById(m,sourceId):null;
+  if(source){
+    retopoId=activeObject.id;
+    if(legacy)activeObject.retopoReferenceId=source.id;
+  }else{
+    source=explicit?requested:activeObject;
+    retopoId=null;
+  }
   if(!explicit&&(!source?.mesh?.faces?.length||source.visible===false)){source=m?.objects?.find(o=>o.visible!==false&&o.mesh?.faces?.length);retopoId=null;}
   if(!source?.mesh?.faces?.length){message('Retopo · select a visible reference mesh first');return false;}
   if(source.visible===false){message('Retopo · show the reference object first');return false;}
@@ -162,8 +176,13 @@ function start({fresh=false,reference=null}={}){
   hint.textContent=`${source.name} · Draw a quad or connect boundary corners · fingers: navigate`;
   return true;
 }
+function resumeSaved(){
+  const m=manager(),edit=objectById(m,m?.activeId);
+  if(!edit?.retopoReferenceId||edit.locked||edit.sourceId)return false;
+  return start({reference:edit.retopoReferenceId});
+}
 function selectReference(id){
-  const source=manager()?.objects?.find(object=>object.id===id);
+  const source=objectById(manager(),id);
   if(!source?.mesh?.faces?.length){message('Retopo · select a visible reference mesh first');return false;}
   if(source.visible===false){message('Retopo · show the reference object first');return false;}
   if(id===referenceId&&valid())return true;
@@ -198,7 +217,7 @@ function down(e){
   consume(e);
   const h=hit(e);if(!h&&tool!=='quad'){message('Retopo · point at the reference surface');return;}
   const m=state().mesh,index=retopoId&&tool!=='relax'?nearestRetopoVertex(m,state().camera,canvas.getBoundingClientRect(),e.clientX,e.clientY,h,16,surface):null;
-  drag={pointer:e.pointerId,object:manager().activeId,mesh:m,index,start:index===null?null:m.vertices[index].clone(),beforeMesh:m.clone(),point:h?.point,normal:h?.normal,valid:true,x:e.clientX,y:e.clientY,moved:false,before:globalThis.__boxlabObjectHistory?.capture?.(),controls:state().controls,enabled:state().controls?.enabled};
+  drag={pointer:e.pointerId,object:manager().activeId,mesh:m,index,start:index===null?null:m.vertices[index].clone(),beforeMesh:tool==='quad'?null:m.clone(),point:h?.point,normal:h?.normal,valid:true,x:e.clientX,y:e.clientY,moved:false,before:tool==='vertex'&&!retopoId?globalThis.__boxlabObjectHistory?.capture?.():null,controls:state().controls,enabled:state().controls?.enabled};
   if(tool==='quad')drag.stroke=[{x:e.clientX,y:e.clientY}];
   if(tool==='relax')relaxDab(drag,e,true);
   if(drag.controls)drag.controls.enabled=false;
@@ -573,10 +592,10 @@ function up(e){
   if(d.index!==null){
     if(d.start.distanceToSquared(d.mesh.vertices[d.index])>1e-16)globalThis.__boxlabHistory?.push?.(d.beforeMesh);
   }else if(!d.moved){
-    if(!d.before){message('Retopo · history is still loading');return;}
     if(!retopoId){
+      if(!d.before){message('Retopo · history is still loading');return;}
       const mesh=new EditableMesh([],[]);mesh.addLooseVertex(d.point);
-      const o=manager().addMesh(mesh,'Retopo',{enterObjectMode:false,settings:{mirror:{x:false,y:false,z:false},subd:false,subdLevel:1,cage:true}});
+      const o=manager().addMesh(mesh,'Retopo',{enterObjectMode:false,retopoReferenceId:referenceId,settings:{mirror:{x:false,y:false,z:false},subd:false,subdLevel:1,cage:true}});
       retopoId=o.id;
       globalThis.__boxlabObjectHistory.checkpointSnapshot(d.before,d.before.objects.find(o=>o.id===d.before.activeId)?.mesh||new EditableMesh([],[]));
     }else {globalThis.__boxlabHistory.push(d.beforeMesh);d.mesh.addLooseVertex(d.point);}
@@ -607,4 +626,4 @@ document.addEventListener('click',e=>{
     close();
   }
 },true);
-globalThis.__boxlabRetopo={start,close,selectReference,get active(){return active||picking;},get referenceId(){return referenceId;},get retopoId(){return retopoId;},get drawQuads(){return active&&tool!=='vertex';}};
+globalThis.__boxlabRetopo= {start,close,selectReference,resumeSaved,get active(){return active||picking;},get referenceId(){return referenceId;},get retopoId(){return retopoId;},get drawQuads(){return active&&tool!=='vertex';}};

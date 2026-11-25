@@ -52,7 +52,7 @@ try{
  assert.equal(await page.locator('#selectionDrawer').evaluate(el=>getComputedStyle(el).pointerEvents),'auto','object selection stays available without an editable object');
  const referenceOnly=await snap();assert.equal(referenceOnly.active,null);assert.equal(referenceOnly.objects.length,1);assert.equal(referenceOnly.live.length,0);assert.equal(referenceOnly.objects[0].id,ref.id);
  await page.locator('#undoBtn').click();assert.deepEqual(await snap(),imported);await page.locator('#redoBtn').click();assert.deepEqual(await snap(),referenceOnly);
- const referenceFile=await page.evaluate(async()=>{const {encodeBoxlabScene}=await import('./src/boxlab-project-codec.js?v=0.36.18.1213');return encodeBoxlabScene(__boxlabObjectHistory.capture());});
+ const referenceFile=await page.evaluate(async()=>{const {encodeBoxlabScene}=await import('./src/boxlab-project-codec.js?v=0.36.18.1229');return encodeBoxlabScene(__boxlabObjectHistory.capture());});
 
  const rp=await page.evaluate(()=>{const s=__boxlabBridgeState,r=document.querySelector('#viewport').getBoundingClientRect(),v=__boxlabObjectManager.objects.find(o=>o.kind==='reference').mesh.vertices[0].clone();return [[-.4,-.3,1],[.1,-.3,1],[.1,.2,1],[-.4,.2,1]].map(p=>{v.set(...p).project(s.camera);return{x:r.left+(v.x*.5+.5)*r.width,y:r.top+(-v.y*.5+.5)*r.height};});});
  await page.locator('#retopoModeBtn').click();
@@ -83,6 +83,12 @@ try{
    return result;
  },ref.id);
  assert.deepEqual(display,{reference:0xd8d5d0,smooth:true,quad:0xa393de,lineWidth:2.7});
+ assert.equal(await page.evaluate(id=>{
+   const body=()=>{let match;__boxlabBridgeState.scene.traverse(o=>{if(o.userData.objectId===id)match=o;});return match;};
+   const geometry=body().geometry;
+   document.querySelector('#cageToggle').dispatchEvent(new Event('change',{bubbles:true}));
+   return body().geometry===geometry;
+ },ref.id),true,'Retopo rebuild must reuse the locked reference geometry');
  const refAfter=await page.evaluate(id=>{const o=__boxlabObjectManager.objects.find(o=>o.id===id);return{kind:o.kind,locked:o.locked,geometry:JSON.stringify([o.mesh.vertices.map(v=>v.toArray()),o.mesh.faces])};},ref.id);
  assert.deepEqual(refAfter,{kind:ref.kind,locked:ref.locked,geometry:ref.geometry});
  await page.locator('#undoBtn').click();assert.deepEqual(await snap(),refStart);await page.locator('#redoBtn').click();assert.deepEqual(await snap(),onRef);
@@ -91,7 +97,7 @@ try{
  await page.evaluate(()=>{document.querySelector('#selectionModes [data-mode="object"]').click();document.querySelector('button[title="Select all objects"]').click();document.querySelector('#outlinerDeleteBtn').click();});
  const empty=await snap();assert.equal(empty.active,null);assert.equal(empty.objects.length,0);assert.equal(empty.live.length,0);
  await page.locator('#undoBtn').click();assert.deepEqual(await snap(),onRef);await page.locator('#redoBtn').click();assert.deepEqual(await snap(),empty);
- const emptyFile=await page.evaluate(async()=>{const {encodeBoxlabScene}=await import('./src/boxlab-project-codec.js?v=0.36.18.1213');return encodeBoxlabScene(__boxlabObjectHistory.capture());});
+ const emptyFile=await page.evaluate(async()=>{const {encodeBoxlabScene}=await import('./src/boxlab-project-codec.js?v=0.36.18.1229');return encodeBoxlabScene(__boxlabObjectHistory.capture());});
  await page.evaluate(()=>document.querySelector('#outlinerAddBtn').click());await page.locator('[data-primitive="cube"]').click();await page.locator('[data-add-action="apply"]').click();const added=await snap();assert.equal(added.objects.length,1);await page.locator('#undoBtn').click();assert.equal((await snap()).objects.length,0);assert.equal((await snap()).live.length,0);await page.locator('#redoBtn').click();assert.deepEqual(await snap(),added);
  page.on('dialog',dialog=>dialog.accept());
  await page.locator('#projectOpenBasicInput').setInputFiles({name:'Empty.boxlab',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(emptyFile))});
@@ -102,5 +108,18 @@ try{
  const vertexPoint=rp[0];await pen('pointerdown',vertexPoint.x,vertexPoint.y);await pen('pointerup',vertexPoint.x,vertexPoint.y);await page.locator('#retopoVertex').click();
  await pen('pointerdown',vertexPoint.x,vertexPoint.y);await pen('pointerup',vertexPoint.x,vertexPoint.y);
  assert.equal((await snap()).objects.length,2);assert.equal((await snap()).live.length,1);await page.locator('#undoBtn').click();assert.equal((await snap()).objects.length,1);assert.equal((await snap()).active,null);await page.locator('#redoBtn').click();assert.equal((await snap()).live.length,1);await page.locator('#retopoDone').click();
- assert.deepEqual(errors,[]);console.log('Retopo1218 browser PASS: closed quad stroke / smooth reference / bold edges / viewport reference selection / cube deletion / reference-only Retopo / delete all / empty UndoRedo / empty and reference-only Open / actual locked OBJ reference import / reference preservation / vertex editing / quad creation / shared edges / duplicate refusal / clear / Undo / Redo / source unchanged / Done');
+ const saved=await page.evaluate(async()=>{
+   const {encodeBoxlabScene}=await import('./src/boxlab-project-codec.js?v=0.36.18.1229');
+   return encodeBoxlabScene(__boxlabObjectHistory.capture());
+ });
+ const savedId=saved.activeId;
+ assert.equal(saved.objects.find(object=>object.id===savedId).retopoReferenceId,ref.id);
+ await page.locator('#projectOpenBasicInput').setInputFiles({name:'Retopo.boxlab',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(saved))});
+ await page.waitForFunction(id=>__boxlabRetopo.active&&__boxlabRetopo.retopoId===id,savedId);
+ await page.locator('#retopoVertex').click();
+ await pen('pointerdown',rp[1].x,rp[1].y);await pen('pointerup',rp[1].x,rp[1].y);
+ assert.equal((await snap()).active,savedId);
+ assert.equal((await snap()).objects.length,2);
+ assert.equal((await snap()).live.length,2);
+ assert.deepEqual(errors,[]);console.log('Retopo1229 browser PASS: closed quad stroke / smooth reference / bold edges / viewport reference selection / cube deletion / reference-only Retopo / delete all / empty UndoRedo / empty and reference-only Open / actual locked OBJ reference import / reference preservation / vertex editing / quad creation / shared edges / duplicate refusal / clear / Undo / Redo / source unchanged / Done');
 }finally{await browser?.close();await new Promise(r=>server.close(r));}
