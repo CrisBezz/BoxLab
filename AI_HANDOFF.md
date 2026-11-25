@@ -1,3 +1,9 @@
+## .1234 — preview guided Retopo patches
+
+Cris passed .1233 Quad colour. Enable Preview patches in Retopo to inspect the proposed grid for multi-quad boundary patches and ribbons. Apply patch validates and commits the result in one Undo step. Cancel patch discards the preview. The option starts off to preserve the immediate drawing workflow.
+
+Device check: enable Preview patches, outline a ribbon along an existing boundary, inspect the divisions, and cancel. Redraw, Apply patch, then Undo.
+
 ## .1233 — choose the Retopo quad colour
 
 Cris passed .1232 Boolean amber. The Retopo panel now has a native Quad colour picker. It updates existing and new quads immediately and remembers the chosen colour as a browser preference. Boolean amber is the default.

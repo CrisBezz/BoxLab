@@ -152,6 +152,25 @@ test('two drawn sides fill a 3 by 5 patch using both existing boundary runs',()=
  f.history('redo');assert.equal(f.state.mesh.faces.length,23);
 });
 
+test('guided patch preview is cancellable and applying commits one undo step',()=>{
+ const {f,stroke,cell}=gestureFixture();
+ cell(384,400);
+ const outline=[[384,400],[384,304],[416,304],[416,400]];
+ f.field('#retopoPreview').checked=true;
+ stroke(outline);
+ assert.equal(f.state.mesh.faces.length,1);
+ assert.equal(f.field('#retopoApplyPatch').hidden,false);
+ assert.match(f.field('#viewportWrap').children.find(child=>child.id==='retopoQuadGuide').innerHTML,/<polygon /);
+ f.field('#retopoCancelPatch').click();
+ assert.equal(f.state.mesh.faces.length,1);
+ assert.equal(f.field('#retopoApplyPatch').hidden,true);
+ stroke(outline);
+ f.field('#retopoApplyPatch').click();
+ assert.equal(f.state.mesh.faces.length,4);
+ f.history('undo');
+ assert.equal(f.state.mesh.faces.length,1);
+});
+
 test('sideways ribbons extend beyond sixteen segments and retain every existing segment',()=>{
  const {f,stroke,cell}=gestureFixture();
  f.state.camera.fov=20;f.state.camera.updateProjectionMatrix();
