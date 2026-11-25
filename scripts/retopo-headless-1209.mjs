@@ -116,6 +116,12 @@ try{
  assert.equal(saved.objects.find(object=>object.id===savedId).retopoReferenceId,ref.id);
  await page.locator('#projectOpenBasicInput').setInputFiles({name:'Retopo.boxlab',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(saved))});
  await page.waitForFunction(id=>__boxlabRetopo.active&&__boxlabRetopo.retopoId===id,savedId);
+ assert.equal(await page.evaluate(id=>{
+   let reference;
+   __boxlabBridgeState.scene.traverse(node=>{if(node.userData.objectId===id)reference=node;});
+   return reference?.material.isMeshMatcapMaterial&&!!reference.material.matcap&&
+     reference.material.color.getHex()===0xd8d5d0&&!reference.material.transparent;
+ },ref.id),true,'reopened reference keeps its pale opaque Retopo shading');
  await page.locator('#retopoVertex').click();
  await pen('pointerdown',rp[1].x,rp[1].y);await pen('pointerup',rp[1].x,rp[1].y);
  assert.equal((await snap()).active,savedId);

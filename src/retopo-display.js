@@ -3,7 +3,9 @@ import {LineSegments2} from 'three/addons/lines/LineSegments2.js';
 import {LineSegmentsGeometry} from 'three/addons/lines/LineSegmentsGeometry.js';
 import {LineMaterial} from 'three/addons/lines/LineMaterial.js';
 
-const referenceMaterial = new THREE.MeshStandardMaterial({color:0xd8d5d0,roughness:.85,side:THREE.DoubleSide});
+// Retopo uses view-relative shading so a saved scene's lighting cannot
+// turn the working reference into a silhouette.
+const referenceMaterial = new THREE.MeshMatcapMaterial({color:0xd8d5d0,side:THREE.DoubleSide,toneMapped:false});
 // Render the Retopo pass after opaque scene geometry. A single unlit fill
 // keeps both GPU triangles of a nonplanar quad the same colour.
 const quadMaterial = new THREE.MeshBasicMaterial({color:0xa393de,depthTest:false,depthWrite:false});
@@ -33,9 +35,10 @@ function smoothReference(geometry) {
   return ()=>geometry.setAttribute('normal',original);
 }
 
-export function applyRetopoDisplay(body, id, mesh, session) {
+export function applyRetopoDisplay(body, id, mesh, session, matcap=null) {
   if (!session?.active || id == null || !mesh) return false;
   if (id === session.referenceId) {
+    referenceMaterial.matcap=matcap;
     body.material = referenceMaterial;
     body.userData.boxlabRetopoCleanup = smoothReference(body.geometry);
     return true;

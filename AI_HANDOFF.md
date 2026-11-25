@@ -1,3 +1,9 @@
+## .1230 — preserve pale Retopo reference shading after Open
+
+The .1229 iPad screenshot showed the restored Retopo overlay on a flat dark reference. Retopo now uses the existing MatCap texture for its opaque smooth reference material. It no longer relies on scene lighting or exposure to shade this display surface. Scope is Retopo display only. Project association and normal View materials are retained. Browser smoke checks the pale material after reopening a linked Retopo project.
+
+Device check: reopen the same project, orbit the head, verify the pale smooth reference and lilac quad overlay, then add a quad to the saved Retopo mesh.
+
 ## .1229 — reopen and continue Retopo projects
 
 Cris passed .1228. The project codec saves an optional Retopo reference ID. Open resumes Retopo when the saved active editable mesh has a visible linked source. Retopo also resumes saved associations on tool entry. For older projects select a mesh named Retopo or Retopo N before choosing its locked reference in Retopo. Saving again writes the association. Missing reference links are omitted on Save.

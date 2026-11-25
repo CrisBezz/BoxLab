@@ -16,7 +16,11 @@ test('Retopo fill clears the reference depth and outlines only front-facing poly
  const mesh=new EditableMesh([[-1,-1,0],[1,-1,0],[1,1,.2],[-1,1,0]].map(p=>new THREE.Vector3(...p)),[[0,1,2,3]]);
  const reference=new THREE.Mesh(mesh.triangulatedGeometry()),output=new THREE.Mesh(mesh.triangulatedGeometry());
  const session={active:true,referenceId:1,retopoId:2};
- applyRetopoDisplay(reference,1,mesh,session);applyRetopoDisplay(output,2,mesh,session);
+ const matcap=new THREE.Texture();
+ applyRetopoDisplay(reference,1,mesh,session,matcap);applyRetopoDisplay(output,2,mesh,session);
+ assert.equal(reference.material.isMeshMatcapMaterial,true);
+ assert.equal(reference.material.matcap,matcap);
+ assert.equal(reference.material.toneMapped,false);
  assert.equal(reference.material.transparent,false);
  assert.equal(reference.material.depthWrite,true);
  assert.equal(output.material.isMeshBasicMaterial,true);
