@@ -314,3 +314,28 @@ test('Quad ignores pen pressure and stale coalesced startup points',()=>{
  assert.equal(f.state.mesh.faces.length,1);
  assert.equal(f.h.undoStack.length,1);
 });
+
+test('a zigzag across one edge deletes its incident faces and Undo restores the patch',()=>{
+ const {f,stroke,cell}=gestureFixture();
+ cell(352,384);cell(384,384);cell(416,384);
+ const before=JSON.stringify(f.state.mesh),count=f.h.undoStack.length;
+ stroke([[378,387],[390,394],[378,404],[390,413]]);
+ assert.equal(f.state.mesh.faces.length,1);
+ assert.equal(f.h.undoStack.length,count+1);
+ assert.match(f.field('#selectionStatus').textContent,/edge deleted/);
+ f.history('undo');assert.equal(JSON.stringify(f.state.mesh),before);
+ f.history('redo');assert.equal(f.state.mesh.faces.length,1);
+});
+
+test('a short inward drag from an edge adds the full snapped quad loop',()=>{
+ const {f,stroke,cell}=gestureFixture();
+ for(let i=0;i<3;i++)cell(352+i*32,384);
+ const before=JSON.stringify(f.state.mesh),count=f.h.undoStack.length;
+ stroke([[352,397],[361,397],[369,397]]);
+ assert.equal(f.state.mesh.faces.length,6);
+ assert.equal(f.state.mesh.vertices.length,12);
+ assert.ok(f.state.mesh.vertices.slice(8).every(p=>Math.abs(p.z-f.state.mesh.vertices[0].z)<1e-7));
+ assert.equal(f.h.undoStack.length,count+1);
+ assert.match(f.field('#selectionStatus').textContent,/loop added/);
+ f.history('undo');assert.equal(JSON.stringify(f.state.mesh),before);
+});

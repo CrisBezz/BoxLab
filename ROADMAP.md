@@ -1,3 +1,9 @@
+## .1228 — Retopo edge-delete and loop gestures
+
+Cris passed .1227. In Quad mode a single zigzag with three alternating crossings along one visible edge deletes that edge and its incident faces, following BoxLab Delete Edge behavior. A short straight inward drag from a visible edge adds the connected opposite-edge loop using the starting edge position. Loop vertices project to the reference and invalid rings refuse before modifying the mesh. Both gestures use one Undo step.
+
+Device check: zigzag across one interior edge, check the adjacent faces are removed, then Undo. Drag from halfway along an edge into the first quad and lift. Check the loop runs through the row, then Undo. Retest the full-row cut stroke.
+
 ## .1227 — live pressure Relax and straight-segment Quad preview
 
 Cris passed .1226. Relax now updates on contact and movement, with pressure controlling move strength. Pointer capture cancellation restores the original vertices and finishing gives one Undo step. Quad uses pressure-independent positions, skips coalesced startup samples and tiny starting motion, displays a fitted straight-segment preview, and downsamples long strokes. Near-silhouette outlines can start off the surface and try a small inward corner recovery. The existing front-visible surface and invalid-patch checks still gate commits.

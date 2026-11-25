@@ -1,4 +1,4 @@
-import {cutRetopoStroke} from './retopo-cut.js?v=0.36.18.1226';
+import {cutRetopoStroke,deleteRetopoZigzag,loopRetopoDrag} from './retopo-cut.js?v=0.36.18.1228';
 import {quadRelaxFlow} from './quad-clean-core.js?v=0.36.18.1226';
 import {openQuadStrokeCorners,quadStrokeCorners,straightQuadStroke,quadStrokeCrossing,quadStrokeGuide} from './retopo-stroke.js?v=0.36.18.1227';
 import {buildRetopoQuad} from './retopo-quad.js?v=0.36.18.1226';
@@ -83,7 +83,7 @@ function commitQuad(outline, result=null){
   const before=retopoId?state().mesh.clone():new EditableMesh([],[]);
   result??=buildRetopoQuad(before,outline,outline[0].normal);
   if(!result.ok){clearCorners();message(`Retopo · ${result.reason} · try another outline`);return;}
-  if(!result.splitFaces&&!validateSurfaceFaces(result.mesh,before.faces.length)){
+  if(!result.splitFaces&&!result.deletedEdge&&!validateSurfaceFaces(result.mesh,before.faces.length)){
     clearCorners();message('Retopo · could not place a valid patch on the reference');return;
   }
   if(!retopoId){
@@ -95,7 +95,7 @@ function commitQuad(outline, result=null){
     globalThis.__boxlabHistory.push(before);
     for(const key of ['vertices','faces','faceGroups','creases','looseEdges','looseVertices'])live[key]=result.mesh[key];
   }
-  clearCorners();manager().saveActive();globalThis.__boxlabSelectionBridge?.clear?.();render();const added=result.mesh.faces.length-before.faces.length;message(result.splitFaces?`Retopo · split ${result.splitFaces} ${result.splitFaces===1?'quad':'quads'}`:`Retopo · ${added===1?'quad':added+' quads'} created`);
+  clearCorners();manager().saveActive();globalThis.__boxlabSelectionBridge?.clear?.();render();const added=result.mesh.faces.length-before.faces.length;message(result.deletedEdge?`Retopo · edge deleted · ${result.deletedFaces} faces removed`:result.loopGesture?'Retopo · loop added':result.splitFaces?`Retopo · split ${result.splitFaces} ${result.splitFaces===1?'quad':'quads'}`:`Retopo · ${added===1?'quad':added+' quads'} created`);
 }
 function message(text){if(status)status.textContent=text;}
 function render(){document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));}
@@ -226,7 +226,12 @@ function finishStroke(d,e){
   if(!d.moved){if(d.point)quadCorner(d);else message('Retopo · tap the visible reference');return;}
   clearCorners();
   const rect=canvas.getBoundingClientRect(),camera=state().camera;
+  const mesh=state().mesh,project=vertex=>screenPoint(vertex,rect,camera);
+  const snap=point=>surface.hit(camera,rect,point.x,point.y)?.point;
+  const visible=(vertex,point)=>visibleBoundaryVertex(vertex,point,rect,camera);
   if(retopoId){
+    const deletion=deleteRetopoZigzag(mesh,d.stroke,project,visible);
+    if(deletion){commitQuad(null,deletion);return;}
     const crossing=quadStrokeCrossing(d.stroke);
     if(crossing){
       if(!fillCrossedQuad(crossing,rect,camera))message('Retopo · draw the cross inside a quad or a four-edge gap');
@@ -236,12 +241,14 @@ function finishStroke(d,e){
   const outline=quadStrokeCorners(d.stroke);
   if(!outline){
     if(retopoId){
-      const result=cutRetopoStroke(state().mesh,d.stroke,vertex=>screenPoint(vertex,rect,camera),
-        point=>surface.hit(camera,rect,point.x,point.y)?.point,
-        (vertex,point)=>visibleBoundaryVertex(vertex,point,rect,camera));
+      const result=cutRetopoStroke(mesh,d.stroke,project,snap,visible);
       if(result){commitQuad(null,result);return;}
     }
     if(retopoId&&completeOpenStroke(d.stroke,rect,camera))return;
+    if(retopoId&&straightQuadStroke(d.stroke)){
+      const loop=loopRetopoDrag(mesh,d.stroke,project,snap,visible);
+      if(loop){commitQuad(null,loop);return;}
+    }
     message('Retopo · close the outline or start and end near boundary corners');return;
   }
   const projected=[];
