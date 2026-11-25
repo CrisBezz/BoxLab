@@ -1,3 +1,9 @@
+## .1233 — choose the Retopo quad colour
+
+Cris passed .1232 Boolean amber. The Retopo panel now has a native Quad colour picker. It updates existing and new quads immediately and remembers the chosen colour as a browser preference. Boolean amber is the default.
+
+Device check: change Quad colour, draw a quad, then refresh and reopen the project to check the colour is remembered.
+
 ## .1232 — Boolean amber Retopo fill
 
 Cris passed .1231 reference shading. Retopo quad fill now uses the Boolean A/source amber (#F3B34A), with the existing dark outlines and opaque shaded reference.

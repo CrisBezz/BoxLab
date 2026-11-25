@@ -116,6 +116,21 @@ try{
  assert.equal(saved.objects.find(object=>object.id===savedId).retopoReferenceId,ref.id);
  await page.locator('#projectOpenBasicInput').setInputFiles({name:'Retopo.boxlab',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(saved))});
  await page.waitForFunction(id=>__boxlabRetopo.active&&__boxlabRetopo.retopoId===id,savedId);
+ const readQuadColour=()=>page.evaluate(()=>{
+   let color;
+   __boxlabBridgeState.scene.traverse(node=>{
+     if(node.userData.kind==='body')color='#'+node.material.color.getHexString();
+   });
+   return color;
+ });
+ await page.locator('#retopoColour').fill('#38b8a4');
+ assert.equal(await readQuadColour(),'#38b8a4','picker updates existing quad fill immediately');
+ await page.reload();
+ await page.waitForFunction(()=>globalThis.__boxlabRetopo&&globalThis.__boxlabObjectManager);
+ await page.locator('#projectOpenBasicInput').setInputFiles({name:'Retopo.boxlab',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(saved))});
+ await page.waitForFunction(id=>__boxlabRetopo.active&&__boxlabRetopo.retopoId===id,savedId);
+ assert.equal(await page.locator('#retopoColour').inputValue(),'#38b8a4');
+ assert.equal(await readQuadColour(),'#38b8a4','chosen colour survives reload and project reopen');
  const referenceShading=await page.evaluate(async id=>{
    const THREE=await import('three');
    const {scene,renderer}=__boxlabBridgeState;
@@ -149,5 +164,5 @@ try{
  assert.equal((await snap()).active,savedId);
  assert.equal((await snap()).objects.length,2);
  assert.equal((await snap()).live.length,2);
- assert.deepEqual(errors,[]);console.log('Retopo1232 browser PASS: closed quad stroke / smooth reference / bold edges / viewport reference selection / cube deletion / reference-only Retopo / delete all / empty UndoRedo / empty and reference-only Open / actual locked OBJ reference import / reference preservation / vertex editing / quad creation / shared edges / duplicate refusal / clear / Undo / Redo / source unchanged / Done');
+ assert.deepEqual(errors,[]);console.log('Retopo1233 browser PASS: closed quad stroke / smooth reference / bold edges / viewport reference selection / cube deletion / reference-only Retopo / delete all / empty UndoRedo / empty and reference-only Open / actual locked OBJ reference import / reference preservation / vertex editing / quad creation / shared edges / duplicate refusal / clear / Undo / Redo / source unchanged / Done');
 }finally{await browser?.close();await new Promise(r=>server.close(r));}

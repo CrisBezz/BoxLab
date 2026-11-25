@@ -41,6 +41,23 @@ const referenceMaterial = new THREE.ShaderMaterial({
 // Render the Retopo pass after opaque scene geometry. A single unlit fill
 // keeps both GPU triangles of a nonplanar quad the same colour.
 const quadMaterial = new THREE.MeshBasicMaterial({color:0xf3b34a,depthTest:false,depthWrite:false});
+const quadColorKey = 'boxlab.retopo.quadColor';
+
+export function getRetopoQuadColor() {
+  return '#' + quadMaterial.color.getHexString();
+}
+
+export function setRetopoQuadColor(color) {
+  if (!/^#[0-9a-f]{6}$/i.test(color)) return;
+  quadMaterial.color.set(color);
+  try { globalThis.localStorage?.setItem(quadColorKey,color); } catch {}
+}
+
+try {
+  const savedColor = globalThis.localStorage?.getItem(quadColorKey);
+  if (/^#[0-9a-f]{6}$/i.test(savedColor)) quadMaterial.color.set(savedColor);
+} catch {}
+
 const edgeMaterial = new LineMaterial({color:0x252236,linewidth:2.7,depthTest:false,depthWrite:false});
 
 function smoothReference(geometry) {

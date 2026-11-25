@@ -1,4 +1,4 @@
-import {applyRetopoDisplay} from './retopo-display.js?v=0.36.18.1232';
+import {applyRetopoDisplay} from './retopo-display.js?v=0.36.18.1233';
 import {createFacegroupDrafts} from './facegroup-drafts.js?v=0.36.18.995';
 import {createFacegroupList} from './facegroup-list.js?v=0.36.18.995';
 import {createFacegroupPaintDock} from './facegroup-paint-dock.js?v=0.36.18.991';
