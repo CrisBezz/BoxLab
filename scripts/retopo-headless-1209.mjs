@@ -82,7 +82,7 @@ try{
    });
    return result;
  },ref.id);
- assert.deepEqual(display,{reference:0xd8d5d0,smooth:true,quad:0xa393de,lineWidth:2.7});
+ assert.deepEqual(display,{reference:0xd8d5d0,smooth:true,quad:0xf3b34a,lineWidth:2.7});
  assert.equal(await page.evaluate(id=>{
    const body=()=>{let match;__boxlabBridgeState.scene.traverse(o=>{if(o.userData.objectId===id)match=o;});return match;};
    const geometry=body().geometry;
@@ -149,5 +149,5 @@ try{
  assert.equal((await snap()).active,savedId);
  assert.equal((await snap()).objects.length,2);
  assert.equal((await snap()).live.length,2);
- assert.deepEqual(errors,[]);console.log('Retopo1231 browser PASS: closed quad stroke / smooth reference / bold edges / viewport reference selection / cube deletion / reference-only Retopo / delete all / empty UndoRedo / empty and reference-only Open / actual locked OBJ reference import / reference preservation / vertex editing / quad creation / shared edges / duplicate refusal / clear / Undo / Redo / source unchanged / Done');
+ assert.deepEqual(errors,[]);console.log('Retopo1232 browser PASS: closed quad stroke / smooth reference / bold edges / viewport reference selection / cube deletion / reference-only Retopo / delete all / empty UndoRedo / empty and reference-only Open / actual locked OBJ reference import / reference preservation / vertex editing / quad creation / shared edges / duplicate refusal / clear / Undo / Redo / source unchanged / Done');
 }finally{await browser?.close();await new Promise(r=>server.close(r));}

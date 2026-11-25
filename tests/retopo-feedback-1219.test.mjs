@@ -31,6 +31,7 @@ test('Retopo fill clears the reference depth and outlines only front-facing poly
  assert.equal(reference.material.transparent,false);
  assert.equal(reference.material.depthWrite,true);
  assert.equal(output.material.isMeshBasicMaterial,true);
+ assert.equal(output.material.color.getHex(),0xf3b34a);
  assert.equal(output.material.depthTest,false);
  const edges=output.children[0],camera=new THREE.PerspectiveCamera();
  const renderer={getViewport(rect){return rect.set(0,0,800,600);}};

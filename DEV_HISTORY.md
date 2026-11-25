@@ -1,3 +1,9 @@
+## .1232 — Boolean amber Retopo fill
+
+Cris passed .1231 reference shading. Retopo quad fill now uses the Boolean A/source amber (#F3B34A), with the existing dark outlines and opaque shaded reference.
+
+Device check: reopen a project in Retopo and compare the amber quad fill to the Boolean A/source preview.
+
 ## .1231 — restore surface definition in Retopo
 
 The .1230 iPad result is FAIL because the reference became a pale silhouette. Use camera-relative key and fill with dedicated smooth normals and a geometric fallback. The geometry retains its original normal attribute for regular viewing. The reopened-project browser check reads rendered pixels for highlight and shadow contrast.

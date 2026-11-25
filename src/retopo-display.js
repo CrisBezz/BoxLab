@@ -40,7 +40,7 @@ const referenceMaterial = new THREE.ShaderMaterial({
 });
 // Render the Retopo pass after opaque scene geometry. A single unlit fill
 // keeps both GPU triangles of a nonplanar quad the same colour.
-const quadMaterial = new THREE.MeshBasicMaterial({color:0xa393de,depthTest:false,depthWrite:false});
+const quadMaterial = new THREE.MeshBasicMaterial({color:0xf3b34a,depthTest:false,depthWrite:false});
 const edgeMaterial = new LineMaterial({color:0x252236,linewidth:2.7,depthTest:false,depthWrite:false});
 
 function smoothReference(geometry) {

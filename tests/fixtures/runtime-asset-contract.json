@@ -161,9 +161,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1231",
+      "url": "./src/drawer-ui.js?v=0.36.18.1232",
       "target": "src/drawer-ui.js",
-      "sha256": "504631930e139cf9f556e072d3df1422bee592aee504c41491458e93a5109f02"
+      "sha256": "027072abf4305f695948e6fc5ffa66923956380254329dd008996ff9a37a26c6"
     },
     {
       "owner": "index.html",
@@ -378,15 +378,15 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1231",
+      "url": "./src/release-version.js?v=0.36.18.1232",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
     {
       "owner": "index.html",
-      "url": "./src/render-modes.js?v=0.36.18.1231",
+      "url": "./src/render-modes.js?v=0.36.18.1232",
       "target": "src/render-modes.js",
-      "sha256": "40d1cce6a48dc5a5a2240b7d81761b6bac841bce47480579cf59067dcaab7468"
+      "sha256": "acc6035837d0f66bd29225f838d000528fce556f9222efeab731a5286f4d9cb5"
     },
     {
       "owner": "index.html",
@@ -864,9 +864,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1231",
+      "url": "./face-workflow-layout.js?v=0.36.18.1232",
       "target": "src/face-workflow-layout.js",
-      "sha256": "8aaf291e4f5bd1507a5b6c85e30baba343fa00b2b17f625780300fc97677bdfb"
+      "sha256": "123e0f6afbf746aada4cb86e5f2e1a02c10a87f7027521a197dd9d0b194d336f"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1361,7 +1361,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1231",
+      "url": "./release-version.js?v=0.36.18.1232",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -3326,9 +3326,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1231",
+      "url": "./src/shell-comparison.js?v=0.36.18.1232",
       "target": "src/shell-comparison.js",
-      "sha256": "f20dff5dcb851858e37cc2a61010a3af9ad3ec2597cfe11de1c33c3ae78d6784"
+      "sha256": "e78cbc371a5495923ca9aa131f7fb9476e6af3dffa2e245871bf8786bf66ad2b"
     },
     {
       "owner": "src/main.js",
@@ -3974,9 +3974,9 @@
     },
     {
       "owner": "src/render-modes.js",
-      "url": "./retopo-display.js?v=0.36.18.1231",
+      "url": "./retopo-display.js?v=0.36.18.1232",
       "target": "src/retopo-display.js",
-      "sha256": "b109f22868c3eb37fce307f02fc00ba6fde779ad2e374a97de466bc7e08ba10d"
+      "sha256": "f58cacfa5c0a6789bd8dd8ec0265dbd430c787a4a52adf9dfe0efac8e570810e"
     },
     {
       "owner": "src/retopo-workspace.js",
