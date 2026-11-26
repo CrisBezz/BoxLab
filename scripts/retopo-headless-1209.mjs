@@ -164,5 +164,17 @@ try{
  assert.equal((await snap()).active,savedId);
  assert.equal((await snap()).objects.length,2);
  assert.equal((await snap()).live.length,2);
- assert.deepEqual(errors,[]);console.log('Retopo1233 browser PASS: closed quad stroke / smooth reference / bold edges / viewport reference selection / cube deletion / reference-only Retopo / delete all / empty UndoRedo / empty and reference-only Open / actual locked OBJ reference import / reference preservation / vertex editing / quad creation / shared edges / duplicate refusal / clear / Undo / Redo / source unchanged / Done');
+ const outlineStroke=async points=>{
+   await pen('pointerdown',points[0].x,points[0].y);
+   for(const p of points.slice(1))await pen('pointermove',p.x,p.y);
+   await pen('pointerup',points[0].x,points[0].y);
+ };
+ await page.locator('#retopoTriangle').click();
+ await outlineStroke([rp[0],rp[1],rp[3]]);
+ assert.equal((await snap()).objects.at(-1).faces.at(-1).length,3,'Pencil triangle outline commits');
+ await page.locator('#retopoNgon').click();
+ const pentagon=[{x:rp[1].x+12,y:rp[1].y},{x:rp[1].x+55,y:rp[1].y},{x:rp[1].x+68,y:(rp[1].y+rp[2].y)/2},{x:rp[2].x+48,y:rp[2].y},{x:rp[2].x+8,y:rp[2].y}];
+ await outlineStroke(pentagon);
+ assert.equal((await snap()).objects.at(-1).faces.at(-1).length,5,'Pencil N-gon outline commits');
+ assert.deepEqual(errors,[]);console.log('Retopo1240 browser PASS: closed quad stroke / smooth reference / bold edges / viewport reference selection / cube deletion / reference-only Retopo / delete all / empty UndoRedo / empty and reference-only Open / actual locked OBJ reference import / reference preservation / vertex editing / quad creation / shared edges / duplicate refusal / clear / Undo / Redo / source unchanged / Done / Tri and N-gon Pencil outlines');
 }finally{await browser?.close();await new Promise(r=>server.close(r));}

@@ -53,6 +53,27 @@ export function quadStrokeCorners(points) {
   return null;
 }
 
+// Retopo's optional polygon tools use the same closed-stroke sampling as Quad,
+// while preserving the number of sides sketched by the pencil.
+export function polygonStrokeCorners(points,kind) {
+  if(points.length<4)return null;
+  let diameter=0,first=0,second=0;
+  for(let i=0;i<points.length;i++)for(let j=i+1;j<points.length;j++){
+    const length=distance(points[i],points[j]);
+    if(length>diameter){diameter=length;first=i;second=j;}
+  }
+  if(diameter<14||distance(points[0],points.at(-1))>Math.min(32,diameter*.34))return null;
+  const paths=[points.slice(first,second+1),points.slice(second).concat(points.slice(0,first+1))];
+  for(const ratio of [.035,.045,.06,.08,.10,.12,.16]){
+    const corners=[],tolerance=Math.max(2,diameter*ratio);
+    for(const path of paths){corners.push(path[0]);simplify(path,0,path.length-1,corners,tolerance);}
+    if(corners.length>=3&&corners.length<=12&&
+      (kind==='triangle'?corners.length===3:corners.length>=5)&&
+      corners.every((point,i)=>distance(point,corners[(i+1)%corners.length])>=5))return corners;
+  }
+  return null;
+}
+
 // Return a loose open outline with either one or two drawn corners.
 export function openQuadStrokeCorners(points, sideCount) {
   const span = Math.max(...points.map(point=>distance(points[0],point)));

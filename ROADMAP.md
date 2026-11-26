@@ -1,3 +1,9 @@
+## .1240 — draw triangle and N-gon outlines
+
+Cris passed .1239 quads but reported that Tri and N-gon could not be drawn. They previously accepted only stationary corner taps. Both now sample closed Pencil outlines, identify three or five-plus distinct sides, snap corners to the visible reference and commit one native face with Undo. Tapping corners remains available; invalid outlines leave the mesh untouched. Keep Quad stroke behavior and the accepted .1239 fix.
+
+Device check: choose Tri and draw a closed triangle in one stroke. Choose N-gon and draw a closed five-sided outline in one stroke. Undo/Redo both; also try tapped corners.
+
 ## .1239 — restore Retopo face creation
 
 The .1238 iPad drawing test failed. The new face validation used an unbound THREE identifier when checking proposed surface faces, so a completed quad stroke could throw before commit. Create the validation centre from an existing vertex vector. Keep the .1238 Tri, N-gon and Relax changes. Browser drawing check covers reference selection, closed quad stroke, editing, Undo/Redo and source preservation.

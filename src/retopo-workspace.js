@@ -1,7 +1,7 @@
 import {getRetopoQuadColor,setRetopoQuadColor} from './retopo-display.js?v=0.36.18.1233';
 import {cutRetopoStroke,deleteRetopoZigzag,loopRetopoDrag} from './retopo-cut.js?v=0.36.18.1228';
 import {quadRelaxFlow} from './quad-clean-core.js?v=0.36.18.1238';
-import {openQuadStrokeCorners,quadStrokeCorners,straightQuadStroke,quadStrokeCrossing,quadStrokeGuide} from './retopo-stroke.js?v=0.36.18.1227';
+import {openQuadStrokeCorners,quadStrokeCorners,polygonStrokeCorners,straightQuadStroke,quadStrokeCrossing,quadStrokeGuide} from './retopo-stroke.js?v=0.36.18.1240';
 import {buildRetopoQuad} from './retopo-quad.js?v=0.36.18.1236';
 import {EditableMesh} from './mesh.js';
 import {createRetopoSurface,nearestRetopoVertex} from './retopo-surface.js?v=0.36.18.1229';
@@ -73,7 +73,7 @@ function drawCorners(){
   guide.innerHTML=`<svg width="100%" height="100%" viewBox="0 0 ${r.width} ${r.height}"><polyline points="${xy.map(p=>p.join(',')).join(' ')}" fill="none" stroke="#50efc6" stroke-width="2"/>${xy.map((p,i)=>`<circle cx="${p[0]}" cy="${p[1]}" r="6" fill="#50efc6" stroke="#102921" stroke-width="2"/><text x="${p[0]+9}" y="${p[1]-8}" fill="#fff" font-size="14">${i+1}</text>`).join('')}</svg>`;
 }
 function clearCorners(){clearPatch();corners=[];cornerContext=null;panel.querySelector('#retopoFinishFace').hidden=true;guide.innerHTML='';}
-function setTool(next){cancelDrag();clearCorners();tool=next;panel.querySelector('#retopoVertex').setAttribute('aria-pressed',String(tool==='vertex'));panel.querySelector('#retopoQuad').setAttribute('aria-pressed',String(tool==='quad'));panel.querySelector('#retopoTriangle').setAttribute('aria-pressed',String(tool==='triangle'));panel.querySelector('#retopoNgon').setAttribute('aria-pressed',String(tool==='ngon'));panel.querySelector('#retopoRelax').setAttribute('aria-pressed',String(tool==='relax'));render();message(tool==='relax'?'Retopo · brush the quads to relax their spacing':tool==='quad'?'Retopo · draw a quad, connect corners or cut across a row':tool==='triangle'?'Retopo · tap three corners for a triangle':tool==='ngon'?'Retopo · tap boundary corners, then Finish face':'Retopo · tap surface to place · drag vertices to move');}
+function setTool(next){cancelDrag();clearCorners();tool=next;panel.querySelector('#retopoVertex').setAttribute('aria-pressed',String(tool==='vertex'));panel.querySelector('#retopoQuad').setAttribute('aria-pressed',String(tool==='quad'));panel.querySelector('#retopoTriangle').setAttribute('aria-pressed',String(tool==='triangle'));panel.querySelector('#retopoNgon').setAttribute('aria-pressed',String(tool==='ngon'));panel.querySelector('#retopoRelax').setAttribute('aria-pressed',String(tool==='relax'));render();message(tool==='relax'?'Retopo · brush the quads to relax their spacing':tool==='quad'?'Retopo · draw a quad, connect corners or cut across a row':tool==='triangle'?'Retopo · draw a closed triangle or tap three corners':tool==='ngon'?'Retopo · draw a closed N-gon or tap five or more corners':'Retopo · tap surface to place · drag vertices to move');}
 function quadCorner(d){
   if(cornerContext&&(cornerContext.mesh!==state().mesh||cornerContext.id!==manager().activeId))clearCorners();
   cornerContext??={mesh:state().mesh,id:manager().activeId};
@@ -285,7 +285,7 @@ function down(e){
   const h=hit(e);if(!h&&tool!=='quad'){message('Retopo · point at the reference surface');return;}
   const m=state().mesh,index=retopoId&&tool!=='relax'?nearestRetopoVertex(m,state().camera,canvas.getBoundingClientRect(),e.clientX,e.clientY,h,16,surface):null;
   drag={pointer:e.pointerId,object:manager().activeId,mesh:m,index,start:index===null?null:m.vertices[index].clone(),beforeMesh:['quad','triangle','ngon'].includes(tool)?null:m.clone(),point:h?.point,normal:h?.normal,valid:true,x:e.clientX,y:e.clientY,moved:false,before:tool==='vertex'&&!retopoId?globalThis.__boxlabObjectHistory?.capture?.():null,controls:state().controls,enabled:state().controls?.enabled};
-  if(tool==='quad')drag.stroke=[{x:e.clientX,y:e.clientY}];
+  if(['quad','triangle','ngon'].includes(tool))drag.stroke=[{x:e.clientX,y:e.clientY}];
   if(tool==='relax')relaxDab(drag,e,true);
   if(drag.controls)drag.controls.enabled=false;
   try{canvas.setPointerCapture(e.pointerId);}catch{}
@@ -353,6 +353,27 @@ function finishStroke(d,e){
     projected.push({...pick,index});
   }
   commitQuad(projected);
+}
+function finishPolygonStroke(d,e){
+  recordStroke(d,e);
+  if(!d.moved){if(d.point)quadCorner(d);else message('Retopo · tap the visible reference');return;}
+  const outline=polygonStrokeCorners(d.stroke,tool);
+  if(!outline){message(tool==='triangle'?'Retopo · close a three-sided outline':'Retopo · close an outline with at least five sides');return;}
+  clearCorners();
+  const rect=canvas.getBoundingClientRect(),camera=state().camera;
+  const count=outline.length;
+  const center=outline.reduce((sum,p)=>({x:sum.x+p.x/count,y:sum.y+p.y/count}),{x:0,y:0});
+  const radius=Math.min(16,Math.min(...outline.map((p,i)=>Math.hypot(p.x-outline[(i+1)%count].x,p.y-outline[(i+1)%count].y)))*.3);
+  const projected=[];
+  for(const point of outline){
+    let {x,y}=point,pick=surface.hit(camera,rect,x,y);
+    const distance=Math.hypot(center.x-x,center.y-y);
+    if(!pick&&distance>0){const step=Math.min(6,distance*.12)/distance;x+=(center.x-x)*step;y+=(center.y-y)*step;pick=surface.hit(camera,rect,x,y);}
+    if(!pick){message('Retopo · a face corner missed the reference');return;}
+    const index=retopoId?nearestRetopoVertex(state().mesh,camera,rect,x,y,pick,radius,surface):null;
+    projected.push({...pick,index});
+  }
+  commitPolygon(projected);
 }
 function boundaryNeighbors(mesh){
   const adjacent=new Map();
@@ -680,7 +701,7 @@ function up(e){
   if(e.type!=='pointerup'||!valid()||state().mesh!==d.mesh||!d.valid){cancelDrag();return;}
   drag=null;release(d);
   if(tool==='quad'){finishStroke(d,e);return;}
-  if(tool==='triangle'||tool==='ngon'){if(!d.moved&&d.point)quadCorner(d);return;}
+  if(tool==='triangle'||tool==='ngon'){finishPolygonStroke(d,e);return;}
   if(tool==='relax'){finishRelax(d);return;}
   if(d.index!==null){
     if(d.start.distanceToSquared(d.mesh.vertices[d.index])>1e-16)globalThis.__boxlabHistory?.push?.(d.beforeMesh);

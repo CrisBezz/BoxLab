@@ -48,6 +48,25 @@ test('explicit triangle and five-corner face stay on the reference and undo sepa
  f.history('undo');assert.equal(f.state.mesh.faces.length,1);
  f.history('redo');assert.equal(f.state.mesh.faces.at(-1).length,5);
 });
+test('Pencil closed outlines create Tri and N-gon faces without tapping corners',()=>{
+ const f=fixture();f.api.start();
+ const stroke=points=>{
+   f.pointer('pointerdown',...points[0]);
+   for(const p of points.slice(1,-1))f.pointer('pointermove',...p);
+   f.pointer('pointerup',...points.at(-1));
+ };
+ f.field('#retopoTriangle').click();
+ stroke([[320,450],[400,450],[360,380],[320,450]]);
+ assert.equal(f.state.mesh.faces.length,1);
+ assert.equal(f.state.mesh.faces[0].length,3);
+ f.field('#retopoNgon').click();
+ stroke([[420,450],[470,450],[500,425],[460,385],[415,410],[420,450]]);
+ assert.equal(f.state.mesh.faces.length,2);
+ assert.equal(f.state.mesh.faces[1].length,5);
+ assert(f.state.mesh.vertices.every(vertex=>Math.abs(vertex.z-1)<1e-7));
+ f.history('undo');assert.equal(f.state.mesh.faces.length,1);
+ f.history('redo');assert.equal(f.state.mesh.faces[1].length,5);
+});
 test('Clear corners and tool switches discard partial quads without geometry/history; original vertex editing remains',()=>{
  const f=fixture();f.api.start();f.field('#retopoQuad').click();f.pointer('pointerdown',340,450);f.pointer('pointerup',340,450);f.field('#retopoClear').click();assert.equal(f.objects.length,1);assert.equal(f.h.undoStack.length,0);
  f.field('#retopoVertex').click();f.pointer('pointerdown');f.pointer('pointerup');assert.equal(f.state.mesh.vertices.length,1);assert.equal(f.state.mesh.faces.length,0);
