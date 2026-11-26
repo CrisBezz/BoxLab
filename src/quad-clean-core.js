@@ -701,7 +701,7 @@ function incidentData(mesh,relaxBoundary=false){
   return{neighbors,incidentFaces,protectedVertices,normalBreakVertices,boundary};
 }
 
-export function quadRelaxFlow(mesh,{strength=.35,maxFraction=.15,weight=null,project=null,relaxBoundary=false}={}){
+export function quadRelaxFlow(mesh,{strength=.35,maxFraction=.15,weight=null,project=null,relaxBoundary=false,boundaryAlignment=0}={}){
   if(!mesh?.faces||!mesh?.vertices)return{ok:false,reason:'invalid-mesh',changed:false,relaxedVertices:0};
   const beforeScore=quadMeshFlowScore(mesh);
   if(!Number.isFinite(beforeScore))return{ok:false,reason:'invalid-quad-region',changed:false,relaxedVertices:0,beforeScore};
@@ -720,7 +720,13 @@ export function quadRelaxFlow(mesh,{strength=.35,maxFraction=.15,weight=null,pro
       const a=mesh.vertices[rim[0]].clone().sub(current),b=mesh.vertices[rim[1]].clone().sub(current);
       if(a.normalize().dot(b.normalize())>-.65)continue;
       const tangent=mesh.vertices[rim[1]].clone().sub(mesh.vertices[rim[0]]).normalize();
-      const along=target.sub(current).dot(tangent);
+      let along=target.sub(current).dot(tangent);
+      const interior=[...neighbors[vi]].filter(index=>!rim.includes(index));
+      if(interior.length===1&&boundaryAlignment>0&&a.dot(b)<-.99){
+        const guide=mesh.vertices[interior[0]].clone().sub(current).dot(tangent);
+        const limit=current.distanceTo(mesh.vertices[interior[0]])*.4;
+        along+=Math.max(-limit,Math.min(limit,guide))*boundaryAlignment;
+      }
       target.copy(current).addScaledVector(tangent,along);
     }
     const move=target.sub(current);

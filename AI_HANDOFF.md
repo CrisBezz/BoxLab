@@ -1,3 +1,9 @@
+## .1238 — explicit triangle and N-gon faces, guided boundary Relax
+
+Cris requested occasional triangle and N-gon faces. Retopo now offers Tri (three tapped corners) and N-gon (five or more tapped corners, then Finish face), with surface visibility and convexity checks, shared boundary winding and native Undo. Quad stays selected on entry. Relax also nudges nearly straight boundary runs toward the adjacent inner row along the edge tangent, then snaps each accepted movement to the reference. Sharp corners and curved boundary bends keep their prior protection.
+
+Device check: draw and Undo a Tri and a five-corner N-gon on the reference. Relax a slightly uneven straight outer edge near an inner row with varying pressure and inspect surface snapping and Undo.
+
 ## .1237 — stronger boundary Relax
 
 Cris passed .1236 performance. Retopo Relax now reaches farther along the outer edge and applies a stronger pressure response with a larger safe move limit. Each candidate continues to project onto the reference and passes the existing quad quality and flip guards.

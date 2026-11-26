@@ -33,6 +33,21 @@ test('actual Quad tool stages corners without edits, commits one face, shares ve
  f.history('undo');assert.equal(f.state.mesh.faces.length,1);f.history('redo');assert.equal(f.state.mesh.faces.length,2);
  f.api.close();assert.equal(JSON.stringify(f.objects[0].mesh),original);
 });
+test('explicit triangle and five-corner face stay on the reference and undo separately',()=>{
+ const f=fixture();f.api.start();
+ const tap=(x,y)=>{f.pointer('pointerdown',x,y);f.pointer('pointerup',x,y);};
+ f.field('#retopoTriangle').click();
+ for(const [x,y] of [[340,450],[400,450],[370,390]])tap(x,y);
+ assert.equal(f.state.mesh.faces[0].length,3);
+ f.field('#retopoNgon').click();
+ for(const [x,y] of [[420,450],[470,450],[480,420],[450,390],[410,410]])tap(x,y);
+ assert.equal(f.field('#retopoFinishFace').hidden,false);
+ f.field('#retopoFinishFace').click();
+ assert.equal(f.state.mesh.faces.at(-1).length,5);
+ assert(f.state.mesh.vertices.every(vertex=>Math.abs(vertex.z-1)<1e-7));
+ f.history('undo');assert.equal(f.state.mesh.faces.length,1);
+ f.history('redo');assert.equal(f.state.mesh.faces.at(-1).length,5);
+});
 test('Clear corners and tool switches discard partial quads without geometry/history; original vertex editing remains',()=>{
  const f=fixture();f.api.start();f.field('#retopoQuad').click();f.pointer('pointerdown',340,450);f.pointer('pointerup',340,450);f.field('#retopoClear').click();assert.equal(f.objects.length,1);assert.equal(f.h.undoStack.length,0);
  f.field('#retopoVertex').click();f.pointer('pointerdown');f.pointer('pointerup');assert.equal(f.state.mesh.vertices.length,1);assert.equal(f.state.mesh.faces.length,0);
