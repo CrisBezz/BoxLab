@@ -1,3 +1,9 @@
+## .1241 — Relax polygons and cross-fill bounded Tri/N-gon gaps
+
+Cris passed .1240 drawing but reported that Tri/N-gon fill gestures and Relax did not work. The shared quad Relax intentionally protected all vertices touching a non-quad face. Keep its quad rules and add a local polygon pass that accepts only improved face regularity, stable normals, intact convex corners and surface-projected moves. In Tri or N-gon mode, one cross in a bounded hole now chooses the smallest containing boundary loop, fills a matching face and keeps Undo; a cross on an existing face of that type deletes it. Ambiguous or uncovered gaps refuse.
+
+Device check: cross an enclosed three-edge gap in Tri mode and a five-edge gap in N-gon mode, then Undo/Redo. Brush an uneven Tri and N-gon with Relax, inspect live surface snapping and Undo. Confirm the Quad ribbon and its Relax still work.
+
 ## .1240 — draw triangle and N-gon outlines
 
 Cris passed .1239 quads but reported that Tri and N-gon could not be drawn. They previously accepted only stationary corner taps. Both now sample closed Pencil outlines, identify three or five-plus distinct sides, snap corners to the visible reference and commit one native face with Undo. Tapping corners remains available; invalid outlines leave the mesh untouched. Keep Quad stroke behavior and the accepted .1239 fix.

@@ -2,7 +2,19 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as THREE from 'three';
 import { EditableMesh } from '../src/mesh.js';
-import { evaluateTrianglePair, quadCleanTrianglePairs, quadCleanLocalRetopo, quadCleanSlivers, quadCleanFourTrianglePatches, quadCleanTriangleIslands, quadBoundaryFlowPenalty, quadPatchBoundaryContext, quadPatchInternalFlowContext, quadInternalFlowPenalty, quadPatchValenceContext, quadValencePenalty, quadRelaxFlow, quadMeshFlowScore, quadTopologyAudit, quadCleanMesh } from '../src/quad-clean-core.js';
+import { evaluateTrianglePair, quadCleanTrianglePairs, quadCleanLocalRetopo, quadCleanSlivers, quadCleanFourTrianglePatches, quadCleanTriangleIslands, quadBoundaryFlowPenalty, quadPatchBoundaryContext, quadPatchInternalFlowContext, quadInternalFlowPenalty, quadPatchValenceContext, quadValencePenalty, quadRelaxFlow, polygonRelaxFlow, quadMeshFlowScore, quadTopologyAudit, quadCleanMesh } from '../src/quad-clean-core.js';
+
+test('polygon Relax regularises uneven triangles and N-gons on the projected reference',()=>{
+  for(const coords of [ [[0,0],[2,0],[.7,1]], [[0,0],[1.4,-.2],[2.1,1],[1,1.5],[-.2,1]] ]){
+    const mesh=new EditableMesh(coords.map(([x,y])=>new THREE.Vector3(x,y,1)),[coords.map((_,i)=>i)]);
+    const original=mesh.vertices.map(v=>v.clone());
+    const result=polygonRelaxFlow(mesh,{strength:1,maxFraction:.25,project:target=>target.setZ(1)});
+    assert.equal(result.changed,true);
+    assert.equal(mesh.faces[0].length,coords.length);
+    assert(mesh.vertices.some((vertex,i)=>vertex.distanceTo(original[i])>1e-5));
+    assert(mesh.vertices.every(vertex=>Math.abs(vertex.z-1)<1e-8));
+  }
+});
 
 test('290 merges a clean triangulated quad without moving vertices',()=>{
   const verts=[

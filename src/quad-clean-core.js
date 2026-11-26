@@ -770,6 +770,86 @@ export function quadRelaxFlow(mesh,{strength=.35,maxFraction=.15,weight=null,pro
   return{ok:true,changed:true,relaxedVertices:proposed.size,protectedNormalBreaks:normalBreakVertices.size,beforeScore,afterScore,candidates:proposed.size};
 }
 
+// Retopo can contain intentional triangles and N-gons. Smooth those faces
+// locally without weakening the all-quad flow or changing their boundaries by
+// an unvalidated amount. A candidate must improve polygon regularity and keep
+// every incident face facing the same way.
+export function polygonRelaxFlow(mesh,{strength=.6,maxFraction=.2,weight=null,project=null}={}){
+  if(!mesh?.faces?.length||!mesh?.vertices?.length)return{ok:false,changed:false,relaxedVertices:0};
+  const incident=Array.from({length:mesh.vertices.length},()=>[]);
+  const neighbors=Array.from({length:mesh.vertices.length},()=>new Set());
+  const boundary=Array.from({length:mesh.vertices.length},()=>[]),locked=new Set();
+  for(let fi=0;fi<mesh.faces.length;fi++){
+    const face=mesh.faces[fi];
+    for(const a of face)incident[a].push(fi);
+  }
+  for(const edge of mesh.edges?.()||[]){
+    neighbors[edge.a].add(edge.b);neighbors[edge.b].add(edge.a);
+    if(edge.faces.length===1){boundary[edge.a].push(edge.b);boundary[edge.b].push(edge.a);}
+    if(edge.faces.length>2||!edge.faces.length||(mesh.creases instanceof Map&&(mesh.creases.get(edgeKey(mesh,edge.a,edge.b))||0)>0)){
+      locked.add(edge.a);locked.add(edge.b);
+    }
+  }
+  function normal(face){
+    const a=mesh.vertices[face[0]],n=a.clone().multiplyScalar(0);
+    for(let i=1;i<face.length-1;i++)n.add(mesh.vertices[face[i]].clone().sub(a).cross(mesh.vertices[face[i+1]].clone().sub(a)));
+    return n.length()>EPS?n.normalize():null;
+  }
+  function quality(face){
+    const lengths=face.map((v,i)=>mesh.vertices[v].distanceTo(mesh.vertices[face[(i+1)%face.length]]));
+    const mean=lengths.reduce((a,b)=>a+b,0)/lengths.length;
+    if(!(mean>EPS))return Infinity;
+    let score=lengths.reduce((sum,l)=>sum+((l-mean)/mean)**2,0)/lengths.length;
+    const angles=face.map((v,i)=>{
+      const p=mesh.vertices[v],a=mesh.vertices[face[(i+face.length-1)%face.length]].clone().sub(p).normalize();
+      const b=mesh.vertices[face[(i+1)%face.length]].clone().sub(p).normalize();
+      return Math.acos(Math.max(-1,Math.min(1,a.dot(b))));
+    });
+    const ideal=(face.length-2)*Math.PI/face.length;
+    score+=angles.reduce((sum,a)=>sum+(a-ideal)**2,0)/angles.length;
+    return score;
+  }
+  let relaxedVertices=0;
+  for(let vi=0;vi<mesh.vertices.length;vi++){
+    const faces=incident[vi],ring=[...neighbors[vi]],rim=boundary[vi];
+    if(locked.has(vi)||!faces.some(fi=>mesh.faces[fi].length!==4)||ring.length<2||rim.length>2)continue;
+    const current=mesh.vertices[vi],influence=weight?weight(vi,current,rim.length>0):1;
+    if(!(influence>0))continue;
+    const original=current.clone(),target=original.clone().multiplyScalar(0);
+    for(const ni of ring)target.add(mesh.vertices[ni]);target.multiplyScalar(1/ring.length);
+    if(rim.length===2&&faces.length>1){
+      const a=mesh.vertices[rim[0]].clone().sub(original).normalize(),b=mesh.vertices[rim[1]].clone().sub(original).normalize();
+      if(a.dot(b)>-.55)continue;
+      const tangent=mesh.vertices[rim[1]].clone().sub(mesh.vertices[rim[0]]).normalize();
+      const along=target.clone().sub(original).dot(tangent);
+      target.copy(original).addScaledVector(tangent,along);
+    }
+    const average=ring.reduce((sum,ni)=>sum+original.distanceTo(mesh.vertices[ni]),0)/ring.length;
+    const move=target.sub(original).multiplyScalar(Math.max(0,Math.min(1,strength*influence)));
+    if(move.length()>average*maxFraction)move.setLength(average*maxFraction);
+    if(move.length()<=average*1e-6)continue;
+    const candidate=project?project(original.clone().add(move),original,average):original.clone().add(move);
+    if(!candidate||candidate.distanceTo(original)<=average*1e-6)continue;
+    const previous=faces.map(fi=>normal(mesh.faces[fi]));
+    const before=faces.filter(fi=>mesh.faces[fi].length!==4).reduce((sum,fi)=>sum+quality(mesh.faces[fi]),0);
+    const quadBefore=faces.filter(fi=>mesh.faces[fi].length===4).reduce((sum,fi)=>sum+quadAspectPenalty(mesh,mesh.faces[fi]),0);
+    current.copy(candidate);
+    const safe=faces.every((fi,i)=>{
+      const face=mesh.faces[fi],next=normal(face);
+      if(!previous[i]||!next||previous[i].dot(next)<.7)return false;
+      return face.every((v,j)=>{
+        const a=mesh.vertices[v],b=mesh.vertices[face[(j+1)%face.length]],c=mesh.vertices[face[(j+2)%face.length]];
+        return b.clone().sub(a).cross(c.clone().sub(b)).dot(next)>EPS;
+      });
+    });
+    const after=faces.filter(fi=>mesh.faces[fi].length!==4).reduce((sum,fi)=>sum+quality(mesh.faces[fi]),0);
+    const quadAfter=faces.filter(fi=>mesh.faces[fi].length===4).reduce((sum,fi)=>sum+quadAspectPenalty(mesh,mesh.faces[fi]),0);
+    if(!safe||!(after<before-1e-8)||quadAfter>quadBefore+1e-6)current.copy(original);
+    else relaxedVertices++;
+  }
+  return{ok:true,changed:relaxedVertices>0,relaxedVertices};
+}
+
 export function quadTopologyAudit(mesh){
   if(!mesh?.faces||!mesh?.vertices)return{ok:false,reason:'invalid-mesh',errors:['invalid-mesh'],boundaryEdges:0,nonManifoldEdges:0};
   const errors=[],faceKeys=new Set();

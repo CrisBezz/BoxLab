@@ -67,6 +67,59 @@ test('Pencil closed outlines create Tri and N-gon faces without tapping corners'
  f.history('undo');assert.equal(f.state.mesh.faces.length,1);
  f.history('redo');assert.equal(f.state.mesh.faces[1].length,5);
 });
+test('cross gesture fills bounded triangular and five-sided gaps with one Undo',()=>{
+ const cross=f=>{
+   f.pointer('pointerdown',390,390);
+   for(const [x,y] of [[410,410],[390,410],[410,390]])f.pointer('pointermove',x,y);
+   f.pointer('pointerup',410,390);
+ };
+ const ring=(sides,points)=>{
+   const f=fixture(),center={x:400,y:400},scale=1.65;
+   const toWorld=([x,y])=>new THREE.Vector3((x-400)/241.42,(400-y)/241.42,1);
+   const outer=points.map(([x,y])=>[center.x+(x-center.x)*scale,center.y+(y-center.y)*scale]);
+   const mesh=new EditableMesh([...points,...outer].map(toWorld),points.map((_,i)=>[
+     (i+1)%sides,i,i+sides,(i+1)%sides+sides
+   ]));
+   f.manager.addMesh(mesh,'Retopo',{retopoReferenceId:1});f.api.start();
+   return f;
+ };
+ const tri=ring(3,[[360,420],[440,420],[400,360]]);
+ tri.field('#retopoTriangle').click();cross(tri);
+ assert.equal(tri.state.mesh.faces.length,4,tri.field('#selectionStatus').textContent);
+ assert.equal(tri.state.mesh.faces.at(-1).length,3);
+ tri.history('undo');assert.equal(tri.state.mesh.faces.length,3);
+ const ngon=ring(5,[[380,430],[420,430],[440,395],[400,360],[360,395]]);
+ ngon.field('#retopoNgon').click();cross(ngon);
+ assert.equal(ngon.state.mesh.faces.length,6);
+ assert.equal(ngon.state.mesh.faces.at(-1).length,5);
+ ngon.history('undo');assert.equal(ngon.state.mesh.faces.length,5);
+});
+test('Retopo Relax moves an uneven triangle on the reference and keeps Undo',()=>{
+ const f=fixture(),mesh=new EditableMesh([
+   new THREE.Vector3(-.35,-.2,1),new THREE.Vector3(.45,-.2,1),new THREE.Vector3(-.07,.2,1)
+ ],[[0,1,2]]);
+ f.manager.addMesh(mesh,'Retopo',{retopoReferenceId:1});f.api.start();
+ const before=f.state.mesh.vertices.map(v=>v.clone()),reference=JSON.stringify(f.objects[0].mesh);
+ f.field('#retopoRelax').click();
+ f.pointer('pointerdown',502,445,{pressure:.8});
+ f.pointer('pointermove',516,451,{pressure:.8});
+ f.pointer('pointerup',516,451,{pressure:.8});
+ assert(f.state.mesh.vertices.some((v,i)=>v.distanceTo(before[i])>1e-5));
+ assert(f.state.mesh.vertices.every(v=>Math.abs(v.z-1)<1e-7));
+ assert.equal(JSON.stringify(f.objects[0].mesh),reference);
+ f.history('undo');assert.deepEqual(f.state.mesh.vertices,before);
+ const ngon=fixture(),points=[[0,0],[1.4,-.2],[2.1,1],[1,1.5],[-.2,1]];
+ const five=new EditableMesh(points.map(([x,y])=>new THREE.Vector3(x*.3-.3,y*.3-.2,1)),[[0,1,2,3,4]]);
+ ngon.manager.addMesh(five,'Retopo',{retopoReferenceId:1});ngon.api.start();
+ const original=ngon.state.mesh.vertices.map(v=>v.clone());
+ ngon.field('#retopoRelax').click();
+ ngon.pointer('pointerdown',476,372,{pressure:.9});
+ ngon.pointer('pointermove',488,384,{pressure:.9});
+ ngon.pointer('pointerup',488,384,{pressure:.9});
+ assert(ngon.state.mesh.vertices.some((v,i)=>v.distanceTo(original[i])>1e-5));
+ assert(ngon.state.mesh.vertices.every(v=>Math.abs(v.z-1)<1e-7));
+ ngon.history('undo');assert.deepEqual(ngon.state.mesh.vertices,original);
+});
 test('Clear corners and tool switches discard partial quads without geometry/history; original vertex editing remains',()=>{
  const f=fixture();f.api.start();f.field('#retopoQuad').click();f.pointer('pointerdown',340,450);f.pointer('pointerup',340,450);f.field('#retopoClear').click();assert.equal(f.objects.length,1);assert.equal(f.h.undoStack.length,0);
  f.field('#retopoVertex').click();f.pointer('pointerdown');f.pointer('pointerup');assert.equal(f.state.mesh.vertices.length,1);assert.equal(f.state.mesh.faces.length,0);

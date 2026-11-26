@@ -1,6 +1,6 @@
 import {getRetopoQuadColor,setRetopoQuadColor} from './retopo-display.js?v=0.36.18.1233';
 import {cutRetopoStroke,deleteRetopoZigzag,loopRetopoDrag} from './retopo-cut.js?v=0.36.18.1228';
-import {quadRelaxFlow} from './quad-clean-core.js?v=0.36.18.1238';
+import {quadRelaxFlow,polygonRelaxFlow} from './quad-clean-core.js?v=0.36.18.1241';
 import {openQuadStrokeCorners,quadStrokeCorners,polygonStrokeCorners,straightQuadStroke,quadStrokeCrossing,quadStrokeGuide} from './retopo-stroke.js?v=0.36.18.1240';
 import {buildRetopoQuad} from './retopo-quad.js?v=0.36.18.1236';
 import {EditableMesh} from './mesh.js';
@@ -357,6 +357,13 @@ function finishStroke(d,e){
 function finishPolygonStroke(d,e){
   recordStroke(d,e);
   if(!d.moved){if(d.point)quadCorner(d);else message('Retopo · tap the visible reference');return;}
+  if(retopoId){
+    const crossing=quadStrokeCrossing(d.stroke);
+    if(crossing){
+      if(!fillCrossedPolygon(crossing))message('Retopo · cross a bounded open face of the selected type');
+      return;
+    }
+  }
   const outline=polygonStrokeCorners(d.stroke,tool);
   if(!outline){message(tool==='triangle'?'Retopo · close a three-sided outline':'Retopo · close an outline with at least five sides');return;}
   clearCorners();
@@ -422,6 +429,56 @@ function containsQuadPoint(points,point){
 function visibleBoundaryVertex(vertex,point,rect,camera){
   const front=surface.hit(camera,rect,point.x,point.y);
   return front&&front.point.distanceTo(vertex)<=Math.max(.00001,front.distance*.00001);
+}
+function containsPolygonPoint(points,point){
+  let inside=false;
+  for(let i=0,j=points.length-1;i<points.length;j=i++){
+    const a=points[i],b=points[j];
+    if((a.y>point.y)!==(b.y>point.y)&&point.x<(b.x-a.x)*(point.y-a.y)/(b.y-a.y)+a.x)inside=!inside;
+  }
+  return inside;
+}
+function fillCrossedPolygon(point){
+  const mesh=state().mesh,rect=canvas.getBoundingClientRect(),camera=state().camera;
+  const hit=surface.hit(camera,rect,point.x,point.y);
+  if(!hit)return false;
+  const projected=index=>screenPoint(mesh.vertices[index],rect,camera);
+  const occupied=mesh.faces.map((face,i)=>({face,i})).filter(({face})=>
+    containsPolygonPoint(face.map(projected),point)&&face.every(index=>visibleBoundaryVertex(mesh.vertices[index],projected(index),rect,camera)));
+  if(occupied.length){
+    if(occupied.length!==1||!(tool==='triangle'?occupied[0].face.length===3:occupied[0].face.length>=5))return false;
+    const before=mesh.clone();mesh.deleteFace(occupied[0].i);mesh.compactUnusedVertices();
+    globalThis.__boxlabHistory.push(before);manager().saveActive();globalThis.__boxlabSelectionBridge?.clear?.();render();
+    message('Retopo · face deleted');return true;
+  }
+  const adjacent=boundaryNeighbors(mesh),visited=new Set(),candidates=[];
+  for(const start of adjacent.keys()){
+    if(visited.has(start))continue;
+    const component=[],stack=[start];
+    while(stack.length){
+      const v=stack.pop();if(visited.has(v))continue;
+      visited.add(v);component.push(v);
+      for(const neighbor of adjacent.get(v)||[])if(!visited.has(neighbor))stack.push(neighbor);
+    }
+    if(component.length<3||component.length>64||component.some(v=>adjacent.get(v).size!==2))continue;
+    const cycle=[start];let previous=-1,current=start;
+    do{
+      const next=[...adjacent.get(current)].find(v=>v!==previous);
+      if(next===undefined||cycle.length>component.length)break;
+      previous=current;current=next;if(current!==start)cycle.push(current);
+    }while(current!==start);
+    if(current!==start||cycle.length!==component.length)continue;
+    const expected=tool==='triangle'?cycle.length===3:cycle.length>=5;
+    if(!expected||!containsPolygonPoint(cycle.map(projected),point))continue;
+    if(!cycle.every(index=>visibleBoundaryVertex(mesh.vertices[index],projected(index),rect,camera)))continue;
+    const points=cycle.map(projected);
+    const area=Math.abs(points.reduce((sum,p,i)=>sum+p.x*points[(i+1)%points.length].y-p.y*points[(i+1)%points.length].x,0));
+    candidates.push({cycle,area});
+  }
+  candidates.sort((a,b)=>a.area-b.area);
+  if(!candidates.length||(candidates.length>1&&candidates[1].area<candidates[0].area*1.2))return false;
+  commitPolygon(candidates[0].cycle.map(index=>({index,normal:hit.normal})));
+  return true;
 }
 function fillCrossedQuad(point,rect,camera){
   const mesh=state().mesh,adjacent=boundaryNeighbors(mesh),hit=surface.hit(camera,rect,point.x,point.y);
@@ -684,12 +741,14 @@ function relaxDab(d,e,initial=false){
     return hit&&current.distanceTo(hit.point)<=averageEdge*.48?hit.point:null;
   }
   const pressure=e.pointerType==='pen'&&Number.isFinite(e.pressure)?Math.max(0,Math.min(1,e.pressure)):.5;
-  const result=quadRelaxFlow(d.mesh,{strength:.65+.8*pressure,maxFraction:.22+.22*pressure,weight,project,relaxBoundary:true,boundaryAlignment:.45});
-  if(result.changed){d.relaxed=true;render();}
+  const settings={strength:.65+.8*pressure,maxFraction:.22+.22*pressure,weight,project};
+  const quad=quadRelaxFlow(d.mesh,{...settings,relaxBoundary:true,boundaryAlignment:.45});
+  const polygon=d.mesh.faces.some(face=>face.length!==4)?polygonRelaxFlow(d.mesh,settings):{changed:false};
+  if(quad.changed||polygon.changed){d.relaxed=true;render();}
 }
 function finishRelax(d){
   clearCorners();
-  if(!d.relaxed){message('Retopo · brush across visible quad vertices or along an outer edge');return;}
+  if(!d.relaxed){message('Retopo · brush across visible face vertices or along an outer edge');return;}
   globalThis.__boxlabHistory.push(d.beforeMesh);
   manager().saveActive();globalThis.__boxlabSelectionBridge?.clear?.();render();
   message('Retopo · quad spacing relaxed');

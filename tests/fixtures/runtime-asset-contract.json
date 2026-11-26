@@ -161,9 +161,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1240",
+      "url": "./src/drawer-ui.js?v=0.36.18.1241",
       "target": "src/drawer-ui.js",
-      "sha256": "87e33196245b1529c870495334ef8a25f533f2514382e82d0b82f99972e52c95"
+      "sha256": "4819009463ec306ca08a2734648e2a97114a3bf03854e76384753a3c745f8e0f"
     },
     {
       "owner": "index.html",
@@ -378,7 +378,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1240",
+      "url": "./src/release-version.js?v=0.36.18.1241",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -864,9 +864,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1240",
+      "url": "./face-workflow-layout.js?v=0.36.18.1241",
       "target": "src/face-workflow-layout.js",
-      "sha256": "c15d78a34e53a2f14a004ffa5a6a636f82feeee166b88a0f98f9a2989859f759"
+      "sha256": "168ad46267abc00f1e64199c45de35f3d9a73c9a3b983df522f8de8d551045b3"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1361,7 +1361,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1240",
+      "url": "./release-version.js?v=0.36.18.1241",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -1488,7 +1488,7 @@
       "owner": "src/import-mesh.js",
       "url": "./quad-clean-core.js?v=0.36.18.323",
       "target": "src/quad-clean-core.js",
-      "sha256": "58dd60b760a6f6adb3cc99454b7623a7273ba37c95bb83b2a9ba384fc409216d"
+      "sha256": "7f5b89574bfded72d0cbcad051332b2d9e294763c5fa7ddb853b581daa40c4c1"
     },
     {
       "owner": "src/insert-tool.js",
@@ -1836,7 +1836,7 @@
       "owner": "src/quad-clean.js",
       "url": "./quad-clean-core.js?v=0.36.18.1226",
       "target": "src/quad-clean-core.js",
-      "sha256": "58dd60b760a6f6adb3cc99454b7623a7273ba37c95bb83b2a9ba384fc409216d"
+      "sha256": "7f5b89574bfded72d0cbcad051332b2d9e294763c5fa7ddb853b581daa40c4c1"
     },
     {
       "owner": "src/render-modes.js",
@@ -3326,9 +3326,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1240",
+      "url": "./src/shell-comparison.js?v=0.36.18.1241",
       "target": "src/shell-comparison.js",
-      "sha256": "72c058932177bc0711fc9fed03c277e3885b3e03fecf2c2b2d47e086bdb26e75"
+      "sha256": "357e68ac994d81dc590d7d290172a7fcf46695859c777d3c86ff5b422fba3e4f"
     },
     {
       "owner": "src/main.js",
@@ -3938,9 +3938,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/retopo-workspace.js?v=0.36.18.1240",
+      "url": "./src/retopo-workspace.js?v=0.36.18.1241",
       "target": "src/retopo-workspace.js",
-      "sha256": "f4831a4ada6b619c609b443a1615badbb34945a6c7962f26f3013aea4ece178c"
+      "sha256": "18042d9531cb325fc798f923238f88da19b14e33b26b3ea8e51146fb549ef0ff"
     },
     {
       "owner": "src/retopo-workspace.js",
@@ -3970,7 +3970,7 @@
       "owner": "src/retopo-quad.js",
       "url": "./quad-clean-core.js?v=0.36.18.1226",
       "target": "src/quad-clean-core.js",
-      "sha256": "58dd60b760a6f6adb3cc99454b7623a7273ba37c95bb83b2a9ba384fc409216d"
+      "sha256": "7f5b89574bfded72d0cbcad051332b2d9e294763c5fa7ddb853b581daa40c4c1"
     },
     {
       "owner": "src/retopo-workspace.js",
@@ -3986,9 +3986,9 @@
     },
     {
       "owner": "src/retopo-workspace.js",
-      "url": "./quad-clean-core.js?v=0.36.18.1238",
+      "url": "./quad-clean-core.js?v=0.36.18.1241",
       "target": "src/quad-clean-core.js",
-      "sha256": "58dd60b760a6f6adb3cc99454b7623a7273ba37c95bb83b2a9ba384fc409216d"
+      "sha256": "7f5b89574bfded72d0cbcad051332b2d9e294763c5fa7ddb853b581daa40c4c1"
     },
     {
       "owner": "src/retopo-workspace.js",
@@ -4000,7 +4000,7 @@
       "owner": "src/retopo-cut.js",
       "url": "./quad-clean-core.js?v=0.36.18.1226",
       "target": "src/quad-clean-core.js",
-      "sha256": "58dd60b760a6f6adb3cc99454b7623a7273ba37c95bb83b2a9ba384fc409216d"
+      "sha256": "7f5b89574bfded72d0cbcad051332b2d9e294763c5fa7ddb853b581daa40c4c1"
     }
   ]
 }
