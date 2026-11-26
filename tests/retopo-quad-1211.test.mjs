@@ -94,6 +94,33 @@ test('cross gesture fills bounded triangular and five-sided gaps with one Undo',
  assert.equal(ngon.state.mesh.faces.at(-1).length,5);
  ngon.history('undo');assert.equal(ngon.state.mesh.faces.length,5);
 });
+test('one line closes a triangle or N-gon using existing boundary edges',()=>{
+ const openRing=points=>{
+   const f=fixture(),n=points.length,center={x:400,y:400};
+   const outer=points.map(([x,y])=>[center.x+(x-center.x)*1.65,center.y+(y-center.y)*1.65]);
+   const toWorld=([x,y])=>new THREE.Vector3((x-400)/241.42,(400-y)/241.42,1);
+   const mesh=new EditableMesh([...points,...outer].map(toWorld),points.slice(0,-1).map((_,i)=>[
+     (i+1)%n,i,i+n,(i+1)%n+n
+   ]));
+   f.manager.addMesh(mesh,'Retopo',{retopoReferenceId:1});f.api.start();
+   return f;
+ };
+ const draw=(f,a,b)=>{
+   f.pointer('pointerdown',...a);
+   f.pointer('pointermove',(a[0]+b[0])/2,(a[1]+b[1])/2);
+   f.pointer('pointerup',...b);
+ };
+ const triangle=[[360,420],[440,420],[400,360]],tri=openRing(triangle);
+ tri.field('#retopoTriangle').click();draw(tri,triangle[2],triangle[0]);
+ assert.equal(tri.state.mesh.faces.length,3,tri.field('#selectionStatus').textContent);
+ assert.equal(tri.state.mesh.faces.at(-1).length,3);
+ tri.history('undo');assert.equal(tri.state.mesh.faces.length,2);
+ const pentagon=[[380,430],[420,430],[440,395],[400,360],[360,395]],ngon=openRing(pentagon);
+ ngon.field('#retopoNgon').click();draw(ngon,pentagon[4],pentagon[0]);
+ assert.equal(ngon.state.mesh.faces.length,5,ngon.field('#selectionStatus').textContent);
+ assert.equal(ngon.state.mesh.faces.at(-1).length,5);
+ ngon.history('undo');assert.equal(ngon.state.mesh.faces.length,4);
+});
 test('Retopo Relax moves an uneven triangle on the reference and keeps Undo',()=>{
  const f=fixture(),mesh=new EditableMesh([
    new THREE.Vector3(-.35,-.2,1),new THREE.Vector3(.45,-.2,1),new THREE.Vector3(-.07,.2,1)

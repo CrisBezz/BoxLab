@@ -73,7 +73,7 @@ function drawCorners(){
   guide.innerHTML=`<svg width="100%" height="100%" viewBox="0 0 ${r.width} ${r.height}"><polyline points="${xy.map(p=>p.join(',')).join(' ')}" fill="none" stroke="#50efc6" stroke-width="2"/>${xy.map((p,i)=>`<circle cx="${p[0]}" cy="${p[1]}" r="6" fill="#50efc6" stroke="#102921" stroke-width="2"/><text x="${p[0]+9}" y="${p[1]-8}" fill="#fff" font-size="14">${i+1}</text>`).join('')}</svg>`;
 }
 function clearCorners(){clearPatch();corners=[];cornerContext=null;panel.querySelector('#retopoFinishFace').hidden=true;guide.innerHTML='';}
-function setTool(next){cancelDrag();clearCorners();tool=next;panel.querySelector('#retopoVertex').setAttribute('aria-pressed',String(tool==='vertex'));panel.querySelector('#retopoQuad').setAttribute('aria-pressed',String(tool==='quad'));panel.querySelector('#retopoTriangle').setAttribute('aria-pressed',String(tool==='triangle'));panel.querySelector('#retopoNgon').setAttribute('aria-pressed',String(tool==='ngon'));panel.querySelector('#retopoRelax').setAttribute('aria-pressed',String(tool==='relax'));render();message(tool==='relax'?'Retopo · brush the quads to relax their spacing':tool==='quad'?'Retopo · draw a quad, connect corners or cut across a row':tool==='triangle'?'Retopo · draw a closed triangle or tap three corners':tool==='ngon'?'Retopo · draw a closed N-gon or tap five or more corners':'Retopo · tap surface to place · drag vertices to move');}
+function setTool(next){cancelDrag();clearCorners();tool=next;panel.querySelector('#retopoVertex').setAttribute('aria-pressed',String(tool==='vertex'));panel.querySelector('#retopoQuad').setAttribute('aria-pressed',String(tool==='quad'));panel.querySelector('#retopoTriangle').setAttribute('aria-pressed',String(tool==='triangle'));panel.querySelector('#retopoNgon').setAttribute('aria-pressed',String(tool==='ngon'));panel.querySelector('#retopoRelax').setAttribute('aria-pressed',String(tool==='relax'));render();message(tool==='relax'?'Retopo · brush the quads to relax their spacing':tool==='quad'?'Retopo · draw a quad, connect corners or cut across a row':tool==='triangle'?'Retopo · draw a triangle or connect two boundary corners':tool==='ngon'?'Retopo · draw an N-gon or connect two boundary corners':'Retopo · tap surface to place · drag vertices to move');}
 function quadCorner(d){
   if(cornerContext&&(cornerContext.mesh!==state().mesh||cornerContext.id!==manager().activeId))clearCorners();
   cornerContext??={mesh:state().mesh,id:manager().activeId};
@@ -363,6 +363,7 @@ function finishPolygonStroke(d,e){
       if(!fillCrossedPolygon(crossing))message('Retopo · cross a bounded open face of the selected type');
       return;
     }
+    if(straightQuadStroke(d.stroke)&&completeOpenPolygonStroke(d.stroke))return;
   }
   const outline=polygonStrokeCorners(d.stroke,tool);
   if(!outline){message(tool==='triangle'?'Retopo · close a three-sided outline':'Retopo · close an outline with at least five sides');return;}
@@ -478,6 +479,42 @@ function fillCrossedPolygon(point){
   candidates.sort((a,b)=>a.area-b.area);
   if(!candidates.length||(candidates.length>1&&candidates[1].area<candidates[0].area*1.2))return false;
   commitPolygon(candidates[0].cycle.map(index=>({index,normal:hit.normal})));
+  return true;
+}
+function completeOpenPolygonStroke(stroke){
+  const mesh=state().mesh,rect=canvas.getBoundingClientRect(),camera=state().camera;
+  const first=stroke[0],last=stroke.at(-1),length=Math.hypot(last.x-first.x,last.y-first.y);
+  const radius=Math.min(32,Math.max(14,length*.35));
+  function anchor(point){
+    const pick=surface.hit(camera,rect,point.x,point.y);
+    const index=pick?nearestRetopoVertex(mesh,camera,rect,point.x,point.y,pick,radius,surface):null;
+    return index===null?null:{index,normal:pick.normal};
+  }
+  const start=anchor(first),end=anchor(last);
+  if(!start||!end||start.index===end.index)return false;
+  const adjacent=boundaryNeighbors(mesh);
+  if(!adjacent.has(start.index)||!adjacent.has(end.index))return false;
+  const paths=boundaryPaths(adjacent,start.index,end.index,Math.min(64,adjacent.size));
+  const candidates=[];
+  for(const path of paths){
+    if(!(tool==='triangle'?path.length===3:path.length>=5)||path.length>64)continue;
+    // The drawn segment is the only missing side; do not duplicate an edge.
+    if(adjacent.get(start.index).has(end.index))continue;
+    const projected=path.map(index=>screenPoint(mesh.vertices[index],rect,camera));
+    if(projected.some((point,i)=>!visibleBoundaryVertex(mesh.vertices[path[i]],point,rect,camera)))continue;
+    const center=projected.reduce((sum,p)=>({x:sum.x+p.x/path.length,y:sum.y+p.y/path.length}),{x:0,y:0});
+    if(mesh.faces.some(face=>containsPolygonPoint(face.map(index=>screenPoint(mesh.vertices[index],rect,camera)),center)))continue;
+    const turns=projected.map((p,i)=>{
+      const b=projected[(i+1)%path.length],c=projected[(i+2)%path.length];
+      return(b.x-p.x)*(c.y-b.y)-(b.y-p.y)*(c.x-b.x);
+    });
+    if(!turns.every(t=>t>1e-6)&&!turns.every(t=>t< -1e-6))continue;
+    const area=Math.abs(projected.reduce((sum,p,i)=>sum+p.x*projected[(i+1)%path.length].y-p.y*projected[(i+1)%path.length].x,0));
+    candidates.push({path,area});
+  }
+  candidates.sort((a,b)=>a.area-b.area);
+  if(!candidates.length||(candidates.length>1&&candidates[1].area<candidates[0].area*1.2))return false;
+  commitPolygon(candidates[0].path.map(index=>({index,normal:start.normal})));
   return true;
 }
 function fillCrossedQuad(point,rect,camera){

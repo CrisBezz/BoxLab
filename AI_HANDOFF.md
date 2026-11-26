@@ -1,3 +1,9 @@
+## .1242 — one-line Tri and N-gon boundary closure
+
+Cris passed .1241 but could not close an open Tri or N-gon with a single line. In the selected polygon mode, a straight Pencil stroke from one visible boundary corner to another now follows the existing open boundary path and supplies the missing side. Tri requires exactly two existing edges; N-gon requires four or more. A direct existing edge, occupied area or ambiguous competing path refuses. The face uses native surface validation and one Undo step; closed outlines, tapped corners, X fill and Quad gestures retain their previous behavior.
+
+Device check: with Tri selected, draw a line between the loose endpoints of a two-edge triangle. Repeat in N-gon mode with a four-edge open chain. Check surface snapping and Undo/Redo, then confirm closed outlines and a normal Quad still work.
+
 ## .1241 — Relax polygons and cross-fill bounded Tri/N-gon gaps
 
 Cris passed .1240 drawing but reported that Tri/N-gon fill gestures and Relax did not work. The shared quad Relax intentionally protected all vertices touching a non-quad face. Keep its quad rules and add a local polygon pass that accepts only improved face regularity, stable normals, intact convex corners and surface-projected moves. In Tri or N-gon mode, one cross in a bounded hole now chooses the smallest containing boundary loop, fills a matching face and keeps Undo; a cross on an existing face of that type deletes it. Ambiguous or uncovered gaps refuse.
