@@ -1,3 +1,9 @@
+## .1237 — stronger boundary Relax
+
+Cris passed .1236 performance. Retopo Relax now reaches farther along the outer edge and applies a stronger pressure response with a larger safe move limit. Each candidate continues to project onto the reference and passes the existing quad quality and flip guards.
+
+Device check: brush an uneven outer edge gently, then with more Pencil pressure. Check visible smoothing, source snapping, Undo/Redo and whether a sharp corner stays in place.
+
 ## .1236 — build multi-quad Retopo patches on one private candidate
 
 Cris passed .1235 patch quality. A ribbon or area patch now copies the editable mesh once, then assembles its cells on that private candidate. The resulting patch still runs the existing shape, topology and surface checks before Preview or commit. Single-quad gestures keep their own transactional copy. This reduces repeated copying on dense patches.

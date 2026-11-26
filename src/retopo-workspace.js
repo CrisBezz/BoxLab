@@ -626,7 +626,7 @@ function relaxDab(d,e,initial=false){
   const dx=d.brush.x-previous.x,dy=d.brush.y-previous.y;
   const length=dx*dx+dy*dy;
   function weight(index,vertex,onBoundary){
-    const p=screenPoint(vertex,rect,camera),reach=onBoundary?24:48;
+    const p=screenPoint(vertex,rect,camera),reach=onBoundary?40:48;
     if(Math.abs(p.z)>1)return 0;
     const t=length?Math.max(0,Math.min(1,((p.x-previous.x)*dx+(p.y-previous.y)*dy)/length)):0;
     const distance=Math.hypot(p.x-previous.x-t*dx,p.y-previous.y-t*dy);
@@ -634,10 +634,10 @@ function relaxDab(d,e,initial=false){
   }
   function project(target,current,averageEdge){
     const p=screenPoint(target,rect,camera),hit=surface.hit(camera,rect,p.x,p.y);
-    return hit&&current.distanceTo(hit.point)<=averageEdge*.3?hit.point:null;
+    return hit&&current.distanceTo(hit.point)<=averageEdge*.48?hit.point:null;
   }
   const pressure=e.pointerType==='pen'&&Number.isFinite(e.pressure)?Math.max(0,Math.min(1,e.pressure)):.5;
-  const result=quadRelaxFlow(d.mesh,{strength:.32+.58*pressure,maxFraction:.1+.14*pressure,weight,project,relaxBoundary:true});
+  const result=quadRelaxFlow(d.mesh,{strength:.65+.8*pressure,maxFraction:.22+.22*pressure,weight,project,relaxBoundary:true});
   if(result.changed){d.relaxed=true;render();}
 }
 function finishRelax(d){
