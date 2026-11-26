@@ -8,6 +8,14 @@ test('Retopo builds a private native quad and reuses shared boundary vertices wi
  const before=JSON.stringify(first.mesh),second=buildRetopoQuad(first.mesh,[index(1),point(2,0),point(2,1),index(2)],normal);assert.equal(second.ok,true);assert.equal(JSON.stringify(first.mesh),before);assert.equal(second.mesh.vertices.length,6);assert.equal(second.mesh.faces.length,2);
  const edge=second.mesh.edges().find(e=>e.a===1&&e.b===2);assert.equal(edge.faces.length,2);assert.equal(second.mesh.faceGroups.length,2);
 });
+test('a private patch candidate adds several cells without cloning every intermediate mesh',()=>{
+ const source=new EditableMesh([],[]),candidate=source.clone();
+ const first=buildRetopoQuad(candidate,[point(0,0),point(1,0),point(1,1),point(0,1)],normal,{privateCandidate:true});
+ assert.equal(first.ok,true);assert.equal(first.mesh,candidate);
+ const second=buildRetopoQuad(candidate,[index(1),point(2,0),point(2,1),index(2)],normal,{privateCandidate:true});
+ assert.equal(second.ok,true);assert.equal(second.mesh,candidate);
+ assert.equal(candidate.faces.length,2);assert.equal(source.faces.length,0);
+});
 test('duplicate, crossed, collinear, invalid and third-owner faces refuse without source changes',()=>{
  const source=new EditableMesh([],[]);
  for(const corners of [[point(0,0),point(1,1),point(0,1),point(1,0)],[point(0,0),point(1,0),point(2,0),point(3,0)],[point(0,0),point(1,0),point(NaN,1),point(0,1)]])assert.equal(buildRetopoQuad(source,corners,normal).ok,false);

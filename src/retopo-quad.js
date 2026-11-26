@@ -3,10 +3,10 @@ import {quadTopologyAudit} from './quad-clean-core.js?v=0.36.18.1226';
 
 // Retopo supplies a four-corner boundary to the existing one-cell Grid Fill
 // assembler. All work stays on a private native mesh until validation succeeds.
-export function buildRetopoQuad(source,corners,referenceNormal){
+export function buildRetopoQuad(source,corners,referenceNormal,{privateCandidate=false}={}){
   const refuse=reason=>({ok:false,reason});
   if(!source?.clone||corners?.length!==4)return refuse('Choose four corners');
-  const mesh=source.clone(),cycle=[];
+  const mesh=privateCandidate?source:source.clone(),cycle=[];
   for(const corner of corners){
     if(corner.index!==null&&corner.index!==undefined){
       if(!Number.isInteger(corner.index)||!mesh.vertices[corner.index])return refuse('Corner selection changed');

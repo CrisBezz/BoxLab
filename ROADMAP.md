@@ -1,3 +1,9 @@
+## .1236 — build multi-quad Retopo patches on one private candidate
+
+Cris passed .1235 patch quality. A ribbon or area patch now copies the editable mesh once, then assembles its cells on that private candidate. The resulting patch still runs the existing shape, topology and surface checks before Preview or commit. Single-quad gestures keep their own transactional copy. This reduces repeated copying on dense patches.
+
+Device check: build a 4 × 2 patch with Preview on, Apply, then Undo and Redo. Extend a longer boundary ribbon and compare responsiveness with .1235.
+
 ## .1235 — favour rectilinear Retopo patches
 
 The .1234 device screenshot showed a pinched and fanned patch. Evaluate snapped cell corner angles and opposite-edge balance before assembly and prefer the strongest nearby boundary split when filling a two-sided patch. Preview and immediate creation share the same quality gate.

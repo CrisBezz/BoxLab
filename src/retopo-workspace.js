@@ -2,7 +2,7 @@ import {getRetopoQuadColor,setRetopoQuadColor} from './retopo-display.js?v=0.36.
 import {cutRetopoStroke,deleteRetopoZigzag,loopRetopoDrag} from './retopo-cut.js?v=0.36.18.1228';
 import {quadRelaxFlow} from './quad-clean-core.js?v=0.36.18.1226';
 import {openQuadStrokeCorners,quadStrokeCorners,straightQuadStroke,quadStrokeCrossing,quadStrokeGuide} from './retopo-stroke.js?v=0.36.18.1227';
-import {buildRetopoQuad} from './retopo-quad.js?v=0.36.18.1226';
+import {buildRetopoQuad} from './retopo-quad.js?v=0.36.18.1236';
 import {EditableMesh} from './mesh.js';
 import {createRetopoSurface,nearestRetopoVertex} from './retopo-surface.js?v=0.36.18.1229';
 import {placeToolSessionPanel} from './tool-session-panel-position.js?v=0.36.18.732';
@@ -475,15 +475,14 @@ function buildStrokeGrid(mesh,bottom,right,left,top,rect,camera,normal,drawnRigh
     }
   }
   if(qualityOnly)return quality;
-  let output=mesh;
+  const output=mesh.clone();
   for(let j=0;j<v.length-1;j++){
     for(let i=0;i<u.length-1;i++){
       const outline=[grid[j][i],grid[j+1][i],grid[j+1][i+1],grid[j][i+1]];
-      const result=buildRetopoQuad(output,outline,normal);
-      if(!result.ok)return null;
       let index=output.vertices.length;
+      const result=buildRetopoQuad(output,outline,normal,{privateCandidate:true});
+      if(!result.ok)return null;
       for(const corner of outline)if(corner.index===null)corner.index=index++;
-      output=result.mesh;
     }
   }
   return output;
