@@ -152,6 +152,21 @@ test('two drawn sides fill a 3 by 5 patch using both existing boundary runs',()=
  f.history('redo');assert.equal(f.state.mesh.faces.length,23);
 });
 
+test('a tapered outline cannot commit a patch with pinched or sharply skewed cells',()=>{
+ const {f,stroke,cell}=gestureFixture();
+ for(let i=0;i<4;i++)cell(320+i*32,404);
+ stroke([[320,404],[374,340],[390,340],[448,404]]);
+ const {vertices,faces}=f.state.mesh;
+ for(const face of faces.slice(4)){
+   const edges=face.map((index,i)=>vertices[face[(i+1)%4]].clone().sub(vertices[index]));
+   for(let i=0;i<4;i++){
+     const edge=edges[i], next=edges[(i+1)%4], opposite=edges[(i+2)%4];
+     assert(Math.abs(edge.dot(next)/(edge.length()*next.length()))<=.6);
+     assert(Math.min(edge.length(),opposite.length())/Math.max(edge.length(),opposite.length())>=.55);
+   }
+ }
+});
+
 test('guided patch preview is cancellable and applying commits one undo step',()=>{
  const {f,stroke,cell}=gestureFixture();
  cell(384,400);

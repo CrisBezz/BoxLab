@@ -433,7 +433,7 @@ function straightRail(a,b,fractions){
 function balancedFractions(mesh,path){
   return boundaryFractions(mesh,path).map((fraction,i)=>(fraction+i/(path.length-1))*.5);
 }
-function buildStrokeGrid(mesh,bottom,right,left,top,rect,camera,normal,drawnRight=null){
+function buildStrokeGrid(mesh,bottom,right,left,top,rect,camera,normal,drawnRight=null,qualityOnly=false){
   const project=index=>screenPoint(mesh.vertices[index],rect,camera);
   const bottomPoints=bottom.map(project),rightPoints=right?.map(project)||drawnRight;
   const u=balancedFractions(mesh,bottom);
@@ -458,6 +458,23 @@ function buildStrokeGrid(mesh,bottom,right,left,top,rect,camera,normal,drawnRigh
     }
     grid.push(row);
   }
+  let quality=1;
+  const point=corner=>corner.index===null?corner.point:mesh.vertices[corner.index];
+  for(let j=0;j<v.length-1;j++){
+    for(let i=0;i<u.length-1;i++){
+      const cell=[grid[j][i],grid[j+1][i],grid[j+1][i+1],grid[j][i+1]].map(point);
+      const edges=cell.map((vertex,k)=>cell[(k+1)%4].clone().sub(vertex));
+      const lengths=edges.map(edge=>edge.length());
+      for(let k=0;k<4;k++){
+        const next=(k+1)%4,opposite=(k+2)%4;
+        const angle=Math.abs(edges[k].dot(edges[next])/(lengths[k]*lengths[next]));
+        const balance=Math.min(lengths[k],lengths[opposite])/Math.max(lengths[k],lengths[opposite]);
+        if(!Number.isFinite(angle)||angle>.6||balance<.55)return null;
+        quality=Math.min(quality,(1-angle)*balance);
+      }
+    }
+  }
+  if(qualityOnly)return quality;
   let output=mesh;
   for(let j=0;j<v.length-1;j++){
     for(let i=0;i<u.length-1;i++){
@@ -508,16 +525,25 @@ function fillBoundaryPatch(mesh,adjacent,start,end,stroke,rect,camera){
   for(const path of boundaryPaths(adjacent,start.index,end.index,adjacent.size-1)){
     if(path.length<4)continue;
     const points=path.map(index=>screenPoint(mesh.vertices[index],rect,camera));
-    const bend=openQuadStrokeCorners(points,2)?.[0],split=points.indexOf(bend);
-    if(split<1||split>=path.length-1)continue;
+    const bend=points.indexOf(openQuadStrokeCorners(points,2)?.[0]);
+    if(bend<1||points.some((p,i)=>!visibleBoundaryVertex(mesh.vertices[path[i]],p,rect,camera)))continue;
     const a=points[0],b=points.at(-1);
     const side=p=>(b.x-a.x)*(p.y-a.y)-(b.y-a.y)*(p.x-a.x);
-    if(side(outer)*side(bend)>=0||points.some((p,i)=>!visibleBoundaryVertex(mesh.vertices[path[i]],p,rect,camera)))continue;
-    const bottom=path.slice(0,split+1),right=path.slice(split);
-    const left=straightRail(a,outer,balancedFractions(mesh,right));
-    const top=straightRail(outer,b,balancedFractions(mesh,bottom));
-    const output=buildStrokeGrid(mesh,bottom,right,left,top,rect,camera,start.normal);
-    if(output)solutions.push(output);
+    const candidates=[];
+    for(let split=Math.max(1,bend-2);split<=Math.min(path.length-2,bend+2);split++){
+      if(side(outer)*side(points[split])>=0)continue;
+      const bottom=path.slice(0,split+1),right=path.slice(split);
+      const left=straightRail(a,outer,balancedFractions(mesh,right));
+      const top=straightRail(outer,b,balancedFractions(mesh,bottom));
+      const args=[mesh,bottom,right,left,top,rect,camera,start.normal,null];
+      const quality=buildStrokeGrid(...args,true);
+      if(quality!==null)candidates.push({args,quality});
+    }
+    candidates.sort((a,b)=>b.quality-a.quality);
+    for(const {args} of candidates){
+      const output=buildStrokeGrid(...args);
+      if(output){solutions.push(output);break;}
+    }
     if(solutions.length>1)return false;
   }
   if(!solutions.length)return false;

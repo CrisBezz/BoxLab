@@ -1,3 +1,9 @@
+## .1235 — favour rectilinear Retopo patches
+
+The .1234 device screenshot showed a pinched and fanned patch. Evaluate snapped cell corner angles and opposite-edge balance before assembly and prefer the strongest nearby boundary split when filling a two-sided patch. Preview and immediate creation share the same quality gate.
+
+Device check: redraw the 4 × 2 patch with Preview patches on, inspect spacing and corners, then Apply and Undo. Try a strongly tapered outline and check that it cannot create a pinched grid.
+
 ## .1234 — preview guided Retopo patches
 
 Cris passed .1233 Quad colour. Enable Preview patches in Retopo to inspect the proposed grid for multi-quad boundary patches and ribbons. Apply patch validates and commits the result in one Undo step. Cancel patch discards the preview. The option starts off to preserve the immediate drawing workflow.
