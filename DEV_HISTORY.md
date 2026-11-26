@@ -1,3 +1,9 @@
+## .1239 — restore Retopo face creation
+
+The .1238 iPad drawing test failed. The new face validation used an unbound THREE identifier when checking proposed surface faces, so a completed quad stroke could throw before commit. Create the validation centre from an existing vertex vector. Keep the .1238 Tri, N-gon and Relax changes. Browser drawing check covers reference selection, closed quad stroke, editing, Undo/Redo and source preservation.
+
+Device check: refresh and reopen the same reference, draw a closed Quad, add an adjacent quad, then Undo/Redo. Try Tri and N-gon separately.
+
 ## .1238 — explicit triangle and N-gon faces, guided boundary Relax
 
 Cris requested occasional triangle and N-gon faces. Retopo now offers Tri (three tapped corners) and N-gon (five or more tapped corners, then Finish face), with surface visibility and convexity checks, shared boundary winding and native Undo. Quad stays selected on entry. Relax also nudges nearly straight boundary runs toward the adjacent inner row along the edge tangent, then snaps each accepted movement to the reference. Sharp corners and curved boundary bends keep their prior protection.

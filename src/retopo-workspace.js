@@ -103,7 +103,7 @@ function validateSurfaceFaces(mesh,firstFace){
       if((b.x-a.x)*(c.y-b.y)-(b.y-a.y)*(c.x-b.x)>=-1e-6)return false;
     }
     const corners=face.map(index=>mesh.vertices[index]);
-    const center=corners.reduce((sum,vertex)=>sum.add(vertex),new THREE.Vector3()).multiplyScalar(1/corners.length);
+    const center=corners.reduce((sum,vertex)=>sum.add(vertex),corners[0].clone().multiplyScalar(0)).multiplyScalar(1/corners.length);
     const span=Math.max(...corners.map(vertex=>vertex.distanceTo(center)));
     // Reject faces bridging holes or jumping to a different depth layer.
     for(let i=0;i<=face.length;i++){
