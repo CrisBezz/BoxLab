@@ -1,3 +1,11 @@
+## .1244 — longer zigzags, even N-gon quad fill and selected-face planarisation
+
+Cris passed .1243. A clean zigzag with three through sixteen alternating crossings along one visible Retopo edge now dissolves the internal edge to a validated polygon, or deletes the outside face. In N-gon mode, a six or eight sided valid outline, tapped corner set, open boundary closure or X-filled hole is divided into two or three welded quads, choosing the least skewed valid rotation on the reference. Five and seven sides remain N-gons. Eight boundary vertices cannot become exactly two conforming quads without a T-junction, so the eight-sided case uses three. No invalid division is committed.
+
+Outside Retopo, the existing Face > Make Planar command now works on multiple selected faces in one Undo step. It iteratively shares vertex movements between adjacent faces, preserves selection, checks planarity and refuses excessive movement or a folded neighbour. The status reports the number of vertices moved. This is a final surface-edit operation; it does not promise to stay on a Retopo reference.
+
+Device check: draw a five-crossing zigzag across an internal quad edge and Undo. In N-gon mode X a six-sided gap (two quads), then an eight-sided gap (three quads); test Undo and reference snapping. Outside Retopo, select two adjacent warped quads and choose Face > Make Planar; inspect both faces, the movement report and Undo. Try a sharply folded selection and confirm refusal.
+
 ## .1243 — X polygon gaps and internal edge dissolve
 
 Cris passed .1242. Tri and N-gon X gestures now trace the smallest valid visible bounded gap even if its boundary vertex branches into another patch. X on a filled face of the selected type deletes it; both operations use one Undo step. A zigzag across one internal edge joins the two adjacent faces into a single polygon, preserving the outer boundary vertices and refusing a nonconvex, overlapping or off-surface result. A zigzag on an outside edge still deletes its one face. The surface reference is unchanged.

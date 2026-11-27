@@ -143,7 +143,11 @@ export function deleteRetopoZigzag(mesh,stroke,project,visible){
       }
       lastPoint=p;lastSide=side;
     }
-    if(hits.length!==3||Math.abs(hits[2]-hits[0])*length<9||((hits[1]-hits[0])*(hits[2]-hits[1]))<=0)continue;
+    // The Pencil can make more than three clean crossings. Keep one direction
+    // of travel along the edge so a scribble cannot select several edges.
+    if(hits.length<3||hits.length>16||Math.abs(hits.at(-1)-hits[0])*length<9)continue;
+    const travel=Math.sign(hits.at(-1)-hits[0]);
+    if(hits.some((t,i)=>i&&travel*(t-hits[i-1])*length<1.5))continue;
     if(visible(mesh.vertices[edge.a],a)&&visible(mesh.vertices[edge.b],b))targets.push(edge);
   }
   if(targets.length!==1)return null;

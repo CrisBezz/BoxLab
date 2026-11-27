@@ -48,6 +48,19 @@ test('explicit triangle and five-corner face stay on the reference and undo sepa
  f.history('undo');assert.equal(f.state.mesh.faces.length,1);
  f.history('redo');assert.equal(f.state.mesh.faces.at(-1).length,5);
 });
+test('six and eight tapped N-gon corners become two and three quads',()=>{
+ for(const sides of [6,8]){
+  const f=fixture();f.api.start();f.field('#retopoNgon').click();
+  for(let i=0;i<sides;i++){
+   const a=-2*Math.PI*i/sides-Math.PI/2,x=400+45*Math.cos(a),y=400+45*Math.sin(a);
+   f.pointer('pointerdown',x,y);f.pointer('pointerup',x,y);
+  }
+  f.field('#retopoFinishFace').click();
+  assert.equal(f.state.mesh.faces.length,sides/2-1,f.field('#selectionStatus').textContent);
+  assert(f.state.mesh.faces.every(face=>face.length===4));
+  f.history('undo');assert.equal(f.objects.length,1);
+ }
+});
 test('Pencil closed outlines create Tri and N-gon faces without tapping corners',()=>{
  const f=fixture();f.api.start();
  const stroke=points=>{
@@ -110,6 +123,25 @@ test('X fills a five-sided gap whose boundary branches into another patch',()=>{
  f.pointer('pointerup',410,390);
  assert.equal(f.state.mesh.faces.length,7,f.field('#selectionStatus').textContent);
  assert.equal(f.state.mesh.faces.at(-1).length,5);
+});
+test('X fills six and eight-sided Retopo gaps with two and three welded quads',()=>{
+ for(const sides of [6,8]){
+  const f=fixture(),center={x:400,y:400};
+  const inner=Array.from({length:sides},(_,i)=>{
+   const a=-2*Math.PI*i/sides-Math.PI/2;return [center.x+38*Math.cos(a),center.y+38*Math.sin(a)];
+  });
+  const outer=inner.map(([x,y])=>[center.x+(x-center.x)*1.7,center.y+(y-center.y)*1.7]);
+  const toWorld=([x,y])=>new THREE.Vector3((x-400)/241.42,(400-y)/241.42,1);
+  const mesh=new EditableMesh([...inner,...outer].map(toWorld),inner.map((_,i)=>[(i+1)%sides,i,i+sides,(i+1)%sides+sides]));
+  f.manager.addMesh(mesh,'Retopo',{retopoReferenceId:1});f.api.start();f.field('#retopoNgon').click();
+  const before=JSON.stringify(f.state.mesh);
+  f.pointer('pointerdown',390,390);
+  for(const [x,y] of [[410,410],[390,410],[410,390]])f.pointer('pointermove',x,y);
+  f.pointer('pointerup',410,390);
+  assert.equal(f.state.mesh.faces.length,sides+(sides/2-1),`${sides}: ${f.field('#selectionStatus').textContent}`);
+  assert(f.state.mesh.faces.slice(sides).every(face=>face.length===4));
+  f.history('undo');assert.equal(JSON.stringify(f.state.mesh),before);
+ }
 });
 test('one line closes a triangle or N-gon using existing boundary edges',()=>{
  const openRing=points=>{
@@ -505,6 +537,14 @@ test('a zigzag on an outside edge still removes its one face',()=>{
  const before=JSON.stringify(f.state.mesh);
  stroke([[346,387],[358,394],[346,404],[358,413]]);
  assert.equal(f.state.mesh.faces.length,0,f.field('#selectionStatus').textContent);
+ f.history('undo');assert.equal(JSON.stringify(f.state.mesh),before);
+});
+test('a longer five-crossing zigzag dissolves one internal edge',()=>{
+ const {f,stroke,cell}=gestureFixture();cell(352,384);cell(384,384);cell(416,384);
+ const before=JSON.stringify(f.state.mesh);
+ stroke([[378,387],[390,392],[378,397],[390,403],[378,408],[390,414]]);
+ assert.equal(f.state.mesh.faces.length,2,f.field('#selectionStatus').textContent);
+ assert.equal(f.state.mesh.faces.find(face=>face.length===6)?.length,6);
  f.history('undo');assert.equal(JSON.stringify(f.state.mesh),before);
 });
 

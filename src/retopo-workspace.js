@@ -1,5 +1,5 @@
 import {getRetopoQuadColor,setRetopoQuadColor} from './retopo-display.js?v=0.36.18.1233';
-import {cutRetopoStroke,deleteRetopoZigzag,loopRetopoDrag} from './retopo-cut.js?v=0.36.18.1243';
+import {cutRetopoStroke,deleteRetopoZigzag,loopRetopoDrag} from './retopo-cut.js?v=0.36.18.1244';
 import {quadRelaxFlow,polygonRelaxFlow} from './quad-clean-core.js?v=0.36.18.1241';
 import {openQuadStrokeCorners,quadStrokeCorners,polygonStrokeCorners,straightQuadStroke,quadStrokeCrossing,quadStrokeGuide} from './retopo-stroke.js?v=0.36.18.1240';
 import {buildRetopoQuad} from './retopo-quad.js?v=0.36.18.1236';
@@ -118,7 +118,7 @@ function validateSurfaceFaces(mesh,firstFace,faceIndexes=null){
   }
   return true;
 }
-function commitPolygon(outline){
+function commitPolygon(outline,{splitEven=false}={}){
   const before=retopoId?state().mesh:new EditableMesh([],[]),mesh=before.clone(),indices=[];
   for(const corner of outline){
     if(corner.index!==null)indices.push(corner.index);
@@ -137,8 +137,29 @@ function commitPolygon(outline){
     const a=mesh.vertices[indices[0]],b=mesh.vertices[indices[1]],c=mesh.vertices[indices[2]];
     if(b.clone().sub(a).cross(c.clone().sub(a)).dot(outline[0].normal)<0)indices.reverse();
   }
-  mesh.faces.push(indices);
-  mesh.faceGroups.push(null);
+  if(splitEven&&(indices.length===6||indices.length===8)){
+    let best=null;
+    for(let rotation=0;rotation<indices.length;rotation++){
+      const ring=[...indices.slice(rotation),...indices.slice(0,rotation)],trial=mesh.clone();
+      const cells=[];
+      for(let i=1;i<ring.length-2;i+=2)cells.push([ring[0],ring[i],ring[i+1],ring[i+2]]);
+      for(const cell of cells){trial.faces.push(cell);trial.faceGroups.push(null);}
+      if(!validateSurfaceFaces(trial,before.faces.length))continue;
+      const rect=canvas.getBoundingClientRect(),camera=state().camera;
+      const score=cells.reduce((sum,face)=>{
+        const p=face.map(index=>screenPoint(trial.vertices[index],rect,camera));
+        const edges=p.map((a,i)=>({x:p[(i+1)%4].x-a.x,y:p[(i+1)%4].y-a.y}));
+        return sum+edges.reduce((s,e,i)=>{
+          const next=edges[(i+1)%4],scale=Math.hypot(e.x,e.y)*Math.hypot(next.x,next.y);
+          return s+Math.abs(e.x*next.x+e.y*next.y)/Math.max(scale,1e-9);
+        },0);
+      },0);
+      if(!best||score<best.score)best={mesh:trial,score};
+    }
+    if(!best){clearCorners();message('Retopo · no valid quad division on the reference');return;}
+    commitQuad(null,{ok:true,mesh:best.mesh});return;
+  }
+  mesh.faces.push(indices);mesh.faceGroups.push(null);
   if(!validateSurfaceFaces(mesh,before.faces.length)){clearCorners();message('Retopo · could not place a valid face on the reference');return;}
   commitQuad(null,{ok:true,mesh});
 }
@@ -385,7 +406,7 @@ function finishPolygonStroke(d,e){
     const index=retopoId?nearestRetopoVertex(state().mesh,camera,rect,x,y,pick,radius,surface):null;
     projected.push({...pick,index});
   }
-  commitPolygon(projected);
+  commitPolygon(projected,{splitEven:tool==='ngon'});
 }
 function boundaryNeighbors(mesh){
   const adjacent=new Map();
@@ -479,7 +500,7 @@ function fillCrossedPolygon(point){
     if(budget<=0)break;
   }
   function consider(cycle){
-    const expected=tool==='triangle'?cycle.length===3:cycle.length>=5;
+    const expected=tool==='triangle'?cycle.length===3:cycle.length>=5&&cycle.length<=8;
     if(!expected||!containsPolygonPoint(cycle.map(projected),point))return;
     if(!cycle.every(index=>visibleBoundaryVertex(mesh.vertices[index],projected(index),rect,camera)))return;
     const points=cycle.map(projected);
@@ -494,7 +515,7 @@ function fillCrossedPolygon(point){
   }
   candidates.sort((a,b)=>a.area-b.area);
   if(!candidates.length||(candidates.length>1&&candidates[1].area<candidates[0].area*1.2))return false;
-  commitPolygon(candidates[0].cycle.map(index=>({index,normal:hit.normal})));
+  commitPolygon(candidates[0].cycle.map(index=>({index,normal:hit.normal})),{splitEven:true});
   return true;
 }
 function completeOpenPolygonStroke(stroke){
@@ -530,7 +551,7 @@ function completeOpenPolygonStroke(stroke){
   }
   candidates.sort((a,b)=>a.area-b.area);
   if(!candidates.length||(candidates.length>1&&candidates[1].area<candidates[0].area*1.2))return false;
-  commitPolygon(candidates[0].path.map(index=>({index,normal:start.normal})));
+  commitPolygon(candidates[0].path.map(index=>({index,normal:start.normal})),{splitEven:tool==='ngon'});
   return true;
 }
 function fillCrossedQuad(point,rect,camera){
@@ -842,7 +863,7 @@ panel.querySelector('#retopoVertex').addEventListener('click',()=>setTool('verte
 panel.querySelector('#retopoQuad').addEventListener('click',()=>setTool('quad'));
 panel.querySelector('#retopoTriangle').addEventListener('click',()=>setTool('triangle'));
 panel.querySelector('#retopoNgon').addEventListener('click',()=>setTool('ngon'));
-panel.querySelector('#retopoFinishFace').addEventListener('click',()=>{if(corners.length>=5)commitPolygon(corners);});
+panel.querySelector('#retopoFinishFace').addEventListener('click',()=>{if(corners.length>=5)commitPolygon(corners,{splitEven:true});});
 panel.querySelector('#retopoRelax').addEventListener('click',()=>setTool('relax'));
 panel.querySelector('#retopoClear').addEventListener('click',()=>{cancelDrag();clearCorners();message('Retopo · corners cleared');});
 window.addEventListener('resize',drawCorners);

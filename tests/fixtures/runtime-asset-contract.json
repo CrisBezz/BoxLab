@@ -161,9 +161,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1243",
+      "url": "./src/drawer-ui.js?v=0.36.18.1244",
       "target": "src/drawer-ui.js",
-      "sha256": "1ba7ac6dc389c28c901f7d2fa1256b4c787532ac4b549047313d79a0557b06ea"
+      "sha256": "1fb01364d9636c87a63b0e1122daca2aaf5921cb2a5e69a592eecce46b6d43ef"
     },
     {
       "owner": "index.html",
@@ -378,7 +378,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1243",
+      "url": "./src/release-version.js?v=0.36.18.1244",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -864,9 +864,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1243",
+      "url": "./face-workflow-layout.js?v=0.36.18.1244",
       "target": "src/face-workflow-layout.js",
-      "sha256": "548b07002b61eadbe8e882bf1a0ce369e01a1f26d432b6ff877e4c1d794a2bac"
+      "sha256": "d9735aa8bba780a4d18963b3d75fc71c2c91e3961e002cbbf6e8f3792a365a65"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1316,9 +1316,9 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./make-planar.js?v=0.36.18.93",
+      "url": "./make-planar.js?v=0.36.18.1244",
       "target": "src/make-planar.js",
-      "sha256": "ef9004c53be0dd2d2f0d595e46633148c7d82459e6ee7a06618781eefa194fcd"
+      "sha256": "44063314423cd9a398be092de81b1223a58245e2114d051ceb4f34badba30cdc"
     },
     {
       "owner": "src/face-workflow-layout.js",
@@ -1361,7 +1361,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1243",
+      "url": "./release-version.js?v=0.36.18.1244",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -1713,6 +1713,12 @@
       "url": "./subdivision.js?v=0.36.18.1037",
       "target": "src/subdivision.js",
       "sha256": "800b106071706b359d97cf9266c008c7801a5e704ebdad025e58df604a8362a4"
+    },
+    {
+      "owner": "src/make-planar.js",
+      "url": "./make-planar-core.js?v=0.36.18.1244",
+      "target": "src/make-planar-core.js",
+      "sha256": "5073c4ee1e70e19389ba29431ead884290740a382fa8d6b85f48998e999f1953"
     },
     {
       "owner": "src/mesh-auto-close-core.js",
@@ -3326,9 +3332,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1243",
+      "url": "./src/shell-comparison.js?v=0.36.18.1244",
       "target": "src/shell-comparison.js",
-      "sha256": "b0a892fc910fd13f32c2f03be95e7683d8d9b1a7847c5d47efa6b7fcf17c5887"
+      "sha256": "4162b5bc5226973779130a85520c9caab150bfd89f173738fa276c2ad77f6e3f"
     },
     {
       "owner": "src/main.js",
@@ -3938,9 +3944,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/retopo-workspace.js?v=0.36.18.1243",
+      "url": "./src/retopo-workspace.js?v=0.36.18.1244",
       "target": "src/retopo-workspace.js",
-      "sha256": "a147ffaccb0e412acc4ad972f7f0679c4dfefb5e97d8f13cd52bfddad4f09bb3"
+      "sha256": "841537a5544fa7ce97d4167660cffe58fe1db6ac3e9cf1dd322923add105360f"
     },
     {
       "owner": "src/retopo-workspace.js",
@@ -3992,9 +3998,9 @@
     },
     {
       "owner": "src/retopo-workspace.js",
-      "url": "./retopo-cut.js?v=0.36.18.1243",
+      "url": "./retopo-cut.js?v=0.36.18.1244",
       "target": "src/retopo-cut.js",
-      "sha256": "1d4bc33ebcb4398e38eb6b5fc3803152547f2aef575615f2312e72910c1a564f"
+      "sha256": "1b5b370408c4ea311a663356b20f1f5337007f4a2f140690994ca865aa3f4f9b"
     },
     {
       "owner": "src/retopo-cut.js",

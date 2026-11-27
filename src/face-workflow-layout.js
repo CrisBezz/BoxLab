@@ -2,7 +2,7 @@ import './duplicate-faces.js?v=0.36.18.342';
 import './flip-faces.js?v=0.36.18.90';
 import './triangulate-faces.js?v=0.36.18.91';
 import './poke-faces.js?v=0.36.18.92';
-import './make-planar.js?v=0.36.18.93';
+import './make-planar.js?v=0.36.18.1244';
 import './orient-faces.js?v=0.36.18.94';
 import './orient-shell-outward.js?v=0.36.18.95';
 import './rotate-edge.js?v=0.36.18.337';
@@ -34,7 +34,7 @@ import './backdrop-presets.js?v=0.36.18.190';
 import './studio-light-angle.js?v=0.36.18.199';
 import './cage-intensity.js?v=0.36.18.846';
 import './live-mesh-bridge.js?v=0.36.18.840';
-import './release-version.js?v=0.36.18.1243';
+import './release-version.js?v=0.36.18.1244';
 import './beta-runtime-guard.js?v=0.36.18.193';
 import './loop-cut-feedback.js?v=0.36.18.193';
 

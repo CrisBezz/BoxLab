@@ -1,8 +1,8 @@
 import * as THREE from 'three';
+import {planarizeSelectedFaces} from './make-planar-core.js?v=0.36.18.1244';
 
 // BoxLab v0.36.18.93 — Make Planar.
-// Projects one selected Face onto its own current best-fit working plane.
-// Shared neighbouring Faces deform naturally through the same vertices.
+// Iteratively fits each selected Face while sharing proposed vertex moves.
 
 const faceTools=document.querySelector('[data-mode-tools="face"]');
 const status=document.querySelector('#selectionStatus');
@@ -65,21 +65,18 @@ function place(){
 
 function apply(){
   const m=mesh(),ids=selectedFaces(),history=globalThis.__boxlabHistory;
-  if(!m||ids.length!==1||!history)return false;
-  const fi=ids[0],info=analyse(m,fi);
-  if(!info.ok){if(status)status.textContent=`Make Planar • ${info.reason}`;sync();return false;}
-  if(!info.needsPlanar){if(status)status.textContent='Make Planar • selected Face is already planar';sync();return false;}
+  if(!m||!ids.length||!history)return false;
+  const result=planarizeSelectedFaces(m,ids);
+  if(!result.ok){if(status)status.textContent=`Make Planar • ${result.reason}`;sync();return false;}
+  if(!result.moved){if(status)status.textContent='Make Planar • selected faces are already planar';sync();return false;}
 
   history.push(m.clone());
-  for(const vi of info.face){
-    const v=m.vertices[vi];
-    const d=v.clone().sub(info.center).dot(info.normal);
-    v.addScaledVector(info.normal,-d);
-  }
+  m.vertices=result.mesh.vertices;
   m.edges?.();
-  bridge()?.set?.('face',[fi]);
+  bridge()?.set?.('face',ids);
+  globalThis.__boxlabObjectManager?.saveActive?.();
   render();
-  if(status)status.textContent=`Make Planar • Face projected to plane • previous max deviation ${info.maxDeviation.toPrecision(3)}`;
+  if(status)status.textContent=`Make Planar • ${ids.length} face${ids.length===1?'':'s'} planar • ${result.moved} vertices moved (max ${result.maxMove.toPrecision(3)})`;
   queueMicrotask(sync);
   return true;
 }
@@ -87,24 +84,15 @@ function apply(){
 function sync(){
   place();
   const ids=selectedFaces(),m=mesh();
-  if(ids.length!==1){
+  button.textContent=ids.length>1?'Make Planar · moves verts':'Make Planar';
+  if(!ids.length){
     button.disabled=true;
-    button.title=ids.length>1?'Make Planar currently works on one Face at a time':'Select one non-planar Face';
+    button.title='Select one or more non-planar faces';
     return;
   }
-  const info=analyse(m,ids[0]);
-  button.disabled=!info.ok||!info.needsPlanar||!globalThis.__boxlabHistory;
-  button.title=!info.ok
-    ?info.reason
-    :info.needsPlanar
-      ?`Project selected Face onto its working plane • deviation ${info.maxDeviation.toPrecision(3)}`
-      :'Selected Face is already planar';
-}
-
-function stampVersion(){
-  const version=document.querySelector('#appVersion');
-  if(version)version.textContent='v0.36.18.93';
-  document.title='BoxLab v0.36.18.93';
+  const infos=ids.map(i=>analyse(m,i));
+  button.disabled=infos.some(info=>!info.ok)||!infos.some(info=>info.needsPlanar)||!globalThis.__boxlabHistory;
+  button.title=button.disabled?'Selected faces are planar or invalid':`Make ${ids.length} selected faces planar • moves shared vertices • Undo available`;
 }
 
 button.addEventListener('click',apply);
@@ -112,6 +100,4 @@ window.addEventListener('boxlab-bridge-state',sync);
 document.addEventListener('pointerup',()=>queueMicrotask(sync),true);
 document.querySelectorAll('#selectionModes button').forEach(b=>b.addEventListener('click',()=>queueMicrotask(sync)));
 [0,40,120,300,700].forEach(delay=>setTimeout(sync,delay));
-[120,500,1000,1600].forEach(delay=>setTimeout(stampVersion,delay));
-
-globalThis.__boxlabMakePlanar={version:'0.36.18.93',analyse,apply};
+globalThis.__boxlabMakePlanar={version:'0.36.18.1244',analyse,apply};
