@@ -347,6 +347,32 @@ function finishZigzag(d,e){
   commitQuad(null,deletion);
   return true;
 }
+function deleteCrossedFace(point,d){
+  const rect=canvas.getBoundingClientRect(),camera=state().camera,mesh=d.beforeMesh||d.mesh;
+  if(!surface.hit(camera,rect,point.x,point.y))return false;
+  const projected=index=>screenPoint(mesh.vertices[index],rect,camera);
+  const faces=mesh.faces.map((face,i)=>({face,i})).filter(({face})=>
+    containsPolygonPoint(face.map(projected),point)&&
+    face.every(index=>visibleBoundaryVertex(mesh.vertices[index],projected(index),rect,camera)));
+  if(faces.length!==1)return false;
+  if(d.beforeMesh)d.mesh.vertices=d.beforeMesh.vertices.map(vertex=>vertex.clone());
+  const before=d.mesh.clone();d.mesh.deleteFace(faces[0].i);d.mesh.compactUnusedVertices();
+  const remaining=new Set(d.mesh.edges().map(({a,b})=>d.mesh.edgeKey(a,b)));
+  for(const key of d.mesh.creases.keys())if(!remaining.has(key))d.mesh.creases.delete(key);
+  globalThis.__boxlabHistory.push(before);clearCorners();manager().saveActive();
+  globalThis.__boxlabSelectionBridge?.clear?.();render();message('Retopo · face deleted');return true;
+}
+function finishCrossGesture(d,e){
+  if(!retopoId)return false;
+  recordStroke(d,e);
+  const crossing=quadStrokeCrossing(d.stroke);
+  if(!crossing)return false;
+  if(deleteCrossedFace(crossing,d))return true;
+  if(tool!=='vertex'&&tool!=='relax')return false;
+  if(d.beforeMesh)d.mesh.vertices=d.beforeMesh.vertices.map(vertex=>vertex.clone());
+  clearCorners();render();message('Retopo · choose Quad, Tri or N-gon to fill an open gap');
+  return true;
+}
 function finishStroke(d,e){
   recordStroke(d,e);
   if(!d.moved){if(d.point)quadCorner(d);else message('Retopo · tap the visible reference');return;}
@@ -847,6 +873,7 @@ function up(e){
   if(e.type!=='pointerup'||!valid()||state().mesh!==d.mesh||!d.valid){cancelDrag();return;}
   drag=null;release(d);
   if(finishZigzag(d,e))return;
+  if(finishCrossGesture(d,e))return;
   if(tool==='quad'){finishStroke(d,e);return;}
   if(tool==='triangle'||tool==='ngon'){finishPolygonStroke(d,e);return;}
   if(tool==='relax'){finishRelax(d);return;}

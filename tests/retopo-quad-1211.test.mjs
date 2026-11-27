@@ -301,6 +301,39 @@ test('a continuous X deletes an existing quad in one undoable edit',()=>{
  f.history('undo');assert.equal(f.state.mesh.faces.length,1);
  f.history('redo');assert.equal(f.state.mesh.faces.length,0);
 });
+test('X deletes an existing quad in every Retopo tool and restores with Undo',()=>{
+ for(const mode of ['#retopoQuad','#retopoTriangle','#retopoNgon','#retopoVertex','#retopoRelax']){
+  const {f,stroke,cell}=gestureFixture();cell(384,384);f.field(mode).click();
+  const before=JSON.stringify(f.state.mesh),count=f.h.undoStack.length;
+  stroke([[389,389],[411,411],[389,411],[411,389]]);
+  assert.equal(f.state.mesh.faces.length,0,`${mode}: ${f.field('#selectionStatus').textContent}`);
+  assert.equal(f.h.undoStack.length,count+1,mode);
+  f.history('undo');assert.equal(JSON.stringify(f.state.mesh),before,mode);
+ }
+});
+test('X deletes a Tri from Quad mode and an N-gon from Tri mode',()=>{
+ const triangle=fixture();triangle.api.start();triangle.field('#retopoTriangle').click();
+ for(const [x,y] of [[360,420],[440,420],[400,360]]){triangle.pointer('pointerdown',x,y);triangle.pointer('pointerup',x,y);}
+ assert.equal(triangle.state.mesh.faces[0].length,3);
+ triangle.field('#retopoQuad').click();
+ triangle.pointer('pointerdown',390,390);for(const [x,y] of [[410,410],[390,410],[410,390]])triangle.pointer('pointermove',x,y);triangle.pointer('pointerup',410,390);
+ assert.equal(triangle.state.mesh.faces.length,0,triangle.field('#selectionStatus').textContent);
+ const ngon=fixture();ngon.api.start();ngon.field('#retopoNgon').click();
+ for(const [x,y] of [[380,430],[420,430],[440,395],[400,360],[360,395]]){ngon.pointer('pointerdown',x,y);ngon.pointer('pointerup',x,y);}
+ ngon.field('#retopoFinishFace').click();assert.equal(ngon.state.mesh.faces[0].length,5);
+ ngon.field('#retopoTriangle').click();
+ ngon.pointer('pointerdown',390,390);for(const [x,y] of [[410,410],[390,410],[410,390]])ngon.pointer('pointermove',x,y);ngon.pointer('pointerup',410,390);
+ assert.equal(ngon.state.mesh.faces.length,0,ngon.field('#selectionStatus').textContent);
+});
+test('X over an empty gap in Vertex and Relax does not move the live mesh',()=>{
+ for(const mode of ['#retopoVertex','#retopoRelax']){
+  const {f,stroke,cell}=gestureFixture();cell(384,384);f.field(mode).click();
+  const before=JSON.stringify([f.state.mesh.vertices,f.state.mesh.faces]),count=f.h.undoStack.length;
+  stroke([[450,450],[480,480],[450,480],[480,450]]);
+  assert.equal(JSON.stringify([f.state.mesh.vertices,f.state.mesh.faces]),before,mode);
+  assert.equal(f.h.undoStack.length,count,mode);
+ }
+});
 
 test('a deep U from one existing edge extends a one-quad-wide ribbon',()=>{
  const {f,stroke,cell}=gestureFixture();

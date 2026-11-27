@@ -1,3 +1,9 @@
+## .1246 — X deletes any visible Retopo face in every tool
+
+Cris passed .1245. X on an existing visible Retopo face now deletes that face in Quad, Tri, N-gon, Vertex or Relax mode, independent of its side count. The shared gesture runs after zigzag and before mode-specific fill. Vertex/Relax use their untouched stroke-start mesh and discard temporary live movement before committing a single Undo step. X over open space in Vertex/Relax makes no edit; choose a face tool to fill a new gap. Quad, Tri and N-gon keep their respective bounded-gap creation behavior. Overlapping or occluded faces are refused.
+
+Device check: make a Quad, select Vertex and X it; Undo. Repeat with Relax. Make a Tri and X it in Quad mode, then a five-sided N-gon and X it in Tri mode. Confirm that X over empty reference space in Vertex/Relax makes no mesh change, while X inside a bounded gap in its selected face mode still creates the face.
+
 ## .1245 — zigzag in every Retopo tool
 
 Cris passed .1244 and reported zigzag only worked with Quad selected. The single edge gesture now runs before the tool-specific completion path for Quad, Tri, N-gon, Vertex and Relax. Vertex and Relax still work normally for other strokes; if the stroke is a zigzag, transient live vertex movement is restored before the validated edge edit commits. One Undo restores the original patch. The existing three-to-sixteen crossing and convex surface checks remain unchanged.
