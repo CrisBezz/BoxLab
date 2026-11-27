@@ -1,3 +1,9 @@
+## .1245 — zigzag in every Retopo tool
+
+Cris passed .1244 and reported zigzag only worked with Quad selected. The single edge gesture now runs before the tool-specific completion path for Quad, Tri, N-gon, Vertex and Relax. Vertex and Relax still work normally for other strokes; if the stroke is a zigzag, transient live vertex movement is restored before the validated edge edit commits. One Undo restores the original patch. The existing three-to-sixteen crossing and convex surface checks remain unchanged.
+
+Device check: create two adjacent quads, then select Tri and zigzag across their shared edge. Undo and repeat with N-gon, Vertex and Relax selected. Each should produce one N-gon from the two quads. Try a normal Vertex drag and Relax brush afterward; both should still work.
+
 ## .1244 — longer zigzags, even N-gon quad fill and selected-face planarisation
 
 Cris passed .1243. A clean zigzag with three through sixteen alternating crossings along one visible Retopo edge now dissolves the internal edge to a validated polygon, or deletes the outside face. In N-gon mode, a six or eight sided valid outline, tapped corner set, open boundary closure or X-filled hole is divided into two or three welded quads, choosing the least skewed valid rotation on the reference. Five and seven sides remain N-gons. Eight boundary vertices cannot become exactly two conforming quads without a T-junction, so the eight-sided case uses three. No invalid division is committed.

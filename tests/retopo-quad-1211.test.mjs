@@ -547,6 +547,18 @@ test('a longer five-crossing zigzag dissolves one internal edge',()=>{
  assert.equal(f.state.mesh.faces.find(face=>face.length===6)?.length,6);
  f.history('undo');assert.equal(JSON.stringify(f.state.mesh),before);
 });
+test('zigzag dissolves the same edge in every Retopo tool with one Undo step',()=>{
+ const modes=['#retopoQuad','#retopoTriangle','#retopoNgon','#retopoVertex','#retopoRelax'];
+ for(const mode of modes){
+  const {f,stroke,cell}=gestureFixture();cell(352,384);cell(384,384);cell(416,384);
+  f.field(mode).click();const before=JSON.stringify(f.state.mesh),count=f.h.undoStack.length;
+  stroke([[378,387],[390,394],[378,404],[390,413]]);
+  assert.equal(f.state.mesh.faces.length,2,`${mode}: ${f.field('#selectionStatus').textContent}`);
+  assert.equal(f.state.mesh.faces.find(face=>face.length===6)?.length,6,mode);
+  assert.equal(f.h.undoStack.length,count+1,mode);
+  f.history('undo');assert.equal(JSON.stringify(f.state.mesh),before,mode);
+ }
+});
 
 test('a short inward drag from an edge adds the full snapped quad loop',()=>{
  const {f,stroke,cell}=gestureFixture();

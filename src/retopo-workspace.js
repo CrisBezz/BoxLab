@@ -310,7 +310,7 @@ function down(e){
   const h=hit(e);if(!h&&tool!=='quad'){message('Retopo · point at the reference surface');return;}
   const m=state().mesh,index=retopoId&&tool!=='relax'?nearestRetopoVertex(m,state().camera,canvas.getBoundingClientRect(),e.clientX,e.clientY,h,16,surface):null;
   drag={pointer:e.pointerId,object:manager().activeId,mesh:m,index,start:index===null?null:m.vertices[index].clone(),beforeMesh:['quad','triangle','ngon'].includes(tool)?null:m.clone(),point:h?.point,normal:h?.normal,valid:true,x:e.clientX,y:e.clientY,moved:false,before:tool==='vertex'&&!retopoId?globalThis.__boxlabObjectHistory?.capture?.():null,controls:state().controls,enabled:state().controls?.enabled};
-  if(['quad','triangle','ngon'].includes(tool))drag.stroke=[{x:e.clientX,y:e.clientY}];
+  drag.stroke=[{x:e.clientX,y:e.clientY}];
   if(tool==='relax')relaxDab(drag,e,true);
   if(drag.controls)drag.controls.enabled=false;
   try{canvas.setPointerCapture(e.pointerId);}catch{}
@@ -319,8 +319,9 @@ function move(e){
   if(picking){sourceMove(e);return;}
   if(!drag||e.pointerId!==drag.pointer)return;
   consume(e);if(!valid()||state().mesh!==drag.mesh){cancelDrag();return;}
+  recordStroke(drag,e);
   if(tool==='relax'){relaxDab(drag,e);return;}
-  if(drag.stroke){recordStroke(drag,e);drawCorners();return;}
+  if(tool!=='vertex'){drawCorners();return;}
   const h=hit(e);drag.valid=!!h;drag.moved ||= Math.hypot(e.clientX-drag.x,e.clientY-drag.y)>5;
   if(!h)return;drag.point=h.point;
   if(tool==='vertex'&&drag.index!==null){drag.mesh.vertices[drag.index].copy(h.point);render();}
@@ -332,6 +333,20 @@ function recordStroke(d,e){
   d.stroke.push({x:e.clientX,y:e.clientY});
   d.moved ||= Math.hypot(e.clientX-d.x,e.clientY-d.y)>5;
 }
+function finishZigzag(d,e){
+  if(!retopoId)return false;
+  recordStroke(d,e);
+  const rect=canvas.getBoundingClientRect(),camera=state().camera,mesh=d.beforeMesh||d.mesh;
+  const project=vertex=>screenPoint(vertex,rect,camera);
+  const visible=(vertex,point)=>visibleBoundaryVertex(vertex,point,rect,camera);
+  const deletion=deleteRetopoZigzag(mesh,d.stroke,project,visible);
+  if(!deletion)return false;
+  // Vertex and Relax may have moved live vertices during the gesture. Commit
+  // the dissolve against the untouched start mesh as a single Undo step.
+  if(d.beforeMesh)d.mesh.vertices=d.beforeMesh.vertices.map(vertex=>vertex.clone());
+  commitQuad(null,deletion);
+  return true;
+}
 function finishStroke(d,e){
   recordStroke(d,e);
   if(!d.moved){if(d.point)quadCorner(d);else message('Retopo · tap the visible reference');return;}
@@ -341,8 +356,6 @@ function finishStroke(d,e){
   const snap=point=>surface.hit(camera,rect,point.x,point.y)?.point;
   const visible=(vertex,point)=>visibleBoundaryVertex(vertex,point,rect,camera);
   if(retopoId){
-    const deletion=deleteRetopoZigzag(mesh,d.stroke,project,visible);
-    if(deletion){commitQuad(null,deletion);return;}
     const crossing=quadStrokeCrossing(d.stroke);
     if(crossing){
       if(!fillCrossedQuad(crossing,rect,camera))message('Retopo · draw the cross inside a quad or a four-edge gap');
@@ -833,6 +846,7 @@ function up(e){
   consume(e);const d=drag;
   if(e.type!=='pointerup'||!valid()||state().mesh!==d.mesh||!d.valid){cancelDrag();return;}
   drag=null;release(d);
+  if(finishZigzag(d,e))return;
   if(tool==='quad'){finishStroke(d,e);return;}
   if(tool==='triangle'||tool==='ngon'){finishPolygonStroke(d,e);return;}
   if(tool==='relax'){finishRelax(d);return;}
