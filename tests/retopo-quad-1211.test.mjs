@@ -88,11 +88,28 @@ test('cross gesture fills bounded triangular and five-sided gaps with one Undo',
  assert.equal(tri.state.mesh.faces.length,4,tri.field('#selectionStatus').textContent);
  assert.equal(tri.state.mesh.faces.at(-1).length,3);
  tri.history('undo');assert.equal(tri.state.mesh.faces.length,3);
+ tri.history('redo');cross(tri);assert.equal(tri.state.mesh.faces.length,3);
+ tri.history('undo');assert.equal(tri.state.mesh.faces.length,4);
  const ngon=ring(5,[[380,430],[420,430],[440,395],[400,360],[360,395]]);
  ngon.field('#retopoNgon').click();cross(ngon);
  assert.equal(ngon.state.mesh.faces.length,6);
  assert.equal(ngon.state.mesh.faces.at(-1).length,5);
  ngon.history('undo');assert.equal(ngon.state.mesh.faces.length,5);
+ ngon.history('redo');cross(ngon);assert.equal(ngon.state.mesh.faces.length,5);
+ ngon.history('undo');assert.equal(ngon.state.mesh.faces.length,6);
+});
+test('X fills a five-sided gap whose boundary branches into another patch',()=>{
+ const f=fixture(),points=[[380,430],[420,430],[440,395],[400,360],[360,395]],n=points.length;
+ const outer=points.map(([x,y])=>[400+(x-400)*1.65,400+(y-400)*1.65]);
+ const toWorld=([x,y])=>new THREE.Vector3((x-400)/241.42,(400-y)/241.42,1);
+ const mesh=new EditableMesh([...points,...outer,[330,465],[300,455]].map(toWorld),points.map((_,i)=>[(i+1)%n,i,i+n,(i+1)%n+n]));
+ mesh.faces.push([5,10,11]);mesh.faceGroups.push(null);
+ f.manager.addMesh(mesh,'Retopo',{retopoReferenceId:1});f.api.start();f.field('#retopoNgon').click();
+ f.pointer('pointerdown',390,390);
+ for(const [x,y] of [[410,410],[390,410],[410,390]])f.pointer('pointermove',x,y);
+ f.pointer('pointerup',410,390);
+ assert.equal(f.state.mesh.faces.length,7,f.field('#selectionStatus').textContent);
+ assert.equal(f.state.mesh.faces.at(-1).length,5);
 });
 test('one line closes a triangle or N-gon using existing boundary edges',()=>{
  const openRing=points=>{
@@ -471,16 +488,24 @@ test('Quad ignores pen pressure and stale coalesced startup points',()=>{
  assert.equal(f.h.undoStack.length,1);
 });
 
-test('a zigzag across one edge deletes its incident faces and Undo restores the patch',()=>{
+test('a zigzag across an internal edge dissolves two quads to an N-gon with Undo',()=>{
  const {f,stroke,cell}=gestureFixture();
  cell(352,384);cell(384,384);cell(416,384);
  const before=JSON.stringify(f.state.mesh),count=f.h.undoStack.length;
  stroke([[378,387],[390,394],[378,404],[390,413]]);
- assert.equal(f.state.mesh.faces.length,1);
+ assert.equal(f.state.mesh.faces.length,2);
+ assert.equal(f.state.mesh.faces.find(face=>face.length===6)?.length,6);
  assert.equal(f.h.undoStack.length,count+1);
- assert.match(f.field('#selectionStatus').textContent,/edge deleted/);
+ assert.match(f.field('#selectionStatus').textContent,/edge dissolved · N-gon created/);
  f.history('undo');assert.equal(JSON.stringify(f.state.mesh),before);
- f.history('redo');assert.equal(f.state.mesh.faces.length,1);
+ f.history('redo');assert.equal(f.state.mesh.faces.length,2);
+});
+test('a zigzag on an outside edge still removes its one face',()=>{
+ const {f,stroke,cell}=gestureFixture();cell(352,384);
+ const before=JSON.stringify(f.state.mesh);
+ stroke([[346,387],[358,394],[346,404],[358,413]]);
+ assert.equal(f.state.mesh.faces.length,0,f.field('#selectionStatus').textContent);
+ f.history('undo');assert.equal(JSON.stringify(f.state.mesh),before);
 });
 
 test('a short inward drag from an edge adds the full snapped quad loop',()=>{

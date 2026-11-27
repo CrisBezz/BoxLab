@@ -1,5 +1,5 @@
 import {getRetopoQuadColor,setRetopoQuadColor} from './retopo-display.js?v=0.36.18.1233';
-import {cutRetopoStroke,deleteRetopoZigzag,loopRetopoDrag} from './retopo-cut.js?v=0.36.18.1228';
+import {cutRetopoStroke,deleteRetopoZigzag,loopRetopoDrag} from './retopo-cut.js?v=0.36.18.1243';
 import {quadRelaxFlow,polygonRelaxFlow} from './quad-clean-core.js?v=0.36.18.1241';
 import {openQuadStrokeCorners,quadStrokeCorners,polygonStrokeCorners,straightQuadStroke,quadStrokeCrossing,quadStrokeGuide} from './retopo-stroke.js?v=0.36.18.1240';
 import {buildRetopoQuad} from './retopo-quad.js?v=0.36.18.1236';
@@ -84,7 +84,7 @@ function quadCorner(d){
   if(corners.length<count){message(`Retopo · corner ${corners.length}/${count} · tap the next corner`);return;}
   if(tool==='triangle')commitPolygon(corners);else commitQuad(corners);
 }
-function validateSurfaceFaces(mesh,firstFace){
+function validateSurfaceFaces(mesh,firstFace,faceIndexes=null){
   const rect=canvas.getBoundingClientRect(),camera=state().camera,checked=new Map();
   function pointOnReference(index){
     if(checked.has(index))return checked.get(index);
@@ -93,15 +93,19 @@ function validateSurfaceFaces(mesh,firstFace){
     checked.set(index,result);
     return result;
   }
-  for(const face of mesh.faces.slice(firstFace)){
+  for(const face of (faceIndexes?faceIndexes.map(index=>mesh.faces[index]):mesh.faces.slice(firstFace))){
     const points=face.map(pointOnReference);
     if(points.some(point=>!point))return false;
     // Screen y points down. An outward face must turn consistently in the
     // negative direction around the whole polygon, not only at one triangle.
+    let curved=false;
     for(let i=0;i<face.length;i++){
       const a=points[i],b=points[(i+1)%face.length],c=points[(i+2)%face.length];
-      if((b.x-a.x)*(c.y-b.y)-(b.y-a.y)*(c.x-b.x)>=-1e-6)return false;
+      const turn=(b.x-a.x)*(c.y-b.y)-(b.y-a.y)*(c.x-b.x);
+      if(turn>1e-6)return false;
+      if(turn< -1e-6)curved=true;
     }
+    if(!curved)return false;
     const corners=face.map(index=>mesh.vertices[index]);
     const center=corners.reduce((sum,vertex)=>sum.add(vertex),corners[0].clone().multiplyScalar(0)).multiplyScalar(1/corners.length);
     const span=Math.max(...corners.map(vertex=>vertex.distanceTo(center)));
@@ -142,7 +146,7 @@ function commitQuad(outline, result=null, preview=false){
   const before=retopoId?state().mesh.clone():new EditableMesh([],[]);
   result??=buildRetopoQuad(before,outline,outline[0].normal);
   if(!result.ok){clearCorners();message(`Retopo · ${result.reason} · try another outline`);return;}
-  if(!result.splitFaces&&!result.deletedEdge&&!validateSurfaceFaces(result.mesh,before.faces.length)){
+  if(!result.splitFaces&&!result.deletedEdge&&!validateSurfaceFaces(result.mesh,before.faces.length,result.dissolvedEdge?[result.mergedFaceIndex]:null)){
     clearCorners();message('Retopo · could not place a valid patch on the reference');return;
   }
   if(preview&&previewToggle.checked&&result.mesh.faces.length-before.faces.length>1){
@@ -162,7 +166,7 @@ function commitQuad(outline, result=null, preview=false){
     globalThis.__boxlabHistory.push(before);
     for(const key of ['vertices','faces','faceGroups','creases','looseEdges','looseVertices'])live[key]=result.mesh[key];
   }
-  clearCorners();manager().saveActive();globalThis.__boxlabSelectionBridge?.clear?.();render();const added=result.mesh.faces.length-before.faces.length;message(result.deletedEdge?`Retopo · edge deleted · ${result.deletedFaces} faces removed`:result.loopGesture?'Retopo · loop added':result.splitFaces?`Retopo · split ${result.splitFaces} ${result.splitFaces===1?'quad':'quads'}`:`Retopo · ${added===1?'quad':added+' quads'} created`);
+  clearCorners();manager().saveActive();globalThis.__boxlabSelectionBridge?.clear?.();render();const added=result.mesh.faces.length-before.faces.length;message(result.dissolvedEdge?`Retopo · edge dissolved · ${result.mergedSides===3?'Tri':result.mergedSides===4?'quad':'N-gon'} created`:result.deletedEdge?`Retopo · edge deleted · ${result.deletedFaces} face removed`:result.loopGesture?'Retopo · loop added':result.splitFaces?`Retopo · split ${result.splitFaces} ${result.splitFaces===1?'quad':'quads'}`:`Retopo · ${added===1?'quad':added+' quads'} created`);
 }
 function message(text){if(status)status.textContent=text;}
 function render(){document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));}
@@ -452,27 +456,39 @@ function fillCrossedPolygon(point){
     globalThis.__boxlabHistory.push(before);manager().saveActive();globalThis.__boxlabSelectionBridge?.clear?.();render();
     message('Retopo · face deleted');return true;
   }
-  const adjacent=boundaryNeighbors(mesh),visited=new Set(),candidates=[];
-  for(const start of adjacent.keys()){
-    if(visited.has(start))continue;
-    const component=[],stack=[start];
-    while(stack.length){
-      const v=stack.pop();if(visited.has(v))continue;
-      visited.add(v);component.push(v);
-      for(const neighbor of adjacent.get(v)||[])if(!visited.has(neighbor))stack.push(neighbor);
+  const adjacent=boundaryNeighbors(mesh),candidates=[],seen=new Set();
+  // A hole can touch other patches at a corner. Walk boundary cycles rather
+  // than demanding a disconnected, degree-two boundary component.
+  const starts=[...adjacent.keys()].filter(i=>visibleBoundaryVertex(mesh.vertices[i],projected(i),rect,camera))
+    .sort((a,b)=>Math.hypot(projected(a).x-point.x,projected(a).y-point.y)-Math.hypot(projected(b).x-point.x,projected(b).y-point.y)).slice(0,6);
+  let budget=12000;
+  for(const start of starts){
+    const pending=[[start]];
+    while(pending.length&&budget-->0){
+      const path=pending.pop(),tip=path.at(-1);
+      if(path.length>64)continue;
+      for(const next of adjacent.get(tip)||[]){
+        if(next===start){
+          if(path.length>=3){
+            const key=[...path].sort((a,b)=>a-b).join(':');
+            if(!seen.has(key)){seen.add(key);consider(path);}
+          }
+        }else if(!path.includes(next)&&path.length<64)pending.push([...path,next]);
+      }
     }
-    if(component.length<3||component.length>64||component.some(v=>adjacent.get(v).size!==2))continue;
-    const cycle=[start];let previous=-1,current=start;
-    do{
-      const next=[...adjacent.get(current)].find(v=>v!==previous);
-      if(next===undefined||cycle.length>component.length)break;
-      previous=current;current=next;if(current!==start)cycle.push(current);
-    }while(current!==start);
-    if(current!==start||cycle.length!==component.length)continue;
+    if(budget<=0)break;
+  }
+  function consider(cycle){
     const expected=tool==='triangle'?cycle.length===3:cycle.length>=5;
-    if(!expected||!containsPolygonPoint(cycle.map(projected),point))continue;
-    if(!cycle.every(index=>visibleBoundaryVertex(mesh.vertices[index],projected(index),rect,camera)))continue;
+    if(!expected||!containsPolygonPoint(cycle.map(projected),point))return;
+    if(!cycle.every(index=>visibleBoundaryVertex(mesh.vertices[index],projected(index),rect,camera)))return;
     const points=cycle.map(projected);
+    const turns=points.map((a,i)=>{const b=points[(i+1)%points.length],c=points[(i+2)%points.length];return(b.x-a.x)*(c.y-b.y)-(b.y-a.y)*(c.x-b.x);});
+    if(!turns.every(t=>t>1e-6)&&!turns.every(t=>t< -1e-6))return;
+    if(mesh.faces.some(face=>{
+      const vertices=face.map(projected),center=vertices.reduce((p,v)=>({x:p.x+v.x/vertices.length,y:p.y+v.y/vertices.length}),{x:0,y:0});
+      return containsPolygonPoint(points,center);
+    }))return;
     const area=Math.abs(points.reduce((sum,p,i)=>sum+p.x*points[(i+1)%points.length].y-p.y*points[(i+1)%points.length].x,0));
     candidates.push({cycle,area});
   }

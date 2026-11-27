@@ -1,3 +1,9 @@
+## .1243 — X polygon gaps and internal edge dissolve
+
+Cris passed .1242. Tri and N-gon X gestures now trace the smallest valid visible bounded gap even if its boundary vertex branches into another patch. X on a filled face of the selected type deletes it; both operations use one Undo step. A zigzag across one internal edge joins the two adjacent faces into a single polygon, preserving the outer boundary vertices and refusing a nonconvex, overlapping or off-surface result. A zigzag on an outside edge still deletes its one face. The surface reference is unchanged.
+
+Device check: in Tri mode X an empty triangular gap, X the resulting Tri to remove it, then Undo. Repeat with a five-sided N-gon gap touching another patch. In Quad mode zigzag across an internal edge between two quads: expect one six-sided face with the same outside boundary; Undo restores both faces. Confirm a zigzag on an outer edge still removes its face.
+
 ## .1242 — one-line Tri and N-gon boundary closure
 
 Cris passed .1241 but could not close an open Tri or N-gon with a single line. In the selected polygon mode, a straight Pencil stroke from one visible boundary corner to another now follows the existing open boundary path and supplies the missing side. Tri requires exactly two existing edges; N-gon requires four or more. A direct existing edge, occupied area or ambiguous competing path refuses. The face uses native surface validation and one Undo step; closed outlines, tapped corners, X fill and Quad gestures retain their previous behavior.

@@ -148,6 +148,34 @@ export function deleteRetopoZigzag(mesh,stroke,project,visible){
   }
   if(targets.length!==1)return null;
   const edge=targets[0],trial=mesh.clone();
+  if(edge.faces.length===2){
+    const [left,right]=edge.faces,first=mesh.faces[left],second=mesh.faces[right];
+    const forward=first.findIndex((v,i)=>v===edge.a&&first[(i+1)%first.length]===edge.b);
+    const a=forward>=0?edge.a:edge.b,b=forward>=0?edge.b:edge.a;
+    const at=forward>=0?forward:first.findIndex((v,i)=>v===a&&first[(i+1)%first.length]===b);
+    const opposite=second.findIndex((v,i)=>v===b&&second[(i+1)%second.length]===a);
+    if(at<0||opposite<0)return null;
+    // Walk each face away from the shared edge, retaining both outer paths.
+    const walk=(face,start)=>Array.from({length:face.length},(_,i)=>face[(start+i)%face.length]);
+    const outline=[...walk(first,(at+1)%first.length),...walk(second,(opposite+1)%second.length).slice(1,-1)];
+    if(outline.length<3||outline.length>64||new Set(outline).size!==outline.length)return null;
+    const points=outline.map(i=>project(mesh.vertices[i]));
+    if(points.some(p=>Math.abs(p.z)>1))return null;
+    const turns=points.map((p,i)=>{
+      const q=points[(i+1)%points.length],r=points[(i+2)%points.length];
+      return(q.x-p.x)*(r.y-q.y)-(q.y-p.y)*(r.x-q.x);
+    });
+    if(!turns.some(t=>Math.abs(t)>1e-6)||(!turns.every(t=>t>=-1e-6)&&!turns.every(t=>t<=1e-6)))return null;
+    const keep=Math.min(left,right),remove=Math.max(left,right);
+    trial.faces[keep]=outline;
+    trial.faceGroups[keep]=mesh.faceGroups[left]===mesh.faceGroups[right]?mesh.faceGroups[left]:null;
+    trial.deleteFace(remove);
+    trial.creases.delete(trial.edgeKey(edge.a,edge.b));
+    trial.compactUnusedVertices();
+    if(!quadTopologyAudit(trial).ok)return null;
+    return {ok:true,mesh:trial,dissolvedEdge:true,mergedFaceIndex:keep,mergedSides:outline.length};
+  }
+  if(edge.faces.length!==1)return null;
   for(const fi of [...edge.faces].sort((a,b)=>b-a))trial.deleteFace(fi);
   trial.removeLooseEdge?.(edge.a,edge.b);
   trial.compactUnusedVertices();
