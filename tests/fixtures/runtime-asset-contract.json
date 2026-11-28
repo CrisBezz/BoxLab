@@ -161,9 +161,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.1248",
+      "url": "./src/drawer-ui.js?v=0.36.18.1249",
       "target": "src/drawer-ui.js",
-      "sha256": "de681f0acb37a75d41bde48e36c6ac0d4fbc99474709510047eb7b53e0e095c7"
+      "sha256": "b86c7e63ebef31dc12deef10ca384bd327967bd6918af995706ae5b73c5f50a9"
     },
     {
       "owner": "index.html",
@@ -304,9 +304,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/mesh-health.js?v=0.36.18.1248",
+      "url": "./src/mesh-health.js?v=0.36.18.1249",
       "target": "src/mesh-health.js",
-      "sha256": "c33b450f7372c09568964439f636e25b81ce98b268f41e929d45c080a2ad729b",
+      "sha256": "ea4d004fbc63e91d5f21abd3a049742be04590c39ed2500f688cab8845856ced",
       "sourceVersion": "0.36.18.880"
     },
     {
@@ -378,7 +378,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.1248",
+      "url": "./src/release-version.js?v=0.36.18.1249",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -864,9 +864,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.1248",
+      "url": "./face-workflow-layout.js?v=0.36.18.1249",
       "target": "src/face-workflow-layout.js",
-      "sha256": "e230bd2bca1f79946b998f86e75847976b4431e159c1d7c0c6ae11ca3800ca34"
+      "sha256": "14990ee483b887a49ae75aa090705d5e99856703fb9306951ca8737b2977db81"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1361,7 +1361,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.1248",
+      "url": "./release-version.js?v=0.36.18.1249",
       "target": "src/release-version.js",
       "sha256": "cfadc2ea924b204d7039894a21640d1842357e75be2f651c3517eea97aeff0f7"
     },
@@ -2378,9 +2378,9 @@
     },
     {
       "owner": "src/mesh-health.js",
-      "url": "./uv-workspace.js?v=0.36.18.1248",
+      "url": "./uv-workspace.js?v=0.36.18.1249",
       "target": "src/uv-workspace.js",
-      "sha256": "b5324a6311b252d1c9b77ce55be4057b679522b6d2fd65002bd1e6ceafadf3da"
+      "sha256": "66c578b063ca81b6106d836fa1a4121e641c706c45274f2e0d7c6f494fb0be2f"
     },
     {
       "owner": "src/uv-workspace.js",
@@ -3332,9 +3332,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/shell-comparison.js?v=0.36.18.1248",
+      "url": "./src/shell-comparison.js?v=0.36.18.1249",
       "target": "src/shell-comparison.js",
-      "sha256": "a58efdcea1d89031d90152eb9c012fc6a5f52f6928fc48f7e9387ccd55b81660"
+      "sha256": "e6cd7eca0b34deec93431f690ef9f50886fe6669e7d589cacde02635fc798b4f"
     },
     {
       "owner": "src/main.js",

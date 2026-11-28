@@ -1,9 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import {createUVWorkspace} from '../src/uv-workspace.js';
+import {createUVWorkspace,measureUVAtlas} from '../src/uv-workspace.js';
 const ready={state:'ready',islandCount:1,faceIslands:[0],previewFaceIndices:[0],previewIslands:[0],previewFaces:[[[0,0],[1,0],[0,1]]],previewSeams:[],bounds:{minU:0,minV:0,maxU:1,maxV:1}};
-function fixture(onTransform=()=>false){
+function fixture(onTransform=()=>false,getTransformContext=()=>null){
  const keys=['document','window','ResizeObserver','devicePixelRatio','__boxlabUVWorkspace'],old=keys.map(k=>Object.getOwnPropertyDescriptor(globalThis,k));
  const ctx=Object.fromEntries(['clearRect','fillRect','strokeRect','beginPath','moveTo','lineTo','closePath','stroke','fill'].map(k=>[k,()=>{}]));
  function node(){const fields=new Map(),listeners=new Map();return {hidden:false,children:[],parentElement:null,style:{},width:256,height:200,rect:{left:0,top:0,width:1340,height:590},setAttribute(k,v){this[k]=v;},append(...children){for(const n of children){if(n.parentElement){const a=n.parentElement.children;a.splice(a.indexOf(n),1);}n.parentElement=this;this.children.push(n);}},appendChild(n){this.append(n);return n;},querySelector(k){if(!fields.has(k)){const n=node();fields.set(k,n);this.append(n);}return fields.get(k);},getBoundingClientRect(){return this.rect;},getContext:()=>ctx,addEventListener(k,fn){if(!listeners.has(k))listeners.set(k,new Set());listeners.get(k).add(fn);},removeEventListener(k,fn){listeners.get(k)?.delete(fn);},fire(k,e={}){for(const fn of listeners.get(k)||[])fn({button:0,cancelable:true,stopPropagation(){},preventDefault(){},...e});},count:k=>listeners.get(k)?.size||0};}
@@ -11,7 +11,7 @@ function fixture(onTransform=()=>false){
  let clicks=0,history=[];original.addEventListener('click',()=>clicks++);
  const frames=new Map();let next=0,disconnected=0;const visual=node(),win=node();win.visualViewport=visual;win.requestAnimationFrame=fn=>{frames.set(++next,fn);return next;};win.cancelAnimationFrame=id=>frames.delete(id);
  globalThis.document={head,querySelector:k=>k==='#viewportWrap'?viewport:null,createElement:node};globalThis.window=win;globalThis.devicePixelRatio=2;globalThis.ResizeObserver=class{observe(){}disconnect(){disconnected++;}};
- const api=createUVWorkspace({canvas,note,controls,onDone:()=>api.close(),onHistory:x=>history.push(x),onTransform}),root=app.children[2];
+ const api=createUVWorkspace({canvas,note,controls,onDone:()=>api.close(),onHistory:x=>history.push(x),onTransform,getTransformContext}),root=app.children[2];
  return {app,header,viewport,root,canvas,note,controls,original,head,api,win,visual,frames,history,get clicks(){return clicks;},get disconnected(){return disconnected;},flush(){const jobs=[...frames.values()];frames.clear();jobs.forEach(fn=>fn());},restore(){api.close();keys.forEach((k,i)=>old[i]?Object.defineProperty(globalThis,k,old[i]):delete globalThis[k]);}};
 }
 test('952 real workspace sits beside viewport below original header, reuses controls and retains one root through repeated entry/exit',()=>{
@@ -52,5 +52,20 @@ test('1248 UV Editor Pack all forwards chosen map size, pixel gap and optional r
   assert.equal(calls.length,1);assert.deepEqual(calls[0].slice(0,3),['pack',{mapSize:2048,gutter:16,rotate:false},undefined]);
   f.root.querySelector('[data-uv="pack-rotate"]').checked=true;f.root.querySelector('[data-uv="pack"]').fire('click');
   assert.deepEqual(calls[1].slice(0,3),['pack',{mapSize:2048,gutter:16,rotate:true},undefined]);
+ }finally{f.restore();}
+});
+test('1249 read-only atlas area measures all UV corners, including faces beyond the preview',()=>{
+ const payload={uvCorners:[[[0,0],[.5,0],[.5,.5],[0,.5]],[[.5,0],[1,0],[1,.25],[.5,.25]]]},report={...ready,faces:2,mappedFaces:2,islandCount:2,outsideCorners:0,faceIslands:[0,1]};
+ assert.deepEqual(measureUVAtlas(payload,report),{area:.375,percentage:37.5,islands:2,outsideCorners:0});
+ assert.equal(measureUVAtlas(payload,{...report,state:'stale'}),null);
+ assert.equal(measureUVAtlas({uvCorners:payload.uvCorners.slice(0,1)},report),null);
+ const f=fixture(()=>false,()=>({payload}));try{
+  f.api.setReport(report,'Two islands');f.api.open();
+  assert.equal(f.root.querySelector('[data-uv="atlas-area"]').textContent,'UV area sum 37.5% · 2 islands');
+  assert.deepEqual(f.history,[]);
+  payload.uvCorners[1]=[[.5,0],[1,0],[1,.5],[.5,.5]];
+  f.api.setReport({...report,outsideCorners:1},'Two islands');
+  assert.equal(f.root.querySelector('[data-uv="atlas-area"]').textContent,'UV area sum 50.0% · 2 islands · 1 corner outside tile');
+  assert.deepEqual(f.history,[]);
  }finally{f.restore();}
 });

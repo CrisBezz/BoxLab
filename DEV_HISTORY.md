@@ -1,3 +1,9 @@
+## .1249 — full-layout UV area readout
+
+Cris passed .1248 Rotate charts in UV Editor Pack all. The UV Editor now shows a read-only UV area sum immediately below its controls. It measures every face in the complete saved face-corner channel, including faces omitted from the bounded canvas preview, and refreshes after Pack all, Undo/Redo and other UV edits. The number is the sum of the face areas in 0–1 tile units, not unique painted coverage: stacked or overlapping charts may make it exceed 100%. The island count and outside-tile corner count are shown alongside it. No UV coordinates, mesh, image, history or pack behavior changes.
+
+Device check: in UV Editor note the UV area sum with several islands, Pack all with Rotate charts off, Undo, then turn Rotate charts on and Pack all. Compare the percentages and inspect island outlines. Undo/Redo should restore the corresponding readout and layout. On a deliberately stacked layout the area sum may exceed actual coverage; the label should remain “UV area sum.” Reply PASS/FAIL.
+
 ## .1248 — optional 90° chart rotation in UV Editor Pack all
 
 Cris passed .1247, including pixel-gutter repacking and the Safari refresh bypass. UV Editor → Pack all now offers an unchecked Rotate charts option. When enabled, the existing UV island packer tries 90° orientation within its grid cells and uses it only if the common island scale improves over the accepted unrotated grid/shelf result. This retains each chart's shape, winding, corner ownership, chosen pixel gap and 0–1 bounds. The default unchecked path is unchanged; Undo/Redo uses the native UV history transaction. Paint images stay fixed, so inspect a painted layout before repacking.
