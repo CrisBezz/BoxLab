@@ -43,12 +43,14 @@ test('1001 UV entry preserves plain composition, header priority and reachable B
 test('957 original workspace enables Pack and density through 4096 islands and refuses the next count',()=>{
  const f=fixture();try{for(const count of [129,4096,4097]){f.api.setReport({...ready,islandCount:count},'');f.api.open();for(const action of ['pack','density'])assert.equal(f.root.querySelector(`[data-uv="${action}"]`).disabled,count>4096);}}finally{f.restore();}
 });
-test('1247 UV Editor Pack all forwards chosen map size and pixel gap to the original transform owner',()=>{
+test('1248 UV Editor Pack all forwards chosen map size, pixel gap and optional rotation',()=>{
  const calls=[],f=fixture((...args)=>{calls.push(args);return true;});try{
   f.api.setReport(ready,'Cube');f.api.open();
-  const html=f.root.innerHTML;assert.match(html,/data-uv="pack-map"/);assert.match(html,/data-uv="pack-gap"/);
+  const html=f.root.innerHTML;assert.match(html,/data-uv="pack-map"/);assert.match(html,/data-uv="pack-gap"/);assert.match(html,/data-uv="pack-rotate"/);
   f.root.querySelector('[data-uv="pack-map"]').value='2048';f.root.querySelector('[data-uv="pack-gap"]').value='16';
   f.root.querySelector('[data-uv="pack"]').fire('click');
-  assert.equal(calls.length,1);assert.deepEqual(calls[0].slice(0,3),['pack',2048,16]);
+  assert.equal(calls.length,1);assert.deepEqual(calls[0].slice(0,3),['pack',{mapSize:2048,gutter:16,rotate:false},undefined]);
+  f.root.querySelector('[data-uv="pack-rotate"]').checked=true;f.root.querySelector('[data-uv="pack"]').fire('click');
+  assert.deepEqual(calls[1].slice(0,3),['pack',{mapSize:2048,gutter:16,rotate:true},undefined]);
  }finally{f.restore();}
 });

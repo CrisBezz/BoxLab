@@ -28,7 +28,7 @@ export function fitImportedUVToTile(object,mesh,topologySignature,history,scope)
 }
 export function packImportedUVIslands(object,mesh,topologySignature,history,scope,spacing){
  if(!scope||scope.payload!==object?.glbPassthrough||scope.island!=null&&!Number.isInteger(scope.island))return {ok:false,reason:'Refresh the UV layout before packing'};
- if(spacing&&(![1024,2048].includes(spacing.mapSize)||![2,4,8,16].includes(spacing.gutter)))return {ok:false,reason:'Choose a 1024/2048 map and a 2/4/8/16 pixel gutter'};
+ if(spacing&&(![1024,2048].includes(spacing.mapSize)||![2,4,8,16].includes(spacing.gutter)||spacing.rotate!=null&&typeof spacing.rotate!=='boolean'))return {ok:false,reason:'Choose a 1024/2048 map, a 2/4/8/16 pixel gutter and chart rotation on/off'};
  return editImportedUV(object,mesh,topologySignature,history,{kind:'pack',spacing},scope.island==null?undefined:scope);
 }
 // Cut existing native islands through the original inspector and pack owner.
@@ -201,7 +201,20 @@ function packedLayout(uvCorners,report,spacing){
  let low=best.scale,high=Math.min(width?available/width:Infinity,height?available/height:Infinity),shelf=null;
  for(let pass=0;pass<24;pass++){const scale=(low+high)/2,placed=shelves(scale);if(placed){low=scale;shelf=placed;}else high=scale;}
  if(shelf&&low>best.scale*(1+1e-9))best={...best,scale:low,placements:shelf};
- const result=uvCorners.map((face,fi)=>{const id=report.faceIslands[fi],b=normalized[id],u=best.placements?best.placements[id].u:margin+(id%best.columns)*(best.cellWidth+gap)+best.cellWidth/2,v=best.placements?best.placements[id].v:margin+Math.floor(id/best.columns)*(best.cellHeight+gap)+best.cellHeight/2;return face.map(([x,y])=>[u+((x/magnitude-b.minU)-b.width/2)*best.scale,v+((y/magnitude-b.minV)-b.height/2)*best.scale]);});
+ // Opt-in: try 90° orientations in each grid cell. Keep the accepted unrotated
+ // grid/shelf result unless this improves the common island scale.
+ if(spacing?.rotate)for(let columns=count;columns>=1;columns--){
+  const rows=Math.ceil(count/columns),cellWidth=(available-(columns-1)*gap)/columns,cellHeight=(available-(rows-1)*gap)/rows;
+  if(cellWidth<=0||cellHeight<=0)continue;
+  const rotations=normalized.map(b=>{
+   const plain=Math.min(b.width?cellWidth/b.width:Infinity,b.height?cellHeight/b.height:Infinity);
+   const turned=Math.min(b.height?cellWidth/b.height:Infinity,b.width?cellHeight/b.width:Infinity);
+   return turned>plain*(1+32*Number.EPSILON);
+  });
+  const scale=Math.min(...normalized.map((b,id)=>{const w=rotations[id]?b.height:b.width,h=rotations[id]?b.width:b.height;return Math.min(w?cellWidth/w:Infinity,h?cellHeight/h:Infinity);}));
+  if(Number.isFinite(scale)&&scale>best.scale*(1+1e-9))best={columns,rows,cellWidth,cellHeight,scale,rotations};
+ }
+ const result=uvCorners.map((face,fi)=>{const id=report.faceIslands[fi],b=normalized[id],u=best.placements?best.placements[id].u:margin+(id%best.columns)*(best.cellWidth+gap)+best.cellWidth/2,v=best.placements?best.placements[id].v:margin+Math.floor(id/best.columns)*(best.cellHeight+gap)+best.cellHeight/2;return face.map(([x,y])=>{const dx=x/magnitude-b.minU-b.width/2,dy=y/magnitude-b.minV-b.height/2;return best.rotations?.[id]?[u-dy*best.scale,v+dx*best.scale]:[u+dx*best.scale,v+dy*best.scale];});});
  // Refuse numeric collapse of any existing island extent rather than losing it.
  if(faces.some((ids,id)=>{const b=importedUVIslandBounds(result,ids),old=bounds[id];return old.maxU>old.minU&&b.maxU===b.minU||old.maxV>old.minV&&b.maxV===b.minV;}))return {reason:'UV packing exceeds the coordinate range'};
  if(result.some((face,fi)=>face.some((uv,j)=>{const k=(j+1)%face.length,a=uvCorners[fi][j],b=uvCorners[fi][k],next=face[k];return (a[0]!==b[0]||a[1]!==b[1])&&uv[0]===next[0]&&uv[1]===next[1]||(Math.fround(a[0])!==Math.fround(b[0])||Math.fround(a[1])!==Math.fround(b[1]))&&Math.fround(uv[0])===Math.fround(next[0])&&Math.fround(uv[1])===Math.fround(next[1]);})))return {reason:'UV packing would collapse an existing UV edge'};

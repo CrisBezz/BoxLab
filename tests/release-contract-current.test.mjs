@@ -10,7 +10,7 @@ test('import map is valid JSON and canonical UV imports resolve to the reviewed 
  const match=read('index.html').match(/<script type="importmap">([^<]+)<\/script>/);
  assert.ok(match,'the shell needs its import map');
  const imports=JSON.parse(match[1]).imports;
- assert.equal(imports['./src/imported-uv-edit.js'],'./src/imported-uv-edit.js?v=0.36.18.1247');
+ assert.equal(imports['./src/imported-uv-edit.js'],'./src/imported-uv-edit.js?v=0.36.18.1248');
  for(const old of ['0.36.18.1075','0.36.18.1189'])assert.equal(imports[`./src/imported-uv-edit.js?v=${old}`],imports['./src/imported-uv-edit.js']);
 });
 test('reviewed runtime asset references retain actual cache pins and bytes',()=>{

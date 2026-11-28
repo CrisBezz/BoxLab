@@ -31,3 +31,15 @@ test('1247 existing islands repack to selected pixel gutters without changing ch
  }
  assert.equal(JSON.stringify(corners[0]),JSON.stringify([[0,0],[2,0],[2,1],[0,1]]));
 });
+test('1248 optional 90° rotation improves mixed island packing and preserves winding, gaps and determinism',()=>{
+ const corners=[[[0,0],[4,0],[4,1],[0,1]],[[10,0],[11,0],[11,4],[10,4]]],report={islandCount:2,faceIslands:[0,1]},spacing={mapSize:1024,gutter:8};
+ const plain=c.packedLayout(corners,report,spacing).uvCorners,turned=c.packedLayout(corners,report,{...spacing,rotate:true}).uvCorners;
+ const area=face=>{let sum=0;for(let i=0;i<face.length;i++){const a=face[i],b=face[(i+1)%face.length];sum+=a[0]*b[1]-b[0]*a[1];}return sum/2;};
+ assert(area(turned[0])>area(plain[0])*1.4);assert.equal(area(corners[0]),area(corners[1]));
+ assert(Math.abs(turned[0][1][0]-turned[0][0][0])<1e-12,'horizontal edge turned vertically');
+ const b=turned.map((_,i)=>importedUVIslandBounds(turned,[i])),gap=8/1024;
+ assert(b[0].maxU+gap<=b[1].minU+1e-12||b[1].maxU+gap<=b[0].minU+1e-12||b[0].maxV+gap<=b[1].minV+1e-12||b[1].maxV+gap<=b[0].minV+1e-12);
+ for(const face of turned){assert(area(face)>0);for(const point of face)assert(point.every(v=>v>=.02-1e-12&&v<=.98+1e-12));}
+ assert.equal(JSON.stringify(c.packedLayout(corners,report,{...spacing,rotate:false}).uvCorners),JSON.stringify(plain));
+ assert.equal(JSON.stringify(c.packedLayout(corners,report,{...spacing,rotate:true}).uvCorners),JSON.stringify(turned));
+});

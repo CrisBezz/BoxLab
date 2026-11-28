@@ -1,3 +1,9 @@
+## .1248 — optional 90° chart rotation in UV Editor Pack all
+
+Cris passed .1247, including pixel-gutter repacking and the Safari refresh bypass. UV Editor → Pack all now offers an unchecked Rotate charts option. When enabled, the existing UV island packer tries 90° orientation within its grid cells and uses it only if the common island scale improves over the accepted unrotated grid/shelf result. This retains each chart's shape, winding, corner ownership, chosen pixel gap and 0–1 bounds. The default unchecked path is unchanged; Undo/Redo uses the native UV history transaction. Paint images stay fixed, so inspect a painted layout before repacking.
+
+Device check: use a mesh with both long horizontal and tall vertical UV islands. In UV Editor, Pack all with Rotate charts off, then Undo. Turn it on and Pack all again; at least one chart should turn and the islands should use more tile space with the selected pixel gaps. Undo/Redo, return to 3D, and check that the mesh and texture image remain intact. Reply PASS/FAIL with a screenshot if an island overlaps or flips.
+
 ## .1247 — repack existing UV islands with pixel gutters
 
 Cris passed .1246 X deletion across all Retopo tools. UV Editor → Pack all now offers 1024/2048 map size and 2/4/8/16 pixel gap choices, defaulting to 1024 and 8 pixels. This uses the existing island packer and native UV history owner. Each chart retains its internal shape and corner correspondence, and its bounding box is separated from other charts by at least the chosen gap in the selected map's UV scale. It moves existing UV coordinates within tile 0–1; texture images remain fixed. It does not create new seams, change mesh faces, or resize paint maps. Existing stale-payload and invalid-target refusals remain. The original packer default is retained for other callers.
