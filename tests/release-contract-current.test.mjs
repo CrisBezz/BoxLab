@@ -6,6 +6,13 @@ import {root,contract,assetReference,assertAssetReference,assertModuleStamp,asse
 
 const read=p=>fs.readFileSync(new URL(p,root),'utf8');
 test('current release has coherent title, visible label, data stamp and manifest',()=>assertShellRelease(read('index.html')));
+test('import map is valid JSON and canonical UV imports resolve to the reviewed runtime',()=>{
+ const match=read('index.html').match(/<script type="importmap">([^<]+)<\/script>/);
+ assert.ok(match,'the shell needs its import map');
+ const imports=JSON.parse(match[1]).imports;
+ assert.equal(imports['./src/imported-uv-edit.js'],'./src/imported-uv-edit.js?v=0.36.18.1247');
+ for(const old of ['0.36.18.1075','0.36.18.1189'])assert.equal(imports[`./src/imported-uv-edit.js?v=${old}`],imports['./src/imported-uv-edit.js']);
+});
 test('reviewed runtime asset references retain actual cache pins and bytes',()=>{
   for(const r of contract.references){
     assert.ok(read(r.owner).includes(r.url),`${r.owner} changed reference ${r.url}; review cache contract`);

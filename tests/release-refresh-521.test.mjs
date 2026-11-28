@@ -28,8 +28,15 @@ test('stale shell keeps retrying past three attempts and stays inside frozen pat
     await new Promise(resolve=>setImmediate(resolve));
   }
   assert.equal(redirects.length,10);
-  for(const href of redirects){const url=new URL(href);assert.equal(url.pathname,'/BoxLab/beta-6/');assert.equal(url.searchParams.get('build'),latest);assert.ok(url.searchParams.has('_reload'));}
+  for(const href of redirects){const url=new URL(href);assert.equal(url.pathname,'/BoxLab/beta-6/index.html');assert.equal(url.searchParams.get('build'),latest);assert.ok(url.searchParams.has('_reload'));}
   for(const [url,opts] of requests){assert.equal(new URL(url).pathname,'/BoxLab/beta-6/version.json');assert.equal(opts.cache,'no-store');}
+});
+test('stale Safari directory shell switches to explicit cache-busted index without changing project path',async()=>{
+ const redirects=[],location={href:'https://example.test/BoxLab/?view=front',replace(url){redirects.push(new URL(url));}};
+ vm.runInNewContext(bootstrap,{URL,Date,document:{title:'BoxLab v0.36.18.1000'},window:{location},sessionStorage:{getItem(){return null;},setItem(){}},fetch:async()=>({ok:true,json:async()=>({version:version.version})}),console});
+ await new Promise(resolve=>setImmediate(resolve));assert.equal(redirects.length,1);
+ assert.equal(redirects[0].pathname,'/BoxLab/index.html');assert.equal(redirects[0].searchParams.get('view'),'front');
+ assert.equal(redirects[0].searchParams.get('build'),version.version);assert.ok(redirects[0].searchParams.has('_reload'));
 });
 test('matching release does not redirect',async()=>{
   let redirects=0;

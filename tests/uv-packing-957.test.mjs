@@ -17,3 +17,17 @@ test('957 identical charts retain exact accepted grid when shelves cannot improv
  const uv=Array.from({length:4},()=>[[0,0],[1,0],[1,1],[0,1]]),out=c.packedLayout(uv,{islandCount:4,faceIslands:[0,1,2,3]}).uvCorners;
  assert(Math.abs(out[0][0][0]-.02)<1e-12);assert(Math.abs(out[0][1][0]-.49)<1e-12);
 });
+test('1247 existing islands repack to selected pixel gutters without changing chart shape or corner ownership',()=>{
+ const corners=Array.from({length:6},(_,i)=>[[i*3,0],[i*3+2,0],[i*3+2,1],[i*3,1]]),report={islandCount:6,faceIslands:[0,1,2,3,4,5]};
+ for(const mapSize of [1024,2048])for(const gutter of [2,4,8,16]){
+  const out=c.packedLayout(corners,report,{mapSize,gutter}).uvCorners,b=out.map((_,i)=>importedUVIslandBounds(out,[i])),gap=gutter/mapSize;
+  assert.equal(out.length,corners.length);
+  for(let i=0;i<out.length;i++){
+   assert.equal(out[i].length,4);assert(Math.abs((out[i][1][0]-out[i][0][0])/(out[i][2][1]-out[i][1][1])-2)<1e-10);
+   for(const p of out[i])assert(p.every(v=>v>=.02-1e-12&&v<=.98+1e-12));
+   for(let j=0;j<i;j++)assert(b[i].minU>=b[j].maxU+gap-1e-12||b[j].minU>=b[i].maxU+gap-1e-12||b[i].minV>=b[j].maxV+gap-1e-12||b[j].minV>=b[i].maxV+gap-1e-12,`${mapSize}/${gutter}: islands ${i},${j}`);
+  }
+  assert.equal(JSON.stringify(c.packedLayout(corners,report,{mapSize,gutter}).uvCorners),JSON.stringify(out));
+ }
+ assert.equal(JSON.stringify(corners[0]),JSON.stringify([[0,0],[2,0],[2,1],[0,1]]));
+});

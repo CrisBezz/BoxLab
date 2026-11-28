@@ -5,6 +5,20 @@ import {inspectImportedUV,importedUVIslandBounds} from '../src/imported-uv-inspe
 import {createUVWorkspace} from '../src/uv-workspace.js';
 import {editableBooleanRuntime} from './helpers/editable-boolean-runtime.mjs';import {glbOwnerRuntime} from './helpers/glb-owner-runtime.mjs';
 import {encodeBoxlabScene,decodeBoxlabScene} from '../src/boxlab-project-codec.js';import {buildNomadProject,readNomadProject} from '../src/nomad-export-core.js';
+test('1247 Pack all uses map pixel spacing with one native Undo and stale-context refusal',()=>{
+ const r=fixture(),before=JSON.stringify(r.live),payload=r.payload,n=r.h.undoStack.length;
+ assert.equal(packImportedUVIslands(r.object,r.live,signature,r.owner,{payload},{mapSize:1024,gutter:8}).changed,true);
+ const packed=r.object.glbPassthrough,report=inspectImportedUV(r.live,packed,signature);
+ assert.equal(report.state,'ready');assert.deepEqual(report.faceIslands,[0,1]);
+ assert.equal(JSON.stringify(r.live),before);assert.equal(r.h.undoStack.length,n+1);assert.equal(r.manager.objects.find(o=>o.id===2).glbPassthrough,payload);
+ const bounds=[0,1].map(i=>importedUVIslandBounds(packed.uvCorners,[i])),gap=8/1024;
+ assert(bounds[0].maxU+gap<=bounds[1].minU+1e-12||bounds[1].maxU+gap<=bounds[0].minU+1e-12||bounds[0].maxV+gap<=bounds[1].minV+1e-12||bounds[1].maxV+gap<=bounds[0].minV+1e-12);
+ assert.equal(packImportedUVIslands(r.object,r.live,signature,r.owner,{payload},{mapSize:2048,gutter:16}).ok,false);
+ assert.equal(packImportedUVIslands(r.object,r.live,signature,r.owner,{payload:packed},{mapSize:1024,gutter:3}).ok,false);
+ assert.equal(r.h.undoStack.length,n+1);
+ r.manager.replaceActiveMesh(r.h.undo(r.live));assert.equal(r.manager.objects.find(o=>o.id===3).glbPassthrough,payload);
+ r.manager.replaceActiveMesh(r.h.redo(r.live));assert.equal(r.manager.objects.find(o=>o.id===3).glbPassthrough,packed);
+});
 const exporter=glbOwnerRuntime(),signature=exporter.c.topologySignature,near=(a,b)=>assert(Math.abs(a-b)<1e-10,`${a} != ${b}`);
 function fixture(){const r=editableBooleanRuntime();r.manager.activate(3);r.manager.replaceActiveMesh(new EditableMesh([[0,0,0],[1,0,0],[0,1,0],[2,0,0],[3,0,0],[2,1,0]],[[0,1,2],[3,4,5]]));const object=r.manager.objects.find(o=>o.id===3),payload={version:1,source:'glb',uvTopologySignature:signature(r.live),uvCorners:[[[4,3],[8,3],[4,5]],[[0,0],[2,0],[0,1]]],images:[{data:new Uint8Array([1,2,3])}],tangentCorners:[[],[]]};object.glbPassthrough=payload;r.manager.objects.find(o=>o.id===2).glbPassthrough=payload;return{...r,object,payload,owner:r.c.__boxlabObjectHistory};}
 const equalize=(r,island=null)=>equalizeImportedUVDensity(r.object,r.live,signature,r.owner,{payload:r.object.glbPassthrough,island});

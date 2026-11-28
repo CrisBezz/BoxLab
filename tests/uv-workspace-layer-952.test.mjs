@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {createUVWorkspace} from '../src/uv-workspace.js';
 const ready={state:'ready',islandCount:1,faceIslands:[0],previewFaceIndices:[0],previewIslands:[0],previewFaces:[[[0,0],[1,0],[0,1]]],previewSeams:[],bounds:{minU:0,minV:0,maxU:1,maxV:1}};
-function fixture(){
+function fixture(onTransform=()=>false){
  const keys=['document','window','ResizeObserver','devicePixelRatio','__boxlabUVWorkspace'],old=keys.map(k=>Object.getOwnPropertyDescriptor(globalThis,k));
  const ctx=Object.fromEntries(['clearRect','fillRect','strokeRect','beginPath','moveTo','lineTo','closePath','stroke','fill'].map(k=>[k,()=>{}]));
  function node(){const fields=new Map(),listeners=new Map();return {hidden:false,children:[],parentElement:null,style:{},width:256,height:200,rect:{left:0,top:0,width:1340,height:590},setAttribute(k,v){this[k]=v;},append(...children){for(const n of children){if(n.parentElement){const a=n.parentElement.children;a.splice(a.indexOf(n),1);}n.parentElement=this;this.children.push(n);}},appendChild(n){this.append(n);return n;},querySelector(k){if(!fields.has(k)){const n=node();fields.set(k,n);this.append(n);}return fields.get(k);},getBoundingClientRect(){return this.rect;},getContext:()=>ctx,addEventListener(k,fn){if(!listeners.has(k))listeners.set(k,new Set());listeners.get(k).add(fn);},removeEventListener(k,fn){listeners.get(k)?.delete(fn);},fire(k,e={}){for(const fn of listeners.get(k)||[])fn({button:0,cancelable:true,stopPropagation(){},preventDefault(){},...e});},count:k=>listeners.get(k)?.size||0};}
@@ -11,7 +11,7 @@ function fixture(){
  let clicks=0,history=[];original.addEventListener('click',()=>clicks++);
  const frames=new Map();let next=0,disconnected=0;const visual=node(),win=node();win.visualViewport=visual;win.requestAnimationFrame=fn=>{frames.set(++next,fn);return next;};win.cancelAnimationFrame=id=>frames.delete(id);
  globalThis.document={head,querySelector:k=>k==='#viewportWrap'?viewport:null,createElement:node};globalThis.window=win;globalThis.devicePixelRatio=2;globalThis.ResizeObserver=class{observe(){}disconnect(){disconnected++;}};
- const api=createUVWorkspace({canvas,note,controls,onDone:()=>api.close(),onHistory:x=>history.push(x)}),root=app.children[2];
+ const api=createUVWorkspace({canvas,note,controls,onDone:()=>api.close(),onHistory:x=>history.push(x),onTransform}),root=app.children[2];
  return {app,header,viewport,root,canvas,note,controls,original,head,api,win,visual,frames,history,get clicks(){return clicks;},get disconnected(){return disconnected;},flush(){const jobs=[...frames.values()];frames.clear();jobs.forEach(fn=>fn());},restore(){api.close();keys.forEach((k,i)=>old[i]?Object.defineProperty(globalThis,k,old[i]):delete globalThis[k]);}};
 }
 test('952 real workspace sits beside viewport below original header, reuses controls and retains one root through repeated entry/exit',()=>{
@@ -42,4 +42,13 @@ test('1001 UV entry preserves plain composition, header priority and reachable B
 });
 test('957 original workspace enables Pack and density through 4096 islands and refuses the next count',()=>{
  const f=fixture();try{for(const count of [129,4096,4097]){f.api.setReport({...ready,islandCount:count},'');f.api.open();for(const action of ['pack','density'])assert.equal(f.root.querySelector(`[data-uv="${action}"]`).disabled,count>4096);}}finally{f.restore();}
+});
+test('1247 UV Editor Pack all forwards chosen map size and pixel gap to the original transform owner',()=>{
+ const calls=[],f=fixture((...args)=>{calls.push(args);return true;});try{
+  f.api.setReport(ready,'Cube');f.api.open();
+  const html=f.root.innerHTML;assert.match(html,/data-uv="pack-map"/);assert.match(html,/data-uv="pack-gap"/);
+  f.root.querySelector('[data-uv="pack-map"]').value='2048';f.root.querySelector('[data-uv="pack-gap"]').value='16';
+  f.root.querySelector('[data-uv="pack"]').fire('click');
+  assert.equal(calls.length,1);assert.deepEqual(calls[0].slice(0,3),['pack',2048,16]);
+ }finally{f.restore();}
 });

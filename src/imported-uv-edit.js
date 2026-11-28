@@ -26,9 +26,10 @@ export function fitImportedUVToTile(object,mesh,topologySignature,history,scope)
  if(scope===undefined)return {ok:false,reason:'Select a UV island to fit'};
  return editImportedUV(object,mesh,topologySignature,history,{kind:'fit'},scope);
 }
-export function packImportedUVIslands(object,mesh,topologySignature,history,scope){
+export function packImportedUVIslands(object,mesh,topologySignature,history,scope,spacing){
  if(!scope||scope.payload!==object?.glbPassthrough||scope.island!=null&&!Number.isInteger(scope.island))return {ok:false,reason:'Refresh the UV layout before packing'};
- return editImportedUV(object,mesh,topologySignature,history,{kind:'pack'},scope.island==null?undefined:scope);
+ if(spacing&&(![1024,2048].includes(spacing.mapSize)||![2,4,8,16].includes(spacing.gutter)))return {ok:false,reason:'Choose a 1024/2048 map and a 2/4/8/16 pixel gutter'};
+ return editImportedUV(object,mesh,topologySignature,history,{kind:'pack',spacing},scope.island==null?undefined:scope);
 }
 // Cut existing native islands through the original inspector and pack owner.
 // No seam metadata: separated face-corner coordinates are the authored result.
@@ -164,7 +165,7 @@ function densityLayout(mesh,payload,report,faceTriangles=null){
 }
 // Deterministic grid packing, not an optimal atlas solver. One common scale
 // preserves existing relative UV density; island bounds stay in separate cells.
-function packedLayout(uvCorners,report){
+function packedLayout(uvCorners,report,spacing){
  const count=report.islandCount;if(count<1||count>4096)return {reason:'Pack all supports 1–4096 UV islands'};
  const faces=Array.from({length:count},()=>[]);report.faceIslands.forEach((id,fi)=>faces[id].push(fi));
  const bounds=faces.map(ids=>importedUVIslandBounds(uvCorners,ids));let magnitude=0;
@@ -175,9 +176,10 @@ function packedLayout(uvCorners,report){
  const width=Math.max(...normalized.map(b=>b.width)),height=Math.max(...normalized.map(b=>b.height));let best=null;
  // Keep accepted small layouts exact. Dense atlases reserve ~20% per axis for
  // gaps instead of exhausting the tile with a fixed 2% gap per island.
- const gap=count<=128?.02:.2/Math.ceil(Math.sqrt(count));
+ const gap=spacing?spacing.gutter/spacing.mapSize:count<=128?.02:.2/Math.ceil(Math.sqrt(count));
+ const margin=spacing?Math.max(.02,gap):.02,available=1-2*margin;
  for(let columns=count;columns>=1;columns--){
-  const rows=Math.ceil(count/columns),cellWidth=(.96-(columns-1)*gap)/columns,cellHeight=(.96-(rows-1)*gap)/rows;
+  const rows=Math.ceil(count/columns),cellWidth=(available-(columns-1)*gap)/columns,cellHeight=(available-(rows-1)*gap)/rows;
   if(cellWidth<=0||cellHeight<=0)continue;
   const scale=Math.min(width?cellWidth/width:Infinity,height?cellHeight/height:Infinity);
   if(Number.isFinite(scale)&&scale>0&&(!best||scale>best.scale*(1+32*Number.EPSILON)))best={columns,rows,cellWidth,cellHeight,scale};
@@ -189,17 +191,17 @@ function packedLayout(uvCorners,report){
  function shelves(scale){
   let x=0,y=0,rowHeight=0;const placements=Array(count);
   for(const b of order){const w=b.width*scale,h=b.height*scale;
-   if(w>.96||h>.96)return null;
-   if(x+w>.96){y+=rowHeight+gap;x=0;rowHeight=0;}
-   if(y+h>.96)return null;
-   placements[b.id]={u:.02+x+w/2,v:.02+y+h/2};x+=w+gap;rowHeight=Math.max(rowHeight,h);
+   if(w>available||h>available)return null;
+   if(x+w>available){y+=rowHeight+gap;x=0;rowHeight=0;}
+   if(y+h>available)return null;
+   placements[b.id]={u:margin+x+w/2,v:margin+y+h/2};x+=w+gap;rowHeight=Math.max(rowHeight,h);
   }
   return placements;
  }
- let low=best.scale,high=Math.min(width?.96/width:Infinity,height?.96/height:Infinity),shelf=null;
+ let low=best.scale,high=Math.min(width?available/width:Infinity,height?available/height:Infinity),shelf=null;
  for(let pass=0;pass<24;pass++){const scale=(low+high)/2,placed=shelves(scale);if(placed){low=scale;shelf=placed;}else high=scale;}
  if(shelf&&low>best.scale*(1+1e-9))best={...best,scale:low,placements:shelf};
- const result=uvCorners.map((face,fi)=>{const id=report.faceIslands[fi],b=normalized[id],u=best.placements?best.placements[id].u:.02+(id%best.columns)*(best.cellWidth+gap)+best.cellWidth/2,v=best.placements?best.placements[id].v:.02+Math.floor(id/best.columns)*(best.cellHeight+gap)+best.cellHeight/2;return face.map(([x,y])=>[u+((x/magnitude-b.minU)-b.width/2)*best.scale,v+((y/magnitude-b.minV)-b.height/2)*best.scale]);});
+ const result=uvCorners.map((face,fi)=>{const id=report.faceIslands[fi],b=normalized[id],u=best.placements?best.placements[id].u:margin+(id%best.columns)*(best.cellWidth+gap)+best.cellWidth/2,v=best.placements?best.placements[id].v:margin+Math.floor(id/best.columns)*(best.cellHeight+gap)+best.cellHeight/2;return face.map(([x,y])=>[u+((x/magnitude-b.minU)-b.width/2)*best.scale,v+((y/magnitude-b.minV)-b.height/2)*best.scale]);});
  // Refuse numeric collapse of any existing island extent rather than losing it.
  if(faces.some((ids,id)=>{const b=importedUVIslandBounds(result,ids),old=bounds[id];return old.maxU>old.minU&&b.maxU===b.minU||old.maxV>old.minV&&b.maxV===b.minV;}))return {reason:'UV packing exceeds the coordinate range'};
  if(result.some((face,fi)=>face.some((uv,j)=>{const k=(j+1)%face.length,a=uvCorners[fi][j],b=uvCorners[fi][k],next=face[k];return (a[0]!==b[0]||a[1]!==b[1])&&uv[0]===next[0]&&uv[1]===next[1]||(Math.fround(a[0])!==Math.fround(b[0])||Math.fround(a[1])!==Math.fround(b[1]))&&Math.fround(uv[0])===Math.fround(next[0])&&Math.fround(uv[1])===Math.fround(next[1]);})))return {reason:'UV packing would collapse an existing UV edge'};
@@ -229,7 +231,7 @@ function editImportedUV(object,mesh,topologySignature,history,operation,scope){
   if(magnitude===1&&Math.abs(span-.96)<=8*Number.EPSILON&&Math.abs(centreU-.5)<=8*Number.EPSILON&&Math.abs(centreV-.5)<=8*Number.EPSILON)return {ok:true,changed:false,selectedFaces};
   fit={magnitude,span,minU:bounds.minU/magnitude,minV:bounds.minV/magnitude,width:bounds.maxU/magnitude-bounds.minU/magnitude,height:bounds.maxV/magnitude-bounds.minV/magnitude};
  }
- const packing=operation.kind==='pack'?packedLayout(previous.uvCorners,report):operation.kind==='density'?densityLayout(mesh,previous,report):null;
+ const packing=operation.kind==='pack'?packedLayout(previous.uvCorners,report,operation.spacing):operation.kind==='density'?densityLayout(mesh,previous,report):null;
  if(packing?.reason)return {ok:false,reason:packing.reason};
  const selected=selectedFaces&&new Set(selectedFaces);
  const uvCorners=packing?packing.uvCorners:previous.uvCorners.map((face,fi)=>selected&&!selected.has(fi)?face:face.map(([u,v])=>{

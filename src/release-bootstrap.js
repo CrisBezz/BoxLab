@@ -19,6 +19,10 @@
       if (!latest || latest === running) return;
 
       const target = new URL(window.location.href);
+      // GitHub Pages advertises a ten-minute HTML cache. A directory reload can
+      // reuse its stale response in Safari; request the explicit document path
+      // as well as a fresh URL when a newer release is already known.
+      if (target.pathname.endsWith('/')) target.pathname += 'index.html';
       const previousLatest = sessionStorage.getItem('boxlab-refresh-latest');
       const attempts = previousLatest === latest
         ? Number(sessionStorage.getItem('boxlab-refresh-attempts') || 0)

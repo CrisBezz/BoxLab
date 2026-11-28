@@ -1,3 +1,11 @@
+## .1247 — repack existing UV islands with pixel gutters
+
+Cris passed .1246 X deletion across all Retopo tools. UV Editor → Pack all now offers 1024/2048 map size and 2/4/8/16 pixel gap choices, defaulting to 1024 and 8 pixels. This uses the existing island packer and native UV history owner. Each chart retains its internal shape and corner correspondence, and its bounding box is separated from other charts by at least the chosen gap in the selected map's UV scale. It moves existing UV coordinates within tile 0–1; texture images remain fixed. It does not create new seams, change mesh faces, or resize paint maps. Existing stale-payload and invalid-target refusals remain. The original packer default is retained for other callers.
+
+Safari refresh: GitHub Pages returns a 600-second HTML cache header; meta tags cannot flush that cache. When the fresh version manifest reports a newer build, the early bootstrap now navigates from a cached directory URL to explicit index.html with a unique reload query. Existing retry and frozen-beta path behavior remain. No service worker is registered by BoxLab. This bypasses the stale page without deleting user data or clearing unrelated Safari storage.
+
+Device check: on a mesh with several UV islands, open UV Editor, select 2048 and 16 px, Pack all, inspect the gaps and Undo/Redo. Repeat at 1024 and 2 px and compare the spacing. Confirm a Retopo Quad/Tri/N-gon X and zigzag still work after returning to 3D.
+
 ## .1246 — X deletes any visible Retopo face in every tool
 
 Cris passed .1245. X on an existing visible Retopo face now deletes that face in Quad, Tri, N-gon, Vertex or Relax mode, independent of its side count. The shared gesture runs after zigzag and before mode-specific fill. Vertex/Relax use their untouched stroke-start mesh and discard temporary live movement before committing a single Undo step. X over open space in Vertex/Relax makes no edit; choose a face tool to fill a new gap. Quad, Tri and N-gon keep their respective bounded-gap creation behavior. Overlapping or occluded faces are refused.
